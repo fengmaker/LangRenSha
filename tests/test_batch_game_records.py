@@ -29,6 +29,7 @@ class BatchGameRecordTests(unittest.TestCase):
         value["referee"] = None
         value["game_number"] = None
         value["winner"] = "third_party"
+        value["season"] = "S21"  # Generic archival storage, outside S22 formal policy.
         return value
 
     def template_record(self, board_code):
@@ -64,13 +65,17 @@ class BatchGameRecordTests(unittest.TestCase):
             "night": [blank_event(slot["code"]) for slot in board["night_slots"]],
             "day": [blank_event(slot["code"]) for slot in board["day_slots"]],
         }]
+        if board_code in {"masquerade", "all_in", "treasure_master"}:
+            second = copy.deepcopy(value["rounds"][0])
+            second["number"] = 2
+            value["rounds"].append(second)
         return value
 
     @staticmethod
     def event(value, slot):
         return next(
             event
-            for round_ in value["rounds"]
+            for round_ in reversed(value["rounds"])
             for phase in ("night", "day")
             for event in round_[phase]
             if event["slot"] == slot

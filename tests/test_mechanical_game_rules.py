@@ -47,9 +47,14 @@ class MechanicalGameRulesTests(unittest.TestCase):
         self.assertEqual(mechanical_skill_state(self.value,2,"night"),"wrong_phase")
         self.event(1,"day","mechanical_day_skill").update(action="shoot",targets=[2])
         apply_derived_rules(self.value)
+        with self.assertRaisesRegex(ReviewError,"出局触发"):
+            validate(self.value,check_files=False)
+        self.event(1,"day","exile_result").update(action="exile",targets=[8])
+        # Day 2 events are not needed to test the departure-triggered shot.
+        self.value["rounds"]=self.value["rounds"][:1]
+        apply_derived_rules(self.value)
         validate(self.value,check_files=False)
-        # Shooting alone does not invent an unconfirmed self-death rule.
-        self.assertNotIn(8,prior_departures(self.value,2))
+        self.assertIn(8,prior_departures(self.value,2))
 
     def test_night_forms_unlock_second_night_even_with_small_wolves_alive(self):
         for target,role,action in [(1,"机械通灵师","check"),(5,"机械守卫","guard"),(10,"机械女巫","poison")]:
@@ -178,6 +183,16 @@ class MechanicalGameRulesTests(unittest.TestCase):
         apply_derived_rules(self.value)
         with self.assertRaises(ReviewError):
             validate(self.value,check_files=False)
+
+    def test_learning_may_be_delayed_and_unlock_is_relative_to_learning(self):
+        self.form(5,"机械守卫")
+        self.event(1,"night","mechanical_action").update(action="pass",targets=[],result=None)
+        self.event(2,"night","mechanical_action").update(action="learn",targets=[5],result="机械守卫")
+        self.event(1,"day","mechanical_day_skill").update(action="unavailable")
+        apply_derived_rules(self.value)
+        self.assertEqual(mechanical_skill_state(self.value,1,"night"),"locked")
+        self.assertEqual(mechanical_skill_state(self.value,2,"night"),"learning")
+        validate(self.value,check_files=False)
 
     def test_night_knife_confirmation_must_match_known_departures(self):
         self.event(2,"night","mechanical_knife_status")["action"]="carrying"

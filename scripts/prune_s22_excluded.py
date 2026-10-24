@@ -27,8 +27,35 @@ def safe_move(source: Path, destination: Path, source_root: Path, archive_root: 
     if destination.exists():
         raise ValueError("恢复副本已存在，停止覆盖：" + str(destination))
     destination.parent.mkdir(parents=True, exist_ok=True)
-    source.rename(destination)
+    shutil.move(str(source), str(destination))
+    if source.exists() or not destination.exists():
+        raise RuntimeError("移动恢复副本未完成：" + str(source))
     return True
+
+
+def completed_scope_matches(report: dict, excluded_bvids) -> bool:
+    """Only reuse a completed prune when its exact excluded set matches policy."""
+    if report.get("state") != "complete":
+        return False
+    items = report.get("items", [])
+    recorded = [item.get("bvid") for item in items]
+    return len(recorded) == len(set(recorded)) and set(recorded) == set(excluded_bvids)
+
+
+def require_fresh_backup(report: dict, previous: dict) -> dict:
+    """Do not reuse a database dump made before an expanded exclusion scope."""
+    if previous.get("state") != "complete":
+        return report
+    history = list(report.get("backup_history", []))
+    previous_backup = previous.get("backup")
+    if previous_backup and not any(item.get("path") == previous_backup for item in history):
+        history.append({"path": previous_backup,
+                        "database_before": previous.get("database_before"),
+                        "created_at": previous.get("backup_created_at") or previous.get("completed_at")})
+    report["backup_history"] = history
+    report.pop("backup", None)
+    report.pop("database_before", None)
+    return report
 
 
 def plan() -> dict:
@@ -49,7 +76,8 @@ def plan() -> dict:
         if not dossier.get("slug"):
             raise ValueError("无法唯一确认将删除的对局slug：" + entry["bvid"])
         targets.append({**entry, "slug": dossier["slug"], "removal_reason": exclusion_reason(entry, root=ROOT)})
-    return {**{key: old[key] for key in ["backup", "deleted_rows", "database_matches", "moved_paths"] if key in old},
+    return {**{key: old[key] for key in ["backup", "database_before", "backup_history", "deleted_rows", "database_matches", "moved_paths",
+                                         "pre_removal_snapshots"] if key in old},
             "season": "S22", "state": "planned", "created_at": old.get("created_at") or batch.now(),
             "scope_policy": "config/S22_game_scope.json", "items": targets,
             "removed_games": len(targets), "phase_counts": dict(Counter(e["phase"] for e in targets)),
@@ -60,20 +88,30 @@ def plan() -> dict:
 
 def apply() -> dict:
     with batch.batch_lock():
-        if REPORT.is_file():
-            old = batch.read_json(REPORT)
-            if old.get("state") == "complete":
-                return old
-        report = plan()
+        old = batch.read_json(REPORT) if REPORT.is_file() else {}
+        policy = load_policy(ROOT)
+        if completed_scope_matches(old, policy.get("excluded_bvids", [])):
+            return old
+        report = require_fresh_backup(plan(), old)
+        # A newly expanded policy needs a fresh database snapshot. Keep the prior
+        # completed backup in history rather than letting backup_database reuse it.
         archive = (ROOT / report["archive_root"]).resolve()
         if not archive.is_relative_to((ROOT / "data/archive/S22_excluded_games").resolve()):
             raise ValueError("恢复副本目录不在预期工作区内")
         archive.mkdir(parents=True, exist_ok=True)
+        stamp = batch.now().replace(":", "").replace("+", "_")
+        snapshot = archive / "before" / stamp
+        suffix = 1
+        while snapshot.exists():
+            snapshot = archive / "before" / f"{stamp}_{suffix}"
+            suffix += 1
+        report["pre_removal_snapshots"] = list(report.get("pre_removal_snapshots", [])) + [batch.relative(snapshot)]
+        snapshot.mkdir(parents=True, exist_ok=False)
         for path in [batch.STATE_FILE, ROOT / "data/reports/S22_转写逐句复核进度.json",
                      ROOT / "data/reports/S22_画面座位补全进度.json", ROOT / "data/reports/S22_画面截帧进度.json",
                      ROOT / "data/reports/S22_对局批处理验收.json", ROOT / "data/reports/S22_画面座位验收.json"]:
-            target = archive / "before" / path.name
-            if path.is_file() and not target.exists():
+            target = snapshot / path.name
+            if path.is_file():
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(path, target)
         batch.atomic_json(REPORT, report)
@@ -139,13 +177,14 @@ def apply() -> dict:
         frame = frames._load_progress()
         frame["items"] = {k: v for k, v in frame["items"].items() if k not in excluded}
         frame["completion"] = {"catalog_games": len(active["items"]), "frame_stage_games": len(frame["items"]),
-            "preserved_games": 1, "dates": len(active_dates), "complete_lineup_dates": len(active_dates),
+            "preserved_games": sum(e.get("state") == "preserved" for e in active["items"].values()),
+            "dates": len(active_dates), "complete_lineup_dates": len(active_dates),
             "complete_lineup_games": sum(e.get("named_seats") == 12 for e in active["items"].values()),
             "named_seats": sum(e.get("named_seats", 0) for e in active["items"].values()),
             "pending_dates": [], "processing_pending": 0, "processing_failed": 0, "frame_question_count": 0,
             "text_question_count": text["summary"]["questions"], "checked_at": batch.now()}
         frame.update(scope_policy=report["scope_policy"], review_url="http://127.0.0.1:8766/",
-                     resume_steps=["当前有效范围149局，表演赛及7月3日娱乐局已移除；画面姓名处理与待核项均为0。",
+                     resume_steps=[f"当前有效范围{len(active['items'])}局，已排除范围外场次；画面姓名处理与待核项均为0。",
                                    "后续更正通过审校工作台保存；续跑只处理当前范围，不恢复排除项。"])
         frames._save_progress(frame)
         active["scope"] = {"policy": report["scope_policy"], "excluded_games": len(excluded),

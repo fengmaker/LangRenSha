@@ -1,0 +1,87 @@
+{
+  "bvid": "BV1VxNH6YETC",
+  "date": "2026-07-10",
+  "game_number": 3,
+  "checked_by": "Codex",
+  "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
+  "human_reviewed": false,
+  "facts_sha256": "1eee0acf4542f600e3f36ed0b9800961fd3a0dd308cee8d850e0220c2f9fb96e",
+  "question_count": 0,
+  "pending_count": 1,
+  "questions": [
+    {
+      "id": "vote-BV1VxNH6YETC-day-2-exile_unrecorded",
+      "code": "exile_unrecorded",
+      "day": 2,
+      "target": null,
+      "title": "本日放逐投票或结束原因待核",
+      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
+      "severity": "pending",
+      "evidence": []
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": null
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 1,
+      "question_ids": [
+        "vote-BV1VxNH6YETC-day-2-exile_unrecorded"
+      ],
+      "exile_note": null
+    }
+  ],
+  "video_checks": [],
+  "accepted_changes": [
+    {
+      "id": "BV1VxNH6YETC-registration",
+      "bvid": "BV1VxNH6YETC",
+      "source_sha256": "1114f53ecde8b3297dd28bb7aac66981b562e3861eabf0a2ca9a49cec7a6ae5f",
+      "target": "registration",
+      "after": {
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          10,
+          12
+        ],
+        "off_police": [
+          4,
+          8,
+          9,
+          11
+        ]
+      },
+      "method": "transcript_registration_review",
+      "reason": "原始全文开局点名4、8、9、11号不在警上，随后确认其余玩家均上警。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第03局_机械狼通灵师__BV1VxNH6YETC_P01_CID39830883181.平台AI字幕_ai-zh_01_1114f53ecd.原始.json",
+          "start_ms": 504380,
+          "end_ms": 509180,
+          "quote": "本球戏除4号八号九号11号玩家"
+        },
+        {
+          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第03局_机械狼通灵师__BV1VxNH6YETC_P01_CID39830883181.平台AI字幕_ai-zh_01_1114f53ecd.原始.json",
+          "start_ms": 509180,
+          "end_ms": 510580,
+          "quote": "外区玩家均上警上警"
+        }
+      ]
+    }
+  ],
+  "voting_sha256": "0958f169cfdfaa332eacc63292dc34b4c30d4b86a43cd06b47aa322b34c5e035",
+  "source_sha256": "1114f53ecde8b3297dd28bb7aac66981b562e3861eabf0a2ca9a49cec7a6ae5f"
+}

@@ -1,0 +1,113 @@
+{
+  "bvid": "BV1GmTc61EMA",
+  "date": "2026-06-30",
+  "game_number": 2,
+  "checked_by": "Codex",
+  "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
+  "human_reviewed": false,
+  "facts_sha256": "cc74b1ffdd20ca6063d4aeaaf5e7dc4fc943da5b53cd42a39c0d51b439aa273f",
+  "question_count": 0,
+  "pending_count": 2,
+  "questions": [
+    {
+      "id": "vote-BV1GmTc61EMA-ballot-3-eligibility_unknown",
+      "code": "eligibility_unknown",
+      "day": 2,
+      "target": "ballot-3",
+      "title": "本轮票权与缺票范围待核",
+      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
+      "severity": "pending",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5984290,
+          "end_ms": 6046380,
+          "quote": "是傀儡猎人的话\n呃\n六是悍跳守卫\n七是被毒的守卫\n我们也输了呀\n因为他们三刀啊\n所以我是想出10号的嗯\n然后出10号嗯\n验的话随便验吧\n验个三吧\n警徽给你手机会给我过了\n做完加班结束\n请各位戴盔做好投票准备\n带亏\n警长请归票\n警长归票\n10号\n各位玩家唱票结束前不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给10号\n6号投给4号\n8号投给4号\n9号投给10号\n10号投给4号\n11号投给10号\n投票结束\n10号玩家6.5票出局\n请发表遗言\n那比如说4号是个预言家\n他验了6号是查杀牌\n他现在未知我的身份\n6号是查杀\n他觉得我是狼"
+        }
+      ]
+    },
+    {
+      "id": "vote-BV1GmTc61EMA-day-3-exile_unrecorded",
+      "code": "exile_unrecorded",
+      "day": 3,
+      "target": null,
+      "title": "本日放逐投票或结束原因待核",
+      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
+      "severity": "pending",
+      "evidence": []
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": null
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 1,
+      "question_ids": [
+        "vote-BV1GmTc61EMA-ballot-3-eligibility_unknown"
+      ],
+      "exile_note": null
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 1,
+      "question_ids": [
+        "vote-BV1GmTc61EMA-day-3-exile_unrecorded"
+      ],
+      "exile_note": null
+    }
+  ],
+  "video_checks": [],
+  "accepted_changes": [
+    {
+      "id": "BV1GmTc61EMA-registration",
+      "bvid": "BV1GmTc61EMA",
+      "source_sha256": "51fbb5f35cdc28e7fcd95c1d8011394759465e4584f5e6fbafdc283284e06ff1",
+      "target": "registration",
+      "after": {
+        "day": 1,
+        "on_police": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ],
+        "off_police": [
+          1,
+          2,
+          11
+        ]
+      },
+      "method": "transcript_registration_review",
+      "reason": "原始全文开局点名1、2、11号不在警上，随后确认其余玩家均上警。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 434200,
+          "end_ms": 437720,
+          "quote": "对一号2号11号玩家外"
+        },
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 437720,
+          "end_ms": 439940,
+          "quote": "其余玩家均上井上警"
+        }
+      ]
+    }
+  ],
+  "voting_sha256": "219d5e6e353e0d6ed60e7d914f147976fdbe548f541ef8bf67fc36ceb490f058",
+  "source_sha256": "51fbb5f35cdc28e7fcd95c1d8011394759465e4584f5e6fbafdc283284e06ff1"
+}

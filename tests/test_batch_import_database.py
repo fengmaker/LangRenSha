@@ -36,6 +36,7 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
             raise RuntimeError(f"样例音频必须是真实文件：{cls.audio_path}")
         with database.connect(cls.schema) as conn:
             conn.execute("INSERT INTO seasons(code,name) VALUES('S22','isolated batch integration test')")
+            conn.execute("INSERT INTO seasons(code,name) VALUES('S21','isolated archived-board test')")
             conn.execute(
                 "INSERT INTO sources(platform,external_key,title) VALUES(%s,%s,%s)",
                 (cls.audio["platform"], cls.audio["external_key"], "isolated test source from existing sample"),
@@ -125,6 +126,9 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
 
     def test_ghost_bride_and_third_party_winner_are_stored(self):
         value = self.incomplete_record()
+        # S22 entertainment is excluded by user policy; generic historical-board
+        # storage remains supported for another season in this disposable schema.
+        value["season"] = "S21"
         value["slug"] = "batch-test-ghost-" + uuid.uuid4().hex
         value["board"] = "ghost_bride"
         value["winner"] = "third_party"

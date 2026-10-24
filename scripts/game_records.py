@@ -165,7 +165,9 @@ def mechanical_skill_state(value, round_number, phase):
         return "unknown"
     learned=learning_round(value)
     if learned is None:
-        return "unknown"
+        actions=[e["action"] for r in value["rounds"] if r["number"]<=round_number
+                 for e in r["night"] if e["slot"]=="mechanical_action"]
+        return "locked" if mech["learned_role"] is None and actions and all(a in {"pass","unavailable"} for a in actions) else "unknown"
     if phase=="night" and round_number==learned:
         return "learning"
     offset=game_rules()["mechanical_unlock"][phase+"_round_offset"]
@@ -253,7 +255,7 @@ def apply_derived_rules(value):
     return value
 
 
-def validate_batch(value, check_files=True):
+def validate_batch(value, check_files=True, *, check_rules=True):
     """Validate a batch review record using only the facts already known."""
     forbidden = {"evidence", "evidence_ids", "review", "review_state", "verification_status", "schema_version", "transcription_runs", "speech_turns"}
     def walk(node):
@@ -386,6 +388,7 @@ def validate_batch(value, check_files=True):
         ("couple_select_witness", "choose"): 1,
         ("magician_exchange", "exchange"): 2,
         ("guile_exchange", "exchange"): 2,
+        ("guile_exchange", "invalid_exchange"): 2,
         ("masquerade_verify", "verify"): 1,
         ("masquerade_mask", "give_mask"): 1,
         ("dancer_dance", "dance"): 3,
@@ -402,6 +405,8 @@ def validate_batch(value, check_files=True):
         ("trade_resolution", "immune"): 2,
         ("trade_decisions", "trade"): 2,
         ("trade_decisions", "betray"): 2,
+        ("trade_decisions", "trade_betray"): 2,
+        ("trade_decisions", "betray_trade"): 2,
         ("ghost_bride_attack_executor", "single_wolf_attack"): 1,
         ("ghost_bride_attack_executor", "couple_attack"): 1,
         ("ghost_bride_attack_executor", "witness_attack"): 1,
@@ -440,6 +445,8 @@ def validate_batch(value, check_files=True):
                             raise ReviewError("狼刀行动者必须属于狼队")
                         if slot["code"] == "self_destruct" and event["action"] == "self_destruct" and actor_role not in WOLF_ROLES:
                             raise ReviewError("自爆者必须为狼人身份")
+                        if slot["code"] == "self_destruct" and event["action"] == "self_destruct" and actor_role == "机械狼":
+                            raise ReviewError("机械狼不能自爆")
                 targets = event["targets"]
                 if not isinstance(targets, list) or any(type(t) is not int or t not in by_seat for t in targets) or len(targets) != len(set(targets)):
                     raise ReviewError("目标座位重复或越界")
@@ -484,6 +491,8 @@ def validate_batch(value, check_files=True):
                         raise ReviewError("技能结算类型与死亡者或护盾不一致")
 
                 target_key = (event["slot"], event["action"])
+                if event["action"] == "invalid_exchange" and (event["result"] != "disqualified_repeat_target" or actor is None):
+                    raise ReviewError("违规换位须保留行动者，并明确记录重复选人的判离裁定")
                 if target_key in fixed_target_counts:
                     expected_count = fixed_target_counts[target_key]
                     if len(targets) != expected_count:
@@ -529,12 +538,22 @@ def validate_batch(value, check_files=True):
     if check_files:
         for file in value["files"]:
             data_file(file["path"])
+    if check_rules:
+        from formal_rule_checks import issues
+        errors = [i for i in issues(value) if i["severity"] == "error"]
+        if errors:
+            raise ReviewError(errors[0]["message"])
     return board
 
 
 def validate(value, check_files=True, *, allow_incomplete=False):
     if allow_incomplete:
         return validate_batch(value, check_files)
+    # All boards share the structural contract. The original strict validator
+    # below also resolves mechanical timing/effects and is specific to that board.
+    board = validate_batch(value, check_files)
+    if board["code"] != "mechanical_wolf_seer":
+        return validate_complete_board(value, board)
     forbidden = {"evidence", "evidence_ids", "review", "review_state", "verification_status", "schema_version", "transcription_runs", "speech_turns"}
     def walk(node):
         if isinstance(node, dict):
@@ -640,6 +659,9 @@ def validate(value, check_files=True, *, allow_incomplete=False):
                         allowed=board["mechanical_forms"][mechanical_player(value)["learned_role"]]["actions"]
                         if event["action"] not in allowed+["pass","unknown"]:
                             raise ReviewError("机械技能已解锁，不能记为不适用或使用其他形态技能")
+                    elif state=="locked" and (learning_round(value) is None or round_["number"]<learning_round(value)):
+                        if event["action"] not in {"pass","unavailable","unknown"}:
+                            raise ReviewError("机械狼尚未学习，不能发动模仿技能")
                     elif event["action"]!=("unknown" if state=="unknown" else "unavailable"):
                         raise ReviewError("机械技能尚未解锁、时段不符、已中毒或其他狼人未全出局，不能发动")
                 elif event["availability"] is not None:
@@ -689,6 +711,34 @@ def validate(value, check_files=True, *, allow_incomplete=False):
     if check_files:
         for file in value["files"]:
             data_file(file["path"])
+    from formal_rule_checks import issues
+    errors = [i for i in issues(value) if i["severity"] == "error"]
+    if errors:
+        raise ReviewError(errors[0]["message"])
+    return board
+
+
+def validate_complete_board(value, board):
+    """Complete metadata for every board, with dynamic roles kept dynamic."""
+    seats = value["seats"]
+    if any(p["role"] is None or p["faction"] is None or p["name"] is None for p in seats):
+        raise ReviewError("完整录入需要全部座位的姓名、底牌和胜利阵营")
+    if not board.get("dynamic_roles") and dict(Counter(p["role"] for p in seats)) != board["role_counts"]:
+        raise ReviewError("身份数量与版型不一致")
+    if board.get("dynamic_roles"):
+        pool = board.get("role_pool", {})
+        if any(role not in pool or amount > pool[role] for role, amount in Counter(p["role"] for p in seats).items()):
+            raise ReviewError("实际发牌不属于候选牌池或超过候选牌数量")
+    if len(value["roster"]) != board["seat_count"] or set(value["roster"]) != {p["name"] for p in seats}:
+        raise ReviewError("排班姓名必须与全部在场座位一致")
+    if not value["rounds"] or value.get("game_number") is None:
+        raise ReviewError("完整录入需要局次和实际游戏轮次")
+    if not value["commentators"] or not value["referee"]:
+        raise ReviewError("完整录入需要解说和法官姓名")
+    from formal_rule_checks import issues
+    errors = [i for i in issues(value) if i["severity"] == "error"]
+    if errors:
+        raise ReviewError(errors[0]["message"])
     return board
 
 
@@ -706,6 +756,11 @@ def describe(value, round_number, phase, event):
         actor=f"{event['actor']}号{seats[event['actor']]['learned_role'] or '机械狼'}"
     target = "、".join(person(t) for t in event["targets"])
     slot, action = event["slot"], event["action"]
+    if slot=="guile_exchange" and action=="invalid_exchange":
+        return prefix+actor+"尝试交换"+target+"，因重复选人被判离出局"
+    if slot=="trade_decisions" and action in {"trade","betray","trade_betray","betray_trade"}:
+        choices={"trade":("交易","交易"),"betray":("背叛","背叛"),"trade_betray":("交易","背叛"),"betray_trade":("背叛","交易")}[action]
+        return prefix+"，".join(person(seat)+"选择"+choice for seat,choice in zip(event["targets"],choices))
     if action=="unknown":
         label = {"guard":"守护","wolf_attack":"击杀目标","witch_save":"解药","witch_poison":"毒药","hunter_state":"技能状态","mechanical_knife_status":"带刀状态","mechanical_action":"行动","mechanical_day_skill":"开枪情况","seer_check":"查验"}.get(slot)
         if label:

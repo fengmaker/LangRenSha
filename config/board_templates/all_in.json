@@ -82,11 +82,13 @@
     },
     {
       "code": "trade_decisions",
-      "label": "交易双方各自选择交易或背叛",
+      "label": "按交易双方目标顺序记录两人选择：trade双交易、betray双背叛、trade_betray前交易后背叛、betray_trade前背叛后交易",
       "actor_role": null,
       "actions": [
         "trade",
         "betray",
+        "trade_betray",
+        "betray_trade",
         "pass",
         "unavailable",
         "unknown"

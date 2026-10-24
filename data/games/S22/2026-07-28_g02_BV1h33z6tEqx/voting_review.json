@@ -1,0 +1,94 @@
+{
+  "bvid": "BV1h33z6tEqx",
+  "date": "2026-07-28",
+  "game_number": 2,
+  "checked_by": "Codex",
+  "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
+  "human_reviewed": false,
+  "facts_sha256": "bc0bb9fc40f5ddcf164477e56fe289cae16e3e8ef0a630579d2ff4650940173a",
+  "question_count": 0,
+  "pending_count": 1,
+  "questions": [
+    {
+      "id": "vote-BV1h33z6tEqx-day-3-exile_unrecorded",
+      "code": "exile_unrecorded",
+      "day": 3,
+      "target": null,
+      "title": "本日放逐投票或结束原因待核",
+      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
+      "severity": "pending",
+      "evidence": []
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": null
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": null
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 1,
+      "question_ids": [
+        "vote-BV1h33z6tEqx-day-3-exile_unrecorded"
+      ],
+      "exile_note": null
+    }
+  ],
+  "video_checks": [],
+  "accepted_changes": [
+    {
+      "id": "BV1h33z6tEqx-registration",
+      "bvid": "BV1h33z6tEqx",
+      "source_sha256": "b02a867f9eaeedecc8afa8bcb008b9a072a4f03b52efdf137677648102cf0a58",
+      "target": "registration",
+      "after": {
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          9,
+          10,
+          12
+        ],
+        "off_police": [
+          4,
+          6,
+          8,
+          11
+        ]
+      },
+      "method": "transcript_registration_review",
+      "reason": "原始全文开局点名4、6、8、11号在警下，随后字幕确认其他玩家上警。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
+          "start_ms": 551040,
+          "end_ms": 554480,
+          "quote": "本游戏除4号六号八号11号外"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
+          "start_ms": 554480,
+          "end_ms": 558330,
+          "quote": "其他玩家上镜随机点数五"
+        }
+      ]
+    }
+  ],
+  "voting_sha256": "da0301191255ea06af58493aaf1ded2a3b1b4285f34e023ca94654463e35a8f9",
+  "source_sha256": "b02a867f9eaeedecc8afa8bcb008b9a072a4f03b52efdf137677648102cf0a58"
+}
