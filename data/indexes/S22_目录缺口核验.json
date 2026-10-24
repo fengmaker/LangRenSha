@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-20",
+  "collection": {
+    "title": "曙光航纪",
+    "collection_id": 8209896,
+    "owner_uid": 19106800,
+    "current_index_rows": 163,
+    "index_file": "data/indexes/S22_官方合集_候选索引.csv",
+    "raw_response_file": "data/raw/bilibili/S22_collection.view.raw.json",
+    "official_collection_url": "https://www.bilibili.com/list/19106800?sid=8209896",
+    "absence_check": "CSV has no exact 20260528 表演赛 Day-3 第一局 row, no 20260604 正赛 第一期 Day-3 第三局 row, and no BV1KhEw6vEok row."
+  },
+  "suspected_gaps": [
+    {
+      "id": "20260528_showmatch_day3_game1",
+      "expected_title": "20260528 表演赛 Day-3 第一局-预女猎白混",
+      "status": "unresolved",
+      "official_candidate": null,
+      "evidence": [
+        {
+          "type": "official_collection_neighbors",
+          "items": [
+            {
+              "title": "20260528 表演赛 Day-3 第二局-诡术之境",
+              "bvid": "BV1qKVW6YEZu",
+              "url": "https://www.bilibili.com/video/BV1qKVW6YEZu/"
+            },
+            {
+              "title": "20260528 表演赛 Day-3 第三局-机械狼通灵师",
+              "bvid": "BV1BKVW6YE8u",
+              "url": "https://www.bilibili.com/video/BV1BKVW6YE8u/"
+            }
+          ],
+          "source": "data/indexes/S22_官方合集_候选索引.csv"
+        },
+        {
+          "type": "public_bilibili_search",
+          "query": "20260528 表演赛 Day-3",
+          "endpoint": "https://api.bilibili.com/x/web-interface/search/type",
+          "result": "Search results surfaced the official account's Day-3 second and third game pages, but no official first-game page in the returned results."
+        },
+        {
+          "type": "related_nonofficial_results",
+          "items": [
+            {
+              "title": "S22曙光航纪表演赛DAY3 预女猎白混 诡术之境 机械狼通灵师 | 20260528 纯净版+弹幕版",
+              "bvid": "BV14AVu6uEEZ",
+              "url": "https://www.bilibili.com/video/BV14AVu6uEEZ/",
+              "uploader": "JY戴士后援会"
+            },
+            {
+              "title": "京城大师赛S22表演赛20260528第一局预女猎白混+宝宝狼队的逆袭",
+              "bvid": "BV1t4VH63E7Z",
+              "url": "https://www.bilibili.com/video/BV1t4VH63E7Z/",
+              "uploader": "不作不…"
+            }
+          ],
+          "note": "These are nonofficial uploads; they do not establish that an official standalone BV exists or is absent."
+        }
+      ],
+      "decision_note": "The public search returned official neighboring games and nonofficial recordings, but did not establish whether a separate official first-game BV exists. No absence conclusion is drawn."
+    },
+    {
+      "id": "20260604_regular_phase1_day3_game3",
+      "expected_title": "20260604 正赛 第一期 Day-3 第三局-机械狼通灵师",
+      "status": "excluded_other_event",
+      "official_candidate": {
+        "bvid": "BV1KhEw6vEok",
+        "url": "https://www.bilibili.com/video/BV1KhEw6vEok/",
+        "api_url": "https://api.bilibili.com/x/web-interface/view?bvid=BV1KhEw6vEok",
+        "page_title": "20260604-第三局机械狼通灵师",
+        "owner_uid": 19106800,
+        "owner_name": "京城大师赛官方",
+        "aid": 116691241537340,
+        "cid": 38852691767,
+        "page_part": "20260604-第三局机械狼通灵师"
+      },
+      "evidence": [
+        {
+          "type": "official_video_view_api",
+          "result": "Public view API returned code 0 and identified BV1KhEw6vEok as a one-page video by UID 19106800, with title and CID recorded above."
+        },
+        {
+          "type": "public_bilibili_search",
+          "query": "20260604 第三局 机械狼通灵师",
+          "endpoint": "https://api.bilibili.com/x/web-interface/search/type",
+          "result": "Returned BV1KhEw6vEok under the official account; the broader exact S22 title search also surfaced a fan compilation labelled S22 first-stage Day-3 with the three game titles."
+        },
+        {
+          "type": "official_collection_neighbors",
+          "items": [
+            {
+              "title": "20260604 正赛 第一期 Day-3 第一局-预女猎白混",
+              "bvid": "BV12GEA6iEx5",
+              "url": "https://www.bilibili.com/video/BV12GEA6iEx5/"
+            },
+            {
+              "title": "20260604 正赛 第一期 Day-3 第二局-盗宝大师",
+              "bvid": "BV117EA6AEcV",
+              "url": "https://www.bilibili.com/video/BV117EA6AEcV/"
+            }
+          ],
+          "source": "data/indexes/S22_官方合集_候选索引.csv"
+        }
+      ],
+      "decision_note": "主代理重新请求 view API，确认该 BV 的 ugc_season 是东北宝宝赛（7174786），不是 S22 曙光航纪（8209896）。候选已排除，不能凭相同日期/第三局标题归入 S22。",
+      "prior_status": "confirmed_candidate",
+      "primary_review": {
+        "official_view_response": "data/diagnostics/S22_gap_BV1KhEw6vEok.view.raw.json",
+        "collection_id": 7174786,
+        "collection_title": "东北宝宝赛",
+        "decision": "该官方视频属于另一赛事合集，不纳入 S22。S22 当日第三局的存在和来源仍未确认。"
+      }
+    }
+  ],
+  "sequence_title_checks": [
+    {
+      "bvid": "BV1yKJ56PEak",
+      "url": "https://www.bilibili.com/video/BV1yKJ56PEak/",
+      "api_url": "https://api.bilibili.com/x/web-interface/view?bvid=BV1yKJ56PEak",
+      "official_owner_uid": 19106800,
+      "official_owner_name": "京城大师赛官方",
+      "page_title": "20260612 正赛 第二期 Day-4 唯邻是从",
+      "cid": 39070991291,
+      "status": "unresolved",
+      "explicit_game_number_in_official_title": false,
+      "note": "Official title does not state 第一局/第二局/第三局; do not infer the sequence."
+    },
+    {
+      "bvid": "BV1Abgy6tEP8",
+      "url": "https://www.bilibili.com/video/BV1Abgy6tEP8/",
+      "api_url": "https://api.bilibili.com/x/web-interface/view?bvid=BV1Abgy6tEP8",
+      "official_owner_uid": 19106800,
+      "official_owner_name": "京城大师赛官方",
+      "page_title": "20260722 正赛 第八期 Day-2 机械狼通灵师",
+      "cid": 40203125736,
+      "status": "unresolved",
+      "explicit_game_number_in_official_title": false,
+      "note": "Official title does not state 第一局/第二局/第三局; do not infer the sequence."
+    }
+  ],
+  "query_coverage": {
+    "public_methods": [
+      "Bilibili x/web-interface/search/type keyword searches for 20260528 表演赛 Day-3 and 20260604 第三局 机械狼通灵师, plus broader title variants.",
+      "Bilibili x/web-interface/view requests for BV1KhEw6vEok, BV1yKJ56PEak, and BV1Abgy6tEP8.",
+      "Search engine queries for exact missing titles, official account, and known BV identifiers."
+    ],
+    "cookie_use": "None.",
+    "media_downloads": "None.",
+    "limits": [
+      "The x/space/arc/search account archive request returned HTTP 412, so a full account archive traversal was not completed.",
+      "Search API keyword results were partial/ranked and not an exhaustive account index; some requests later returned HTTP 412. Search absence is therefore not proof of nonexistence.",
+      "The identified 20260604 official video title gives date, third-game ordinal, and game name, but omits the S22 phase/day label; event association remains for the primary agent to validate."
+    ]
+  }
+}

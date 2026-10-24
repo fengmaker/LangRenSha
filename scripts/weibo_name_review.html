@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S22 / S23 排班照片人名复核</title>
+<style>
+:root{color-scheme:light;font-family:"Microsoft YaHei",system-ui,sans-serif;color:#233042;background:#f3f5f8}*{box-sizing:border-box}body{margin:0}header,main{max-width:1480px;margin:auto;padding:24px}h1{font-size:26px;margin:0 0 10px}p{line-height:1.7;margin:8px 0;color:#536174}.toolbar{position:sticky;top:0;z-index:2;background:#fffffff2;box-shadow:0 2px 14px #1c2d4912;padding:14px 24px}.controls{max-width:1432px;margin:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}button,select,input,textarea{font:inherit;border:1px solid #c5cdd8;border-radius:7px;background:white;padding:9px 10px}button{cursor:pointer;color:#233042}button.primary{background:#254d79;color:white;border-color:#254d79}button:hover{filter:brightness(.94)}input[type=search]{min-width:225px}#progress{font-size:14px;color:#536174;margin-left:auto}#storage{font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:18px}.card{background:white;border:1px solid #dce2ea;border-radius:12px;padding:16px;scroll-margin-top:110px}.card.uncertain{border-color:#c89642}.card h2{font-size:21px;margin:0 0 12px;display:flex;align-items:center;gap:10px}.id{font-size:13px;font-weight:normal;color:#6b7687}.badge{font-size:12px;color:#8c5b10;background:#fff1d6;padding:3px 7px;border-radius:4px;margin-left:auto}.body{display:grid;grid-template-columns:134px 1fr;gap:16px}.crop{width:134px;height:310px;object-fit:contain;background:#f8f8f8;border-radius:7px;display:block}.fields label{display:block;font-size:13px;margin:0 0 12px;color:#536174}.fields input,.fields select,.fields textarea{width:100%;display:block;margin-top:5px;color:#233042}.fields textarea{min-height:62px;resize:vertical}.note{font-size:13px;line-height:1.7;color:#79521c;margin:12px 0 0}.meta{font-size:12px;line-height:1.8;color:#6b7687;margin-top:9px}a{color:#254d79;text-underline-offset:3px}.links{display:flex;gap:14px;font-size:13px;margin-top:10px}details{font-size:13px;margin-top:12px;border-top:1px solid #e9edf2;padding-top:10px}summary{cursor:pointer;color:#536174}ol{padding-left:20px;max-height:300px;overflow:auto}li{margin:9px 0;line-height:1.8}.source-text{color:#657185;font-size:12px;overflow-wrap:anywhere}.error{color:#b13628;font-size:12px;min-height:18px}#empty{padding:40px;text-align:center}dialog{width:min(960px,95vw);border:0;border-radius:12px;padding:18px}dialog::backdrop{background:#122033b0}dialog img{display:block;max-width:100%;max-height:82vh;margin:auto}dialog button{float:right}.hint{font-size:13px}noscript{display:block;padding:30px}@media(max-width:500px){header,main{padding:18px}.toolbar{padding:12px}.grid{grid-template-columns:1fr}.body{grid-template-columns:118px 1fr;gap:12px}.crop{width:118px}#progress{margin-left:0}.card{padding:12px}}
+</style>
+<header>
+<h1>S22 / S23 排班照片人名复核</h1>
+<p id="scope"></p>
+<p class="hint">对照名牌裁图修改名字，并选择确认状态。点击裁图可放大，打开原图可查看完整海报。图片序号沿用微博顺序。所有候选名字均等你确认。</p>
+<p class="hint">修改会暂存在当前浏览器。完成后点“导出复核 CSV”保存结果；“导出备份 JSON”可保留进度，供下次导入。下方表格文件与页面进度分别保存。</p>
+<p class="hint"><a href="S22-S23_照片人名_人工复核.csv">已保存的人工复核结果</a>　<a href="../参赛名单/京城大师赛_S22至今_参赛人名总表.csv">已复核参赛名单</a>　<a href="照片人名_逐图复核.csv">初始逐图 CSV</a>　<a href="照片人名_逐帖对应.csv">逐帖图片对应</a></p>
+<div id="storage" role="status"></div>
+</header>
+<div class="toolbar"><div class="controls">
+<input id="search" type="search" aria-label="搜索名字或照片编号" placeholder="搜索名字、照片编号、日期">
+<select id="season" aria-label="赛季"><option value="">全部赛季</option><option>S22</option><option>S23</option></select>
+<select id="filter" aria-label="复核筛选"><option value="">全部照片</option><option value="uncertain">识读存疑</option><option value="pending">尚未确认</option><option value="reviewed">已确认</option></select>
+<button class="primary" id="export-csv">导出复核 CSV</button><button id="export-json">导出备份 JSON</button><button id="import">导入备份</button>
+<input type="file" id="import-file" accept="application/json,.json" hidden>
+<span id="progress" aria-live="polite"></span>
+</div></div>
+<main><div id="grid" class="grid"></div><p id="empty" hidden>没有符合条件的照片。</p></main>
+<dialog id="zoom"><button id="close-zoom">关闭</button><img alt="名牌放大裁图" id="zoom-img"></dialog>
+<noscript>请启用 JavaScript，或使用同目录下的逐图复核 CSV。</noscript>
+<script type="application/json" id="data">__REVIEW_DATA__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById('data').textContent);
+const pictures=data.pictures, storageKey='weibo-name-review-20260526-20261020-v1';
+let edits={};
+const $=id=>document.getElementById(id);
+const statuses=['待确认','确认无误','已修正','无法确认'];
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function state(p){return edits[p.id]||{status:'待确认',corrected_name:'',note:''};}
+function valid(p){const e=state(p);return e.status==='确认无误'||(e.status==='已修正'&&e.corrected_name.trim()!=='');}
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(edits));$('storage').textContent='当前进度已暂存在此浏览器；导出文件后可交回复核结果。';}catch{$('storage').textContent='此浏览器无法暂存进度，请及时导出 CSV 或备份 JSON。';}}
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'{}');for(const p of pictures){const e=saved[p.id];if(e&&statuses.includes(e.status)&&typeof e.corrected_name==='string'&&typeof e.note==='string')edits[p.id]=e;}}catch{$('storage').textContent='无法读取浏览器暂存进度，可以导入备份 JSON。';}
+function progress(){const count=pictures.filter(valid).length;$('progress').textContent=`已确认 ${count} / ${pictures.length} 张 · 当前显示 ${$('grid').children.length} 张`;}
+function matches(p){const q=$('search').value.trim().toLocaleLowerCase();const e=state(p),f=$('filter').value;return (!$('season').value||p.season===$('season').value)&&(!q||[p.id,p.name,e.corrected_name,p.first,p.last,...p.occurrences.map(x=>x.date)].join(' ').toLocaleLowerCase().includes(q))&&(!f||(f==='uncertain'&&p.confidence!=='清楚')||(f==='pending'&&!valid(p))||(f==='reviewed'&&valid(p)));}
+function render(){
+const chosen=pictures.filter(matches);
+$('grid').innerHTML=chosen.map(p=>{const e=state(p);return `<article class="card ${p.confidence==='清楚'?'':'uncertain'}" id="${p.id}" data-id="${p.id}">
+<h2>${escapeHtml(p.name)} <span class="id">${p.id} · ${p.season}</span>${p.confidence==='清楚'?'':`<span class="badge">${escapeHtml(p.confidence)}</span>`}</h2>
+<div class="body"><div><a href="${p.crop}" data-zoom="${p.crop}" aria-label="放大${p.id}名牌"><img class="crop" loading="lazy" src="${p.crop}" alt="${p.id}名牌裁图"></a><div class="links"><a href="${p.original}" target="_blank" rel="noopener">完整原图</a></div></div>
+<div class="fields"><label>确认状态<select data-field="status">${statuses.map(s=>`<option${e.status===s?' selected':''}>${s}</option>`).join('')}</select></label><label>修正名字<input data-field="corrected_name" value="${escapeHtml(e.corrected_name)}" placeholder="需要修改时填写"></label><label>你的备注<textarea data-field="note" placeholder="可留空">${escapeHtml(e.note)}</textarea></label><div class="error">${e.status==='已修正'&&!e.corrected_name.trim()?'请填写修正名字，或调整确认状态。':''}</div></div></div>
+${p.note?`<p class="note">识读备注：${escapeHtml(p.note)}</p>`:''}<div class="meta">${p.first} 至 ${p.last} · 在排班帖中引用 ${p.count} 次</div>
+<details><summary>查看引用赛日与微博正文名单</summary><ol>${p.occurrences.map(o=>`<li><a href="${o.url}" target="_blank" rel="noopener">${o.date} 微博</a> · <a href="${o.original}" target="_blank" rel="noopener">原帖图${String(o.index).padStart(2,'0')}</a><div class="source-text">正文选手：${escapeHtml(o.players)}<br>解说：${escapeHtml(o.commentators)}　法官：${escapeHtml(o.judge)}</div></li>`).join('')}</ol><p class="hint">正文名单仅供参考，未按顺序与照片建立姓名映射。</p></details></article>`;}).join('');
+$('empty').hidden=chosen.length!==0;progress();
+}
+$('grid').addEventListener('input',event=>{const field=event.target.dataset.field;if(!field)return;const article=event.target.closest('[data-id]'),p=pictures.find(x=>x.id===article.dataset.id);const e={...state(p),[field]:event.target.value};edits[p.id]=e;article.querySelector('.error').textContent=e.status==='已修正'&&!e.corrected_name.trim()?'请填写修正名字，或调整确认状态。':'';save();progress();});
+$('grid').addEventListener('click',event=>{const a=event.target.closest('[data-zoom]');if(!a)return;event.preventDefault();$('zoom-img').src=a.dataset.zoom;$('zoom').showModal();});
+$('close-zoom').onclick=()=>$('zoom').close();
+$('search').addEventListener('input',render);$('season').addEventListener('change',render);$('filter').addEventListener('change',render);
+function download(filename,type,body){const url=URL.createObjectURL(new Blob([body],{type}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function csvCell(value){let s=String(value??'');if(/^[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+$('export-csv').onclick=()=>{const rows=[['照片编号','图上名字_候选','人工确认','修正名字','人工备注','确认后的名字','识读状态','赛季','图片SHA256'],...pictures.map(p=>{const e=state(p);return[p.id,p.name,e.status,e.corrected_name,e.note,valid(p)?(e.status==='已修正'?e.corrected_name:p.name):'',p.confidence,p.season,p.sha256];})];download('S22-S23_照片人名_人工复核.csv','text/csv;charset=utf-8','\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n')+'\r\n');};
+$('export-json').onclick=()=>download('S22-S23_照片人名_复核进度.json','application/json;charset=utf-8',JSON.stringify({schema_version:1,scope:storageKey,edits,picture_hashes:Object.fromEntries(pictures.map(p=>[p.id,p.sha256]))},null,2));
+$('import').onclick=()=>$('import-file').click();
+$('import-file').onchange=async event=>{const file=event.target.files[0];if(!file)return;try{const backup=JSON.parse(await file.text());if(backup.schema_version!==1||backup.scope!==storageKey||!backup.edits||!backup.picture_hashes)throw Error('不是本批照片的进度文件');const next={...edits};for(const [id,e] of Object.entries(backup.edits)){const p=pictures.find(x=>x.id===id);if(!p||backup.picture_hashes[id]!==p.sha256||!statuses.includes(e.status)||typeof e.corrected_name!=='string'||typeof e.note!=='string')throw Error('照片编号、校验值或复核字段不匹配');next[id]={status:e.status,corrected_name:e.corrected_name,note:e.note};}edits=next;save();render();}catch(error){alert('导入失败：'+error.message);}event.target.value='';};
+$('scope').textContent=`${data.summary.schedule_posts} 份排班公告，${data.summary.image_occurrences} 张图片引用，按文件内容去重后 ${pictures.length} 张不同照片，提取 ${data.summary.distinct_candidate_spellings} 种名字写法。`;
+render();
+</script>
+</html>

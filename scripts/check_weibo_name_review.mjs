@@ -1,0 +1,64 @@
+// Verify the local review workflow in a disposable browser context.
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {createRequire} from 'node:module';
+const require = createRequire('C:/Users/86183/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/package.json');
+const {chromium} = require('playwright');
+const root = path.resolve('data/weibo/2026-05-26_2026-10-20/人名复核');
+const out = path.resolve('outputs/weibo_name_review_qa');
+await fs.mkdir(out, {recursive:true});
+const browser = await chromium.launch({headless:true, executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+try {
+  const context = await browser.newContext({viewport:{width:1440,height:1050}, acceptDownloads:true});
+  const page = await context.newPage();
+  const errors=[];
+  page.on('pageerror', e=>errors.push(e.message));
+  await page.goto(pathToFileURL(path.join(root,'照片人名_复核.html')).href);
+  const check=(value,message)=>{if(!value)throw Error(message);};
+  check(await page.locator('.card').count()===217,'Expected 217 photo cards');
+  await page.evaluate(()=>{for(const i of document.images)i.loading='eager';});
+  await page.waitForFunction(()=>[...document.querySelectorAll('.crop')].every(i=>i.complete&&i.naturalWidth>0));
+  const imageCount=await page.locator('.crop').count();
+  await page.screenshot({path:path.join(out,'复核页_初始.png')});
+  await page.selectOption('#filter','uncertain');
+  check(await page.locator('.card').count()===5,'Expected five uncertain pictures');
+  await page.screenshot({path:path.join(out,'复核页_存疑.png')});
+  await page.selectOption('#filter','');
+  await page.selectOption('#season','S23');
+  check(await page.locator('.card').count()===88,'Expected 88 S23 pictures');
+  await page.selectOption('#season','S22');
+  check(await page.locator('.card').count()===129,'Expected 129 S22 pictures');
+  await page.selectOption('#season','');
+  await page.fill('#search','P0056');
+  check(await page.locator('.card').count()===1,'Photo ID search failed');
+  check(await page.locator('#P0056').count()===1,'Search returned wrong photo');
+  await page.fill('#search','');
+  await page.locator('#P0001 [data-field=status]').selectOption('确认无误');
+  check((await page.locator('#progress').innerText()).includes('已确认 1 / 217'),'Confirmation not counted');
+  await page.locator('#P0002 [data-field=status]').selectOption('已修正');
+  check((await page.locator('#P0002 .error').innerText()).includes('填写'),'Missing correction should remain pending');
+  check((await page.locator('#progress').innerText()).includes('已确认 1 / 217'),'Incomplete correction counted');
+  await page.locator('#P0002 [data-field=corrected_name]').fill('复核测试');
+  check((await page.locator('#progress').innerText()).includes('已确认 2 / 217'),'Correction not counted');
+  await page.reload();
+  check(await page.locator('#P0002 [data-field=corrected_name]').inputValue()==='复核测试','Saved edits lost after reload');
+  const downloadPromise=page.waitForEvent('download');
+  await page.click('#export-csv');
+  const download=await downloadPromise;
+  await download.saveAs(path.join(out,'临时测试导出.csv'));
+  const csv=await fs.readFile(path.join(out,'临时测试导出.csv'),'utf8');
+  check(csv.startsWith('\ufeff'),'CSV missing UTF-8 BOM');
+  check(csv.split('\r\n').filter(Boolean).length===218,'Export must contain header plus 217 photos');
+  check(csv.includes('"P0002","李晋晔","已修正","复核测试"'),'Export lost correction');
+  // Test context is discarded; do not leave fake human confirmations in deliverables.
+  await fs.unlink(path.join(out,'临时测试导出.csv'));
+  await page.locator('#P0001 [data-zoom]').click();
+  check(await page.locator('#zoom').evaluate(d=>d.open),'Crop zoom did not open');
+  await page.click('#close-zoom');
+  check(errors.length===0,`Browser errors: ${errors.join('; ')}`);
+  const report={status:'passed',cards:217,images_loaded:imageCount,uncertain_cards:5,s22:129,s23:88,
+    checks:['all local crops load','season/search filters','confirmation counts','correction required','browser persistence','CSV export round trip','crop zoom'],browser_errors:errors};
+  await fs.writeFile(path.join(root,'识读记录/页面验收.json'),JSON.stringify(report,null,2)+'\n');
+  console.log(JSON.stringify(report));
+} finally {await browser.close();}

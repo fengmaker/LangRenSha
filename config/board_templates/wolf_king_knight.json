@@ -1,0 +1,204 @@
+{
+  "code": "wolf_king_knight",
+  "name": "狼王骑士",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "女巫": 1,
+    "骑士": 1,
+    "守卫": 1,
+    "平民": 4,
+    "狼人": 3,
+    "狼王": 1
+  },
+  "wake_order": [],
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。",
+  "night_slots": [
+    {
+      "code": "guard",
+      "label": "守卫守护",
+      "actor_role": "守卫",
+      "actions": [
+        "guard",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "女巫解药",
+      "actor_role": "女巫",
+      "actions": [
+        "save",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "女巫毒药",
+      "actor_role": "女巫",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "预言家查验",
+      "actor_role": "预言家",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_king_state",
+      "label": "狼王技能状态",
+      "actor_role": "狼王",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_king_shot",
+      "label": "狼王开枪",
+      "actor_role": "狼王",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "knight_duel",
+      "label": "骑士翻牌决斗",
+      "actor_role": "骑士",
+      "actions": [
+        "duel",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ]
+}

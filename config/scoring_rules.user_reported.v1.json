@@ -1,0 +1,114 @@
+{
+  "config_id": "scoring_rules.user_reported.v1",
+  "schema_version": 1,
+  "collected_at": "2026-10-20",
+  "source": "user_reported",
+  "verification_status": "user_reported",
+  "official_verified": false,
+  "applicable_seasons": "逐季核实",
+  "notes": [
+    "本配置记录用户报告规则，不是官方规则文本。",
+    "适用赛季和跨季变化尚未逐季核实；未经官源确认不可标记 official_verified。",
+    "规则未决、身份/胜负不明时不自动算分，记录 unknown/null 并留存证据。"
+  ],
+  "phase_rules": {
+    "season_opening_week_showmatch": {
+      "phase": "showmatch",
+      "description": "每季第一周为表演赛",
+      "source": "user_reported",
+      "verification_status": "user_reported",
+      "official_verified": false
+    },
+    "reported_start_time": {
+      "local_time": "19:00",
+      "timezone": "Asia/Shanghai",
+      "source": "user_reported",
+      "verification_status": "user_reported",
+      "exceptions": null
+    },
+    "extra_game_4_trigger": {
+      "trigger_condition": "前三局在22:30前结束",
+      "cutoff_local_time": "22:30",
+      "trigger_time_definition": null,
+      "certainty": "conditional_trigger_only",
+      "game_4_guaranteed": false,
+      "actual_game_exists_must_be_verified_from_recording_or_official_schedule": true,
+      "source": "user_reported",
+      "verification_status": "user_reported"
+    },
+    "regular_game_4": {
+      "phase": "regular",
+      "game_number": 4,
+      "scoring_eligible": true,
+      "source": "user_reported",
+      "verification_status": "user_reported"
+    },
+    "showmatch_scoring": {
+      "phase": "showmatch",
+      "scoring_eligible": false,
+      "included_in_analysis": null,
+      "description": "不计赛季正式积分；比赛和结果仍可归档及作独立分析",
+      "source": "user_reported",
+      "verification_status": "user_reported"
+    },
+    "finals_week_reset_and_champion": {
+      "phase": "finals_week",
+      "reset_score_at_week_start": true,
+      "champion_rule": "决赛周计分局总分最高者为季冠军",
+      "tie_break_rule": null,
+      "source": "user_reported",
+      "verification_status": "user_reported"
+    },
+    "finals_week_extra_game_4": {
+      "phase": "finals_week",
+      "game_number": 4,
+      "is_extra_game": true,
+      "scoring_eligible": false,
+      "record_game_and_result_if_played": true,
+      "description": "不计分不等于对局不存在，也不等于不归档输赢",
+      "source": "user_reported",
+      "verification_status": "user_reported"
+    }
+  },
+  "scoring_rules": {
+    "unit": "per_player_per_scoring_eligible_game",
+    "interpretation": "暂按该选手最终计分身份/所属方胜负确定基础分；第三方、混血或特殊结算未核实前不自动套用。",
+    "points": {
+      "werewolf_side_win": 1.5,
+      "good_side_win": 1,
+      "good_or_werewolf_side_loss": -1
+    },
+    "draw_points": null,
+    "third_party_or_mixed_faction_points": null,
+    "bonus_points": null,
+    "penalties": null,
+    "base_points_field_independent": true,
+    "adjustments_field_independent": true,
+    "official_points_field_independent": true,
+    "official_points_requires_official_score_source": true,
+    "source": "user_reported",
+    "verification_status": "user_reported",
+    "official_verified": false
+  },
+  "required_record_separation": {
+    "event_phase": true,
+    "game_number": true,
+    "is_extra_game": true,
+    "scoring_eligible": true,
+    "included_in_analysis": true,
+    "base_points": true,
+    "adjustments": true,
+    "official_points": true
+  },
+  "unknowns_requiring_season_by_season_review": [
+    "平局/流局计分",
+    "混血/第三方阵营及特殊胜负条件",
+    "奖励、扣罚、MVP等以及其与基础分的关系",
+    "跨季规则是否变更",
+    "19:00开始时间的例外",
+    "22:30前结束的判定事件、时区及暂停/延迟处理",
+    "决赛周最高分并列时的冠军判定",
+    "对局阶段、加赛性质、实际是否开局及计分资格"
+  ]
+}
+

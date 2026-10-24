@@ -1,0 +1,309 @@
+{
+  "code": "treasure_master",
+  "name": "盗宝大师",
+  "seat_count": 12,
+  "role_counts": {},
+  "wake_order": [],
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。15 张候选牌中发出 12 张、余 3 张供盗宝大师使用；首夜狼队禁刀。",
+  "night_slots": [
+    {
+      "code": "treasure_remainder",
+      "label": "盗宝大师查看三张余牌（首夜）",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "view",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀（首夜禁刀）",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "forbidden",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "treasure_alignment",
+      "label": "盗宝大师阵营判定",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "good",
+        "wolf",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "treasure_choice",
+      "label": "盗宝大师选择余牌技能",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "choose",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "treasure_card_skill",
+      "label": "盗宝大师所选牌技能",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "attack",
+        "guard",
+        "poison",
+        "check",
+        "dream",
+        "shoot",
+        "delay_death",
+        "no_skill",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "通灵师查验（若在场）",
+      "actor_role": "通灵师",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "毒师毒药（若在场）",
+      "actor_role": "毒师",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_state",
+      "label": "猎人技能（若在场）",
+      "actor_role": "猎人",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_king_state",
+      "label": "狼王技能状态（若在场）",
+      "actor_role": "狼王",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "dreamer_action",
+      "label": "摄梦人技能（若在场）",
+      "actor_role": "摄梦人",
+      "actions": [
+        "dream",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "treasure_extra_attack",
+      "label": "盗宝大师蒙面狼额外击杀",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "masked_wound",
+      "label": "蒙面人负伤或中毒状态",
+      "actor_role": "蒙面人",
+      "actions": [
+        "wounded",
+        "poisoned",
+        "not_wounded",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_shot",
+      "label": "猎人开枪",
+      "actor_role": "猎人",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_king_shot",
+      "label": "狼王开枪",
+      "actor_role": "狼王",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "masked_delayed_death",
+      "label": "蒙面人发言结束后延迟死亡",
+      "actor_role": "蒙面人",
+      "actions": [
+        "die_after_speech",
+        "not_triggered",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "treasure_masked_evasion",
+      "label": "盗宝大师蒙面能力免于放逐",
+      "actor_role": "盗宝大师",
+      "actions": [
+        "avoid_exile",
+        "not_triggered",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "dynamic_roles": true,
+  "role_pool": {
+    "通灵师": 1,
+    "毒师": 1,
+    "猎人": 1,
+    "摄梦人": 1,
+    "蒙面人": 1,
+    "平民": 5,
+    "狼王": 1,
+    "狼人": 3,
+    "盗宝大师": 1
+  }
+}
