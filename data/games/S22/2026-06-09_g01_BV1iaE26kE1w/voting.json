@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1iaE26kE1w-p01-g01",
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11
+      ],
+      "off_police": [
+        8,
+        12
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "ballot-1",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "partial",
+      "candidates": null,
+      "eligible_voters": null,
+      "votes": [
+        {
+          "voter": 2,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 2,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 2,
+      "unrecorded_voters": null
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "interruption-1",
+      "day": 1,
+      "actor": 12,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "interruption-2",
+      "day": 2,
+      "actor": 1,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "unknown",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "unknown",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "unknown",
+      "exile": "recorded"
+    },
+    {
+      "day": 4,
+      "sheriff": "unknown",
+      "exile": "unknown"
+    }
+  ]
+}

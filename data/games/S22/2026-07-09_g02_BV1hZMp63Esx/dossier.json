@@ -738,7 +738,7 @@
           "action": "attack",
           "actor": null,
           "targets": [
-            11
+            2
           ],
           "result": null,
           "start_seat": null,
@@ -807,13 +807,10 @@
         },
         {
           "slot": "guile_exchange",
-          "action": "exchange",
+          "action": "pass",
           "actor": 1,
-          "targets": [
-            5,
-            7
-          ],
-          "result": "诡术师试图交换5号狼与7号平民，但因重复数字被判离出局",
+          "targets": [],
+          "result": null,
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -1101,13 +1098,13 @@
         },
         {
           "slot": "guile_exchange",
-          "action": "exchange",
+          "action": "invalid_exchange",
           "actor": 1,
           "targets": [
             5,
             7
           ],
-          "result": null,
+          "result": "disqualified_repeat_target",
           "start_seat": null,
           "direction": null,
           "votes": [],

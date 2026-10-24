@@ -154,6 +154,8 @@ class FixedGameEventTests(unittest.TestCase):
                 for round_ in value["rounds"][1:]:
                     event=next(e for e in round_["night"] if e["slot"]=="mechanical_action")
                     event.update(action="unavailable",targets=[],result=None)
+                    guard=next(e for e in round_["night"] if e["slot"]=="guard")
+                    guard.update(action="pass",targets=[])
                 apply_derived_rules(value)
                 validate(value, check_files=False)
                 self.assertEqual(

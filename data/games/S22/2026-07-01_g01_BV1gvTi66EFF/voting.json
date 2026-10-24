@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1gvTi66EFF-p01-g01",
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        10,
+        12
+      ],
+      "off_police": [
+        5,
+        8,
+        9,
+        11
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "ballot-1",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "partial",
+      "candidates": null,
+      "eligible_voters": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 4,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 11,
+      "unrecorded_voters": null
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "interruption-1",
+      "day": 2,
+      "actor": 9,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "unknown",
+      "exile": "unknown"
+    },
+    {
+      "day": 2,
+      "sheriff": "unknown",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "unknown",
+      "exile": "recorded"
+    },
+    {
+      "day": 4,
+      "sheriff": "unknown",
+      "exile": "unknown"
+    }
+  ]
+}

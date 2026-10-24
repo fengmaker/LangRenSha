@@ -79,6 +79,7 @@ def save_item(bvid, payload):
         entry["text_resolved_question_count"] = len(text_questions) - entry["text_pending_question_count"]
         entry.update(batch.coverage(value), state=status, auto_protected=True, db_receipt=receipt,
                      imported_dossier_sha256=file_hash, updated_at=batch.now())
+        entry["game_number"] = value["game_number"]
         entry.pop("generated_dossier_sha256", None)
         if reviewed:
             entry.update(reviewed_at=batch.now(), review_note=review["review_note"])

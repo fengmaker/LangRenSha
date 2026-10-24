@@ -298,9 +298,11 @@
         },
         {
           "slot": "night_deaths",
-          "action": "peaceful",
+          "action": "die",
           "actor": null,
-          "targets": [],
+          "targets": [
+            1
+          ],
           "result": null,
           "start_seat": null,
           "direction": null,
@@ -505,12 +507,10 @@
         },
         {
           "slot": "mechanical_action",
-          "action": "check",
+          "action": "pass",
           "actor": 5,
-          "targets": [
-            2
-          ],
-          "result": "机械女巫通过通灵技能验出2号狼",
+          "targets": [],
+          "result": null,
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -521,10 +521,12 @@
         },
         {
           "slot": "seer_check",
-          "action": "unknown",
+          "action": "check",
           "actor": 6,
-          "targets": [],
-          "result": null,
+          "targets": [
+            2
+          ],
+          "result": "狼人",
           "start_seat": null,
           "direction": null,
           "votes": [],

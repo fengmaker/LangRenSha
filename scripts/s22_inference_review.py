@@ -11,7 +11,8 @@ import sys
 import zipfile
 
 import batch_s22 as batch
-from game_records import validate
+from game_records import validate, validate_batch
+from game_scope import exclusion_reason
 from s22_text_review import make_round
 from s22_review_server import save_item
 
@@ -48,9 +49,16 @@ def changed_value(original, changes):
             value['rounds'] = value['rounds'][:count]
         elif kind == 'winner':
             value['winner'] = change['value']
+        elif kind == 'game_number':
+            number = change['value']
+            if type(number) is not int or number < 1:
+                raise ValueError('非法局次')
+            value['game_number'] = number
         else:
             raise ValueError('非法修正类型：' + str(kind))
-    validate(value, allow_incomplete=True)
+    # Historical plans are replayed against their original structural contract.
+    # Current saves/imports separately enforce the latest confirmed rules.
+    validate_batch(value, check_rules=False)
     return value
 
 
@@ -130,6 +138,35 @@ def evidence_check(item, cache):
     return {'source_sha256': batch.digest(source), 'literal_match': literal}
 
 
+def active_scope_entries(entries, *, root=batch.ROOT):
+    """Ignore historical plan rows excluded from the current structured scope."""
+    return [entry for entry in entries
+            if not exclusion_reason({**entry, "season": entry.get("season", "S22")}, root=root)]
+
+
+def later_rule_alignment_valid(bvid, old_hash, current_hash, cache):
+    """Validate a later sourced correction without rewriting the historic review."""
+    path = batch.ROOT / 'data/reports/S22_正式规则对齐记录.json'
+    if not path.is_file():
+        return False
+    report = batch.read_json(path)
+    row = next((r for r in report.get('items', []) if r.get('bvid') == bvid), None)
+    if not row or row.get('state') != 'applied' or row.get('before_sha256') != old_hash or row.get('after_sha256') != current_hash:
+        return False
+    before_path = (batch.ROOT / row['before_snapshot']).resolve()
+    current_path = (batch.ROOT / row['file']).resolve()
+    if (not before_path.is_relative_to((batch.ROOT / 'data/archive/S22_formal_rule_alignment').resolve())
+            or not current_path.is_relative_to((batch.ROOT / 'data/games/S22').resolve())
+            or batch.digest(before_path) != old_hash or batch.digest(current_path) != current_hash):
+        return False
+    if changed_value(batch.read_json(before_path), row['changes']) != batch.read_json(current_path):
+        return False
+    if not row.get('evidence'):
+        return False
+    return all((audit := evidence_check(ev, cache))['literal_match'] and audit['source_sha256'] == ev['source_sha256']
+               for ev in row['evidence'])
+
+
 def check():
     state = batch.load_state()
     seen, games, errors, warnings, cache, plan_hashes = set(), [], [], [], {}, {}
@@ -142,11 +179,13 @@ def check():
             continue
         plan_hashes[group] = batch.digest(path)
         plan = batch.read_json(path)
-        queue = {x['bvid']: x for x in batch.read_json(BASE / (group + '_queue.json'))['items']}
-        supplied = {x['bvid'] for x in plan['games']}
+        queue = {x['bvid']: x for x in active_scope_entries(
+            batch.read_json(BASE / (group + '_queue.json'))['items'])}
+        plan_games = active_scope_entries(plan['games'])
+        supplied = {x['bvid'] for x in plan_games}
         for missing in queue.keys() - supplied:
             errors.append({'bvid': missing, 'error': '尚未逐局核查'})
-        for game in plan['games']:
+        for game in plan_games:
             bvid = game['bvid']
             try:
                 if bvid in seen or bvid not in queue:
@@ -159,7 +198,8 @@ def check():
                 current_hash = batch.digest(folder / 'dossier.json')
                 already_saved = completed.get(bvid)
                 unchanged_saved_plan = already_saved and all(already_saved.get(key) == val for key, val in game.items())
-                if current_hash != game['dossier_sha256'] and not (unchanged_saved_plan and current_hash == already_saved.get('after_sha256')):
+                later_alignment = unchanged_saved_plan and later_rule_alignment_valid(bvid, already_saved.get('after_sha256'), current_hash, cache)
+                if current_hash != game['dossier_sha256'] and not (unchanged_saved_plan and current_hash == already_saved.get('after_sha256')) and not later_alignment:
                     raise ValueError('基础档案哈希变化')
                 review = batch.read_json(folder / '复核记录.json')
                 questions = review.get('text_review', {}).get('questions', [])

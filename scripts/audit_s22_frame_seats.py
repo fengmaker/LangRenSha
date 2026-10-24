@@ -2,13 +2,17 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import dataclass
 from datetime import datetime, timezone, timedelta
+import hashlib
 import json
 import math
 from pathlib import Path
+from pathlib import PurePosixPath
 import re
 import sys
 from typing import Any
+import zipfile
 
 import batch_s22 as batch
 import consolidate_s22_day_seats as seats_plan
@@ -22,7 +26,17 @@ DAY_DIR = ROOT / "data/extractions/S22/按日座位表"
 ANNOTATION_DIR = ROOT / "data/extractions/S22/day_frame_seats"
 PROGRESS_FILE = ROOT / "data/reports/S22_画面座位补全进度.json"
 ARCHIVE_DIR = ROOT / "data/archive/S22_frame_seats"
+INFERENCE_REPORT = ROOT / "data/reports/S22_疑点推理复核.json"
+RULE_ALIGNMENT_REPORT = ROOT / "data/reports/S22_正式规则对齐记录.json"
+RULE_ALIGNMENT_ARCHIVE = ROOT / "data/archive/S22_formal_rule_alignment"
 REVIEW_BASE = "http://127.0.0.1:8766/#"
+
+
+@dataclass(frozen=True)
+class FrameStageSnapshot:
+    dossier: dict
+    sha256: str
+    source: str
 
 
 def read_json(path: Path) -> Any:
@@ -103,12 +117,171 @@ def differing_fields(left: Any, right: Any, prefix: str = "") -> list[str]:
     return [] if left == right else [prefix or "$"]
 
 
+def preimport_projection_diff(frame_stage: dict, archived: dict) -> list[str]:
+    return differing_fields(projection_without_names_or_roster(frame_stage),
+                            projection_without_names_or_roster(archived))
+
+
 def review_url(bvid: str, receipt: dict | None, annotation: dict | None) -> str:
     if isinstance(receipt, dict) and isinstance(receipt.get("review_url"), str):
         return receipt["review_url"]
     if isinstance(annotation, dict) and isinstance(annotation.get("review_url"), str):
         return annotation["review_url"]
     return REVIEW_BASE + bvid
+
+
+def safe_project_file(path_value: Any, root: Path, allowed_root: Path) -> Path | None:
+    if not isinstance(path_value, str) or not path_value.strip():
+        return None
+    raw = Path(path_value)
+    path = (raw if raw.is_absolute() else root / raw).resolve()
+    boundary_raw = Path(allowed_root)
+    if boundary_raw.is_absolute():
+        try:
+            boundary_relative = boundary_raw.resolve().relative_to(ROOT.resolve())
+        except ValueError:
+            boundary = boundary_raw.resolve()
+        else:
+            boundary = (root / boundary_relative).resolve()
+    else:
+        boundary = (root / boundary_raw).resolve()
+    return path if path.is_relative_to(boundary) else None
+
+
+def dossier_zip_member(output_dir: str) -> str | None:
+    if not isinstance(output_dir, str) or not output_dir.strip():
+        return None
+    relative = PurePosixPath(output_dir.replace("\\", "/"))
+    if relative.is_absolute() or any(part in {"", ".", ".."} for part in relative.parts):
+        return None
+    return relative.joinpath("dossier.json").as_posix()
+
+
+def _snapshot_from_bytes(raw: bytes, expected_sha256: str, source: str) -> FrameStageSnapshot | None:
+    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+        return None
+    try:
+        value = json.loads(raw.decode("utf-8-sig"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    if not isinstance(value, dict):
+        return None
+    return FrameStageSnapshot(value, expected_sha256, source)
+
+
+def _alignment_rows(report: dict, bvid: str) -> list[dict]:
+    return [row for row in report.get("items", [])
+            if isinstance(row, dict) and row.get("bvid") == bvid and row.get("state") == "applied"]
+
+
+def resolve_frame_stage_snapshot(bvid: str, output_dir: str, receipt_sha256: str,
+                                 inference_report: dict, alignment_report: dict,
+                                 *, root: Path = ROOT) -> FrameStageSnapshot | None:
+    """Find the exact dossier bytes covered by a frame-import receipt."""
+    member = dossier_zip_member(output_dir)
+    if not member or not isinstance(receipt_sha256, str):
+        return None
+
+    backup = inference_report.get("backup", {})
+    if inference_report.get("state") == "complete" and isinstance(backup, dict):
+        archive_path = safe_project_file(backup.get("files"), root, root / "data/backups")
+        if archive_path and archive_path.is_file():
+            try:
+                with zipfile.ZipFile(archive_path) as archive:
+                    raw = archive.read(member)
+                snapshot = _snapshot_from_bytes(raw, receipt_sha256, "inference_backup")
+                if snapshot:
+                    return snapshot
+            except (OSError, KeyError, zipfile.BadZipFile):
+                pass
+
+    expected_file = PurePosixPath(output_dir.replace("\\", "/")).joinpath("dossier.json").as_posix()
+    for row in _alignment_rows(alignment_report, bvid):
+        if row.get("before_sha256") != receipt_sha256 or row.get("file", "").replace("\\", "/") != expected_file:
+            continue
+        snapshot_path = safe_project_file(row.get("before_snapshot"), root, RULE_ALIGNMENT_ARCHIVE)
+        if not snapshot_path or not snapshot_path.is_file():
+            continue
+        try:
+            snapshot = _snapshot_from_bytes(snapshot_path.read_bytes(), receipt_sha256,
+                                            "rule_alignment_before_snapshot")
+        except OSError:
+            continue
+        if snapshot:
+            return snapshot
+    return None
+
+
+def replay_inference_changes(dossier: dict, changes: list[dict]) -> dict:
+    from s22_inference_review import changed_value
+    return changed_value(dossier, changes)
+
+
+def later_rule_alignment_is_valid(bvid: str, before_sha256: str, current_sha256: str,
+                                  cache: dict) -> bool:
+    from s22_inference_review import later_rule_alignment_valid
+    return later_rule_alignment_valid(bvid, before_sha256, current_sha256, cache)
+
+
+def _alignment_before_value(bvid: str, output_dir: str, before_sha256: str,
+                            alignment_report: dict, *, root: Path = ROOT) -> dict | None:
+    expected_file = PurePosixPath(output_dir.replace("\\", "/")).joinpath("dossier.json").as_posix()
+    rows = [row for row in _alignment_rows(alignment_report, bvid)
+            if row.get("before_sha256") == before_sha256
+            and row.get("file", "").replace("\\", "/") == expected_file]
+    if len(rows) != 1:
+        return None
+    snapshot_path = safe_project_file(rows[0].get("before_snapshot"), root, RULE_ALIGNMENT_ARCHIVE)
+    if not snapshot_path or not snapshot_path.is_file():
+        return None
+    try:
+        snapshot = _snapshot_from_bytes(snapshot_path.read_bytes(), before_sha256, "rule_alignment_before_snapshot")
+    except OSError:
+        return None
+    return snapshot.dossier if snapshot else None
+
+
+def verify_frame_stage_lineage(bvid: str, output_dir: str, receipt_sha256: str,
+                               snapshot: FrameStageSnapshot, current_path: Path,
+                               current_sha256: str, current_dossier: dict,
+                               inference_report: dict, alignment_report: dict,
+                               cache: dict, *, root: Path = ROOT) -> tuple[bool, str | None]:
+    """Accept only unchanged receipt bytes or a fully replayed sourced edit chain."""
+    if (snapshot.sha256 != receipt_sha256 or not current_path.is_file()
+            or batch.digest(current_path) != current_sha256):
+        return False, None
+    if current_sha256 == receipt_sha256:
+        return True, "receipt_unchanged"
+
+    inference_rows = ([row for row in inference_report.get("items", [])
+                       if isinstance(row, dict) and row.get("bvid") == bvid]
+                      if inference_report.get("state") == "complete" else [])
+    if len(inference_rows) == 1:
+        item = inference_rows[0]
+        if (item.get("output_dir") == output_dir
+                and item.get("dossier_sha256") == receipt_sha256
+                and isinstance(item.get("after_sha256"), str)
+                and isinstance(item.get("changes"), list)):
+            try:
+                replayed = replay_inference_changes(snapshot.dossier, item["changes"])
+            except Exception:
+                replayed = None
+            after_sha256 = item["after_sha256"]
+            if replayed is not None and current_sha256 == after_sha256 and replayed == current_dossier:
+                return True, "inference_replay"
+            if replayed is not None:
+                alignment_before = _alignment_before_value(
+                    bvid, output_dir, after_sha256, alignment_report, root=root)
+                if (alignment_before == replayed
+                        and later_rule_alignment_is_valid(bvid, after_sha256, current_sha256, cache)):
+                    return True, "inference_then_rule_alignment"
+
+    try:
+        if later_rule_alignment_is_valid(bvid, receipt_sha256, current_sha256, cache):
+            return True, "rule_alignment_from_frame_stage"
+    except Exception:
+        pass
+    return False, None
 
 
 def audit() -> dict:
@@ -124,6 +297,10 @@ def audit() -> dict:
     full_name_games = 0
     db_rows_checked = 0
     dossiers_checked = 0
+    frame_stage_dossiers: dict[str, dict] = {}
+    frame_snapshot_sources: Counter[str] = Counter()
+    frame_chain_counts: Counter[str] = Counter()
+    evidence_cache: dict[Path, str] = {}
 
     try:
         state = batch.load_state()
@@ -255,6 +432,18 @@ def audit() -> dict:
                       f"无法读取画面补全进度：{type(exc).__name__}。", path=rel(PROGRESS_FILE))
             progress = {"items": {}}
         progress_items = progress.get("items", {})
+        try:
+            inference_report = read_json(INFERENCE_REPORT)
+            if not isinstance(inference_report, dict):
+                inference_report = {}
+        except Exception:
+            inference_report = {}
+        try:
+            alignment_report = read_json(RULE_ALIGNMENT_REPORT)
+            if not isinstance(alignment_report, dict):
+                alignment_report = {}
+        except Exception:
+            alignment_report = {}
 
         for date, daily in dates.items():
             questions = [q for q in daily.get("questions", [])
@@ -346,7 +535,8 @@ def audit() -> dict:
                 add_error(errors, "seed_seat1", "5月26日1号位“二妖”未在按日表和当日所有档案中一致确认。",
                           date=seed_date, field="seats[1].name")
 
-        # Receipt hashes must describe the current frame annotation and dossier.
+        # Receipt hashes identify the exact frame-import dossier. Later AI and
+        # rule edits are accepted only when their saved transformations replay.
         receipt_count = 0
         active_progress_items = {bvid: progress_items[bvid] for bvid in entries if bvid in progress_items}
         for bvid, receipt in active_progress_items.items():
@@ -368,9 +558,35 @@ def audit() -> dict:
                 if not dossier_path.is_file():
                     add_error(errors, "frame_import_receipts", "收据对应的档案文件不存在。", bvid=bvid,
                               field="dossier_sha256")
-                elif batch.digest(dossier_path) != receipt.get("dossier_sha256"):
-                    add_error(errors, "frame_import_receipts", "dossier_sha256与文件不一致。", bvid=bvid,
+                    continue
+                current_dossier = read_json(dossier_path)
+                current_sha256 = batch.digest(dossier_path)
+                receipt_sha256 = receipt.get("dossier_sha256")
+                if current_sha256 == receipt_sha256:
+                    frame_stage_dossiers[bvid] = current_dossier
+                    frame_snapshot_sources["current_receipt"] += 1
+                    frame_chain_counts["receipt_unchanged"] += 1
+                    continue
+                snapshot = resolve_frame_stage_snapshot(
+                    bvid, entries[bvid]["output_dir"], receipt_sha256,
+                    inference_report, alignment_report, root=ROOT)
+                if snapshot is None:
+                    add_error(errors, "frame_import_receipts",
+                              "找不到与画面阶段收据哈希完全匹配的历史档案。", bvid=bvid,
                               path=rel(dossier_path), field="dossier_sha256")
+                    continue
+                valid_chain, chain_source = verify_frame_stage_lineage(
+                    bvid, entries[bvid]["output_dir"], receipt_sha256, snapshot,
+                    dossier_path, current_sha256, current_dossier,
+                    inference_report, alignment_report, evidence_cache)
+                if not valid_chain:
+                    add_error(errors, "frame_import_receipts",
+                              "当前档案与画面阶段收据哈希不同，且未通过推理重放/证据规则对齐链验证。",
+                              bvid=bvid, path=rel(dossier_path), field="dossier_sha256")
+                    continue
+                frame_stage_dossiers[bvid] = snapshot.dossier
+                frame_snapshot_sources[snapshot.source] += 1
+                frame_chain_counts[str(chain_source)] += 1
             except Exception as exc:
                 add_error(errors, "frame_import_receipts", f"无法核对收据哈希：{type(exc).__name__}。",
                           bvid=bvid, path=str(annotation_relative))
@@ -381,6 +597,9 @@ def audit() -> dict:
             "pass": not any(error["check"] == "frame_import_receipts" for error in errors),
             "receipts_checked": receipt_count, "expected_imported_receipts": len(expanded),
             "missing_expected_receipts": len(missing_receipts),
+            "frame_stage_snapshots_resolved": len(frame_stage_dossiers),
+            "snapshot_sources": dict(sorted(frame_snapshot_sources.items())),
+            "verified_chain_counts": dict(sorted(frame_chain_counts.items())),
         }
 
         # Compare every dossier's current seat names with PostgreSQL in a
@@ -457,15 +676,21 @@ def audit() -> dict:
                 continue
             archive_games_checked += 1
             try:
-                current = read_json(current_path)
-                current_projection = projection_without_names_or_roster(current)
+                # Later AI/rule edits may legitimately change business fields.
+                # Compare against the dossier identified by the frame receipt,
+                # while current names are independently checked above/against DB.
+                frame_stage = frame_stage_dossiers.get(bvid)
+                if frame_stage is None:
+                    add_error(errors, "preimport_archives",
+                              "缺少经画面收据哈希验证的历史档案，无法核对导入前业务字段。",
+                              bvid=bvid, date=entry.get("date"), path=rel(game_archive_dir))
+                    continue
                 matching_archive = None
                 differences: list[tuple[str, list[str]]] = []
                 for archive_path in candidates:
                     try:
                         archived = read_json(archive_path)
-                        archived_projection = projection_without_names_or_roster(archived)
-                        diff = differing_fields(current_projection, archived_projection)
+                        diff = preimport_projection_diff(frame_stage, archived)
                         if not diff:
                             matching_archive = archive_path
                             break
@@ -495,7 +720,7 @@ def audit() -> dict:
                 for bvid, entry in entries.items()),
             "games_expected": len(entries),
             "archive_files_checked": archive_file_count,
-            "projection": "all dossier fields except root roster and seats[].name",
+            "projection": "frame-receipt-stage dossier fields except root roster and seats[].name",
         }
 
         pending_by_date: dict[str, dict] = {}
