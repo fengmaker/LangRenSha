@@ -1,0 +1,23 @@
+{
+  "models": {
+    "asr": "iic/speech_seaco_paraformer_large_asr_nat-zh-cn-16k-common-vocab8404-pytorch",
+    "vad": "iic/speech_fsmn_vad_zh-cn-16k-common-pytorch",
+    "punctuation": "iic/punc_ct-transformer_cn-en-common-vocab471067-large",
+    "speaker": "iic/speech_campplus_sv_zh-cn_16k-common"
+  },
+  "device": "cuda",
+  "speakers": false,
+  "batch_size_s": 60,
+  "chunk_seconds": 600,
+  "audio_sha256": "6a7e50e98c246b7e8802e95395cf0b1e0f2a87335a372dffb43e36b1d948d460",
+  "audio_duration_ms": 6814933,
+  "hotwords": "狼人杀 京城大师赛 机械狼 通灵师 预言家 女巫 猎人 守卫 白痴 狼王 悍跳 对跳 退水 警上 警下 金水 银水 查杀 倒钩 冲票 归票 票型 狼坑 警徽 警徽流 自爆 放逐 遗言 好人 狼人 平民 神牌 盗宝大师 诡术之境",
+  "packages": {
+    "funasr": "1.4.16",
+    "torch": "2.5.1",
+    "torchaudio": "2.5.1",
+    "modelscope": "1.37.1",
+    "av": "15.1.0",
+    "numpy": "1.26.4"
+  }
+}

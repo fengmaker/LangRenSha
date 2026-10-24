@@ -1,0 +1,97 @@
+{
+  "checked_at": "2026-10-23T23:12:32+08:00",
+  "valid": true,
+  "counts": {
+    "date_count": 47,
+    "complete_dates": 47,
+    "game_count": 149,
+    "games_with_12_named_seats": 149,
+    "named_seat_total": 1788,
+    "frame_annotation_count": 148,
+    "pending_dates": 0,
+    "pending_review_items": 0
+  },
+  "checks": {
+    "recomputed_plan": {
+      "pass": true,
+      "dates": 47,
+      "games": 149,
+      "annotations_expected": 148,
+      "expected_dates": 47,
+      "expected_games": 149,
+      "expected_annotations": 148,
+      "source_annotations_used": 87
+    },
+    "daily_tables": {
+      "pass": true,
+      "expected": 47,
+      "actual": 47,
+      "matched": 47
+    },
+    "game_annotations": {
+      "pass": true,
+      "expected": 148,
+      "actual": 148,
+      "matched": 148
+    },
+    "name_sources": {
+      "pass": true,
+      "named_source_records": 830,
+      "daily_frame_records": 148,
+      "trust_basis_counts": {
+        "approved_local_alias": 44,
+        "assistant_visual": 122,
+        "canonical_name": 664
+      }
+    },
+    "dossier_names": {
+      "pass": true,
+      "games_checked": 149,
+      "confirmed_names_checked": 1788,
+      "protected_sample_checked": true
+    },
+    "2026-05-26_seat_1_er_yao": {
+      "pass": true,
+      "skipped": true,
+      "reason": "日期不在当前有效范围。"
+    },
+    "frame_import_receipts": {
+      "pass": true,
+      "receipts_checked": 148,
+      "expected_imported_receipts": 148,
+      "missing_expected_receipts": 0
+    },
+    "database_seat_names": {
+      "pass": true,
+      "games_checked": 149,
+      "seat_rows_checked": 1788
+    },
+    "preimport_archives": {
+      "pass": true,
+      "games_with_archives_checked": 148,
+      "games_with_matching_archive": 148,
+      "games_missing_required_archive": 0,
+      "games_without_required_archive": 1,
+      "archives_required": 148,
+      "games_expected": 149,
+      "archive_files_checked": 148,
+      "projection": "all dossier fields except root roster and seats[].name"
+    }
+  },
+  "pending_dates": [],
+  "pending_review_items": [],
+  "source_counts": {
+    "plan_source_annotations": 87,
+    "named_source_records": 830,
+    "daily_frame_records": 148,
+    "named_source_trust_basis": {
+      "approved_local_alias": 44,
+      "assistant_visual": 122,
+      "canonical_name": 664
+    },
+    "frame_import_receipts": 148,
+    "preimport_archive_files": 148
+  },
+  "errors": [],
+  "note": "本报告核对文件、来源链、档案与数据库的一致性；不等于对截图姓名已完成人工事实确认。7月3日特辑没有常规左右姓名栏，未根据画面外信息补名。"
+}

@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "reference_status": "machine_reference_unverified",
+  "check_count": 20,
+  "for_model_input": false,
+  "notes": [
+    "候选只依据 corpus.json 中的 old_text 与 platform_text 预先固定；未读取任何新模型输出。",
+    "两份来源均为机器/平台文本候选，不是人工真值；不得据此报告人工核验准确率。",
+    "座位-角色词组只检查来源文本的词面，不由游戏规则推导角色答案。",
+    "相邻音频段边界附近未收录不完整词，不强加跨片段识别要求。",
+    "部分 platform_text 与同 clip 的 old_text 内容明显不相干，标为不可比；它们既不支持也不反驳候选。"
+  ],
+  "clips": [
+    {
+      "clip_id": "std_recap_01",
+      "source_texts": {
+        "old_text": "一会跟你说来， 先给弹幕老师们做到本局游戏的复盘。 本剧， 版型， 机械狼通灵师神神阵银通灵师一号女巫十号猎人七号守卫五号狼人阵营三号六号十二号， 机械狼八号本局游戏为机械双刀狼平民阵营二号四号九号十一号首夜守卫守护十二号狼人狼队击杀八号机械狼女娲就此形成。 平安夜。 机械狼模仿十二号狼人本就系为机械双刀狼通灵师验证了十二号玩家为狼人身份警上进尾环节。",
+        "platform_text": "又来先给弹幕老师们做下本局游戏的复盘 本局版型机械狼通灵师 神人阵营通灵师 一号女巫 10号猎人 7号守卫 5号狼人阵营3号六号 12号机械狼8号 本局游戏为机械双刀狼 平民阵营 2号四号九号 11号守夜守卫 守护12号狼人 狼队击杀8号机械狼女王救起情人 平安夜机械狼模仿12号狼人 本就游戏为机械双刀狼 通灵师验证了12号玩家为狼人身份 警上竞选环节"
+      },
+      "checks": [
+        {
+          "clip_id": "std_recap_01",
+          "kind": "role_terms",
+          "candidate": "机械狼 / 通灵师",
+          "old_text_evidence": "机械狼通灵师",
+          "platform_text_evidence": "机械狼通灵师",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate",
+            "cross_source": "agreement"
+          },
+          "note": "只核对角色词面，不据此核实座位身份。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "seat_role_phrase",
+          "candidate": "1号女巫、10号猎人、7号守卫",
+          "old_text_evidence": "一号女巫十号猎人七号守卫",
+          "platform_text_evidence": "一号女巫 10号猎人 7号守卫",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement_after_number_format_normalization"
+          },
+          "note": "只检查文本是否保留“1号女巫、10号猎人、7号守卫”的相邻词序；不评估座位—身份映射，不得解释为“1号是女巫”，不打身份准确分。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "faction_term",
+          "candidate": "平民阵营",
+          "old_text_evidence": "平民阵营",
+          "platform_text_evidence": "平民阵营",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate",
+            "cross_source": "agreement"
+          },
+          "note": "规范词形候选，仅检查词面。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "action_phrase",
+          "candidate": "首夜/守夜；守卫守护12号",
+          "old_text_evidence": "首夜守卫守护十二号",
+          "platform_text_evidence": "守夜守卫 守护12号",
+          "support_conflict": {
+            "old_text": "supports_candidate_with_首夜_variant",
+            "platform_text": "supports_shared_phrase_with_守夜_variant",
+            "cross_source": "partial_agreement_首夜_vs_守夜"
+          },
+          "note": "候选保留两种首字词形；共同可比部分是“守卫守护12号”。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "action_phrase",
+          "candidate": "狼队击杀8号机械狼",
+          "old_text_evidence": "狼队击杀八号机械狼",
+          "platform_text_evidence": "狼队击杀8号机械狼",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "仅检查动作短语及座位数字的词面。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "action_phrase",
+          "candidate": "“女娲就此形成”附近短语",
+          "old_text_evidence": "女娲就此形成",
+          "platform_text_evidence": "女王救起情人",
+          "support_conflict": {
+            "old_text": "contains_candidate_phrase",
+            "platform_text": "contains_different_phrase",
+            "cross_source": "lexical_conflict_unresolved"
+          },
+          "note": "两份旧来源对该短语明显不一致；不据规则选择其一。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "role_action_phrase",
+          "candidate": "机械狼模仿12号",
+          "old_text_evidence": "机械狼模仿十二号",
+          "platform_text_evidence": "机械狼模仿12号",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "只核对角色词和数字表达。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "phase_phrase",
+          "candidate": "警上进尾环节 / 警上竞选环节",
+          "old_text_evidence": "警上进尾环节",
+          "platform_text_evidence": "警上竞选环节",
+          "support_conflict": {
+            "old_text": "contains_first_variant",
+            "platform_text": "contains_second_variant",
+            "cross_source": "lexical_conflict_unresolved"
+          },
+          "note": "保留两种候选词形供审阅，不将其定为真值。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_01",
+          "kind": "role_check_phrase",
+          "candidate": "通灵师验证12号玩家为狼人身份",
+          "old_text_evidence": "通灵师验证了十二号玩家为狼人身份",
+          "platform_text_evidence": "通灵师验证了12号玩家为狼人身份",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "模型输入不得提供该候选句或身份答案。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    },
+    {
+      "clip_id": "std_recap_02",
+      "source_texts": {
+        "old_text": "十二号狼人选择自爆， 若夜守卫守护三号狼人狼人击杀一号通灵师女巫技能通过通灵师验证， 三号玩家为狼人身份延期竞尾环节。 六号呢选择自爆本游戏， 警徽流失， 入夜守卫守护五号四手狼队， 击杀七号猎人牛技能空过， 七号猎人出局后开枪带走八号机械双刀狼。 第三天白天， 三号狼人选择自爆游戏结束好人阵营获胜。",
+        "platform_text": "12号狼人选择自爆 入夜守卫守护3号狼人 狼人击杀一号通灵师女巫技能 通过通灵师验证 3号玩家为狼人身份延期尽有环节 6号狼人选择自爆 本九戏警徽流失 入夜守卫守护5号自守狼队击杀7号猎人 女巫技能空过 7号猎人出局后开枪带走8号机械双刀狼 第三天白天 3号狼人选择自爆 游戏结束 好人阵营获胜"
+      },
+      "checks": [
+        {
+          "clip_id": "std_recap_02",
+          "kind": "action_phrase",
+          "candidate": "12号狼人选择自爆",
+          "old_text_evidence": "十二号狼人选择自爆",
+          "platform_text_evidence": "12号狼人选择自爆",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "仅比对转写短语，不核验该事件是否实际发生。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_02",
+          "kind": "process_term",
+          "candidate": "警徽流失",
+          "old_text_evidence": "警徽流失",
+          "platform_text_evidence": "警徽流失",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_in_noisy_context",
+            "cross_source": "shared_term_with_context_noise"
+          },
+          "note": "平台文本前有“本九戏”等异文，不能把整句算作一致。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_02",
+          "kind": "action_phrase",
+          "candidate": "守卫守护5号",
+          "old_text_evidence": "守卫守护五号",
+          "platform_text_evidence": "守卫守护5号自守",
+          "support_conflict": {
+            "old_text": "supports_shared_phrase",
+            "platform_text": "supports_shared_phrase_and_adds_自守",
+            "cross_source": "partial_agreement_on_shared_phrase"
+          },
+          "note": "“自守”仅见于平台候选文本；本检查点不要求模型补出该词。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_02",
+          "kind": "skill_action_phrase",
+          "candidate": "技能空过（归属词待核）",
+          "old_text_evidence": "猎人牛技能空过",
+          "platform_text_evidence": "女巫技能空过",
+          "support_conflict": {
+            "old_text": "supports_skill_phrase_with_猎人_variant",
+            "platform_text": "supports_skill_phrase_with_女巫",
+            "cross_source": "conflict_on_skill_owner"
+          },
+          "note": "候选只固定“技能空过”词段；不把技能归属预设为答案。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_02",
+          "kind": "seat_action_phrase",
+          "candidate": "7号猎人出局后开枪带走8号机械双刀狼",
+          "old_text_evidence": "七号猎人出局后开枪带走八号机械双刀狼",
+          "platform_text_evidence": "7号猎人出局后开枪带走8号机械双刀狼",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "只检查短语和座位数字，不推导其他角色。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_recap_02",
+          "kind": "result_phrase",
+          "candidate": "第三天白天 / 3号自爆 / 好人阵营获胜",
+          "old_text_evidence": "第三天白天， 三号狼人选择自爆游戏结束好人阵营获胜",
+          "platform_text_evidence": "第三天白天 3号狼人选择自爆 游戏结束 好人阵营获胜",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_with_number_format_variant",
+            "cross_source": "agreement"
+          },
+          "note": "仅记录两份候选文本的共同词面，不把机器转写当赛果真值。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    },
+    {
+      "clip_id": "std_flow_01",
+      "source_texts": {
+        "old_text": "不知道第二刀会不会刀在猎人头上。 因为他们真的六号玩家选择自爆本局游戏， 警徽流失所有玩家请变蓝灯， 昨夜一号玩家倒牌没有遗言， 一号玩家是我方技能五四三二一一号玩家没登取板立场。 各位天黑请闭眼，",
+        "platform_text": "不知道第二刀会不会刀在猎人头上 因为他们真的6号玩家选择自爆 本局游戏仅会流失所有玩家请变蓝灯 昨夜一号玩家倒牌 没有遗言 一号玩家受我方技能54321 一号玩家密登取白立畅 各位天黑请闭眼"
+      },
+      "checks": [
+        {
+          "clip_id": "std_flow_01",
+          "kind": "fixed_command",
+          "candidate": "所有玩家请变蓝灯",
+          "old_text_evidence": "所有玩家请变蓝灯",
+          "platform_text_evidence": "所有玩家请变蓝灯",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate_but_surrounding_phrase_differs",
+            "cross_source": "agreement_on_command_only"
+          },
+          "note": "两份上下文不同；只比较明确口令片段。",
+          "reference_status": "machine_reference_unverified"
+        },
+        {
+          "clip_id": "std_flow_01",
+          "kind": "seat_status_phrase",
+          "candidate": "1号玩家倒牌 / 没有遗言",
+          "old_text_evidence": "昨夜一号玩家倒牌没有遗言",
+          "platform_text_evidence": "昨夜一号玩家倒牌 没有遗言",
+          "support_conflict": {
+            "old_text": "supports_candidate",
+            "platform_text": "supports_candidate",
+            "cross_source": "agreement"
+          },
+          "note": "只核对流程词组和座位数字。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    },
+    {
+      "clip_id": "mech_flow_01",
+      "source_texts": {
+        "old_text": "是三二一天亮了。 本游戏全员上警， 警徽流失， 所有玩家请亮蓝灯， 昨夜平安夜随机点数。 七、由七号玩家开始正序发言， 八号玩家请做发言， 准备七号家请发言。",
+        "platform_text": null
+      },
+      "checks": [
+        {
+          "clip_id": "mech_flow_01",
+          "kind": "flow_sequence",
+          "candidate": "全员上警 → 亮蓝灯 → 随机点数 → 7号正序发言、8号准备",
+          "old_text_evidence": "本游戏全员上警， 警徽流失， 所有玩家请亮蓝灯， 昨夜平安夜随机点数。 七、由七号玩家开始正序发言， 八号玩家请做发言， 准备七号家请发言。",
+          "platform_text_evidence": null,
+          "support_conflict": {
+            "old_text": "supports_candidate_sequence",
+            "platform_text": "not_available",
+            "cross_source": "no_platform_comparison"
+          },
+          "note": "不从流程顺序推导角色身份；末尾转写有断句/词形噪声。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    },
+    {
+      "clip_id": "mech_player_01",
+      "source_texts": {
+        "old_text": "我通灵师熬夜了， 九号玩家是一个狼。 我本来想验九号玩家的原因是就是我觉得他其实好人挺厉害的， 可以相信他嘛。 但是我燕川是个狼就没办法。 嗯， 然后可不可以踩一下六号玩家呀？ 我觉得六号玩家真的很像狼哟， 来让我踩一下六号。 嗯， 因为这样发言吧， 这样发言的话可能就是六号玩家沉底了。 但是没关系啊， 大家听一下发言吧， 我觉得我这个狼和通灵师大家人很好辨认的。",
+        "platform_text": "我觉得这个卫生间 一定因为没有纸被投诉过"
+      },
+      "checks": [
+        {
+          "clip_id": "mech_player_01",
+          "kind": "role_claim_and_seat_phrase",
+          "candidate": "“我通灵师” / “9号玩家是一个狼”",
+          "old_text_evidence": "我通灵师熬夜了， 九号玩家是一个狼。",
+          "platform_text_evidence": "我觉得这个卫生间 一定因为没有纸被投诉过",
+          "support_conflict": {
+            "old_text": "contains_candidate_role_claim_and_phrase",
+            "platform_text": "unrelated_candidate_text",
+            "cross_source": "not_comparable_platform_text"
+          },
+          "note": "两份文本不相关，平台文本不支持也不反驳该候选；不提供角色答案给模型。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    },
+    {
+      "clip_id": "mask_fast_commentary_01",
+      "source_texts": {
+        "old_text": "这一局呃， 这局游戏一定会有激烈的呃对辩环节了。 那这一局看来不能只是一一张狼人牌进行倒钩的战术了。 呃， 对的， 目前是这么个情况哦， 我们的六号这个神和狼在这一局都挺强的这得有强对抗了。 哎， 我们的狼行也摸到了一张白色神牌， 这局游戏的对抗将会极其精彩。",
+        "platform_text": "呵呵打野呢 冰面大唐人不起"
+      },
+      "checks": [
+        {
+          "clip_id": "mask_fast_commentary_01",
+          "kind": "commentary_terms",
+          "candidate": "倒钩战术 / 强对抗",
+          "old_text_evidence": "不能只是一一张狼人牌进行倒钩的战术了。 呃， 对的， 目前是这么个情况哦， 我们的六号这个神和狼在这一局都挺强的这得有强对抗了。",
+          "platform_text_evidence": "呵呵打野呢 冰面大唐人不起",
+          "support_conflict": {
+            "old_text": "supports_candidate_terms",
+            "platform_text": "unrelated_candidate_text",
+            "cross_source": "not_comparable_platform_text"
+          },
+          "note": "平台文本与该片段的 FunASR 候选词不相干，只标记为不可比，不据此判定哪份正确。",
+          "reference_status": "machine_reference_unverified"
+        }
+      ]
+    }
+  ]
+}

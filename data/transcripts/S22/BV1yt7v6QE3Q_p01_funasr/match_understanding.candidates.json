@@ -1,0 +1,2017 @@
+{
+  "schema_version": 1,
+  "status": "needs_review",
+  "method": "assistant_reading_transcript",
+  "scope": {
+    "focus": "仅覆盖末尾法官复盘及其身份/行动清单，不是全场逐人发言档案。",
+    "recap_window_original_audio_ms": {
+      "start": 2037215,
+      "end": 2084010
+    },
+    "coverage_note": "覆盖复盘开场、板型与身份清单、复盘所述三夜/三天关键行动和结果；不覆盖完整局内辩论、全票型、逐人发言或赛前互动。",
+    "source_alignment": "full-audio FunASR时间为原音频绝对毫秒；52秒二次识别的时间映回原音频时加2034000ms；平台字幕证据使用独立0-based body索引。"
+  },
+  "metadata_candidate": {
+    "bvid": "BV1yt7v6QE3Q",
+    "cid": 39404962859,
+    "page": 1,
+    "title": "20260625 正赛 第四期 Day-3 第三局-机械狼通灵师",
+    "duration_ms": 2228416,
+    "board_candidate": "机械狼通灵师",
+    "metadata_status": "candidate_only",
+    "evidence": [
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "transcript_metadata",
+        "segment_ids": [],
+        "start_ms": null,
+        "end_ms": null,
+        "quote": "source.bvid=BV1yt7v6QE3Q; source.title=20260625 正赛 第四期 Day-3 第三局-机械狼通灵师; audio_duration_ms=2228416; full_audio_processed=true"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0104",
+          "c0004_s0105",
+          "c0004_s0106"
+        ],
+        "start_ms": 2039035,
+        "end_ms": 2046145,
+        "quote": "本剧，版型，机械狼通灵师"
+      }
+    ]
+  },
+  "recap_boundary": {
+    "start_segment_id": "c0004_s0103",
+    "end_segment_id": "c0004_s0119",
+    "start_ms": 2037215,
+    "end_ms": 2084010,
+    "speaker_key_candidate": "chunk_0004:speaker_1",
+    "speaker_role": "referee_recap_candidate",
+    "speaker_role_status": "needs_review",
+    "speaker_identity": null,
+    "speaker_identity_verified": false,
+    "judge_speakers_in_transcript": [],
+    "boundary_note": "以全音频转写中“给弹幕老师们做本局游戏复盘”起始为界，以“游戏结束/好人阵营获胜”复述为止；随后c0004_s0120转向2号玩家，属于复盘后的镜头交接。",
+    "evidence": [
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0103"
+        ],
+        "start_ms": 2037215,
+        "end_ms": 2039035,
+        "quote": "先给弹幕老师们做到本局游戏的复盘。"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+        "source_type": "local_recap_second_pass",
+        "segment_ids": [
+          "c0001_s0003"
+        ],
+        "source_offset_ms": 2034000,
+        "source_clip_start_ms": 3480,
+        "source_clip_end_ms": 5240,
+        "start_ms": 2037480,
+        "end_ms": 2039240,
+        "quote": "先给给弹幕老师们做到本局游戏的复盘。"
+      },
+      {
+        "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+        "source_type": "platform_subtitle",
+        "body_index_from": 1023,
+        "body_index_to": 1023,
+        "body_index_basis": "0-based inclusive",
+        "start_ms": 2036070,
+        "end_ms": 2039030,
+        "quote": "又来先给弹幕老师们做下本局游戏的复盘"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0119"
+        ],
+        "start_ms": 2080935,
+        "end_ms": 2084010,
+        "quote": "三号狼人选择自爆游戏结束好人阵营获胜。"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0120"
+        ],
+        "start_ms": 2084435,
+        "end_ms": 2087015,
+        "quote": "那接下来请导播老师帮我把镜头先移交至我们的二号玩。"
+      }
+    ]
+  },
+  "role_list_reading": {
+    "status": "needs_review",
+    "reading": "按相邻词序连续解析为：通灵师1号、女巫10号、猎人7号、守卫5号；狼人3号、6号、12号，机械狼8号；平民2号、4号、9号、11号。8号机械狼模仿12号，复盘后段称其为“机械双刀狼”。",
+    "note": "这是赛后复盘身份清单候选，不是人工核验结果；并非把单条字幕片段各自当成独立“号码+身份”字段。",
+    "seats": [
+      {
+        "seat": 1,
+        "role_revealed": "psychic",
+        "role_label_candidate": "通灵师",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "通灵师一号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ],
+        "role_code_note": "通灵师单独编码，不与预言家 seer 合并"
+      },
+      {
+        "seat": 2,
+        "role_revealed": "villager",
+        "role_label_candidate": "平民",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "平民阵营二号四号九号十一号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 3,
+        "role_revealed": "werewolf",
+        "role_label_candidate": "狼人",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "狼人阵营三号六号十二号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 4,
+        "role_revealed": "villager",
+        "role_label_candidate": "平民",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "平民阵营二号四号九号十一号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 5,
+        "role_revealed": "guard",
+        "role_label_candidate": "守卫",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "守卫五号狼人阵营"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 6,
+        "role_revealed": "werewolf",
+        "role_label_candidate": "狼人",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "狼人阵营三号六号十二号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 7,
+        "role_revealed": "hunter",
+        "role_label_candidate": "猎人",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "猎人七号守卫五号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 8,
+        "role_revealed": "mechanical_werewolf",
+        "role_label_candidate": "机械狼",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "狼人阵营三号六号十二号，机械狼八号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ],
+        "mechanical_wolf_learning_candidate": {
+          "learned_from_seat": 12,
+          "learned_form_candidate": "机械双刀狼",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0109"
+              ],
+              "start_ms": 2055805,
+              "end_ms": 2061755,
+              "quote": "机械狼模仿十二号狼人"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0117"
+              ],
+              "start_ms": 2077135,
+              "end_ms": 2080095,
+              "quote": "七号猎人出局后开枪带走八号机械双刀狼"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0008",
+                "c0001_s0009"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 19620,
+              "source_clip_end_ms": 28100,
+              "start_ms": 2053620,
+              "end_ms": 2062100,
+              "quote": "机械狼模仿十二号狼人本局，游戏为机械双刀狼"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1037,
+              "body_index_to": 1038,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2055470,
+              "end_ms": 2058520,
+              "quote": "平安夜机械狼模仿12号狼人 / 本就游戏为机械双刀狼",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1050,
+              "body_index_to": 1050,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2076880,
+              "end_ms": 2080060,
+              "quote": "7号猎人出局后开枪带走8号机械双刀狼"
+            }
+          ]
+        }
+      },
+      {
+        "seat": 9,
+        "role_revealed": "villager",
+        "role_label_candidate": "平民",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "平民阵营二号四号九号十一号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 10,
+        "role_revealed": "witch",
+        "role_label_candidate": "女巫",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "女巫十号猎人七号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 11,
+        "role_revealed": "villager",
+        "role_label_candidate": "平民",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "平民阵营二号四号九号十一号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      },
+      {
+        "seat": 12,
+        "role_revealed": "werewolf",
+        "role_label_candidate": "狼人",
+        "reveal_status": "postgame_reveal_candidate",
+        "status": "needs_review",
+        "basis": "recap_role_roster_continuously_parsed_across_segments",
+        "evidence": [
+          {
+            "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+            "source_type": "local_full_audio_transcript",
+            "segment_ids": [
+              "c0004_s0106",
+              "c0004_s0107"
+            ],
+            "start_ms": 2039515,
+            "end_ms": 2055465,
+            "quote": "狼人阵营三号六号十二号，机械狼八号"
+          },
+          {
+            "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+            "source_type": "platform_subtitle",
+            "body_index_from": 1024,
+            "body_index_to": 1034,
+            "body_index_basis": "0-based inclusive",
+            "start_ms": 2039030,
+            "end_ms": 2052510,
+            "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+            "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0106",
+          "c0004_s0107"
+        ],
+        "start_ms": 2039515,
+        "end_ms": 2055465,
+        "quote": "机械狼通灵师神神阵银通灵师一号女巫十号猎人七号守卫五号狼人阵营三号六号十二号，机械狼八号本局游戏为机械双刀狼平民阵营二号四号九号十一号"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+        "source_type": "local_recap_second_pass",
+        "segment_ids": [
+          "c0001_s0006",
+          "c0001_s0007"
+        ],
+        "source_offset_ms": 2034000,
+        "source_clip_start_ms": 5700,
+        "source_clip_end_ms": 19620,
+        "start_ms": 2039700,
+        "end_ms": 2053620,
+        "quote": "机械狼灵灵神神阵阵通灵师一号女巫十号猎人七号守卫五号狼狼阵营营三号六号十二号，机械狼八号本游戏戏机械械刀狼狼平阵阵营号四号九九号十一号首页首位守护十二狼狼人，"
+      },
+      {
+        "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+        "source_type": "platform_subtitle",
+        "body_index_from": 1024,
+        "body_index_to": 1034,
+        "body_index_basis": "0-based inclusive",
+        "start_ms": 2039030,
+        "end_ms": 2052510,
+        "quote": "本局版型机械狼通灵师 / 神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫 / 5号狼人阵营3号六号 / 12号机械狼8号 / 本局游戏为机械双刀狼 / 平民阵营 / 2号四号九号 / 11号守夜守卫",
+        "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0107"
+        ],
+        "start_ms": 2046145,
+        "end_ms": 2055465,
+        "quote": "平民阵营二号四号九号十一号"
+      }
+    ]
+  },
+  "result": {
+    "winner_candidate": "好人阵营",
+    "result_status": "needs_review",
+    "recap_says_final_day": "第三天白天",
+    "evidence": [
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0118",
+          "c0004_s0119"
+        ],
+        "start_ms": 2080155,
+        "end_ms": 2084010,
+        "quote": "第三天白天，三号狼人选择自爆游戏结束好人阵营获胜。"
+      },
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+        "source_type": "local_recap_second_pass",
+        "segment_ids": [
+          "c0001_s0020",
+          "c0001_s0021"
+        ],
+        "source_offset_ms": 2034000,
+        "source_clip_start_ms": 46130,
+        "source_clip_end_ms": 49950,
+        "start_ms": 2080130,
+        "end_ms": 2083950,
+        "quote": "第三天白天，三号狼人选择自爆游戏结束好人阵营获胜。"
+      },
+      {
+        "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+        "source_type": "platform_subtitle",
+        "body_index_from": 1051,
+        "body_index_to": 1054,
+        "body_index_basis": "0-based inclusive",
+        "start_ms": 2080060,
+        "end_ms": 2084199,
+        "quote": "第三天白天 / 3号狼人选择自爆 / 游戏结束 / 好人阵营获胜",
+        "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+      }
+    ]
+  },
+  "game_timeline_as_recap_candidates": [
+    {
+      "phase": "首夜",
+      "status": "needs_review",
+      "events": [
+        {
+          "event_candidate": "守卫守护12号",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0107"
+              ],
+              "start_ms": 2046145,
+              "end_ms": 2055465,
+              "quote": "首夜守卫守护十二号狼人"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0007"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 12380,
+              "source_clip_end_ms": 19620,
+              "start_ms": 2046380,
+              "end_ms": 2053620,
+              "quote": "首页首位守护十二狼狼人"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1034,
+              "body_index_to": 1035,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2050920,
+              "end_ms": 2053510,
+              "quote": "11号守夜守卫 / 守护12号狼人",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        },
+        {
+          "event_candidate": "狼队击杀目标8号（后续句义不清）",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0107"
+              ],
+              "start_ms": 2046145,
+              "end_ms": 2055465,
+              "quote": "狼队击杀八号机械狼女娲就此形成"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0008"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 19620,
+              "source_clip_end_ms": 23460,
+              "start_ms": 2053620,
+              "end_ms": 2057460,
+              "quote": "狼队击杀八号机械狼女娲就起形成平安夜"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1036,
+              "body_index_to": 1036,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2053510,
+              "end_ms": 2055470,
+              "quote": "狼队击杀8号机械狼女王救起情人"
+            }
+          ]
+        },
+        {
+          "event_candidate": "形成平安夜",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0108"
+              ],
+              "start_ms": 2055465,
+              "end_ms": 2055805,
+              "quote": "平安夜。"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0008"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 19620,
+              "source_clip_end_ms": 23460,
+              "start_ms": 2053620,
+              "end_ms": 2057460,
+              "quote": "女娲就起形成平安夜"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1037,
+              "body_index_to": 1037,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2055470,
+              "end_ms": 2057150,
+              "quote": "平安夜机械狼模仿12号狼人"
+            }
+          ]
+        },
+        {
+          "event_candidate": "机械狼8号模仿/学习12号；形态候选为机械双刀狼",
+          "status": "needs_review",
+          "learned_from_seat": 12,
+          "learned_form_candidate": "机械双刀狼",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0109"
+              ],
+              "start_ms": 2055805,
+              "end_ms": 2061755,
+              "quote": "机械狼模仿十二号狼人"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0008",
+                "c0001_s0009"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 19620,
+              "source_clip_end_ms": 28100,
+              "start_ms": 2053620,
+              "end_ms": 2062100,
+              "quote": "机械狼模仿十二号狼人本局，游戏为机械双刀狼"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1037,
+              "body_index_to": 1038,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2055470,
+              "end_ms": 2058520,
+              "quote": "平安夜机械狼模仿12号狼人 / 本就游戏为机械双刀狼",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        },
+        {
+          "event_candidate": "通灵师查验12号，复盘称其为狼人",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0109"
+              ],
+              "start_ms": 2055805,
+              "end_ms": 2061755,
+              "quote": "通灵师验证了十二号玩家为狼人身份"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0009"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 23460,
+              "source_clip_end_ms": 28100,
+              "start_ms": 2057460,
+              "end_ms": 2062100,
+              "quote": "通灵师验证了十二号玩家为狼人身份"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1039,
+              "body_index_to": 1039,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2058520,
+              "end_ms": 2060920,
+              "quote": "通灵师验证了12号玩家为狼人身份"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "首日警上竞选",
+      "status": "needs_review",
+      "events": [
+        {
+          "event_candidate": "复盘提到警上竞选环节；没有报出票型或当选结果",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0109"
+              ],
+              "start_ms": 2055805,
+              "end_ms": 2061755,
+              "quote": "警上进尾环节"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0009"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 23460,
+              "source_clip_end_ms": 28100,
+              "start_ms": 2057460,
+              "end_ms": 2062100,
+              "quote": "警上选选环节"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1040,
+              "body_index_to": 1040,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2060920,
+              "end_ms": 2061820,
+              "quote": "警上竞选环节"
+            }
+          ]
+        },
+        {
+          "event_candidate": "12号狼人选择自爆",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0110"
+              ],
+              "start_ms": 2061875,
+              "end_ms": 2063770,
+              "quote": "十二号狼人选择自爆"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0010"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 28120,
+              "source_clip_end_ms": 29680,
+              "start_ms": 2062120,
+              "end_ms": 2063680,
+              "quote": "二号狼人选选自爆"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1041,
+              "body_index_to": 1041,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2061820,
+              "end_ms": 2063840,
+              "quote": "12号狼人选择自爆"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "次夜",
+      "status": "needs_review",
+      "events": [
+        {
+          "event_candidate": "守卫守护3号",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0111"
+              ],
+              "start_ms": 2064095,
+              "end_ms": 2068575,
+              "quote": "守卫守护三号狼人"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0011"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 29900,
+              "source_clip_end_ms": 32750,
+              "start_ms": 2063900,
+              "end_ms": 2066750,
+              "quote": "入夜守卫守护三号狼人狼人击杀一号"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1042,
+              "body_index_to": 1042,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2063840,
+              "end_ms": 2065880,
+              "quote": "入夜守卫守护3号狼人"
+            }
+          ]
+        },
+        {
+          "event_candidate": "狼队击杀1号；身份列表候选为通灵师",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0111"
+              ],
+              "start_ms": 2064095,
+              "end_ms": 2068575,
+              "quote": "狼人击杀一号通灵师"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0011"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 29900,
+              "source_clip_end_ms": 32750,
+              "start_ms": 2063900,
+              "end_ms": 2066750,
+              "quote": "狼人击杀一号"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1043,
+              "body_index_to": 1044,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2065880,
+              "end_ms": 2068600,
+              "quote": "狼人击杀一号通灵师女巫技能 / 通过通灵师验证",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        },
+        {
+          "event_candidate": "次夜女巫技能空过为候选、各来源读法不一致",
+          "status": "needs_review",
+          "source_variants": [
+            "全音频首遍：女巫技能通过通灵师验证",
+            "二次识别：通灵师女巫技能空过",
+            "离线Whisper baseline：通力师女巫技能空过",
+            "平台字幕：女巫技能通过通灵师验证"
+          ],
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0111"
+              ],
+              "start_ms": 2064095,
+              "end_ms": 2068575,
+              "quote": "女巫技能通过通灵师验证"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0012"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 32750,
+              "source_clip_end_ms": 34110,
+              "start_ms": 2066750,
+              "end_ms": 2068110,
+              "quote": "通灵师女巫技能空过"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1043,
+              "body_index_to": 1044,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2065880,
+              "end_ms": 2068600,
+              "quote": "狼人击杀一号通灵师女巫技能 / 通过通灵师验证",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_whisper_baseline.json",
+              "source_type": "local_whisper_baseline",
+              "segment_ids": [
+                "9"
+              ],
+              "segment_array_index": 9,
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 32680,
+              "source_clip_end_ms": 34000,
+              "start_ms": 2066680,
+              "end_ms": 2068000,
+              "quote": "通力师女巫技能空过"
+            }
+          ],
+          "normalized_action_candidate": {
+            "actor_seat": 10,
+            "actor_role": "witch",
+            "action": "no_skill_use",
+            "canonical_term": "空过",
+            "term_meaning_confirmed_by_user": true
+          }
+        },
+        {
+          "event_candidate": "通灵师查验3号为狼人（仅二次识别语序明确，待核）",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0112"
+              ],
+              "start_ms": 2068575,
+              "end_ms": 2071025,
+              "quote": "三号玩家为狼人身份延期竞尾环节"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0013"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 34110,
+              "source_clip_end_ms": 36990,
+              "start_ms": 2068110,
+              "end_ms": 2070990,
+              "quote": "通灵师验证三号玩家为狼人身份延期竞尾环节"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1044,
+              "body_index_to": 1045,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2067800,
+              "end_ms": 2070980,
+              "quote": "通过通灵师验证 / 3号玩家为狼人身份延期尽有环节",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        },
+        {
+          "event_candidate": "3号玩家狼人身份；后续竞选阶段词句不清",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0112"
+              ],
+              "start_ms": 2068575,
+              "end_ms": 2071025,
+              "quote": "三号玩家为狼人身份延期竞尾环节"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0013"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 34110,
+              "source_clip_end_ms": 36990,
+              "start_ms": 2068110,
+              "end_ms": 2070990,
+              "quote": "通灵师验证三号玩家为狼人身份延期竞尾环节"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1045,
+              "body_index_to": 1045,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2068600,
+              "end_ms": 2070980,
+              "quote": "3号玩家为狼人身份延期尽有环节"
+            }
+          ]
+        },
+        {
+          "event_candidate": "6号狼人选择自爆；警徽流失",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0113",
+                "c0004_s0114"
+              ],
+              "start_ms": 2071025,
+              "end_ms": 2072945,
+              "quote": "六号呢选择自爆本游戏，警徽流失"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0014",
+                "c0001_s0015"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 36990,
+              "source_clip_end_ms": 38950,
+              "start_ms": 2070990,
+              "end_ms": 2072950,
+              "quote": "六号狼人选择自爆，本游戏警徽流失"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1046,
+              "body_index_to": 1047,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2070980,
+              "end_ms": 2072920,
+              "quote": "6号狼人选择自爆 / 本九戏警徽流失",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "末夜",
+      "status": "needs_review",
+      "events": [
+        {
+          "event_candidate": "守卫5号守护自己（自守）",
+          "status": "needs_review",
+          "source_variants": [
+            "全音频首遍：五号四手",
+            "二次识别：五号四手",
+            "平台字幕：5号自守"
+          ],
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0115"
+              ],
+              "start_ms": 2072945,
+              "end_ms": 2074425,
+              "quote": "入夜守卫守护五号四手"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0016",
+                "c0001_s0017"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 38950,
+              "source_clip_end_ms": 40450,
+              "start_ms": 2072950,
+              "end_ms": 2074450,
+              "quote": "入夜，守卫守护五号四手狼队"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1048,
+              "body_index_to": 1048,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2072920,
+              "end_ms": 2075760,
+              "quote": "入夜守卫守护5号自守狼队击杀7号猎人"
+            }
+          ],
+          "normalized_action_candidate": {
+            "actor_seat": 5,
+            "target_seat": 5,
+            "action": "guard",
+            "is_self_guard": true,
+            "canonical_term": "自守",
+            "term_meaning_confirmed_by_user": true,
+            "basis": "复盘角色名单守卫为5号，守护目标亦为5号；用户确认自守释义"
+          }
+        },
+        {
+          "event_candidate": "狼队击杀7号猎人；女巫技能空过为第二遍+平台候选",
+          "status": "needs_review",
+          "source_variants": [
+            "全音频首遍：击杀七号猎人牛技能空过",
+            "二次识别：击杀七号猎人女巫技能空过",
+            "离线Whisper baseline：列人女巫技能空过",
+            "平台字幕：击杀7号猎人 / 女巫技能空过"
+          ],
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0116"
+              ],
+              "start_ms": 2074425,
+              "end_ms": 2076650,
+              "quote": "击杀七号猎人牛技能空过"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0018"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 40450,
+              "source_clip_end_ms": 42590,
+              "start_ms": 2074450,
+              "end_ms": 2076590,
+              "quote": "击杀七号猎人女巫技能空过"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1048,
+              "body_index_to": 1049,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2072920,
+              "end_ms": 2076880,
+              "quote": "击杀7号猎人 / 女巫技能空过",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_whisper_baseline.json",
+              "source_type": "local_whisper_baseline",
+              "segment_ids": [
+                "16"
+              ],
+              "segment_array_index": 16,
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 41160,
+              "source_clip_end_ms": 42920,
+              "start_ms": 2075160,
+              "end_ms": 2076920,
+              "quote": "列人女巫技能空过"
+            }
+          ],
+          "normalized_action_candidate": {
+            "actor_seat": 10,
+            "actor_role": "witch",
+            "action": "no_skill_use",
+            "canonical_term": "空过",
+            "term_meaning_confirmed_by_user": true
+          }
+        },
+        {
+          "event_candidate": "7号猎人出局后开枪带走8号机械双刀狼",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0117"
+              ],
+              "start_ms": 2077135,
+              "end_ms": 2080095,
+              "quote": "七号猎人出局后开枪带走八号机械双刀狼"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0019"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 43050,
+              "source_clip_end_ms": 46070,
+              "start_ms": 2077050,
+              "end_ms": 2080070,
+              "quote": "七号猎人出击后开枪带走八号机械双刀狼"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1050,
+              "body_index_to": 1050,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2076880,
+              "end_ms": 2080060,
+              "quote": "7号猎人出局后开枪带走8号机械双刀狼"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "第三天白天",
+      "status": "needs_review",
+      "events": [
+        {
+          "event_candidate": "3号狼人选择自爆，游戏结束，好人阵营获胜",
+          "status": "needs_review",
+          "evidence": [
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+              "source_type": "local_full_audio_transcript",
+              "segment_ids": [
+                "c0004_s0118",
+                "c0004_s0119"
+              ],
+              "start_ms": 2080155,
+              "end_ms": 2084010,
+              "quote": "第三天白天，三号狼人选择自爆游戏结束好人阵营获胜。"
+            },
+            {
+              "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+              "source_type": "local_recap_second_pass",
+              "segment_ids": [
+                "c0001_s0020",
+                "c0001_s0021"
+              ],
+              "source_offset_ms": 2034000,
+              "source_clip_start_ms": 46130,
+              "source_clip_end_ms": 49950,
+              "start_ms": 2080130,
+              "end_ms": 2083950,
+              "quote": "第三天白天，三号狼人选择自爆游戏结束好人阵营获胜。"
+            },
+            {
+              "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+              "source_type": "platform_subtitle",
+              "body_index_from": 1051,
+              "body_index_to": 1054,
+              "body_index_basis": "0-based inclusive",
+              "start_ms": 2080060,
+              "end_ms": 2084199,
+              "quote": "第三天白天 / 3号狼人选择自爆 / 游戏结束 / 好人阵营获胜",
+              "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vote_and_badge_candidates": {
+    "badge": {
+      "status": "needs_review",
+      "statement": "复盘说6号自爆后警徽流失；没有给出警徽先前属于谁、投票结果或具体操作。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0113",
+            "c0004_s0114"
+          ],
+          "start_ms": 2071025,
+          "end_ms": 2072945,
+          "quote": "六号呢选择自爆本游戏，警徽流失"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0014",
+            "c0001_s0015"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 36990,
+          "source_clip_end_ms": 38950,
+          "start_ms": 2070990,
+          "end_ms": 2072950,
+          "quote": "六号狼人选择自爆，本游戏警徽流失"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1046,
+          "body_index_to": 1047,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2070980,
+          "end_ms": 2072920,
+          "quote": "6号狼人选择自爆 / 本九戏警徽流失",
+          "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+        }
+      ]
+    },
+    "ballots": null,
+    "ballot_note": "复盘只提“警上竞选环节/警徽流失”，未报票型、票数或警长归属；不补推。"
+  },
+  "broadcast_segment": {
+    "phase": "postgame_recap",
+    "speaker_role": "referee_recap_candidate",
+    "speaker_identity": null,
+    "status": "needs_review",
+    "speaker_note": "全音频转写将结构化复盘归于chunk_0004:speaker_1，并且该段明确宣布开始复盘；转写元数据speaker_identity_verified=false、judge_speakers=[]，所以不认作已验证法官身份。",
+    "evidence": [
+      {
+        "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+        "source_type": "local_full_audio_transcript",
+        "segment_ids": [
+          "c0004_s0103"
+        ],
+        "start_ms": 2037215,
+        "end_ms": 2039035,
+        "quote": "先给弹幕老师们做到本局游戏的复盘。"
+      }
+    ]
+  },
+  "readable_transcript": {
+    "status": "needs_review",
+    "basis": "仅对全音频首遍机器识别原文增加句读；原词不替换。原始逐段文本在verbatim_segments中保留。",
+    "punctuation_only_text": "先给弹幕老师们做到本局游戏的复盘。本剧，版型：机械狼通灵师。神神阵银：通灵师一号、女巫十号、猎人七号、守卫五号；狼人阵营三号、六号、十二号，机械狼八号。本局游戏为机械双刀狼；平民阵营二号、四号、九号、十一号。首夜，守卫守护十二号狼人；狼队击杀八号机械狼女娲就此形成。平安夜。机械狼模仿十二号狼人，本就系为机械双刀狼。通灵师验证了十二号玩家为狼人身份，警上进尾环节。十二号狼人选择自爆。若夜，守卫守护三号狼人；狼人击杀一号通灵师；女巫技能通过通灵师验证。三号玩家为狼人身份，延期竞尾环节。六号呢选择自爆，本游戏警徽流失。入夜，守卫守护五号四手；狼队击杀七号猎人，牛技能空过。七号猎人出局后开枪带走八号机械双刀狼。第三天白天，三号狼人选择自爆，游戏结束，好人阵营获胜。",
+    "verbatim_segments": [
+      {
+        "id": "c0004_s0103",
+        "start_ms": 2037215,
+        "end_ms": 2039035,
+        "text": "先给弹幕老师们做到本局游戏的复盘。"
+      },
+      {
+        "id": "c0004_s0104",
+        "start_ms": 2039035,
+        "end_ms": 2039275,
+        "text": "本剧，"
+      },
+      {
+        "id": "c0004_s0105",
+        "start_ms": 2039275,
+        "end_ms": 2039515,
+        "text": "版型，"
+      },
+      {
+        "id": "c0004_s0106",
+        "start_ms": 2039515,
+        "end_ms": 2046145,
+        "text": "机械狼通灵师神神阵银通灵师一号女巫十号猎人七号守卫五号狼人阵营三号六号十二号，"
+      },
+      {
+        "id": "c0004_s0107",
+        "start_ms": 2046145,
+        "end_ms": 2055465,
+        "text": "机械狼八号本局游戏为机械双刀狼平民阵营二号四号九号十一号首夜守卫守护十二号狼人狼队击杀八号机械狼女娲就此形成。"
+      },
+      {
+        "id": "c0004_s0108",
+        "start_ms": 2055465,
+        "end_ms": 2055805,
+        "text": "平安夜。"
+      },
+      {
+        "id": "c0004_s0109",
+        "start_ms": 2055805,
+        "end_ms": 2061755,
+        "text": "机械狼模仿十二号狼人本就系为机械双刀狼通灵师验证了十二号玩家为狼人身份警上进尾环节。"
+      },
+      {
+        "id": "c0004_s0110",
+        "start_ms": 2061875,
+        "end_ms": 2063770,
+        "text": "十二号狼人选择自爆，"
+      },
+      {
+        "id": "c0004_s0111",
+        "start_ms": 2064095,
+        "end_ms": 2068575,
+        "text": "若夜守卫守护三号狼人狼人击杀一号通灵师女巫技能通过通灵师验证，"
+      },
+      {
+        "id": "c0004_s0112",
+        "start_ms": 2068575,
+        "end_ms": 2071025,
+        "text": "三号玩家为狼人身份延期竞尾环节。"
+      },
+      {
+        "id": "c0004_s0113",
+        "start_ms": 2071025,
+        "end_ms": 2072465,
+        "text": "六号呢选择自爆本游戏，"
+      },
+      {
+        "id": "c0004_s0114",
+        "start_ms": 2072465,
+        "end_ms": 2072945,
+        "text": "警徽流失，"
+      },
+      {
+        "id": "c0004_s0115",
+        "start_ms": 2072945,
+        "end_ms": 2074425,
+        "text": "入夜守卫守护五号四手狼队，"
+      },
+      {
+        "id": "c0004_s0116",
+        "start_ms": 2074425,
+        "end_ms": 2076650,
+        "text": "击杀七号猎人牛技能空过，"
+      },
+      {
+        "id": "c0004_s0117",
+        "start_ms": 2077135,
+        "end_ms": 2080095,
+        "text": "七号猎人出局后开枪带走八号机械双刀狼。"
+      },
+      {
+        "id": "c0004_s0118",
+        "start_ms": 2080155,
+        "end_ms": 2080855,
+        "text": "第三天白天，"
+      },
+      {
+        "id": "c0004_s0119",
+        "start_ms": 2080935,
+        "end_ms": 2084010,
+        "text": "三号狼人选择自爆游戏结束好人阵营获胜。"
+      }
+    ],
+    "notes": [
+      "正文逐字保留全音频首遍FunASR片段的词语；仅加逗号、句号、分号和空格，不把机器识别疑点静默改写。",
+      "“本剧”“神神阵银”“女娲就此形成”“本就系为”“若夜”“延期竞尾”“五号四手”“牛技能”等是首遍原识别词串；其中部分与平台/二次识别不同，见source_differences。"
+    ]
+  },
+  "source_differences": [
+    {
+      "topic": "角色阵营清单声学识别",
+      "status": "needs_review",
+      "comparison": "首遍将阵营标题识别成“神神阵银”；二次为“灵灵神神阵阵”；平台为“神人阵营”。相邻身份与号码连续顺序可读，角色-座位映射按整串解析；阵营标题词保留疑点。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0106"
+          ],
+          "start_ms": 2039515,
+          "end_ms": 2046145,
+          "quote": "神神阵银通灵师一号女巫十号猎人七号守卫五号"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0006"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 5700,
+          "source_clip_end_ms": 12380,
+          "start_ms": 2039700,
+          "end_ms": 2046380,
+          "quote": "灵灵神神阵阵通灵师一号女巫十号猎人七号守卫五号"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1025,
+          "body_index_to": 1028,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2040370,
+          "end_ms": 2043230,
+          "quote": "神人阵营通灵师 / 一号女巫 / 10号猎人 / 7号守卫",
+          "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+        }
+      ]
+    },
+    {
+      "topic": "首夜击杀/救援短语",
+      "status": "needs_review",
+      "comparison": "首遍“狼队击杀八号机械狼女娲就此形成”；二次“狼队击杀八号机械狼女娲就起形成平安夜”；平台body[1036]为“狼队击杀8号机械狼女王救起情人”。不将“女娲”修成“女巫”，也不据平台猜定救援对象或行动因果。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0107"
+          ],
+          "start_ms": 2046145,
+          "end_ms": 2055465,
+          "quote": "狼队击杀八号机械狼女娲就此形成"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0008"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 19620,
+          "source_clip_end_ms": 23460,
+          "start_ms": 2053620,
+          "end_ms": 2057460,
+          "quote": "狼队击杀八号机械狼女娲就起形成平安夜"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1036,
+          "body_index_to": 1036,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2053510,
+          "end_ms": 2055470,
+          "quote": "狼队击杀8号机械狼女王救起情人"
+        }
+      ]
+    },
+    {
+      "topic": "12号自爆的十位识别",
+      "status": "needs_review",
+      "comparison": "首遍全音频与平台原字幕都为12号；二次识别丢掉“十”成为二号。身份清单/复盘第一遍支持采用12号候选，不据二次结果写2号。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0110"
+          ],
+          "start_ms": 2061875,
+          "end_ms": 2063770,
+          "quote": "十二号狼人选择自爆"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0010"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 28120,
+          "source_clip_end_ms": 29680,
+          "start_ms": 2062120,
+          "end_ms": 2063680,
+          "quote": "二号狼人选选自爆"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1041,
+          "body_index_to": 1041,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2061820,
+          "end_ms": 2063840,
+          "quote": "12号狼人选择自爆"
+        }
+      ]
+    },
+    {
+      "topic": "次夜女巫动作",
+      "status": "needs_review",
+      "comparison": "首遍与平台字幕将相邻词识别为“女巫技能通过通灵师验证”；二次FunASR与离线Whisper baseline均出现“女巫技能空过”候选。因三份本地机器输出并非人工听核，保留空过候选但不升级为确认。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0111"
+          ],
+          "start_ms": 2064095,
+          "end_ms": 2068575,
+          "quote": "女巫技能通过通灵师验证"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0012"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 32750,
+          "source_clip_end_ms": 34110,
+          "start_ms": 2066750,
+          "end_ms": 2068110,
+          "quote": "通灵师女巫技能空过"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1043,
+          "body_index_to": 1044,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2065880,
+          "end_ms": 2068600,
+          "quote": "狼人击杀一号通灵师女巫技能 / 通过通灵师验证",
+          "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_whisper_baseline.json",
+          "source_type": "local_whisper_baseline",
+          "segment_ids": [
+            "9"
+          ],
+          "segment_array_index": 9,
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 32680,
+          "source_clip_end_ms": 34000,
+          "start_ms": 2066680,
+          "end_ms": 2068000,
+          "quote": "通力师女巫技能空过"
+        }
+      ]
+    },
+    {
+      "topic": "通灵师是否查验3号",
+      "status": "needs_review",
+      "comparison": "二次明确听成“通灵师验证三号玩家为狼人身份”；首遍与平台只有“三号玩家为狼人身份/通过通灵师验证”的相邻语句，没有相同的完整谓词。列作查验候选，不升为确认。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0112"
+          ],
+          "start_ms": 2068575,
+          "end_ms": 2071025,
+          "quote": "三号玩家为狼人身份延期竞尾环节"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0013"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 34110,
+          "source_clip_end_ms": 36990,
+          "start_ms": 2068110,
+          "end_ms": 2070990,
+          "quote": "通灵师验证三号玩家为狼人身份延期竞尾环节"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1044,
+          "body_index_to": 1045,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2067800,
+          "end_ms": 2070980,
+          "quote": "通过通灵师验证 / 3号玩家为狼人身份延期尽有环节",
+          "quote_display_separator": " / marks platform subtitle segment boundaries; not spoken"
+        }
+      ]
+    },
+    {
+      "topic": "守卫对5号的守护词",
+      "status": "needs_review",
+      "comparison": "首遍与二次均识别为“五号四手”；平台写“5号自守”。自守是候选读法，首遍转写正文保持“四手”。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0115"
+          ],
+          "start_ms": 2072945,
+          "end_ms": 2074425,
+          "quote": "守卫守护五号四手"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0017"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 39190,
+          "source_clip_end_ms": 40450,
+          "start_ms": 2073190,
+          "end_ms": 2074450,
+          "quote": "守卫守护五号四手狼队"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1048,
+          "body_index_to": 1048,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2072920,
+          "end_ms": 2075760,
+          "quote": "守卫守护5号自守狼队击杀7号猎人"
+        }
+      ]
+    },
+    {
+      "topic": "末夜女巫技能",
+      "status": "needs_review",
+      "comparison": "首遍将“女巫”识成“牛”；二次FunASR、离线Whisper baseline和平台字幕都出现“女巫技能空过”。这些机器输出尚未人工听核，列为空过候选并保留首遍异文。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0116"
+          ],
+          "start_ms": 2074425,
+          "end_ms": 2076650,
+          "quote": "击杀七号猎人牛技能空过"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0018"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 40450,
+          "source_clip_end_ms": 42590,
+          "start_ms": 2074450,
+          "end_ms": 2076590,
+          "quote": "击杀七号猎人女巫技能空过"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1049,
+          "body_index_to": 1049,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2075760,
+          "end_ms": 2076880,
+          "quote": "女巫技能空过"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_whisper_baseline.json",
+          "source_type": "local_whisper_baseline",
+          "segment_ids": [
+            "16"
+          ],
+          "segment_array_index": 16,
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 41160,
+          "source_clip_end_ms": 42920,
+          "start_ms": 2075160,
+          "end_ms": 2076920,
+          "quote": "列人女巫技能空过"
+        }
+      ]
+    },
+    {
+      "topic": "7号出局/出击",
+      "status": "needs_review",
+      "comparison": "首遍和平台为“出局后”；二次为“出击后”。结果动作一致为7号猎人开枪带走8号，字词差异保留。",
+      "evidence": [
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json",
+          "source_type": "local_full_audio_transcript",
+          "segment_ids": [
+            "c0004_s0117"
+          ],
+          "start_ms": 2077135,
+          "end_ms": 2080095,
+          "quote": "七号猎人出局后开枪带走八号机械双刀狼"
+        },
+        {
+          "source_file": "data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/recap_second_pass/transcript.json",
+          "source_type": "local_recap_second_pass",
+          "segment_ids": [
+            "c0001_s0019"
+          ],
+          "source_offset_ms": 2034000,
+          "source_clip_start_ms": 43050,
+          "source_clip_end_ms": 46070,
+          "start_ms": 2077050,
+          "end_ms": 2080070,
+          "quote": "七号猎人出击后开枪带走八号机械双刀狼"
+        },
+        {
+          "source_file": "data/seasons/S22/第05周_正赛第04期/2026-06-25/2026-06-25_S22_第05周_正赛第04期_第03局_机械狼通灵师__BV1yt7v6QE3Q_P01_CID39404962859.平台AI字幕_ai-zh_01_77599cd3f4.原始.json",
+          "source_type": "platform_subtitle",
+          "body_index_from": 1050,
+          "body_index_to": 1050,
+          "body_index_basis": "0-based inclusive",
+          "start_ms": 2076880,
+          "end_ms": 2080060,
+          "quote": "7号猎人出局后开枪带走8号机械双刀狼"
+        }
+      ]
+    }
+  ],
+  "unresolved_information": [
+    "首夜狼队击杀8号后，复盘中的“女娲/女王救起情人”具体词、女巫是否救人及平安夜因果未恢复。",
+    "通灵师查验3号是二次识别候选，需人工听音确认。",
+    "警上竞选的具体票型、票数、警长当选与警徽先前持有人未在本段复盘中恢复。",
+    "每个行动的完整游戏轮次细节、玩家发言/解说观点和赛前互动均超出本候选档案范围。"
+  ],
+  "coverage_and_limits": {
+    "coverage": "仅末尾复盘片段，约33:57.215–34:44.010；逐段保留首遍机器文本，补充独立平台body索引与二次识别对照。",
+    "omitted": "不是全局语义图；不覆盖所有日间发言、票型、玩家主张、解说观点、赛前互动或逐人speaker diarization。",
+    "identity_policy": "座位身份均为postgame_reveal_candidate；普通平民是复盘阵营清单明列候选，不是由票型/行为推断。",
+    "source_status": "full_audio_processed=true；FunASR machine_generated_unverified；speaker_identity_verified=false；judge_speakers=[]。"
+  },
+  "claims_and_commentary": {
+    "player_claims": [],
+    "commentary_opinions": [],
+    "note": "本档案收缩到赛后结构化复盘；不把场上玩家自报或解说推测纳入身份表。"
+  },
+  "primary_agent_validation": {
+    "evidence_references_and_exact_quotes_checked": true,
+    "evidence_reference_count": 126,
+    "human_listening_verified": false,
+    "note": "Platform slash separators are display boundaries; 通灵师 is distinct from 预言家. One copied Whisper id corrected to its matching array index."
+  },
+  "user_review": {
+    "reviewed_at_utc": "2026-10-20T09:42:40.245796+00:00",
+    "reviewer": "user",
+    "status": "pilot_accepted_with_remaining_issues",
+    "user_feedback": "可以的，空过就是不使用技能呗，自守就是守卫守护自己阿，这次复核差不多",
+    "confirmed_term_semantics": {
+      "空过": "本次技能机会不使用技能",
+      "自守": "守卫守护自己的座位"
+    },
+    "scope": "用户认可本次复盘试跑基本可用，确认术语含义；不是逐字声学真值或全部字段逐项核验",
+    "next_direction": "批量优先定位法官复盘，转写复盘或所在短窗口；不默认整条转写",
+    "batch_asr_started": false
+  },
+  "terminology_review": {
+    "reviewer": "user",
+    "status": "confirmed_semantics",
+    "terms": {
+      "空过": "不使用技能",
+      "自守": "守卫守护自己"
+    },
+    "preserve_original_asr": true
+  },
+  "resolved_term_questions": [
+    "空过释义：不使用技能",
+    "自守释义：守卫守护自己；本局守卫与守护目标均为5号"
+  ]
+}

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260625 正赛 第四期 Day-3 第三局-机械狼通灵师 · 转写审阅</title>
+<style>
+:root { color-scheme: light; --ink:#18232d; --muted:#65737e; --line:#dce3e8; --panel:#fff; --wash:#f3f6f8; --accent:#146b78; --warn:#8a4e14; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--wash); color:var(--ink); font:16px/1.55 system-ui,"Microsoft YaHei",sans-serif; }
+main { max-width:1120px; margin:0 auto; padding:24px 18px 60px; }
+h1 { margin:0; font-size:1.65rem; line-height:1.3; overflow-wrap:anywhere; }
+.topline { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.badge { flex:none; border:1px solid #e6c99f; border-radius:999px; padding:4px 10px; color:var(--warn); background:#fff8ec; font-size:.88rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; margin:14px 0; box-shadow:0 2px 8px #1020300a; }
+.note { margin:0; color:#714314; background:#fff8ec; border-left:4px solid #d69a43; padding:11px 13px; border-radius:5px; }
+.facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px 18px; margin:0 0 13px; }
+.facts div { min-width:0; } .facts dt { color:var(--muted); font-size:.82rem; } .facts dd { margin:2px 0 0; overflow-wrap:anywhere; }
+audio { display:block; width:100%; margin-top:10px; }
+.toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+button,input { font:inherit; }
+button { border:1px solid #b9c7ce; background:#fff; color:var(--ink); border-radius:8px; padding:8px 12px; cursor:pointer; }
+button[aria-pressed="true"] { color:#fff; background:var(--accent); border-color:var(--accent); }
+button:hover { border-color:var(--accent); }
+input { flex:1 1 220px; min-width:170px; border:1px solid #b9c7ce; background:#fff; border-radius:8px; padding:8px 10px; }
+#visible-count { color:var(--muted); font-size:.9rem; margin-left:auto; }
+.entry { background:#fff; border:1px solid var(--line); border-radius:10px; padding:13px 15px; margin:10px 0; }
+.entry-meta { display:flex; flex-wrap:wrap; gap:7px 13px; align-items:center; color:var(--muted); font-size:.88rem; }
+.time { color:var(--accent); font-variant-numeric:tabular-nums; font-weight:700; text-decoration:none; }
+.time:hover { text-decoration:underline; } .unknown-time { color:var(--muted); }
+.seat { color:#154e66; font-weight:700; }
+.transcript-text { white-space:pre-wrap; overflow-wrap:anywhere; margin:9px 0 5px; font-size:1.03rem; }
+.end-time { color:#8a969e; font-size:.78rem; }
+details { margin-top:8px; } summary { color:var(--muted); cursor:pointer; font-size:.88rem; }
+pre { overflow:auto; padding:10px; background:#f4f6f7; border-radius:6px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:.82rem; }
+.empty { color:var(--muted); text-align:center; padding:30px; }
+@media(max-width:620px) { main { padding:14px 10px 36px; } .topline { display:block; } .badge { display:inline-block; margin-top:10px; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="topline"><h1>20260625 正赛 第四期 Day-3 第三局-机械狼通灵师</h1><span class="badge">候选 · 未人工校对</span></header>
+  <section class="panel" aria-label="来源与状态">
+    <dl class="facts">
+      <div><dt>音频时长</dt><dd>00:37:08.416</dd></div>
+      <div><dt>转写模型</dt><dd>FunASR / iic/speech_seaco_paraformer_large_asr_nat-zh-cn-16k-common-vocab8404-pytorch</dd></div>
+      <div><dt>句级片段</dt><dd>19</dd></div>
+      <div><dt>合并发言候选</dt><dd>1</dd></div>
+      <div><dt>转写状态</dt><dd>machine_generated_unverified（候选）</dd></div>
+      <div><dt>结构候选状态</dt><dd>candidate_unverified（候选）</dd></div>
+    </dl>
+    <p class="note">以下内容都是机器转写或结构候选，尚未人工校对。声纹聚类标签不是座位号；报告不确认真实身份、游戏胜负或其他比赛事实。 当前播放的是从原音频 00:33:54.000 起截取的复盘片段，列表显示原音频时间，点击会跳到片段内对应位置。</p>
+    <audio id="audio" controls preload="metadata" src="referee_recap.audio.wav">浏览器无法播放此本地音频。</audio>
+  </section>
+
+  <section class="panel toolbar" aria-label="审阅工具">
+    <button type="button" class="view-button" data-view="raw" aria-pressed="true">句级原始转写</button>
+    <button type="button" class="view-button" data-view="candidate" aria-pressed="false">合并发言候选</button>
+    <input id="search" type="search" placeholder="检索当前视图中的文字" aria-label="关键词检索">
+    <button type="button" id="copy-text">复制当前列表文本</button>
+    <span id="visible-count" aria-live="polite"></span>
+  </section>
+
+  <section id="raw-view" class="entries" aria-label="句级原始转写"><article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="1.955" aria-label="跳到 00:33:55.955">00:33:55.955</a><span>匿名声纹候选：chunk_0004:speaker_3</span><span>片段 c0004_s0101</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">哦，</p><span class="end-time">结束 00:33:56.055</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="2.055" aria-label="跳到 00:33:56.055">00:33:56.055</a><span>匿名声纹候选：chunk_0004:speaker_3</span><span>片段 c0004_s0102</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">一会跟你说来，</p><span class="end-time">结束 00:33:57.215</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="3.215" aria-label="跳到 00:33:57.215">00:33:57.215</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0103</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">先给弹幕老师们做到本局游戏的复盘。</p><span class="end-time">结束 00:33:59.035</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="5.035" aria-label="跳到 00:33:59.035">00:33:59.035</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0104</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">本剧，</p><span class="end-time">结束 00:33:59.275</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="5.275" aria-label="跳到 00:33:59.275">00:33:59.275</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0105</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">版型，</p><span class="end-time">结束 00:33:59.515</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="5.515" aria-label="跳到 00:33:59.515">00:33:59.515</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0106</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">机械狼通灵师神神阵银通灵师一号女巫十号猎人七号守卫五号狼人阵营三号六号十二号，</p><span class="end-time">结束 00:34:06.145</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="12.145" aria-label="跳到 00:34:06.145">00:34:06.145</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0107</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">机械狼八号本局游戏为机械双刀狼平民阵营二号四号九号十一号首夜守卫守护十二号狼人狼队击杀八号机械狼女娲就此形成。</p><span class="end-time">结束 00:34:15.465</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="21.465" aria-label="跳到 00:34:15.465">00:34:15.465</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0108</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">平安夜。</p><span class="end-time">结束 00:34:15.805</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="21.805" aria-label="跳到 00:34:15.805">00:34:15.805</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0109</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">机械狼模仿十二号狼人本就系为机械双刀狼通灵师验证了十二号玩家为狼人身份警上进尾环节。</p><span class="end-time">结束 00:34:21.755</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="27.875" aria-label="跳到 00:34:21.875">00:34:21.875</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0110</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">十二号狼人选择自爆，</p><span class="end-time">结束 00:34:23.770</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="30.095" aria-label="跳到 00:34:24.095">00:34:24.095</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0111</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">若夜守卫守护三号狼人狼人击杀一号通灵师女巫技能通过通灵师验证，</p><span class="end-time">结束 00:34:28.575</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="34.575" aria-label="跳到 00:34:28.575">00:34:28.575</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0112</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">三号玩家为狼人身份延期竞尾环节。</p><span class="end-time">结束 00:34:31.025</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="37.025" aria-label="跳到 00:34:31.025">00:34:31.025</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0113</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">六号呢选择自爆本游戏，</p><span class="end-time">结束 00:34:32.465</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="38.465" aria-label="跳到 00:34:32.465">00:34:32.465</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0114</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">警徽流失，</p><span class="end-time">结束 00:34:32.945</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="38.945" aria-label="跳到 00:34:32.945">00:34:32.945</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0115</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">入夜守卫守护五号四手狼队，</p><span class="end-time">结束 00:34:34.425</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="40.425" aria-label="跳到 00:34:34.425">00:34:34.425</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0116</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">击杀七号猎人牛技能空过，</p><span class="end-time">结束 00:34:36.650</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="43.135" aria-label="跳到 00:34:37.135">00:34:37.135</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0117</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">七号猎人出局后开枪带走八号机械双刀狼。</p><span class="end-time">结束 00:34:40.095</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="46.155" aria-label="跳到 00:34:40.155">00:34:40.155</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0118</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">第三天白天，</p><span class="end-time">结束 00:34:40.855</span></article>
+<article class="entry raw-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="46.935" aria-label="跳到 00:34:40.935">00:34:40.935</a><span>匿名声纹候选：chunk_0004:speaker_1</span><span>片段 c0004_s0119</span><span>machine_generated_unverified（候选）</span></div><p class="transcript-text">三号狼人选择自爆游戏结束好人阵营获胜。</p><span class="end-time">结束 00:34:44.010</span></article></section>
+  <section id="candidate-view" class="entries" aria-label="合并发言候选" hidden><article class="entry candidate-entry"><div class="entry-meta"><a class="time" href="#audio" data-time="1.955" aria-label="跳到 00:33:55.955">00:33:55.955</a><span class="seat">法官（复盘语境候选）</span><span>结束候选</span><span>法官最终复盘候选</span><span>待复核候选</span><span>声纹候选：未标记</span></div><p class="transcript-text">哦，一会跟你说来，先给弹幕老师们做到本局游戏的复盘。本剧，版型，机械狼通灵师神神阵银通灵师一号女巫十号猎人七号守卫五号狼人阵营三号六号十二号，机械狼八号本局游戏为机械双刀狼平民阵营二号四号九号十一号首夜守卫守护十二号狼人狼队击杀八号机械狼女娲就此形成。平安夜。机械狼模仿十二号狼人本就系为机械双刀狼通灵师验证了十二号玩家为狼人身份警上进尾环节。十二号狼人选择自爆，若夜守卫守护三号狼人狼人击杀一号通灵师女巫技能通过通灵师验证，三号玩家为狼人身份延期竞尾环节。六号呢选择自爆本游戏，警徽流失，入夜守卫守护五号四手狼队，击杀七号猎人牛技能空过，七号猎人出局后开枪带走八号机械双刀狼。第三天白天，三号狼人选择自爆游戏结束好人阵营获胜。</p><span class="end-time">结束 00:34:44.010</span><details><summary>来源与复核依据（19 个原始片段）</summary><pre>{
+  &quot;evidence&quot;: [
+    {
+      &quot;boundary_basis&quot;: &quot;explicit_intro_and_result_before_flower_message&quot;,
+      &quot;segment_ids&quot;: [
+        &quot;c0004_s0101&quot;,
+        &quot;c0004_s0102&quot;,
+        &quot;c0004_s0103&quot;,
+        &quot;c0004_s0104&quot;,
+        &quot;c0004_s0105&quot;,
+        &quot;c0004_s0106&quot;,
+        &quot;c0004_s0107&quot;,
+        &quot;c0004_s0108&quot;,
+        &quot;c0004_s0109&quot;,
+        &quot;c0004_s0110&quot;,
+        &quot;c0004_s0111&quot;,
+        &quot;c0004_s0112&quot;,
+        &quot;c0004_s0113&quot;,
+        &quot;c0004_s0114&quot;,
+        &quot;c0004_s0115&quot;,
+        &quot;c0004_s0116&quot;,
+        &quot;c0004_s0117&quot;,
+        &quot;c0004_s0118&quot;,
+        &quot;c0004_s0119&quot;
+      ],
+      &quot;source_file&quot;: &quot;data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/transcript.json&quot;
+    }
+  ],
+  &quot;review_reasons&quot;: [
+    &quot;contextual_recap_boundary&quot;,
+    &quot;critical_action_words_need_listening_review&quot;
+  ],
+  &quot;source_segment_ids&quot;: [
+    &quot;c0004_s0101&quot;,
+    &quot;c0004_s0102&quot;,
+    &quot;c0004_s0103&quot;,
+    &quot;c0004_s0104&quot;,
+    &quot;c0004_s0105&quot;,
+    &quot;c0004_s0106&quot;,
+    &quot;c0004_s0107&quot;,
+    &quot;c0004_s0108&quot;,
+    &quot;c0004_s0109&quot;,
+    &quot;c0004_s0110&quot;,
+    &quot;c0004_s0111&quot;,
+    &quot;c0004_s0112&quot;,
+    &quot;c0004_s0113&quot;,
+    &quot;c0004_s0114&quot;,
+    &quot;c0004_s0115&quot;,
+    &quot;c0004_s0116&quot;,
+    &quot;c0004_s0117&quot;,
+    &quot;c0004_s0118&quot;,
+    &quot;c0004_s0119&quot;
+  ]
+}</pre></details></article></section>
+</main>
+<script>
+(() => {
+  const audio = document.getElementById('audio');
+  const search = document.getElementById('search');
+  const count = document.getElementById('visible-count');
+  const buttons = [...document.querySelectorAll('.view-button')];
+  let currentView = 'raw';
+  function refresh() {
+    const section = document.getElementById(currentView + '-view');
+    const query = search.value.trim().toLocaleLowerCase();
+    let visible = 0;
+    const entries = [...section.querySelectorAll('.entry')];
+    for (const entry of entries) {
+      const matches = !query || entry.textContent.toLocaleLowerCase().includes(query);
+      entry.hidden = !matches;
+      if (matches) visible += 1;
+    }
+    count.textContent = `显示 ${visible} / ${entries.length} 条`;
+  }
+  buttons.forEach(button => button.addEventListener('click', () => {
+    currentView = button.dataset.view;
+    document.getElementById('raw-view').hidden = currentView !== 'raw';
+    document.getElementById('candidate-view').hidden = currentView !== 'candidate';
+    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    refresh();
+  }));
+  search.addEventListener('input', refresh);
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[data-time]');
+    if (!link || !audio) return;
+    event.preventDefault();
+    audio.currentTime = Number(link.dataset.time);
+    audio.play().catch(() => {});
+  });
+  document.getElementById('copy-text').addEventListener('click', async () => {
+    const section = document.getElementById(currentView + '-view');
+    const text = [...section.querySelectorAll('.entry:not([hidden])')]
+      .map(entry => entry.innerText.trim()).join('\n\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      count.textContent = '已复制当前列表';
+    } catch (_) {
+      const field = document.createElement('textarea');
+      field.value = text;
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand('copy');
+      field.remove();
+      count.textContent = '已复制当前列表';
+    }
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

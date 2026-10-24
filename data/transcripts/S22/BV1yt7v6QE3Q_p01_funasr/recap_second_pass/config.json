@@ -1,0 +1,23 @@
+{
+  "models": {
+    "asr": "iic/speech_seaco_paraformer_large_asr_nat-zh-cn-16k-common-vocab8404-pytorch",
+    "vad": "iic/speech_fsmn_vad_zh-cn-16k-common-pytorch",
+    "punctuation": "iic/punc_ct-transformer_cn-en-common-vocab471067-large",
+    "speaker": "iic/speech_campplus_sv_zh-cn_16k-common"
+  },
+  "device": "cuda",
+  "speakers": true,
+  "batch_size_s": 60,
+  "chunk_seconds": 600,
+  "audio_sha256": "40bfc90be69e133624cff85aebc0cfeee31e75793a7db1c56f74dfe460401148",
+  "audio_duration_ms": 52000,
+  "hotwords": "机械狼 通灵师 机械双刀狼 狼人阵营 好人阵营 平民阵营 神职阵营 女巫 猎人 守卫 首夜 入夜 守护 自守 空过 解药 毒药 救起 模仿 验证 狼人身份 选择自爆 延期竞选 警上竞选 警徽流失 开枪 带走 游戏结束 好人阵营获胜",
+  "packages": {
+    "funasr": "1.4.16",
+    "torch": "2.5.1",
+    "torchaudio": "2.5.1",
+    "modelscope": "1.37.1",
+    "av": "15.1.0",
+    "numpy": "1.26.4"
+  }
+}

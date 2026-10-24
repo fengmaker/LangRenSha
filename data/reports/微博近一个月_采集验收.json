@@ -1,0 +1,92 @@
+{
+  "verified_at_utc": "2026-10-20T14:11:38.855026+00:00",
+  "source_manifest": "data/raw/weibo/20261020T140325Z_author_7525583841/manifest.json",
+  "auth_mode": "cookies",
+  "window": {
+    "uid": "7525583841",
+    "since": "2026-09-20",
+    "until": "2026-10-20",
+    "keywords": [],
+    "max_pages": 50
+  },
+  "collection_status": "partial",
+  "termination_reason": "max_pages_reached",
+  "posts_saved": 57,
+  "pages_fetched": 50,
+  "posts_by_date": {
+    "2026-09-20": 2,
+    "2026-09-21": 2,
+    "2026-09-22": 4,
+    "2026-09-23": 1,
+    "2026-09-24": 3,
+    "2026-09-25": 2,
+    "2026-09-26": 1,
+    "2026-09-27": 1,
+    "2026-09-29": 4,
+    "2026-09-30": 3,
+    "2026-10-01": 4,
+    "2026-10-02": 2,
+    "2026-10-04": 1,
+    "2026-10-06": 2,
+    "2026-10-07": 3,
+    "2026-10-08": 3,
+    "2026-10-09": 3,
+    "2026-10-10": 1,
+    "2026-10-11": 1,
+    "2026-10-13": 2,
+    "2026-10-14": 2,
+    "2026-10-15": 3,
+    "2026-10-16": 3,
+    "2026-10-17": 1,
+    "2026-10-18": 2,
+    "2026-10-19": 1
+  },
+  "downloaded_images": 192,
+  "image_bytes": 221798386,
+  "long_text_expansion": {
+    "status": "completed",
+    "long_posts": 39,
+    "expanded_posts": 39,
+    "cached_responses": 1,
+    "fetched_responses": 38,
+    "termination_reason": null
+  },
+  "schedule_announcements": 15,
+  "schedule_dates": [
+    "2026-09-22",
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-06",
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "checks": {
+    "authors_dates_and_raw_ids": "passed",
+    "long_text_matches_saved_response": "passed",
+    "image_sizes_and_sha256": "passed",
+    "all_schedule_rosters_12_players": "passed",
+    "schedule_required_fields": "passed",
+    "schedule_commentators_2_judge_1": "passed",
+    "export_relative_references": "passed"
+  },
+  "coverage_note": "只代表本次可见分页样本；置顶/乱序、缺页、删除、搜索不可见或分页限制均可能造成遗漏。即使接口报告末页，也不能据此声称找全历史。",
+  "facts_imported_to_business_tables": false,
+  "candidate_categories": {
+    "排班候选": 15,
+    "赛事公告待核": 6
+  },
+  "additional_notices_reviewed": 4,
+  "automated_tests": {
+    "command": ".venv/Scripts/python.exe -m unittest discover -s tests -p test_weibo*.py",
+    "passed": 24
+  }
+}
