@@ -1,0 +1,380 @@
+.statsPage {
+  --stats-copy: #c6d2ca;
+  --stats-muted: #aab9b0;
+}
+
+.statsPage :global(.page-intro) {
+  margin-bottom: 24px;
+}
+
+.statsPage :global(.page-intro) :global(.intro-copy) {
+  max-width: 760px;
+  color: var(--stats-copy);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.statsPage :global(.stats-filter) {
+  margin-bottom: 22px;
+}
+
+.statsPage :global(.stats-season-form) {
+  padding: 16px 18px;
+}
+
+.statsPage :global(.stats-topline) {
+  grid-template-columns: minmax(230px, 0.65fr) minmax(0, 1.35fr);
+  gap: 14px;
+}
+
+.statsPage :global(.stats-total),
+.statsPage :global(.stats-callout) {
+  min-height: 104px;
+  padding: 20px 23px;
+}
+
+.statsPage :global(.stats-total) > span {
+  color: var(--stats-muted);
+  font-size: 15px;
+}
+
+.statsPage :global(.stats-total) { flex-direction: row; align-items: center; justify-content: space-between; gap: 18px; }
+.statsPage :global(.stats-total) > strong { display: flex; align-items: baseline; gap: 8px; margin: 0; }
+.statsPage :global(.stats-total) strong small { color: var(--stats-muted); font: 14px var(--display); letter-spacing: 0; }
+.playerLink { margin: 18px 0 0; color: var(--mint); font-size: 14px; }
+.playerLink a:hover { text-decoration: underline; }
+
+.statsPage :global(.stats-total) > strong {
+  margin-top: 5px;
+  font-size: 40px;
+}
+
+.statsPage :global(.stats-total) > small {
+  color: var(--stats-muted);
+  font-size: 14px;
+}
+
+.statsPage :global(.stats-callout) {
+  gap: 15px;
+}
+
+.statsPage :global(.stats-callout) p {
+  max-width: 680px;
+  color: var(--stats-copy);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.statsPage :global(.stats-section) {
+  padding-top: 46px;
+}
+
+.statsPage :global(.section-heading) {
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.statsPage :global(.section-heading) h2 {
+  margin-top: 0;
+  font-size: 26px;
+}
+
+.statsPage :global(.section-subtitle) {
+  margin-top: 7px;
+  color: var(--stats-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.statsPage :global(.role-stat-grid) {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.statsPage :global(.role-stat-card) {
+  min-width: 0;
+  min-height: 118px;
+  padding: 15px 16px;
+}
+
+.statsPage :global(.role-stat-card) strong {
+  margin-top: 0;
+  font-size: 16px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.statsPage :global(.role-stat-card) > b {
+  margin-top: auto;
+  font-size: 22px;
+}
+
+.statsPage :global(.table-wrap) {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.statsPage :global(.stats-table) {
+  min-width: 620px;
+}
+
+.statsPage :global(.stats-table) th {
+  height: 48px;
+  padding: 0 15px;
+  color: var(--stats-muted);
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.statsPage :global(.stats-table) td {
+  padding: 14px 15px;
+  color: var(--stats-copy);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.statsPage :global(.stats-table) td strong {
+  font-size: 15px;
+}
+
+.statsPage :global(.stats-player-list) {
+  border-top-color: var(--line-strong);
+}
+
+.statsPage :global(.stats-player-row) {
+  min-height: 58px;
+  grid-template-columns: minmax(140px, 0.9fr) minmax(0, 1.5fr) 82px 24px;
+  gap: 16px;
+  padding: 8px 12px;
+}
+
+.statsPage :global(.stats-player-row) > strong {
+  min-width: 0;
+  color: #dbe4dc;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.statsPage :global(.stats-player-roles) {
+  color: var(--stats-muted);
+  font-size: 14px;
+}
+
+.statsPage :global(.stats-player-row) > b {
+  font-size: 15px;
+}
+
+.statsPage :global(.stats-player-row) > b small {
+  font-size: 13px;
+}
+
+.statsPage :global(.methodology-section) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 15px;
+  padding: 25px 28px;
+  margin-top: 48px;
+}
+
+.statsPage :global(.methodology-heading) {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.statsPage :global(.methodology-heading) h2 {
+  flex: none;
+  margin: 0;
+  font-size: 24px;
+}
+
+.statsPage :global(.methodology-heading) > p {
+  max-width: 620px;
+  color: var(--stats-muted);
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.statsPage :global(.methodology-list) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.statsPage :global(.methodology-list) article {
+  padding: 11px 0;
+}
+
+.statsPage :global(.methodology-list) p {
+  color: var(--stats-copy);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.statsPage :global(.state-legend) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding-top: 16px;
+  margin-top: 1px;
+}
+
+.statsPage :global(.state-legend) > div {
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.statsPage :global(.state-mark) {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.statsPage :global(.state-legend) > div > span:last-child {
+  gap: 3px;
+}
+
+.statsPage :global(.state-legend) b {
+  font-size: 15px;
+}
+
+.statsPage :global(.state-legend) small {
+  color: var(--stats-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.statsPage :global(.release-details) {
+  margin-top: 21px;
+}
+
+.statsPage :global(.release-details) > summary {
+  padding: 14px 0;
+  color: var(--stats-muted);
+  font-size: 15px;
+}
+
+.statsPage :global(.release-history) {
+  padding-top: 13px;
+}
+
+.statsPage :global(.release-history) .section-heading {
+  margin-bottom: 12px;
+}
+
+.statsPage :global(.release-table) {
+  overflow-x: auto;
+}
+
+.statsPage :global(.release-table-head),
+.statsPage :global(.release-table-row) {
+  min-width: 560px;
+  grid-template-columns: 1.3fr 1fr 0.7fr 0.8fr;
+  gap: 15px;
+  padding: 13px 14px;
+  font-size: 14px;
+}
+
+.statsPage :global(.release-table-head) {
+  color: var(--stats-muted);
+  font-size: 14px;
+}
+
+.statsPage :global(.release-table-row) {
+  color: var(--stats-copy);
+}
+
+.statsPage :global(.release-table-row) strong {
+  font-size: 14px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .statsPage :global(.stats-topline) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .statsPage :global(.stats-total),
+  .statsPage :global(.stats-callout) {
+    min-height: 0;
+  }
+
+  .statsPage :global(.role-stat-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .statsPage :global(.methodology-section) {
+    padding: 21px;
+  }
+
+  .statsPage :global(.state-legend) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .statsPage :global(.section-heading) {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .statsPage :global(.section-heading) h2 {
+    font-size: 23px;
+  }
+
+  .statsPage :global(.role-stat-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .statsPage :global(.role-stat-card) {
+    min-height: 106px;
+    padding: 13px;
+  }
+
+  .statsPage :global(.stats-player-row) {
+    grid-template-columns: minmax(0, 1fr) auto 20px;
+    gap: 5px 10px;
+    padding: 10px 6px;
+  }
+
+  .statsPage :global(.stats-player-row) > strong {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .statsPage :global(.stats-player-roles) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .statsPage :global(.stats-player-row) > b {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    white-space: nowrap;
+  }
+
+  .statsPage :global(.stats-player-row) > .row-arrow {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .statsPage :global(.methodology-heading) {
+    display: grid;
+    gap: 6px;
+  }
+
+  .statsPage :global(.methodology-heading) > p {
+    text-align: left;
+  }
+
+  .statsPage :global(.methodology-section) {
+    padding: 18px;
+    margin-top: 40px;
+  }
+}

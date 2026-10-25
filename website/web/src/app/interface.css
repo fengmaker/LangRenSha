@@ -1,0 +1,61 @@
+.page-wrap:not(.home-page) { padding-top: 34px; }
+.page-intro { min-height: 0; gap: 24px; padding: 0; margin-bottom: 26px; border-bottom: 0; }
+.page-intro h1 { margin: 0 0 10px; font-size: clamp(32px, 4vw, 42px); line-height: 1.25; }
+.intro-copy { max-width: 760px; font-size: 15px; line-height: 1.75; }
+.button { min-height: 42px; border-radius: 6px; font-size: 14px; }
+.intro-action .button { min-height: 42px; padding: 0 16px; font-size: 14px; }
+.text-link, .inline-link, .clear-link { font-size: 14px; }
+.filter-panel { border-radius: 8px; }
+.filter-field { gap: 8px; }
+.filter-field > span { font-size: 14px; }
+.filter-field input, .filter-field select { height: 44px; padding: 0 12px; border-radius: 5px; font-size: 16px; }
+.filter-field input::placeholder { color: var(--faint); }
+.filter-panel .button { min-height: 44px; height: auto; font-size: 14px; }
+.section-heading { gap: 20px; margin-bottom: 18px; }
+.section-heading h2, .listing-heading h2 { margin: 0; font-size: 24px; }
+.section-heading.compact h2 { font-size: 21px; }
+.section-subtitle { margin-top: 8px; font-size: 14px; line-height: 1.7; }
+.section-index { color: var(--muted); font-size: 14px; font-family: var(--display); letter-spacing: 0; }
+.listing-section, .player-directory { padding-top: 26px; }
+.breadcrumb { margin: 0 0 18px; font-size: 14px; flex-wrap: wrap; }
+.pagination, .pagination-summary { margin-top: 22px; color: var(--muted); font-size: 14px; }
+.pagination a, .pagination .disabled { min-height: 40px; padding: 0 14px; border-radius: 5px; }
+.empty-state p, .lane-empty, .data-problem p { font-size: 15px; line-height: 1.7; }
+.data-table th { padding: 12px 14px; height: auto; font-size: 14px; letter-spacing: 0; }
+.data-table td { padding: 12px 14px; font-size: 15px; }
+.methodology-details { padding: 14px 16px; border-radius: 7px; font-size: 14px; line-height: 1.8; }
+.release-details summary, .release-detail-content { font-size: 14px; }
+.release-detail-content { flex-wrap: wrap; overflow-wrap: anywhere; }
+.bluff-review-card .review-meta { margin: 0; color: var(--muted); font: 14px/1.6 var(--display); }
+.endgame-day { display: inline-block; margin-left: 12px; color: var(--muted); font-size: 14px; font-weight: 400; }
+.season-page .season-summary-metrics article { min-height: 88px; padding: 14px 18px; gap: 6px; }
+.season-page .season-summary-metrics article > span { color: var(--muted); font-size: 14px; }
+.season-page .season-summary-metrics strong { margin: 0; font-size: 27px; }
+.season-page .season-phase-section, .season-page .season-board-section, .season-page .season-recent-section { padding-top: 32px; }
+.season-page .season-phase-card { min-height: 108px; gap: 10px; border-radius: 7px; }
+.season-page .season-phase-card > strong { margin-top: 0; font-size: 17px; }
+.season-page .season-phase-card > b { font-size: 21px; }
+.season-page .season-phase-card > b span, .season-page .season-leaderboard-links > span, .season-page .season-leaderboard-links a { font-size: 14px; }
+.season-page .season-board-row { min-height: 52px; }
+.season-page .season-board-row > strong, .season-page .season-board-row > b { font-size: 15px; }
+.season-page .season-hero-code { font-size: 17px; }
+
+@media (max-width: 760px) {
+  .page-wrap:not(.home-page) { padding-top: 26px; }
+  .page-intro { gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
+  .page-intro h1 { font-size: 34px; }
+  .section-heading h2 { font-size: 22px; }
+  .section-heading { align-items: center; gap: 16px; }
+  .pagination { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .page-intro h1 { font-size: 32px; }
+  .intro-copy { font-size: 15px; }
+  .pagination { align-items: flex-start; flex-direction: column; }
+  .stats-season-form { flex-wrap: wrap; }
+  .stats-season-form .filter-field { width: 100%; }
+  .season-page .season-summary-metrics article { padding: 12px; }
+  .season-page .season-board-row { grid-template-columns: 24px minmax(108px, 1fr) .8fr 30px; gap: 8px; }
+  .season-page .season-recent-section .section-heading { flex-wrap: wrap; }
+}

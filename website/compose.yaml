@@ -1,0 +1,74 @@
+name: masters-archive
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: masters
+      POSTGRES_USER: masters
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in website/.env}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U masters -d masters"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  api:
+    build:
+      context: ..
+      dockerfile: website/Dockerfile.api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://masters_web_reader:${POSTGRES_READER_PASSWORD:?Set POSTGRES_READER_PASSWORD in website/.env}@db:5432/masters
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  web:
+    build:
+      context: ..
+      dockerfile: website/Dockerfile.web
+    restart: unless-stopped
+    environment:
+      API_BASE_URL: http://api:8000
+    ports:
+      - "127.0.0.1:${SITE_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+  publish:
+    profiles: ["tools"]
+    build:
+      context: ..
+      dockerfile: website/Dockerfile.api
+    environment:
+      DATABASE_URL: postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters
+      MASTERS_SOURCE_ROOT: /source
+    volumes:
+      - ../data/games/S22:/source/data/games/S22:ro
+      - ../config:/source/config:ro
+      - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["python", "-m", "website.api.publish"]
+    command: ["--season", "S22"]
+  reader-setup:
+    profiles: ["tools"]
+    build:
+      context: ..
+      dockerfile: website/Dockerfile.api
+    environment:
+      DATABASE_URL: postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters
+      MASTERS_READER_PASSWORD: ${POSTGRES_READER_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python", "-m", "website.grant_reader"]
+volumes:
+  postgres_data:
