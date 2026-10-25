@@ -1,0 +1,1032 @@
+"""Conservative, read-only event projection for public game details.
+
+The source rounds are complete archival facts.  This module only prepares a
+quieter presentation and marks any inferred status on its copied event.
+"""
+
+from __future__ import annotations
+
+from copy import deepcopy
+import re
+from typing import Any
+
+
+_EMPTY_ACTIONS = {None, "unknown"}
+PRESENTATION_VERSION = 2
+_KEEP_UNKNOWN_SLOTS = {
+    # Unknown actions that can change survival, information, or skill access.
+    "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
+    "hunter_state", "mechanical_knife_status", "mechanical_action",
+    "puppet_select", "puppet_skill_effect", "wolf_king_state",
+    "mixed_blood_model", "night_deaths", "wolf_king_shot", "exile_result",
+    "mechanical_day_skill", "puppet_hunter_eligibility",
+}
+_DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile"}
+
+
+def _as_int(value: Any) -> int | None:
+    return value if type(value) is int else None
+
+
+def _seat_rows(game: dict) -> list[dict]:
+    rows = game.get("seats")
+    if not isinstance(rows, list):
+        rows = game.get("players")
+    return [row for row in rows or [] if isinstance(row, dict)]
+
+
+def _role_seats(game: dict) -> dict[str, list[int]]:
+    result: dict[str, list[int]] = {}
+    for seat in _seat_rows(game):
+        number = _as_int(seat.get("seat", seat.get("number")))
+        role = seat.get("role")
+        if number is not None and isinstance(role, str):
+            result.setdefault(role, []).append(number)
+    return result
+
+
+def _board_code(game: dict) -> str | None:
+    board = game.get("board")
+    if isinstance(board, dict):
+        code = board.get("code")
+        return code if isinstance(code, str) else None
+    return board if isinstance(board, str) else None
+
+
+def _actor_for_tracking(event: dict, slot_roles: dict[str, list[int]]) -> int | None:
+    actor = _as_int(event.get("actor"))
+    if actor is not None:
+        return actor
+    slot = event.get("slot")
+    if slot == "witch_poison":
+        matches = slot_roles.get("女巫", []) + slot_roles.get("毒师", [])
+        return matches[0] if len(matches) == 1 else None
+    role = {
+        "witch_save": "女巫", "witch_poison": "女巫",
+        "mixed_blood_model": "混血儿", "mixed_blood_alignment": "混血儿",
+        "hunter_state": "猎人", "hunter_shot": "猎人",
+        "mechanical_action": "机械狼",
+    }.get(slot)
+    matches = slot_roles.get(role, []) if role else []
+    return matches[0] if len(matches) == 1 else None
+
+
+def _has_recorded_content(event: dict) -> bool:
+    """Whether an unknown event carries anything beyond its template slot."""
+    for key in (
+        "targets", "votes", "effects", "result", "availability", "start_seat",
+        "direction", "random_point", "speech_scope",
+    ):
+        value = event.get(key)
+        if value not in (None, [], {}):
+            return True
+    return False
+
+
+def _is_empty_unknown(event: dict) -> bool:
+    return event.get("action") in _EMPTY_ACTIONS and not _has_recorded_content(event)
+
+
+def _inferred_description(event: dict, replacement: str, note: str) -> str:
+    description = event.get("description")
+    if not isinstance(description, str) or not description:
+        return f"{replacement}；展示推断：{note}"
+    for placeholder in ("记录未知", "记录动作 unknown"):
+        if placeholder in description:
+            description = description.replace(placeholder, replacement, 1)
+            return f"{description}；展示推断依据：{note}"
+    return f"{description}；展示推断为{replacement}；依据：{note}"
+
+
+def _effect_dead_seats(event: dict) -> set[int]:
+    dead: set[int] = set()
+    effects = event.get("effects")
+    if not isinstance(effects, list):
+        return dead
+    for effect in effects:
+        if not isinstance(effect, dict):
+            continue
+        kind = effect.get("kind")
+        # A reflected poison is still an actual poison result.  Use dead_seat,
+        # never intended_target or the event's pre-reflection targets.
+        if isinstance(kind, str) and "poison" in kind:
+            seat = _as_int(effect.get("dead_seat"))
+            if seat is not None:
+                dead.add(seat)
+    return dead
+
+
+def _poison_effects(event: dict) -> list[dict]:
+    effects = event.get("effects")
+    if not isinstance(effects, list):
+        return []
+    return [
+        effect for effect in effects
+        if isinstance(effect, dict)
+        and isinstance(effect.get("kind"), str)
+        and "poison" in effect["kind"]
+    ]
+
+
+def _poison_reflection_possible(
+    targets: set[int], events: list[dict], game: dict,
+) -> bool:
+    if not targets:
+        return False
+    if _board_code(game) != "mechanical_wolf_seer":
+        return False
+    for event in events:
+        if event.get("slot") == "mechanical_action" and event.get("action") == "guard":
+            guard_targets = event.get("targets")
+            if isinstance(guard_targets, list) and targets.intersection(
+                value for value in guard_targets if type(value) is int
+            ):
+                return True
+        result = event.get("result")
+        if isinstance(result, str) and "反弹" in result and "毒" in result:
+            return True
+    return False
+
+
+def _resolved_poison_seats(
+    event: dict,
+    *,
+    night_events: list[dict],
+    day_events: list[dict],
+    game: dict,
+) -> tuple[set[int], bool]:
+    """Resolve actual poison victims, preferring effects over intended targets."""
+    effects = event.get("effects")
+    poison_effects = _poison_effects(event)
+    if poison_effects:
+        victims = {
+            dead_seat
+            for effect in poison_effects
+            if (dead_seat := _as_int(effect.get("dead_seat"))) is not None
+        }
+        unresolved = any(_as_int(effect.get("dead_seat")) is None for effect in poison_effects)
+        return victims, unresolved
+    if effects not in (None, []):
+        # A populated effect record takes precedence even if it does not give a
+        # usable poison victim; do not fall back to the original target.
+        return set(), True
+
+    targets = event.get("resolved_targets") or event.get("targets")
+    intended = {
+        value for value in (targets if isinstance(targets, list) else [])
+        if type(value) is int
+    }
+    if not intended or _poison_reflection_possible(intended, night_events, game):
+        return set(), True
+
+    confirmed_night_deaths = [
+        row for row in day_events
+        if row.get("slot") == "night_deaths" and row.get("action") == "die"
+    ]
+    if not confirmed_night_deaths:
+        return set(), True
+    dead = {
+        value
+        for row in confirmed_night_deaths
+        for value in (row.get("targets") if isinstance(row.get("targets"), list) else [])
+        if type(value) is int
+    }
+    victims = intended & dead
+    return victims, bool(intended - dead)
+
+
+def _known_poison_victims(
+    night_events: list[dict], day_events: list[dict], game: dict,
+) -> set[int]:
+    victims: set[int] = set()
+    for event in night_events:
+        victims.update(_effect_dead_seats(event))
+        if event.get("action") == "poison":
+            resolved, _ = _resolved_poison_seats(
+                event, night_events=night_events, day_events=day_events, game=game,
+            )
+            victims.update(resolved)
+    return victims
+
+
+def _actual_deaths(events: list[dict]) -> set[int]:
+    """Seats known out from explicit result events, never from attack targets."""
+    dead: set[int] = set()
+    for event in events:
+        slot = event.get("slot")
+        action = event.get("action")
+        targets = event.get("targets")
+        targets = targets if isinstance(targets, list) else []
+        target_seats = {seat for value in targets if (seat := _as_int(value)) is not None}
+
+        if slot == "night_deaths" and action == "die":
+            dead.update(target_seats)
+        elif slot == "exile_result" and action == "exile":
+            dead.update(target_seats)
+        elif action in _DEATH_ACTIONS:
+            dead.update(target_seats)
+            if not target_seats and (actor := _as_int(event.get("actor"))) is not None:
+                dead.add(actor)
+        elif action == "self_destruct":
+            if (actor := _as_int(event.get("actor"))) is not None:
+                dead.add(actor)
+        elif action == "shoot":
+            # The shot targets are actual outcomes.  The shooter is only
+            # considered out for roles whose shot is a death-triggered skill;
+            # mechanical daytime shots do not eliminate their shooter.
+            dead.update(target_seats)
+            if slot in {"hunter_shot", "wolf_king_shot"}:
+                if (actor := _as_int(event.get("actor"))) is not None:
+                    dead.add(actor)
+
+        dead.update(_effect_dead_seats(event))
+    return dead
+
+
+def _annotate_exchange_settlement(events: list[dict], game: dict) -> None:
+    """Link explicit settled exchange notes to their original actions.
+
+    The board's general interaction order is not fully established.  An
+    exchange pair alone is therefore insufficient to manufacture a mapping.
+    """
+    if _board_code(game) != "guile_realm":
+        return
+    seats = {row.get("seat"): row for row in _seat_rows(game)}
+    exchanges = [e for e in events if e.get("slot") == "magician_exchange"
+                 and e.get("action") == "exchange" and len(e.get("targets") or []) == 2]
+    if len(exchanges) != 1:
+        return
+    exchange = exchanges[0]
+    pair = set(exchange["targets"])
+    if len(pair) != 2 or not pair <= seats.keys():
+        return
+    if any(e.get("slot") == "guile_exchange" and e.get("action") == "exchange"
+           and set(e.get("targets") or []) == pair for e in events):
+        return  # Same-pair cancellation must not be mistaken for redirection.
+    note = exchange.get("result") or ""
+    if not isinstance(note, str):
+        return
+    patterns = {
+        "seer_check": r"(?:查验|预言家)[^，。；;]*?实际(?:查验|验|到|为|落在)?\s*(\d{1,2})(?!\d)",
+        "wolf_attack": r"(?:狼刀|原刀)[^，。；;]*?实际\s*(\d{1,2})(?!\d)",
+        "witch_poison": r"(?:女巫|毒药)[^，。；;]*?实际(?:毒杀|毒|到|为)?\s*(\d{1,2})(?!\d)",
+    }
+    feedback_by_role = {
+        "狼人": "werewolf", "诡术师": "werewolf", "预言家": "good",
+        "女巫": "good", "魔术师": "good", "定序王子": "good", "平民": "good",
+    }
+    for slot, pattern in patterns.items():
+        actuals = {int(value) for value in re.findall(pattern, note)}
+        actions = [e for e in events if e.get("slot") == slot
+                   and e.get("action") == {"seer_check": "check", "wolf_attack": "attack", "witch_poison": "poison"}[slot]]
+        if len(actuals) != 1 or len(actions) != 1:
+            continue
+        actual = next(iter(actuals))
+        event = actions[0]
+        targets = event.get("targets") or []
+        if len(targets) != 1 or targets[0] not in pair or pair - {targets[0]} != {actual}:
+            continue
+        if slot == "seer_check":
+            actor = seats.get(event.get("actor"), {})
+            feedback = feedback_by_role.get(seats[actual].get("role"))
+            if actor.get("role") != "预言家" or feedback is None:
+                continue
+            existing = event.get("result")
+            expected = {"good": {"good", "好人"}, "werewolf": {"werewolf", "wolf", "狼人"}}[feedback]
+            # Some archives put the feedback and redirection in one sentence.
+            # Keep explicit conflicting feedback rather than replacing it.
+            embedded = re.search(r"(?:反馈|结果(?:为|是)?)\s*(好人|狼人)", existing or "")
+            if embedded:
+                existing = embedded.group(1)
+            if existing not in (None, "", "unknown") and existing not in expected:
+                continue  # Keep conflicting recorded feedback for review.
+            event["result"] = feedback
+            reason = f"本夜交换结算明确实际查验{actual}号，其底牌为{seats[actual]['role']}，预言家反馈为{'好人' if feedback == 'good' else '狼人'}。"
+        elif slot == "wolf_attack":
+            reason = f"本夜交换结算明确狼刀原目标{targets[0]}号，实际刀口为{actual}号。"
+        else:
+            reason = f"本夜交换结算明确原用毒目标{targets[0]}号，实际毒药目标为{actual}号。"
+        event["resolved_targets"] = [actual]
+        event["inferred"] = True
+        event["inference_note"] = reason
+
+
+def _annotate_identity_feedback(events: list[dict], game: dict) -> None:
+    """The treasure board's medium reports physical identity, not victory side."""
+    if _board_code(game) != "treasure_master":
+        return
+    seats = {row.get("seat"): row for row in _seat_rows(game)}
+    known_roles = {"通灵师", "毒师", "猎人", "摄梦人", "蒙面人", "平民", "狼王", "狼人", "盗宝大师"}
+    for event in events:
+        targets = event.get("targets") or []
+        if (event.get("slot") != "seer_check" or event.get("action") != "check"
+                or event.get("result") not in (None, "", "unknown") or len(targets) != 1
+                or seats.get(event.get("actor"), {}).get("role") != "通灵师"):
+            continue
+        role = seats.get(targets[0], {}).get("role")
+        if role in known_roles:
+            event["result"] = role
+            event["inferred"] = True
+            event["inference_note"] = f"通灵师反馈实际底牌；{targets[0]}号底牌为{role}，不按其临时能力或胜利阵营改写。"
+
+
+def _witch_poison_use_nights(game: dict, role_seats: dict[str, list[int]]) -> dict[int, int]:
+    """Find a single, nonconflicting later use of a witch/poisoner's bottle."""
+    uses: dict[int, list[tuple[int, bool]]] = {}
+    eliminated: set[int] = set()
+    for round_ in game.get("rounds") or []:
+        if not isinstance(round_, dict) or type(round_.get("number")) is not int:
+            continue
+        night = [e for e in (round_.get("night") or []) if isinstance(e, dict)]
+        day = [deepcopy(e) for e in (round_.get("day") or []) if isinstance(e, dict)]
+        for event in day:
+            _voting_exile_result(event, game, round_["number"])
+        saves = {_actor_for_tracking(e, role_seats) for e in night
+                 if e.get("slot") == "witch_save" and e.get("action") == "save"}
+        for event in night:
+            if event.get("slot") != "witch_poison":
+                continue
+            actor = _actor_for_tracking(event, role_seats)
+            if actor not in role_seats.get("女巫", []) + role_seats.get("毒师", []):
+                continue
+            if event.get("action") == "poison" or _poison_effects(event):
+                valid = actor not in eliminated and actor not in saves
+                uses.setdefault(actor, []).append((round_["number"], valid))
+        # Confirmed deaths, rather than attack targets, delimit a witch's life.
+        eliminated.update(_actual_deaths(night + day))
+    return {actor: rows[0][0] for actor, rows in uses.items()
+            if len(rows) == 1 and rows[0][1]}
+
+
+def _annotate_held_poison(events: list[dict], *, number: int, use_nights: dict[int, int],
+                          role_seats: dict[str, list[int]], eliminated: set[int],
+                          spent: set[int], saved: set[int]) -> None:
+    for event in events:
+        if event.get("slot") != "witch_poison" or not _is_empty_unknown(event):
+            continue
+        actor = _actor_for_tracking(event, role_seats)
+        later_night = use_nights.get(actor)
+        if (later_night is None or later_night <= number
+                or actor in eliminated or actor in spent or actor in saved):
+            continue
+        role = "毒师" if actor in role_seats.get("毒师", []) else "女巫"
+        event["actor"] = actor
+        event["action"] = "pass"
+        event["inferred"] = True
+        event["inference_note"] = f"同一{role}第{later_night}夜才使用这瓶毒药，结合此前出局记录，本夜推断为压毒。"
+        event["description"] = f"{actor}号{role}压毒，本夜未使用毒药。"
+
+
+def _annotate_poison_from_deaths(events: list[dict], day: list[dict], game: dict, *,
+                                  number: int, role_seats: dict[str, list[int]],
+                                  eliminated: set[int], spent: set[int], saved: set[int]) -> None:
+    # This board has only the ordinary wolf knife and witch poison at night.
+    # A single death cannot rule out knife and poison hitting the same seat.
+    if _board_code(game) != "mixed_blood":
+        return
+    knives = [e for e in events if e.get("slot") == "wolf_attack" and e.get("action") == "attack"]
+    deaths = [e for e in day if e.get("slot") == "night_deaths" and e.get("action") == "die"]
+    poisons = [e for e in events if e.get("slot") == "witch_poison"]
+    if len(knives) != 1 or len(deaths) != 1 or len(poisons) != 1:
+        return
+    knife = knives[0].get("targets") or []
+    dead = set(deaths[0].get("targets") or [])
+    event = poisons[0]
+    actor = _actor_for_tracking(event, role_seats)
+    if (len(knife) != 1 or len(dead) != 2 or knife[0] not in dead
+            or actor not in role_seats.get("女巫", []) or actor in eliminated
+            or actor in spent or actor in saved or not _is_empty_unknown(event)):
+        return
+    # A later recorded use of the same bottle would contradict this deduction.
+    for round_ in game.get("rounds") or []:
+        if round_.get("number", 0) <= number:
+            continue
+        if any(e.get("slot") == "witch_poison" and e.get("action") == "poison"
+               and _actor_for_tracking(e, role_seats) == actor for e in round_.get("night") or []):
+            return
+    victim = next(iter(dead - set(knife)))
+    event["action"] = "poison"
+    event["actor"] = actor
+    event["targets"] = [victim]
+    event["inferred"] = True
+    event["inference_note"] = f"本版无其他夜间致死技能；完整天亮记录为{knife[0]}号、{victim}号双死，已知狼刀命中{knife[0]}号，因此补出毒口{victim}号。"
+    event["description"] = f"{actor}号女巫使用毒药，毒杀{victim}号。"
+
+
+def _annotate_lost_badge(events: list[dict], game: dict, number: int) -> None:
+    lost_days = [row.get("day") for row in (game.get("voting") or {}).get("days", [])
+                 if row.get("sheriff") == "badge_lost" and type(row.get("day")) is int]
+    if not lost_days or number != min(lost_days):
+        return
+    for event in events:
+        if (event.get("slot") == "badge" and not event.get("targets")
+                and (event.get("action") == "none" or _is_empty_unknown(event))):
+            event["action"] = "badge_lost"
+            event["inferred"] = True
+            event["inference_note"] = "延期警长竞选再次被自爆中断，逐日竞选记录确认警徽流失。"
+            event["description"] = "警徽流失，本局不再进行警长竞选。"
+
+
+def _poison_sources(
+    events: list[dict],
+    *,
+    day_events: list[dict],
+    game: dict,
+    role_seats: dict[str, list[int]],
+    eliminated_before_night: set[int],
+    spent_witch_poison: set[int],
+    saved_this_night: set[int],
+    spent_mechanical_poison: set[int],
+) -> tuple[set[int], bool]:
+    """Return proven poisoned seats and whether a possible poison is unresolved."""
+    poisoned: set[int] = set()
+    uncertain = False
+    witch_seats = role_seats.get("女巫", []) + role_seats.get("毒师", [])
+    mechanical_seats = role_seats.get("机械狼", [])
+    seat_by_number = {
+        _as_int(row.get("seat", row.get("number"))): row
+        for row in _seat_rows(game)
+        if _as_int(row.get("seat", row.get("number"))) is not None
+    }
+    event_slots = {event.get("slot") for event in events}
+
+    # Missing an available witch slot is a gap, not evidence that no poison
+    # was used.  A same-night save or a previously spent bottle rules it out.
+    if witch_seats and "witch_poison" not in event_slots:
+        if any(
+            seat not in eliminated_before_night
+            and seat not in spent_witch_poison
+            and seat not in saved_this_night
+            for seat in witch_seats
+        ):
+            uncertain = True
+
+    mechanical_poison_possible = False
+    for seat in mechanical_seats:
+        seat_row = seat_by_number.get(seat, {})
+        if (seat_row.get("learned_role") == "机械女巫"
+                and seat not in eliminated_before_night
+                and seat not in spent_mechanical_poison):
+            mechanical_poison_possible = True
+    if mechanical_poison_possible and "mechanical_action" not in event_slots:
+        uncertain = True
+
+    for event in events:
+        slot = event.get("slot")
+        action = event.get("action")
+        actor = _actor_for_tracking(event, role_seats)
+        poison_effects = _poison_effects(event)
+        for effect in poison_effects:
+            dead_seat = _as_int(effect.get("dead_seat"))
+            if dead_seat is not None:
+                poisoned.add(dead_seat)
+
+        if slot == "witch_poison":
+            if actor is None:
+                continue
+            # The same witch cannot use both bottles on one night.  A saved
+            # night rules out poison without spending the poison bottle.
+            if (action in _EMPTY_ACTIONS and not poison_effects
+                    and (actor in eliminated_before_night
+                         or actor in spent_witch_poison
+                         or actor in saved_this_night)):
+                continue
+            if action == "poison":
+                victims, unresolved = _resolved_poison_seats(
+                    event, night_events=events, day_events=day_events, game=game,
+                )
+                poisoned.update(victims)
+                uncertain = uncertain or unresolved
+            elif action in _EMPTY_ACTIONS and not poison_effects:
+                uncertain = True
+        elif slot == "mechanical_action":
+            if actor is None:
+                continue
+            if (action in _EMPTY_ACTIONS and not poison_effects
+                    and (actor in eliminated_before_night or actor in spent_mechanical_poison)):
+                continue
+            seat_row = seat_by_number.get(actor, {})
+            learned_role = seat_row.get("learned_role")
+            # On the learning night the mechanical wolf cannot use the new
+            # skill.  On later nights an empty mechanical-witch slot is open.
+            learning_this_night = action == "learn" or event.get("availability") == "learning"
+            if action == "poison":
+                victims, unresolved = _resolved_poison_seats(
+                    event, night_events=events, day_events=day_events, game=game,
+                )
+                poisoned.update(victims)
+                uncertain = uncertain or unresolved
+            elif (action in _EMPTY_ACTIONS and not poison_effects
+                  and learned_role == "机械女巫" and not learning_this_night):
+                uncertain = True
+        elif action == "poison":
+            # Cover other configured role slots that can record poison use.
+            victims, unresolved = _resolved_poison_seats(
+                event, night_events=events, day_events=day_events, game=game,
+            )
+            poisoned.update(victims)
+            uncertain = uncertain or unresolved
+
+    return poisoned, uncertain
+
+
+def _puppet_hunter_seats(
+    events: list[dict], role_seats: dict[str, list[int]],
+) -> set[int]:
+    puppet_seats: set[int] = set()
+    hunter_seats = set(role_seats.get("猎人", []))
+    for event in events:
+        if event.get("slot") == "puppet_select" and event.get("action") == "select":
+            targets = event.get("targets")
+            if isinstance(targets, list):
+                puppet_seats.update(
+                    value for value in targets
+                    if type(value) is int and value in hunter_seats
+                )
+        elif event.get("slot") == "puppet_skill_effect" and event.get("action") == "skill_disabled":
+            targets = event.get("targets")
+            if isinstance(targets, list):
+                puppet_seats.update(
+                    value for value in targets
+                    if type(value) is int and value in hunter_seats
+                )
+            result = event.get("result")
+            if isinstance(result, str):
+                for match in re.finditer(r"(\d+)号", result):
+                    seat = int(match.group(1))
+                    if seat in hunter_seats:
+                        puppet_seats.add(seat)
+    return puppet_seats
+
+
+def _annotate_hunter_state(
+    events: list[dict],
+    *,
+    day_events: list[dict],
+    game: dict,
+    role_seats: dict[str, list[int]],
+    eliminated_before_night: set[int],
+    spent_witch_poison: set[int],
+    saved_this_night: set[int],
+    spent_mechanical_poison: set[int],
+    puppet_hunter_seats: set[int],
+) -> None:
+    hunter_seats = role_seats.get("猎人", [])
+    if len(hunter_seats) != 1 or any(
+        not isinstance(row.get("role"), str) for row in _seat_rows(game)
+    ):
+        return
+    hunter = hunter_seats[0]
+    if hunter in eliminated_before_night:
+        return
+
+    state_events = [event for event in events if event.get("slot") == "hunter_state"]
+    if len(state_events) != 1:
+        return
+    event = state_events[0]
+    if (not _is_empty_unknown(event)
+            or event.get("availability") is not None):
+        return
+    event_actor = _actor_for_tracking(event, role_seats)
+    if event_actor != hunter:
+        return
+
+    # Puppet Hunter qualification has a separate explicit event.  Its outcome
+    # is not derivable from poison status, so leave an unknown state for review.
+    if _board_code(game) == "neighbor_puppet" and hunter in puppet_hunter_seats:
+        return
+
+    poisoned, poison_uncertain = _poison_sources(
+        events,
+        day_events=day_events,
+        game=game,
+        role_seats=role_seats,
+        eliminated_before_night=eliminated_before_night,
+        spent_witch_poison=spent_witch_poison,
+        saved_this_night=saved_this_night,
+        spent_mechanical_poison=spent_mechanical_poison,
+    )
+    if hunter in poisoned:
+        action = "cannot_shoot"
+        note = "本夜毒药结算确认命中该猎人；被毒中的猎人不能开枪。"
+    elif poison_uncertain:
+        return
+    else:
+        action = "can_shoot"
+        note = "该座位是本局唯一且仍在场的猎人；可核实的本夜用药结算未命中该猎人，因此可以开枪。"
+
+    event["action"] = action
+    event["inferred"] = True
+    event["inference_note"] = note
+    replacement = "可开枪" if action == "can_shoot" else "不能开枪"
+    event["description"] = _inferred_description(event, replacement, note)
+
+
+def _should_omit(
+    event: dict,
+    *,
+    phase: str,
+    eliminated_before_round: set[int],
+    role_seats: dict[str, list[int]],
+    spent_saves: set[int],
+    spent_witch_poison: set[int],
+    spent_mechanical_poison: set[int],
+    saved_this_night: set[int],
+    poisoned_this_night: set[int],
+    model_chosen: set[int],
+    mixed_alignment_resolved: set[int],
+    poisoner_absent: bool = False,
+) -> bool:
+    slot = event.get("slot")
+    actor = _actor_for_tracking(event, role_seats)
+    if (event.get("action") in {"unavailable", "not_applicable", "pass", "none"}
+            and not any(event.get(key) for key in ("targets", "votes", "effects"))):
+        if actor is not None and actor in eliminated_before_round:
+            return True
+        if slot == "witch_save" and actor in spent_saves:
+            return True
+        if slot == "witch_poison" and actor in spent_witch_poison:
+            return True
+    if not _is_empty_unknown(event):
+        return False
+    if slot == "witch_poison" and poisoner_absent:
+        return True
+
+    # A role's blank night slots after it has actually left play add no useful
+    # event.  Explicit actions and outcome data have already been kept above.
+    if actor is not None and actor in eliminated_before_round:
+        return True
+
+    if slot == "hunter_shot" and event.get("inferred") is True and event.get("inference_note"):
+        return False
+
+    if slot == "mixed_blood_model" and actor is not None and actor in model_chosen:
+        return True
+    if slot == "mixed_blood_alignment" and actor is not None and actor in mixed_alignment_resolved:
+        return True
+    if slot == "witch_save" and actor is not None and actor in spent_saves:
+        return True
+    if slot == "witch_poison" and actor is not None and actor in spent_witch_poison:
+        return True
+    if slot == "mechanical_action" and actor is not None and actor in spent_mechanical_poison:
+        return True
+
+    # Hide the other empty bottle slot for this night only.  The opposite
+    # bottle remains available on a later night unless it was used itself.
+    if phase == "night" and slot == "witch_poison" and actor is not None and actor in saved_this_night:
+        return True
+    if phase == "night" and slot == "witch_save" and actor is not None and actor in poisoned_this_night:
+        return True
+
+    # Empty unknown placeholders in noncritical template slots can disappear;
+    # the omitted count keeps this presentation's filtering visible.
+    return slot not in _KEEP_UNKNOWN_SLOTS
+
+
+def _record_resource_uses(
+    events: list[dict],
+    *,
+    role_seats: dict[str, list[int]],
+    spent_saves: set[int],
+    spent_witch_poison: set[int],
+    spent_mechanical_poison: set[int],
+    saved_this_night: set[int],
+    poisoned_this_night: set[int],
+    model_chosen: set[int],
+    mixed_alignment_resolved: set[int],
+) -> None:
+    for event in events:
+        actor = _actor_for_tracking(event, role_seats)
+        action = event.get("action")
+        slot = event.get("slot")
+        if actor is None:
+            continue
+        if slot == "witch_save" and action == "save":
+            spent_saves.add(actor)
+            saved_this_night.add(actor)
+        elif slot == "witch_poison" and action == "poison":
+            spent_witch_poison.add(actor)
+            poisoned_this_night.add(actor)
+        elif slot == "mechanical_action" and action == "poison":
+            spent_mechanical_poison.add(actor)
+        elif slot == "mixed_blood_model" and action == "choose":
+            model_chosen.add(actor)
+        elif slot == "mixed_blood_alignment" and action in {"good", "wolf"}:
+            mixed_alignment_resolved.add(actor)
+
+
+def _voting_exile_result(event: dict, game: dict, day_number: int) -> str | None:
+    """Use explicit voting records to resolve or omit an empty exile slot.
+
+    Returns ``"omit"`` when the day record proves no exile result was held,
+    ``"inferred"`` after filling a completed voting outcome, or ``None`` when
+    the voting archive does not settle the question.
+    """
+    if event.get("slot") != "exile_result":
+        return None
+    empty_result = _is_empty_unknown(event)
+    recorded_no_exile = event.get("action") == "none" and not event.get("targets")
+    if not empty_result and not recorded_no_exile:
+        return None
+    voting = game.get("voting")
+    if not isinstance(voting, dict):
+        return None
+
+    day_record = next(
+        (row for row in voting.get("days", [])
+         if isinstance(row, dict) and row.get("day") == day_number),
+        None,
+    )
+    if not isinstance(day_record, dict):
+        return None
+    status = day_record.get("exile")
+    if status in {"interrupted_self_destruct", "not_applicable", "not_held"}:
+        return "omit" if empty_result else None
+    if status != "recorded":
+        return None
+
+    ballots = [
+        row for row in voting.get("ballots", [])
+        if isinstance(row, dict)
+        and row.get("day") == day_number
+        and row.get("kind") == "exile"
+    ]
+    if not ballots:
+        return None
+    # Voting records are stored in their played order.  An earlier complete
+    # round cannot stand in for a later incomplete or unresolved one.
+    ballot = ballots[-1]
+    if ballot.get("status") != "complete":
+        return None
+    winner = _as_int(ballot.get("winner"))
+    # A completed initial vote followed by a completed, tied PK ends this
+    # day's exile.  The PK stage itself establishes the initial tie even if
+    # that older ballot has no tied_candidates annotation.  Do not infer this
+    # from a lone tie, incomplete PK, or an earlier pair before a later vote.
+    if (winner is None and len(ballots) >= 2
+            and ballot.get("stage") == "pk"
+            and len(set(ballot.get("tied_candidates") or [])) >= 2
+            and ballots[-2].get("stage") == "initial"
+            and ballots[-2].get("status") == "complete"
+            and _as_int(ballots[-2].get("winner")) is None):
+        event["action"] = "none"
+        event["targets"] = []
+        event["result"] = "double_tie"
+        if empty_result:
+            event["inferred"] = True
+            event["inference_note"] = "完整放逐首轮与 PK 轮均平票，按规则本日无人被放逐。"
+        event["description"] = "放逐首轮与 PK 轮均平票，本日无人被放逐。"
+        return "inferred"
+    if not empty_result:
+        return None
+    if winner is None:
+        return None
+
+    event["action"] = "exile"
+    event["targets"] = [winner]
+    note = f"第{day_number}天完整放逐票的最终结果记录为{winner}号出局，据此补记。"
+    event["inferred"] = True
+    event["inference_note"] = note
+    event["description"] = _inferred_description(event, f"{winner}号出局", note)
+    return "inferred"
+
+
+def _annotate_pending_hunter_shot(
+    night_events: list[dict],
+    day_events: list[dict],
+    *,
+    known_deaths: set[int],
+    known_poison_victims: set[int],
+    role_seats: dict[str, list[int]],
+) -> None:
+    hunter_seats = role_seats.get("猎人", [])
+    if len(hunter_seats) != 1:
+        return
+    hunter = hunter_seats[0]
+    if hunter not in known_deaths:
+        return
+    if hunter in known_poison_victims:
+        return
+
+    state_events = [
+        event for event in night_events
+        if event.get("slot") == "hunter_state"
+        and _actor_for_tracking(event, role_seats) == hunter
+    ]
+    status = state_events[-1].get("action") if state_events else None
+    if status in {"cannot_shoot", "unavailable", "forbidden"}:
+        return
+
+    puppet_events = [
+        event for event in day_events
+        if event.get("slot") == "puppet_hunter_eligibility"
+        and _actor_for_tracking(event, role_seats) == hunter
+    ]
+    puppet_status = puppet_events[-1].get("action") if puppet_events else None
+    if puppet_status in {"cannot_shoot", "unavailable", "forbidden"}:
+        return
+
+    qualification_known = status == "can_shoot" or puppet_status == "can_shoot"
+    note = (
+        "档案确认猎人本日出局且具备开枪资格，但未记录开枪目标，请复核。"
+        if qualification_known else
+        "猎人本日出局，开枪资格或开枪目标仍待核；档案未记录枪口，请复核。"
+    )
+    for event in day_events:
+        if (event.get("slot") == "hunter_shot"
+                and _actor_for_tracking(event, role_seats) == hunter
+                and _is_empty_unknown(event)):
+            event["inferred"] = True
+            event["inference_note"] = note
+            event["description"] = _inferred_description(event, "开枪情况待核", note)
+
+
+def build_game_presentation(game: dict) -> dict:
+    """Build a filtered, inferred presentation without changing ``game``.
+
+    Each returned event is a copy of its source GameEvent and retains its
+    original fields.  Inferred hunter states and voting outcomes gain
+    ``inferred`` and ``inference_note``.  Phase boundaries are untouched.
+    """
+    source_rounds = game.get("rounds")
+    source_rounds = source_rounds if isinstance(source_rounds, list) else []
+    role_seats = _role_seats(game)
+    poison_use_nights = _witch_poison_use_nights(game, role_seats)
+    seats = _seat_rows(game)
+    poisoner_absent = (len(seats) == 12
+                       and all(row.get("role") not in {None, "", "unknown", "未知", "身份未知"} for row in seats)
+                       and not role_seats.get("女巫") and not role_seats.get("毒师"))
+
+    eliminated: set[int] = set()
+    spent_saves: set[int] = set()
+    spent_witch_poison: set[int] = set()
+    spent_mechanical_poison: set[int] = set()
+    model_chosen: set[int] = set()
+    mixed_alignment_resolved: set[int] = set()
+    puppet_hunter_seats: set[int] = set()
+    output_rounds: list[dict] = []
+    omitted = 0
+
+    for source_round in source_rounds:
+        if not isinstance(source_round, dict):
+            output_rounds.append({"number": None, "night": [], "day": []})
+            omitted += 1
+            continue
+        number = source_round.get("number")
+        source_night = source_round.get("night")
+        source_day = source_round.get("day")
+        source_night = source_night if isinstance(source_night, list) else []
+        source_day = source_day if isinstance(source_day, list) else []
+        eliminated_before_round = set(eliminated)
+
+        # Do analysis on copies so inference and presentation never mutate the
+        # database-backed event dictionaries passed by the API.
+        night = [deepcopy(event) for event in source_night if isinstance(event, dict)]
+        day = [deepcopy(event) for event in source_day if isinstance(event, dict)]
+        for event in night:
+            if (event.get("slot") == "witch_poison"
+                    and _actor_for_tracking(event, role_seats) in role_seats.get("毒师", [])):
+                event["slot_label"] = "毒师毒药"
+
+        saved_this_night = {
+            _actor_for_tracking(event, role_seats)
+            for event in night
+            if event.get("slot") == "witch_save" and event.get("action") == "save"
+        }
+        poisoned_this_night = {
+            _actor_for_tracking(event, role_seats)
+            for event in night
+            if event.get("slot") == "witch_poison" and event.get("action") == "poison"
+        }
+        saved_this_night.discard(None)
+        poisoned_this_night.discard(None)
+
+        _annotate_exchange_settlement(night, game)
+        _annotate_identity_feedback(night, game)
+        _annotate_poison_from_deaths(
+            night, day, game, number=number if type(number) is int else 0,
+            role_seats=role_seats, eliminated=eliminated_before_round,
+            spent=spent_witch_poison, saved=saved_this_night,
+        )
+        _annotate_held_poison(
+            night, number=number if type(number) is int else 0,
+            use_nights=poison_use_nights, role_seats=role_seats,
+            eliminated=eliminated_before_round, spent=spent_witch_poison,
+            saved=saved_this_night,
+        )
+        _annotate_lost_badge(day, game, number)
+
+        puppet_hunter_seats.update(_puppet_hunter_seats(night, role_seats))
+        puppet_hunter_seats.update(_puppet_hunter_seats(day, role_seats))
+        _annotate_hunter_state(
+            night,
+            game=game,
+            day_events=day,
+            role_seats=role_seats,
+            eliminated_before_night=eliminated_before_round,
+            spent_witch_poison=spent_witch_poison,
+            saved_this_night=saved_this_night,
+            spent_mechanical_poison=spent_mechanical_poison,
+            puppet_hunter_seats=puppet_hunter_seats,
+        )
+
+        for event in night:
+            slot = event.get("slot")
+            if slot == "witch_save" and event.get("action") == "save":
+                saved_this_night.add(_actor_for_tracking(event, role_seats))
+            elif slot == "witch_poison" and event.get("action") == "poison":
+                poisoned_this_night.add(_actor_for_tracking(event, role_seats))
+        saved_this_night.discard(None)
+        poisoned_this_night.discard(None)
+
+        filtered_night = []
+        for event in night:
+            if _should_omit(
+                event,
+                phase="night",
+                eliminated_before_round=eliminated_before_round,
+                role_seats=role_seats,
+                spent_saves=spent_saves,
+                spent_witch_poison=spent_witch_poison,
+                spent_mechanical_poison=spent_mechanical_poison,
+                saved_this_night=saved_this_night,
+                poisoned_this_night=poisoned_this_night,
+                model_chosen=model_chosen,
+                mixed_alignment_resolved=mixed_alignment_resolved,
+                poisoner_absent=poisoner_absent,
+            ):
+                omitted += 1
+            else:
+                filtered_night.append(event)
+
+        # Resolve/omit unsupported empty exile placeholders first, so a
+        # completed ballot winner is included in the current day's deaths.
+        omitted_day_event_ids: set[int] = set()
+        for event in day:
+            exile_status = _voting_exile_result(
+                event, game, number if type(number) is int else 0,
+            )
+            if exile_status == "omit":
+                omitted += 1
+                omitted_day_event_ids.add(id(event))
+
+        # Night result events belong to the day row, but deaths take effect
+        # after night actions and before day actions.  Include inferred exile
+        # results before deciding who can act on a later night.
+        night_out = _actual_deaths(night) | _actual_deaths(day)
+        known_poison_victims = _known_poison_victims(night, day, game)
+        _annotate_pending_hunter_shot(
+            night,
+            day,
+            known_deaths=night_out,
+            known_poison_victims=known_poison_victims,
+            role_seats=role_seats,
+        )
+        filtered_day = []
+        for event in day:
+            if id(event) in omitted_day_event_ids:
+                continue
+            if _should_omit(
+                event,
+                phase="day",
+                eliminated_before_round=eliminated_before_round,
+                role_seats=role_seats,
+                spent_saves=spent_saves,
+                spent_witch_poison=spent_witch_poison,
+                spent_mechanical_poison=spent_mechanical_poison,
+                saved_this_night=saved_this_night,
+                poisoned_this_night=poisoned_this_night,
+                model_chosen=model_chosen,
+                mixed_alignment_resolved=mixed_alignment_resolved,
+                poisoner_absent=poisoner_absent,
+            ):
+                omitted += 1
+            else:
+                filtered_day.append(event)
+
+        output_rounds.append({"number": number, "night": filtered_night, "day": filtered_day})
+
+        # Update persistent once-per-game actions after projecting this night.
+        _record_resource_uses(
+            night,
+            role_seats=role_seats,
+            spent_saves=spent_saves,
+            spent_witch_poison=spent_witch_poison,
+            spent_mechanical_poison=spent_mechanical_poison,
+            saved_this_night=set(),
+            poisoned_this_night=set(),
+            model_chosen=model_chosen,
+            mixed_alignment_resolved=mixed_alignment_resolved,
+        )
+        eliminated.update(night_out)
+
+    # Source events that were not dictionaries are malformed for the public
+    # GameEvent contract, but count as omitted instead of changing numbering.
+    omitted += sum(
+        1
+        for round_ in source_rounds
+        for phase in ("night", "day")
+        for event in (round_.get(phase) if isinstance(round_, dict) else []) or []
+        if not isinstance(event, dict)
+    )
+    return {"version": PRESENTATION_VERSION, "rounds": output_rounds, "omitted_events": omitted}

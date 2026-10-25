@@ -1,0 +1,81 @@
+.directory :global(.player-directory) {
+  padding-top: 22px;
+}
+
+.directory :global(.player-grid) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.directory :global(.player-card-photo) {
+  height: clamp(176px, 18vw, 216px);
+}
+
+.directory :global(.player-card-copy) {
+  padding: 12px 14px 14px;
+}
+
+.directory :global(.player-card-copy h3) {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.directory :global(.player-card-copy > p) {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.directory :global(.player-card-rate) {
+  gap: 9px;
+  margin-top: 9px;
+  padding-top: 8px;
+}
+
+.directory :global(.player-card-rate span) {
+  font-size: 12px;
+}
+
+.directory :global(.player-card-rate strong) {
+  font-size: 16px;
+}
+
+@media (max-width: 1050px) {
+  .directory :global(.player-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .directory :global(.player-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .directory :global(.player-card-photo) {
+    height: 168px;
+  }
+
+  .directory :global(.player-card-copy) {
+    padding: 11px 12px 13px;
+  }
+
+  .directory :global(.player-card-copy h3) {
+    font-size: 16px;
+  }
+
+  .directory :global(.player-card-copy > p) {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .directory :global(.player-card-photo) {
+    height: 145px;
+  }
+
+  .directory :global(.player-card-copy) {
+    padding-inline: 9px;
+  }
+}

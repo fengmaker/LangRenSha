@@ -1,0 +1,182 @@
+.roster {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+
+.column,
+.reviewSection {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid var(--line-strong, rgba(222, 235, 221, .22));
+  background: rgba(16, 30, 30, .72);
+}
+
+.wolfColumn {
+  border-top: 3px solid #d98f8f;
+}
+
+.specialColumn {
+  border-top: 3px solid var(--mint, #7ce1bf);
+}
+
+.civilianColumn {
+  border-top: 3px solid var(--gold, #e7c886);
+}
+
+.columnHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.columnTitle {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.columnCount {
+  flex: none;
+  color: var(--muted, #a0b1aa);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.seatList {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.seatCard {
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid var(--line, rgba(222, 235, 221, .12));
+  border-left-width: 3px;
+  background: var(--panel, #101e1e);
+  overflow-wrap: anywhere;
+}
+
+.wolfCard {
+  border-left-color: #d98f8f;
+}
+
+.specialCard {
+  border-left-color: var(--mint, #7ce1bf);
+}
+
+.civilianCard {
+  border-left-color: var(--gold, #e7c886);
+}
+
+.reviewCard {
+  border-left-color: var(--rose, #e69b9b);
+}
+
+.seatTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.seatNumber {
+  display: inline-grid;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--line-strong, rgba(222, 235, 221, .22));
+  color: var(--mint-strong, #a0f0d3);
+  font: 700 15px/1 var(--mono, Consolas, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+.seatFaction {
+  min-width: 0;
+  color: var(--muted, #a0b1aa);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.seatName {
+  margin: 10px 0 2px;
+  color: var(--text, #f0f1e9);
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.seatName a {
+  color: inherit;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: color .16s ease, text-decoration-color .16s ease;
+}
+
+.seatName a:hover {
+  color: var(--mint-strong, #a0f0d3);
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
+.seatRole {
+  margin: 0;
+  color: #d2ddd5;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 550;
+}
+
+.seatNote {
+  margin: 7px 0 0;
+  color: var(--muted, #a0b1aa);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.emptyGroup {
+  margin: 14px 0 1px;
+  color: var(--muted, #a0b1aa);
+  font-size: 13px;
+}
+
+.reviewSection {
+  border-top: 3px solid var(--gold, #e7c886);
+  background: rgba(35, 30, 20, .32);
+}
+
+.reviewList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+@media (max-width: 760px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .column,
+  .reviewSection {
+    padding: 14px;
+  }
+
+  .reviewList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

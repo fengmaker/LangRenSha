@@ -1,0 +1,256 @@
+export type Release = {
+  id: string;
+  published_at: string | null;
+  game_count: number;
+  source_hash: string;
+  active?: boolean;
+};
+
+export type RoleCount = { role: string; count: number };
+export type BoardCount = { code: string; name: string; count: number };
+export type BoardSummary = { code: string; name: string; games: number };
+export type PlayerSummary = {
+  id: string;
+  name: string;
+  appearances: number;
+  roles: RoleCount[];
+  photo?: PlayerPhoto | null;
+  stats?: Pick<PlayerStats, "appearances" | "wins" | "losses" | "pending_games" | "points" | "points_complete" | "total_win_rate">;
+};
+export type Metric = {
+  numerator: number;
+  denominator: number;
+  rate: number | null;
+  excluded: number;
+  game_ids: string[];
+};
+export type PlayerPhoto = { url: string; season: string; source_url: string; source_date: string };
+export type PlayerLedgerEntry = {
+  game_id: string;
+  date: string;
+  game_number: number | null;
+  phase: string;
+  board_name: string;
+  role: string | null;
+  faction: string | null;
+  faction_inferred?: boolean;
+  result: "win" | "loss" | "unknown";
+  points: number | null;
+  cumulative_points: number;
+  pending_count: number;
+};
+export type PlayerStats = {
+  appearances: number;
+  scope_games: number;
+  wins: number;
+  losses: number;
+  pending_games: number;
+  points: number;
+  points_complete: boolean;
+  attendance: Metric;
+  total_win_rate: Metric;
+  werewolf_win_rate: Metric;
+  good_win_rate: Metric;
+  sheriff_registration_rate: Metric;
+  seer_follow_rate: Metric;
+  sheriff_seer_vote_rate: Metric;
+  roles: { role: string; appearances: number; wins: number; losses: number; pending_games: number; win_rate: number | null }[];
+  ledger: PlayerLedgerEntry[];
+  notes: string[];
+};
+export type GamePlayer = {
+  id: string | null;
+  name: string;
+  seat: number;
+  role: string | null;
+  faction: string | null;
+};
+export type GameSummary = {
+  id: string;
+  season: string;
+  date: string;
+  phase: string;
+  game_number: number | null;
+  board: { code: string; name: string };
+  winner: string | null;
+  players: GamePlayer[];
+  ballot_count: number;
+  round_count: number;
+};
+export type Overview = {
+  release: Release;
+  totals: { games: number; days: number; players: number; ballots: number; votes: number };
+  seasons: { id: string; name: string; games: number; days: number }[];
+  boards: { code: string; name: string; games: number }[];
+  recent_games: GameSummary[];
+};
+export type PageResult<T> = {
+  items: T[];
+  total: number;
+  page: number;
+  page_size: number;
+  release_id: string;
+};
+export type GameEvent = {
+  inferred?: boolean;
+  inference_note?: string;
+  resolved_targets?: number[];
+  slot?: string | null;
+  slot_label?: string | null;
+  action?: string | null;
+  actor?: number | null;
+  targets?: number[] | null;
+  result?: string | null;
+  start_seat?: number | null;
+  direction?: string | null;
+  votes?: unknown[] | null;
+  random_point?: number | null;
+  speech_scope?: string | null;
+  availability?: string | null;
+  effects?: GameEffect[] | null;
+  description?: string | null;
+};
+export type GameEffect = {
+  kind: string;
+  intended_target?: number | null;
+  dead_seat?: number | null;
+  shield_actor?: number | null;
+};
+export type GameRound = {
+  number: number;
+  night: GameEvent[];
+  day: GameEvent[];
+};
+export type Seat = {
+  seat: number;
+  person_id: string | null;
+  name: string | null;
+  role: string | null;
+  faction: string | null;
+  learning_target: number | null;
+  learned_role: string | null;
+};
+export type Vote = { voter: number; target: number | null; state: string; basis?: string | null };
+export type Ballot = {
+  id: string;
+  day: number;
+  kind: string;
+  number: number;
+  stage: string;
+  status: string;
+  candidates: number[] | null;
+  eligible_voters: number[] | null;
+  votes: Vote[];
+  tied_candidates: number[];
+  winner: number | null;
+  unrecorded_voters: number[];
+};
+export type VotingDay = { day: number; sheriff?: string; exile?: string };
+export type VotingData = {
+  registrations?: { id: string; day: number; on_police: number[] | null; off_police: number[] | null }[];
+  ballots?: Ballot[];
+  interruptions?: { day?: number; kind?: string; reason?: string; status?: string }[];
+  days?: VotingDay[];
+};
+export type GameDetail = GameSummary & {
+  release_id: string;
+  commentators: string[];
+  referee: string | null;
+  seats: Seat[];
+  rounds: GameRound[];
+  presentation?: { version: number; rounds: GameRound[]; omitted_events: number };
+  voting: VotingData;
+  endgame: { phases: { phase?: string; kind?: string; day?: number | null; actor?: number | null; declared_targets?: number[]; result?: string | null; note?: string | null }[] };
+  source: { url: string | null; bvid: string | null };
+  data_notes: string[];
+};
+export type PlayerDetail = {
+  id: string;
+  name: string;
+  appearances: number;
+  roles: RoleCount[];
+  boards: BoardCount[];
+  games: GameSummary[];
+  release_id: string;
+  stats?: PlayerStats;
+  scope?: { season: string; phase: string; games: number };
+  available_seasons?: string[];
+  photo?: PlayerPhoto | null;
+};
+export type LeaderboardItem = {
+  rank: number;
+  id: string;
+  name: string;
+  appearances: number;
+  wins: number;
+  losses: number;
+  pending_games: number;
+  points: number;
+  points_complete: boolean;
+  total_win_rate: Metric;
+  werewolf_win_rate: Metric;
+  good_win_rate: Metric;
+  attendance: Metric;
+  sheriff_registration_rate: Metric;
+  wolf_vote_rate: Metric;
+  exile_abstentions: number;
+  werewolf_appearances: number;
+  werewolf_draw_rate: Metric;
+  werewolf_self_explosion_rate: Metric;
+  werewolf_sheriff_registration_rate: Metric;
+  seer_follow_rate: Metric;
+  sheriff_seer_vote_rate: Metric;
+  bluff_count: number;
+  bluff_count_complete: boolean;
+  bluff_pending_games: number;
+  bluff_review_count: number;
+  bluff_success_rate: Metric;
+  photo: PlayerPhoto | null;
+};
+export type BluffReview = {
+  release_id: string;
+  analytics_version: number;
+  season: string;
+  status: "all" | "pending";
+  player: string;
+  inference_version: string | null;
+  summary: { games: number; wolf_appearances: number; identified_bluffs: number; successes: number; pending: number };
+  notes: string[];
+  items: {
+    review_id: string; source_fingerprint: string; game_id: string; date: string; game_number: number | null; bvid: string | null;
+    player_id: string; seat: number; name: string; physical_role: string; claimed_role: string | null;
+    decision: "yes" | "no" | "uncertain"; confidence: "high" | "medium" | "low";
+    claim_day: 1 | 2 | "later" | null; first_day_claim: boolean | null; decision_note: string; verification_status: string;
+    evidence: { kind: string; text: string; start_ms?: number; end_ms?: number; url?: string; interpretation?: string }[];
+    success: boolean | null; success_reasons: { kind: string; text: string; target?: number }[];
+    review_questions: string[]; needs_review: boolean;
+  }[];
+};
+export type Leaderboard = {
+  release_id: string;
+  season: string;
+  season_status: "completed" | "ongoing" | "unknown";
+  phase: "all" | "finals_week";
+  game_count: number;
+  pending_games: number;
+  scoring: { werewolf_win: number; good_win: number; loss: number };
+  items: LeaderboardItem[];
+  notes: string[];
+};
+export type Stats = {
+  release_id: string;
+  game_count: number;
+  roles: RoleCount[];
+  boards: {
+    code: string;
+    name: string;
+    games: number;
+    good_wins: number;
+    werewolf_wins: number;
+    unknown: number;
+  }[];
+  players: PlayerSummary[];
+  methodology: string[];
+};
+
+export type SearchParams = Record<string, string | string[] | undefined>;

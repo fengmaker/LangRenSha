@@ -1,0 +1,68 @@
+.wrap { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; }
+.table { width: 100%; border-collapse: collapse; text-align: left; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.table th { padding: 12px 18px; color: var(--muted); background: var(--panel); font-size: 14px; font-weight: 500; }
+.table th:last-child { text-align: right; }
+.game td { padding: 13px 18px; border-top: 1px solid var(--line); vertical-align: middle; }
+.game:hover { background: rgba(124, 225, 191, .025); }
+.date { display: grid; gap: 3px; width: fit-content; }
+.date time { color: var(--text); font-size: 17px; font-variant-numeric: tabular-nums; font-weight: 550; white-space: nowrap; }
+.date > span { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.date:hover time, .actions a:hover, .actions button:hover { color: var(--mint-strong); }
+.board { color: var(--text); font-size: 16px; }
+.result { display: inline-flex; padding: 3px 10px; border-radius: 5px; font-size: 14px; white-space: nowrap; }
+.good { color: var(--mint); background: rgba(124, 225, 191, .08); }
+.wolf { color: #e6aeaa; background: rgba(230, 155, 155, .08); }
+.unknown { color: var(--muted); background: rgba(222, 235, 221, .06); }
+.records { color: var(--muted); font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.records > span { color: var(--faint); }
+.actions { display: flex; justify-content: flex-end; align-items: center; gap: 18px; white-space: nowrap; }
+.actions button, .actions a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 14px; cursor: pointer; }
+.expanded { transform: rotate(180deg); }
+.rosterRow[hidden] { display: none !important; }
+.rosterRow > td { padding: 4px 18px 18px; background: rgba(16, 30, 30, .45); }
+.seats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; list-style: none; margin: 0; padding: 0; }
+.seats li { min-width: 0; }
+.seats a, .seats li > div { display: flex; align-items: center; gap: 10px; min-height: 66px; height: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 5px; background: var(--ink-soft); }
+.seats a:hover { border-color: var(--line-strong); }
+.seats a:hover strong { color: var(--mint); }
+.seat { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; color: var(--muted); background: rgba(222, 235, 221, .06); font-size: 13px; font-variant-numeric: tabular-nums; }
+.playerInfo { display: grid; gap: 3px; min-width: 0; overflow-wrap: anywhere; }
+.playerInfo strong { font-size: 15px; font-weight: 500; }
+.playerInfo > span { color: var(--muted); font-size: 13px; }
+.noRoster { color: var(--faint); font-size: 13px; }
+.empty { display: grid; place-items: center; min-height: 140px; margin: 0; padding: 24px; border: 1px dashed var(--line-strong); border-radius: 8px; color: var(--muted); font-size: 15px; text-align: center; }
+
+@media (max-width: 1050px) {
+  .table th, .game td { padding-left: 12px; padding-right: 12px; }
+  .actions { gap: 12px; }
+  .seats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 820px) {
+  .wrap { border: 0; overflow: visible; }
+  .table, .table tbody { display: block; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .game { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 9px 14px; padding: 14px 0 6px; border-top: 1px solid var(--line); }
+  .game td { padding: 0; border: 0; }
+  .dateCell { grid-column: 1; grid-row: 1; }
+  .resultCell { grid-column: 2; grid-row: 1; justify-self: end; }
+  .board { grid-column: 1; grid-row: 2; }
+  .records { grid-column: 2; grid-row: 2; font-size: 13px; }
+  .actionCell { grid-column: 1 / -1; }
+  .actions { justify-content: space-between; }
+  .rosterRow, .rosterRow > td { display: block; width: 100%; }
+  .rosterRow > td { padding: 8px 0 14px; background: transparent; }
+  .seats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .seats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 360px) {
+  .game { gap: 8px; }
+  .result { padding: 3px 8px; }
+  .records { font-size: 12px; }
+  .seats a, .seats li > div { gap: 7px; padding: 9px 8px; }
+}

@@ -1,0 +1,29 @@
+.home :global(.hero-copy h1) { margin-top: 0; }
+.home :global(.hero-copy > p) { font-size: 16px; }
+.home :global(.hero-actions) { flex-wrap: wrap; gap: 18px 24px; }
+.home :global(.hero-actions .button), .home :global(.hero-actions .text-link) { font-size: 14px; }
+.home :global(.hero-center > span) { letter-spacing: -.05em; }
+.home :global(.section-heading h2) { margin: 0; }
+.home :global(.metric-card > span) { font-size: 14px; }
+.home :global(.metric-card > strong) { margin-top: 14px; }
+.home :global(.board-row-main strong), .home :global(.season-row strong) { font-size: 15px; }
+.home :global(.board-row > b), .home :global(.season-count), .home :global(.season-code) { font-size: 15px; }
+.home :global(.season-row small) { font-size: 13px; }
+.home :global(.inline-link) { font-size: 14px; }
+.home :global(.recent-section .button) { min-height: 42px; padding: 0 16px; border-radius: 6px; font-size: 14px; }
+
+@media (max-width: 760px) {
+  .home :global(.hero-copy > p) { font-size: 15px; }
+  .home :global(.hero-actions .button), .home :global(.hero-actions .text-link) { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .home :global(.hero-copy) { padding: 38px 0 42px; }
+  .home :global(.home-hero) { min-height: 0; }
+  .home :global(.hero-copy > p) { max-width: 310px; }
+  .home :global(.metric-card > strong) { font-size: 29px; }
+  .home :global(.metric-card .metric-inline) { font-size: 14px; }
+  .home :global(.board-row-main) { grid-template-columns: minmax(110px, 1.2fr) 1fr; }
+  .home :global(.board-row-main strong), .home :global(.season-row strong) { font-size: 14px; }
+  .home :global(.season-row small) { font-size: 12px; }
+}

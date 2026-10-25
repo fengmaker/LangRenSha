@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>S22 悍跳推断与填写复核</title>
+<style>
+*{box-sizing:border-box}body{max-width:1100px;margin:28px auto;padding:0 16px;background:#0b1717;color:#e7eeeb;font:16px/1.8 Arial,"Microsoft YaHei",sans-serif}a{color:#7ce1bf}h2{font-size:20px}article{border:1px solid #426056;padding:20px;margin:18px 0;overflow-wrap:anywhere}blockquote{border-left:3px solid #7ce1bf;margin:15px 0;padding:10px 15px;background:#152a25}.questions{color:#f0ce82}.key{color:#9bb0a5}nav{position:sticky;top:0;z-index:4;padding:12px;background:#17352b;border:1px solid #426056}nav p{margin:0 0 8px;font-size:13px}nav .actions{display:flex;flex-wrap:wrap;gap:8px}button,.import-button{font:inherit;font-size:14px;padding:7px 12px;background:#1d4537;color:#ebfff6;border:1px solid #598674;cursor:pointer}input[type=search]{font:inherit;max-width:100%;min-width:0;background:#091614;border:1px solid #598674;color:#fff;padding:7px}.bluff-feedback-form{margin-top:20px;padding-top:14px;border-top:1px solid #426056}.bluff-feedback-form h3{font-size:17px}.bluff-feedback-form label{display:grid;gap:6px}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}select,textarea{width:100%;min-width:0;font:inherit;color:#e7eeeb;background:#091614;border:1px solid #598674;padding:9px}textarea{min-height:105px;resize:vertical}[data-feedback-row-status]{font-size:13px;color:#9bb0a5}[data-feedback-filled=true] [data-feedback-row-status]{color:#7ce1bf}[hidden]{display:none!important}@media(max-width:700px){.choices{grid-template-columns:1fr}article{padding:14px}nav{padding:9px}button,.import-button{font-size:13px;padding:6px 8px}}
+</style><style>
+.copy-fallback{margin-top:10px;padding:12px;background:#091614;border:1px solid #598674}.copy-fallback p{margin:0 0 8px}.copy-fallback textarea{min-height:260px;font:12px/1.5 Consolas,monospace;white-space:pre}
+</style></head><body>
+<h1>S22 悍跳推断与填写复核</h1><p>__SUMMARY__</p>
+<details><summary>判定口径</summary><ul>__NOTES__</ul></details>
+<p>我会先核对狼人底牌、首日发言及前后语境。你只需在需要更正或确认的记录下填写结论和意见，完成后导出反馈 JSON 发给我，我再据此更新统计。未填写不代表确认；缺少的身份或天数会保留为未确定，不会自动补填。</p>
+<nav><p>填写会保存在当前浏览器。浏览器没有开始下载时，可点“显示／复制反馈 JSON”手动复制。也可以下载包含填写内容的整份复核页。</p>
+<div class="actions"><button type="button" data-feedback-save>保存草稿</button><button type="button" data-feedback-export>导出反馈 JSON</button><button type="button" data-feedback-copy-open>显示／复制反馈 JSON</button><button type="button" data-feedback-backup>下载已填写复核页</button><label class="import-button">导入反馈<input type="file" accept=".json,application/json" data-feedback-import hidden></label></div>
+<p data-feedback-status role="status" aria-live="polite">正在读取草稿…</p>
+<div class="copy-fallback" data-feedback-copy-fallback hidden><p>如果浏览器没有开始下载，请复制下面的完整反馈 JSON，再发给维护者。</p><textarea aria-label="可复制的完整反馈 JSON" data-feedback-copy-text readonly spellcheck="false"></textarea><button type="button" data-feedback-copy>复制 JSON</button></div>
+<div class="actions"><button type="button" id="pending">只看待复核</button><button type="button" id="all">全部记录（含推断不是悍跳）</button><input type="search" id="search" placeholder="搜索姓名、日期、BV号"></div></nav>
+__CARDS__
+<script type="module">
+__RUNTIME__
+mountBluffFeedback(document, __OPTIONS__);
+let pending=Array.from(document.querySelectorAll('article')).some(el=>el.dataset.pending==='1');
+const filter=()=>{const q=document.querySelector('#search').value.trim().toLowerCase();document.querySelectorAll('article').forEach(el=>el.hidden=(pending&&el.dataset.pending!=='1')||!el.dataset.search.toLowerCase().includes(q));};
+document.querySelector('#pending').onclick=()=>{pending=true;filter();};document.querySelector('#all').onclick=()=>{pending=false;filter();};document.querySelector('#search').oninput=filter;filter();
+</script></body></html>
