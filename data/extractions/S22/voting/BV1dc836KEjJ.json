@@ -470,17 +470,7 @@
       }
     ]
   },
-  "rule_applications": [
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-3",
-      "day": 3,
-      "voters": [
-        12
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    }
-  ],
+  "rule_applications": [],
   "eligibility_derivations": [
     {
       "target": "ballot-2",
@@ -600,7 +590,7 @@
   ],
   "bvid": "BV1dc836KEjJ",
   "source_sha256": "83160b3b8257d5edd096f38403433d2dd469d70d0b7e4df1480a7dd5b4426ae7",
-  "dossier_sha256": "c0b6042cdfa635916744fcfdf9acf1b69eb2b72411114a54ee75e2a7e9905a1e",
+  "dossier_sha256": "8ce6783e9f5fec1a65ee71513959e862c5f914caaee4bdf664b9b86913fbbcc9",
   "generated_at": "2026-10-25T04:08:41+08:00",
   "facts": {
     "schema_version": 1,
@@ -803,8 +793,8 @@
           },
           {
             "voter": 12,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           }
         ],
         "tied_candidates": [],
@@ -830,5 +820,8 @@
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "dot_audit_applied": [
+    "S22-V-027"
+  ]
 }

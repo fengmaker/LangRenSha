@@ -25,6 +25,62 @@
         ],
         "result": "狼刀6号平民；毒11号九尾狐因特殊规则免疫，因此6单死。"
       }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "pass",
+        "actor": 3,
+        "targets": [],
+        "result": "N1守卫3号技能通过，未守护目标。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "guard",
+        "actor": 3,
+        "targets": [
+          7
+        ],
+        "result": "D1狼10号自爆后入N2，守卫3号守护7号预言家。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "whiteze_clear_mark",
+      "changes": {
+        "result": "清标尝试未生效；法官播报无事发生。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "whiteze_clear_mark",
+      "changes": {
+        "result": "清标尝试未生效；法官播报无事发生。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
     }
   ],
   "finding_resolutions": [
@@ -90,5 +146,182 @@
     }
   ],
   "extra_findings": [],
-  "human_questions": []
+  "human_questions": [],
+  "semantic_patches": [
+    {
+      "id": "S23-F06",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "N1守卫技能通过；D1自爆后N2守卫3号守护7号预言家。",
+      "fields": [
+        "rounds[1].night.guard",
+        "rounds[2].night.guard"
+      ],
+      "rationale": "本地原字幕连续行给出首夜“技能通过”及自爆后“守护7号”；本地音轨解码后的Fun-ASR-Nano窄窗也转写出“守夜守卫技能通过”与“入夜守卫守护七号”。机器ASR作为辅助，不冒充人工听写。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3742000,
+          "end_ms": 3775000,
+          "quote": "11号平民阵营一号6号八号12号\n首页首位即能通过九尾狐标记4号女巫\n狼队击杀3号\n首位女巫要救起\n形成平安夜\n当演预言家验证了2号玩家白泽为好人身份\n警上竞选环节\n10号狼人选择自爆入夜\n首位守护7号预言家白泽\n选择清除4号女巫的标记\n成功清除掉\n然后我们九尾狐选择标记了一号平民\n当夜狼队击杀3号守卫女巫\n技能空过预言家验证\n12号玩家平民为好人身份",
+          "row_ids": [
+            1883,
+            1884,
+            1885,
+            1886,
+            1887,
+            1888,
+            1889,
+            1890,
+            1891,
+            1892,
+            1893,
+            1894,
+            1895,
+            1896,
+            1897
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "audio_asr",
+          "source_path": "data/extractions/S23/audio_semantic_review/BV1nJer63EDh/transcript.json",
+          "source_sha256": "84d130cf483943224edc7677f182ea64b3b8646c5468c9f57b8cd0eb4a7a7900",
+          "source_audio_path": "D:\\langrensha\\data\\seasons\\S23\\第03周_正赛第02期\\2026-09-17\\2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.音频.m4a",
+          "source_audio_sha256": "3d1bc115732840d437736919866b3c32545cf8ab2b9f4ab12eb2dd1274d7b8fc",
+          "clip_audio_sha256": "65b7f913fc86cae07239530a4005588fda491b9e65d7fb867dbffac9ca814bf3",
+          "start_ms": 3740000,
+          "end_ms": 3767000,
+          "model": "FunAudioLLM/Fun-ASR-Nano-2512",
+          "revision": "272c57b82523ada6fd87095e955f8e29100979ab",
+          "status": "machine_generated_unverified",
+          "quote": "守夜守卫技能通过",
+          "note": "本地Fun-ASR-Nano machine-generated-unverified；辅助定位原音，不作为人工听核。"
+        }
+      ]
+    },
+    {
+      "id": "S23-F08",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "白泽清标尝试没有生效，保留原目标并修正result。",
+      "fields": [
+        "rounds[3].night.whiteze_clear_mark.result",
+        "rounds[4].night.whiteze_clear_mark.result"
+      ],
+      "rationale": "目标分别保留；操作后法官连续播报“无事发生”，不能将尝试直接记为成功清除。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3780000,
+          "end_ms": 3788500,
+          "quote": "本局游戏警徽流失入夜\n白泽选择在夜间清除8号玩家平民的标记\n无事发生\n而当夜九尾狐选择标记8号平民",
+          "row_ids": [
+            1900,
+            1901,
+            1902,
+            1903
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3801000,
+          "end_ms": 3809000,
+          "quote": "5号狼人选择自爆入夜\n白泽选择清除12号平民的标记\n无事发生\n而九尾狐在夜间选择标记12号平民",
+          "row_ids": [
+            1909,
+            1910,
+            1911,
+            1912
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3820000,
+          "end_ms": 3843000,
+          "quote": "所以当夜为6号平民单死\n在第四天白天\n九尾狐选择发动猎杀时刻技能\n当夜呃\n当日我们以身上有标记的玩家为一号平民\n8号平民以及12号平民\n加上我们九尾狐本身\n11号玩家四张牌大于仅剩的两张牌\n2号白泽以及4号女巫",
+          "row_ids": [
+            1917,
+            1918,
+            1919,
+            1920,
+            1921,
+            1922,
+            1923,
+            1924,
+            1925
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    },
+    {
+      "id": "S23-F17-BV1nJer63EDh",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "fields": [
+        "rounds[2].night.seer_check.result",
+        "rounds[3].night.seer_check.result"
+      ],
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3750540,
+          "end_ms": 3759550,
+          "quote": "形成平安夜\n当演预言家验证了2号玩家白泽为好人身份\n警上竞选环节\n10号狼人选择自爆入夜",
+          "row_ids": [
+            1887,
+            1888,
+            1889,
+            1890
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3769550,
+          "end_ms": 3777690,
+          "quote": "当夜狼队击杀3号守卫女巫\n技能空过预言家验证\n12号玩家平民为好人身份\n在第二天的延期竞选环节",
+          "row_ids": [
+            1895,
+            1896,
+            1897,
+            1898
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3793530,
+          "end_ms": 3800879,
+          "quote": "女巫技能继续空过\n当预言家验证了8号玩家\n平民为好人身份\n当夜为7号预言家单四在第三天白天",
+          "row_ids": [
+            1905,
+            1906,
+            1907,
+            1908
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

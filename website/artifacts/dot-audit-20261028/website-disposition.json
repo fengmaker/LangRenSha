@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "scope": "Website implementation plus final primary-agent database/publication/API/browser integration.",
+  "database_written": true,
+  "publication_performed": true,
+  "publication_format_version": 6,
+  "baseline_reports": [
+    "dot-handoff/LangRenSha-S22-S23-audit-3476a56-20261027/audit-published/mapping/REPORT.md",
+    "dot-handoff/LangRenSha-S22-S23-audit-3476a56-20261027/audit-published/mapping/presentation/REPORT.md"
+  ],
+  "dispositions": [
+    {
+      "id": "M-01",
+      "status": "fixed",
+      "issue": "Six confirmed S23 rule-default abstentions lost their public basis during publication.",
+      "change": "Preserve the exact approved basis as public basis=rule_default without exposing the private explanatory text.",
+      "verification": "Actual BallotPanel SSR for BV1gBhn6dE5c shows the default-abstention group and the 12号规则默认 marker."
+    },
+    {
+      "id": "M-02",
+      "status": "fixed",
+      "issue": "BV1iDGK61E1c has a final ballot winner of 2 while the same-day exile event names seat 10.",
+      "change": "S22 source reconciliation applied the final judge correction: ballot-3 winner=10, matching the exile event. The UI also retains conflict protection for future inconsistent inputs.",
+      "verification": "Final semantic scan: zero result conflicts. Actual desktop/mobile ballot card displays 10号安妮 and no conflict notice."
+    },
+    {
+      "id": "P-01",
+      "status": "fixed",
+      "issue": "An inferred badge_lost event attributed the outcome to a delayed election interrupted by another self-destruct.",
+      "change": "Use cause-neutral badge-lost text and inference notes; show separately recorded source results independently.",
+      "verification": "The actual React SSR scan of 16 audit-candidate timelines found zero false-cause phrases."
+    },
+    {
+      "id": "P-02",
+      "status": "fixed",
+      "issue": "The S23 mixed-blood last-god Hunter could be shown a pending shot after the terminal rule had ended the game.",
+      "change": "Include previously eliminated gods in the last-god check across rounds and suppress a pending Hunter shot at terminal departure.",
+      "verification": "The BV1gBhn6dE5c projection and a cross-round fixture show no pending shot. Presentation audit finding count is zero."
+    },
+    {
+      "id": "P-03",
+      "status": "fixed",
+      "issue": "A supplemental disqualification did not affect survival projection and could be followed by a Hunter action inference.",
+      "change": "Project sanitized disqualification/surrender events, count disqualification as a departure, and suppress same-day/later Hunter inferences. Private review reasons are omitted.",
+      "verification": "BV1BmpB6PE2C regression passes; presentation audit post-DQ finding count is zero."
+    },
+    {
+      "id": "P-04",
+      "status": "fixed_for_confirmed_terminal_boundaries",
+      "issue": "A night terminal could be followed by a nonexistent day and an apparent no-exile result.",
+      "change": "Apply current-dossier-bound formal/S22 terminal observations and narrowly recognized explicit day-never-started markers. Keep actual terminal night events in a separate panel. Clip placeholder-only future days; reject contradictory real ballots, registrations, interruptions, or day results. Day-specific no-exile/no-vote wording does not end the whole day.",
+      "verification": "Marker-boundary, event-preservation, null-day, post-terminal conflict, and actual React SSR regressions pass; presentation audit post-terminal-day finding count is zero."
+    },
+    {
+      "id": "P-05",
+      "status": "fixed",
+      "issue": "Formal revote stages were labeled as other voting rounds.",
+      "change": "Map both revote and legacy skill_revote to 技能重投.",
+      "verification": "Actual React SSR scan of 16 audit-candidate timelines found zero 其他投票轮次 labels; component fixture passes."
+    },
+    {
+      "id": "P-06",
+      "status": "fixed_for_current_bound_source_audits",
+      "issue": "Nine S22 night terminals could render the following day and an unsupported Hunter-shot question.",
+      "change": "Apply S22 terminal flow only when its dossier SHA matches the current dossier SHA; clip the unplayed day and placeholder voting, retaining terminal-night facts in the terminal panel.",
+      "verification": "Strict regression over all nine audited BVIDs passes; presentation audit reports zero S22 terminal-Hunter and post-terminal-day findings."
+    },
+    {
+      "id": "P-07",
+      "status": "fixed",
+      "issue": "A Hunter already disabled as the Puppet could receive an unsupported pending-shot question.",
+      "change": "Consult the persistent puppet-Hunter set when annotating Hunter departures.",
+      "verification": "BV12pNo6HEuV regression passes; presentation audit puppet-Hunter finding count is zero."
+    }
+  ],
+  "verification": {
+    "baseline_reproduction": {
+      "presentation_report": "223 games; badge lost wrong-cause candidates=3; revote stages without display mapping=14; post-DQ Hunter inference=1; post-terminal day=12; last-god Hunter pending=1; S22 terminal Hunter pending=9; puppet Hunter pending=1.",
+      "semantic_mapping_report": "223 games; default-basis loss=6; final-result conflict=1; formula differences=0."
+    },
+    "full_website_pytest": "179 passed; core source/database tests separately 115 passed",
+    "react_component_fixtures": "5 actual component SSR assertions passed",
+    "react_ssr_audit_candidates": "16 timelines rendered; false badge-cause phrase=0; other-ballot-stage labels=0; pending Hunter snippets=0; puppet-Hunter pending snippets=0.",
+    "presentation_audit": {
+      "command": "PYTHONUTF8=1 .\\.venv\\Scripts\\python.exe dot-handoff\\LangRenSha-S22-S23-audit-3476a56-20261027\\audit-published\\mapping\\presentation\\check_presentation.py --repo . --out tmp\\dot-audit-presentation-final --render-input tmp\\dot-audit-presentation-final-render.json",
+      "counts": "S22=148; S23=75; inferred events=591; omitted events=7471; terminal/DQ/Hunter findings=0.",
+      "terminal_and_hunter_findings": "post-DQ=0; post-terminal-day=0; last-god Hunter pending=0; S22 terminal Hunter pending=0; S22 puppet Hunter pending=0.",
+      "candidate_rows_note": "The scanner records all first-day inferred badge_lost events (3) and raw ballots whose stage is revote (13); these are review candidates, not asserted false UI wording. The actual component SSR checks the rendered text and labels."
+    },
+    "typescript_typecheck": "passed with repository Node 24 and website/web/node_modules/typescript/bin/tsc --noEmit",
+    "raw_ballot_count_regression": "Independently sums ballots and votes from each formal raw voting.json and compares against load_publication output; no hard-coded season ballot total.",
+    "source_fact_tests": "Updated to source-confirmed S22-B-131-3 seer result (平民, seat 7 bottom role remains 盗宝大师) and S22-A-043-01/02 poison targets (ordinary Witch=11, mechanical Witch=5); Hunter remains can_shoot.",
+    "semantic_mapping_audit": "Completed: 223 games, formula differences=0, default abstention basis losses=0, final result conflicts=0.",
+    "actual_api_games_matched": 223,
+    "browser_pages": {
+      "general": 36,
+      "targeted": 14,
+      "page_errors": 0,
+      "horizontal_overflow": 0
+    },
+    "production_build": "passed"
+  },
+  "operations": {
+    "frontend_production_rebuild_required": false,
+    "api_restart_required": false,
+    "local_site": "http://127.0.0.1:3000",
+    "active_release": "S22_S23-8012409cd1c0e327-ef9d908b-p6-s2",
+    "both_season_bluffs_bound": true,
+    "acceptance_command": ".venv/Scripts/python.exe website/check_publication.py --seasons S22 S23"
+  },
+  "implementation_subagent_database_written": false,
+  "additional_integration_fixes": [
+    "S22 bluff generator uses the same public terminal projection as publisher; all 148 fingerprints checked by regression.",
+    "Preserve explicit terminal notes outside the unplayed day; do not label them as a no-exile day.",
+    "API GameDetail response model preserves terminal observation/events; serialization regression and full live API check pass."
+  ]
+}

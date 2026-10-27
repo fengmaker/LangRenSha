@@ -24,7 +24,16 @@
       ]
     }
   ],
-  "event_patches": [],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
+    }
+  ],
   "finding_resolutions": [
     {
       "id": "b54-d2-poisoned-hunter-ineligible",
@@ -86,5 +95,34 @@
     }
   ],
   "extra_findings": [],
-  "human_questions": []
+  "human_questions": [],
+  "semantic_patches": [
+    {
+      "id": "S23-F17-BV1D2ak6XExH",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "fields": [
+        "rounds[1].night.seer_check.result"
+      ],
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第01局_预女猎白混__BV1D2ak6XExH_P01_CID42376237020.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5f9648e1dbca542f2b7fd46cfe8e1dbfa370bfc4c6b6a2f9a85cbc98dc858022",
+          "start_ms": 5442350,
+          "end_ms": 5450230,
+          "quote": "要救起\n形成平安夜预言家验证\n11号玩家白神为好人身份\n在警上竞选环节两轮平票",
+          "row_ids": [
+            2952,
+            2953,
+            2954,
+            2955
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

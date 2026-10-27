@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-28",
+  "status": "completed",
+  "baseline_commit": "3476a56af155f36a0d0050abc1660ed0d6fd538a",
+  "request": "根据dot交付和复核清单核对并更新数据库",
+  "scope": "本地S22/S23正式源、JCMS业务库、masters_web发布库和本地生产网站；AI语义核对，不冒充真人审核或223局全视频重看。",
+  "handoff_validation": {
+    "files": 2005,
+    "hash_matched": 2005,
+    "missing": 0,
+    "mismatched": 0
+  },
+  "candidate_disposition": {
+    "S22": {
+      "candidates": 101,
+      "accepted": 100,
+      "held": 1
+    },
+    "S23": {
+      "candidates": 29,
+      "accepted": 27,
+      "held": 2
+    }
+  },
+  "formal_data_delta": {
+    "S22": {
+      "files": 75,
+      "games": 65,
+      "dossiers": 46,
+      "voting": 28,
+      "endgame": 1
+    },
+    "S23": {
+      "files": 21,
+      "games": 20,
+      "dossiers": 20,
+      "voting": 1,
+      "endgame": 0
+    }
+  },
+  "database": {
+    "source_games_compared": 223,
+    "field_group_mismatches": 0,
+    "both_seasons_imported_twice": true,
+    "fingerprints": {
+      "S22": {
+        "season_exists": true,
+        "games": 148,
+        "details": 148,
+        "seats": 1776,
+        "rounds": 473,
+        "events": 9285,
+        "targets": 2446,
+        "event_votes": 0,
+        "effects": 1,
+        "ballots": 346,
+        "choices": 2507,
+        "voting_days": 436,
+        "sheriff_registrations": 1776,
+        "files": 595,
+        "formal_receipts": 0,
+        "formal_annotations": 0,
+        "formal_tables_present": {
+          "game_formal_import_receipts": true,
+          "game_formal_annotations": true
+        },
+        "content_sha256": "41250d4ff357c29011454670e625c9e1d7fcce4c9322afb576a76df0f41ef654",
+        "content_row_counts": {
+          "games": 148,
+          "details": 148,
+          "seats": 1776,
+          "staff": 396,
+          "rounds": 473,
+          "events": 9285,
+          "targets": 2446,
+          "event_votes": 0,
+          "effects": 1,
+          "ballots": 346,
+          "ballot_choices": 2507,
+          "voting_days": 436,
+          "sheriff_registrations": 1776,
+          "files": 595,
+          "formal_receipts": 0,
+          "formal_annotations": 0,
+          "legacy_templates": 247
+        }
+      },
+      "S23": {
+        "season_exists": true,
+        "games": 75,
+        "details": 75,
+        "seats": 900,
+        "rounds": 227,
+        "events": 4390,
+        "targets": 1328,
+        "event_votes": 315,
+        "effects": 0,
+        "ballots": 178,
+        "choices": 1299,
+        "voting_days": 224,
+        "sheriff_registrations": 900,
+        "files": 300,
+        "formal_receipts": 75,
+        "formal_annotations": 375,
+        "formal_tables_present": {
+          "game_formal_import_receipts": true,
+          "game_formal_annotations": true
+        },
+        "content_sha256": "8b3d782104bc76cae444b66762f4ede9d93d724a49452fd8db9df3cda771e225",
+        "content_row_counts": {
+          "games": 75,
+          "details": 75,
+          "seats": 900,
+          "staff": 225,
+          "rounds": 227,
+          "events": 4390,
+          "targets": 1328,
+          "event_votes": 315,
+          "effects": 0,
+          "ballots": 178,
+          "ballot_choices": 1299,
+          "voting_days": 224,
+          "sheriff_registrations": 900,
+          "files": 300,
+          "formal_receipts": 75,
+          "formal_annotations": 375,
+          "legacy_templates": 247
+        }
+      }
+    },
+    "receipts": [
+      "s22-database-sync.json",
+      "s23-database-import.json",
+      "formal-database-comparison.json"
+    ]
+  },
+  "publication": {
+    "id": "S22_S23-8012409cd1c0e327-ef9d908b-p6-s2",
+    "seasons": [
+      "S22",
+      "S23"
+    ],
+    "game_count": 223,
+    "source_hash": "8012409cd1c0e3274094f38f3404b33ba2908ef9ac945f240cecacdefc490d7b",
+    "rules_hash": "ef9d908bd140b7aa46569998e8c24a87eafd963c374d93b3c380e417bba3f93b",
+    "activated": true,
+    "idempotent": false
+  },
+  "public_counts": {
+    "source_hash": "8012409cd1c0e3274094f38f3404b33ba2908ef9ac945f240cecacdefc490d7b",
+    "rules_hash": "ef9d908bd140b7aa46569998e8c24a87eafd963c374d93b3c380e417bba3f93b",
+    "totals": {
+      "games": 223,
+      "seats": 2676,
+      "rounds": 699,
+      "ballots": 524,
+      "votes": 3806
+    },
+    "per_season": {
+      "S22": {
+        "games": 148,
+        "seats": 1776,
+        "rounds": 472,
+        "ballots": 346,
+        "votes": 2507
+      },
+      "S23": {
+        "games": 75,
+        "seats": 900,
+        "rounds": 227,
+        "ballots": 178,
+        "votes": 1299
+      }
+    }
+  },
+  "bluffs": {
+    "S22": {
+      "games_total": 148,
+      "decisions": {
+        "no": 465,
+        "yes": 121
+      },
+      "successful_bluffs": 46,
+      "pending": 0,
+      "user_confirmed_records": 46
+    },
+    "S23": {
+      "games_total": 75,
+      "decisions": {
+        "yes": 82,
+        "no": 218,
+        "uncertain": 0
+      },
+      "successful_bluffs": 24,
+      "pending": 0,
+      "user_confirmed_records": 2
+    }
+  },
+  "rongyao_score": {
+    "before": {
+      "appearances": 37,
+      "wins": 19,
+      "losses": 18,
+      "points": 3.0,
+      "wolf_games": 14
+    },
+    "after": {
+      "appearances": 37,
+      "wins": 18,
+      "losses": 19,
+      "points": 1.0,
+      "wolf_games": 15
+    },
+    "api_after": {
+      "name": "荣耀",
+      "points": 1.0,
+      "rank": 30,
+      "wins": 18,
+      "losses": 19,
+      "appearances": 37
+    }
+  },
+  "verification": {
+    "tests": {
+      "core": {
+        "tests": 115,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "website": {
+        "tests": 179,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "tests_total": 294,
+    "typescript": "passed",
+    "production_build": "passed",
+    "api_games_matched": 223,
+    "general_browser_pages": 36,
+    "targeted_browser_pages": 14,
+    "independent_formula_differences": 0,
+    "default_abstention_basis_losses": 0,
+    "final_ballot_result_conflicts": 0,
+    "actual_component_ssr_timelines": 16,
+    "actual_component_false_badge_cause_or_unmapped_stage_or_false_hunter_questions": 0
+  },
+  "held_candidates": [
+    {
+      "id": "S22-A-027-02",
+      "bvid": "BV1W6jG6HELj",
+      "reason": "第二夜查验目标号的原字幕不清。无热词Nano辅助稿支持5号，未据此单独升级正式事实。"
+    },
+    {
+      "id": "S23-F12",
+      "bvid": "BV123aQ6BEu2",
+      "reason": "N2重复学习记录的字段含义仍有歧义。"
+    },
+    {
+      "id": "S23-F16",
+      "bvid": "BV1nJer6gEkx",
+      "reason": "夜间即时开枪目标是否计入night_deaths汇总仍有字段语义歧义。"
+    }
+  ],
+  "limits": [
+    "当前正式档案均已通过校验；S22原始生成器内存探针45/46通过，BV1hZMp63Esx在补丁前后均有既有技能参与次数解析问题，正式已核档案保持受保护。",
+    "业务库存档保留700个模板轮；网站依已绑定终局展示699轮，裁去的是未进入的占位阶段，没有裁去真实票轮。",
+    "整库备份已完成并验证归档目录，未声称做过整库恢复演练。"
+  ],
+  "backup_receipt": "data/backups/dot-audit-before-20261028/receipt.json",
+  "local_site": "http://127.0.0.1:3000",
+  "branch": "ci/full-acceptance",
+  "execution_notes": [
+    "初次网站测试有25个临时目录ACL导致的fixture setup error；改用新的项目内basetemp后179项全部实际执行通过，旧错误JUnit另存。",
+    "首次p5悍跳预检暴露S22 raw/public投影指纹差异；立即恢复旧网站活动版本，补齐同投影生成器回归、逐条重绑用户反馈及终局说明保留后成功发布p6。",
+    "实际API逐局验收暴露响应模型过滤终局字段；增加真实响应模型回归、修复并重启后223局API及50个浏览器页面均通过。"
+  ]
+}

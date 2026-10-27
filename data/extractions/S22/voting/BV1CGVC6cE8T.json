@@ -143,15 +143,7 @@
       }
     ]
   },
-  "day_crosscheck_changes": [
-    {
-      "target": "ballot-3",
-      "field": "day",
-      "before": 2,
-      "after": 3,
-      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
-    }
-  ],
+  "day_crosscheck_changes": [],
   "day_crosscheck_source": {
     "path": "data/games/S22/2026-06-02_g02_BV1CGVC6cE8T/复核记录.json",
     "sha256": "3fe9ffc96091a83e2e6a947436b25dfabb5134d450ecce51bdbe192a0cd88c93",
@@ -531,17 +523,7 @@
       }
     ]
   },
-  "rule_applications": [
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-2",
-      "day": 1,
-      "voters": [
-        12
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    }
-  ],
+  "rule_applications": [],
   "eligibility_derivations": [
     {
       "target": "ballot-2",
@@ -687,7 +669,7 @@
   ],
   "bvid": "BV1CGVC6cE8T",
   "source_sha256": "33d64c2907c29f98faff022e669092f34862e3b90a9218bb0337a7b139427d78",
-  "dossier_sha256": "378aa611152a06712ef17ef53253e8db5c7e5c3dbe1f5b539c3611f34c53cbf9",
+  "dossier_sha256": "ec6de38792656e49d0f0e4025f8c7f1f831176f4aa38fc63edac048e1656f5b9",
   "generated_at": "2026-10-25T04:08:34+08:00",
   "facts": {
     "schema_version": 1,
@@ -826,8 +808,8 @@
           },
           {
             "voter": 12,
-            "target": null,
-            "state": "abstained"
+            "target": 4,
+            "state": "cast"
           }
         ],
         "tied_candidates": [],
@@ -956,5 +938,8 @@
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "dot_audit_applied": [
+    "S22-V-001"
+  ]
 }

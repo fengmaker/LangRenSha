@@ -188,6 +188,14 @@
         "inferred": false,
         "confirmation_status": "user_confirmed"
       }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
     }
   ],
   "finding_resolutions": [
@@ -810,5 +818,49 @@
         "exile": "unknown"
       }
     ]
-  }
+  },
+  "semantic_patches": [
+    {
+      "id": "S23-F17-BV12sY36hEQh",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "fields": [
+        "rounds[1].night.seer_check.result"
+      ],
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4050030,
+          "end_ms": 4060550,
+          "quote": "当夜为4号平民单死\n预言家验证了9号玩家平民为好人身份\n在警上竞选环节\n6号悍跳狼人获得警徽",
+          "row_ids": [
+            2063,
+            2064,
+            2065,
+            2066
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4123870,
+          "end_ms": 4133450,
+          "quote": "为11号五者单死\n夜间预言家验证10号平民为好人身份\n在第三天白天场上最后一狼\n3号假面选择交牌游戏结束",
+          "row_ids": [
+            2092,
+            2093,
+            2094,
+            2095
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

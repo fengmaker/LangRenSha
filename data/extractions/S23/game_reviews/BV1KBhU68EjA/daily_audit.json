@@ -64,6 +64,25 @@
         "inferred": false,
         "confirmation_status": "user_confirmed"
       }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "targets": [
+          9,
+          12
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
     }
   ],
   "finding_resolutions": [
@@ -163,5 +182,82 @@
       "confirmation_status": "user_confirmed"
     }
   ],
-  "human_questions": []
+  "human_questions": [],
+  "semantic_patches": [
+    {
+      "id": "S23-F10",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "D3夜死汇总targets补入被舞出局的12号，保留其死亡原因区别。",
+      "fields": [
+        "rounds[3].day.night_deaths.targets"
+      ],
+      "rationale": "复盘明确9号与12号双死，12号的舞池少数出局原因仍保存在dance_resolution；不误记为狼刀。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5524000,
+          "end_ms": 5544000,
+          "quote": "11号假面及12号武者当印五指在舞池内\n五池免疫狼刀假面\n选择验证\n10号玩家白神在舞池内给予10号白神一张面具\n此时五之内12号武者被五出局\n当夜假面开刀击杀9号女巫\n9号12号双死\n在第三天白天两轮平票\n平安日无人被放逐后\n狼队选择拍刀",
+          "row_ids": [
+            3081,
+            3082,
+            3083,
+            3084,
+            3085,
+            3086,
+            3087,
+            3088,
+            3089,
+            3090
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    },
+    {
+      "id": "S23-F17-BV1KBhU68EjA",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "fields": [
+        "rounds[2].night.seer_check.result"
+      ],
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5481130,
+          "end_ms": 5487510,
+          "quote": "形成平安夜\n预言家验证3号玩家平民为好人身份\n在警上竞选环节\n8号预言家获得警徽",
+          "row_ids": [
+            3060,
+            3061,
+            3062,
+            3063
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5509410,
+          "end_ms": 5517920,
+          "quote": "六八双死\n预言家验证2号玩家平民为好人身份\n并在出局后将警徽移交至2号平民\n在第二天的白天",
+          "row_ids": [
+            3075,
+            3076,
+            3077,
+            3078
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

@@ -393,17 +393,7 @@
       }
     ]
   },
-  "rule_applications": [
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-2",
-      "day": 1,
-      "voters": [
-        12
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    }
-  ],
+  "rule_applications": [],
   "eligibility_derivations": [
     {
       "target": "ballot-3",
@@ -466,14 +456,14 @@
     },
     {
       "day": 2,
-      "outcome": "ended_before_exile",
-      "exile_note": "第2天最后一狼交牌并直接终局，没有放逐票。",
+      "outcome": "missing",
+      "exile_note": "未见白天自爆记录，应有放逐投票环节；需交叉核对并补录票型或确认提前结束原因。",
       "evidence": []
     }
   ],
   "bvid": "BV1DijD6BE4g",
   "source_sha256": "d1a67da48146e8917b328eda7e67b7555db56c2853dd088af90852bc2a73ba4a",
-  "dossier_sha256": "db2af3ad194c4783aa8acbbb89fcc82e59ad86d062fb3bdd90888cb81d835b35",
+  "dossier_sha256": "2d6ac294cfe2f45fd6425a569f223fa346f7cb113680e798cd4a945d55603d90",
   "generated_at": "2026-10-25T04:08:36+08:00",
   "facts": {
     "schema_version": 1,
@@ -606,8 +596,8 @@
           },
           {
             "voter": 12,
-            "target": null,
-            "state": "abstained"
+            "target": 2,
+            "state": "cast"
           }
         ],
         "tied_candidates": [],
@@ -716,5 +706,8 @@
         "exile": "unknown"
       }
     ]
-  }
+  },
+  "dot_audit_applied": [
+    "S22-V-009"
+  ]
 }

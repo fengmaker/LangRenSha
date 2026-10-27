@@ -35,6 +35,18 @@
         "targets": [],
         "result": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。"
       }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "targets": [
+          6,
+          9
+        ],
+        "result": "N2狼刀6号预言家、女巫毒杀9号狼人；6号与9号双死。"
+      }
     }
   ],
   "finding_resolutions": [
@@ -710,5 +722,55 @@
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "semantic_patches": [
+    {
+      "id": "S23-F03",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "D2夜死targets补入9号毒口。",
+      "fields": [
+        "rounds[2].day.night_deaths.targets"
+      ],
+      "rationale": "现场死亡播报与连续末复盘均明确6/9双死；正式只漏了9号targets。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 4534000,
+          "end_ms": 4539500,
+          "quote": "死亡顺序不分先后\n6号九号倒牌\n没有遗言\n是否发动技能\n543216号",
+          "row_ids": [
+            2331,
+            2332,
+            2333,
+            2334,
+            2335
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6955000,
+          "end_ms": 6974500,
+          "quote": "第一天白天11号查杀狼人被抗推呃\n被公投出局\n入夜狼人击杀6号预言家女巫毒杀9号狼人\n六九双死\n预言家验证一号玩家混血儿为好人身份\n6号预言家出局\n将警徽移交至一号混血儿\n第二天白天4号悍跳狼人自爆\n入夜狼人击杀7号平民",
+          "row_ids": [
+            3592,
+            3593,
+            3594,
+            3595,
+            3596,
+            3597,
+            3598,
+            3599,
+            3600
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV1U3p86dEJY-p01-g03",
-  "source_snapshot_id": "21f324d421887c334d3b52c34b573970738391aff2fdb25d65274d05f6c81db6",
+  "source_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
   "authorization": {
     "scope": "S23_regular_75",
     "record_path": "data/extractions/S23/用户授权_20261026_正式入库与网站上线.txt",
@@ -174,7 +174,7 @@
         "round": 1,
         "phase": "day",
         "phase_label": "第1天白天",
-        "status": "unresolved",
+        "status": "resolved_user_confirmed",
         "field": "bluffs.eulogy_false_identity_claim_counting",
         "title": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
         "conclusion": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
@@ -207,7 +207,10 @@
         ],
         "origin": "human_question",
         "previous_question": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
-        "daily_audited": true
+        "daily_audited": true,
+        "decision": "no",
+        "resolution": "用户明确确认10号遗言自称通灵师不计入悍跳；本局6号悍跳。",
+        "resolution_source": "data/extractions/S23/bluff_review/user_feedback_20261026_eulogy.json"
       }
     ],
     "report_unpublished_source_items": [],

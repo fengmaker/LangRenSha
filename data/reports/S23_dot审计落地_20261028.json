@@ -1,0 +1,4069 @@
+{
+  "report_id": "S23-dot-semantic-audit-landing-20261028",
+  "reviewed_at_local": "2026-10-28",
+  "scope": "S23 semantic findings from the 2026-10-27 handoff: all 29 records audited against local original transcripts, source-bound daily reviews, and cited local frames where indicated.",
+  "snapshot": {
+    "candidate_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+    "progress_report": "data/reports/S23_逐局复核进度.json",
+    "daily_acceptance_report": "data/reports/S23_逐日复核验收_20261026.json",
+    "status": "Progress and daily acceptance reports share one snapshot; the primary agent updated the authoritative config snapshot before the final formal prepare/check.",
+    "consistency_checks": {
+      "distinct_original_transcripts_hash_verified": 21,
+      "formal_source_files_hash_verified": 22,
+      "cited_transcript_rows_compared": 386,
+      "transcript_row_mismatches": 0
+    }
+  },
+  "disposition_summary": {
+    "candidate_records": 29,
+    "corrected": 27,
+    "retained_ambiguous": 2,
+    "changed_fields": 40,
+    "F17_game_records": 13,
+    "F17_seer_result_fields": 19,
+    "new_human_questions": [
+      "S23-F12",
+      "S23-F16"
+    ],
+    "preexisting_user_confirmed_question_not_reopened": {
+      "bvid": "BV1U3p86dEJY",
+      "policy": "EULOGY_POLICY_PATH; seat 6 yes / seat 10 no",
+      "treatment": "Preserved as an existing determination; not counted as a new question in this audit."
+    }
+  },
+  "evidence_boundaries": {
+    "transcript": "Original archived platform AI captions were read with full cited row context and source SHA-256 verified; this is transcript evidence, not human audio replay.",
+    "frames": "Local original video frames were visually inspected for S23-F01 (BV1KaaT67Eca, 4723.380s = 78:43.380), S23-F09 (BV12sY36hEdr, 3484.980s = 58:04.980), and BV1g1YU6kERd (4411.719s = 73:31.719). Frame SHA-256s are recorded in the corresponding daily-audit evidence.",
+    "audio_asr": "For S23-F06, a local 27-second Fun-ASR-Nano result is machine_generated_unverified auxiliary localization evidence only; it is not human listening or a verified transcript.",
+    "inference": "Temporal and field-semantics conclusions are marked in each rationale; candidate JSON was not executed as a patch."
+  },
+  "daily_delivery_history": {
+    "historical_report_path": "data/reports/S23_逐日复核交付_20261026.json",
+    "historical_report_preserved_verbatim": {
+      "generated_at_utc": "2026-10-26T09:53:19.992221+00:00",
+      "snapshot_id": "21f324d421887c334d3b52c34b573970738391aff2fdb25d65274d05f6c81db6",
+      "regular_games": 75,
+      "competition_days": 23,
+      "date_range": [
+        "2026-09-08",
+        "2026-10-16"
+      ],
+      "original_pending": 145,
+      "required_user_questions": [
+        {
+          "bvid": "BV1U3p86dEJY",
+          "date": "2026-10-09",
+          "game_number": 3,
+          "id": "question-q_s73_eulogy_identity_claim_counting",
+          "question_id": "q_s73_eulogy_identity_claim_counting",
+          "round": 1,
+          "phase": "day",
+          "phase_label": "第1天白天",
+          "status": "unresolved",
+          "field": "bluffs.eulogy_false_identity_claim_counting",
+          "title": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+          "conclusion": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+          "reasoning": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+              "start_ms": 2039120,
+              "end_ms": 2045540,
+              "quote": "双方技能54321十号玩家请发表遗言",
+              "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1U3p86dEJY_P01_CID42602201781.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            },
+            {
+              "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+              "start_ms": 2047320,
+              "end_ms": 2048840,
+              "quote": "唉我是通灵师啊",
+              "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1U3p86dEJY_P01_CID42602201781.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            },
+            {
+              "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+              "start_ms": 2066260,
+              "end_ms": 2068710,
+              "quote": "然后我是通灵师验的三金水",
+              "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1U3p86dEJY_P01_CID42602201781.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            }
+          ],
+          "origin": "human_question",
+          "previous_question": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+          "daily_audited": true
+        }
+      ],
+      "unpublished_source_records": [
+        {
+          "bvid": "BV1sAYJ6UEoF",
+          "date": "2026-09-08",
+          "game_number": 2,
+          "id": "s23-a-bv1sayj6ueof-r3-seer_check-unresolved",
+          "round": 3,
+          "phase": "night",
+          "status": "not_observed",
+          "field": "rounds[3].night.seer_check.targets",
+          "title": "终局查验未记录，仅保留说明",
+          "conclusion": "终局夜查验未记录；可能因前序技能或狼刀判定已使对局结束，未再进入后续查验环节。保留未知，不补造查验目标，不影响已确定的结算。",
+          "reasoning": "用户确认此类终局查验只需说明；“可能未进入环节”不是确定未查验，也不是主动空过。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+              "start_ms": 3873780,
+              "end_ms": 3885780,
+              "quote": "通灵师入夜圣某人梦游9号盗宝大师\n盗宝大师选择平民身份击杀6号射梦人\n六九双死游戏结束\n好人阵营获胜",
+              "file_url": "../seasons/S23/%E7%AC%AC02%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC01%E6%9C%9F/2026-09-08/2026-09-08_S23_%E7%AC%AC02%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC01%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E7%9B%97%E5%AE%9D%E5%A4%A7%E5%B8%88__BV1sAYJ6UEoF_P01_CID41701214461.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            },
+            {
+              "kind": "user_confirmation",
+              "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+              "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+              "quote": "终局查验可能因为前面的技能判定和狼刀判定导致游戏结束了就没有后面的查验环节了，不过不影响 说明就好了",
+              "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+            }
+          ],
+          "phase_label": "第2天夜晚",
+          "previous_question": "第3轮夜晚通灵师查验未记载",
+          "confirmation_status": "user_explanation",
+          "requires_user_check": false,
+          "daily_audited": true
+        },
+        {
+          "bvid": "BV1MheH6wEBb",
+          "date": "2026-09-15",
+          "game_number": 2,
+          "id": "s23-a-bv1mheh6webb-r3-seer_check-unresolved",
+          "round": 3,
+          "phase": "night",
+          "status": "not_observed",
+          "field": "rounds[3].night.seer_check.targets",
+          "title": "终局查验未记录，仅保留说明",
+          "conclusion": "终局夜查验未记录；可能因前序技能或狼刀判定已使对局结束，未再进入后续查验环节。保留未知，不补造查验目标，不影响已确定的结算。",
+          "reasoning": "用户确认此类终局查验只需说明；“可能未进入环节”不是确定未查验，也不是主动空过。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+              "start_ms": 3950739,
+              "end_ms": 3967500,
+              "quote": "5号狼人自爆入夜\n五者共我的对象为2号预言家\n6号舞者和9号假面假面验证\n6号玩家暂五池给6号玩家扣了面具\n2号玩家共五出局\n击杀了2号\n第三天八天\n最后一张狼人\n9号选择交牌\n游戏结束",
+              "file_url": "../seasons/S23/%E7%AC%AC03%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC02%E6%9C%9F/2026-09-15/2026-09-15_S23_%E7%AC%AC03%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC02%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1MheH6wEBb_P01_CID41924036812.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            },
+            {
+              "kind": "user_confirmation",
+              "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+              "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+              "quote": "终局查验可能因为前面的技能判定和狼刀判定导致游戏结束了就没有后面的查验环节了，不过不影响 说明就好了",
+              "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+            }
+          ],
+          "phase_label": "第2天夜晚",
+          "previous_question": "第3轮夜晚预言家查验未记载",
+          "confirmation_status": "user_explanation",
+          "requires_user_check": false,
+          "daily_audited": true
+        }
+      ],
+      "event_patches": 140,
+      "ballots": 178,
+      "votes": 1300,
+      "recap_segments_displayed": 2429,
+      "original_full_segments_preserved": 183170,
+      "targeted_original_video_frames": [
+        "data/extractions/S23/daily_video_checks/BV15PaW66EjW/BV15PaW66EjW_02653.000.png",
+        "data/extractions/S23/daily_video_checks/BV15PaW66EjW/BV15PaW66EjW_02658.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_01858.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_01965.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_02050.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_03550.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_05348.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_05355.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_05363.000.png",
+        "data/extractions/S23/daily_video_checks/BV1BmpB6PE2C/BV1BmpB6PE2C_05372.000.png",
+        "data/extractions/S23/daily_video_checks/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06959.000.png",
+        "data/extractions/S23/daily_video_checks/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06963.000.png",
+        "data/extractions/S23/daily_video_checks/BV1MheH6wEBb/BV1MheH6wEBb_03945.000.png",
+        "data/extractions/S23/daily_video_checks/BV1MheH6wEBb/BV1MheH6wEBb_03955.000.png",
+        "data/extractions/S23/daily_video_checks/BV1MheH6wEBb/BV1MheH6wEBb_03962.000.png",
+        "data/extractions/S23/daily_video_checks/BV1NBhU68EyT/BV1NBhU68EyT_03838.000.png",
+        "data/extractions/S23/daily_video_checks/BV1NBhU68EyT/BV1NBhU68EyT_03842.000.png",
+        "data/extractions/S23/daily_video_checks/BV1U9YE69E6Q/BV1U9YE69E6Q_05468.500.png",
+        "data/extractions/S23/daily_video_checks/BV1U9YE69E6Q/BV1U9YE69E6Q_05475.000.png",
+        "data/extractions/S23/daily_video_checks/BV1U9YE69E6Q/BV1U9YE69E6Q_05535.000.png",
+        "data/extractions/S23/daily_video_checks/BV1zmpB6PEcF/BV1zmpB6PEcF_05568.000.png",
+        "data/extractions/S23/daily_video_checks/BV1zmpB6PEcF/BV1zmpB6PEcF_05570.000.png",
+        "data/extractions/S23/daily_video_checks/BV1zmpB6PEcF/BV1zmpB6PEcF_05719.000.png",
+        "data/extractions/S23/daily_video_checks/BV1zmpB6PEcF/BV1zmpB6PEcF_06095.000.png",
+        "data/extractions/S23/daily_video_checks/BV1zmpB6PEcF/BV1zmpB6PEcF_06100.000.png"
+      ],
+      "qa": {
+        "daily_evidence_objects": 705,
+        "source_hashes_and_quotes": true,
+        "survival_vote_consistency": true,
+        "pages_rendered": 75,
+        "local_source_links": 300,
+        "rule_unit_tests": 15,
+        "required_question_filter": true,
+        "terminal_night_boundary": true,
+        "mobile_390px": true,
+        "unpublished_list_filter": true,
+        "seat6_bluff_user_confirmed": true,
+        "user_rule_cases": {
+          "snapshot_id": "21f324d421887c334d3b52c34b573970738391aff2fdb25d65274d05f6c81db6",
+          "masquerade_first_night_games": 6,
+          "oct08_seer_sequence": [
+            [
+              7,
+              "狼人"
+            ],
+            [
+              4,
+              "好人"
+            ],
+            [
+              5,
+              "狼人"
+            ]
+          ],
+          "oct08_mask_targets": [
+            [
+              8,
+              5
+            ],
+            [
+              9,
+              9
+            ]
+          ],
+          "terminal_hunters_blocked": 3,
+          "dq_invalidates_knife": true,
+          "remaining_terminal_check_notes": 2,
+          "terminal_check_uncertainty_preserved": true,
+          "javascript_errors": [],
+          "updated_csv": "data/exports/S23_资料未公开清单.csv",
+          "original_csv_locked": false,
+          "passed": true
+        }
+      },
+      "formal_database_writes": false,
+      "source_transcripts_modified": false,
+      "unpublished_review_csv": "data/exports/S23_资料未公开清单.csv",
+      "unpublished_unique_items": 2,
+      "unpublished_record_note": "此前9条记录含1条重复；本轮用户确认后7条销项，剩2条终局查验仅作说明，保留可能性，不需个人复核。",
+      "user_confirmed_bluffs": [
+        {
+          "bvid": "BV1U3p86dEJY",
+          "date": "2026-10-09",
+          "game_number": 3,
+          "seat": 6,
+          "day": 1,
+          "claimed_role": "通灵师",
+          "attempted": true,
+          "success": false,
+          "confirmation_status": "user_confirmed",
+          "reasoning": "用户明确确认6号是本局悍跳；法官点名6号发言后，6号报验10号金水、给出警徽流并与另一通灵师自称形成对跳。6号在首日竞选环节自爆，未取得警徽，也没有首日放逐好人的结果；按既有统计口径为悍跳尝试、未成功。",
+          "evidence": [
+            {
+              "source_path": "data/extractions/S23/用户确认_20261026_六号悍跳.txt",
+              "source_sha256": "efa6b4cb341aed1ea8df277cbc8624f13a9761d38abb612241532790a98cea15",
+              "quote": "这把六号是悍跳",
+              "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%85%AD%E5%8F%B7%E6%82%8D%E8%B7%B3.txt"
+            },
+            {
+              "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+              "start_ms": 1356500,
+              "end_ms": 1387399,
+              "quote": "过了6号玩家请发言\n斯噩梦有些时候就是会来的嘛对吧\n警徽流留下一号好吧哈\n请问这一号因为前面有逻辑关系的\n好像就只有一跟你像\n比如跟五啊\n跟二啊对吧\n他们都还有逻辑关系\n所以是验一下一号收益会更大一点嘛\n三其实无所谓的\n三比如说你看他也可以就是一个狼对吧\n在跟9号玩家去拉9号的杆\n另外呢他有可能就是想操作\n他也没找到谁是通灵师\n可以他一个机会是可以的是吧\n我验了我验了十是金水牌\n主要是上一把10号也那个了",
+              "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1U3p86dEJY_P01_CID42602201781.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            },
+            {
+              "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+              "start_ms": 3507440,
+              "end_ms": 3510360,
+              "quote": "在警上竞选环节\n6号狼人选择自爆",
+              "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1U3p86dEJY_P01_CID42602201781.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+            }
+          ]
+        }
+      ],
+      "unpublished_original_locked": false,
+      "user_confirmed_unpublished_resolutions_20261026": [
+        {
+          "before": {
+            "bvid": "BV17xpA6aE7N",
+            "date": "2026-10-06",
+            "game_number": 2,
+            "id": "coverage-4-day-hunter_shot",
+            "round": 4,
+            "phase": "day",
+            "phase_label": "第4天白天",
+            "status": "not_observed",
+            "field": "hunter_shot",
+            "title": "终局猎人响应未在节目中公布",
+            "conclusion": "8号猎人在终局夜被击杀后直接宣布屠神获胜；录制未给出枪技响应，保留未知。",
+            "reasoning": "无需据此补造白天开枪或推定资格；实际夜刀、目标与胜负均有原文。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+                "start_ms": 5710460,
+                "end_ms": 5716800,
+                "quote": "入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-06/2026-10-06_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E7%9B%97%E5%AE%9D%E5%A4%A7%E5%B8%88__BV17xpA6aE7N_P01_CID42519955818.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "origin": "phase_coverage_check",
+            "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+            "previous_question": "猎人开枪结算待核实",
+            "daily_audited": true
+          },
+          "after": null
+        },
+        {
+          "before": {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "id": "b68-r1-masquerade-target-unresolved",
+            "round": 1,
+            "phase": "night",
+            "status": "not_observed",
+            "field": "rounds[1].night.masquerade_verify.targets",
+            "title": "开局夜晚 · 假面验证目标未报",
+            "conclusion": "最终复盘未公开假面N1验证目标，目标保持unknown。",
+            "reasoning": "本局复盘列出首验、救药、通灵师验7，但没有公开假面首夜对象；之后的8号验证明确发生在N2，不回填至N1。该字段属于资料未公开，不形成用户问题。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3051260,
+                "end_ms": 3054480,
+                "quote": "首验狼人击杀4号平民",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3060490,
+                "end_ms": 3063270,
+                "quote": "7号狼人选择自爆入夜无耻的舞池",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3068580,
+                "end_ms": 3070660,
+                "quote": "验证8号玩家白神不在舞池内",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "phase_label": "开局夜晚",
+            "previous_question": "开局夜晚 · 假面验证目标未报",
+            "daily_audited": true
+          },
+          "after": {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "id": "b68-r1-masquerade-target-unresolved",
+            "round": 1,
+            "phase": "night",
+            "status": "confirmed",
+            "field": "rounds[1].night.masquerade_verify.targets",
+            "title": "首夜技能按规则不适用",
+            "conclusion": "假面验证、扣面具和舞者共舞均不能在首夜发动；没有待补的首夜目标。",
+            "reasoning": "假面验证、扣面具和舞者共舞均不能在首夜发动；没有待补的首夜目标。",
+            "evidence": [
+              {
+                "kind": "user_confirmation",
+                "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+                "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+                "quote": "假面和舞者都是第一天夜晚发动技能阿，首夜不能发动技能",
+                "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+              }
+            ],
+            "phase_label": "开局夜晚",
+            "previous_question": "开局夜晚 · 假面验证目标未报",
+            "confirmation_status": "user_confirmed",
+            "daily_audited": true
+          }
+        },
+        {
+          "before": {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "id": "b68-r3-seer-action-unresolved",
+            "round": 3,
+            "phase": "night",
+            "status": "not_observed",
+            "field": "rounds[3].night.seer_check.targets; rounds[3].night.seer_check.result",
+            "title": "第2天夜晚 · 通灵师查验未说明",
+            "conclusion": "最终复盘未公开N3预言家10号是否查验、查验目标或反馈；相应字段保持unknown。",
+            "reasoning": "全文复盘说明假面验证9号及舞者互动、当夜只有9号舞者单死，没有公开预言家查验信息。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3100290,
+                "end_ms": 3102370,
+                "quote": "夜间假面验证了9号玩家",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3110860,
+                "end_ms": 3114950,
+                "quote": "所以当夜只有9号玩家舞者单死在第三天白天",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "phase_label": "第2天夜晚",
+            "previous_question": "第2天夜晚 · 通灵师查验未说明",
+            "daily_audited": true
+          },
+          "after": {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "id": "b68-r3-seer-action-unresolved",
+            "round": 3,
+            "phase": "night",
+            "status": "confirmed",
+            "field": "rounds[3].night.seer_check.targets; rounds[3].night.seer_check.result",
+            "title": "第二天夜晚查验5号狼人已确认",
+            "conclusion": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+            "reasoning": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+            "evidence": [
+              {
+                "kind": "user_confirmation",
+                "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+                "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+                "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀",
+                "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+              }
+            ],
+            "phase_label": "第2天夜晚",
+            "previous_question": "第2天夜晚 · 通灵师查验未说明",
+            "confirmation_status": "user_confirmed",
+            "daily_audited": true
+          }
+        },
+        {
+          "before": {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "id": "coverage-3-night-seer_check",
+            "round": 3,
+            "phase": "night",
+            "phase_label": "第2天夜晚",
+            "status": "not_observed",
+            "field": "seer_check",
+            "title": "查验目标或反馈待核实",
+            "conclusion": "重复覆盖项：N3预言家查验未由复盘公开，保持unknown；已由b68-r3-seer-action-unresolved统一记录。",
+            "reasoning": "与b68-r3-seer-action-unresolved指向同一槽位，不另造用户问题。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3100290,
+                "end_ms": 3102370,
+                "quote": "当夜舞者在舞池内五池免疫狼刀\n夜间假面验证了9号玩家\n舞者在舞室内给予了9号舞者一张面具",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+                "start_ms": 3110860,
+                "end_ms": 3114950,
+                "quote": "此时夜间我们的8号白神是免疫狼刀\n所以当夜只有9号玩家舞者单死在第三天白天\n场上最后一狼5号假面被公投出局",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-08/2026-10-08_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1ZmHX6iEcx_P01_CID42572710760.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "origin": "phase_coverage_check",
+            "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+            "previous_question": "查验目标或反馈待核实",
+            "daily_audited": true
+          },
+          "after": null
+        },
+        {
+          "before": {
+            "bvid": "BV1U3p86dEYR",
+            "date": "2026-10-09",
+            "game_number": 2,
+            "id": "b72-d2-terminal-hunter-response",
+            "round": 2,
+            "phase": "day",
+            "status": "not_observed",
+            "field": "rounds[2].day.hunter_shot[3]",
+            "title": "猎人被狼队拍刀击中后的响应",
+            "conclusion": "终局拍刀命中5号女巫及3号猎人后宣布狼胜；猎人终局响应未公开，字段保持unknown。",
+            "reasoning": "复盤只确认狼队拍刀成功并结束游戏，未说明猎人响应；不推成pass或资格结论，且不影响胜负。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+                "start_ms": 5585190,
+                "end_ms": 5586550,
+                "quote": "狼队选择拍刀",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E9%AD%94%E5%B9%BB%E5%AF%B9%E5%86%B3__BV1U3p86dEYR_P01_CID42602072331.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+                "start_ms": 5586550,
+                "end_ms": 5590000,
+                "quote": "5号女巫及3号猎人拍到成功",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E9%AD%94%E5%B9%BB%E5%AF%B9%E5%86%B3__BV1U3p86dEYR_P01_CID42602072331.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+                "start_ms": 5590000,
+                "end_ms": 5590520,
+                "quote": "游戏结束",
+                "file_url": "../seasons/S23/%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F/2026-10-09/2026-10-09_S23_%E7%AC%AC06%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC05%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E9%AD%94%E5%B9%BB%E5%AF%B9%E5%86%B3__BV1U3p86dEYR_P01_CID42602072331.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "phase_label": "第2天白天",
+            "previous_question": "猎人被狼队拍刀击中后的响应",
+            "daily_audited": true
+          },
+          "after": {
+            "bvid": "BV1U3p86dEYR",
+            "date": "2026-10-09",
+            "game_number": 2,
+            "id": "b72-d2-terminal-hunter-response",
+            "round": 2,
+            "phase": "day",
+            "status": "confirmed",
+            "field": "rounds[2].day.hunter_shot[3]",
+            "title": "末神猎人出局后立即终局，不能开枪",
+            "conclusion": "终局拍刀命中5号女巫及3号猎人，结算后神职全部出局，对局立即结束，3号猎人没有后续开枪窗口；不据目标集合推定刀序。",
+            "reasoning": "终局拍刀命中5号女巫及3号猎人，结算后神职全部出局，对局立即结束，3号猎人没有后续开枪窗口；不据目标集合推定刀序。",
+            "evidence": [
+              {
+                "kind": "user_confirmation",
+                "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+                "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+                "quote": "猎人作为出局的最后一神开不出枪游戏就结束了",
+                "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+              }
+            ],
+            "phase_label": "第2天白天拍刀结算",
+            "previous_question": "猎人被狼队拍刀击中后的响应",
+            "confirmation_status": "user_confirmed",
+            "daily_audited": true
+          }
+        },
+        {
+          "before": {
+            "bvid": "BV1zmpB6PEcF",
+            "date": "2026-10-13",
+            "game_number": 2,
+            "id": "coverage-3-night-wolf_attack",
+            "round": 3,
+            "phase": "night",
+            "phase_label": "第2天夜晚",
+            "status": "not_observed",
+            "field": "wolf_attack",
+            "title": "狼刀目标待核实",
+            "conclusion": "N3常规狼刀行动者及目标未在复盘中公开，wolf_attack保持unknown；当夜“昨夜平安夜”与8号DQ分别记录。",
+            "reasoning": "全文仅明确播报平安夜和8号因DQ离场，没有普通狼刀行动或目标。DQ不是普通夜死，也不能据平安夜反推狼队是否行动；此缺项不改变本局结算，属于资料未公开。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+                "start_ms": 5716480,
+                "end_ms": 5722870,
+                "quote": "忘了昨夜平安夜\n昨夜8号玩家被DQ出局\n8号玩家请离场\n请警长组织发言顺序",
+                "file_url": "../seasons/S23/%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F/2026-10-13/2026-10-13_S23_%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E7%9B%97%E5%AE%9D%E5%A4%A7%E5%B8%88__BV1zmpB6PEcF_P01_CID42717088844.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "origin": "phase_coverage_check",
+            "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+            "previous_question": "狼刀目标待核实",
+            "daily_audited": true
+          },
+          "after": null
+        },
+        {
+          "before": {
+            "bvid": "BV1vMpm6QEdM",
+            "date": "2026-10-14",
+            "game_number": 3,
+            "id": "b79-r4-terminal-hunter-response",
+            "round": 4,
+            "phase": "day",
+            "status": "not_observed",
+            "field": "rounds[4].day.hunter_shot[11]",
+            "title": "终局夜击中猎人后的开枪资格",
+            "conclusion": "终局击杀11号猎人后立即宣布游戏结束；猎人响应未公开，字段保持unknown。",
+            "reasoning": "复盘确认11号猎人倒牌后游戏结束，没有公开技能响应；保留unknown，不列人工问题。",
+            "evidence": [
+              {
+                "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+                "start_ms": 5267100,
+                "end_ms": 5269600,
+                "quote": "昨夜11号玩家倒牌游戏结束",
+                "file_url": "../seasons/S23/%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F/2026-10-14/2026-10-14_S23_%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1vMpm6QEdM_P01_CID42744940707.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+                "start_ms": 5269600,
+                "end_ms": 5271560,
+                "quote": "狼人阵营屠神获胜",
+                "file_url": "../seasons/S23/%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F/2026-10-14/2026-10-14_S23_%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1vMpm6QEdM_P01_CID42744940707.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              },
+              {
+                "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+                "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+                "start_ms": 5340620,
+                "end_ms": 5342340,
+                "quote": "11号猎人游戏结束",
+                "file_url": "../seasons/S23/%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F/2026-10-14/2026-10-14_S23_%E7%AC%AC07%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC06%E6%9C%9F_%E7%AC%AC03%E5%B1%80_%E6%9C%BA%E6%A2%B0%E7%8B%BC%E9%80%9A%E7%81%B5%E5%B8%88__BV1vMpm6QEdM_P01_CID42744940707.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
+              }
+            ],
+            "phase_label": "第4天白天",
+            "previous_question": "终局夜击中猎人后的开枪资格",
+            "daily_audited": true
+          },
+          "after": {
+            "bvid": "BV1vMpm6QEdM",
+            "date": "2026-10-14",
+            "game_number": 3,
+            "id": "b79-r4-terminal-hunter-response",
+            "round": 4,
+            "phase": "day",
+            "status": "confirmed",
+            "field": "rounds[4].day.hunter_shot[11]",
+            "title": "末神猎人出局后立即终局，不能开枪",
+            "conclusion": "11号猎人在终局结算时作为最后存活神职出局，神职侧已全部出局，对局立即结束，没有后续开枪环节。",
+            "reasoning": "11号猎人在终局结算时作为最后存活神职出局，神职侧已全部出局，对局立即结束，没有后续开枪环节。",
+            "evidence": [
+              {
+                "kind": "user_confirmation",
+                "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+                "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+                "quote": "猎人作为出局的最后一神开不出枪游戏就结束了",
+                "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
+              }
+            ],
+            "phase_label": "第3天夜晚终局时",
+            "previous_question": "终局夜击中猎人后的开枪资格",
+            "confirmation_status": "user_confirmed",
+            "daily_audited": true
+          }
+        }
+      ],
+      "user_rule_confirmation_source": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt"
+    },
+    "historical_reading": "The prior delivery record remains unchanged at snapshot 21f324... with 178 ballots and 1300 votes. The new revision is recorded separately below; the older report is not rewritten to impersonate a re-review.",
+    "current_delivery_revision": {
+      "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+      "progress_summary": {
+        "planned": 75,
+        "ai_reviewed": 75,
+        "human_questions": 1,
+        "games_with_human_questions": 1,
+        "ballots": 178,
+        "votes": 1299,
+        "daily_audited_games": 75,
+        "unpublished_source_items": 2,
+        "delivery_status": "phase_gaps_pending",
+        "formal_database_writes": false
+      },
+      "daily_audit_acceptance": {
+        "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+        "checked_at_utc": "2026-10-27T17:04:25.144691+00:00",
+        "games": [
+          {
+            "bvid": "BV1KfYE6HEDv",
+            "date": "2026-09-08",
+            "game_number": 1,
+            "full_segments": 2144,
+            "recap_segments": 17,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1sAYJ6UEoF",
+            "date": "2026-09-08",
+            "game_number": 2,
+            "full_segments": 2094,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 5
+          },
+          {
+            "bvid": "BV1U9YE69E6Q",
+            "date": "2026-09-08",
+            "game_number": 3,
+            "full_segments": 2794,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1LdY46xEUu",
+            "date": "2026-09-09",
+            "game_number": 1,
+            "full_segments": 1924,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1ddY46sEgn",
+            "date": "2026-09-09",
+            "game_number": 2,
+            "full_segments": 3642,
+            "recap_segments": 43,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1ddY46sEzY",
+            "date": "2026-09-09",
+            "game_number": 3,
+            "full_segments": 2897,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV14sY36hEp8",
+            "date": "2026-09-10",
+            "game_number": 1,
+            "full_segments": 2834,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 4
+          },
+          {
+            "bvid": "BV12sY36hEQh",
+            "date": "2026-09-10",
+            "game_number": 2,
+            "full_segments": 2119,
+            "recap_segments": 43,
+            "pending": 0,
+            "patches": 15
+          },
+          {
+            "bvid": "BV14sY36hEPC",
+            "date": "2026-09-10",
+            "game_number": 3,
+            "full_segments": 1330,
+            "recap_segments": 39,
+            "pending": 0,
+            "patches": 2
+          },
+          {
+            "bvid": "BV12sY36hEdr",
+            "date": "2026-09-10",
+            "game_number": 4,
+            "full_segments": 1786,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 2
+          },
+          {
+            "bvid": "BV1S1YU6rE6R",
+            "date": "2026-09-11",
+            "game_number": 1,
+            "full_segments": 1912,
+            "recap_segments": 24,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1g1YU6kERd",
+            "date": "2026-09-11",
+            "game_number": 2,
+            "full_segments": 2516,
+            "recap_segments": 62,
+            "pending": 0,
+            "patches": 9
+          },
+          {
+            "bvid": "BV1D1YU6rEhh",
+            "date": "2026-09-11",
+            "game_number": 3,
+            "full_segments": 2424,
+            "recap_segments": 35,
+            "pending": 0,
+            "patches": 2
+          },
+          {
+            "bvid": "BV1theH6cESW",
+            "date": "2026-09-15",
+            "game_number": 1,
+            "full_segments": 3662,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1MheH6wEBb",
+            "date": "2026-09-15",
+            "game_number": 2,
+            "full_segments": 2047,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 6
+          },
+          {
+            "bvid": "BV1theH6cE6x",
+            "date": "2026-09-15",
+            "game_number": 3,
+            "full_segments": 1478,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1CAeA6qErr",
+            "date": "2026-09-16",
+            "game_number": 1,
+            "full_segments": 1753,
+            "recap_segments": 29,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1yAeA6qE7X",
+            "date": "2026-09-16",
+            "game_number": 2,
+            "full_segments": 3038,
+            "recap_segments": 39,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1yAeA6qEMd",
+            "date": "2026-09-16",
+            "game_number": 3,
+            "full_segments": 2586,
+            "recap_segments": 34,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1nJer6gEkx",
+            "date": "2026-09-17",
+            "game_number": 1,
+            "full_segments": 2255,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 7
+          },
+          {
+            "bvid": "BV1nJer63EDh",
+            "date": "2026-09-17",
+            "game_number": 2,
+            "full_segments": 1980,
+            "recap_segments": 51,
+            "pending": 0,
+            "patches": 7
+          },
+          {
+            "bvid": "BV1nJer6gEBP",
+            "date": "2026-09-17",
+            "game_number": 3,
+            "full_segments": 2687,
+            "recap_segments": 32,
+            "pending": 0,
+            "patches": 2
+          },
+          {
+            "bvid": "BV1tneS6kEnQ",
+            "date": "2026-09-18",
+            "game_number": 1,
+            "full_segments": 2239,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1tneS6rEx1",
+            "date": "2026-09-18",
+            "game_number": 2,
+            "full_segments": 2317,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1MneS6kEWz",
+            "date": "2026-09-18",
+            "game_number": 3,
+            "full_segments": 3340,
+            "recap_segments": 37,
+            "pending": 0,
+            "patches": 7
+          },
+          {
+            "bvid": "BV1gBhn6dE5c",
+            "date": "2026-09-22",
+            "game_number": 1,
+            "full_segments": 3285,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV18Bhn6dEJ6",
+            "date": "2026-09-22",
+            "game_number": 2,
+            "full_segments": 2765,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1gBhn6dEEJ",
+            "date": "2026-09-22",
+            "game_number": 3,
+            "full_segments": 3617,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 4
+          },
+          {
+            "bvid": "BV1KaaT67Eca",
+            "date": "2026-09-24",
+            "game_number": 1,
+            "full_segments": 2535,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 7
+          },
+          {
+            "bvid": "BV1saaT6jEyK",
+            "date": "2026-09-24",
+            "game_number": 2,
+            "full_segments": 2014,
+            "recap_segments": 43,
+            "pending": 0,
+            "patches": 4
+          },
+          {
+            "bvid": "BV1gpaT6WEMb",
+            "date": "2026-09-24",
+            "game_number": 3,
+            "full_segments": 3446,
+            "recap_segments": 34,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1NBhU68EUy",
+            "date": "2026-09-25",
+            "game_number": 1,
+            "full_segments": 2098,
+            "recap_segments": 26,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1KBhU68EjA",
+            "date": "2026-09-25",
+            "game_number": 2,
+            "full_segments": 3272,
+            "recap_segments": 43,
+            "pending": 0,
+            "patches": 5
+          },
+          {
+            "bvid": "BV1NBhU68EyT",
+            "date": "2026-09-25",
+            "game_number": 3,
+            "full_segments": 2095,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1RPaW6zEcm",
+            "date": "2026-09-29",
+            "game_number": 1,
+            "full_segments": 2313,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1VPaW66EZz",
+            "date": "2026-09-29",
+            "game_number": 2,
+            "full_segments": 1996,
+            "recap_segments": 35,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV15PaW66EjW",
+            "date": "2026-09-29",
+            "game_number": 3,
+            "full_segments": 1404,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1RPaW6zEg8",
+            "date": "2026-09-29",
+            "game_number": 4,
+            "full_segments": 2057,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1V8af6zE56",
+            "date": "2026-09-30",
+            "game_number": 1,
+            "full_segments": 2409,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1V8af6zEtX",
+            "date": "2026-09-30",
+            "game_number": 2,
+            "full_segments": 2116,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1V8af6zE5T",
+            "date": "2026-09-30",
+            "game_number": 3,
+            "full_segments": 3488,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1D2ak6XExH",
+            "date": "2026-10-01",
+            "game_number": 1,
+            "full_segments": 3040,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1D2ak6XEji",
+            "date": "2026-10-01",
+            "game_number": 2,
+            "full_segments": 3525,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1D2ak6XEMa",
+            "date": "2026-10-01",
+            "game_number": 3,
+            "full_segments": 3324,
+            "recap_segments": 26,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1N3aQ6zEXr",
+            "date": "2026-10-02",
+            "game_number": 1,
+            "full_segments": 1321,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1UNaQ6kEWR",
+            "date": "2026-10-02",
+            "game_number": 2,
+            "full_segments": 2349,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1K3aQ6zEB9",
+            "date": "2026-10-02",
+            "game_number": 3,
+            "full_segments": 2046,
+            "recap_segments": 32,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV123aQ6BEu2",
+            "date": "2026-10-02",
+            "game_number": 4,
+            "full_segments": 1077,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 4
+          },
+          {
+            "bvid": "BV17xpA6aE77",
+            "date": "2026-10-06",
+            "game_number": 1,
+            "full_segments": 3322,
+            "recap_segments": 25,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV17xpA6aE7N",
+            "date": "2026-10-06",
+            "game_number": 2,
+            "full_segments": 3164,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 9
+          },
+          {
+            "bvid": "BV1EspA6AENf",
+            "date": "2026-10-06",
+            "game_number": 3,
+            "full_segments": 2935,
+            "recap_segments": 29,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1SmHy6eEQQ",
+            "date": "2026-10-07",
+            "game_number": 1,
+            "full_segments": 2538,
+            "recap_segments": 26,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1gmHy6vECS",
+            "date": "2026-10-07",
+            "game_number": 2,
+            "full_segments": 3554,
+            "recap_segments": 41,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1hmHy6vEGv",
+            "date": "2026-10-07",
+            "game_number": 3,
+            "full_segments": 2395,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV17mHX6qETb",
+            "date": "2026-10-08",
+            "game_number": 1,
+            "full_segments": 2067,
+            "recap_segments": 21,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1ZmHX6iEcx",
+            "date": "2026-10-08",
+            "game_number": 2,
+            "full_segments": 1536,
+            "recap_segments": 37,
+            "pending": 0,
+            "patches": 10
+          },
+          {
+            "bvid": "BV1ZmHX6iEW4",
+            "date": "2026-10-08",
+            "game_number": 3,
+            "full_segments": 1507,
+            "recap_segments": 34,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1omHX6iEQz",
+            "date": "2026-10-08",
+            "game_number": 4,
+            "full_segments": 1161,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1U3p86dEHL",
+            "date": "2026-10-09",
+            "game_number": 1,
+            "full_segments": 2646,
+            "recap_segments": 15,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1U3p86dEYR",
+            "date": "2026-10-09",
+            "game_number": 2,
+            "full_segments": 2863,
+            "recap_segments": 30,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1U3p86dEJY",
+            "date": "2026-10-09",
+            "game_number": 3,
+            "full_segments": 1796,
+            "recap_segments": 35,
+            "pending": 1,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1zmpB6PEWL",
+            "date": "2026-10-13",
+            "game_number": 1,
+            "full_segments": 2939,
+            "recap_segments": 28,
+            "pending": 0,
+            "patches": 3
+          },
+          {
+            "bvid": "BV1zmpB6PEcF",
+            "date": "2026-10-13",
+            "game_number": 2,
+            "full_segments": 3125,
+            "recap_segments": 33,
+            "pending": 0,
+            "patches": 6
+          },
+          {
+            "bvid": "BV1BmpB6PE2C",
+            "date": "2026-10-13",
+            "game_number": 3,
+            "full_segments": 2895,
+            "recap_segments": 46,
+            "pending": 0,
+            "patches": 10
+          },
+          {
+            "bvid": "BV1Rgpm6nERY",
+            "date": "2026-10-14",
+            "game_number": 1,
+            "full_segments": 3186,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1vgpm6nEz6",
+            "date": "2026-10-14",
+            "game_number": 2,
+            "full_segments": 3595,
+            "recap_segments": 40,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1vMpm6QEdM",
+            "date": "2026-10-14",
+            "game_number": 3,
+            "full_segments": 2710,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV1i6J163EnN",
+            "date": "2026-10-15",
+            "game_number": 1,
+            "full_segments": 1593,
+            "recap_segments": 27,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1i6J163Ees",
+            "date": "2026-10-15",
+            "game_number": 2,
+            "full_segments": 1834,
+            "recap_segments": 23,
+            "pending": 0,
+            "patches": 6
+          },
+          {
+            "bvid": "BV1i6J163Eqb",
+            "date": "2026-10-15",
+            "game_number": 3,
+            "full_segments": 1370,
+            "recap_segments": 32,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV1i6J163EWn",
+            "date": "2026-10-15",
+            "game_number": 4,
+            "full_segments": 2590,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV17QJh6qEur",
+            "date": "2026-10-16",
+            "game_number": 1,
+            "full_segments": 1437,
+            "recap_segments": 29,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV17QJh6qEid",
+            "date": "2026-10-16",
+            "game_number": 2,
+            "full_segments": 2509,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 1
+          },
+          {
+            "bvid": "BV17QJh6qEVo",
+            "date": "2026-10-16",
+            "game_number": 3,
+            "full_segments": 2100,
+            "recap_segments": 31,
+            "pending": 0,
+            "patches": 0
+          },
+          {
+            "bvid": "BV17QJh6qEFa",
+            "date": "2026-10-16",
+            "game_number": 4,
+            "full_segments": 2413,
+            "recap_segments": 36,
+            "pending": 0,
+            "patches": 0
+          }
+        ],
+        "audited_games": 75,
+        "proofs_checked": 759,
+        "old_pending": 145,
+        "pending": 1,
+        "issues": [],
+        "passed": true,
+        "formal_database_writes": false
+      },
+      "semantic_revision": {
+        "records_reviewed": 29,
+        "corrected": 27,
+        "ambiguous_retained": 2,
+        "new_questions": [
+          "S23-F12",
+          "S23-F16"
+        ],
+        "votes_removed": 1,
+        "note": "BV12sY36hEdr D1 ballot-1 vote 12->8 remains; only D3 dead-voter 12 was removed."
+      },
+      "already_confirmed_user_question": "BV1U3p86dEJY eulogy count determination remains unchanged and is excluded from new questions.",
+      "formal_validation": {
+        "prepare": "passed; 75 games; database_write=false",
+        "check": "valid=true; 75 games; database_write=false"
+      },
+      "primary_integrated_import_receipt": "data/reports/dot-audit-20261028/s23-database-import.json"
+    }
+  },
+  "global_result_assertions": {
+    "faction_delta_only": {
+      "bvid": "BV1KaaT67Eca",
+      "seat": 4,
+      "old": "good",
+      "new": "werewolf"
+    },
+    "seat_roles_unchanged": true,
+    "winners_unchanged": true,
+    "names_dates_game_numbers_board_unchanged": true,
+    "seer_feedback_only_true_seers_changed": true,
+    "medium_specific_identity_feedback_preserved": true,
+    "BV12sY36hEdr_D1_sheriff_vote_12_to_8_preserved": true
+  },
+  "code_and_source_changes": {
+    "code": [
+      "scripts/s23_daily_audit.py",
+      "tests/test_s23_daily_audit.py"
+    ],
+    "durable_source": "Corrected findings are source-bound in 27 data/extractions/S23/game_reviews/{bvid}/daily_audit.json entries and event patches. F12/F16 are explicitly recorded as unresolved here and their formal fields remain unchanged.",
+    "auxiliary_audio_evidence": [
+      "data/extractions/S23/audio_semantic_review/BV1nJer63EDh/transcript.json"
+    ],
+    "generated_outputs": "build_s23_review.py generated candidate files under data/games/S23; no database writes.",
+    "tests": [
+      "pytest tests/test_s23_daily_audit.py tests/test_s23_phase_review.py -q: 17 passed",
+      "test_qingqiu_guard_pass_is_an_allowed_source_action：确认模板允许guard/pass且BV1nJer63EDh N1旁证动作和值相符。"
+    ],
+    "supporting_model_files": [
+      {
+        "path": "config/board_templates/s23_qingqiu_night.json",
+        "change": "night guard.actions添加pass，以表达原文“技能通过”；其他槽未改。",
+        "changed_by": "主代理"
+      }
+    ]
+  },
+  "rebuild_and_checks": {
+    "commands": [
+      "python scripts/build_s23_review.py --require-complete",
+      "python scripts/check_s23_daily_audit.py",
+      "python scripts/audit_s23_review.py",
+      "python scripts/check_s23_review_page.py --require-complete",
+      "python scripts/check_s23_phase_review.py",
+      "python scripts/check_s23_phase_consistency.py",
+      "pytest tests/test_s23_daily_audit.py tests/test_s23_phase_review.py -q"
+    ],
+    "results": {
+      "build": "passed; 75/75; 178 ballots; 1299 votes; 1 preexisting human question; formal_database_writes=false",
+      "daily_audit": "passed; 75 games; 759 proofs; 0 issues; 1 preexisting pending item",
+      "review_audit": "passed; 75 outputs; 2930 evidence items; 0 errors; 0 warnings",
+      "review_page": "passed; 75 rendered; 300 links; no JS errors; feedback persistence, snapshot rejection, and 390px layout passed",
+      "phase_review": "passed; failures=[]",
+      "phase_consistency": "passed; 75 games; 0 issues; temporal ordering validated",
+      "tests": "17 passed; qingqiu guard/pass positive validation included",
+      "formal_prepare": "passed; 75 games prepared; database_write=false",
+      "formal_check": "passed; valid=true; 75 games; database_write=false"
+    },
+    "formal_prepare_check": "Passed after the primary agent updated the S23 Qingqiu template to allow the source-proven guard/pass action. This audit subtask performed no database write."
+  },
+  "findings": [
+    {
+      "id": "S23-F01",
+      "bvid": "BV1KaaT67Eca",
+      "date": "2026-09-24",
+      "game_number": 1,
+      "title": "混血儿4号榜样12/好人阵营与8号狼人榜样复盘冲突",
+      "priority": "P1",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "4号混血儿以8号狼人为榜样；混血个人胜利阵营随榜样为狼人。",
+      "rationale": "本地字幕完整复盘行明确混血儿选择8号狼人为榜样；已目视原视频截图确认4号底牌混血儿、8号狼人、12号预言家。榜样事件改为8号后，生成流程从事件重算faction。",
+      "changes": [
+        {
+          "field": "rounds[1].night.mixed_blood_model.targets",
+          "old_formal_value": [
+            12
+          ],
+          "dot_candidate_value_not_executed": [
+            8
+          ],
+          "generated_value_after_review": [
+            8
+          ],
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "seats[4].faction",
+          "old_formal_value": "good",
+          "dot_candidate_value_not_executed": "werewolf",
+          "generated_value_after_review": "werewolf",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第01局_预女猎白混__BV1KaaT67Eca_P01_CID42171304005.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "6a916290b182e25eb6dee5ce5cb7f63c076e6f4ba8244b93c30e69ed46ffbc89",
+          "start_ms": 4799000,
+          "end_ms": 4812000,
+          "quote": "神志医院加12号女巫\n7号猎人\n5号白神\n2号狼人阵营一号3号八号\n10号平民阵营6号九号\n11号混血儿4号\n本游戏狼人混首页混血儿选择8号狼人文榜样\n形成狼人混\n狼队击杀12号预言家牛药救起行程",
+          "row_ids": [
+            2471,
+            2472,
+            2473,
+            2474,
+            2475,
+            2476,
+            2477,
+            2478,
+            2479
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "video_frame",
+          "source_path": "data/extractions/S23/speech_frames/BV1KaaT67Eca/BV1KaaT67Eca_04723.380.png",
+          "source_sha256": "d3871f4499ed47f27cb72e0e122738ec3b41d45f2fac9a87ae37db000ae73573",
+          "start_ms": 4723380,
+          "end_ms": 4723380,
+          "note": "原视频78:43.380画面侧栏可见4号混血儿、8号狼人、12号预言家；黄字只作玩家发言旁证。"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1KaaT67Eca/daily_audit.json",
+        "data/games/S23/2026-09-24_g01_BV1KaaT67Eca/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1KaaT67Eca/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F02",
+      "bvid": "BV1g1YU6kERd",
+      "date": "2026-09-11",
+      "game_number": 2,
+      "title": "青丘前两昼死亡错位且漏5，末夜说明误把11称九尾",
+      "priority": "P1",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "青丘夜影D1/D2夜死错位；删除无据的11号九尾狐毒免疫句。",
+      "rationale": "D1公布平安、N2刀5毒1、N3刀8、N4刀11的原字幕和连续自爆链互相一致；11号底牌守卫、九尾狐为4号。",
+      "changes": [
+        {
+          "field": "rounds[1].day.night_deaths",
+          "old_formal_value": {
+            "slot": "night_deaths",
+            "action": "die",
+            "actor": null,
+            "targets": [
+              1
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "peaceful",
+            "targets": []
+          },
+          "generated_value_after_review": {
+            "slot": "night_deaths",
+            "action": "peaceful",
+            "actor": null,
+            "targets": [],
+            "result": "N1狼刀3号预言家，女巫救起，形成平安夜。",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[2].day.night_deaths",
+          "old_formal_value": {
+            "slot": "night_deaths",
+            "action": "die",
+            "actor": null,
+            "targets": [
+              8
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "die",
+            "targets": [
+              1,
+              5
+            ]
+          },
+          "generated_value_after_review": {
+            "slot": "night_deaths",
+            "action": "die",
+            "actor": null,
+            "targets": [
+              1,
+              5
+            ],
+            "result": "N2狼刀5号平民，女巫毒杀1号狼人；1号与5号双死。"
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[4].day.night_deaths.result",
+          "old_formal_value": "N4狼刀11号守卫单死；11号九尾狐对毒免疫。",
+          "dot_candidate_value_not_executed": "N4狼刀11号守卫单死；删除本局无据的11号九尾毒免疫句。",
+          "generated_value_after_review": "N4狼刀11号守卫单死。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 1786000,
+          "end_ms": 1791000,
+          "quote": "作为信息平安夜警长选择发言顺序\n4号玩家请发言",
+          "row_ids": [
+            922,
+            923
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 2967000,
+          "end_ms": 2975000,
+          "quote": "一直想这么久远了\n我的天呐好\n昨夜伤死死亡时去不分先后\n一号5号倒牌\n没有遗言\nM1号5号灭灯去摆离场",
+          "row_ids": [
+            1552,
+            1553,
+            1554,
+            1555,
+            1556,
+            1557
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4001000,
+          "end_ms": 4006000,
+          "quote": "扛推3号\n所以抗对3号了吗\n昨夜8号玩家倒牌没有因言\n8号玩家没等取完离场",
+          "row_ids": [
+            2101,
+            2102,
+            2103,
+            2104
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4249000,
+          "end_ms": 4254000,
+          "quote": "那到底刀没刀对啊\n到底刀错了\n11号玩家倒牌没有遗言\n11号玩家没能全满离场",
+          "row_ids": [
+            2258,
+            2259,
+            2260,
+            2261
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4452000,
+          "end_ms": 4505500,
+          "quote": "4号平民阵营一号2号五号八号\n首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节\n3号预言家胡的警徽\n第一天白天\n9号狼人选择自爆\n入夜守卫守护11号自首\n九尾狐标记5号平民白泽\n清除了前天夜间标记的10号玩家身上的标记\n当夜狼队击杀5号平民女巫\n毒杀一号平民\n一号5号双死\n预言家验证8号玩家\n平民为好人身份\n在第二令的白天\n7号狼人选择自爆\n入夜守卫守护\n2号平民白泽清除2号身上的标记\n无事发生\n当夜九尾狐标记12号女巫\n夜间狼队击杀8号平民\n预言家验证6号玩家白泽为好人身份\n当夜为8号平民单死\n第三天的白天\n10号狼人选择自爆\n入夜守卫守护十",
+          "row_ids": [
+            2345,
+            2346,
+            2347,
+            2348,
+            2349,
+            2350,
+            2351,
+            2352,
+            2353,
+            2354,
+            2355,
+            2356,
+            2357,
+            2358,
+            2359,
+            2360,
+            2361,
+            2362,
+            2363,
+            2364,
+            2365,
+            2366,
+            2367,
+            2368,
+            2369,
+            2370,
+            2371,
+            2372,
+            2373
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4532000,
+          "end_ms": 4579000,
+          "quote": "我们夜间啊\n夜间的环节是九尾狐带刀击杀了11号\n首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记\n12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀\n12号女巫拍刀成功",
+          "row_ids": [
+            2382,
+            2383,
+            2384,
+            2385,
+            2386,
+            2387,
+            2388,
+            2389,
+            2390,
+            2391,
+            2392,
+            2393,
+            2394,
+            2395,
+            2396,
+            2397,
+            2398,
+            2399
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "video_frame",
+          "source_path": "data/extractions/S23/speech_frames/BV1g1YU6kERd/BV1g1YU6kERd_04411.719.png",
+          "source_sha256": "880f60e1c06f357643eb728f85ce9ba630ed6e435b47c15283121a7eb0815e5c",
+          "start_ms": 4411719,
+          "end_ms": 4411719,
+          "note": "原视频73:31.719画面显示第四天状态；用作夜死/轮次链的旁证，不单独判定夜次。"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+        "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F03",
+      "bvid": "BV1theH6cESW",
+      "date": "2026-09-15",
+      "game_number": 1,
+      "title": "D2夜死漏9号毒口",
+      "priority": "P1",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "D2夜死targets补入9号毒口。",
+      "rationale": "现场死亡播报与连续末复盘均明确6/9双死；正式只漏了9号targets。",
+      "changes": [
+        {
+          "field": "rounds[2].day.night_deaths.targets",
+          "old_formal_value": [
+            6
+          ],
+          "dot_candidate_value_not_executed": [
+            6,
+            9
+          ],
+          "generated_value_after_review": [
+            6,
+            9
+          ],
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 4534000,
+          "end_ms": 4539500,
+          "quote": "死亡顺序不分先后\n6号九号倒牌\n没有遗言\n是否发动技能\n543216号",
+          "row_ids": [
+            2331,
+            2332,
+            2333,
+            2334,
+            2335
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6955000,
+          "end_ms": 6974500,
+          "quote": "第一天白天11号查杀狼人被抗推呃\n被公投出局\n入夜狼人击杀6号预言家女巫毒杀9号狼人\n六九双死\n预言家验证一号玩家混血儿为好人身份\n6号预言家出局\n将警徽移交至一号混血儿\n第二天白天4号悍跳狼人自爆\n入夜狼人击杀7号平民",
+          "row_ids": [
+            3592,
+            3593,
+            3594,
+            3595,
+            3596,
+            3597,
+            3598,
+            3599,
+            3600
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1theH6cESW/daily_audit.json",
+        "data/games/S23/2026-09-15_g01_BV1theH6cESW/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1theH6cESW/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F04",
+      "bvid": "BV18Bhn6dEJ6",
+      "date": "2026-09-22",
+      "game_number": 2,
+      "title": "D2夜死targets漏1，与自身双死说明矛盾",
+      "priority": "P1",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "D2夜死targets补入1号自刀死者。",
+      "rationale": "复盘明确一号与六号双死；魔术师及诡术师交换均不涉及两名死者。",
+      "changes": [
+        {
+          "field": "rounds[2].day.night_deaths.targets",
+          "old_formal_value": [
+            6
+          ],
+          "dot_candidate_value_not_executed": [
+            1,
+            6
+          ],
+          "generated_value_after_review": [
+            1,
+            6
+          ],
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9fa3aa9d45458c1207db81a09a90796b99370df5eb0a362061462b542a7f0ca5",
+          "start_ms": 5253500,
+          "end_ms": 5275000,
+          "quote": "8号玩家出局\n入夜魔术师更换7号平民和10号预言家的号码\n鬼术师更换了9号定序\n王子和11号鬼术师自己的放逐\n结果狼人决定一号自刀女巫毒杀6号狼人\n一六双死\n当夜预言家验证11号玩家为狼人身份\n第二天白天\n狼人阵营决定交牌",
+          "row_ids": [
+            2716,
+            2717,
+            2718,
+            2719,
+            2720,
+            2721,
+            2722,
+            2723,
+            2724
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV18Bhn6dEJ6/daily_audit.json",
+        "data/games/S23/2026-09-22_g02_BV18Bhn6dEJ6/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV18Bhn6dEJ6/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F05",
+      "bvid": "BV1MneS6kEWz",
+      "date": "2026-09-18",
+      "game_number": 3,
+      "title": "已在N3死亡守卫3仍被写为N4守1",
+      "priority": "P2",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "N4守卫3号已在N3死亡，守护1号槽改为不可行动。",
+      "rationale": "N3狼刀3号守卫且复盘宣布单死；D3后5号自爆再进入N4，N4只有狼刀8号。",
+      "changes": [
+        {
+          "field": "rounds[4].night.guard",
+          "old_formal_value": {
+            "slot": "guard",
+            "action": "guard",
+            "actor": 3,
+            "targets": [
+              1
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "unavailable",
+            "actor": 3,
+            "targets": [],
+            "availability": "dead",
+            "result": "守卫3已于N3死亡，无N4行动资格。"
+          },
+          "generated_value_after_review": {
+            "slot": "guard",
+            "action": "unavailable",
+            "actor": 3,
+            "targets": [],
+            "result": "守卫3号已于N3出局，N4无法执行守护。",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": "dead",
+            "effects": []
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5963500,
+          "end_ms": 5978500,
+          "quote": "12号平民被抗推出局\n警徽移交至一号平民入夜守卫守护一号平民\n狼队击杀3号守卫\n3号守卫单四\n第三天的白天\n5号狼人选择自爆入夜\n狼队击杀8号平民\n8号平民三死\n第四天白天\n2号狼人选择自保后",
+          "row_ids": [
+            3289,
+            3290,
+            3291,
+            3292,
+            3293,
+            3294,
+            3295,
+            3296,
+            3297,
+            3298
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1MneS6kEWz/daily_audit.json",
+        "data/games/S23/2026-09-18_g03_BV1MneS6kEWz/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1MneS6kEWz/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F06",
+      "bvid": "BV1nJer63EDh",
+      "date": "2026-09-17",
+      "game_number": 2,
+      "title": "守7属于N2而非首夜",
+      "priority": "P2",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "N1守卫技能通过；D1自爆后N2守卫3号守护7号预言家。",
+      "rationale": "本地原字幕连续行给出首夜“技能通过”及自爆后“守护7号”；本地音轨解码后的Fun-ASR-Nano窄窗也转写出“守夜守卫技能通过”与“入夜守卫守护七号”。机器ASR作为辅助，不冒充人工听写。",
+      "changes": [
+        {
+          "field": "rounds[1].night.guard",
+          "old_formal_value": {
+            "slot": "guard",
+            "action": "guard",
+            "actor": 3,
+            "targets": [
+              7
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "pass",
+            "actor": 3,
+            "targets": []
+          },
+          "generated_value_after_review": {
+            "slot": "guard",
+            "action": "pass",
+            "actor": 3,
+            "targets": [],
+            "result": "N1守卫3号技能通过，未守护目标。"
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[2].night.guard",
+          "old_formal_value": {
+            "slot": "guard",
+            "action": "unknown",
+            "actor": null,
+            "targets": [],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "guard",
+            "actor": 3,
+            "targets": [
+              7
+            ]
+          },
+          "generated_value_after_review": {
+            "slot": "guard",
+            "actor": 3,
+            "targets": [
+              7
+            ],
+            "action": "guard",
+            "result": "D1狼10号自爆后入N2，守卫3号守护7号预言家。"
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3742000,
+          "end_ms": 3775000,
+          "quote": "11号平民阵营一号6号八号12号\n首页首位即能通过九尾狐标记4号女巫\n狼队击杀3号\n首位女巫要救起\n形成平安夜\n当演预言家验证了2号玩家白泽为好人身份\n警上竞选环节\n10号狼人选择自爆入夜\n首位守护7号预言家白泽\n选择清除4号女巫的标记\n成功清除掉\n然后我们九尾狐选择标记了一号平民\n当夜狼队击杀3号守卫女巫\n技能空过预言家验证\n12号玩家平民为好人身份",
+          "row_ids": [
+            1883,
+            1884,
+            1885,
+            1886,
+            1887,
+            1888,
+            1889,
+            1890,
+            1891,
+            1892,
+            1893,
+            1894,
+            1895,
+            1896,
+            1897
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "audio_asr",
+          "source_path": "data/extractions/S23/audio_semantic_review/BV1nJer63EDh/transcript.json",
+          "source_sha256": "84d130cf483943224edc7677f182ea64b3b8646c5468c9f57b8cd0eb4a7a7900",
+          "source_audio_path": "D:\\langrensha\\data\\seasons\\S23\\第03周_正赛第02期\\2026-09-17\\2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.音频.m4a",
+          "source_audio_sha256": "3d1bc115732840d437736919866b3c32545cf8ab2b9f4ab12eb2dd1274d7b8fc",
+          "clip_audio_sha256": "65b7f913fc86cae07239530a4005588fda491b9e65d7fb867dbffac9ca814bf3",
+          "start_ms": 3740000,
+          "end_ms": 3767000,
+          "model": "FunAudioLLM/Fun-ASR-Nano-2512",
+          "revision": "272c57b82523ada6fd87095e955f8e29100979ab",
+          "status": "machine_generated_unverified",
+          "quote": "守夜守卫技能通过",
+          "note": "本地Fun-ASR-Nano machine-generated-unverified；辅助定位原音，不作为人工听核。"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+        "data/games/S23/2026-09-17_g02_BV1nJer63EDh/dossier.candidate.json",
+        "config/board_templates/s23_qingqiu_night.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。；S23青丘板型模板仅为guard槽补入已观察到的pass动作，未扩展其他槽。"
+    },
+    {
+      "id": "S23-F07",
+      "bvid": "BV1g1YU6kERd",
+      "date": "2026-09-11",
+      "game_number": 2,
+      "title": "白泽尝试清标无事发生，却记result=cleared",
+      "priority": "P2",
+      "kind": "action_vs_effect_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "白泽清标尝试没有生效，保留原目标并修正result。",
+      "rationale": "目标分别保留；操作后法官连续播报“无事发生”，不能将尝试直接记为成功清除。",
+      "changes": [
+        {
+          "field": "rounds[3].night.whiteze_clear_mark.result",
+          "old_formal_value": "cleared",
+          "dot_candidate_value_not_executed": "no_effect（尝试清标目标保留；当时未成功移除标记）",
+          "generated_value_after_review": "清标尝试未生效；法官播报无事发生。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[4].night.whiteze_clear_mark.result",
+          "old_formal_value": "cleared",
+          "dot_candidate_value_not_executed": "no_effect（尝试清标目标保留；当时未成功移除标记）",
+          "generated_value_after_review": "清标尝试未生效；法官播报无事发生。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4485000,
+          "end_ms": 4493000,
+          "quote": "7号狼人选择自爆\n入夜守卫守护\n2号平民白泽清除2号身上的标记\n无事发生\n当夜九尾狐标记12号女巫",
+          "row_ids": [
+            2363,
+            2364,
+            2365,
+            2366,
+            2367
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4505000,
+          "end_ms": 4516000,
+          "quote": "10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民\n此时场上有标记的玩家是2号平民",
+          "row_ids": [
+            2372,
+            2373,
+            2374,
+            2375,
+            2376,
+            2377
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+        "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F08",
+      "bvid": "BV1nJer63EDh",
+      "date": "2026-09-17",
+      "game_number": 2,
+      "title": "白泽尝试清标无事发生，却记result=cleared",
+      "priority": "P2",
+      "kind": "action_vs_effect_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "白泽清标尝试没有生效，保留原目标并修正result。",
+      "rationale": "目标分别保留；操作后法官连续播报“无事发生”，不能将尝试直接记为成功清除。",
+      "changes": [
+        {
+          "field": "rounds[3].night.whiteze_clear_mark.result",
+          "old_formal_value": "cleared",
+          "dot_candidate_value_not_executed": "no_effect（尝试清标目标保留；当时未成功移除标记）",
+          "generated_value_after_review": "清标尝试未生效；法官播报无事发生。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[4].night.whiteze_clear_mark.result",
+          "old_formal_value": "cleared",
+          "dot_candidate_value_not_executed": "no_effect（尝试清标目标保留；当时未成功移除标记）",
+          "generated_value_after_review": "清标尝试未生效；法官播报无事发生。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3780000,
+          "end_ms": 3788500,
+          "quote": "本局游戏警徽流失入夜\n白泽选择在夜间清除8号玩家平民的标记\n无事发生\n而当夜九尾狐选择标记8号平民",
+          "row_ids": [
+            1900,
+            1901,
+            1902,
+            1903
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3801000,
+          "end_ms": 3809000,
+          "quote": "5号狼人选择自爆入夜\n白泽选择清除12号平民的标记\n无事发生\n而九尾狐在夜间选择标记12号平民",
+          "row_ids": [
+            1909,
+            1910,
+            1911,
+            1912
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3820000,
+          "end_ms": 3843000,
+          "quote": "所以当夜为6号平民单死\n在第四天白天\n九尾狐选择发动猎杀时刻技能\n当夜呃\n当日我们以身上有标记的玩家为一号平民\n8号平民以及12号平民\n加上我们九尾狐本身\n11号玩家四张牌大于仅剩的两张牌\n2号白泽以及4号女巫",
+          "row_ids": [
+            1917,
+            1918,
+            1919,
+            1920,
+            1921,
+            1922,
+            1923,
+            1924,
+            1925
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+        "data/games/S23/2026-09-17_g02_BV1nJer63EDh/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F09",
+      "bvid": "BV12sY36hEdr",
+      "date": "2026-09-10",
+      "game_number": 4,
+      "title": "首夜12已死亡却记平安，并在D3错误扩成一张投票",
+      "priority": "P1",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "N1实际死者为12号；保留其死亡公布前的D1警徽票，仅从D3放逐票权与票型去掉12号。",
+      "rationale": "原字幕时间轴显示12号投给8号的D1警徽票发生于1454.670秒，5号当选后于1463.640秒法官才宣布12号昨夜倒牌；该D1票保留。D3原字幕仅6名存活玩家投票，目视D3画面12号死亡，因此D3票权名单与选票都移除12号。",
+      "changes": [
+        {
+          "field": "rounds[1].day.night_deaths",
+          "old_formal_value": {
+            "slot": "night_deaths",
+            "action": "peaceful",
+            "actor": null,
+            "targets": [],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "die",
+            "targets": [
+              12
+            ],
+            "result": "首夜守救同目标，法官明确宣布12倒牌。"
+          },
+          "generated_value_after_review": {
+            "slot": "night_deaths",
+            "action": "die",
+            "actor": null,
+            "targets": [
+              12
+            ],
+            "result": "N1夜死为12号；D1警长唱票后才宣布12号昨夜倒牌。",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "voting.ballot-2.eligible_voters/votes",
+          "old_formal_value": {
+            "id": "ballot-2",
+            "day": 3,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": null,
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 11,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 11,
+            "unrecorded_voters": []
+          },
+          "dot_candidate_value_not_executed": {
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              10,
+              11
+            ],
+            "votes_remove_only": [
+              {
+                "voter": 12,
+                "target": 11,
+                "state": "cast"
+              }
+            ],
+            "retain_other_observed_votes_and_winner": true
+          },
+          "generated_value_after_review": {
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              10,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 3,
+                "state": "cast"
+              }
+            ]
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 1436000,
+          "end_ms": 1473000,
+          "quote": "4号五号八号十号请警下玩家带盔\n在4号五号八号十号玩家中选出本局游戏警长\n321请出票\n9号投给5号\n11号投给5号\n12号投给8号\n投票结束\n5号玩家两票当选\n其余玩家请变蓝灯\n昨夜12号玩家倒牌\n12号玩家请发表遗言",
+          "row_ids": [
+            686,
+            687,
+            688,
+            689,
+            690,
+            691,
+            692,
+            693,
+            694,
+            695,
+            696
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3537000,
+          "end_ms": 3557000,
+          "quote": "我自己头洗过了\n所有玩家发言结束\n请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n11号投给3号\n其余玩家投票给11号\n11号玩家高票出局\n游戏结束\n好人阵营获胜",
+          "row_ids": [
+            1705,
+            1706,
+            1707,
+            1708,
+            1709,
+            1710,
+            1711,
+            1712,
+            1713,
+            1714,
+            1715,
+            1716
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3577000,
+          "end_ms": 3592000,
+          "quote": "本局游戏为机械双刀狼\n平民阵营一号2号十号12号首夜守卫守护\n12号平民狼队击杀12号平民女巫开药\n12号平民乃疮身乃川身亡\n机械狼模仿6号狼人\n本局游戏为机械双刀狼",
+          "row_ids": [
+            1726,
+            1727,
+            1728,
+            1729,
+            1730,
+            1731
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "video_frame",
+          "source_path": "data/extractions/S23/speech_frames/BV12sY36hEdr/BV12sY36hEdr_03484.980.png",
+          "source_sha256": "51f2d760f4ef5ba7aecc29df5d33e66ed975e87e957992856748c3694746e11b",
+          "start_ms": 3484980,
+          "end_ms": 3484980,
+          "note": "原视频58:04.980左右的D3发言画面，12号死亡图标可见；存活集合仅作票权交叉旁证。"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV12sY36hEdr/daily_audit.json",
+        "data/games/S23/2026-09-10_g04_BV12sY36hEdr/voting.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV12sY36hEdr/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F10",
+      "bvid": "BV1KBhU68EjA",
+      "date": "2026-09-25",
+      "game_number": 2,
+      "title": "D3夜死汇总漏舞者12",
+      "priority": "P2",
+      "kind": "death_aggregate_incomplete",
+      "disposition": "corrected_from_source",
+      "summary": "D3夜死汇总targets补入被舞出局的12号，保留其死亡原因区别。",
+      "rationale": "复盘明确9号与12号双死，12号的舞池少数出局原因仍保存在dance_resolution；不误记为狼刀。",
+      "changes": [
+        {
+          "field": "rounds[3].day.night_deaths.targets",
+          "old_formal_value": [
+            9
+          ],
+          "dot_candidate_value_not_executed": [
+            9,
+            12
+          ],
+          "generated_value_after_review": [
+            9,
+            12
+          ],
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5524000,
+          "end_ms": 5544000,
+          "quote": "11号假面及12号武者当印五指在舞池内\n五池免疫狼刀假面\n选择验证\n10号玩家白神在舞池内给予10号白神一张面具\n此时五之内12号武者被五出局\n当夜假面开刀击杀9号女巫\n9号12号双死\n在第三天白天两轮平票\n平安日无人被放逐后\n狼队选择拍刀",
+          "row_ids": [
+            3081,
+            3082,
+            3083,
+            3084,
+            3085,
+            3086,
+            3087,
+            3088,
+            3089,
+            3090
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1KBhU68EjA/daily_audit.json",
+        "data/games/S23/2026-09-25_g02_BV1KBhU68EjA/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1KBhU68EjA/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F11",
+      "bvid": "BV1K3aQ6zEB9",
+      "date": "2026-10-02",
+      "game_number": 3,
+      "title": "终局查验说明误称6通灵师N2已死",
+      "priority": "P2",
+      "kind": "wrong_explanation_not_new_action",
+      "disposition": "corrected_from_source",
+      "summary": "修正终局查验说明：6号并未在N2出局；终局后续查验未观察。",
+      "rationale": "正式N2守卫6挡刀且N2仅11号毒死；N3狼队交牌结束对局。保留终局未知，不补查验目标或空过。",
+      "changes": [
+        {
+          "field": "rounds[3].night.seer_check.result",
+          "old_formal_value": "6号通灵师已在N2出局",
+          "dot_candidate_value_not_executed": "N3狼队夜间交牌终局，后续查验未观察；不能称6号N2已死。",
+          "generated_value_after_review": "N3狼队夜间交牌终局；后续查验未观察，不能称6号通灵师已于N2出局。",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-02/2026-10-02_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1K3aQ6zEB9_P01_CID42404220856.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8001b18179fb7e99383ba5b8f85e4116a9fa919cea27cf2f245189d948ae4386",
+          "start_ms": 3816500,
+          "end_ms": 3853500,
+          "quote": "机械狼模仿7号狼人\n本局游戏为机械双刀狼\n通灵师验证了4号玩家为平民身份\n在警上竞选环节\n6号通灵师获得警徽\n第一天白天\n7号狼人被呃\n7号狼人选择自爆\n入夜守卫守护6号通灵师\n狼队击杀6号通灵师\n形成平安夜\n当夜女巫毒杀11号狼人\n11号狼人单死\n通灵师验证5号玩家为首位身份\n在第二天白天\n3号狼人选择自爆\n入夜守卫守护\n5号自首\n机械双刀狼在夜间选择交牌游戏结束\n好人阵营获胜",
+          "row_ids": [
+            1949,
+            1950,
+            1951,
+            1952,
+            1953,
+            1954,
+            1955,
+            1956,
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1962,
+            1963,
+            1964,
+            1965,
+            1966,
+            1967,
+            1968
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1K3aQ6zEB9/daily_audit.json",
+        "data/games/S23/2026-10-02_g03_BV1K3aQ6zEB9/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1K3aQ6zEB9/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F12",
+      "bvid": "BV123aQ6BEu2",
+      "date": "2026-10-02",
+      "game_number": 4,
+      "title": "N2再次学习8疑为首夜学习重复",
+      "priority": "P3",
+      "kind": "possible_duplicate_event",
+      "disposition": "retained_ambiguous",
+      "summary": "原复盘末段可确认机械狼模仿8号，但该语句是对持续学习状态的总结还是N2的具体再次学习动作，现有字幕上下文不足以唯一映射到 mechanical_action 的行动时点；重复学习可能把持续形态误建成第二次动作，故保留正式源。",
+      "rationale": "原复盘末段可确认机械狼模仿8号，但该语句是对持续学习状态的总结还是N2的具体再次学习动作，现有字幕上下文不足以唯一映射到 mechanical_action 的行动时点；重复学习可能把持续形态误建成第二次动作，故保留正式源。",
+      "changes": [
+        {
+          "field": "rounds[2].night.mechanical_action",
+          "old_formal_value": {
+            "slot": "mechanical_action",
+            "action": "learn",
+            "actor": 9,
+            "targets": [
+              8
+            ],
+            "result": "机械狼9号模仿8号狼人",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "unknown",
+            "actor": 9,
+            "targets": [],
+            "note": "N1学习8保留；N2是否有解锁技能实际使用未由复盘给出，不凭重复学习造动作。"
+          },
+          "generated_value_after_review": {
+            "slot": "mechanical_action",
+            "action": "learn",
+            "actor": 9,
+            "targets": [
+              8
+            ],
+            "result": "机械狼9号模仿8号狼人",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "changed": false,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S23/第05周_正赛第04期/2026-10-02/2026-10-02_S23_第05周_正赛第04期_第04局_机械狼通灵师__BV123aQ6BEu2_P01_CID42404351469.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "4250475d6f604f66dfca8ddae4482f35840311c4bb6d27005c7738fab39eec3e",
+          "start_ms": 2096000,
+          "end_ms": 2129000,
+          "rows": [
+            {
+              "row": 1011,
+              "start_ms": 2094750,
+              "end_ms": 2096070,
+              "text": "一号7号十号"
+            },
+            {
+              "row": 1012,
+              "start_ms": 2096070,
+              "end_ms": 2098460,
+              "text": "11号首夜守卫守护"
+            },
+            {
+              "row": 1013,
+              "start_ms": 2098460,
+              "end_ms": 2102300,
+              "text": "3号通灵师狼队击杀11号平民女娲"
+            },
+            {
+              "row": 1014,
+              "start_ms": 2102300,
+              "end_ms": 2103990,
+              "text": "救起形成平安夜"
+            },
+            {
+              "row": 1015,
+              "start_ms": 2103990,
+              "end_ms": 2105750,
+              "text": "机械狼模仿8号狼人"
+            },
+            {
+              "row": 1016,
+              "start_ms": 2105750,
+              "end_ms": 2107090,
+              "text": "本局游戏为机械双刀狼"
+            },
+            {
+              "row": 1017,
+              "start_ms": 2107090,
+              "end_ms": 2110830,
+              "text": "通灵师查验7号玩家为平民身份"
+            },
+            {
+              "row": 1018,
+              "start_ms": 2110830,
+              "end_ms": 2112130,
+              "text": "在集上竞选环节"
+            },
+            {
+              "row": 1019,
+              "start_ms": 2112130,
+              "end_ms": 2114310,
+              "text": "6号狼人寻得自爆"
+            },
+            {
+              "row": 1020,
+              "start_ms": 2114310,
+              "end_ms": 2117730,
+              "text": "入夜守卫守护4号自守狼队"
+            },
+            {
+              "row": 1021,
+              "start_ms": 2117730,
+              "end_ms": 2120210,
+              "text": "击杀3号通灵师女巫"
+            },
+            {
+              "row": 1022,
+              "start_ms": 2120210,
+              "end_ms": 2121890,
+              "text": "毒杀8号狼人"
+            },
+            {
+              "row": 1023,
+              "start_ms": 2121890,
+              "end_ms": 2122850,
+              "text": "三八双死"
+            },
+            {
+              "row": 1024,
+              "start_ms": 2122850,
+              "end_ms": 2125970,
+              "text": "当夜通灵师验证了9号玩家"
+            },
+            {
+              "row": 1025,
+              "start_ms": 2125970,
+              "end_ms": 2128590,
+              "text": "机械狼为狼人身份"
+            },
+            {
+              "row": 1026,
+              "start_ms": 2128590,
+              "end_ms": 2130410,
+              "text": "在延期禁选环节"
+            }
+          ],
+          "quote": "一号7号十号\n11号首夜守卫守护\n3号通灵师狼队击杀11号平民女娲\n救起形成平安夜\n机械狼模仿8号狼人\n本局游戏为机械双刀狼\n通灵师查验7号玩家为平民身份\n在集上竞选环节\n6号狼人寻得自爆\n入夜守卫守护4号自守狼队\n击杀3号通灵师女巫\n毒杀8号狼人\n三八双死\n当夜通灵师验证了9号玩家\n机械狼为狼人身份\n在延期禁选环节",
+          "level": "archived_transcript_direct_read",
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV123aQ6BEu2/daily_audit.json",
+      "change_note": "本条在此次语义审计中未改正式源或旁证；旧值保留。审计结论及未决理由记在本报告。"
+    },
+    {
+      "id": "S23-F13",
+      "bvid": "BV1zmpB6PEWL",
+      "date": "2026-10-13",
+      "game_number": 1,
+      "title": "4号警长移徽12被提前重复写在D1",
+      "priority": "P2",
+      "kind": "source_fact_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "删除D1重复移徽事件；4号当选后持徽，D2出局后移交12号。",
+      "rationale": "D1只有4号当选及9号被放逐；4号在N2死亡后才发生向12号移徽。D2正确移徽事件保留。",
+      "changes": [
+        {
+          "field": "rounds[1].day.badge",
+          "old_formal_value": {
+            "slot": "badge",
+            "action": "transfer",
+            "actor": null,
+            "targets": [
+              12
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "unknown",
+            "targets": [],
+            "note": "D1无已观察到移徽；4号持徽。D2 4死后移12保留。"
+          },
+          "generated_value_after_review": {
+            "slot": "badge",
+            "action": "none",
+            "actor": null,
+            "targets": [],
+            "result": "D1未发生移徽；4号当选后持徽，至N2出局后才移交12号。",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第01局_预女猎白混__BV1zmpB6PEWL_P01_CID42716957800.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "4232a86e97e18add1506e85505ffbed69ec3f3029b7fb993c97cdd71c3f4c900",
+          "start_ms": 5630000,
+          "end_ms": 5649000,
+          "quote": "成平安夜冤家\n验证了9号玩家为狼人身份上警环节\n4号预言家获得警徽\n第一天白天9号查杀狼人被公投出局\n入野狼击杀\n4号预言家\n牛毒杀一号悍跳狼\n依四双死\n预言家验证了12号家为好人身份\n4号出局\n将警徽移交至12号平民\n第二天白天10号狼人自爆",
+          "row_ids": [
+            2895,
+            2896,
+            2897,
+            2898,
+            2899,
+            2900,
+            2901,
+            2902,
+            2903,
+            2904,
+            2905,
+            2906
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1zmpB6PEWL/daily_audit.json",
+        "data/games/S23/2026-10-13_g01_BV1zmpB6PEWL/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1zmpB6PEWL/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F14",
+      "bvid": "BV1zmpB6PEcF",
+      "date": "2026-10-13",
+      "game_number": 2,
+      "title": "通灵查验反馈将临时平民误写实际盗宝底牌",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "修正通灵师首夜反馈为平民；盗宝大师真实底牌和后续DQ结算不变。",
+      "rationale": "盗宝8号首夜选择平民后，法官明确报通灵师查验8号为平民；N2改选摄梦人后的反馈仍保留摄梦人。10月13日8号最后一狼DQ导致狼刀失效的用户定案不触碰。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "盗宝大师",
+          "dot_candidate_value_not_executed": "平民",
+          "generated_value_after_review": "平民",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6064500,
+          "end_ms": 6075000,
+          "quote": "平民4号七号十号12号\n首页盗宝大师选择平民身份\n通灵师验证8号玩家\n盗宝大师为平民身份上警环节\n10号平民获得警徽",
+          "row_ids": [
+            3068,
+            3069,
+            3070,
+            3071,
+            3072
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1zmpB6PEcF/daily_audit.json",
+        "data/games/S23/2026-10-13_g02_BV1zmpB6PEcF/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1zmpB6PEcF/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F15",
+      "bvid": "BV1V8af6zE5T",
+      "date": "2026-09-30",
+      "game_number": 3,
+      "title": "D2出现第二次5号当选警长，疑首日结果重复",
+      "priority": "P3",
+      "kind": "possible_duplicate_event",
+      "disposition": "corrected_from_source",
+      "summary": "D2不存在第二次警长选举；5号继续持徽但不重复记当选事件。",
+      "rationale": "原字幕与voting.json均显示D1首轮平票后实际PK并由5号当选；D2只有放逐投票，没有警长投票。sheriff_result是事件槽，持徽状态不复制为新当选事件。",
+      "changes": [
+        {
+          "field": "rounds[2].day.sheriff_result",
+          "old_formal_value": {
+            "slot": "sheriff_result",
+            "action": "elected",
+            "actor": null,
+            "targets": [
+              5
+            ],
+            "result": null,
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "dot_candidate_value_not_executed": {
+            "action": "unknown",
+            "targets": [],
+            "note": "5号继续持徽状态保留；D2再选警长未观察。"
+          },
+          "generated_value_after_review": {
+            "slot": "sheriff_result",
+            "action": "none",
+            "actor": null,
+            "targets": [],
+            "result": "D2未重新竞选警长；5号持徽状态延续，不记为D2再次当选。",
+            "start_seat": null,
+            "direction": null,
+            "votes": [],
+            "random_point": null,
+            "speech_scope": null,
+            "availability": null,
+            "effects": []
+          },
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2f82dfe5b12286e131b7f4edb4c18fd292e266d6c1db9da3600ca3a4f25d00f7",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜",
+          "row_ids": [
+            3440,
+            3441,
+            3442,
+            3443,
+            3444,
+            3445,
+            3446,
+            3447,
+            3448,
+            3449,
+            3450,
+            3451,
+            3452,
+            3453,
+            3454,
+            3455,
+            3456,
+            3457,
+            3458,
+            3459,
+            3460,
+            3461,
+            3462,
+            3463,
+            3464,
+            3465,
+            3466
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1V8af6zE5T/daily_audit.json",
+        "data/games/S23/2026-09-30_g03_BV1V8af6zE5T/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1V8af6zE5T/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F16",
+      "bvid": "BV1nJer6gEkx",
+      "date": "2026-09-17",
+      "game_number": 1,
+      "title": "D4猎人开枪带7被同时计入夜死汇总",
+      "priority": "P3",
+      "kind": "death_phase_classification",
+      "disposition": "retained_ambiguous",
+      "summary": "原复盘确认N4狼刀12号、猎人12号出局后开枪带走7号。当前 night_deaths 聚合字段是否应包含同夜猎人追枪死亡取决于该字段口径；将7移出汇总会混淆死亡时点，保留原值并明确猎枪另有事件。",
+      "rationale": "原复盘确认N4狼刀12号、猎人12号出局后开枪带走7号。当前 night_deaths 聚合字段是否应包含同夜猎人追枪死亡取决于该字段口径；将7移出汇总会混淆死亡时点，保留原值并明确猎枪另有事件。",
+      "changes": [
+        {
+          "field": "rounds[4].day.night_deaths.targets",
+          "old_formal_value": [
+            12,
+            7
+          ],
+          "dot_candidate_value_not_executed": [
+            12
+          ],
+          "generated_value_after_review": [
+            12,
+            7
+          ],
+          "changed": false,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+          "start_ms": 4305000,
+          "end_ms": 4340000,
+          "rows": [
+            {
+              "row": 2121,
+              "start_ms": 4303080,
+              "end_ms": 4306690,
+              "text": "本局游戏仅会流失入野狼队击杀3号预言家"
+            },
+            {
+              "row": 2122,
+              "start_ms": 4306690,
+              "end_ms": 4308570,
+              "text": "预言家验证了12号玩家"
+            },
+            {
+              "row": 2123,
+              "start_ms": 4308570,
+              "end_ms": 4309890,
+              "text": "猎人为好人身份"
+            },
+            {
+              "row": 2124,
+              "start_ms": 4309890,
+              "end_ms": 4311640,
+              "text": "当夜为3号预言家单四"
+            },
+            {
+              "row": 2125,
+              "start_ms": 4311640,
+              "end_ms": 4312720,
+              "text": "第三天白天"
+            },
+            {
+              "row": 2126,
+              "start_ms": 4312720,
+              "end_ms": 4314889,
+              "text": "4号狼人被公投出局"
+            },
+            {
+              "row": 2127,
+              "start_ms": 4314889,
+              "end_ms": 4316969,
+              "text": "入夜狼队击杀12号猎人"
+            },
+            {
+              "row": 2128,
+              "start_ms": 4316969,
+              "end_ms": 4320290,
+              "text": "猎人出局后开枪带走7号混血儿"
+            },
+            {
+              "row": 2129,
+              "start_ms": 4320290,
+              "end_ms": 4322530,
+              "text": "在第四天的白天场上"
+            },
+            {
+              "row": 2130,
+              "start_ms": 4322530,
+              "end_ms": 4324730,
+              "text": "最后一狼一号被公投出局"
+            },
+            {
+              "row": 2131,
+              "start_ms": 4324730,
+              "end_ms": 4325690,
+              "text": "游戏结束"
+            },
+            {
+              "row": 2132,
+              "start_ms": 4325690,
+              "end_ms": 4326900,
+              "text": "好人阵营获胜"
+            },
+            {
+              "row": 2133,
+              "start_ms": 4326900,
+              "end_ms": 4328580,
+              "text": "以上是我们今天第一局版型"
+            },
+            {
+              "row": 2134,
+              "start_ms": 4328580,
+              "end_ms": 4330180,
+              "text": "预女猎白混血儿的全部内容"
+            },
+            {
+              "row": 2135,
+              "start_ms": 4330180,
+              "end_ms": 4331940,
+              "text": "再次感谢各位丹木老师的陪伴"
+            },
+            {
+              "row": 2136,
+              "start_ms": 4331940,
+              "end_ms": 4335360,
+              "text": "这里是我们基城大师赛第23赛季昆仑归墟"
+            },
+            {
+              "row": 2137,
+              "start_ms": 4335360,
+              "end_ms": 4338559,
+              "text": "再一次感谢天天狼人对本赛事的大力支持"
+            },
+            {
+              "row": 2138,
+              "start_ms": 4338559,
+              "end_ms": 4339839,
+              "text": "希望各位弹幕老师们"
+            },
+            {
+              "row": 2139,
+              "start_ms": 4339839,
+              "end_ms": 4342039,
+              "text": "可以来到我们各大应用平台搜索并下载"
+            }
+          ],
+          "quote": "本局游戏仅会流失入野狼队击杀3号预言家\n预言家验证了12号玩家\n猎人为好人身份\n当夜为3号预言家单四\n第三天白天\n4号狼人被公投出局\n入夜狼队击杀12号猎人\n猎人出局后开枪带走7号混血儿\n在第四天的白天场上\n最后一狼一号被公投出局\n游戏结束\n好人阵营获胜\n以上是我们今天第一局版型\n预女猎白混血儿的全部内容\n再次感谢各位丹木老师的陪伴\n这里是我们基城大师赛第23赛季昆仑归墟\n再一次感谢天天狼人对本赛事的大力支持\n希望各位弹幕老师们\n可以来到我们各大应用平台搜索并下载",
+          "level": "archived_transcript_direct_read",
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1nJer6gEkx/daily_audit.json",
+      "change_note": "本条在此次语义审计中未改正式源或旁证；旧值保留。审计结论及未决理由记在本报告。"
+    },
+    {
+      "id": "S23-F17-BV14sY36hEp8",
+      "bvid": "BV14sY36hEp8",
+      "date": "2026-09-10",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "猎人",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5264310,
+          "end_ms": 5275900,
+          "quote": "女巫要救起\n形成平安夜预言家验证了2号玩家\n平民因为好人身份在警上竞选环节\n7号混血儿获得警徽一",
+          "row_ids": [
+            2701,
+            2702,
+            2703,
+            2704
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5286610,
+          "end_ms": 5294380,
+          "quote": "2号十号双死\n预言家验证5号玩家猎人为好人身份\n在第二天的白天\n8号狼人选择自爆之后",
+          "row_ids": [
+            2710,
+            2711,
+            2712,
+            2713
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV14sY36hEp8/daily_audit.json",
+        "data/games/S23/2026-09-10_g01_BV14sY36hEp8/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV14sY36hEp8/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV12sY36hEQh",
+      "bvid": "BV12sY36hEQh",
+      "date": "2026-09-10",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4050030,
+          "end_ms": 4060550,
+          "quote": "当夜为4号平民单死\n预言家验证了9号玩家平民为好人身份\n在警上竞选环节\n6号悍跳狼人获得警徽",
+          "row_ids": [
+            2063,
+            2064,
+            2065,
+            2066
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4123870,
+          "end_ms": 4133450,
+          "quote": "为11号五者单死\n夜间预言家验证10号平民为好人身份\n在第三天白天场上最后一狼\n3号假面选择交牌游戏结束",
+          "row_ids": [
+            2092,
+            2093,
+            2094,
+            2095
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV12sY36hEQh/daily_audit.json",
+        "data/games/S23/2026-09-10_g02_BV12sY36hEQh/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV12sY36hEQh/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1S1YU6rE6R",
+      "bvid": "BV1S1YU6rE6R",
+      "date": "2026-09-11",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+          "start_ms": 3484100,
+          "end_ms": 3490890,
+          "quote": "平安夜\n预言家验证9号玩家平民为好人身份\n警上竞选环节\n10号悍跳狼人获得警徽",
+          "row_ids": [
+            1627,
+            1628,
+            1629,
+            1630
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1S1YU6rE6R/daily_audit.json",
+        "data/games/S23/2026-09-11_g01_BV1S1YU6rE6R/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1S1YU6rE6R/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1g1YU6kERd",
+      "bvid": "BV1g1YU6kERd",
+      "date": "2026-09-11",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4479810,
+          "end_ms": 4484830,
+          "quote": "一号5号双死\n预言家验证8号玩家\n平民为好人身份\n在第二令的白天",
+          "row_ids": [
+            2359,
+            2360,
+            2361,
+            2362
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4493750,
+          "end_ms": 4503850,
+          "quote": "夜间狼队击杀8号平民\n预言家验证6号玩家白泽为好人身份\n当夜为8号平民单死\n第三天的白天",
+          "row_ids": [
+            2368,
+            2369,
+            2370,
+            2371
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4536059,
+          "end_ms": 4545390,
+          "quote": "首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记",
+          "row_ids": [
+            2384,
+            2385,
+            2386,
+            2387
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+        "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1nJer6gEkx",
+      "bvid": "BV1nJer6gEkx",
+      "date": "2026-09-17",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[3].night.seer_check.result",
+          "old_formal_value": "猎人",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+          "start_ms": 4283319,
+          "end_ms": 4290970,
+          "quote": "形成平安夜\n预言家验证了10号玩家平民为好人身份\n在警上确的环节\n6号狼人选择自爆",
+          "row_ids": [
+            2111,
+            2112,
+            2113,
+            2114
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+          "start_ms": 4293910,
+          "end_ms": 4301320,
+          "quote": "毒杀5号狼人\n当预言家验证了8号玩家\n平民为好人身份\n在延期竞选环节",
+          "row_ids": [
+            2116,
+            2117,
+            2118,
+            2119
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+          "start_ms": 4303080,
+          "end_ms": 4311640,
+          "quote": "本局游戏仅会流失入野狼队击杀3号预言家\n预言家验证了12号玩家\n猎人为好人身份\n当夜为3号预言家单四",
+          "row_ids": [
+            2121,
+            2122,
+            2123,
+            2124
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1nJer6gEkx/daily_audit.json",
+        "data/games/S23/2026-09-17_g01_BV1nJer6gEkx/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1nJer6gEkx/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1nJer63EDh",
+      "bvid": "BV1nJer63EDh",
+      "date": "2026-09-17",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[3].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3750540,
+          "end_ms": 3759550,
+          "quote": "形成平安夜\n当演预言家验证了2号玩家白泽为好人身份\n警上竞选环节\n10号狼人选择自爆入夜",
+          "row_ids": [
+            1887,
+            1888,
+            1889,
+            1890
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3769550,
+          "end_ms": 3777690,
+          "quote": "当夜狼队击杀3号守卫女巫\n技能空过预言家验证\n12号玩家平民为好人身份\n在第二天的延期竞选环节",
+          "row_ids": [
+            1895,
+            1896,
+            1897,
+            1898
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3793530,
+          "end_ms": 3800879,
+          "quote": "女巫技能继续空过\n当预言家验证了8号玩家\n平民为好人身份\n当夜为7号预言家单四在第三天白天",
+          "row_ids": [
+            1905,
+            1906,
+            1907,
+            1908
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+        "data/games/S23/2026-09-17_g02_BV1nJer63EDh/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1nJer63EDh/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1tneS6kEnQ",
+      "bvid": "BV1tneS6kEnQ",
+      "date": "2026-09-18",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "女巫",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[3].night.seer_check.result",
+          "old_formal_value": "猎人",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4101690,
+          "end_ms": 4110629,
+          "quote": "形成平安夜\n预言家验证3号玩家女巫为好人身份\n在警上竞选环节\n10号狼人选择自爆",
+          "row_ids": [
+            2071,
+            2072,
+            2073,
+            2074
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4116310,
+          "end_ms": 4126699,
+          "quote": "当夜为5号12号双死\n预言家验证11号玩家混血儿为好人身份\n在延期竞选环节\n12号狼人选择吞毒自爆",
+          "row_ids": [
+            2077,
+            2078,
+            2079,
+            2080
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4127919,
+          "end_ms": 4140420,
+          "quote": "入夜狼队击杀7号平民\n预言家验证4号玩家猎人为好人身份\n当夜为7号平民单死在第三天白天\n8号平民被抗推出局",
+          "row_ids": [
+            2082,
+            2083,
+            2084,
+            2085
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1tneS6kEnQ/daily_audit.json",
+        "data/games/S23/2026-09-18_g01_BV1tneS6kEnQ/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1tneS6kEnQ/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1KaaT67Eca",
+      "bvid": "BV1KaaT67Eca",
+      "date": "2026-09-24",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "白神",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第01局_预女猎白混__BV1KaaT67Eca_P01_CID42171304005.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "6a916290b182e25eb6dee5ce5cb7f63c076e6f4ba8244b93c30e69ed46ffbc89",
+          "start_ms": 4811690,
+          "end_ms": 4820350,
+          "quote": "狼队击杀12号预言家牛药救起行程\n平安夜预言家验证2号玩家白神为好人身份\n警上竞选环节\n一号悍跳狼人获得警徽",
+          "row_ids": [
+            2479,
+            2480,
+            2481,
+            2482
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1KaaT67Eca/daily_audit.json",
+        "data/games/S23/2026-09-24_g01_BV1KaaT67Eca/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1KaaT67Eca/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1saaT6jEyK",
+      "bvid": "BV1saaT6jEyK",
+      "date": "2026-09-24",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        },
+        {
+          "field": "rounds[3].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第02局_青丘夜影__BV1saaT6jEyK_P01_CID42171630894.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
+          "start_ms": 4007200,
+          "end_ms": 4014790,
+          "quote": "4号五号双死\n预言家验证3号玩家平民为好人身份\n在警上竞选环节\n4号悍跳狼人获得警徽",
+          "row_ids": [
+            1959,
+            1960,
+            1961,
+            1962
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第02局_青丘夜影__BV1saaT6jEyK_P01_CID42171630894.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
+          "start_ms": 4052540,
+          "end_ms": 4057600,
+          "quote": "一号守卫单子\n夜间预言家查验7号玩家\n平民为好人身份\n在第三天白天",
+          "row_ids": [
+            1978,
+            1979,
+            1980,
+            1981
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1saaT6jEyK/daily_audit.json",
+        "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1saaT6jEyK/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1KBhU68EjA",
+      "bvid": "BV1KBhU68EjA",
+      "date": "2026-09-25",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5481130,
+          "end_ms": 5487510,
+          "quote": "形成平安夜\n预言家验证3号玩家平民为好人身份\n在警上竞选环节\n8号预言家获得警徽",
+          "row_ids": [
+            3060,
+            3061,
+            3062,
+            3063
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        },
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+          "start_ms": 5509410,
+          "end_ms": 5517920,
+          "quote": "六八双死\n预言家验证2号玩家平民为好人身份\n并在出局后将警徽移交至2号平民\n在第二天的白天",
+          "row_ids": [
+            3075,
+            3076,
+            3077,
+            3078
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1KBhU68EjA/daily_audit.json",
+        "data/games/S23/2026-09-25_g02_BV1KBhU68EjA/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1KBhU68EjA/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1D2ak6XExH",
+      "bvid": "BV1D2ak6XExH",
+      "date": "2026-10-01",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[1].night.seer_check.result",
+          "old_formal_value": "验出11号白神",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第01局_预女猎白混__BV1D2ak6XExH_P01_CID42376237020.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5f9648e1dbca542f2b7fd46cfe8e1dbfa370bfc4c6b6a2f9a85cbc98dc858022",
+          "start_ms": 5442350,
+          "end_ms": 5450230,
+          "quote": "要救起\n形成平安夜预言家验证\n11号玩家白神为好人身份\n在警上竞选环节两轮平票",
+          "row_ids": [
+            2952,
+            2953,
+            2954,
+            2955
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1D2ak6XExH/daily_audit.json",
+        "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1D2ak6XExH/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV1zmpB6PEWL",
+      "bvid": "BV1zmpB6PEWL",
+      "date": "2026-10-13",
+      "game_number": 1,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第01局_预女猎白混__BV1zmpB6PEWL_P01_CID42716957800.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "4232a86e97e18add1506e85505ffbed69ec3f3029b7fb993c97cdd71c3f4c900",
+          "start_ms": 5640799,
+          "end_ms": 5646970,
+          "quote": "依四双死\n预言家验证了12号家为好人身份\n4号出局\n将警徽移交至12号平民",
+          "row_ids": [
+            2902,
+            2903,
+            2904,
+            2905
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV1zmpB6PEWL/daily_audit.json",
+        "data/games/S23/2026-10-13_g01_BV1zmpB6PEWL/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV1zmpB6PEWL/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    },
+    {
+      "id": "S23-F17-BV17QJh6qEid",
+      "bvid": "BV17QJh6qEid",
+      "date": "2026-10-16",
+      "game_number": 2,
+      "title": "预言家实际好人反馈被写为具体底牌（同类逐局子项）",
+      "priority": "P2",
+      "kind": "actual_check_feedback_conflict",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "changes": [
+        {
+          "field": "rounds[2].night.seer_check.result",
+          "old_formal_value": "平民",
+          "dot_candidate_value_not_executed": "好人（目标真实身份另存，不当作预言家具体身份反馈）",
+          "generated_value_after_review": "好人",
+          "changed": true,
+          "locator_semantics": "rounds[n]按round.number的游戏轮次、seats[n]按seat的座号定位，不是零起始JSON数组下标；候选不可直接当JSON Patch执行。"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第02局_魔幻对决__BV17QJh6qEid_P01_CID42799531683.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "240434fb2bf0d97ed664ab4ac90bb70c7f7e88867dd16184cbaa82cef6c19918",
+          "start_ms": 4770960,
+          "end_ms": 4778860,
+          "quote": "当一位6号预言家单死预言家\n验证2号玩家平民为好人身份\n并在出局后将警徽移交至2号平民\n在第二天白天",
+          "row_ids": [
+            2453,
+            2454,
+            2455,
+            2456
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ],
+      "modified_files": [
+        "data/extractions/S23/game_reviews/BV17QJh6qEid/daily_audit.json",
+        "data/games/S23/2026-10-16_g02_BV17QJh6qEid/dossier.candidate.json"
+      ],
+      "human_question_created": false,
+      "daily_audit_source_path": "data/extractions/S23/game_reviews/BV17QJh6qEid/daily_audit.json",
+      "change_note": "正式持久化修改写入该局daily_audit.json的source-bound语义旁证/事件补丁；候选dossier/voting由构建脚本生成。"
+    }
+  ],
+  "subtask_database_write": false,
+  "primary_integrated_import": {
+    "receipt_path": "data/reports/dot-audit-20261028/s23-database-import.json",
+    "generated_at_utc": "2026-10-27T17:15:28.455439+00:00",
+    "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+    "status": "database imported twice in one transaction; idempotency and S22 fingerprints verified",
+    "database_write": true,
+    "candidate_games": 75,
+    "idempotency": "two-pass import in one transaction verified",
+    "S22_unchanged": "verified by primary agent as recorded in receipt status"
+  }
+}

@@ -26,6 +26,9 @@ def test_terminal_night_keeps_only_observed_phases_and_explains_blocked_hunter()
     shot=next(e for e in r['day'] if e['slot']=='hunter_shot')
     shot.update(action='unavailable',blocked_by_game_end=True)
     item['dossier']['_publication_context']={'terminal_observation':{'round':r['number'],'phase':'night'}}
+    # This synthetic N1 terminal fixture cannot also contain later day votes.
+    item['voting']={'registrations':[],'ballots':[],'interruptions':[],'days':[]}
+    item['audit']=None
     before=deepcopy(item['dossier'])
     game=render(item,ids)
     assert game['rounds'][-1]['day']==[]

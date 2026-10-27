@@ -252,6 +252,12 @@ def input_digest(entry):
         parts.append(digest(ROOT / entry["source_path"]))
     for path in [Path(__file__), ROOT / "scripts/recap_parser.py", ROOT / "scripts/recap_specials.py", ROOT / "scripts/batch_people.py", ROOT / "scripts/batch_review.py", ROOT / "scripts/board_catalog.py", ROOT / "scripts/game_records.py", ROOT / "config/board_templates" / (entry["board"] + ".json")]:
         parts.append(digest(path))
+    # S22 dot-audit decisions are formal, source-bound extraction input. A
+    # patchset or applicator change must invalidate cached generated dossiers.
+    from s22_dot_audit import PATCHSET_PATH
+    audit_module = ROOT / "scripts/s22_dot_audit.py"
+    parts.append(digest(audit_module))
+    parts.append(digest(PATCHSET_PATH) if PATCHSET_PATH.is_file() else "missing:s22-dot-audit-patchset")
     from batch_people import SCHEDULE_REL, PHOTO_NAMES_REL, TOTAL_NAMES_REL, JUNE_25_SAMPLE_REL
     for relative_path in (SCHEDULE_REL, PHOTO_NAMES_REL, TOTAL_NAMES_REL, JUNE_25_SAMPLE_REL):
         path = ROOT / relative_path
@@ -538,6 +544,8 @@ def process_entry(entry, state, *, dry_run=False):
     value, issues, unmapped = build_dossier(entry, extracted)
     from batch_people import enrich_people
     value, people_issues, people_context = enrich_people(value, entry)
+    from s22_dot_audit import apply_generated_dossier
+    dot_audit_applied = apply_generated_dossier(value, entry)
     issues.extend(people_issues)
     issues = location["issues"] + issues
     if entry.get("catalog_issues"):
@@ -548,6 +556,7 @@ def process_entry(entry, state, *, dry_run=False):
               "recap_segments": recap_segments, "recap_start_ms": recap_segments[0]["start_ms"] if recap_segments else None,
               "recap_end_ms": recap_segments[-1]["end_ms"] if recap_segments else None,
               "recap_status": location["status"], "issues": issues, "unmapped_events": unmapped,
+              "dot_audit_applied": dot_audit_applied,
               "state": "prepared" if dry_run else "awaiting_import", "db_receipt": None,
               "people_sources": people_context}
     atomic_json(out / "dossier.json", value)
@@ -634,12 +643,19 @@ def main(argv=None):
             if args.action == "import-edits":
                 from game_records import import_game
                 value = read_json(out / "dossier.json")
+                from s22_dot_audit import apply_dossier, load_patchset, validate_sources
+                patchset = load_patchset()
+                validate_sources(patchset)
+                dot_audit_applied = apply_dossier(value, args.bvid, patchset=patchset)
+                if dot_audit_applied:
+                    atomic_json(out / "dossier.json", value)
                 previous_slug = entry.get("db_receipt", {}).get("slug")
                 if value.get("season") != "S22" or (previous_slug and value.get("slug") != previous_slug):
                     raise ValueError("人工修正不得改变赛季或已登记的对局标识；仅修改本局内容。")
                 receipt = import_game(value, allow_incomplete=True)
                 atomic_json(out / "database_receipt.json", receipt)
                 entry.update(coverage(value), state="imported", db_receipt=receipt, auto_protected=True,
+                             dot_audit_applied=sorted(set(entry.get("dot_audit_applied", [])) | set(dot_audit_applied)),
                              imported_dossier_sha256=digest(out / "dossier.json"), updated_at=now())
                 # No generated hash: future automatic runs protect manual edits.
                 entry.pop("generated_dossier_sha256", None)

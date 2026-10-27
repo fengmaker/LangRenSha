@@ -617,7 +617,7 @@
           "targets": [
             11
           ],
-          "result": "N4狼刀11号守卫单死；11号九尾狐对毒免疫。"
+          "result": "N4狼刀11号守卫单死。"
         }
       },
       {
@@ -632,6 +632,55 @@
             6
           ],
           "result": "九尾狐猎杀时刻技能成功，导致3号预言家和6号白泽出局。"
+        }
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "peaceful",
+          "actor": null,
+          "targets": [],
+          "result": "N1狼刀3号预言家，女巫救起，形成平安夜。"
+        }
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "die",
+          "actor": null,
+          "targets": [
+            1,
+            5
+          ],
+          "result": "N2狼刀5号平民，女巫毒杀1号狼人；1号与5号双死。"
+        }
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "slot": "whiteze_clear_mark",
+        "changes": {
+          "result": "清标尝试未生效；法官播报无事发生。"
+        }
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "slot": "whiteze_clear_mark",
+        "changes": {
+          "result": "清标尝试未生效；法官播报无事发生。"
+        }
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "好人"
         }
       }
     ],
@@ -1035,7 +1084,263 @@
           "exile": "unknown"
         }
       ]
-    }
+    },
+    "semantic_patches": [
+      {
+        "id": "S23-F02",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "青丘夜影D1/D2夜死错位；删除无据的11号九尾狐毒免疫句。",
+        "fields": [
+          "rounds[1].day.night_deaths",
+          "rounds[2].day.night_deaths",
+          "rounds[4].day.night_deaths.result"
+        ],
+        "rationale": "D1公布平安、N2刀5毒1、N3刀8、N4刀11的原字幕和连续自爆链互相一致；11号底牌守卫、九尾狐为4号。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 1786000,
+            "end_ms": 1791000,
+            "quote": "作为信息平安夜警长选择发言顺序\n4号玩家请发言",
+            "row_ids": [
+              922,
+              923
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 2967000,
+            "end_ms": 2975000,
+            "quote": "一直想这么久远了\n我的天呐好\n昨夜伤死死亡时去不分先后\n一号5号倒牌\n没有遗言\nM1号5号灭灯去摆离场",
+            "row_ids": [
+              1552,
+              1553,
+              1554,
+              1555,
+              1556,
+              1557
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4001000,
+            "end_ms": 4006000,
+            "quote": "扛推3号\n所以抗对3号了吗\n昨夜8号玩家倒牌没有因言\n8号玩家没等取完离场",
+            "row_ids": [
+              2101,
+              2102,
+              2103,
+              2104
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4249000,
+            "end_ms": 4254000,
+            "quote": "那到底刀没刀对啊\n到底刀错了\n11号玩家倒牌没有遗言\n11号玩家没能全满离场",
+            "row_ids": [
+              2258,
+              2259,
+              2260,
+              2261
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4452000,
+            "end_ms": 4505500,
+            "quote": "4号平民阵营一号2号五号八号\n首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节\n3号预言家胡的警徽\n第一天白天\n9号狼人选择自爆\n入夜守卫守护11号自首\n九尾狐标记5号平民白泽\n清除了前天夜间标记的10号玩家身上的标记\n当夜狼队击杀5号平民女巫\n毒杀一号平民\n一号5号双死\n预言家验证8号玩家\n平民为好人身份\n在第二令的白天\n7号狼人选择自爆\n入夜守卫守护\n2号平民白泽清除2号身上的标记\n无事发生\n当夜九尾狐标记12号女巫\n夜间狼队击杀8号平民\n预言家验证6号玩家白泽为好人身份\n当夜为8号平民单死\n第三天的白天\n10号狼人选择自爆\n入夜守卫守护十",
+            "row_ids": [
+              2345,
+              2346,
+              2347,
+              2348,
+              2349,
+              2350,
+              2351,
+              2352,
+              2353,
+              2354,
+              2355,
+              2356,
+              2357,
+              2358,
+              2359,
+              2360,
+              2361,
+              2362,
+              2363,
+              2364,
+              2365,
+              2366,
+              2367,
+              2368,
+              2369,
+              2370,
+              2371,
+              2372,
+              2373
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4532000,
+            "end_ms": 4579000,
+            "quote": "我们夜间啊\n夜间的环节是九尾狐带刀击杀了11号\n首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记\n12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀\n12号女巫拍刀成功",
+            "row_ids": [
+              2382,
+              2383,
+              2384,
+              2385,
+              2386,
+              2387,
+              2388,
+              2389,
+              2390,
+              2391,
+              2392,
+              2393,
+              2394,
+              2395,
+              2396,
+              2397,
+              2398,
+              2399
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "video_frame",
+            "source_path": "data/extractions/S23/speech_frames/BV1g1YU6kERd/BV1g1YU6kERd_04411.719.png",
+            "source_sha256": "880f60e1c06f357643eb728f85ce9ba630ed6e435b47c15283121a7eb0815e5c",
+            "start_ms": 4411719,
+            "end_ms": 4411719,
+            "note": "原视频73:31.719画面显示第四天状态；用作夜死/轮次链的旁证，不单独判定夜次。"
+          }
+        ]
+      },
+      {
+        "id": "S23-F07",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "白泽清标尝试没有生效，保留原目标并修正result。",
+        "fields": [
+          "rounds[3].night.whiteze_clear_mark.result",
+          "rounds[4].night.whiteze_clear_mark.result"
+        ],
+        "rationale": "目标分别保留；操作后法官连续播报“无事发生”，不能将尝试直接记为成功清除。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4485000,
+            "end_ms": 4493000,
+            "quote": "7号狼人选择自爆\n入夜守卫守护\n2号平民白泽清除2号身上的标记\n无事发生\n当夜九尾狐标记12号女巫",
+            "row_ids": [
+              2363,
+              2364,
+              2365,
+              2366,
+              2367
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4505000,
+            "end_ms": 4516000,
+            "quote": "10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民\n此时场上有标记的玩家是2号平民",
+            "row_ids": [
+              2372,
+              2373,
+              2374,
+              2375,
+              2376,
+              2377
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      },
+      {
+        "id": "S23-F17-BV1g1YU6kERd",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+        "fields": [
+          "rounds[2].night.seer_check.result"
+        ],
+        "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4479810,
+            "end_ms": 4484830,
+            "quote": "一号5号双死\n预言家验证8号玩家\n平民为好人身份\n在第二令的白天",
+            "row_ids": [
+              2359,
+              2360,
+              2361,
+              2362
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4493750,
+            "end_ms": 4503850,
+            "quote": "夜间狼队击杀8号平民\n预言家验证6号玩家白泽为好人身份\n当夜为8号平民单死\n第三天的白天",
+            "row_ids": [
+              2368,
+              2369,
+              2370,
+              2371
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4536059,
+            "end_ms": 4545390,
+            "quote": "首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记",
+            "row_ids": [
+              2384,
+              2385,
+              2386,
+              2387
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -1103,7 +1408,7 @@
         "targets": [
           11
         ],
-        "result": "N4狼刀11号守卫单死；11号九尾狐对毒免疫。",
+        "result": "N4狼刀11号守卫单死。",
         "start_seat": null,
         "direction": null,
         "votes": [],
@@ -1150,6 +1455,162 @@
         "speech_scope": null,
         "availability": null,
         "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          1
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": "N1狼刀3号预言家，女巫救起，形成平安夜。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          8
+        ],
+        "result": null
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          1,
+          5
+        ],
+        "result": "N2狼刀5号平民，女巫毒杀1号狼人；1号与5号双死。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "whiteze_clear_mark",
+      "before": {
+        "slot": "whiteze_clear_mark",
+        "action": "clear_mark",
+        "actor": 6,
+        "targets": [
+          2
+        ],
+        "result": "cleared",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "whiteze_clear_mark",
+        "action": "clear_mark",
+        "actor": 6,
+        "targets": [
+          2
+        ],
+        "result": "清标尝试未生效；法官播报无事发生。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "whiteze_clear_mark",
+      "before": {
+        "slot": "whiteze_clear_mark",
+        "action": "clear_mark",
+        "actor": 6,
+        "targets": [
+          3
+        ],
+        "result": "cleared",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "whiteze_clear_mark",
+        "action": "clear_mark",
+        "actor": 6,
+        "targets": [
+          3
+        ],
+        "result": "清标尝试未生效；法官播报无事发生。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 3,
+        "targets": [
+          8
+        ],
+        "result": "平民"
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 3,
+        "targets": [
+          8
+        ],
+        "result": "好人"
       }
     }
   ],

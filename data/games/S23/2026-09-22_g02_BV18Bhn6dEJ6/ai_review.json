@@ -648,9 +648,10 @@
         "action": "die",
         "actor": null,
         "targets": [
+          1,
           6
         ],
-        "result": "一号自刀、6号狼人被女巫毒杀，双死",
+        "result": "N2狼队1号自刀、毒杀6号；1号与6号双死。",
         "start_seat": null,
         "direction": null,
         "votes": [],
@@ -730,6 +731,18 @@
           "targets": [],
           "result": "第二天狼队交牌，未进行放逐。"
         }
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "targets": [
+            1,
+            6
+          ],
+          "result": "N2狼队1号自刀、毒杀6号；1号与6号双死。"
+        }
       }
     ],
     "finding_resolutions": [
@@ -795,7 +808,41 @@
       }
     ],
     "extra_findings": [],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F04",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "D2夜死targets补入1号自刀死者。",
+        "fields": [
+          "rounds[2].day.night_deaths.targets"
+        ],
+        "rationale": "复盘明确一号与六号双死；魔术师及诡术师交换均不涉及两名死者。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "9fa3aa9d45458c1207db81a09a90796b99370df5eb0a362061462b542a7f0ca5",
+            "start_ms": 5253500,
+            "end_ms": 5275000,
+            "quote": "8号玩家出局\n入夜魔术师更换7号平民和10号预言家的号码\n鬼术师更换了9号定序\n王子和11号鬼术师自己的放逐\n结果狼人决定一号自刀女巫毒杀6号狼人\n一六双死\n当夜预言家验证11号玩家为狼人身份\n第二天白天\n狼人阵营决定交牌",
+            "row_ids": [
+              2716,
+              2717,
+              2718,
+              2719,
+              2720,
+              2721,
+              2722,
+              2723,
+              2724
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -857,6 +904,44 @@
         "actor": null,
         "targets": [],
         "result": "第二天狼队交牌，未进行放逐。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          6
+        ],
+        "result": "一号自刀、6号狼人被女巫毒杀，双死",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          1,
+          6
+        ],
+        "result": "N2狼队1号自刀、毒杀6号；1号与6号双死。",
         "start_seat": null,
         "direction": null,
         "votes": [],

@@ -274,7 +274,9 @@
       },
       {
         "day": 2,
-        "night_deaths": [],
+        "night_deaths": [
+          8
+        ],
         "night_basis": "recorded",
         "living_before_vote": [
           1,
@@ -284,7 +286,6 @@
           5,
           6,
           7,
-          8,
           10,
           11,
           12
@@ -297,7 +298,6 @@
           5,
           6,
           7,
-          8,
           10,
           11,
           12
@@ -315,7 +315,6 @@
           3,
           6,
           7,
-          8,
           10,
           11,
           12
@@ -327,13 +326,18 @@
           3,
           6,
           7,
-          8,
           11,
           12
         ]
       }
     ],
-    "terminal": null,
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
     "deductions": [],
     "issues": [],
     "display_phases": [
@@ -445,7 +449,7 @@
   ],
   "bvid": "BV1Abgy6tEP8",
   "source_sha256": "ea9289e2e3f11071890d584b8339ff3e44494050d683bd16c8f48c206a00d287",
-  "dossier_sha256": "f49385cce853d863b668c3ec68a817a8c81dc6b0b40fd7e53229bb2104ba4475",
+  "dossier_sha256": "ea2876e1c041e994acd4daaabdd43aa68a327ad97a69d415934344fb6becda7c",
   "generated_at": "2026-10-25T04:08:39+08:00",
   "facts": {
     "schema_version": 1,
@@ -633,5 +637,6 @@
         "exile": "interrupted_self_destruct"
       }
     ]
-  }
+  },
+  "dot_audit_applied": []
 }

@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from website.api.bluffs import METHODOLOGY, S23_VIDEO_METHODOLOGY, physical_wolf, review_items, source_fingerprint
+from website.api import publisher
 
 WORK = ROOT / "data" / "extractions" / "S22" / "bluff_review"
 PUBLIC = ROOT / "website" / "assets" / "bluffs" / "S22.json"
@@ -94,12 +95,16 @@ def listening_hint(game: dict, seat: int) -> dict | None:
 
 def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
     sources = {}
-    for path in sorted((ROOT / "data/games/S22").glob("*/dossier.json")):
-        game = json.loads(path.read_text(encoding="utf-8"))
-        game["voting"] = json.loads((path.parent / "voting.json").read_text(encoding="utf-8"))
-        game["id"] = game["slug"]
-        game["source"] = {"bvid": re.search(r"BV[0-9A-Za-z]{10}", path.parent.name)[0]}
-        sources[game["id"]] = (game, path.parent.relative_to(ROOT).as_posix())
+    entries, _, _ = publisher.load_publication(ROOT, "S22")
+    for item in entries:
+        dossier = item["dossier"]
+        identities = {seat["name"]: seat["name"] for seat in dossier["seats"]}
+        game = publisher._public_game(dossier, item["voting"], item["endgame"],
+                                      item["audit"], item["board"], identities)
+        # Evidence lookup stays local; binding and success evaluation use the
+        # exact public timeline, including its source-bound terminal boundary.
+        game["files"] = dossier.get("files", [])
+        sources[game["id"]] = (game, item["folder"].relative_to(ROOT).as_posix())
     merged = {}
     for path in sorted(WORK.glob("part_?.json")):
         for game in json.loads(path.read_text(encoding="utf-8")).get("games", []):

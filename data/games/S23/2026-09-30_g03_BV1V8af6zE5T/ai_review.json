@@ -374,12 +374,112 @@
         ]
       }
     ],
-    "event_patches": [],
+    "event_patches": [
+      {
+        "round": 2,
+        "phase": "day",
+        "slot": "sheriff_result",
+        "changes": {
+          "action": "none",
+          "actor": null,
+          "targets": [],
+          "result": "D2未重新竞选警长；5号持徽状态延续，不记为D2再次当选。"
+        }
+      }
+    ],
     "finding_resolutions": [],
     "extra_findings": [],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F15",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "D2不存在第二次警长选举；5号继续持徽但不重复记当选事件。",
+        "fields": [
+          "rounds[2].day.sheriff_result"
+        ],
+        "rationale": "原字幕与voting.json均显示D1首轮平票后实际PK并由5号当选；D2只有放逐投票，没有警长投票。sheriff_result是事件槽，持徽状态不复制为新当选事件。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2f82dfe5b12286e131b7f4edb4c18fd292e266d6c1db9da3600ca3a4f25d00f7",
+            "start_ms": 6384080,
+            "end_ms": 6443540,
+            "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜",
+            "row_ids": [
+              3440,
+              3441,
+              3442,
+              3443,
+              3444,
+              3445,
+              3446,
+              3447,
+              3448,
+              3449,
+              3450,
+              3451,
+              3452,
+              3453,
+              3454,
+              3455,
+              3456,
+              3457,
+              3458,
+              3459,
+              3460,
+              3461,
+              3462,
+              3463,
+              3464,
+              3465,
+              3466
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
-  "daily_audit_changes": [],
+  "daily_audit_changes": [
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "before": {
+        "slot": "sheriff_result",
+        "action": "elected",
+        "actor": null,
+        "targets": [
+          5
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "sheriff_result",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "D2未重新竞选警长；5号持徽状态延续，不记为D2再次当选。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    }
+  ],
   "daily_bluff_changes": [],
   "daily_supplemental_aliases": [],
   "derived_event_states": [

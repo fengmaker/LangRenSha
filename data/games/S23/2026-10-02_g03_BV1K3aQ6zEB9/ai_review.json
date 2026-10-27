@@ -1181,6 +1181,14 @@
           "inferred": true,
           "inference_note": "“自首”为“自守”的语音转写；本局5号身份为守卫。"
         }
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "N3狼队夜间交牌终局；后续查验未观察，不能称6号通灵师已于N2出局。"
+        }
       }
     ],
     "finding_resolutions": [
@@ -1295,7 +1303,52 @@
       }
     ],
     "extra_findings": [],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F11",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "修正终局查验说明：6号并未在N2出局；终局后续查验未观察。",
+        "fields": [
+          "rounds[3].night.seer_check.result"
+        ],
+        "rationale": "正式N2守卫6挡刀且N2仅11号毒死；N3狼队交牌结束对局。保留终局未知，不补查验目标或空过。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-02/2026-10-02_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1K3aQ6zEB9_P01_CID42404220856.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "8001b18179fb7e99383ba5b8f85e4116a9fa919cea27cf2f245189d948ae4386",
+            "start_ms": 3816500,
+            "end_ms": 3853500,
+            "quote": "机械狼模仿7号狼人\n本局游戏为机械双刀狼\n通灵师验证了4号玩家为平民身份\n在警上竞选环节\n6号通灵师获得警徽\n第一天白天\n7号狼人被呃\n7号狼人选择自爆\n入夜守卫守护6号通灵师\n狼队击杀6号通灵师\n形成平安夜\n当夜女巫毒杀11号狼人\n11号狼人单死\n通灵师验证5号玩家为首位身份\n在第二天白天\n3号狼人选择自爆\n入夜守卫守护\n5号自首\n机械双刀狼在夜间选择交牌游戏结束\n好人阵营获胜",
+            "row_ids": [
+              1949,
+              1950,
+              1951,
+              1952,
+              1953,
+              1954,
+              1955,
+              1956,
+              1957,
+              1958,
+              1959,
+              1960,
+              1961,
+              1962,
+              1963,
+              1964,
+              1965,
+              1966,
+              1967,
+              1968
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -1368,6 +1421,39 @@
         "effects": [],
         "inferred": true,
         "inference_note": "“自首”为“自守”的语音转写；本局5号身份为守卫。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "unavailable",
+        "actor": 6,
+        "targets": [],
+        "result": "6号通灵师已在N2出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "unavailable",
+        "actor": 6,
+        "targets": [],
+        "result": "N3狼队夜间交牌终局；后续查验未观察，不能称6号通灵师已于N2出局。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
       }
     }
   ],

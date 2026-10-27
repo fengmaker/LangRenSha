@@ -649,6 +649,14 @@
           "result": "狼刀因最后一狼8号当夜DQ而失效；平安夜指无狼刀死亡，DQ单列。",
           "confirmation_status": "user_confirmed"
         }
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "平民"
+        }
       }
     ],
     "finding_resolutions": [
@@ -764,7 +772,37 @@
         "confirmation_status": "user_confirmed"
       }
     ],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F14",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "修正通灵师首夜反馈为平民；盗宝大师真实底牌和后续DQ结算不变。",
+        "fields": [
+          "rounds[1].night.seer_check.result"
+        ],
+        "rationale": "盗宝8号首夜选择平民后，法官明确报通灵师查验8号为平民；N2改选摄梦人后的反馈仍保留摄梦人。10月13日8号最后一狼DQ导致狼刀失效的用户定案不触碰。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+            "start_ms": 6064500,
+            "end_ms": 6075000,
+            "quote": "平民4号七号十号12号\n首页盗宝大师选择平民身份\n通灵师验证8号玩家\n盗宝大师为平民身份上警环节\n10号平民获得警徽",
+            "row_ids": [
+              3068,
+              3069,
+              3070,
+              3071,
+              3072
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -933,6 +971,43 @@
         "availability": null,
         "effects": [],
         "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 3,
+        "targets": [
+          8
+        ],
+        "result": "盗宝大师",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 3,
+        "targets": [
+          8
+        ],
+        "result": "平民",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
       }
     }
   ],

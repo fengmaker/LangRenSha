@@ -276,26 +276,7 @@
       }
     ]
   },
-  "rule_applications": [
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "causal-ballot-4-d3",
-      "day": 3,
-      "voters": [
-        6
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    },
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-3",
-      "day": 4,
-      "voters": [
-        6
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    }
-  ],
+  "rule_applications": [],
   "day_crosscheck_changes": [],
   "day_crosscheck_source": {
     "path": "data/games/S22/2026-06-11_g04_BV1wmEB68Exu/复核记录.json",
@@ -603,7 +584,9 @@
       },
       {
         "day": 2,
-        "night_deaths": [],
+        "night_deaths": [
+          6
+        ],
         "night_basis": "recorded",
         "living_before_vote": [
           1,
@@ -611,7 +594,6 @@
           3,
           4,
           5,
-          6,
           8,
           9,
           10,
@@ -624,7 +606,6 @@
           3,
           4,
           5,
-          6,
           8,
           10,
           11
@@ -641,7 +622,6 @@
           2,
           3,
           5,
-          6,
           8,
           10,
           11
@@ -651,7 +631,6 @@
           1,
           2,
           3,
-          6,
           8,
           10,
           11
@@ -666,7 +645,6 @@
         "living_before_vote": [
           2,
           3,
-          6,
           8,
           10,
           11
@@ -675,7 +653,6 @@
         "living_after_day": [
           2,
           3,
-          6,
           8,
           10
         ]
@@ -775,23 +752,21 @@
         2,
         3,
         5,
-        6,
         8,
         10,
         11
       ],
-      "living_count": 8,
+      "living_count": 7,
       "eligible_voters": [
         1,
         2,
         3,
         5,
-        6,
         8,
         10,
         11
       ],
-      "vote_count": 8,
+      "vote_count": 7,
       "basis": "night_deaths_and_previous_day_departures"
     },
     {
@@ -800,21 +775,19 @@
       "living": [
         2,
         3,
-        6,
         8,
         10,
         11
       ],
-      "living_count": 6,
+      "living_count": 5,
       "eligible_voters": [
         2,
         3,
-        6,
         8,
         10,
         11
       ],
-      "vote_count": 6,
+      "vote_count": 5,
       "basis": "night_deaths_and_previous_day_departures"
     }
   ],
@@ -882,7 +855,7 @@
   ],
   "bvid": "BV1wmEB68Exu",
   "source_sha256": "24d35d6f401f8001eda548a36ae58f2825afbbd1c683220a675abb889745378a",
-  "dossier_sha256": "d4872692cfad8b7978b3f63566f1f2760886a7e9eaa29debd7661238ebc1f27a",
+  "dossier_sha256": "e62653d2639cbdd69de17141849959529b51d6849b3d4f45f4677fd0a7faae32",
   "generated_at": "2026-10-25T04:08:35+08:00",
   "facts": {
     "schema_version": 1,
@@ -1049,7 +1022,6 @@
           2,
           3,
           5,
-          6,
           8,
           10,
           11
@@ -1074,11 +1046,6 @@
             "voter": 5,
             "target": 3,
             "state": "cast"
-          },
-          {
-            "voter": 6,
-            "target": null,
-            "state": "abstained"
           },
           {
             "voter": 8,
@@ -1111,7 +1078,6 @@
         "eligible_voters": [
           2,
           3,
-          6,
           8,
           10,
           11
@@ -1126,11 +1092,6 @@
             "voter": 3,
             "target": 11,
             "state": "cast"
-          },
-          {
-            "voter": 6,
-            "target": null,
-            "state": "abstained"
           },
           {
             "voter": 8,
@@ -1176,5 +1137,9 @@
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "dot_audit_applied": [
+    "S22-V-005",
+    "S22-V-006"
+  ]
 }

@@ -814,7 +814,16 @@
     "checks": [
       "N1狼刀9、女巫救9，平安；预言家验9为好人；D1放逐10号并交牌，好人胜。"
     ],
-    "event_patches": [],
+    "event_patches": [
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "好人"
+        }
+      }
+    ],
     "finding_resolutions": [
       {
         "id": "phase-23-night-1",
@@ -893,9 +902,76 @@
       }
     ],
     "extra_findings": [],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F17-BV1S1YU6rE6R",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+        "fields": [
+          "rounds[1].night.seer_check.result"
+        ],
+        "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+            "start_ms": 3484100,
+            "end_ms": 3490890,
+            "quote": "平安夜\n预言家验证9号玩家平民为好人身份\n警上竞选环节\n10号悍跳狼人获得警徽",
+            "row_ids": [
+              1627,
+              1628,
+              1629,
+              1630
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
-  "daily_audit_changes": [],
+  "daily_audit_changes": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 5,
+        "targets": [
+          9
+        ],
+        "result": "平民",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 5,
+        "targets": [
+          9
+        ],
+        "result": "好人",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    }
+  ],
   "daily_bluff_changes": [],
   "daily_supplemental_aliases": [],
   "derived_event_states": [

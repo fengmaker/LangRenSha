@@ -1113,6 +1113,22 @@
           "targets": [],
           "result": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。"
         }
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "好人"
+        }
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "好人"
+        }
       }
     ],
     "finding_resolutions": [
@@ -1213,7 +1229,67 @@
         "title": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。"
       }
     ],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F17-BV1tneS6kEnQ",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+        "fields": [
+          "rounds[1].night.seer_check.result",
+          "rounds[3].night.seer_check.result"
+        ],
+        "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+            "start_ms": 4101690,
+            "end_ms": 4110629,
+            "quote": "形成平安夜\n预言家验证3号玩家女巫为好人身份\n在警上竞选环节\n10号狼人选择自爆",
+            "row_ids": [
+              2071,
+              2072,
+              2073,
+              2074
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+            "start_ms": 4116310,
+            "end_ms": 4126699,
+            "quote": "当夜为5号12号双死\n预言家验证11号玩家混血儿为好人身份\n在延期竞选环节\n12号狼人选择吞毒自爆",
+            "row_ids": [
+              2077,
+              2078,
+              2079,
+              2080
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+            "start_ms": 4127919,
+            "end_ms": 4140420,
+            "quote": "入夜狼队击杀7号平民\n预言家验证4号玩家猎人为好人身份\n当夜为7号平民单死在第三天白天\n8号平民被抗推出局",
+            "row_ids": [
+              2082,
+              2083,
+              2084,
+              2085
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -1240,6 +1316,80 @@
         "actor": 12,
         "targets": [],
         "result": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 1,
+        "targets": [
+          3
+        ],
+        "result": "女巫",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 1,
+        "targets": [
+          3
+        ],
+        "result": "好人",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 1,
+        "targets": [
+          4
+        ],
+        "result": "猎人",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 1,
+        "targets": [
+          4
+        ],
+        "result": "好人",
         "start_seat": null,
         "direction": null,
         "votes": [],

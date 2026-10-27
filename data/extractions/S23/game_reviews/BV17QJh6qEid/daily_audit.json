@@ -23,7 +23,16 @@
       ]
     }
   ],
-  "event_patches": [],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "result": "好人"
+      }
+    }
+  ],
   "finding_resolutions": [
     {
       "id": "b85-r1-peaceful-night",
@@ -56,5 +65,34 @@
     }
   ],
   "extra_findings": [],
-  "human_questions": []
+  "human_questions": [],
+  "semantic_patches": [
+    {
+      "id": "S23-F17-BV17QJh6qEid",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+      "fields": [
+        "rounds[2].night.seer_check.result"
+      ],
+      "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第02局_魔幻对决__BV17QJh6qEid_P01_CID42799531683.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "240434fb2bf0d97ed664ab4ac90bb70c7f7e88867dd16184cbaa82cef6c19918",
+          "start_ms": 4770960,
+          "end_ms": 4778860,
+          "quote": "当一位6号预言家单死预言家\n验证2号玩家平民为好人身份\n并在出局后将警徽移交至2号平民\n在第二天白天",
+          "row_ids": [
+            2453,
+            2454,
+            2455,
+            2456
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

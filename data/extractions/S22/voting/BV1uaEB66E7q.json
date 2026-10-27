@@ -645,7 +645,22 @@
       "basis": "night_deaths_and_previous_day_departures"
     }
   ],
-  "election_flow": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 5,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 1,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": []
+    }
+  ],
   "rule_issues": [],
   "voting_rule_source": {
     "path": "config/S22_formal_rules.json",
@@ -738,7 +753,7 @@
   ],
   "bvid": "BV1uaEB66E7q",
   "source_sha256": "b2de82f3083314fe0806d3345e4cf20eccf59ece99eeab0a786c074056cb1106",
-  "dossier_sha256": "ca309dcad2b89f8fcd67ce18f4e7542031f4cdc718fcda1d5ae17524c17d86ba",
+  "dossier_sha256": "8f9b34145f0e7f0b8aa123c66ee8ebf72a9a37b996e88587b4a3ff1e971528df",
   "generated_at": "2026-10-25T04:08:35+08:00",
   "facts": {
     "schema_version": 1,
@@ -895,24 +910,25 @@
     "days": [
       {
         "day": 1,
-        "sheriff": "unknown",
+        "sheriff": "deferred",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 2,
-        "sheriff": "not_applicable",
+        "sheriff": "badge_lost",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "not_applicable",
+        "sheriff": "badge_lost",
         "exile": "recorded"
       },
       {
         "day": 4,
-        "sheriff": "not_applicable",
+        "sheriff": "badge_lost",
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "dot_audit_applied": []
 }

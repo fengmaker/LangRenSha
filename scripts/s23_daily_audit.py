@@ -18,9 +18,29 @@ def load_audit(folder, entry):
     return audit
 
 
+def sync_mixed_blood_faction(dossier, actor):
+    """Update one mixed-blood faction after its model-target patch."""
+    seats = {seat['seat']: seat for seat in dossier.get('seats', [])}
+    mixed_bloods = [seat for seat in seats.values() if seat.get('role') == '混血儿']
+    if len(mixed_bloods) != 1 or mixed_bloods[0]['seat'] != actor:
+        return
+    choices = [event for round_ in dossier.get('rounds', [])
+               for event in round_.get('night', [])
+               if event.get('slot') == 'mixed_blood_model'
+               and event.get('actor') == actor
+               and event.get('action') == 'choose']
+    if len(choices) != 1 or len(choices[0].get('targets', [])) != 1:
+        return
+    target = seats.get(choices[0]['targets'][0])
+    if not target or target.get('faction') not in {'good', 'werewolf'}:
+        return
+    mixed_bloods[0]['faction'] = target['faction']
+
+
 def apply_events(game, audit):
     """Patch the normalized dossier before presentation and survival replay."""
     changes = []
+    mixed_blood_actors = set()
     for patch in audit.get('event_patches', []):
         number, phase, slot = patch['round'], patch['phase'], patch['slot']
         if phase not in {'night', 'day'}:
@@ -34,9 +54,16 @@ def apply_events(game, audit):
         event.update(deepcopy(patch['changes']))
         if event['slot'] != slot:
             raise ValueError('逐日复核不能改写事件槽名称')
+        if slot == 'mixed_blood_model' and 'targets' in patch['changes']:
+            mixed_blood_actors.add(event.get('actor'))
         if not matches:
             rr[phase].append(event)
         changes.append({'round': number, 'phase': phase, 'slot': slot, 'before': before, 'after': deepcopy(event)})
+    # S23 derives mixed-blood victory faction from its model target. Recompute
+    # after source-bound event patches so a corrected target also persists its
+    # dependent faction in the generated dossier.
+    for actor in mixed_blood_actors:
+        sync_mixed_blood_faction(game['dossier'], actor)
     if audit.get('voting_replacement') is not None:
         game['voting'] = deepcopy(audit['voting_replacement'])
     bluff_changes = []

@@ -82,6 +82,18 @@
         "targets": [],
         "result": "N4普通狼人2号仍存活，机械双刀尚未解锁；不执行额外技能刀。"
       }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "unavailable",
+        "actor": 3,
+        "targets": [],
+        "availability": "dead",
+        "result": "守卫3号已于N3出局，N4无法执行守护。"
+      }
     }
   ],
   "finding_resolutions": [
@@ -320,5 +332,40 @@
       ]
     }
   ],
-  "human_questions": []
+  "human_questions": [],
+  "semantic_patches": [
+    {
+      "id": "S23-F05",
+      "reviewed_date": "2026-10-28",
+      "disposition": "corrected_from_source",
+      "summary": "N4守卫3号已在N3死亡，守护1号槽改为不可行动。",
+      "fields": [
+        "rounds[4].night.guard"
+      ],
+      "rationale": "N3狼刀3号守卫且复盘宣布单死；D3后5号自爆再进入N4，N4只有狼刀8号。",
+      "evidence": [
+        {
+          "kind": "transcript",
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5963500,
+          "end_ms": 5978500,
+          "quote": "12号平民被抗推出局\n警徽移交至一号平民入夜守卫守护一号平民\n狼队击杀3号守卫\n3号守卫单四\n第三天的白天\n5号狼人选择自爆入夜\n狼队击杀8号平民\n8号平民三死\n第四天白天\n2号狼人选择自保后",
+          "row_ids": [
+            3289,
+            3290,
+            3291,
+            3292,
+            3293,
+            3294,
+            3295,
+            3296,
+            3297,
+            3298
+          ],
+          "label": "归档原字幕/ASR，非本轮回听音频"
+        }
+      ]
+    }
+  ]
 }

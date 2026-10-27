@@ -20,7 +20,7 @@ from psycopg.types.json import Jsonb
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
 PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
-PUBLICATION_FORMAT_VERSION = 4
+PUBLICATION_FORMAT_VERSION = 6
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
 EVENT_FIELDS = (
@@ -42,7 +42,7 @@ ACTION_LABELS = {
     "guard": "执行守护", "attack": "执行击杀", "save": "使用解药", "poison": "使用毒药",
     "check": "执行查验", "learn": "学习身份", "can_shoot": "可以开枪", "cannot_shoot": "不能开枪",
     "carrying": "已带刀", "not_carrying": "未带刀", "shoot": "开枪", "self_destruct": "自爆",
-    "die": "出局", "die_after_speech": "发言后出局", "suicide": "自杀出局", "peaceful": "平安夜",
+    "die": "出局", "die_after_speech": "发言后出局", "suicide": "自杀出局", "disqualify": "DQ出局", "peaceful": "平安夜",
     "register": "登记上警", "elected": "当选警长", "deferred": "竞选延期", "continued": "继续竞选",
     "transfer": "移交警徽", "hold": "持有警徽", "order": "安排发言顺序", "exile": "被放逐",
     "vote": "投票", "not_held": "未举行投票", "none": "没有结果", "pass": "选择不行动",
@@ -139,8 +139,16 @@ def _clean_ballot(ballot: dict, rule_defaults: set[tuple[str, int]]) -> dict:
     for vote in ballot.get("votes", []):
         cleaned = _pick(vote, ("voter", "target", "state"))
         if vote.get("state") == "abstained":
+            source_basis = vote.get("basis")
+            source_default = (
+                isinstance(source_basis, str)
+                and source_basis.strip() == (
+                    "本轮票权由已核死亡及存活唯一确定；未播报投向按既有用户口径默认弃票"
+                )
+            )
             cleaned["basis"] = (
-                "rule_default" if (ballot_id, vote.get("voter")) in rule_defaults else "abstained"
+                "rule_default" if source_default or (ballot_id, vote.get("voter")) in rule_defaults
+                else "abstained"
             )
         else:
             cleaned["basis"] = "recorded"
@@ -162,7 +170,7 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
             events = []
             for event in round_.get(phase, []):
                 slot = event.get("slot")
-                if slot not in labels[phase]:
+                if slot not in labels[phase] and slot != "disqualification":
                     raise PublishError("事件槽位不在当前版型中")
                 output = _pick(event, EVENT_FIELDS)
                 if dossier.get("season") == "S23" and isinstance(output.get("result"), str):
@@ -172,7 +180,9 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
                     )
                 output["votes"] = [_pick(vote, VOTE_FIELDS) for vote in event.get("votes", [])]
                 output["effects"] = [_pick(effect, EFFECT_FIELDS) for effect in event.get("effects", [])]
-                output["slot_label"] = labels[phase][slot]
+                output["slot_label"] = (
+                    "DQ出局" if slot == "disqualification" else labels[phase][slot]
+                )
                 period = f"第{number}夜" if phase == "night" else f"第{number}天白天"
                 action = event.get("action")
                 action_label = ACTION_LABELS.get(action, '记录动作 ' + str(action))
@@ -189,6 +199,114 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
                 events.append(output)
             row[phase] = events
         result.append(row)
+    return result
+
+
+def _terminal_from_dossier(dossier: dict) -> dict | None:
+    """Recognize only explicit statements that a corresponding day never began."""
+    boundaries: set[int] = set()
+    for round_ in dossier.get("rounds", []):
+        for phase in ("night", "day"):
+            for event in round_.get(phase, []):
+                result = event.get("result")
+                if not isinstance(result, str):
+                    continue
+                for match in re.finditer(r"D\s*(\d+)\s*未开始(?!放逐|投票)", result):
+                    boundaries.add(int(match.group(1)))
+                for match in re.finditer(r"未进入\s*D\s*(\d+)(?!\s*(?:放逐|投票))", result):
+                    boundaries.add(int(match.group(1)))
+    if len(boundaries) > 1:
+        raise PublishError("正式事件记录互相指向不同终局白天，需核对终局边界")
+    if not boundaries:
+        return None
+    return {"round": next(iter(boundaries)), "phase": "night"}
+
+
+def _public_supplemental_events(supplemental: dict) -> list[dict]:
+    """Expose only the confirmed DQ and surrender actions needed by the timeline."""
+    public = []
+    for row in supplemental.get("events", []):
+        if not isinstance(row, dict) or type(row.get("round")) is not int:
+            continue
+        phase, source = row.get("phase"), row.get("event")
+        if phase not in {"night", "day"} or not isinstance(source, dict):
+            continue
+        action = source.get("action")
+        if action not in {"disqualify", "surrender"}:
+            continue
+        event = _pick(source, EVENT_FIELDS)
+        event["supplemental"] = True
+        if action == "disqualify":
+            event["slot"] = "disqualification"
+            targets = event.get("targets") or []
+            seats = "、".join(f"{seat}号" for seat in targets)
+            subject = seats or (f"{event['actor']}号" if type(event.get("actor")) is int else "玩家")
+            event["result"] = "DQ裁定；与普通死亡结算分开记录。"
+            event["description"] = f"{subject}被DQ出局；此裁定与普通死亡结算分开记录。"
+            event["slot_label"] = "DQ出局"
+        else:
+            slot = event.get("slot")
+            if slot is None:
+                continue
+            actor = event.get("actor")
+            subject = f"{actor}号狼人" if type(actor) is int else "狼人"
+            event["result"] = "交牌，对局结束。"
+            event["description"] = f"{subject}选择交牌，对局结束。"
+        public.append({"round": row["round"], "phase": phase, "event": event})
+    return public
+
+
+def _append_supplemental_events(rounds: list[dict], context: dict) -> None:
+    for item in context.get("supplemental_events", []):
+        if not isinstance(item, dict):
+            continue
+        number, phase, event = item.get("round"), item.get("phase"), item.get("event")
+        if type(number) is not int or phase not in {"night", "day"} or not isinstance(event, dict):
+            continue
+        round_ = next((row for row in rounds if row["number"] == number), None)
+        if round_ is None:
+            continue
+        output = _pick(event, EVENT_FIELDS)
+        output["slot_label"] = event.get("slot_label") or output.get("slot")
+        output["description"] = event.get("description") or "对局补充记录。"
+        round_[phase].append(output)
+
+
+def _clip_voting(voting: dict, round_number: int, phase: str) -> dict:
+    """Remove vote records for a phase that the terminal boundary excludes."""
+    last_day = round_number - 1 if phase == "night" else round_number
+
+    def is_excluded_day(row: dict) -> bool:
+        day = row.get("day")
+        return type(day) is int and day > last_day
+
+    future_ballots = [row for row in voting.get("ballots", []) if is_excluded_day(row)]
+    if future_ballots:
+        raise PublishError("终局边界之后仍有已记录投票，需先核对终局与票轮档案")
+    future_registrations = [row for row in voting.get("registrations", [])
+                            if is_excluded_day(row)
+                            and (row.get("on_police") is not None or row.get("off_police") is not None)]
+    if future_registrations:
+        raise PublishError("终局边界之后仍有已记录竞选报名，需先核对终局与报名档案")
+    future_interruptions = [row for row in voting.get("interruptions", []) if is_excluded_day(row)]
+    if future_interruptions:
+        raise PublishError("终局边界之后仍有已记录流程中断，需先核对终局与投票档案")
+    future_days = [row for row in voting.get("days", []) if is_excluded_day(row)]
+    non_placeholder_days = [
+        row for row in future_days
+        if any(row.get(kind) not in (None, "unknown", "not_applicable")
+               for kind in ("sheriff", "exile"))
+    ]
+    if non_placeholder_days:
+        raise PublishError("终局边界之后仍有已确认白天阶段，需先核对终局与日阶段档案")
+
+    result = dict(voting)
+    result["days"] = [row for row in voting.get("days", []) if not is_excluded_day(row)]
+    result["ballots"] = [row for row in voting.get("ballots", []) if not is_excluded_day(row)]
+    result["registrations"] = [row for row in voting.get("registrations", [])
+                                if not is_excluded_day(row)]
+    result["interruptions"] = [row for row in voting.get("interruptions", [])
+                                if not is_excluded_day(row)]
     return result
 
 
@@ -235,6 +353,39 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     if audit is None:
         public_voting["notes"].append("默认弃票旁证缺失，未把弃票标记为规则默认。")
 
+    context = dossier.get("_publication_context", {})
+    public_rounds = _rounds(dossier, board)
+    _append_supplemental_events(public_rounds, context)
+    terminal = context.get("terminal_observation")
+    terminal_observation = None
+    terminal_events = []
+    if isinstance(terminal, dict):
+        number, phase = terminal.get("round"), terminal.get("phase")
+        if type(number) is not int or phase not in {"night", "day"}:
+            raise PublishError("终局观察缺少有效日夜边界")
+        terminal_observation = {"round": number, "phase": phase}
+        public_rounds = [row for row in public_rounds if row["number"] <= number]
+        if phase == "night":
+            terminal_round = next((row for row in public_rounds if row["number"] == number), None)
+            if terminal_round is None:
+                raise PublishError("终局轮次不在正式档案范围内")
+            terminal_events = [
+                event for event in terminal_round["day"]
+                if (event.get("slot") == "night_deaths"
+                    and (event.get("action") not in {None, "unknown"}
+                         or event.get("targets") or event.get("result")))
+                or (event.get("slot") in {"hunter_shot", "wolf_king_shot"}
+                    and (event.get("action") not in {None, "unknown"}
+                         or event.get("blocked_by_game_end") is True))
+                or (event.get("slot") == "exile_result"
+                    and event.get("action") in {"none", "unknown", "not_held"}
+                    and not event.get("targets")
+                    and isinstance(event.get("result"), str)
+                    and re.search(r"游戏结束|终局|未进入\s*D\d+|D\d+未开始|交牌", event["result"]))
+            ]
+            terminal_round["day"] = []
+        public_voting = _clip_voting(public_voting, number, phase)
+
     winner = dossier.get("winner")
     if winner not in {"good", "werewolf", "draw", None}:
         raise PublishError("胜方字段不在允许的公开值内")
@@ -245,14 +396,17 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
                   if dossier["season"] == "S23" else board["name"]}, "winner": winner,
         "players": [{"id": s["person_id"], "name": s["name"], "seat": s["seat"],
                      "role": s["role"], "faction": s["faction"]} for s in seats],
-        "ballot_count": len(public_voting["ballots"]), "round_count": len(dossier.get("rounds", [])),
+        "ballot_count": len(public_voting["ballots"]), "round_count": len(public_rounds),
         "release_id": None,
         "commentators": list(dossier.get("commentators", [])), "referee": dossier.get("referee"),
-        "seats": seats, "rounds": _rounds(dossier, board), "voting": public_voting,
+        "seats": seats, "rounds": public_rounds, "voting": public_voting,
         "endgame": {"phases": [_pick(item, ENDGAME_FIELDS) for item in endgame.get("phases", [])]},
         "source": {"url": f"https://www.bilibili.com/video/{bvid}/", "bvid": bvid},
         "data_notes": [],
     }
+    if terminal_observation is not None:
+        details["terminal_observation"] = terminal_observation
+        details["terminal_events"] = terminal_events
     if not public_voting["ballots"]:
         details["data_notes"].append("没有可发布的投票记录；投票数未按零票推断。")
     if winner is None:
@@ -263,7 +417,6 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         details["data_notes"].append("部分座位阵营待核，保留未知值。")
     if any(event["action"] == "unknown" for r in details["rounds"] for phase in ("night", "day") for event in r[phase]):
         details["data_notes"].append("部分行动仍为未知，保留来源状态。")
-    context = dossier.get("_publication_context", {})
     for note in context.get("public_notes", []):
         if not isinstance(note, str) or re.search(r"source_path|[A-Za-z]:[\\/]|data[\\/]", note):
             raise PublishError("公开补充说明含有无效文字或本地路径")
@@ -275,20 +428,16 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         if any(event.get("invalidated") or event.get("action") == "invalidated_by_dq"
                for r in details["rounds"] for event in r["night"]):
             details["data_notes"].append("最后一狼8号在夜间被DQ出局，狼刀被判失效，因此为平安夜；DQ出局单独记录。")
-        if any(event.get("blocked_by_game_end") for r in details["rounds"]
-               for phase in ("night", "day") for event in r[phase]):
+        if (any(event.get("blocked_by_game_end") for r in details["rounds"]
+                for phase in ("night", "day") for event in r[phase])
+                or any(event.get("blocked_by_game_end") for event in details.get("terminal_events", []))):
             details["data_notes"].append("猎人作为最后一张神牌出局时对局立即结束，没有后续开枪环节。")
-    terminal = context.get("terminal_observation")
-    if terminal:
-        number, phase = terminal.get("round"), terminal.get("phase")
-        if type(number) is not int or phase not in {"night", "day"}:
-            raise PublishError("终局观察缺少有效日夜边界")
-        details["rounds"] = [r for r in details["rounds"] if r["number"] <= number]
+    if terminal_observation is not None:
+        number, phase = terminal_observation["round"], terminal_observation["phase"]
         if phase == "night":
-            details["rounds"][-1]["day"] = []
-        details["round_count"] = len(details["rounds"])
-        details["data_notes"].append(f"录像明确播报本局在第{number}夜结束，未进入下一白天。" if phase == "night"
-                                     else f"录像明确播报本局在第{number}天白天结束。")
+            details["data_notes"].append(f"档案确认本局在第{number}夜结束，未进入第{number}天白天。")
+        else:
+            details["data_notes"].append(f"档案确认本局在第{number}天白天结束。")
     return details
 
 
@@ -335,6 +484,7 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         # explicitly allowlisted public notes and a phase boundary cross into
         # the public snapshot; source paths and audit text stay private.
         context = {}
+        supplemental = {}
         for name in ("supplemental", "vote_control", "formal_context"):
             sidecar_path = folder / f"{name}.json"
             if sidecar_path.is_file():
@@ -344,6 +494,18 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
                 file_hashes[name] = sidecar_hash
                 if name == "formal_context":
                     context = sidecar
+                elif name == "supplemental":
+                    supplemental = sidecar
+        if not context.get("terminal_observation") and audit is not None:
+            audited_terminal = (audit.get("game_flow") or {}).get("terminal")
+            if (isinstance(audited_terminal, dict)
+                    and audit.get("dossier_sha256") == dossier_digest):
+                round_number, phase = audited_terminal.get("round"), audited_terminal.get("phase")
+                if type(round_number) is int and phase in {"night", "day"}:
+                    context["terminal_observation"] = {"round": round_number, "phase": phase}
+        if not context.get("terminal_observation"):
+            context["terminal_observation"] = _terminal_from_dossier(dossier)
+        context["supplemental_events"] = _public_supplemental_events(supplemental)
         dossier = {**dossier, "_publication_context": context}
         entries.append({
             "dossier": dossier, "voting": voting, "endgame": endgame, "audit": audit,

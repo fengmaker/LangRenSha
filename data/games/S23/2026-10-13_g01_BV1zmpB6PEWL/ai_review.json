@@ -540,6 +540,25 @@
           ],
           "result": "预言家4验9号为狼人。"
         }
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "slot": "badge",
+        "changes": {
+          "action": "none",
+          "actor": null,
+          "targets": [],
+          "result": "D1未发生移徽；4号当选后持徽，至N2出局后才移交12号。"
+        }
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "result": "好人"
+        }
       }
     ],
     "finding_resolutions": [
@@ -582,7 +601,71 @@
       }
     ],
     "extra_findings": [],
-    "human_questions": []
+    "human_questions": [],
+    "semantic_patches": [
+      {
+        "id": "S23-F13",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "删除D1重复移徽事件；4号当选后持徽，D2出局后移交12号。",
+        "fields": [
+          "rounds[1].day.badge"
+        ],
+        "rationale": "D1只有4号当选及9号被放逐；4号在N2死亡后才发生向12号移徽。D2正确移徽事件保留。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第01局_预女猎白混__BV1zmpB6PEWL_P01_CID42716957800.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "4232a86e97e18add1506e85505ffbed69ec3f3029b7fb993c97cdd71c3f4c900",
+            "start_ms": 5630000,
+            "end_ms": 5649000,
+            "quote": "成平安夜冤家\n验证了9号玩家为狼人身份上警环节\n4号预言家获得警徽\n第一天白天9号查杀狼人被公投出局\n入野狼击杀\n4号预言家\n牛毒杀一号悍跳狼\n依四双死\n预言家验证了12号家为好人身份\n4号出局\n将警徽移交至12号平民\n第二天白天10号狼人自爆",
+            "row_ids": [
+              2895,
+              2896,
+              2897,
+              2898,
+              2899,
+              2900,
+              2901,
+              2902,
+              2903,
+              2904,
+              2905,
+              2906
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      },
+      {
+        "id": "S23-F17-BV1zmpB6PEWL",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "预言家查验反馈按原复盘的“好人身份”记录为好人；目标真实底牌继续单独保存在seats.role。",
+        "fields": [
+          "rounds[2].night.seer_check.result"
+        ],
+        "rationale": "原字幕措辞明确为“验证/查验X为好人身份”。修正的仅是真正预言家的反馈结果；不改变身份底牌、目标或胜负。通灵师反馈保留当前具体身份。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第01局_预女猎白混__BV1zmpB6PEWL_P01_CID42716957800.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "4232a86e97e18add1506e85505ffbed69ec3f3029b7fb993c97cdd71c3f4c900",
+            "start_ms": 5640799,
+            "end_ms": 5646970,
+            "quote": "依四双死\n预言家验证了12号家为好人身份\n4号出局\n将警徽移交至12号平民",
+            "row_ids": [
+              2902,
+              2903,
+              2904,
+              2905
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -611,6 +694,78 @@
           9
         ],
         "result": "预言家4验9号为狼人。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "badge",
+      "before": {
+        "slot": "badge",
+        "action": "transfer",
+        "actor": null,
+        "targets": [
+          12
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "badge",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "D1未发生移徽；4号当选后持徽，至N2出局后才移交12号。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 4,
+        "targets": [
+          12
+        ],
+        "result": "平民",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "seer_check",
+        "action": "check",
+        "actor": 4,
+        "targets": [
+          12
+        ],
+        "result": "好人",
         "start_seat": null,
         "direction": null,
         "votes": [],

@@ -4,12 +4,14 @@ import { actionLabel, availabilityLabel } from "@/lib/format";
 import { BallotPanel } from "@/components/ballot-panel";
 
 function slotLabel(event: GameEvent): string {
+  if (event.terminal && event.slot === "exile_result") return "终局说明";
   if (event.slot_label) return event.slot_label;
   const labels: Record<string, string> = {
     mixed_blood_model: "混血儿榜样", wolf_attack: "狼队行动", witch_save: "女巫解药", witch_poison: "女巫毒药",
     seer_check: "预言家查验", hunter_state: "猎人状态", mixed_blood_alignment: "混血儿阵营",
     sheriff_candidates: "竞选报名", sheriff_vote: "警长投票", sheriff_result: "警长结果", night_deaths: "天亮情况",
     hunter_shot: "猎人开枪", badge: "警徽处理", speech_order: "发言顺序", exile_vote: "放逐投票",
+    disqualification: "DQ出局",
     exile_result: "放逐结果", self_destruct: "狼人自爆", white_god_reveal: "白神翻牌", mixed_blood_victory: "混血儿胜利条件",
     dancer_dance: "舞者共舞", dance_resolution: "共舞结算", magician_exchange: "魔术师交换",
     magic_duel_magician_swap: "魔术师交换", magic_duel_wolf_sorcerer_swap: "狼术师交换", sorcerer_exchange: "狼术师交换",
@@ -28,6 +30,7 @@ function seatText(number: number, seats: Seat[]): string {
   return `${number}号${seat?.name ?? ""}${seat?.role ? `（${seat.role}）` : ""}`;
 }
 function narrative(event: GameEvent, seats: Seat[]): string {
+  if (event.terminal && event.slot === "exile_result" && event.result) return resultLabel(event.result);
   const actor = event.actor != null ? seatText(event.actor, seats) : "";
   const targets = (event.targets ?? []).map((number) => seatText(number, seats)).join("、");
   const resolved = (event.resolved_targets ?? []).map((number) => seatText(number, seats)).join("、");
@@ -51,9 +54,14 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   if (event.action === "not_carrying") return `${actor || "机械狼"}尚未接过狼刀。`;
   if (event.slot === "hunter_state" && event.action === "can_shoot") return `${actor || "猎人"}本夜可开枪。`;
   if (event.slot === "hunter_state" && event.action === "cannot_shoot") return `${actor || "猎人"}本夜不能开枪。`;
-  if (event.slot === "night_deaths") return ["peaceful", "no_death"].includes(event.action) ? "天亮，昨夜平安夜。" : targets ? `天亮，昨夜出局：${targets}。` : "夜间出局情况待核。";
+  if (event.slot === "night_deaths") {
+    if (event.terminal) return ["peaceful", "no_death"].includes(event.action)
+      ? "本夜终局结算：平安夜。" : targets ? `本夜终局出局：${targets}。` : "本夜终局结算待核。";
+    return ["peaceful", "no_death"].includes(event.action) ? "天亮，昨夜平安夜。" : targets ? `天亮，昨夜出局：${targets}。` : "夜间出局情况待核。";
+  }
   if (event.slot === "sheriff_result" && event.action === "elected") return `${targets || actor || "当选者待核"}当选警长。`;
-  if (event.slot === "badge" && event.action === "badge_lost") return "延期警长竞选再次被狼人自爆中断，警徽流失，本局不再进行警长竞选。";
+  if (event.slot === "badge" && event.action === "badge_lost") return "警徽流失，本局不再进行警长竞选。";
+  if (event.slot === "disqualification" && event.action === "disqualify") return event.description ?? `${targets || actor || "玩家"}被DQ出局；与普通死亡结算分开记录。`;
   if (event.slot === "exile_result" && event.action === "exile") return `${targets || "放逐对象待核"}被放逐出局。`;
   if (event.action === "self_destruct") return `${actor || targets || "狼人"}自爆。`;
   if (event.action === "shoot") return `${actor || "开枪者"}开枪带走${targets || "目标待核"}。`;
@@ -77,7 +85,8 @@ function EventList({ events, seats }: { events: GameEvent[]; seats: Seat[] }) {
   return <div className="game-event-list">{events.map((event, index) => <article className="game-event" key={`${event.slot ?? "event"}-${index}`} data-slot={event.slot} data-action={event.action}>
     <div className="game-event-label"><span>{slotLabel(event)}</span>{event.inferred ? <small className="game-inference-tag">规则推断</small> : null}</div>
     <div className="game-event-content"><p>{narrative(event, seats)}</p>
-      {event.result && event.result !== "double_tie" && event.action !== "check" ? <small className="game-event-result">{resultLabel(event.result)}</small> : null}
+      {event.result && event.result !== "double_tie" && event.action !== "check"
+        && !(event.terminal && event.slot === "exile_result") ? <small className="game-event-result">{resultLabel(event.result)}</small> : null}
       {event.effects?.length ? <small className="game-event-effects">{event.effects.map((effect) => effectText(effect, seats)).join("；")}</small> : null}
       {event.inference_note && !event.resolved_targets?.length && event.action !== "badge_lost" && !(event.slot === "hunter_state" && ["can_shoot", "cannot_shoot"].includes(event.action ?? "")) && event.result !== "double_tie" ? <small>{event.inference_note}</small> : null}
       {event.availability && !event.inferred ? <small>{availabilityLabel(event.availability)}</small> : null}
@@ -95,6 +104,16 @@ function hasVoting(voting: VotingData) {
     || voting.days?.some((row) => [row.sheriff, row.exile].some((status) => status && !["unknown", "not_applicable", "not_held"].includes(status))));
 }
 function DayRecap({ events, voting, seats }: { events: GameEvent[]; voting: VotingData; seats: Seat[] }) {
+  const resultConflictIds: string[] = [];
+  for (const kind of ["sheriff", "exile"] as const) {
+    const ballots = voting.ballots?.filter((ballot) => ballot.kind === kind) ?? [];
+    const finalBallot = ballots.at(-1);
+    const result = events.find((event) => event.slot === (kind === "sheriff" ? "sheriff_result" : "exile_result")
+      && event.action === (kind === "sheriff" ? "elected" : "exile"));
+    const resultSeat = result?.targets?.length === 1 ? result.targets[0] : null;
+    if (finalBallot?.status === "complete" && finalBallot.winner != null
+      && resultSeat != null && finalBallot.winner !== resultSeat) resultConflictIds.push(finalBallot.id);
+  }
   const sheriffVoting: VotingData = {
     registrations: voting.registrations,
     ballots: voting.ballots?.filter((ballot) => ballot.kind === "sheriff"),
@@ -107,16 +126,19 @@ function DayRecap({ events, voting, seats }: { events: GameEvent[]; voting: Voti
   const resultAt = events.findIndex((event) => event.slot === "exile_vote" || event.slot === "exile_result");
   const splitAt = resultAt < 0 ? events.length : resultAt;
   return <>
-    <BallotPanel voting={sheriffVoting} seats={seats} />
+    <BallotPanel voting={sheriffVoting} seats={seats} resultConflictIds={resultConflictIds} />
     {splitAt ? <EventList events={events.slice(0, splitAt)} seats={seats} /> : null}
-    <BallotPanel voting={exileVoting} seats={seats} />
+    <BallotPanel voting={exileVoting} seats={seats} resultConflictIds={resultConflictIds} />
     {splitAt < events.length ? <EventList events={events.slice(splitAt)} seats={seats} /> : null}
     <BallotPanel voting={{ ballots: voting.ballots?.filter((ballot) => !["sheriff", "exile"].includes(ballot.kind)) }} seats={seats} />
   </>;
 }
-export function EventBoard({ rounds, voting = {}, seats = [] }: { rounds: GameRound[]; voting?: VotingData; seats?: Seat[] }) {
+export function EventBoard({ rounds, voting = {}, seats = [], terminal = null }: {
+  rounds: GameRound[]; voting?: VotingData; seats?: Seat[];
+  terminal?: { round: number; phase: "night" | "day"; events: GameEvent[] } | null;
+}) {
   const numbers = [...new Set([...rounds.map((round) => round.number), ...(voting.days ?? []).map((row) => row.day), ...(voting.ballots ?? []).map((row) => row.day), ...(voting.registrations ?? []).map((row) => row.day)])].sort((a, b) => a - b);
-  if (!numbers.length) return <p className="timeline-empty">当前还没有可整理的日夜行动记录。</p>;
+  if (!numbers.length && !terminal?.events.length) return <p className="timeline-empty">当前还没有可整理的日夜行动记录。</p>;
   return <div className="game-timeline">{numbers.map((number) => {
     const round = rounds.find((item) => item.number === number);
     const night = round?.night ?? [], day = round?.day ?? [];
@@ -131,5 +153,12 @@ export function EventBoard({ rounds, voting = {}, seats = [] }: { rounds: GameRo
         <DayRecap events={day} voting={dayVoting} seats={seats} />
       </section> : null}
     </Fragment>;
-  })}</div>;
+  })}
+    {terminal?.events.length ? <section className="timeline-phase timeline-terminal" data-phase="terminal" data-day={terminal.round}>
+      <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">◆</span><div>
+        <p>终局结算</p><h3>第 {terminal.round} {terminal.phase === "night" ? "夜" : "天"} · 游戏结束</h3>
+      </div></header>
+      <EventList events={terminal.events} seats={seats} />
+    </section> : null}
+  </div>;
 }

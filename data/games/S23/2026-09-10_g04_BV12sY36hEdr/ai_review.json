@@ -775,6 +775,19 @@
           ],
           "result": "好人"
         }
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "die",
+          "actor": null,
+          "targets": [
+            12
+          ],
+          "result": "N1夜死为12号；D1警长唱票后才宣布12号昨夜倒牌。"
+        }
       }
     ],
     "finding_resolutions": [
@@ -1102,8 +1115,7 @@
             3,
             4,
             10,
-            11,
-            12
+            11
           ],
           "votes": [
             {
@@ -1134,11 +1146,6 @@
             {
               "voter": 11,
               "target": 3,
-              "state": "cast"
-            },
-            {
-              "voter": 12,
-              "target": 11,
               "state": "cast"
             }
           ],
@@ -1180,7 +1187,92 @@
           "exile": "recorded"
         }
       ]
-    }
+    },
+    "semantic_patches": [
+      {
+        "id": "S23-F09",
+        "reviewed_date": "2026-10-28",
+        "disposition": "corrected_from_source",
+        "summary": "N1实际死者为12号；保留其死亡公布前的D1警徽票，仅从D3放逐票权与票型去掉12号。",
+        "fields": [
+          "rounds[1].day.night_deaths",
+          "voting.ballot-2.eligible_voters/votes"
+        ],
+        "rationale": "原字幕时间轴显示12号投给8号的D1警徽票发生于1454.670秒，5号当选后于1463.640秒法官才宣布12号昨夜倒牌；该D1票保留。D3原字幕仅6名存活玩家投票，目视D3画面12号死亡，因此D3票权名单与选票都移除12号。",
+        "evidence": [
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+            "start_ms": 1436000,
+            "end_ms": 1473000,
+            "quote": "4号五号八号十号请警下玩家带盔\n在4号五号八号十号玩家中选出本局游戏警长\n321请出票\n9号投给5号\n11号投给5号\n12号投给8号\n投票结束\n5号玩家两票当选\n其余玩家请变蓝灯\n昨夜12号玩家倒牌\n12号玩家请发表遗言",
+            "row_ids": [
+              686,
+              687,
+              688,
+              689,
+              690,
+              691,
+              692,
+              693,
+              694,
+              695,
+              696
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+            "start_ms": 3537000,
+            "end_ms": 3557000,
+            "quote": "我自己头洗过了\n所有玩家发言结束\n请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n11号投给3号\n其余玩家投票给11号\n11号玩家高票出局\n游戏结束\n好人阵营获胜",
+            "row_ids": [
+              1705,
+              1706,
+              1707,
+              1708,
+              1709,
+              1710,
+              1711,
+              1712,
+              1713,
+              1714,
+              1715,
+              1716
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "transcript",
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+            "start_ms": 3577000,
+            "end_ms": 3592000,
+            "quote": "本局游戏为机械双刀狼\n平民阵营一号2号十号12号首夜守卫守护\n12号平民狼队击杀12号平民女巫开药\n12号平民乃疮身乃川身亡\n机械狼模仿6号狼人\n本局游戏为机械双刀狼",
+            "row_ids": [
+              1726,
+              1727,
+              1728,
+              1729,
+              1730,
+              1731
+            ],
+            "label": "归档原字幕/ASR，非本轮回听音频"
+          },
+          {
+            "kind": "video_frame",
+            "source_path": "data/extractions/S23/speech_frames/BV12sY36hEdr/BV12sY36hEdr_03484.980.png",
+            "source_sha256": "51f2d760f4ef5ba7aecc29df5d33e66ed975e87e957992856748c3694746e11b",
+            "start_ms": 3484980,
+            "end_ms": 3484980,
+            "note": "原视频58:04.980左右的D3发言画面，12号死亡图标可见；存活集合仅作票权交叉旁证。"
+          }
+        ]
+      }
+    ]
   },
   "daily_audit_changes": [
     {
@@ -1211,6 +1303,41 @@
           3
         ],
         "result": "好人",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          12
+        ],
+        "result": "N1夜死为12号；D1警长唱票后才宣布12号昨夜倒牌。",
         "start_seat": null,
         "direction": null,
         "votes": [],

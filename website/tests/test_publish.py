@@ -47,9 +47,16 @@ def test_formal_scope_and_source_totals_are_derived_from_current_files():
     seat_count = sum(len(item["dossier"]["seats"]) for item in entries)
     ballot_count = sum(len(item["voting"]["ballots"]) for item in entries)
     vote_count = sum(len(ballot["votes"]) for item in entries for ballot in item["voting"]["ballots"])
+    raw_votings = [json.loads((item["folder"] / "voting.json").read_text(encoding="utf-8-sig"))
+                   for item in entries]
+    raw_ballot_count = sum(len(raw.get("ballots", [])) for raw in raw_votings)
+    raw_vote_count = sum(len(ballot.get("votes", []))
+                         for raw in raw_votings for ballot in raw.get("ballots", []))
     assert seat_count == 1776
-    assert ballot_count == 347
-    assert vote_count == 2513
+    # Read the formal JSON files independently of load_publication so a dropped
+    # round or vote remains visible without pinning a stale season total.
+    assert ballot_count == raw_ballot_count
+    assert vote_count == raw_vote_count
 
 
 def test_unknown_states_and_default_abstentions_keep_distinct_meanings():

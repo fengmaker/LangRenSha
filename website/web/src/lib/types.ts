@@ -116,6 +116,7 @@ export type GameEvent = {
   inference_note?: string;
   invalidated?: boolean;
   blocked_by_game_end?: boolean;
+  terminal?: boolean;
   resolved_targets?: number[];
   slot?: string | null;
   slot_label?: string | null;
@@ -180,7 +181,10 @@ export type GameDetail = GameSummary & {
   referee: string | null;
   seats: Seat[];
   rounds: GameRound[];
-  presentation?: { version: number; rounds: GameRound[]; omitted_events: number };
+  presentation?: {
+    version: number; rounds: GameRound[]; omitted_events: number;
+    terminal?: { round: number; phase: "night" | "day"; events: GameEvent[] } | null;
+  };
   voting: VotingData;
   endgame: { phases: { phase?: string; kind?: string; day?: number | null; actor?: number | null; declared_targets?: number[]; result?: string | null; note?: string | null }[] };
   source: { url: string | null; bvid: string | null };

@@ -433,6 +433,10 @@ def run(write_database=False):
             rebuild_days(facts)
         from voting_crosscheck import reconcile, day_outcomes
         reconcile(facts, audit, dossier)
+        # Apply reviewed S22-only corrections before rule-derived voter
+        # eligibility, default abstentions, and outcomes are rebuilt.
+        from s22_dot_audit import apply_generated_voting
+        dot_audit_applied = apply_generated_voting(facts, audit, entry)
         review_path = folder / "复核记录.json"
         if review_path.is_file():
             audit["day_crosscheck_source"] = {"path": batch.relative(review_path),
@@ -452,6 +456,8 @@ def run(write_database=False):
         validate(facts)
         audit.update(bvid=bvid, source_sha256=batch.digest(source), dossier_sha256=batch.digest(dossier_path),
                      generated_at=batch.now(), facts=facts)
+        if dot_audit_applied:
+            audit["dot_audit_applied"] = sorted(set(audit.get("dot_audit_applied", [])) | set(dot_audit_applied))
         EXTRACTIONS.mkdir(parents=True, exist_ok=True)
         batch.atomic_json(EXTRACTIONS / (bvid + ".json"), audit)
         batch.atomic_json(folder / "voting.json", facts)

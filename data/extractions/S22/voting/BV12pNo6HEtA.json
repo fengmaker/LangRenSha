@@ -411,34 +411,7 @@
       }
     ]
   },
-  "rule_applications": [
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-2",
-      "day": 2,
-      "voters": [
-        1,
-        6,
-        7,
-        8,
-        9,
-        11,
-        12
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    },
-    {
-      "rule": "unannounced_choice_is_abstention",
-      "target": "ballot-4",
-      "day": 4,
-      "voters": [
-        7,
-        8,
-        9
-      ],
-      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
-    }
-  ],
+  "rule_applications": [],
   "eligibility_derivations": [
     {
       "target": "ballot-2",
@@ -568,7 +541,7 @@
   ],
   "bvid": "BV12pNo6HEtA",
   "source_sha256": "b855625f8d0525e2a85fc49a31db37d32a016316a760e3cb3ca52237f3b898a3",
-  "dossier_sha256": "c447439177e6fe477f2a643733b38b65aaa8a523ed0bd5aa4d5941f86f9586c1",
+  "dossier_sha256": "1e9423537a5a793ffc80c1a3d7059f4975a4fb6ca0c75709d2d220b7e4839074",
   "generated_at": "2026-10-25T04:08:38+08:00",
   "facts": {
     "schema_version": 1,
@@ -654,28 +627,28 @@
         "votes": [
           {
             "voter": 1,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 6,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 7,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 8,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 9,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 10,
@@ -684,13 +657,13 @@
           },
           {
             "voter": 11,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           },
           {
             "voter": 12,
-            "target": null,
-            "state": "abstained"
+            "target": 10,
+            "state": "cast"
           }
         ],
         "tied_candidates": [],
@@ -771,18 +744,18 @@
           },
           {
             "voter": 7,
-            "target": null,
-            "state": "abstained"
+            "target": 1,
+            "state": "cast"
           },
           {
             "voter": 8,
-            "target": null,
-            "state": "abstained"
+            "target": 1,
+            "state": "cast"
           },
           {
             "voter": 9,
-            "target": null,
-            "state": "abstained"
+            "target": 1,
+            "state": "cast"
           }
         ],
         "tied_candidates": [],
@@ -813,5 +786,9 @@
         "exile": "recorded"
       }
     ]
-  }
+  },
+  "dot_audit_applied": [
+    "S22-V-017",
+    "S22-V-018"
+  ]
 }
