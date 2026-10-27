@@ -51,13 +51,32 @@ services:
       MASTERS_SOURCE_ROOT: /source
     volumes:
       - ../data/games/S22:/source/data/games/S22:ro
+      - ../data/games/S23:/source/data/games/S23:ro
       - ../config:/source/config:ro
       - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro
+      - ../data/extractions/S23/voting:/source/data/extractions/S23/voting:ro
     depends_on:
       db:
         condition: service_healthy
     entrypoint: ["python", "-m", "website.api.publish"]
-    command: ["--season", "S22"]
+    # A publication replaces the complete active set; never append one season.
+    command: ["--seasons", "S22", "S23"]
+  publish-bluffs:
+    profiles: ["tools"]
+    build:
+      context: ..
+      dockerfile: website/Dockerfile.api
+    environment:
+      DATABASE_URL: postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters
+    volumes:
+      # The bluff completeness guard reads PACKAGE_ROOT/config, not /source.
+      - ../config:/app/config:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["python", "-m", "website.api.publish_bluffs"]
+    # Explicit season required in the runbook; default is validation only.
+    command: ["--season", "S22", "--check"]
   reader-setup:
     profiles: ["tools"]
     build:

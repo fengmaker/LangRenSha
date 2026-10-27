@@ -9,6 +9,7 @@ COPY scripts/season_config.py /app/scripts/season_config.py
 COPY config/seasons.json /app/config/seasons.json
 COPY website/assets/player-photos /app/website/assets/player-photos
 COPY website/assets/bluffs /app/website/assets/bluffs
+COPY website/assets/bluff-frames /app/website/assets/bluff-frames
 COPY website/grant_reader.py /app/website/grant_reader.py
 USER app
 EXPOSE 8000
