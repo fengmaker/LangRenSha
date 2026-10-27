@@ -1,0 +1,1584 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "batch": "a",
+  "created_at_utc": "2026-10-27T10:47:55+00:00",
+  "input_path": "tmp/s21_roster_batch_a.json",
+  "scope": [
+    "seat_number",
+    "display_name_and_normalized_name",
+    "actual_role"
+  ],
+  "reviewer": "codex_subagent_visual_read",
+  "verified_summary": {
+    "game_count": 30,
+    "seat_count": 360,
+    "name_fields_checked": 360,
+    "role_fields_checked": 360,
+    "null_name_count": 0,
+    "null_role_count": 0,
+    "all_best_daytime_frame_sha256_match_candidates": true,
+    "referenced_crop_sha256_match": true,
+    "name_normalizations": {
+      "鲸鱼→董鲸鱼": 21,
+      "BOBBY→Bobby": 7
+    },
+    "empty_normalization_kept_as_direct_display_name": {
+      "occurrence_count": 11,
+      "occurrences": [
+        {
+          "bvid": "BV1w3AVzPE3R",
+          "seat": 1,
+          "display_name": "夏夏",
+          "name": "夏夏"
+        },
+        {
+          "bvid": "BV1w3AVzPEAL",
+          "seat": 1,
+          "display_name": "夏夏",
+          "name": "夏夏"
+        },
+        {
+          "bvid": "BV1w3AVzPEZM",
+          "seat": 1,
+          "display_name": "夏夏",
+          "name": "夏夏"
+        },
+        {
+          "bvid": "BV1VyAHzCENA",
+          "seat": 12,
+          "display_name": "鱼刺",
+          "name": "鱼刺"
+        },
+        {
+          "bvid": "BV1XyAHzkE1w",
+          "seat": 12,
+          "display_name": "鱼刺",
+          "name": "鱼刺"
+        },
+        {
+          "bvid": "BV1XyAHzkE9U",
+          "seat": 12,
+          "display_name": "鱼刺",
+          "name": "鱼刺"
+        },
+        {
+          "bvid": "BV1cLX4BkETh",
+          "seat": 1,
+          "display_name": "夏夏",
+          "name": "夏夏"
+        },
+        {
+          "bvid": "BV1udXxBxEX7",
+          "seat": 1,
+          "display_name": "夏夏",
+          "name": "夏夏"
+        },
+        {
+          "bvid": "BV1Ey9wBzEEV",
+          "seat": 1,
+          "display_name": "刚好",
+          "name": "刚好"
+        },
+        {
+          "bvid": "BV1Zy9wBBE1P",
+          "seat": 1,
+          "display_name": "刚好",
+          "name": "刚好"
+        },
+        {
+          "bvid": "BV1fy9wBBEAq",
+          "seat": 1,
+          "display_name": "刚好",
+          "name": "刚好"
+        }
+      ]
+    }
+  },
+  "resolved_name_corrections": {
+    "changed_seat_row_count": 17,
+    "primary_audit_correction_rows": 14,
+    "earlier_2026_03_19_seat_2_nameplate_correction_rows": 3,
+    "rows": [
+      {
+        "bvid": "BV1w3AVzPE3R",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "潭潭",
+        "verified_name": "彭彭",
+        "reason": "放大编号姓名牌后与S21名牌索引一致；原先压缩字形误读。"
+      },
+      {
+        "bvid": "BV1w3AVzPEAL",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "潭潭",
+        "verified_name": "彭彭",
+        "reason": "放大编号姓名牌后与S21名牌索引一致；原先压缩字形误读。"
+      },
+      {
+        "bvid": "BV1w3AVzPEZM",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "潭潭",
+        "verified_name": "彭彭",
+        "reason": "放大编号姓名牌后与S21名牌索引一致；原先压缩字形误读。"
+      },
+      {
+        "bvid": "BV1MfQkBeEmP",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV1MfQkBeEmP",
+        "seat": 3,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV1MfQkBeEmg",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV1MfQkBeEmg",
+        "seat": 3,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV1ufQkBeEYL",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV1ufQkBeEYL",
+        "seat": 3,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV178XkB7ECz",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV178XkB7ECz",
+        "seat": 6,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV178XkB7EXx",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV178XkB7EXx",
+        "seat": 6,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV1j8XkB7EUD",
+        "seat": 2,
+        "field": "name",
+        "previous_reading": "牛仔仔",
+        "verified_name": "华仔仔",
+        "reason": "局部姓名牌放大；与同日官方阵容/既有S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV1j8XkB7EUD",
+        "seat": 6,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及既有S21名牌索引交叉。"
+      },
+      {
+        "bvid": "BV1Ey9wBzEEV",
+        "seat": 12,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及S21姓名索引交叉。"
+      },
+      {
+        "bvid": "BV1Zy9wBBE1P",
+        "seat": 12,
+        "field": "name",
+        "previous_reading": "豆豆",
+        "verified_name": "彭彭",
+        "reason": "局部姓名牌放大；与同日官方阵容及S21姓名索引交叉。"
+      }
+    ],
+    "prewrite_visual_ocr_ambiguities_not_counted_as_changed_rows": [
+      {
+        "bvid": "BV1b5wBz5Exk",
+        "seat": 5,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "机子",
+        "verified_name": "桃子",
+        "reason": "局部放大并按S21官方姓名牌索引中桃子规范名核对；保留清晰显示名，不凭人脸。",
+        "file_row_changed_after_first_save": false
+      },
+      {
+        "bvid": "BV18NXgB5E8k",
+        "seat": 10,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "机子",
+        "verified_name": "桃子",
+        "reason": "局部放大并按S21官方姓名牌索引中桃子规范名核对；保留清晰显示名，不凭人脸。",
+        "file_row_changed_after_first_save": false
+      },
+      {
+        "bvid": "BV1hAXgB1ECp",
+        "seat": 10,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "机子",
+        "verified_name": "桃子",
+        "reason": "局部放大并按S21官方姓名牌索引中桃子规范名核对；保留清晰显示名，不凭人脸。",
+        "file_row_changed_after_first_save": false
+      },
+      {
+        "bvid": "BV1hNXgB5Ewp",
+        "seat": 10,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "机子",
+        "verified_name": "桃子",
+        "reason": "局部放大并按S21官方姓名牌索引中桃子规范名核对；保留清晰显示名，不凭人脸。",
+        "file_row_changed_after_first_save": false
+      },
+      {
+        "bvid": "BV1cLX4BkETh",
+        "seat": 4,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "潭潭",
+        "verified_name": "彭彭",
+        "reason": "局部放大与同日官方名单、既有S21姓名索引交叉；文件初写前已按彭彭记录。",
+        "file_row_changed_after_first_save": false
+      },
+      {
+        "bvid": "BV1udXxBxEX7",
+        "seat": 4,
+        "field": "name",
+        "initial_ocr_or_visual_candidate": "潭潭",
+        "verified_name": "彭彭",
+        "reason": "局部放大与同日官方名单、既有S21姓名索引交叉；文件初写前已按彭彭记录。",
+        "file_row_changed_after_first_save": false
+      }
+    ]
+  },
+  "unknowns_and_conflicts": {
+    "unresolved_name_or_role_fields": [],
+    "resolved_ambiguities": [],
+    "daytime_unknown_label_supplement": {
+      "bvid": "BV1fy9wBBEAq",
+      "daytime_unknown_label_seats": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "daytime_unknown_resolution": "screen_candidates.json 的终局4×3身份结算格已用 view_image 实看，12座姓名和布偶角色标签清晰；角色依终局格直读，全部解析，无 null。",
+      "settlement_frame": {
+        "path": "data/extractions/S21/frames/BV1fy9wBBEAq/BV1fy9wBBEAq_03399.450.png",
+        "sha256": "250c16b04661eba44fe9ceb68444ee5442188fe60858b612a969cecafdfd121d",
+        "requested_time_ms": 3399450,
+        "actual_frame_time_ms": 3399463,
+        "classification": "settlement_grid_4x3"
+      },
+      "resolved_roles": {
+        "1": "平民",
+        "2": "猎人",
+        "3": "女巫",
+        "4": "平民",
+        "5": "通灵师",
+        "6": "狼人",
+        "7": "机械狼",
+        "8": "平民",
+        "9": "狼人",
+        "10": "平民",
+        "11": "守卫",
+        "12": "狼人"
+      }
+    },
+    "notes": [
+      "只核实座位号、姓名与真实底牌；未核白天/夜间事件、悍跳、胜负或阵营。",
+      "中文名按编号姓名牌直读并按S21姓名索引规范化；规范化字段为空时保留直接显示名。BOBBY按既有名牌索引大小写规范写为Bobby，鲸鱼按既有映射写为董鲸鱼。",
+      "真实底牌按布偶身份标签直读；黄色自称摘要不作真实身份，未凭人脸判断。",
+      "“白神”“假面”“舞者”等按可见标签原词记录。"
+    ]
+  },
+  "verified_games": [
+    {
+      "index": 44,
+      "bvid": "BV1b5wBz5Exk",
+      "cid": 36797546718,
+      "page": 1,
+      "date_candidate": "2026-03-18",
+      "title": "20260318 正赛 第三期 Day-2 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1b5wBz5Exk/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1b5wBz5Exk/BV1b5wBz5Exk_02794.040.png",
+        "sha256": "98a19980a1ccbb0e42f06c9ebc7c13dfe46cbe1046dfeafa679f759bd773c39a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 2794040,
+        "actual_frame_time_ms": 2794066,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1b5wBz5Exk_seat5_verify.png",
+        "inspection_crop_sha256": "2a5d2b5c79668c4f3b3458ad9bdbb3a8eac22ed28773c9d0e3632e9d44469e24",
+        "crop_rectangles_px": [
+          [
+            0,
+            835,
+            160,
+            925
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 47,
+      "bvid": "BV1w3AVzPE3R",
+      "cid": 36821929578,
+      "page": 1,
+      "date_candidate": "2026-03-19",
+      "title": "20260319 正赛 第三期 Day-3 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1w3AVzPE3R/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1w3AVzPE3R/BV1w3AVzPE3R_06263.540.png",
+        "sha256": "85d86f6f6b8c8a329300de23c2b5a8e7844b304d0ba1f8aadf2a862c6f3473a7",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 6263540,
+        "actual_frame_time_ms": 6263550,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPE3R_seat2_recheck.png",
+        "inspection_crop_sha256": "6abfb8a8d1329adfb9cb001eb5255b7ac103819596183e03d204a65f5b3c10f5",
+        "crop_rectangles_px": [
+          [
+            0,
+            315,
+            160,
+            400
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 46,
+      "bvid": "BV1w3AVzPEAL",
+      "cid": 36821795468,
+      "page": 1,
+      "date_candidate": "2026-03-19",
+      "title": "20260319 正赛 第三期 Day-3 第二局-盗宝大师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1w3AVzPEAL/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1w3AVzPEAL/BV1w3AVzPEAL_02950.819.png",
+        "sha256": "042a1e0e0f875b4cedf8b0bec11af802f82087e913d27ac23a11f6da85367e5d",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 2950819,
+        "actual_frame_time_ms": 2950833,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEAL_seat2_left.png",
+        "inspection_crop_sha256": "49fdab285fe6a1804b03ee0184c36a10e9892f39829673a131062bab59aa0608",
+        "crop_rectangles_px": [
+          [
+            0,
+            315,
+            160,
+            400
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 45,
+      "bvid": "BV1w3AVzPEZM",
+      "cid": 36821729340,
+      "page": 1,
+      "date_candidate": "2026-03-19",
+      "title": "20260319 正赛 第三期 Day-3 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1w3AVzPEZM/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1w3AVzPEZM/BV1w3AVzPEZM_03766.580.png",
+        "sha256": "6729d55706ca59e68dcd050fc0fc69a191cb4795aec4d79461d7290ed035b0eb",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3766580,
+        "actual_frame_time_ms": 3766584,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEZM_seat2_left.png",
+        "inspection_crop_sha256": "d99f049ae04ba77cacc8cc3fcae80bb16da597d97743369a12c610672f8361b5",
+        "crop_rectangles_px": [
+          [
+            0,
+            315,
+            160,
+            400
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 49,
+      "bvid": "BV1VyAHzCENA",
+      "cid": 36846764036,
+      "page": 1,
+      "date_candidate": "2026-03-20",
+      "title": "20260320 正赛 第三期 Day-4 第二局-诡术之境",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1VyAHzCENA/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1VyAHzCENA/BV1VyAHzCENA_04508.049.png",
+        "sha256": "e411e6cfb5158cb18e7553f2285f395c248f9b0993236d6981f16051572aa58b",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4508049,
+        "actual_frame_time_ms": 4508066,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/049_BV1VyAHzCENA_sidebars.png",
+        "inspection_crop_sha256": "f9a4e31c3fd295bac731509abd9ec528fea9fdd63dbb934e74eaad7c1cb5dee9",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 50,
+      "bvid": "BV1XyAHzkE1w",
+      "cid": 36846767724,
+      "page": 1,
+      "date_candidate": "2026-03-20",
+      "title": "20260320 正赛 第三期 Day-4 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1XyAHzkE1w/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1XyAHzkE1w/BV1XyAHzkE1w_03814.250.png",
+        "sha256": "d52683884eea1921564829e4e8f2e4373aaec20b87e03ccaea7d57ad043a1d24",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3814250,
+        "actual_frame_time_ms": 3814250,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/050_BV1XyAHzkE1w_sidebars.png",
+        "inspection_crop_sha256": "68661be8a9b8e34fb811faa4a3d7c6b840d061bd0f42ceec63d220dbb9e2e697",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 48,
+      "bvid": "BV1XyAHzkE9U",
+      "cid": 36846636855,
+      "page": 1,
+      "date_candidate": "2026-03-20",
+      "title": "20260320 正赛 第三期 Day-4 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1XyAHzkE9U/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1XyAHzkE9U/BV1XyAHzkE9U_05474.679.png",
+        "sha256": "c59f88a1318c41f77cebbb62259a661c070e0919faa52055d7697f903006e4e0",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5474679,
+        "actual_frame_time_ms": 5474700,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/048_BV1XyAHzkE9U_sidebars.png",
+        "inspection_crop_sha256": "2a2433addef4eebea9911c13ab41559e3051ada6c9a474101a0b59cb2e5ec9e5",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 52,
+      "bvid": "BV1MfQkBeEmP",
+      "cid": 36949855741,
+      "page": 1,
+      "date_candidate": "2026-03-24",
+      "title": "20260324 正赛 第四期 Day-1 第二局-假面舞会",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1MfQkBeEmP/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1MfQkBeEmP/BV1MfQkBeEmP_04031.440.png",
+        "sha256": "716d4ec2740d9ec57cbbc98b475ac327f9bb0322246e9d272565e0dd830c6b9a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4031440,
+        "actual_frame_time_ms": 4031467,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmP_seat3_verify.png",
+        "inspection_crop_sha256": "7a7187cfd2d0f7f59de8f7a1e2beb7bd93115b2388687c388710efa88fec6d35",
+        "crop_rectangles_px": [
+          [
+            0,
+            485,
+            160,
+            570
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 53,
+      "bvid": "BV1MfQkBeEmg",
+      "cid": 36949985221,
+      "page": 1,
+      "date_candidate": "2026-03-24",
+      "title": "20260324 正赛 第四期 Day-1 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1MfQkBeEmg/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1MfQkBeEmg/BV1MfQkBeEmg_05352.849.png",
+        "sha256": "125b0877f6ac9abe82767ad65255227d6329a5c8c2829e2b96793ec534b69367",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5352849,
+        "actual_frame_time_ms": 5352867,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmg_seat3_verify.png",
+        "inspection_crop_sha256": "2601cb7133b3d34a5415b65879f82afd91331fa20ec0e24d281379e13c7bcb9f",
+        "crop_rectangles_px": [
+          [
+            0,
+            485,
+            160,
+            570
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 51,
+      "bvid": "BV1ufQkBeEYL",
+      "cid": 36949854163,
+      "page": 1,
+      "date_candidate": "2026-03-24",
+      "title": "20260324 正赛 第四期 Day-1 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1ufQkBeEYL/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1ufQkBeEYL/BV1ufQkBeEYL_04010.069.png",
+        "sha256": "9058862344f7ec0796be36f9ed811b6201b93a502fad0bcbe22c98d24778c31a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4010069,
+        "actual_frame_time_ms": 4010070,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1ufQkBeEYL_seat3_verify.png",
+        "inspection_crop_sha256": "639aafb85a502df8a58bb6644156dc4c86f00cd20298c8adf3d440ab3c8ae608",
+        "crop_rectangles_px": [
+          [
+            0,
+            485,
+            160,
+            570
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 56,
+      "bvid": "BV1roX7BQE1n",
+      "cid": 36979281762,
+      "page": 1,
+      "date_candidate": "2026-03-25",
+      "title": "20260325 正赛 第四期 Day-2 第二局-唯邻是从",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1roX7BQE1n/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1roX7BQE1n/BV1roX7BQE1n_05399.190.png",
+        "sha256": "bc8b919c747f2c3634f05314d9ec797bd4b804429ab84ba1e05cdda52d8ba79a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5399190,
+        "actual_frame_time_ms": 5399200,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/056_BV1roX7BQE1n_sidebars.png",
+        "inspection_crop_sha256": "a7ac83476dc106aa9b5744f0ffa4f29bd17a76e472a9ca96403fb09dd8143e20",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 55,
+      "bvid": "BV1roX7BQEau",
+      "cid": 36979672873,
+      "page": 1,
+      "date_candidate": "2026-03-25",
+      "title": "20260325 正赛 第四期 Day-2 第三局-机械狼通灵师修改",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1roX7BQEau/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1roX7BQEau/BV1roX7BQEau_04815.340.png",
+        "sha256": "8f8184cbdbc38a894f3fda25f6fd115f3fb8f7130deb1ac5b390383bc2bcf35d",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4815340,
+        "actual_frame_time_ms": 4815367,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/055_BV1roX7BQEau_sidebars.png",
+        "inspection_crop_sha256": "8060a27dc8ddb57e78ad9515c7356df2b62633d9881c549d62830d016a5f6212",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 54,
+      "bvid": "BV1roX7BQEfa",
+      "cid": 36979147710,
+      "page": 1,
+      "date_candidate": "2026-03-25",
+      "title": "20260325 正赛 第四期 Day-2 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1roX7BQEfa/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1roX7BQEfa/BV1roX7BQEfa_04119.910.png",
+        "sha256": "a49823a486e4cda5c635e05f357a8d74517c2c789dabe0993011326ed6ed9390",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4119910,
+        "actual_frame_time_ms": 4119917,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/054_BV1roX7BQEfa_sidebars.png",
+        "inspection_crop_sha256": "87df8643ceb2f9f11b9e4d9f82a8193fcb1440f6700ec7675e760e06b43e0b12",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 58,
+      "bvid": "BV1cLX4BkETh",
+      "cid": 37004118124,
+      "page": 1,
+      "date_candidate": "2026-03-26",
+      "title": "20260326 正赛 第四期 Day-3 第二局-诡术之境",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1cLX4BkETh/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1cLX4BkETh/BV1cLX4BkETh_05409.560.png",
+        "sha256": "042f02fb2f8b902eb332e6657d95d64111ec8ba254bfab9dd9d3950fcc3fa363",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5409560,
+        "actual_frame_time_ms": 5409583,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1cLX4BkETh_seat4_left.png",
+        "inspection_crop_sha256": "47afb4f6ac326ef4ff47a23225c0f9976eabb7eb616b86e80f75c36b05766347",
+        "crop_rectangles_px": [
+          [
+            0,
+            665,
+            160,
+            750
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 57,
+      "bvid": "BV1udXxBxEX7",
+      "cid": 37003987505,
+      "page": 1,
+      "date_candidate": "2026-03-26",
+      "title": "20260326 正赛 第四期 Day-3 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1udXxBxEX7/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1udXxBxEX7/BV1udXxBxEX7_06114.570.png",
+        "sha256": "6aadf12f4a1b9149d2b7039b1288c912e0e213117c0f36956072ea5a48f43f9a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 6114570,
+        "actual_frame_time_ms": 6114600,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/057_BV1udXxBxEX7_sidebars.png",
+        "inspection_crop_sha256": "be9a29ca2ce957a998d864f38bb5a7c2e1174857b58f9a826cb07768a4619f41",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 59,
+      "bvid": "BV18NXgB5E8k",
+      "cid": 37028236499,
+      "page": 1,
+      "date_candidate": "2026-03-27",
+      "title": "20260327 正赛 第四期 Day-4 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV18NXgB5E8k/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV18NXgB5E8k/BV18NXgB5E8k_03331.870.png",
+        "sha256": "df4a8ba5b48f372ab3a0a0c4f0588ccaa4ce55bb5c4d91da26dfb9c4d84eb18f",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3331870,
+        "actual_frame_time_ms": 3331883,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV18NXgB5E8k_seat10_right.png",
+        "inspection_crop_sha256": "e84eb8118c8b1a3b80d21ad9b7aa6df30bbe2ba4a57c28276260619593aa8b6f",
+        "crop_rectangles_px": [
+          [
+            1740,
+            665,
+            1920,
+            750
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 61,
+      "bvid": "BV1hAXgB1ECp",
+      "cid": 37029741035,
+      "page": 1,
+      "date_candidate": "2026-03-27",
+      "title": "20260327 正赛 第四期 Day-4 第二局-盗宝大师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1hAXgB1ECp/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1hAXgB1ECp/BV1hAXgB1ECp_03257.760.png",
+        "sha256": "3f8cc4de9819cd048ea16074d0fb9502904d4ef7e84ffeaabece84fb48cd2562",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3257760,
+        "actual_frame_time_ms": 3257783,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1hAXgB1ECp_seat10_right.png",
+        "inspection_crop_sha256": "6493e75c0f85a485aa371adfe1e45cf88e13fa999ef24e55772aa0ecdef8b411",
+        "crop_rectangles_px": [
+          [
+            1740,
+            665,
+            1920,
+            750
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 60,
+      "bvid": "BV1hNXgB5Ewp",
+      "cid": 37029873308,
+      "page": 1,
+      "date_candidate": "2026-03-27",
+      "title": "20260327 正赛 第四期 Day-4 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1hNXgB5Ewp/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1hNXgB5Ewp/BV1hNXgB5Ewp_02733.375.png",
+        "sha256": "edac41f7dabc760d8f3fa2adfee0a3d0de774fedd7882b6a255b48fcfd855633",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 2733375,
+        "actual_frame_time_ms": 2733400,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1hNXgB5Ewp_seat10_right.png",
+        "inspection_crop_sha256": "9105a0470c4ce9441db5a853341afdd5c5735ffefbb15dbea23e6f718ee73c39",
+        "crop_rectangles_px": [
+          [
+            1740,
+            665,
+            1920,
+            750
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 64,
+      "bvid": "BV178XkB7ECz",
+      "cid": 37131258521,
+      "page": 1,
+      "date_candidate": "2026-03-31",
+      "title": "20260331 正赛 第五期 Day-1 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV178XkB7ECz/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV178XkB7ECz/BV178XkB7ECz_07032.820.png",
+        "sha256": "313143c5a51fc4c65d7cd0df63f4ef593219a2f532cc6aa4aca90f2841db22ec",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 7032820,
+        "actual_frame_time_ms": 7032850,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7ECz_seat6_verify.png",
+        "inspection_crop_sha256": "c9394730dec8c4451eb2cfb2540912ea34f4b2e184a18490f3ca9f013ad37520",
+        "crop_rectangles_px": [
+          [
+            0,
+            1000,
+            160,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 63,
+      "bvid": "BV178XkB7EXx",
+      "cid": 37131193005,
+      "page": 1,
+      "date_candidate": "2026-03-31",
+      "title": "20260331 正赛 第五期 Day-1 第二局-孤注一掷",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV178XkB7EXx/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV178XkB7EXx/BV178XkB7EXx_02587.300.png",
+        "sha256": "28c319bda38c65d98959da302c945bc176e0fadfe4daf1e3063d821c51ed61cb",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 2587300,
+        "actual_frame_time_ms": 2587319,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7EXx_seat6_verify.png",
+        "inspection_crop_sha256": "18d89d30450a3bf8e7d15ade83e2d26c7e0e83a496516129f92f73330d33d7a1",
+        "crop_rectangles_px": [
+          [
+            0,
+            1000,
+            160,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 62,
+      "bvid": "BV1j8XkB7EUD",
+      "cid": 37131062176,
+      "page": 1,
+      "date_candidate": "2026-03-31",
+      "title": "20260331 正赛 第五期 Day-1 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1j8XkB7EUD/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1j8XkB7EUD/BV1j8XkB7EUD_05457.580.png",
+        "sha256": "597336d70cc95f3f36e0e231de8ee914f85ad40e3e3ad66e2af3e66aeb8240e3",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5457580,
+        "actual_frame_time_ms": 5457600,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1j8XkB7EUD_seat6_verify.png",
+        "inspection_crop_sha256": "b5b77b126b417ee7d022c8185d5858a9e51dcc5b191786be6abf0a6eaf20ab4c",
+        "crop_rectangles_px": [
+          [
+            0,
+            1000,
+            160,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 67,
+      "bvid": "BV1KP9HBBEcN",
+      "cid": 37157930635,
+      "page": 1,
+      "date_candidate": "2026-04-01",
+      "title": "20260401 正赛 第五期 Day-2 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1KP9HBBEcN/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1KP9HBBEcN/BV1KP9HBBEcN_07476.609.png",
+        "sha256": "6008a978f8393e2c109615f2b9702c1bb045afa10ded7f5e5807363935f463d4",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 7476609,
+        "actual_frame_time_ms": 7476617,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/067_BV1KP9HBBEcN_sidebars.png",
+        "inspection_crop_sha256": "9832769a1e34b6c8b10a99d274d7264fef66f14eea5f9f586c3be58e7c497acc",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 65,
+      "bvid": "BV1NP9HBBEDj",
+      "cid": 37157799358,
+      "page": 1,
+      "date_candidate": "2026-04-01",
+      "title": "20260401 正赛 第五期 Day-2 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1NP9HBBEDj/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1NP9HBBEDj/BV1NP9HBBEDj_04187.019.png",
+        "sha256": "d3af21cb6bbaed1b4e4742c3d2de629e04c2ca1a65871c7859c2011f79c77898",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4187019,
+        "actual_frame_time_ms": 4187050,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/065_BV1NP9HBBEDj_sidebars.png",
+        "inspection_crop_sha256": "b6ac8a3896aaf0dc1131a206171434962ad6ed16adefddf8102429ad411ac6a4",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 66,
+      "bvid": "BV1NP9HBBEKw",
+      "cid": 37157864074,
+      "page": 1,
+      "date_candidate": "2026-04-01",
+      "title": "20260401 正赛 第五期 Day-2 第二局-诡术之境",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1NP9HBBEKw/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1NP9HBBEKw/BV1NP9HBBEKw_05605.590.png",
+        "sha256": "16bca229344626f5ddb903c93845dfa860a0fe6cc0b2a30195e6c0d2c75eef3a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5605590,
+        "actual_frame_time_ms": 5605600,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/066_BV1NP9HBBEKw_sidebars.png",
+        "inspection_crop_sha256": "605e19adc6882b8522a413521326d4eda436faf90b73f75af2297ec9f9ab1937",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 69,
+      "bvid": "BV1Ey9wBzEEV",
+      "cid": 37182442389,
+      "page": 1,
+      "date_candidate": "2026-04-02",
+      "title": "20260402 正赛 第五期 Day-3 第二局-唯邻是从",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1Ey9wBzEEV/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1Ey9wBzEEV/BV1Ey9wBzEEV_04583.890.png",
+        "sha256": "8e778855b967e0c94e3ddd42207c8e3bacdcd87082998e5df635dfcdbe158659",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 4583890,
+        "actual_frame_time_ms": 4583900,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1Ey9wBzEEV_seat12_verify.png",
+        "inspection_crop_sha256": "d06d25b9ab1379dfadf2397ff10ae79b521d913bf84c678d59b49032f60f11c4",
+        "crop_rectangles_px": [
+          [
+            1740,
+            1000,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 68,
+      "bvid": "BV1Zy9wBBE1P",
+      "cid": 37182374955,
+      "page": 1,
+      "date_candidate": "2026-04-02",
+      "title": "20260402 正赛 第五期 Day-3 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1Zy9wBBE1P/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1Zy9wBBE1P/BV1Zy9wBBE1P_05157.230.png",
+        "sha256": "12656d05cfeafa032c2ab3e286711f480b09baabec2e793cb30daca3bfdd60e4",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 5157230,
+        "actual_frame_time_ms": 5157233,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/zoom/BV1Zy9wBBE1P_seat12_verify.png",
+        "inspection_crop_sha256": "6978500e20cb054742fe391333566aef03f401d32f952b5736c4b5a4389cc305",
+        "crop_rectangles_px": [
+          [
+            1740,
+            1000,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 70,
+      "bvid": "BV1fy9wBBEAq",
+      "cid": 37182570656,
+      "page": 1,
+      "date_candidate": "2026-04-02",
+      "title": "20260402 正赛 第五期 Day-3 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1fy9wBBEAq/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1fy9wBBEAq/BV1fy9wBBEAq_03164.350.png",
+        "sha256": "c2525966cc095520b760e37fbd80e64201ac20c3c89f1b03b13b72f36e72ae4c",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3164350,
+        "actual_frame_time_ms": 3164357,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/070_BV1fy9wBBEAq_sidebars.png",
+        "inspection_crop_sha256": "0998e8322db37bcfd439b78d48c3d77f04442a306c29e9826e53d91c6a3cac4c",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": [
+        {
+          "path": "data/extractions/S21/frames/BV1fy9wBBEAq/BV1fy9wBBEAq_03399.450.png",
+          "sha256": "250c16b04661eba44fe9ceb68444ee5442188fe60858b612a969cecafdfd121d",
+          "requested_time_ms": 3399450,
+          "actual_frame_time_ms": 3399463,
+          "kind": "settlement_grid_4x3"
+        }
+      ]
+    },
+    {
+      "index": 72,
+      "bvid": "BV17J9gBZEJy",
+      "cid": 37216848199,
+      "page": 1,
+      "date_candidate": "2026-04-03",
+      "title": "20260403 正赛 第五期 Day-4 第二局-盗宝大师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV17J9gBZEJy/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV17J9gBZEJy/BV17J9gBZEJy_06587.504.png",
+        "sha256": "c0650594e7851e442fcbc0f43c5bdc65e9fcbecf9fc51a9d68bdf31ad6cdef2a",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 6587504,
+        "actual_frame_time_ms": 6587533,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/072_BV17J9gBZEJy_sidebars.png",
+        "inspection_crop_sha256": "a7364d31ba746c61c611ed0087d6b50c0bfed9f7096eebfb2d345cde3d7fdffd",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 71,
+      "bvid": "BV17J9gBZEb8",
+      "cid": 37216780325,
+      "page": 1,
+      "date_candidate": "2026-04-03",
+      "title": "20260403 正赛 第五期 Day-4 第一局-预女猎白混",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV17J9gBZEb8/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV17J9gBZEb8/BV17J9gBZEb8_06010.160.png",
+        "sha256": "188d68816571227867f563804c9686a04bf041bb31dfbdd93ae777d55b3b26c1",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 6010160,
+        "actual_frame_time_ms": 6010167,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/071_BV17J9gBZEb8_sidebars.png",
+        "inspection_crop_sha256": "9943bbeca9217cbe9f45e55c0671285e5d147a0858f4580b0f93f29806545d7b",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    },
+    {
+      "index": 73,
+      "bvid": "BV1qJ9gBZEU8",
+      "cid": 37216977333,
+      "page": 1,
+      "date_candidate": "2026-04-03",
+      "title": "20260403 正赛 第五期 Day-4 第三局-机械狼通灵师",
+      "seat_count": 12,
+      "name_fields_checked": 12,
+      "role_fields_checked": 12,
+      "null_name_count": 0,
+      "null_role_count": 0,
+      "visual_review_path": "data/extractions/S21/game_reviews/BV1qJ9gBZEU8/visual_review.json",
+      "best_daytime_frame": {
+        "path": "data/extractions/S21/frames/BV1qJ9gBZEU8/BV1qJ9gBZEU8_03678.010.png",
+        "sha256": "d9ac4f92f6ffc31934095000cb9afcedd91684d76432888a4ed63e64041172dc",
+        "sha_matches_candidate": true,
+        "requested_time_ms": 3678010,
+        "actual_frame_time_ms": 3678016,
+        "time_kind": "capture_receipt_actual_frame_time",
+        "inspection_crop_path": "tmp/s21_roster_batch_a_crops/073_BV1qJ9gBZEU8_sidebars.png",
+        "inspection_crop_sha256": "7945a9ad79b1bdd1407b44b3f289d8d14c15088ba593dc5ca3212a5ef5369370",
+        "crop_rectangles_px": [
+          [
+            0,
+            0,
+            300,
+            1080
+          ],
+          [
+            1620,
+            0,
+            1920,
+            1080
+          ]
+        ]
+      },
+      "additional_direct_frames": []
+    }
+  ],
+  "all_outputs": {
+    "visual_review_files": [
+      "data/extractions/S21/game_reviews/BV1b5wBz5Exk/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1w3AVzPE3R/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1w3AVzPEAL/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1w3AVzPEZM/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1VyAHzCENA/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1XyAHzkE1w/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1XyAHzkE9U/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1MfQkBeEmP/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1MfQkBeEmg/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1ufQkBeEYL/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1roX7BQE1n/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1roX7BQEau/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1roX7BQEfa/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1cLX4BkETh/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1udXxBxEX7/visual_review.json",
+      "data/extractions/S21/game_reviews/BV18NXgB5E8k/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1hAXgB1ECp/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1hNXgB5Ewp/visual_review.json",
+      "data/extractions/S21/game_reviews/BV178XkB7ECz/visual_review.json",
+      "data/extractions/S21/game_reviews/BV178XkB7EXx/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1j8XkB7EUD/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1KP9HBBEcN/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1NP9HBBEDj/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1NP9HBBEKw/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1Ey9wBzEEV/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1Zy9wBBE1P/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1fy9wBBEAq/visual_review.json",
+      "data/extractions/S21/game_reviews/BV17J9gBZEJy/visual_review.json",
+      "data/extractions/S21/game_reviews/BV17J9gBZEb8/visual_review.json",
+      "data/extractions/S21/game_reviews/BV1qJ9gBZEU8/visual_review.json"
+    ],
+    "crop_files": [
+      "tmp/s21_roster_batch_a_crops/044_BV1b5wBz5Exk_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/045_BV1w3AVzPEZM_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/046_BV1w3AVzPEAL_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/047_BV1w3AVzPE3R_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/048_BV1XyAHzkE9U_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/049_BV1VyAHzCENA_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/050_BV1XyAHzkE1w_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/051_BV1ufQkBeEYL_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/052_BV1MfQkBeEmP_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/053_BV1MfQkBeEmg_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/054_BV1roX7BQEfa_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/055_BV1roX7BQEau_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/056_BV1roX7BQE1n_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/057_BV1udXxBxEX7_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/058_BV1cLX4BkETh_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/059_BV18NXgB5E8k_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/060_BV1hNXgB5Ewp_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/061_BV1hAXgB1ECp_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/062_BV1j8XkB7EUD_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/063_BV178XkB7EXx_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/064_BV178XkB7ECz_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/065_BV1NP9HBBEDj_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/066_BV1NP9HBBEKw_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/067_BV1KP9HBBEcN_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/068_BV1Zy9wBBE1P_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/069_BV1Ey9wBzEEV_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/070_BV1fy9wBBEAq_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/071_BV17J9gBZEb8_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/072_BV17J9gBZEJy_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/073_BV1qJ9gBZEU8_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7ECz_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7ECz_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7EXx_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7EXx_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV17J9gBZEJy_seat5_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV17J9gBZEb8_seat5_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV18NXgB5E8k_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1Ey9wBzEEV_seat12_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1KP9HBBEcN_seat6_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmP_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmP_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmg_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmg_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1NP9HBBEDj_seat6_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1Zy9wBBE1P_seat12_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1b5wBz5Exk_seat5_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1cLX4BkETh_seat4_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1hAXgB1ECp_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1hNXgB5Ewp_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1j8XkB7EUD_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1j8XkB7EUD_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1qJ9gBZEU8_seat5_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1ufQkBeEYL_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1ufQkBeEYL_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPE3R_seat2_recheck.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEAL_seat2_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEZM_seat2_left.png"
+    ],
+    "crop_file_count": 57,
+    "crops_referenced_by_visual_review": [
+      "tmp/s21_roster_batch_a_crops/044_BV1b5wBz5Exk_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/045_BV1w3AVzPEZM_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/046_BV1w3AVzPEAL_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/047_BV1w3AVzPE3R_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/048_BV1XyAHzkE9U_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/049_BV1VyAHzCENA_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/050_BV1XyAHzkE1w_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/051_BV1ufQkBeEYL_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/052_BV1MfQkBeEmP_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/053_BV1MfQkBeEmg_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/054_BV1roX7BQEfa_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/055_BV1roX7BQEau_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/056_BV1roX7BQE1n_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/057_BV1udXxBxEX7_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/058_BV1cLX4BkETh_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/059_BV18NXgB5E8k_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/060_BV1hNXgB5Ewp_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/061_BV1hAXgB1ECp_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/062_BV1j8XkB7EUD_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/063_BV178XkB7EXx_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/064_BV178XkB7ECz_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/065_BV1NP9HBBEDj_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/066_BV1NP9HBBEKw_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/067_BV1KP9HBBEcN_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/068_BV1Zy9wBBE1P_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/069_BV1Ey9wBzEEV_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/070_BV1fy9wBBEAq_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/071_BV17J9gBZEb8_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/072_BV17J9gBZEJy_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/073_BV1qJ9gBZEU8_sidebars.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7ECz_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7ECz_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7EXx_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV178XkB7EXx_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV18NXgB5E8k_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1Ey9wBzEEV_seat12_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmP_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmP_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmg_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1MfQkBeEmg_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1Zy9wBBE1P_seat12_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1b5wBz5Exk_seat5_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1cLX4BkETh_seat4_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1hAXgB1ECp_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1hNXgB5Ewp_seat10_right.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1j8XkB7EUD_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1j8XkB7EUD_seat6_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1ufQkBeEYL_seat2_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1ufQkBeEYL_seat3_verify.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPE3R_seat2_recheck.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEAL_seat2_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1w3AVzPEZM_seat2_left.png"
+    ],
+    "referenced_crop_count": 52,
+    "auxiliary_generated_crops_not_referenced": [
+      "tmp/s21_roster_batch_a_crops/zoom/BV17J9gBZEJy_seat5_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV17J9gBZEb8_seat5_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1KP9HBBEcN_seat6_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1NP9HBBEDj_seat6_left.png",
+      "tmp/s21_roster_batch_a_crops/zoom/BV1qJ9gBZEU8_seat5_left.png"
+    ],
+    "summary_file": "data/reports/S21_座位姓名身份_批次a.json"
+  },
+  "file_integrity_followup": "逐座来源帧与SHA由主审最终核验；截图路径、哈希、时间和裁剪细节保存在 actually_inspected_frames 中。"
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "bvid": "BV1wgRtBQEms",
+  "review_status": "assistant_source_reviewed_receipt",
+  "spec_path": "data/extractions/S21/phase_specs/BV1wgRtBQEms.json",
+  "spec_sha256": "c1feae32bc874b9570449265599149a5ce7833de6c74cc280bafbe8e525bf3ef",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1wgRtBQEms/transcript.selected.json",
+  "selected_transcript_sha256": "1fd801e1a7c6d963b819a8f7dd45c2a363383cdb5732c4dcd4f70735d2b8fed2",
+  "identity_path": "data/extractions/S21/game_reviews/BV1wgRtBQEms/identity.reviewed.json",
+  "identity_sha256": "608fe30f2e2bf0b9be244b6822dd22a1d48fcb9d954bdb56ff96a9d1491cc87f",
+  "true_recap_spans": [
+    [
+      8780,
+      8808
+    ]
+  ],
+  "terminal_live_event_indices": [
+    8772,
+    8773,
+    8774,
+    8775,
+    8776,
+    8777
+  ],
+  "terminal_live_evidence": [
+    {
+      "indices": [
+        8772,
+        8773,
+        8774,
+        8775,
+        8776,
+        8777
+      ],
+      "literal_quote": "这个确实真正好来到9万人了\n确实就有反转吗\n当然徐姐是预言家嘛\n徐姐昨天说了\n砍8号推11号杀9号狼\n狼人阵营图名获胜嗯"
+    }
+  ],
+  "counts": {
+    "events": 26,
+    "ballots": 5,
+    "gaps": 2
+  },
+  "event_and_ballot_source_bvid_check": "passed",
+  "semantic_audit": [],
+  "gaps": [
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "sheriff_ballot_completeness",
+      "reason": "候选为1、4、8，只明确10→1、11→1与1当选；警下票权全集及其他票未播报，不能由当选结果补全。",
+      "indices": [
+        5441,
+        5442,
+        5443,
+        5444,
+        5445,
+        5446,
+        5447,
+        5448
+      ],
+      "literal_quote": "54321人流警上玩家一号4号八号\n请警下玩家带盔做好投票准备\n请从148当中选出本局游戏警长\n321请出票\n10号投给一号\n11号投给一号\n投票结束\n一号加两票当选警长"
+    },
+    {
+      "phase": "day",
+      "round": 4,
+      "field": "voter_12_choice",
+      "reason": "12号预期为存活票权之一，但8746字幕为“十一十二号投给11号”，11号已在8745单独投11；该段无法排除重复话头或多席合并，故不把12→11当作确定票。",
+      "indices": [
+        8745,
+        8746,
+        8747,
+        8748
+      ],
+      "literal_quote": "11号投给11号\n十一十二号投给11号\n投票结束\n11号玩家4.5票出局"
+    }
+  ],
+  "notes": [
+    "1号预言家D1放逐后警徽移交8号；夜3狼刀7、夜4狼刀8与D4警徽移交9分开记录。",
+    "夜5狼刀与末民9号游戏结束来自本局连续复盘及终局直播，唯一存活狼为5号。"
+  ]
+}

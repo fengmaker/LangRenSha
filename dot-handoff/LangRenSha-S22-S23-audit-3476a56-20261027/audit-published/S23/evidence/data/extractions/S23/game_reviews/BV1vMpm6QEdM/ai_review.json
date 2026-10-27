@@ -1,0 +1,223 @@
+{
+  "bvid": "BV1vMpm6QEdM",
+  "reviewer": "ai",
+  "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "真实角色：1女巫、2/3/5/9平民、4/6/12狼人、7通灵师、8守卫、10机械狼（N1模仿9平民）、11猎人。N1守8→4，狼刀1、女巫毒8，1/8双死；7验11猎人。警徽首轮6/7平票，PK后7以6票当选，随后12号狼在D1放逐6票出局。N2狼刀2、7验3平民；D2狼6自爆。N3狼刀7通灵师、7验4狼，警徽移交3；D3狼4自爆。N4狼刀11猎人，狼人屠神胜。6号狼在警上自称通灵师并报验8查杀，未当选且D1最终被放逐的是狼12，悍跳未成功。",
+  "decisions": [
+    {
+      "field": "seats[1..12]",
+      "before": "baseline role candidates",
+      "after": "confirmed complete role lineup and factions",
+      "reasoning": "The end recap lists roles role-first followed by seat numbers; frame role labels independently confirm the lineup. Seat10 remains the mechanical wolf with copied civilian skill on seat9, separate from its true card.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5292789,
+          "end_ms": 5307330,
+          "quote": "本游戏通灵师7号女巫\n一号猎人\n11号守卫8号机械狼\n10号狼人\n4号六号\n12号平民\n2号三号五号九号首夜机械狼模仿9号平民\n本游戏为机械平民守卫"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1vMpm6QEdM/BV1vMpm6QEdM_05154.900.png",
+          "frame_time_ms": 5154900,
+          "quote": "可见角色牌：1女巫，4/6/12狼人，7通灵师，8守卫，10机械狼，11猎人；其余显示平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0].night",
+      "before": "wolf attack/witch poison/guard action incomplete",
+      "after": "guard8 protects4; wolf attacks1; witch1 poisons8; 7 checks11 as hunter; mechanical wolf10 copies civilian9",
+      "reasoning": "Tail recap explicitly states N1 copy result, guard target, wolf target, witch poison target, double death and medium check target.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5301370,
+          "end_ms": 5316770,
+          "quote": "2号三号五号九号首夜机械狼模仿9号平民\n本游戏为机械平民守卫\n守护4号狼人\n狼人击杀一号女巫\n女巫毒杀8号守卫\n一八双死\n通灵师验证\n11号玩家为猎人身份上警环节"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[sheriff_day1]",
+      "before": "PK candidates/eligible voters incomplete",
+      "after": "initial 6/7 tie (2/4 vote6, 8/9 vote7); PK excludes candidates, 7 wins with 6 votes",
+      "reasoning": "Source lists the first four off-police votes and declares 6/7 tied; the PK call excludes candidates 6 and7, and the ten remaining voters include two abstentions (2 and4). The result cue says 7 gets six votes and wins the badge.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1656099,
+          "end_ms": 1682370,
+          "quote": "井上玩家5号六号七号请警下玩家带盔做好投票准备\n请从5号六号七号当中选出本局游戏警长321\n请出票\n2号投给6号\n4号投给6号\n8号投给7号\n9号投给7号\n投票结束\n6号七号各一票\n平票pk其他玩家请退税"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1971140,
+          "end_ms": 1996420,
+          "quote": "321\n请出票\n一号投给7号\n2号弃票\n3号投给6号\n4号弃票\n5号投给7号\n8号投给7号\n9号投给7号\n10号投给7号\n11号\n投给7号\n12号投给6号\n投票结束\n7号玩家六票当选警长"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0].day.exile",
+      "before": "D1 exile partly recorded",
+      "after": "after sheriff election/death announcement, eligible 10 voters cast; wolf12 receives 6 and is expelled",
+      "reasoning": "Transcript reports 1/8 night deaths after the sheriff ballot, then lists all ten surviving voters. Votes to 12 are from 2/5/7/9/10/11; 12 is a wolf, so this is not a successful seer bluff outcome for wolf6.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2003100,
+          "end_ms": 2007060,
+          "quote": "所以双死死亡顺序不分先后\n一号8号倒牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1973230,
+          "end_ms": 1992830,
+          "quote": "请出票\n一号投给7号\n2号弃票\n3号投给6号\n4号弃票\n5号投给7号\n8号投给7号\n9号投给7号\n10号投给7号\n11号\n投给7号\n12号投给6号\n投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5318110,
+          "end_ms": 5321290,
+          "quote": "第一天白天12号狼人被公投出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1..4].night/day",
+      "before": "N2/N3 exits and terminal death incomplete",
+      "after": "wolf6 D2 self-destruct; wolf7 attacks medium7 N3 and wolf4 self-destructs D3; N4 wolf kills hunter11, wolf team wins",
+      "reasoning": "End recap identifies all sequence boundaries and resolves the terminal victory; badge passed from dead medium7 to civilian3 after night3.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5321290,
+          "end_ms": 5344460,
+          "quote": "入夜狼击杀2号平民通灵师验证3号玩家为平民身份\n第二天白天\n6号悍跳狼自爆入夜狼人击杀7号通灵师\n通灵师验证4号玩家为狼人身份\n7号通灵师出局\n将警徽移交至3号平民\n第三天白天4号狼人自爆\n入夜狼人击杀最后一张神职牌\n11号猎人游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "女巫",
+        "平民",
+        "平民",
+        "狼人",
+        "平民",
+        "狼人",
+        "通灵师",
+        "守卫",
+        "平民",
+        "机械狼",
+        "猎人",
+        "狼人"
+      ],
+      "reasoning": "Role-first end-recap list was aligned continuously: medium7; witch1; hunter11; guard8; mechanical wolf10; wolf4/6; civilian12; civilians2/3/5/9. Screenshot corroborates the displayed role labels.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5292789,
+          "end_ms": 5301370,
+          "quote": "本游戏通灵师7号女巫\n一号猎人\n11号守卫8号机械狼\n10号狼人\n4号六号\n12号平民"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1vMpm6QEdM/BV1vMpm6QEdM_05154.900.png",
+          "frame_time_ms": 5154900,
+          "quote": "1女巫；4、6、12狼人；7通灵师；8守卫；10机械狼；11猎人；其余平民。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 6,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "6号狼在警上发言自称通灵师并报8查杀/警徽流9-3；警徽最终由真通灵师7号取得，D1放逐狼12而非好人，故不符合成功条件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1448600,
+          "end_ms": 1511070,
+          "quote": "过了6号玩家请发言\n我觉得好人这把也许会有人站错\n但站队的一定更多\n因为本局游戏我是通灵师\n不是你们谁谁能放手啊\n在干嘛\n这只能低吗\n兄弟这低不了\n我也没意思\n能低吗\n兄弟嗯\n你要是可以赛后再说\n你你你现在我没法跟你\n对不对\n你给四发\n我验了八是个狼\n然后你给四发个查杀\n对不对\n我没法儿没法儿\n这个那个啥呀\n真拿到通灵石的时候\n肯定还是就就不验你了\n你自己玩啊\n你自己玩生日嘛\n你自己玩验验八\n我其实也是奔着狼验的啊\n就感觉你要摸狼了\n就感觉你要摸狼了\n你的确摸了个狼\n但是我现在还不知道你是一个机械狼还是一个小狼\n这样给你一个很好的机会练练自己的发言了啊\n给你一个很好的机会练练自己的发言了对吧\n拿狼嘛\n对不对\n大家都有的时候五跟12为什么叫五\n怎怎么就跟12\n我听12玩\n我觉得还行啊\n也可能是因为我是通灵师视角"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1683880,
+          "end_ms": 1734340,
+          "quote": "6号男请发言\n那这盘应该是狼了\n90万应该是狼了\n呃同伴被抓了\n有点难受\n这得冲啊\n这得冲啊\n想办法先把警警徽搞到手嘛\n对不对\n那我这样呗\n我先点一个就52开一个\n我先点点五啊\n我先点55789\n我先点一个5789\n外置位多开好人了\n就大概是没什么狼了\n二给我投票\n二是好人\n四是好人\n那是没低吧\n对不对\n你到时候给好人走了就没法低\n10号玩家应该是好人\n因为现在你没你坑了\n应该啊应该不说死\n那警徽流怎么留呢\n那还是得留嘛\n对不对\n虽然我觉得你现在是狼啊\n但我奔着狼验了哈\n就奔着狼验了\n我就验一下\n9号玩家\n第二警徽流\n留谁啊\n留谁啊\n没啥没啥留的"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1vMpm6QEdM/BV1vMpm6QEdM_05154.900.png",
+          "frame_time_ms": 5154900,
+          "quote": "6号底牌狼人；黄色自称线写“验8查杀”“警徽流9-3”；7号通灵师获警徽。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T18:13:06Z",
+  "phase_findings": [
+    {
+      "id": "b79-r4-terminal-hunter-response",
+      "round": 4,
+      "phase": "night",
+      "status": "unresolved",
+      "field": "rounds[4].day.hunter_shot[11]",
+      "title": "终局夜击中猎人后的开枪资格",
+      "conclusion": "N4击杀11号猎人后立即宣布游戏结束；未说明猎人是否开枪或被禁止响应。",
+      "reasoning": "结尾复盘确认物理猎人11出局与即时狼人胜利，没有说明猎人枪结算，需保留为终局规则问题。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+          "start_ms": 5267100,
+          "end_ms": 5269600,
+          "quote": "昨夜11号玩家倒牌游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+          "start_ms": 5269600,
+          "end_ms": 5271560,
+          "quote": "狼人阵营屠神获胜"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+          "start_ms": 5340620,
+          "end_ms": 5342340,
+          "quote": "11号猎人游戏结束"
+        }
+      ]
+    }
+  ]
+}

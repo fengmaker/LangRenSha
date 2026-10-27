@@ -1,0 +1,1404 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1LQ9sBAEkn",
+  "cid": 37952292532,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+    "selected_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+    "original_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1LQ9sBAEkn/identity.reviewed.json",
+    "sha256": "0df5ab63e6d5556d3224445bdf42b34a4e201cafe0e69351e6211b42a6848892"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1LQ9sBAEkn-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "guard",
+      "actor": 10,
+      "actor_physical_role": "守卫",
+      "targets": [],
+      "actual_targets": null,
+      "state": "pass",
+      "status": "unique_deduction",
+      "result": "复盘称守卫空过",
+      "details": {},
+      "note": "底牌确认10号为唯一守卫；终局复盘称当夜守卫技能空过。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1805
+          ],
+          "start_ms": 3741780,
+          "end_ms": 3744380,
+          "quote": "本游戏为机械女巫守卫空过狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称狼人击杀12号女巫，刀手未指明",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1805,
+            1806
+          ],
+          "start_ms": 3741780,
+          "end_ms": 3745540,
+          "quote": "本游戏为机械女巫守卫空过狼人\n击杀12号女巫",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "poison",
+      "actor": 12,
+      "actor_physical_role": "女巫",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "女巫12号毒杀4号狼人",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1806,
+            1807
+          ],
+          "start_ms": 3744380,
+          "end_ms": 3747420,
+          "quote": "击杀12号女巫\n女巫毒杀4号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "learn",
+      "actor": 1,
+      "actor_physical_role": "机械狼",
+      "targets": [
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "机械狼1号模仿12号女巫",
+      "details": {
+        "learned_form": "女巫"
+      },
+      "note": "底牌确认1号为本局唯一机械狼；复盘明确学习目标12号女巫。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1803,
+            1804
+          ],
+          "start_ms": 3736210,
+          "end_ms": 3741780,
+          "quote": "9号平民2号三号五号八号首页机械狼\n模仿12号女巫",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-005",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 6,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "通灵师查验9号为狼人",
+      "details": {},
+      "note": "底牌确认6号为本局唯一通灵师；复盘明确查验9号为狼。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1808,
+            1809
+          ],
+          "start_ms": 3747420,
+          "end_ms": 3751230,
+          "quote": "42双死通灵师验证\n9号玩家为狼人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-006",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "4号中毒、12号被狼刀，双死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1806,
+            1807,
+            1808
+          ],
+          "start_ms": 3744380,
+          "end_ms": 3749380,
+          "quote": "击杀12号女巫\n女巫毒杀4号狼人\n42双死通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "self_destruct",
+      "actor": 9,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "9号狼人首日警上競選階段自爆",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            690,
+            1810,
+            1811
+          ],
+          "start_ms": 1439480,
+          "end_ms": 3757270,
+          "quote": "9号的选择自爆\n上警环节\n9号狼人自爆入夜守卫守护6号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-008",
+      "phase": "day",
+      "round": 1,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "9号自爆后播报昨夜4、12号倒牌；公告分日记录，不改夜1实际死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            690,
+            691,
+            692,
+            693,
+            694
+          ],
+          "start_ms": 1439480,
+          "end_ms": 1449180,
+          "quote": "9号的选择自爆\n昨夜双死\n死亡顺序不分先后\n4号12号倒牌\n4号玩家请发表遗言",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-009",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_deferred",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "9号在警上竞选环节自爆，首日警长竞选未完成并延期",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            690,
+            1810,
+            1811
+          ],
+          "start_ms": 1439480,
+          "end_ms": 3757270,
+          "quote": "9号的选择自爆\n上警环节\n9号狼人自爆入夜守卫守护6号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            802,
+            803,
+            1811
+          ],
+          "start_ms": 1654310,
+          "end_ms": 3757270,
+          "quote": "过了天黑请闭眼\n一下子落后了\n9号狼人自爆入夜守卫守护6号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "guard",
+      "actor": 10,
+      "actor_physical_role": "守卫",
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "守卫守护6号通灵师",
+      "details": {},
+      "note": "底牌确认10号为守卫；终局复盘明确守护目标6号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1811
+          ],
+          "start_ms": 3752550,
+          "end_ms": 3757270,
+          "quote": "9号狼人自爆入夜守卫守护6号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人攻击6号后形成平安夜；复盘未指出刀手",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1812,
+            1813
+          ],
+          "start_ms": 3757270,
+          "end_ms": 3759330,
+          "quote": "狼人击杀6号行程\n平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-013",
+      "phase": "night",
+      "round": 2,
+      "action": "poison",
+      "actor": 1,
+      "actor_physical_role": "机械狼",
+      "targets": [],
+      "actual_targets": null,
+      "state": "pass",
+      "status": "unique_deduction",
+      "result": "机械女巫当夜空过",
+      "details": {
+        "effective_role": "女巫",
+        "form_evidence_indices": [
+          1803,
+          1804
+        ]
+      },
+      "note": "物理1号机械狼在N1模仿12号女巫；N2以已学习形态空过。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1814
+          ],
+          "start_ms": 3759330,
+          "end_ms": 3761510,
+          "quote": "机械女巫空过通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-014",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 6,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "通灵师查验10号为守卫",
+      "details": {},
+      "note": "底牌确认6号为通灵师；终局复盘明确查验10号守卫身份。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1814,
+            1815
+          ],
+          "start_ms": 3759330,
+          "end_ms": 3762910,
+          "quote": "机械女巫空过通灵师验证\n10号玩家为守卫身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-015",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "夜2平安，无夜死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            875,
+            1812,
+            1813
+          ],
+          "start_ms": 1869120,
+          "end_ms": 3759330,
+          "quote": "昨夜平安夜\n狼人击杀6号行程\n平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-016",
+      "phase": "day",
+      "round": 2,
+      "action": "sheriff_candidates",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "延期竞选时警上候选6、11号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            866,
+            867,
+            868,
+            869,
+            870
+          ],
+          "start_ms": 1842380,
+          "end_ms": 1855960,
+          "quote": "二一天亮了\n退水自爆环节\n54321人了\n井上玩家6号11号\n请警下玩家带盔做好投票准备",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-017",
+      "phase": "day",
+      "round": 2,
+      "action": "sheriff_elected",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "10号明确投6号；6号当选警长，其他票向未识别",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            870,
+            871,
+            872,
+            873,
+            874
+          ],
+          "start_ms": 1852320,
+          "end_ms": 1866779,
+          "quote": "请警下玩家带盔做好投票准备\n321请出票\n10号投票给6号\n6号玩家当选警长\n其他玩家请亮蓝灯",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-018",
+      "phase": "day",
+      "round": 2,
+      "action": "self_destruct",
+      "actor": 7,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "7号狼人第二天白天自爆",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1301,
+            1302,
+            1303,
+            1816,
+            1817
+          ],
+          "start_ms": 2726040,
+          "end_ms": 3767030,
+          "quote": "唉我自爆了\n7号玩家选择自爆\n天黑请闭眼\n第二天6号通灵师当选警长\n7号狼人自爆",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-019",
+      "phase": "night",
+      "round": 3,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1302,
+            1303,
+            1817,
+            1818
+          ],
+          "start_ms": 2728000,
+          "end_ms": 3769020,
+          "quote": "7号玩家选择自爆\n天黑请闭眼\n7号狼人自爆\n入夜守卫守护",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-020",
+      "phase": "night",
+      "round": 3,
+      "action": "guard",
+      "actor": 10,
+      "actor_physical_role": "守卫",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "守卫10号自守",
+      "details": {},
+      "note": "底牌确认10号为守卫；本局复盘称其守护自己。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1818,
+            1819
+          ],
+          "start_ms": 3767030,
+          "end_ms": 3770060,
+          "quote": "入夜守卫守护\n10号自首",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-021",
+      "phase": "night",
+      "round": 3,
+      "action": "wolf_attack",
+      "actor": 1,
+      "actor_physical_role": "机械狼",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "机械狼攻击10号，守卫自守后未造成夜死",
+      "details": {},
+      "note": "4号首夜死亡、9号首日自爆、7号Day2自爆后，1号是唯一剩余狼方刀手；复盘称守卫目标10并记该刀平安。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1818,
+            1819,
+            1820,
+            1821
+          ],
+          "start_ms": 3767030,
+          "end_ms": 3774880,
+          "quote": "入夜守卫守护\n10号自首\n机械女巫击杀10号行程\n平安夜毒杀6号通灵师出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-022",
+      "phase": "night",
+      "round": 3,
+      "action": "poison",
+      "actor": 1,
+      "actor_physical_role": "机械狼",
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "机械狼1号以已学习女巫形态毒杀6号通灵师",
+      "details": {
+        "effective_role": "女巫",
+        "form_evidence_indices": [
+          1803,
+          1804,
+          1823
+        ]
+      },
+      "note": "1号首夜学习12号女巫；终局复盘称机械女巫形态且夜3毒杀6号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1820,
+            1821,
+            1823
+          ],
+          "start_ms": 3770060,
+          "end_ms": 3778060,
+          "quote": "机械女巫击杀10号行程\n平安夜毒杀6号通灵师出局\n机械女巫为女巫身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-023",
+      "phase": "night",
+      "round": 3,
+      "action": "investigate",
+      "actor": 6,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "通灵师6号查验1号机械女巫，反馈女巫身份。",
+      "details": {},
+      "note": "底牌确认6号为通灵师；复盘明确其同夜查验1号后死亡。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1822,
+            1823
+          ],
+          "start_ms": 3774880,
+          "end_ms": 3778060,
+          "quote": "通灵师验证一号玩家\n机械女巫为女巫身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-024",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "6号通灵师中毒单死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1821,
+            1822,
+            1824
+          ],
+          "start_ms": 3772140,
+          "end_ms": 3778940,
+          "quote": "平安夜毒杀6号通灵师出局\n通灵师验证一号玩家\n6号出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-025",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第三天白天播报6号通灵师倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1346,
+            1347,
+            1350,
+            1824
+          ],
+          "start_ms": 2875840,
+          "end_ms": 3778940,
+          "quote": "一天亮了\n作业6号玩家倒牌\n543216号玩家是否移交警徽\n6号出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-026",
+      "phase": "day",
+      "round": 3,
+      "action": "badge_transfer",
+      "actor": 6,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "6号出局后将警徽移交8号平民",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1350,
+            1824,
+            1825
+          ],
+          "start_ms": 2880500,
+          "end_ms": 3780540,
+          "quote": "543216号玩家是否移交警徽\n6号出局\n将警徽移交至8号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-027",
+      "phase": "day",
+      "round": 3,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "11号与8号后续票段中的十、一号连续片段合读为11号投1号；1号机械狼以6.5票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1774,
+            1775,
+            1776,
+            1777,
+            1778,
+            1779,
+            1780,
+            1781,
+            1782,
+            1783,
+            1784,
+            1785,
+            1786,
+            1787,
+            1788,
+            1827,
+            1828
+          ],
+          "start_ms": 3684290,
+          "end_ms": 3783980,
+          "quote": "请戴盔做好投标准备\n警长请归票\n警长归票\n一号高玩家请做好投票准备\n321请出票\n一号投给5号\n2号投给一号\n3号投给一号\n5号投给一号\n8号投给一号\n10号投给一号\n十\n一号投给一号\n投票结束\n一号玩家6.5票出局\n最后一张狼人\n一号机械女巫被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1LQ9sBAEkn-event-028",
+      "phase": "endgame",
+      "round": 3,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "最后机械狼1号出局，好人获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1788,
+            1789,
+            1790,
+            1828,
+            1829,
+            1830
+          ],
+          "start_ms": 3711430,
+          "end_ms": 3786290,
+          "quote": "一号玩家6.5票出局\n游戏结束\n好人阵营获胜\n一号机械女巫被公投出局\n游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1LQ9sBAEkn-ballot-01",
+      "day": 2,
+      "type": "sheriff",
+      "stage": "initial",
+      "eligible_voters": [
+        10
+      ],
+      "candidate_seats": [
+        6,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 10,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                872
+              ],
+              "start_ms": 1861679,
+              "end_ms": 1863439,
+              "quote": "10号投票给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "elected": 6
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            866,
+            867,
+            868,
+            869,
+            870,
+            871,
+            872,
+            873,
+            874
+          ],
+          "start_ms": 1842380,
+          "end_ms": 1866779,
+          "quote": "二一天亮了\n退水自爆环节\n54321人了\n井上玩家6号11号\n请警下玩家带盔做好投票准备\n321请出票\n10号投票给6号\n6号玩家当选警长\n其他玩家请亮蓝灯",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            191,
+            192,
+            193,
+            869,
+            870,
+            871,
+            872,
+            873,
+            875,
+            1806,
+            1807,
+            1808,
+            1810,
+            1811,
+            1812,
+            1813
+          ],
+          "start_ms": 471160,
+          "end_ms": 3759330,
+          "quote": "本游戏除9号十号12号外\n其他玩家上警上警\n玩家请亮红灯\n井上玩家6号11号\n请警下玩家带盔做好投票准备\n321请出票\n10号投票给6号\n6号玩家当选警长\n昨夜平安夜\n击杀12号女巫\n女巫毒杀4号狼人\n42双死通灵师验证\n上警环节\n9号狼人自爆入夜守卫守护6号通灵师\n狼人击杀6号行程\n平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "首次警下9/10/12；12于首夜倒牌、9首日自爆均已公布，次日延期时原警下仅10，明确10→6，票轮完整。"
+    },
+    {
+      "ballot_id": "BV1LQ9sBAEkn-ballot-02",
+      "day": 3,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        10,
+        11
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1779
+              ],
+              "start_ms": 3699130,
+              "end_ms": 3700630,
+              "quote": "一号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1780
+              ],
+              "start_ms": 3700630,
+              "end_ms": 3702030,
+              "quote": "2号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1781
+              ],
+              "start_ms": 3702030,
+              "end_ms": 3703430,
+              "quote": "3号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1782
+              ],
+              "start_ms": 3703430,
+              "end_ms": 3704750,
+              "quote": "5号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1783
+              ],
+              "start_ms": 3704750,
+              "end_ms": 3706250,
+              "quote": "8号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1784
+              ],
+              "start_ms": 3706250,
+              "end_ms": 3707570,
+              "quote": "10号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+              "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+              "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+              "source_segment_indices": [
+                1785,
+                1786
+              ],
+              "start_ms": 3707570,
+              "end_ms": 3708850,
+              "quote": "十\n一号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 1,
+        "reported_votes": 6.5,
+        "other_votes": {
+          "5": 1
+        }
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1774,
+            1775,
+            1776,
+            1777,
+            1778,
+            1779,
+            1780,
+            1781,
+            1782,
+            1783,
+            1784,
+            1785,
+            1786,
+            1787,
+            1788
+          ],
+          "start_ms": 3684290,
+          "end_ms": 3713290,
+          "quote": "请戴盔做好投标准备\n警长请归票\n警长归票\n一号高玩家请做好投票准备\n321请出票\n一号投给5号\n2号投给一号\n3号投给一号\n5号投给一号\n8号投给一号\n10号投给一号\n十\n一号投给一号\n投票结束\n一号玩家6.5票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1LQ9sBAEkn/transcript.selected.json",
+          "source_sha256": "4c1e622dfabaa3a5a5b1ba80526aeba92c7902be578e7e528774c58276a62f37",
+          "original_source_path": "data/seasons/S21/第10周_正赛第09期/2026-04-29/2026-04-29_S21_第10周_正赛第09期_第03局_机械狼通灵师__BV1LQ9sBAEkn_P01_CID37952292532.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "c5e2a60582f66549d321b8959e6cbd5405ee29ed8bc004e81a99db4cc1423eb3",
+          "source_segment_indices": [
+            1347,
+            1350,
+            1788
+          ],
+          "start_ms": 2876920,
+          "end_ms": 3713290,
+          "quote": "作业6号玩家倒牌\n543216号玩家是否移交警徽\n一号玩家6.5票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "末尾两段相邻分词“十 / 一号投给一号”组成11号投1号；这样每名仍存活玩家仅有一张票，并与8号持徽、1号获6.5票一致。"
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        1794,
+        1830
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        690,
+        695
+      ],
+      [
+        802,
+        803
+      ],
+      [
+        866,
+        875
+      ],
+      [
+        1301,
+        1304
+      ],
+      [
+        1345,
+        1357
+      ],
+      [
+        1774,
+        1790
+      ]
+    ],
+    "gaps": [],
+    "notes": [
+      "底牌身份以本局identity.reviewed.json为准：1机械狼、4/7/9狼人、6通灵师、10守卫、11猎人、12女巫。终局复盘角色序列错位时不覆盖身份底牌；机械狼1号的女巫行动仅依据明确学习形态记录。",
+      "N1实际4、12双死，Day1在9号自爆后才播报；N2守卫守6形成平安，Day2延期警长选举后7号自爆；N3守卫自守，6号毒死并移交警徽给8号。",
+      "Day3尾段字幕将“十”和下一段“一号投给一号”分开，按连续数字读为11号投1号；完整7人选票与6.5票结果吻合。"
+    ],
+    "status": "reviewed_explicit_events"
+  },
+  "primary_audit": {
+    "spec_sha256": "5229400635938be4700f7515964040f9c239220354d747402a13a7c3b716edbb",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 0
+  }
+}

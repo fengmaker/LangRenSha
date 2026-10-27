@@ -1,0 +1,2519 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1ayoxBqEyr",
+  "cid": 37730648508,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+    "selected_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+    "original_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1ayoxBqEyr/identity.reviewed.json",
+    "sha256": "b9e32e337cda944be54c0ea78a332a4a063baf550558ea8ff1b3ffc18432bfb2"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1ayoxBqEyr-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "exchange",
+      "actor": 6,
+      "actor_physical_role": "诡术师",
+      "targets": [
+        8,
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "终局复盘称6号诡术师交换8号与9号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3913
+          ],
+          "start_ms": 7676970,
+          "end_ms": 7680430,
+          "quote": "鬼术师交换8号平民以及9号平民狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称狼人击杀11号；刀手未指明",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3914
+          ],
+          "start_ms": 7680430,
+          "end_ms": 7682950,
+          "quote": "击杀11号魔术师牛药救起行程",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "save",
+      "actor": 2,
+      "actor_physical_role": "女巫",
+      "targets": [
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫救起11号；复盘称11号为首夜银水",
+      "details": {},
+      "note": "底牌确认2号为本局唯一女巫；终局复盘与女巫本人复盘互证首夜救11号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3860,
+            3914
+          ],
+          "start_ms": 7591920,
+          "end_ms": 7682950,
+          "quote": "第一天的银水是11号\n击杀11号魔术师牛药救起行程",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 1,
+      "actor_physical_role": "预言家",
+      "targets": [
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "预言家查验11号为好人",
+      "details": {},
+      "note": "底牌确认1号为本局唯一预言家；终局复盘明确其查验11号并报好人。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3915,
+            3916
+          ],
+          "start_ms": 7682950,
+          "end_ms": 7688149,
+          "quote": "平安夜预言家验证了11号玩家\n魔术师为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-005",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "首夜为平安夜；11号被救起",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3914,
+            3915
+          ],
+          "start_ms": 7680430,
+          "end_ms": 7686649,
+          "quote": "击杀11号魔术师牛药救起行程\n平安夜预言家验证了11号玩家",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-006",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_candidates",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1,
+        7,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "法官播报1、7、12号为警长候选",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            879,
+            880
+          ],
+          "start_ms": 1803389,
+          "end_ms": 1810909,
+          "quote": "一号7号12号请请向玩家带盔\n在一号7号12号玩家中选出本就行长",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_elected",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "2号明确投给7号；7号当选警长",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            881,
+            882
+          ],
+          "start_ms": 1810909,
+          "end_ms": 1817210,
+          "quote": "321请出票\n2号投给7号七号玩家当选警长",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-008",
+      "phase": "day",
+      "round": 1,
+      "action": "skill_resolution",
+      "actor": 12,
+      "actor_physical_role": "定序王子",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "定序王子被询问是否发动技能；其后最终宣布9号出局，技能目标及具体结算机制不清",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2095,
+            2096,
+            2097,
+            2098
+          ],
+          "start_ms": 4141639,
+          "end_ms": 4157619,
+          "quote": "7号玩家六票定序\n王子是否发动技能\n54321\n最终结果9号玩家出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-009",
+      "phase": "day",
+      "round": 1,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "最终结果为9号出局并发表遗言",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2098,
+            2099
+          ],
+          "start_ms": 4154319,
+          "end_ms": 4160199,
+          "quote": "最终结果9号玩家出局\n9号玩家请发表遗言",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2152,
+            2155
+          ],
+          "start_ms": 4292309,
+          "end_ms": 4297700,
+          "quote": "9号玩家遗言结束\n各位天黑请闭眼哦",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "exchange",
+      "actor": 6,
+      "actor_physical_role": "诡术师",
+      "targets": [
+        3,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "终局复盘称6号诡术师交换3号与11号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3923,
+            3924,
+            3925
+          ],
+          "start_ms": 7698559,
+          "end_ms": 7707800,
+          "quote": "入夜鬼术师交换了3号狼人\n11号魔术师\n魔术师交换3号狼人及11号魔术师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "exchange",
+      "actor": 11,
+      "actor_physical_role": "魔术师",
+      "targets": [
+        3,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "终局复盘称魔术师交换3号与11号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3923,
+            3924,
+            3925
+          ],
+          "start_ms": 7698559,
+          "end_ms": 7707800,
+          "quote": "入夜鬼术师交换了3号狼人\n11号魔术师\n魔术师交换3号狼人及11号魔术师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-013",
+      "phase": "night",
+      "round": 2,
+      "action": "skill_resolution",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称两名术师对同一对座位的交换技能互相抵消并触发彩蛋",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3925,
+            3926,
+            3927
+          ],
+          "start_ms": 7703720,
+          "end_ms": 7712730,
+          "quote": "魔术师交换3号狼人及11号魔术师\n触发本游戏彩蛋\n两名术师的这个交换技能均抵消",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-014",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀5号平民；刀手未指明",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3928
+          ],
+          "start_ms": 7712730,
+          "end_ms": 7717250,
+          "quote": "当夜狼人击杀5号平民牛毒杀3号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-015",
+      "phase": "night",
+      "round": 2,
+      "action": "poison",
+      "actor": 2,
+      "actor_physical_role": "女巫",
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫复盘称毒3号；终局复盘称3号被毒死",
+      "details": {},
+      "note": "底牌确认2号为唯一女巫；女巫本人在局后明确说第一天毒3号，终局复盘确认3号当夜死亡。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3852,
+            3928,
+            3929
+          ],
+          "start_ms": 7572160,
+          "end_ms": 7718210,
+          "quote": "我然后我就把3号毒了\n当夜狼人击杀5号平民牛毒杀3号狼人\n当夜为3号",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-016",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 1,
+      "actor_physical_role": "预言家",
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "预言家查验2号女巫为好人",
+      "details": {},
+      "note": "底牌确认1号为本局唯一预言家；终局复盘明确查验2号为好人。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3930
+          ],
+          "start_ms": 7718210,
+          "end_ms": 7721860,
+          "quote": "5号双死预言家验证2号玩家女巫为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-017",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3,
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "3号与5号双死；复盘称5号狼刀、3号中毒",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2335,
+            2336,
+            2337,
+            3928,
+            3930
+          ],
+          "start_ms": 4693550,
+          "end_ms": 7721860,
+          "quote": "二一天亮了\n昨夜双死死亡社区不分先后\n3号五号倒牌\n当夜狼人击杀5号平民牛毒杀3号狼人\n5号双死预言家验证2号玩家女巫为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-018",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3,
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "法官播报昨夜3号、5号倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2335,
+            2336,
+            2337,
+            2338
+          ],
+          "start_ms": 4693550,
+          "end_ms": 4700270,
+          "quote": "二一天亮了\n昨夜双死死亡社区不分先后\n3号五号倒牌\n没有遗言",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-019",
+      "phase": "day",
+      "round": 2,
+      "action": "prince_revote",
+      "actor": 12,
+      "actor_physical_role": "定序王子",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "首轮结算后法官确认定序王子可发动技能；12号发言后确有第二轮投票",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3201,
+            3202,
+            3203,
+            3204,
+            3205,
+            3206,
+            3289,
+            3290
+          ],
+          "start_ms": 6314900,
+          "end_ms": 6471300,
+          "quote": "当前票型8号玩家4.5票\n7号玩家五票定序王子是否发动技能\n五四十二号玩家翻牌为定序\n王子可以发动技能\n镜头交至12号玩家\n12号玩家请发言\n过了地球王子翻译完毕\n请各位戴盔做好投票准备",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-020",
+      "phase": "day",
+      "round": 2,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第二轮投票后1号预言家出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3302,
+            3303,
+            3932
+          ],
+          "start_ms": 6491970,
+          "end_ms": 7726530,
+          "quote": "投票结束\n一号玩家六票出局\n一号预言家被抗推出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-021",
+      "phase": "night",
+      "round": 3,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3404,
+            3406
+          ],
+          "start_ms": 6681420,
+          "end_ms": 6686390,
+          "quote": "过了一号玩家烟烟结束\n各位天黑请闭眼",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-022",
+      "phase": "night",
+      "round": 3,
+      "action": "exchange",
+      "actor": 6,
+      "actor_physical_role": "诡术师",
+      "targets": [
+        7,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "连续复盘：诡术师交换7/10，魔术师交换2/6。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3933,
+            3934,
+            3935
+          ],
+          "start_ms": 7726530,
+          "end_ms": 7736730,
+          "quote": "入夜鬼术师交换7号狼人\n10号平民魔术师交换2号女巫\n6号鬼术师狼人击杀8号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-023",
+      "phase": "night",
+      "round": 3,
+      "action": "exchange",
+      "actor": 11,
+      "actor_physical_role": "魔术师",
+      "targets": [
+        2,
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "连续复盘：诡术师交换7/10，魔术师交换2/6。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3933,
+            3934,
+            3935
+          ],
+          "start_ms": 7726530,
+          "end_ms": 7736730,
+          "quote": "入夜鬼术师交换7号狼人\n10号平民魔术师交换2号女巫\n6号鬼术师狼人击杀8号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-024",
+      "phase": "night",
+      "round": 3,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "终局复盘称狼人击杀8号平民；当夜尚有4、7号狼人，不能唯一指定刀手",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3935
+          ],
+          "start_ms": 7733270,
+          "end_ms": 7736730,
+          "quote": "6号鬼术师狼人击杀8号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-025",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "8号夜间单死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3492,
+            3493,
+            3494,
+            3935,
+            3936
+          ],
+          "start_ms": 6873299,
+          "end_ms": 7738110,
+          "quote": "但一天了\n昨夜8号玩家倒牌\n没有遗言\n6号鬼术师狼人击杀8号平民\n当夜为8号平民单死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-026",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "法官播报昨夜8号倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3492,
+            3493,
+            3494,
+            3495
+          ],
+          "start_ms": 6873299,
+          "end_ms": 6878360,
+          "quote": "但一天了\n昨夜8号玩家倒牌\n没有遗言\n8号玩家请灭灯",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-027",
+      "phase": "day",
+      "round": 3,
+      "action": "self_destruct",
+      "actor": 7,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "7号狼人白天自爆",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3508,
+            3509,
+            3938
+          ],
+          "start_ms": 6895940,
+          "end_ms": 7741250,
+          "quote": "对不起\n我自爆自爆自爆7号玩家选择自爆\n7号狼人选择自爆并撕掉警徽",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-028",
+      "phase": "day",
+      "round": 3,
+      "action": "badge_lost",
+      "actor": 7,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警长7号自爆后警徽流失",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3509,
+            3938,
+            3939
+          ],
+          "start_ms": 6896140,
+          "end_ms": 7742879,
+          "quote": "我自爆自爆自爆7号玩家选择自爆\n7号狼人选择自爆并撕掉警徽\n本就警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-029",
+      "phase": "night",
+      "round": 4,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3509,
+            3510
+          ],
+          "start_ms": 6896140,
+          "end_ms": 6901530,
+          "quote": "我自爆自爆自爆7号玩家选择自爆\n天黑请闭",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-030",
+      "phase": "night",
+      "round": 4,
+      "action": "exchange",
+      "actor": 6,
+      "actor_physical_role": "诡术师",
+      "targets": [
+        4,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "終局复盘称6号诡术师交换4号与12号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3940
+          ],
+          "start_ms": 7743239,
+          "end_ms": 7747880,
+          "quote": "入夜鬼术师交换4号狼人以及12号定序",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-031",
+      "phase": "night",
+      "round": 4,
+      "action": "exchange",
+      "actor": 11,
+      "actor_physical_role": "魔术师",
+      "targets": [
+        4,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "魔术师交换4号狼人和10号平民。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3941,
+            3942
+          ],
+          "start_ms": 7747880,
+          "end_ms": 7754520,
+          "quote": "王子魔术师交换4号狼人\n10号平民狼人击杀10号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-032",
+      "phase": "night",
+      "round": 4,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        10
+      ],
+      "actual_targets": [
+        4
+      ],
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人原刀10，魔术师换4/10后实际4号中刀。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3561,
+            3942
+          ],
+          "start_ms": 7030500,
+          "end_ms": 7754520,
+          "quote": "哦杀10号了哟\n10号平民狼人击杀10号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-033",
+      "phase": "night",
+      "round": 4,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "局中明确4号夜间倒牌；复盘确认最终4号狼人倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3571,
+            3572,
+            3577,
+            3601,
+            3943
+          ],
+          "start_ms": 7051849,
+          "end_ms": 7756920,
+          "quote": "首先触发了一波彩蛋\n接着竟然弹死了4号\n4号玩家是夜间倒牌的吧\n昨夜4号玩家倒牌没有遗言\n最终结果为4号狼人倒牌",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-034",
+      "phase": "day",
+      "round": 4,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "法官播报昨夜4号无遗言倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3577,
+            3601,
+            3602
+          ],
+          "start_ms": 7065040,
+          "end_ms": 7116130,
+          "quote": "4号玩家是夜间倒牌的吧\n昨夜4号玩家倒牌没有遗言\n4号玩家请灭灯取牌离场",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-035",
+      "phase": "day",
+      "round": 4,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "6号投给10号，其余存活玩家均投给6号，6号被投出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3865,
+            3870,
+            3872,
+            3874,
+            3875,
+            3876,
+            3877,
+            3945
+          ],
+          "start_ms": 7604740,
+          "end_ms": 7761569,
+          "quote": "就投你\n请各位玩家带盔做好投票准备\n各位请自行投票\n321请出票\n6号投给10号\n其余所有玩家投票给6号\n6号玩家投票出局\n最后一狼6号鬼术师被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1ayoxBqEyr-event-036",
+      "phase": "endgame",
+      "round": 4,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "游戏结束，好人阵营获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3877,
+            3878,
+            3879,
+            3946,
+            3947
+          ],
+          "start_ms": 7628280,
+          "end_ms": 7763180,
+          "quote": "6号玩家投票出局\n游戏结束\n好人阵营获胜哇\n游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1ayoxBqEyr-ballot-01",
+      "day": 1,
+      "type": "sheriff",
+      "stage": "initial",
+      "eligible_voters": [
+        2
+      ],
+      "candidate_seats": [
+        1,
+        7,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 2,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                882
+              ],
+              "start_ms": 1813910,
+              "end_ms": 1817210,
+              "quote": "2号投给7号七号玩家当选警长",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "elected": 7
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            877,
+            878,
+            879,
+            880,
+            881,
+            882,
+            883
+          ],
+          "start_ms": 1796230,
+          "end_ms": 1819350,
+          "quote": "退水自爆环节\n54321人楼井上玩家\n一号7号12号请请向玩家带盔\n在一号7号12号玩家中选出本就行长\n321请出票\n2号投给7号七号玩家当选警长\n其余玩家请变蓝灯",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            221,
+            222
+          ],
+          "start_ms": 489330,
+          "end_ms": 492730,
+          "quote": "本局游戏除2号玩家外\n其余玩家均上警",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "首次完整报名口令明确警下全集，现有逐票/弃票已逐人完整覆盖；最终候选补集不作为票权依据。"
+    },
+    {
+      "ballot_id": "BV1ayoxBqEyr-ballot-02",
+      "day": 1,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2079
+              ],
+              "start_ms": 4108360,
+              "end_ms": 4110060,
+              "quote": "一号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2080
+              ],
+              "start_ms": 4110060,
+              "end_ms": 4111360,
+              "quote": "2号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2081
+              ],
+              "start_ms": 4111360,
+              "end_ms": 4112790,
+              "quote": "3号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2082
+              ],
+              "start_ms": 4112790,
+              "end_ms": 4114290,
+              "quote": "4号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2083
+              ],
+              "start_ms": 4114290,
+              "end_ms": 4115550,
+              "quote": "5号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2084
+              ],
+              "start_ms": 4115550,
+              "end_ms": 4117030,
+              "quote": "6号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2085
+              ],
+              "start_ms": 4117030,
+              "end_ms": 4118470,
+              "quote": "7号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2086
+              ],
+              "start_ms": 4118470,
+              "end_ms": 4119730,
+              "quote": "8号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2087
+              ],
+              "start_ms": 4119730,
+              "end_ms": 4121350,
+              "quote": "9号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2088
+              ],
+              "start_ms": 4121350,
+              "end_ms": 4123410,
+              "quote": "10号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2089
+              ],
+              "start_ms": 4123410,
+              "end_ms": 4125330,
+              "quote": "11号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                2090
+              ],
+              "start_ms": 4125330,
+              "end_ms": 4127150,
+              "quote": "12号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 9
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2072,
+            2073,
+            2074,
+            2075,
+            2076,
+            2077,
+            2078,
+            2079,
+            2080,
+            2081,
+            2082,
+            2083,
+            2084,
+            2085,
+            2086,
+            2087,
+            2088,
+            2089,
+            2090,
+            2091,
+            2092,
+            2093,
+            2094,
+            2095
+          ],
+          "start_ms": 4093330,
+          "end_ms": 4144339,
+          "quote": "请各位玩家带盔做好投票准备\n请戴盔\n警长请归票\n警长归票8号\n各位玩家唱票结束前\n请不要放手\n321请出票\n一号投给7号\n2号投给8号\n3号投给8号\n4号投给8号\n5号投给7号\n6号投给7号\n7号投给8号\n8号投给7号\n9号投给7号\n10号投给8号\n11号投给7号\n12号投给8号\n投票结束\n当前票型8号玩家8.5票\n7号玩家哦不\n8号玩家6.5票\n7号玩家六票定序",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2072,
+            2078,
+            2091
+          ],
+          "start_ms": 4093330,
+          "end_ms": 4128790,
+          "quote": "请各位玩家带盔做好投票准备\n321请出票\n投票结束",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "逐人投向来自完整连续播报；字幕中的8/7票数在[2092–2095]互相冲突，12号随后被询问是否发动技能并最终公布9号出局，具体结算不由票数推算。"
+    },
+    {
+      "ballot_id": "BV1ayoxBqEyr-ballot-03",
+      "day": 2,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3190
+              ],
+              "start_ms": 6285760,
+              "end_ms": 6287120,
+              "quote": "一号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3191
+              ],
+              "start_ms": 6287120,
+              "end_ms": 6288400,
+              "quote": "2号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3192
+              ],
+              "start_ms": 6288400,
+              "end_ms": 6289860,
+              "quote": "4号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3193
+              ],
+              "start_ms": 6289860,
+              "end_ms": 6291480,
+              "quote": "6号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3194
+              ],
+              "start_ms": 6291480,
+              "end_ms": 6293060,
+              "quote": "7号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3195
+              ],
+              "start_ms": 6293060,
+              "end_ms": 6294760,
+              "quote": "8号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3196
+              ],
+              "start_ms": 6294760,
+              "end_ms": 6296720,
+              "quote": "10号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3197
+              ],
+              "start_ms": 6296720,
+              "end_ms": 6298820,
+              "quote": "11号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3198
+              ],
+              "start_ms": 6298820,
+              "end_ms": 6300700,
+              "quote": "12号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "leading_candidate": 7,
+        "reported_votes": {
+          "7": 5,
+          "8": 4.5
+        }
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3184,
+            3185,
+            3186,
+            3187,
+            3188,
+            3189,
+            3190,
+            3191,
+            3192,
+            3193,
+            3194,
+            3195,
+            3196,
+            3197,
+            3198,
+            3199,
+            3201,
+            3202
+          ],
+          "start_ms": 6273590,
+          "end_ms": 6323710,
+          "quote": "请各位戴盔做好投票准备好\n警长请归票\n警长归票\n8号\n各位玩家唱票结束前请不要放手\n321请出票\n一号投给7号\n2号投给7号\n4号投给8号\n6号投给7号\n7号投给8号\n8号投给7号\n10号投给8号\n11号投给7号\n12号投给8号\n投票结束\n当前票型8号玩家4.5票\n7号玩家五票定序王子是否发动技能",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            2337,
+            2339,
+            3184
+          ],
+          "start_ms": 4698030,
+          "end_ms": 6276720,
+          "quote": "3号五号倒牌\n3号五号请面灯取满离场\n请各位戴盔做好投票准备好",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "首轮票型8号4.5票、7号5票；随后定序王子发动技能并举行另一轮投票，故本轮不记为最终放逐。"
+    },
+    {
+      "ballot_id": "BV1ayoxBqEyr-ballot-04",
+      "day": 2,
+      "type": "exile",
+      "stage": "prince_revote",
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3293
+              ],
+              "start_ms": 6478300,
+              "end_ms": 6480440,
+              "quote": "一号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3294
+              ],
+              "start_ms": 6480440,
+              "end_ms": 6482340,
+              "quote": "2号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3295
+              ],
+              "start_ms": 6482340,
+              "end_ms": 6483720,
+              "quote": "4号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3296
+              ],
+              "start_ms": 6483720,
+              "end_ms": 6485020,
+              "quote": "6号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3297
+              ],
+              "start_ms": 6485020,
+              "end_ms": 6486370,
+              "quote": "7号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3298
+              ],
+              "start_ms": 6486370,
+              "end_ms": 6487810,
+              "quote": "8号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3299
+              ],
+              "start_ms": 6487810,
+              "end_ms": 6489170,
+              "quote": "10号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": null,
+          "state": "abstained",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3300
+              ],
+              "start_ms": 6489170,
+              "end_ms": 6490410,
+              "quote": "11号弃票",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3301
+              ],
+              "start_ms": 6490410,
+              "end_ms": 6491970,
+              "quote": "12号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 1,
+        "reported_votes": 6
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3289,
+            3290,
+            3291,
+            3292,
+            3293,
+            3294,
+            3295,
+            3296,
+            3297,
+            3298,
+            3299,
+            3300,
+            3301,
+            3302,
+            3303
+          ],
+          "start_ms": 6464900,
+          "end_ms": 6496669,
+          "quote": "过了地球王子翻译完毕\n请各位戴盔做好投票准备\n唱票结束前不要放手\n321请出票\n一号投给4号\n2号投给一号\n4号投给一号\n6号投给一号\n7号投给一号\n8号投给7号\n10号投给一号\n11号弃票\n12号投给一号\n投票结束\n一号玩家六票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3290,
+            3292,
+            3302
+          ],
+          "start_ms": 6467940,
+          "end_ms": 6493969,
+          "quote": "请各位戴盔做好投票准备\n321请出票\n投票结束",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "第二轮逐人播报包括11号弃票，结果1号出局；阶段按前置定序王子技能发动和实际再投票区分。"
+    },
+    {
+      "ballot_id": "BV1ayoxBqEyr-ballot-05",
+      "day": 4,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        2,
+        6,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 6,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3875
+              ],
+              "start_ms": 7622780,
+              "end_ms": 7625040,
+              "quote": "6号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3876
+              ],
+              "start_ms": 7625040,
+              "end_ms": 7628280,
+              "quote": "其余所有玩家投票给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3876
+              ],
+              "start_ms": 7625040,
+              "end_ms": 7628280,
+              "quote": "其余所有玩家投票给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3876
+              ],
+              "start_ms": 7625040,
+              "end_ms": 7628280,
+              "quote": "其余所有玩家投票给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+              "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+              "source_segment_indices": [
+                3876
+              ],
+              "start_ms": 7625040,
+              "end_ms": 7628280,
+              "quote": "其余所有玩家投票给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 6,
+        "reported_votes": 4
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3869,
+            3870,
+            3871,
+            3872,
+            3873,
+            3874,
+            3875,
+            3876,
+            3877
+          ],
+          "start_ms": 7608960,
+          "end_ms": 7630200,
+          "quote": "我过了公文交关结束\n请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n6号投给10号\n其余所有玩家投票给6号\n6号玩家投票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+          "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+          "source_segment_indices": [
+            3601,
+            3602,
+            3870,
+            3872
+          ],
+          "start_ms": 7111450,
+          "end_ms": 7617110,
+          "quote": "昨夜4号玩家倒牌没有遗言\n4号玩家请灭灯取牌离场\n请各位玩家带盔做好投票准备\n各位请自行投票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "法官明确6号投10号、其余存活玩家投6号；夜间倒牌/白天存活情况将票权限制为2、6、10、11、12号。"
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        3899,
+        3947
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        877,
+        885
+      ],
+      [
+        2072,
+        2100
+      ],
+      [
+        2152,
+        2158
+      ],
+      [
+        2310,
+        2343
+      ],
+      [
+        3176,
+        3206
+      ],
+      [
+        3285,
+        3304
+      ],
+      [
+        3403,
+        3410
+      ],
+      [
+        3490,
+        3512
+      ],
+      [
+        3560,
+        3605
+      ],
+      [
+        3869,
+        3879
+      ]
+    ],
+    "gaps": [
+      {
+        "phase": "day",
+        "round": 1,
+        "field": "day1_reported_tally_and_prince_resolution",
+        "reason": "法官先报8号8.5票后更正8号6.5、7号6票；询问王子是否发动后直接宣布9出局。8/9交换及实际9出局明确，但王子是否实际发动无明确响应，保留未知。",
+        "sources": [
+          2092,
+          2093,
+          2094,
+          2095,
+          2096,
+          2097,
+          2098
+        ],
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV1ayoxBqEyr/transcript.selected.json",
+            "source_sha256": "7c03c3f70145b6abce973d7b2002133568129cb1e1f2e18c2b3828a021bb58b3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-22/2026-04-22_S21_第09周_正赛第08期_第02局_诡术之境__BV1ayoxBqEyr_P01_CID37730648508.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "f6436e476f6f9f7e1fdbdbf6fdaab2451767869b1ad6756b35ad1bd55bed6bf2",
+            "source_segment_indices": [
+              2092,
+              2093,
+              2094,
+              2095,
+              2096,
+              2097,
+              2098
+            ],
+            "start_ms": 4134699,
+            "end_ms": 4157619,
+            "quote": "当前票型8号玩家8.5票\n7号玩家哦不\n8号玩家6.5票\n7号玩家六票定序\n王子是否发动技能\n54321\n最终结果9号玩家出局",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "物理底牌以本局identity.reviewed.json为准：1预言家、2女巫、3/4/7狼人、5/8/9/10平民、6诡术师、11魔术师、12定序王子。终局复盘的个别角色座位识别与已核底牌不一致时，不据此改写物理身份。",
+      "夜1平安夜与11号获救、夜2两术师对同一对目标交换后抵消并发生3/5双死、夜3 8号夜死、夜4 4号夜死分别按当局复盘与局中播报记录；交换作用造成的实际夜死因果未解处单独留gap。",
+      "首日投票逐人选择可读，但报告票数ASR冲突；定序王子询问技能后直接宣布9号出局，未补造复投。第二天首轮与实际定序王子技能后的再投票分别保存。"
+    ],
+    "status": "reviewed_with_explicit_gaps"
+  },
+  "primary_audit": {
+    "spec_sha256": "ed673f4cb85ef70993343be1fd2b01e6c2cc4c8fdc2808d458ceeb8fd12d962f",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 1
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "bvid": "BV1DMRmB9Evw",
+  "review_status": "assistant_source_reviewed_receipt",
+  "spec_path": "data/extractions/S21/phase_specs/BV1DMRmB9Evw.json",
+  "spec_sha256": "d7055caa7306f03d437a88182c431fb3b465f9d62b370077245f6b8b57686b19",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1DMRmB9Evw/transcript.selected.json",
+  "selected_transcript_sha256": "673e24a16e9f77207a99c799e1e3a0bb82bc43f6099e987d0f5d3c3828d74300",
+  "identity_path": "data/extractions/S21/game_reviews/BV1DMRmB9Evw/identity.reviewed.json",
+  "identity_sha256": "97052ada6367c82acdf63e674799e054cb23e895139196f1dd2d7d6a1c696324",
+  "true_recap_spans": [
+    [
+      2060,
+      2097
+    ]
+  ],
+  "terminal_live_event_indices": [],
+  "terminal_live_evidence": [],
+  "counts": {
+    "events": 22,
+    "ballots": 2,
+    "gaps": 2
+  },
+  "event_and_ballot_source_bvid_check": "passed",
+  "semantic_audit": [],
+  "gaps": [
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "sheriff_ballot_unreported_choices",
+      "reason": "警长候选11、12；只明确3→12、7→11、10→11及11以两票当选，其他警长选择/弃票未逐人播报。",
+      "indices": [
+        783,
+        784,
+        785,
+        786,
+        787,
+        788,
+        789,
+        790
+      ],
+      "literal_quote": "11号12号请警下玩家带盔\n在11号12号玩家中选出本局游戏警长\n321请出票\n3号投给12号\n7号投给11号\n10号投给11号\n投票结束\n11号玩家两票当选"
+    },
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "exile_ballot_1811_1812_voter_identity_and_choice",
+      "reason": "N1双死6、9已在792–795公布。投票回合先后为8号、1811“9号投给10号”、1812无票人“投给11号”、再11号；该字幕不能将1812唯一归给10，也不能录死者9的投票，故只保留其余逐人明确票。",
+      "indices": [
+        792,
+        793,
+        794,
+        795,
+        1808,
+        1809,
+        1810,
+        1811,
+        1812,
+        1813,
+        1814,
+        1815,
+        1816
+      ],
+      "literal_quote": "昨夜双死死亡\n数据不分先后\n6号九号倒牌\n6号玩家请发表遗言\n5号投给11号\n7号投给12号\n8号投给11号\n9号投给10号\n投给11号\n11号投给12号\n12号投给11号\n投票结束\n11号玩家七票出局"
+    }
+  ],
+  "notes": [
+    "终局角色段按前向连续分组：12预言家、6女巫、2舞者、8白神、4/7/11狼人、1假面、3/5/9/10平民；侧栏本局画面亦一致。假面1属于狼阵营特殊牌。",
+    "N1双死6、9在首日警长选举后公布；夜间真实死亡与公告分开，放逐票轮按公布后的实际存活票权核对。",
+    "N2舞者2选择1/3/5共舞，1假面为舞池少数狼方出局；狼刀12与舞者结算分别记录。N3舞池2/4/8中4为少数狼方，被复盘明确为最后一狼出局，未补造D3逐人投票。"
+  ]
+}

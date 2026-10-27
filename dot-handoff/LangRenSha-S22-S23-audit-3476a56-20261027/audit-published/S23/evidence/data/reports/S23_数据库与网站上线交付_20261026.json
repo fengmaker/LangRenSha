@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-10-26T10:43:04.302304+00:00",
+  "status": "published_and_verified",
+  "site": "http://127.0.0.1:3000",
+  "season_page": "http://127.0.0.1:3000/seasons/S23",
+  "release_id": "S22_S23-1c2312637b4dd6b8-805e6171-p4-s2",
+  "S23_games": 75,
+  "S23_seats": 900,
+  "S23_ballots": 178,
+  "S23_votes": 1300,
+  "S23_photos": 51,
+  "S22_games_preserved": 148,
+  "S22_database_tables_content_unchanged": 17,
+  "S22_public_snapshots_unchanged": true,
+  "combined_totals": {
+    "games": 223,
+    "days": 70,
+    "ballots": 525,
+    "votes": 3813,
+    "players": 72
+  },
+  "source_snapshot": "21f324d421887c334d3b52c34b573970738391aff2fdb25d65274d05f6c81db6",
+  "database_idempotency_verified": true,
+  "automated_tests_passed": 168,
+  "browser_viewports": [
+    1440,
+    390
+  ],
+  "browser_errors": [],
+  "backup_before_import": "website/artifacts/before-s23-20261026T101421/database.dump",
+  "web_backup_restored_and_verified": "website/artifacts/masters-20261026T101443.dump",
+  "unknown_terminal_checks": 2,
+  "bluff_publication_summary": {
+    "games_total": 75,
+    "games_assessed": 75,
+    "wolf_appearances": 300,
+    "decisions": {
+      "yes": 64,
+      "no": 3,
+      "uncertain": 233
+    },
+    "successful_bluffs": 18,
+    "pending": 234,
+    "evidence_validation_issues": 0,
+    "user_confirmed_records": 1,
+    "separate_identity_claims": 2
+  },
+  "data_limitations": [
+    "两条未公开终局查验保留未知；可能未进入查验环节仅为解释。",
+    "悍跳统计只发布已有判断；233个物理狼位缺少充分结论而保持uncertain，未视作未尝试；234项包含成功结果未知。这些不自动等于必须用户亲自核对的对局事实。",
+    "10号遗言自称通灵师的常规计数口径未获用户确认，独立保留待定。"
+  ],
+  "receipts": {
+    "formal_import": "data/reports/S23_正式数据库入库验收.json",
+    "browser": "website/artifacts/S23-publication-acceptance.json",
+    "photos": "data/reports/S23_网站照片准备验收.json"
+  }
+}

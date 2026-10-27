@@ -1,0 +1,1103 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1zddeBMEBn",
+  "cid": 37560847092,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+    "selected_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+    "original_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1zddeBMEBn/identity.reviewed.json",
+    "sha256": "1bc1060dc8f70633f6985e985fb6575d01f5a44631452bc59a97ea5935561e09"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1zddeBMEBn-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "steal_card",
+      "actor": 1,
+      "actor_physical_role": "盗宝大师",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "1号盗宝大师选择猎人身份；不改变其物理底牌",
+      "details": {
+        "selected_identity": "猎人"
+      },
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1425,
+            1430
+          ],
+          "start_ms": 3006100,
+          "end_ms": 3020180,
+          "quote": "7号盗宝大师为一号\n盗宝大师在猎人平民身份中选择了猎人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 9,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "通灵师查验3号为平民身份",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1431
+          ],
+          "start_ms": 3020180,
+          "end_ms": 3023860,
+          "quote": "当夜通灵师查验了3号玩家为平民身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "dream",
+      "actor": 6,
+      "actor_physical_role": "摄梦人",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "复盘称首夜摄梦人梦游4号；身份表确认6号为摄梦人，夜2明确再次梦游4号",
+      "details": {},
+      "note": "终局复盘句未清晰辨认梦游者座位；依据identity.reviewed.json，6号是本局唯一摄梦人，且夜2复盘明确称再次梦游4号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1429
+          ],
+          "start_ms": 3012250,
+          "end_ms": 3016340,
+          "quote": "12号首页圣梦人梦游4号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "昨夜信息平安夜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            195
+          ],
+          "start_ms": 448170,
+          "end_ms": 450730,
+          "quote": "昨夜信息平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-005",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_signup",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            193
+          ],
+          "start_ms": 441389,
+          "end_ms": 442989,
+          "quote": "本局游戏全员上警",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-006",
+      "phase": "day",
+      "round": 1,
+      "action": "badge_lost",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警徽流失；未见警长当选播报",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1092,
+            1093
+          ],
+          "start_ms": 2253510,
+          "end_ms": 2259100,
+          "quote": "请各位玩家带盔做好投票准备\n本局游戏警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "天亮后法官播报昨夜信息平安夜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            192,
+            195
+          ],
+          "start_ms": 436819,
+          "end_ms": 450730,
+          "quote": "4321天亮了\n昨夜信息平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-008",
+      "phase": "day",
+      "round": 1,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘确认1号盗宝猎人被公投出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1109,
+            1110,
+            1434,
+            1435
+          ],
+          "start_ms": 2282189,
+          "end_ms": 3032300,
+          "quote": "投票结束\n341号玩家八票出局\n警徽流失在第一天白天\n一号盗宝猎人被公投出局并开枪带走",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-009",
+      "phase": "day",
+      "round": 1,
+      "action": "shoot",
+      "actor": 1,
+      "actor_physical_role": "盗宝大师",
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "主持人播报1号发动技能带走8号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1212
+          ],
+          "start_ms": 2522700,
+          "end_ms": 2526100,
+          "quote": "一号玩家发动技能带走8号玩家",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1286,
+            1287
+          ],
+          "start_ms": 2687290,
+          "end_ms": 2693210,
+          "quote": "竖方技能54321\n各位天黑请闭眼",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "dream",
+      "actor": 6,
+      "actor_physical_role": "摄梦人",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称6号摄梦人再次梦游4号，4号狼人被梦游技能击杀",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1410,
+            1411,
+            1412,
+            1437,
+            1438
+          ],
+          "start_ms": 2978140,
+          "end_ms": 3039700,
+          "quote": "你知道四是被毒的\n四是被双打死\n对四是被6号射梦人扎死\n圣某人再次梦游4号狼人\n4号狼人被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "连续复盘明确狼人击杀9号通灵师。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1439,
+            1440
+          ],
+          "start_ms": 3039700,
+          "end_ms": 3044500,
+          "quote": "狼人击杀\n9号通灵师女呃毒师毒杀10号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-013",
+      "phase": "night",
+      "round": 2,
+      "action": "poison",
+      "actor": 2,
+      "actor_physical_role": "毒师",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "复盘确认10号狼人被毒杀；行动者句识别不清",
+      "details": {},
+      "note": "identity.reviewed.json确认2号为毒师，且其余11席无毒师底牌；只补唯一毒师行动者，不混淆其它座位或阵营。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1440
+          ],
+          "start_ms": 3040540,
+          "end_ms": 3044500,
+          "quote": "9号通灵师女呃毒师毒杀10号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-014",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 9,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "通灵师查验12号为平民身份",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1442
+          ],
+          "start_ms": 3047490,
+          "end_ms": 3050030,
+          "quote": "当夜验证了12号玩家为平民身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-015",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4,
+        9,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "4、9、10号倒牌，无遗言",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1390,
+            1391,
+            1441
+          ],
+          "start_ms": 2933460,
+          "end_ms": 3047490,
+          "quote": "4号九号十号倒牌\n没有遗言\n当夜为4号九号十号多岛通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-016",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        4,
+        9,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "4、9、10号公布倒牌，无遗言",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1390,
+            1391
+          ],
+          "start_ms": 2933460,
+          "end_ms": 2937460,
+          "quote": "4号九号十号倒牌\n没有遗言",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-017",
+      "phase": "day",
+      "round": 2,
+      "action": "badge_lost",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警徽流失",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1395
+          ],
+          "start_ms": 2948650,
+          "end_ms": 2949230,
+          "quote": "警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-018",
+      "phase": "day",
+      "round": 2,
+      "action": "concede",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼队交牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1400
+          ],
+          "start_ms": 2957860,
+          "end_ms": 2958700,
+          "quote": "狼队交牌",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-019",
+      "phase": "endgame",
+      "round": 2,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼队交牌，游戏结束，好人阵营获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1400,
+            1401,
+            1402
+          ],
+          "start_ms": 2957860,
+          "end_ms": 2960180,
+          "quote": "狼队交牌\n游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1zddeBMEBn-ballot-01",
+      "day": 1,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1097
+              ],
+              "start_ms": 2264790,
+              "end_ms": 2266210,
+              "quote": "一号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1098
+              ],
+              "start_ms": 2266210,
+              "end_ms": 2267790,
+              "quote": "2号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1099
+              ],
+              "start_ms": 2267790,
+              "end_ms": 2269190,
+              "quote": "3号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1100
+              ],
+              "start_ms": 2269190,
+              "end_ms": 2270430,
+              "quote": "4号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1101
+              ],
+              "start_ms": 2270430,
+              "end_ms": 2271760,
+              "quote": "5号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1102
+              ],
+              "start_ms": 2271760,
+              "end_ms": 2273260,
+              "quote": "6号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1103
+              ],
+              "start_ms": 2273260,
+              "end_ms": 2274460,
+              "quote": "7号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1104
+              ],
+              "start_ms": 2274460,
+              "end_ms": 2275720,
+              "quote": "8号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1105
+              ],
+              "start_ms": 2275720,
+              "end_ms": 2277149,
+              "quote": "9号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1106
+              ],
+              "start_ms": 2277149,
+              "end_ms": 2278529,
+              "quote": "10号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1107
+              ],
+              "start_ms": 2278529,
+              "end_ms": 2280129,
+              "quote": "11号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+              "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+              "source_segment_indices": [
+                1108
+              ],
+              "start_ms": 2280129,
+              "end_ms": 2282189,
+              "quote": "12号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 1,
+        "reported_votes": 8,
+        "other_votes": {
+          "6": 4
+        }
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1092,
+            1093,
+            1094,
+            1095,
+            1096,
+            1097,
+            1098,
+            1099,
+            1100,
+            1101,
+            1102,
+            1103,
+            1104,
+            1105,
+            1106,
+            1107,
+            1108,
+            1109,
+            1110
+          ],
+          "start_ms": 2253510,
+          "end_ms": 2288540,
+          "quote": "请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票就之前不要放手\n321请出票\n一号投给6号\n2号投给一号\n3号投给一号\n4号投给一号\n5号投给一号\n6号投给一号\n7号投给6号\n8号投给一号\n9号投给一号\n10号投给6号\n11号投给一号\n12号投给6号\n投票结束\n341号玩家八票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            193,
+            194,
+            1092,
+            1094
+          ],
+          "start_ms": 441389,
+          "end_ms": 2260520,
+          "quote": "本局游戏全员上警\n警徽流失所有玩家保持蓝灯\n请各位玩家带盔做好投票准备\n各位请自行投票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": null
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        1418,
+        1446
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        189,
+        202
+      ],
+      [
+        456,
+        468
+      ],
+      [
+        1087,
+        1116
+      ],
+      [
+        1282,
+        1294
+      ],
+      [
+        1390,
+        1409
+      ],
+      [
+        1429,
+        1453
+      ]
+    ],
+    "gaps": [
+      {
+        "phase": "night",
+        "round": 1,
+        "field": "wolf_attack_target",
+        "reason": "首夜平安夜与查验结果明确，但未找到狼人原刀目标的可靠播报。",
+        "sources": [
+          189,
+          195,
+          1431
+        ],
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+            "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+            "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+            "source_segment_indices": [
+              189,
+              195,
+              1431
+            ],
+            "start_ms": 429990,
+            "end_ms": 3023860,
+            "quote": "期待这一号和7号之间的配合啊\n昨夜信息平安夜\n当夜通灵师查验了3号玩家为平民身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "夜1为开局夜；夜2为首日投票后的夜晚。第二夜的梦游死亡、毒杀、狼人击杀及白天公布分别记录；不把公布顺序当作行动时间。",
+      "播报的‘341号玩家八票出局’转写有粘连；以逐票表的8票指向1号及复盘明确1号被公投出局相互核定。",
+      "盗宝大师1号物理身份仍为盗宝大师；首夜选择猎人身份后按猎人技能开枪。夜1梦游行动者按底牌6号摄梦人唯一对应；夜2复盘明确再次梦游4号。"
+    ],
+    "status": "reviewed_with_explicit_gaps"
+  },
+  "primary_audit": {
+    "spec_sha256": "0b122bfe923309f63c89dd150550f607bdb6ea5d7c1529f2ca4edce0c159c33f",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 1
+  }
+}

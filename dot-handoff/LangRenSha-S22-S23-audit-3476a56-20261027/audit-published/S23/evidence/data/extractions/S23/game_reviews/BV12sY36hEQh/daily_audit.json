@@ -1,0 +1,814 @@
+{
+  "bvid": "BV12sY36hEQh",
+  "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4030099,
+    "end_ms": 4135109,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1狼刀4号，最终复盘说女巫没有发动技能，公布4号单死；12号毒杀属于下一夜。",
+    "N2狼队击杀7号、女巫不救并毒杀12号，公布7/12双死；D2 8号狼人自爆。",
+    "N3舞池阶段11号舞者出局；狼刀2号白神被女巫救起，公布11号单死。D3最后一狼3号假面交牌，好人获胜。",
+    "用户确认假面与舞者首夜不能发动；已按开局夜/第一天夜晚/第二天夜晚分清夜次。"
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_poison",
+      "changes": {
+        "action": "pass",
+        "actor": 1,
+        "targets": [],
+        "result": "最终复盘记首夜女巫没有发动技能；12号毒杀属于下一夜。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          4
+        ],
+        "result": "首夜仅4号平民单死；候选多记的12号毒死属下一夜。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "pass",
+        "actor": 1,
+        "targets": [],
+        "result": "女巫选择不救。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "changes": {
+        "action": "poison",
+        "actor": 1,
+        "targets": [
+          12
+        ],
+        "result": "女巫毒杀12号狼人。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          7,
+          12
+        ],
+        "result": "当夜狼刀7号平民、毒杀12号狼人，7/12双死。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 1,
+        "targets": [
+          2
+        ],
+        "result": "女巫见狼刀2号后救起，2号白神当夜无事发生。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          11
+        ],
+        "result": "11号舞者在舞池技能结算出局；狼刀2号被女巫救起，夜死仅11号。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "最后一狼3号假面选择交牌，未再放逐。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 5,
+        "targets": [
+          3
+        ],
+        "result": "狼人"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 5,
+        "targets": [
+          10
+        ],
+        "result": "好人"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "pass",
+        "actor": 1,
+        "targets": [],
+        "result": "最终复盘说明首夜女巫没有发动技能。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "masquerade_verify",
+      "changes": {
+        "action": "unavailable",
+        "actor": 3,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "masquerade_mask",
+      "changes": {
+        "action": "unavailable",
+        "actor": 3,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "dancer_dance",
+      "changes": {
+        "action": "unavailable",
+        "actor": 11,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-20-night-1",
+      "status": "confirmed",
+      "conclusion": "N1仅4号平民单死；12号狼人于N2被毒杀。",
+      "reasoning": "最终复盘分开报告N1 4号单死与下一夜女巫毒杀12号；候选将12号死因错置到首夜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4043350,
+          "end_ms": 4052490,
+          "quote": "9号十号首页狼队击杀4号平民女巫\n没有发动技能\n当夜为4号平民单死"
+        }
+      ]
+    },
+    {
+      "id": "phase-BV12sY36hEQh-open-2-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N2夜死7号和12号。",
+      "reasoning": "狼队击杀7、女巫不救并毒杀12，复盘明确7/12双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4076520,
+          "end_ms": 4086130,
+          "quote": "狼队击杀7号平民\n女巫选择不救并毒杀12号狼人\n当夜为7号\n12号双死预言家验证"
+        }
+      ]
+    },
+    {
+      "id": "phase-BV12sY36hEQh-open-3-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N3夜死11号舞者；2号白神被救。",
+      "reasoning": "连续原文说明11舞者出局，狼刀2号后女巫救起，2号当夜无事发生，11单死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4101960,
+          "end_ms": 4125530,
+          "quote": "此时舞者在舞池内五持免疫狼刀假面验证\n11号舞者在舞池内给予11号武者一张面具\n此时舞池内武者被五出局\n假面当夜开刀击杀2号白神\n当夜女巫看到实际刀口为2号\n白神选择开O救起\n所以当夜2号白神无事发生\n为11号五者单死"
+        }
+      ]
+    },
+    {
+      "id": "target-BV12sY36hEQh-r1-wolf_attack-recap",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：4",
+      "reasoning": "原复盘句直接指出该夜目标，补录unknown目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4041990,
+          "end_ms": 4050030,
+          "quote": "4号七号\n9号十号首页狼队击杀4号平民女巫\n没有发动技能"
+        }
+      ]
+    },
+    {
+      "id": "target-BV12sY36hEQh-r1-witch_poison-recap",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：12",
+      "reasoning": "原复盘句直接指出该夜目标，补录unknown目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4076520,
+          "end_ms": 4084000,
+          "quote": "狼队击杀7号平民\n女巫选择不救并毒杀12号狼人\n当夜为7号"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv12sy36heqh-r1-seer_check-target",
+      "status": "confirmed",
+      "conclusion": "开局夜预言家查验9号，反馈为好人。",
+      "reasoning": "复盘明确预言家验证9号为平民；对应第1轮开局夜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4050030,
+          "end_ms": 4058670,
+          "quote": "当夜为4号平民单死\n预言家验证了9号玩家平民为好人身份\n在警上竞选环节"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv12sy36heqh-r2-wolf_attack-target",
+      "status": "confirmed",
+      "conclusion": "第1天夜晚狼队击杀7号平民。",
+      "reasoning": "复盘在后续夜晚刀口事件之前明确记录狼队击杀7号；对应第2轮夜晚。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4074380,
+          "end_ms": 4082760,
+          "quote": "此时50内无事发生\n狼队击杀7号平民\n女巫选择不救并毒杀12号狼人"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv12sy36heqh-r3-wolf_attack-target",
+      "status": "confirmed",
+      "conclusion": "第2天夜晚假面狼刀击杀2号。",
+      "reasoning": "复盘明确记载该夜开刀击杀2号；按前后白天与夜晚行动链对应第3轮夜晚。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4109820,
+          "end_ms": 4119700,
+          "quote": "此时舞池内武者被五出局\n假面当夜开刀击杀2号白神\n当夜女巫看到实际刀口为2号"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv12sy36heqh-r2-seer_check-unresolved",
+      "status": "confirmed",
+      "conclusion": "N2预言家5号查验3号，反馈狼人。",
+      "reasoning": "最终复盘明确“3号玩家假面为狼人身份”。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4084000,
+          "end_ms": 4089350,
+          "quote": "12号双死预言家验证\n3号玩家假面为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-night-witch_save",
+      "status": "confirmed",
+      "conclusion": "N2女巫选择不救。",
+      "reasoning": "复盘原句明确“女巫选择不救并毒杀12号狼人”。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4079040,
+          "end_ms": 4082760,
+          "quote": "女巫选择不救并毒杀12号狼人"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-day-exile_result",
+      "status": "inferred",
+      "conclusion": "D2 8号狼人自爆结束白天，没有放逐。",
+      "reasoning": "复盘明说8号选择自爆并撕掉警徽，随后进入夜晚；当日未有放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4090950,
+          "end_ms": 4097600,
+          "quote": "8号狼人选择自爆并撕掉警徽\n本局游戏警徽流失入夜舞者的舞池"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-witch_save",
+      "status": "confirmed",
+      "conclusion": "N3女巫救起2号白神。",
+      "reasoning": "复盘原句明确女巫看到刀口2后开药救起，2号当夜无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4117180,
+          "end_ms": 4123870,
+          "quote": "当夜女巫看到实际刀口为2号\n白神选择开O救起\n所以当夜2号白神无事发生"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-exile_result",
+      "status": "confirmed",
+      "conclusion": "D3最后一狼3号假面交牌结束，无放逐。",
+      "reasoning": "最终复盘明确3号假面交牌并宣布好人胜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4130910,
+          "end_ms": 4135109,
+          "quote": "3号假面选择交牌游戏结束\n好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-registrations",
+      "status": "confirmed",
+      "conclusion": "首日初始上警：1/2/5/6/8/10/12号；警下：3/4/7/9/11号。",
+      "reasoning": "法官直接公告除3、4、7、9、11号外其余玩家上警，登记名单为其补集。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 697010,
+          "end_ms": 702070,
+          "quote": "除3号四号七号九号11号玩家外\n其余玩家均上警"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-ballot.ballot-1",
+      "status": "confirmed",
+      "conclusion": "警徽首轮：3/4投6，7弃票，9/11投5，5/6各两票平票；PK轮1/5/7/9/11投5，2/3/4/8/10/12投6，6号当选。",
+      "reasoning": "两轮法官唱票逐人给出所有警下票与PK票；初轮五名警下玩家全部有记录，PK轮十名非候选玩家全部有记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 1462040,
+          "end_ms": 1492140,
+          "quote": "一号5号六号12号\n请请向人家带盔\n在一号5号六号12号玩家中选出本九警长\n321请出票\n3号投给6号\n4号投给6号\n7号弃票\n9号投给5号\n11号投给5号\n投票结束\n5号六号平票pk"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 1806900,
+          "end_ms": 1830740,
+          "quote": "在5号六号玩家中选出本游戏警长321\n请出票来高举手\n一号投给5号\n2号投给6号\n3号投给6号\n4号投给6号\n7号投给5号\n8号投给6号\n9号投给5号\n10号投给6号\n11号\n投给5号\n12号\n投给6号\n投票结束"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-1-night-witch_poison-1",
+      "status": "confirmed",
+      "conclusion": "最终复盘记首夜女巫没有发动技能；12号毒杀属于下一夜。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4079040,
+          "end_ms": 4082760,
+          "quote": "女巫选择不救并毒杀12号狼人"
+        }
+      ],
+      "round": 1,
+      "phase": "night",
+      "field": "rounds[1].night.witch_poison",
+      "title": "最终复盘记首夜女巫没有发动技能；12号毒杀属于下一夜。"
+    },
+    {
+      "id": "daily-correction-1-day-night_deaths-2",
+      "status": "confirmed",
+      "conclusion": "首夜仅4号平民单死；候选多记的12号毒死属下一夜。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4079040,
+          "end_ms": 4082760,
+          "quote": "女巫选择不救并毒杀12号狼人"
+        }
+      ],
+      "round": 1,
+      "phase": "day",
+      "field": "rounds[1].day.night_deaths",
+      "title": "首夜仅4号平民单死；候选多记的12号毒死属下一夜。"
+    },
+    {
+      "id": "daily-correction-2-night-witch_save-3",
+      "status": "confirmed",
+      "conclusion": "女巫选择不救。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4079040,
+          "end_ms": 4082760,
+          "quote": "女巫选择不救并毒杀12号狼人"
+        }
+      ],
+      "round": 2,
+      "phase": "night",
+      "field": "rounds[2].night.witch_save",
+      "title": "女巫选择不救。"
+    },
+    {
+      "id": "daily-correction-2-night-witch_poison-4",
+      "status": "confirmed",
+      "conclusion": "女巫毒杀12号狼人。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4119700,
+          "end_ms": 4121280,
+          "quote": "白神选择开O救起"
+        }
+      ],
+      "round": 2,
+      "phase": "night",
+      "field": "rounds[2].night.witch_poison",
+      "title": "女巫毒杀12号狼人。"
+    },
+    {
+      "id": "daily-correction-2-day-night_deaths-5",
+      "status": "confirmed",
+      "conclusion": "当夜狼刀7号平民、毒杀12号狼人，7/12双死。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4119700,
+          "end_ms": 4121280,
+          "quote": "白神选择开O救起"
+        }
+      ],
+      "round": 2,
+      "phase": "day",
+      "field": "rounds[2].day.night_deaths",
+      "title": "当夜狼刀7号平民、毒杀12号狼人，7/12双死。"
+    },
+    {
+      "id": "daily-correction-3-night-witch_save-6",
+      "status": "confirmed",
+      "conclusion": "女巫见狼刀2号后救起，2号白神当夜无事发生。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4119700,
+          "end_ms": 4121280,
+          "quote": "白神选择开O救起"
+        }
+      ],
+      "round": 3,
+      "phase": "night",
+      "field": "rounds[3].night.witch_save",
+      "title": "女巫见狼刀2号后救起，2号白神当夜无事发生。"
+    },
+    {
+      "id": "daily-correction-2-night-seer_check-verified",
+      "round": 2,
+      "phase": "night",
+      "field": "rounds[2].night.seer_check",
+      "title": "N2预言家验3号狼人",
+      "status": "confirmed",
+      "conclusion": "N2预言家5号查验3号，反馈狼人。",
+      "reasoning": "最终复盘直接报出该夜查验目标与反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4084000,
+          "end_ms": 4089350,
+          "quote": "12号双死预言家验证\n3号玩家假面为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "daily-correction-3-night-seer_check-verified",
+      "round": 3,
+      "phase": "night",
+      "field": "rounds[3].night.seer_check",
+      "title": "N3预言家验10号好人",
+      "status": "confirmed",
+      "conclusion": "N3预言家5号查验10号，反馈好人。",
+      "reasoning": "最终复盘直接报出该夜查验目标与反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4125530,
+          "end_ms": 4128770,
+          "quote": "夜间预言家验证10号平民为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "daily-correction-1-night-witch_save-pass",
+      "round": 1,
+      "phase": "night",
+      "field": "rounds[1].night.witch_save",
+      "title": "N1女巫空过解药",
+      "status": "confirmed",
+      "conclusion": "最终复盘明确N1女巫没有发动技能；解药与毒药均空过。",
+      "reasoning": "复盘将N1刀口4号、女巫没有发动技能和4号单死连在同一夜次序中。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+          "start_ms": 4043350,
+          "end_ms": 4052490,
+          "quote": "9号十号首页狼队击杀4号平民女巫\n没有发动技能\n当夜为4号平民单死"
+        }
+      ]
+    },
+    {
+      "id": "user-20261026-masquerade-first-night",
+      "round": 1,
+      "phase": "night",
+      "field": "masquerade_verify",
+      "title": "假面、舞者首夜不能发动技能",
+      "status": "confirmed",
+      "conclusion": "首夜三项技能均不适用；从第一天白天结束后的夜晚起发动。",
+      "reasoning": "首夜三项技能均不适用；从第一天白天结束后的夜晚起发动。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "假面和舞者都是第一天夜晚发动技能阿，首夜不能发动技能"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    }
+  ],
+  "human_questions": [],
+  "voting_replacement": {
+    "schema_version": 1,
+    "game_slug": "bili-BV12sY36hEQh-p01-g02",
+    "registrations": [
+      {
+        "id": "registration-1",
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          5,
+          6,
+          8,
+          10,
+          12
+        ],
+        "off_police": [
+          3,
+          4,
+          7,
+          9,
+          11
+        ]
+      }
+    ],
+    "ballots": [
+      {
+        "id": "ballot-1",
+        "day": 1,
+        "kind": "sheriff",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": [
+          1,
+          5,
+          6,
+          12
+        ],
+        "eligible_voters": [
+          3,
+          4,
+          7,
+          9,
+          11
+        ],
+        "votes": [
+          {
+            "voter": 3,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": null,
+            "state": "abstained"
+          },
+          {
+            "voter": 9,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 5,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [
+          5,
+          6
+        ],
+        "winner": null,
+        "unrecorded_voters": []
+      },
+      {
+        "id": "ballot-2",
+        "day": 1,
+        "kind": "sheriff",
+        "number": 2,
+        "stage": "pk",
+        "status": "complete",
+        "candidates": [
+          5,
+          6
+        ],
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 2,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 10,
+            "target": 6,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 6,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 6,
+        "unrecorded_voters": []
+      }
+    ],
+    "interruptions": [
+      {
+        "id": "interruption-1",
+        "day": 1,
+        "actor": 6,
+        "reason": "self_destruct",
+        "ends_day": true
+      },
+      {
+        "id": "interruption-2",
+        "day": 2,
+        "actor": 8,
+        "reason": "self_destruct",
+        "ends_day": false
+      }
+    ],
+    "days": [
+      {
+        "day": 1,
+        "sheriff": "recorded",
+        "exile": "interrupted_self_destruct"
+      },
+      {
+        "day": 2,
+        "sheriff": "unknown",
+        "exile": "unknown"
+      },
+      {
+        "day": 3,
+        "sheriff": "unknown",
+        "exile": "unknown"
+      }
+    ]
+  }
+}

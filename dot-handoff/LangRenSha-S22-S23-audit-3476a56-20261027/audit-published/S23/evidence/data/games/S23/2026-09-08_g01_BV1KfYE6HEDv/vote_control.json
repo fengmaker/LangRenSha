@@ -1,0 +1,70 @@
+{
+  "game_slug": "bili-BV1KfYE6HEDv-p01-g01",
+  "source_sha256": "e2048fce7f0922bda0d28e6ed47ed75b67aa5651647e63616372d5ef3b23a1b7",
+  "applicable": true,
+  "phases": [
+    {
+      "round": 1,
+      "phase": "day",
+      "phase_label": "第1天白天",
+      "living": [
+        1,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "basis": "night_deaths_and_previous_departures",
+      "stage": "before_exile",
+      "calculation_kind": "potential_vote_power",
+      "actual_ballot_exists": true,
+      "exile_status": "recorded",
+      "werewolf_seats": [
+        1,
+        4,
+        6,
+        10,
+        12
+      ],
+      "good_seats": [
+        3,
+        7,
+        8,
+        9,
+        11
+      ],
+      "werewolf_count": 5,
+      "good_count": 5,
+      "badge_holder": 6,
+      "badge_known": true,
+      "werewolf_votes": 5.5,
+      "good_votes": 5,
+      "controls_vote": true,
+      "reason": "按已核存活玩家的可用票权及个人胜利阵营计算理论票力；狼混计入狼方，警长额外半票计入持徽者阵营"
+    }
+  ],
+  "rule": "狼混按个人胜利阵营计入狼人方；比较双方可用票数，狼人方大于等于好人方构成绑票。人数相等时必须核对警徽，持徽者阵营计额外半票。",
+  "rule_status": "user_confirmed",
+  "source_path": "data/extractions/S23/用户确认_20261026_日夜待核与绑票.txt",
+  "victory_announced": true,
+  "evidence": [
+    {
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第01局_预女猎白混__BV1KfYE6HEDv_P01_CID41701147368.平台AI字幕_ai-zh_01.原始.json",
+      "start_ms": 3819690,
+      "end_ms": 3824730,
+      "quote": "3号玩家5.5票出局\n游戏结束\n狼人阵营绑票获胜"
+    },
+    {
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第01局_预女猎白混__BV1KfYE6HEDv_P01_CID41701147368.平台AI字幕_ai-zh_01.原始.json",
+      "start_ms": 3870310,
+      "end_ms": 3878740,
+      "quote": "6号悍跳狼人获得警徽\n第一天白天狼人阵营实质达成绑票游戏结束\n狼人阵营绑票获胜"
+    }
+  ],
+  "winner_reason": "狼人阵营绑票获胜（法官明确宣布）"
+}

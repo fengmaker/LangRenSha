@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "bvid": "BV1wgRtBQEmG",
+  "review_status": "assistant_source_reviewed_receipt",
+  "spec_path": "data/extractions/S21/phase_specs/BV1wgRtBQEmG.json",
+  "spec_sha256": "a1818d372d29d14b09a4e30cab85cb2b703b756c631765df163ad13988b2277d",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1wgRtBQEmG/transcript.selected.json",
+  "selected_transcript_sha256": "6a04dab9e9a79435c1124a72fb8a874e685ab265be958c6ced793b3604101909",
+  "identity_path": "data/extractions/S21/game_reviews/BV1wgRtBQEmG/identity.reviewed.json",
+  "identity_sha256": "8a0362d1ef257c9a6fe2c4b8c20e7d6f2443064c2b076434ab9ba992711bbcce",
+  "true_recap_spans": [
+    [
+      2710,
+      2746
+    ]
+  ],
+  "terminal_live_event_indices": [
+    2707,
+    2708
+  ],
+  "terminal_live_evidence": [
+    {
+      "indices": [
+        2707,
+        2708
+      ],
+      "literal_quote": "游戏结束\n好人阵营获胜"
+    }
+  ],
+  "counts": {
+    "events": 22,
+    "ballots": 3,
+    "gaps": 2
+  },
+  "event_and_ballot_source_bvid_check": "passed",
+  "semantic_audit": [],
+  "gaps": [
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "sheriff_ballot_unreported_choices",
+      "reason": "候选2、4、10、12；只明确8→10、11→10及10以两票当选，其他警长票或弃票未逐人播报。",
+      "indices": [
+        784,
+        785,
+        786,
+        787,
+        788,
+        789,
+        790,
+        791
+      ],
+      "literal_quote": "5421人轮井上玩家2号四号十号12号\n请请下家带盔做好的标准备\n请从二四十十二当中选出本局游戏警长\n321请出票\n8号投给10号\n11号投给10号\n投票结束\n10号玩家两票当选警长"
+    },
+    {
+      "phase": "night",
+      "round": 3,
+      "field": "magician_exchange_actual_target_mapping_and_investigation_result",
+      "reason": "复盘先称魔术师交换3女巫与10预言家的号码，随后把狼刀/女巫救药称为10号女巫，又把查验目标与“10号自己金水”断句混合；可确认10为原始狼刀目标、当夜平安，但不能确定交换后实际承受行动的号码或查验主体/目标/反馈，故不改写actual_targets、不补查验事件。",
+      "indices": [
+        2737,
+        2738,
+        2739,
+        2740,
+        2741,
+        2742
+      ],
+      "literal_quote": "鬼术师通过魔术师\n更换3号女巫和10号预言家的号码\n狼人击杀10号女巫开药解救行程\n平安夜当夜\n冤家验证3号玩家\n女巫实际验证到10号自己的身份为金水"
+    }
+  ],
+  "notes": [
+    "连续终局身份段按角色词向后分组，物理底牌与已冻结identity一致：1诡术师、2/4/6狼人、3女巫、5/7/8/12平民、9魔术师、10预言家、11定序王子。",
+    "诡术师1号虽为特殊牌，仍在狼阵营；普通狼2、4、6依次出局后，N3由1号执行狼队普通刀。",
+    "N1真实夜死4、5与D1警长投票后公布分开记录；席4的候选身份按现场点名保存，不用延后播报抹除竞选环节。",
+    "D2票型按现场逐票投给10号保存，实际放逐结果按诡术师对6/10结果置换记为6号出局。"
+  ]
+}

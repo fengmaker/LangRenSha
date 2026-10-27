@@ -1,0 +1,1241 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV19UoEBDEcH",
+  "cid": 37790549863,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+    "selected_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+    "original_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV19UoEBDEcH/identity.reviewed.json",
+    "sha256": "582aaabe7cad3b12dd645234f1063018064eb7199c0e7eef1ddec81167b59ab6"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV19UoEBDEcH-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称狼人击杀2号平民；刀手未指明",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1480
+          ],
+          "start_ms": 2945540,
+          "end_ms": 2949720,
+          "quote": "9号十号首页狼人击杀2号平民女王救起行程",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "save",
+      "actor": 3,
+      "actor_physical_role": "女巫",
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫救起2号，形成平安夜",
+      "details": {},
+      "note": "底牌确认3号为本局唯一女巫；复盘明确2号获救。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1480,
+            1481
+          ],
+          "start_ms": 2945540,
+          "end_ms": 2953510,
+          "quote": "9号十号首页狼人击杀2号平民女王救起行程\n平安夜预言家验证了9号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 12,
+      "actor_physical_role": "预言家",
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "预言家查验9号为平民好人",
+      "details": {},
+      "note": "底牌确认12号为本局唯一预言家；复盘明确查验9号为好人。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1481
+          ],
+          "start_ms": 2949720,
+          "end_ms": 2953510,
+          "quote": "平安夜预言家验证了9号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "首夜平安，无夜死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1480,
+            1481
+          ],
+          "start_ms": 2945540,
+          "end_ms": 2953510,
+          "quote": "9号十号首页狼人击杀2号平民女王救起行程\n平安夜预言家验证了9号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-005",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_deferred",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警长竞选未完成；11号狼人于首日竞选环节自爆，后续转入延期竞选",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            784,
+            785,
+            786,
+            787,
+            1482,
+            1483
+          ],
+          "start_ms": 1561659,
+          "end_ms": 2957430,
+          "quote": "过了警上发言结束\n退水自爆环节\n5432发言暂停\n11号玩家选择自爆\n在警上竞选环节\n11号狼人选择自爆入夜舞者舞池",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-006",
+      "phase": "day",
+      "round": 1,
+      "action": "self_destruct",
+      "actor": 11,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "11号狼人首日竞选阶段自爆",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            787,
+            1482,
+            1483
+          ],
+          "start_ms": 1569840,
+          "end_ms": 2957430,
+          "quote": "11号玩家选择自爆\n在警上竞选环节\n11号狼人选择自爆入夜舞者舞池",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-007",
+      "phase": "night",
+      "round": 2,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            787,
+            789
+          ],
+          "start_ms": 1569840,
+          "end_ms": 1576250,
+          "quote": "11号玩家选择自爆\n平安夜天黑请闭眼",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-008",
+      "phase": "night",
+      "round": 2,
+      "action": "dance",
+      "actor": 4,
+      "actor_physical_role": "舞者",
+      "targets": [
+        3,
+        8,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "舞者4号将3号女巫、8号狼人、10号平民选入舞池；复盘称3号被舞池结算出局",
+      "details": {},
+      "note": "身份底牌确认4号为唯一舞者；舞池名单及3号出局均来自本局复盘，10号戴面具按实际结算身份另留事件。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1483,
+            1484,
+            1485,
+            1486,
+            1490
+          ],
+          "start_ms": 2954910,
+          "end_ms": 2970810,
+          "quote": "11号狼人选择自爆入夜舞者舞池\n13号女巫\n8号狼人\n10号平民\n此时舞池内3号女巫被五出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-009",
+      "phase": "night",
+      "round": 2,
+      "action": "skill_resolution",
+      "actor": 6,
+      "actor_physical_role": "假面",
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "假面查验7号白神不在舞池内",
+      "details": {
+        "skill": "核查玩家是否在舞池"
+      },
+      "note": "底牌确认6号为本局唯一假面；依据复盘记其查验目标与结果。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1487,
+            1488
+          ],
+          "start_ms": 2961560,
+          "end_ms": 2966160,
+          "quote": "此时五池内8号狼人为独立阵营假面\n验证7号白神不在五池内",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "wear_mask",
+      "actor": 6,
+      "actor_physical_role": "假面",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "假面6号给予10号平民一张面具",
+      "details": {},
+      "note": "物理底牌确认6号为假面，复盘明确面具目标10号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1489
+          ],
+          "start_ms": 2966160,
+          "end_ms": 2968210,
+          "quote": "给予了10号平民一张面具",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘称狼人击杀10号平民；未指明刀手",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1491
+          ],
+          "start_ms": 2970810,
+          "end_ms": 2973890,
+          "quote": "当夜狼人击杀10号平民牛毒杀5号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "poison",
+      "actor": 3,
+      "actor_physical_role": "女巫",
+      "targets": [
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫毒杀5号狼人",
+      "details": {},
+      "note": "底牌确认3号为唯一女巫；复盘明确毒杀5号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1491,
+            1492
+          ],
+          "start_ms": 2970810,
+          "end_ms": 2975330,
+          "quote": "当夜狼人击杀10号平民牛毒杀5号狼人\n当夜为3号五号",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-013",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3,
+        5,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "3、5、10号多死；复盘分别称舞池出局、毒杀和狼刀",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            950,
+            951,
+            952,
+            1490,
+            1491,
+            1492,
+            1493
+          ],
+          "start_ms": 1926100,
+          "end_ms": 2976250,
+          "quote": "昨夜多岛死亡顺序不分先后\n3号五号十号倒牌\n没有遗言\n此时舞池内3号女巫被五出局\n当夜狼人击杀10号平民牛毒杀5号狼人\n当夜为3号五号\n10号多岛",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-014",
+      "phase": "day",
+      "round": 2,
+      "action": "self_destruct",
+      "actor": 8,
+      "actor_physical_role": "狼人",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "延期警长竞选中狼人自爆并导致警徽流失；复盘确认8号自爆",
+      "details": {},
+      "note": "局中字幕自爆编号识别噪声；终局复盘明确8号狼人自爆，身份牌验证其为狼人。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            946,
+            947,
+            1495,
+            1496,
+            1497
+          ],
+          "start_ms": 1911010,
+          "end_ms": 2982320,
+          "quote": "548号玩家选择自爆\n本局游戏警徽流失\n在延期竞选环节\n8号狼人选择自爆\n本局游戏警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-015",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3,
+        5,
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "8号自爆后法官公布昨夜3、5、10号倒牌；名单与实际夜2结算分开记录",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            946,
+            947,
+            948,
+            949,
+            950,
+            951,
+            952,
+            953,
+            954
+          ],
+          "start_ms": 1911010,
+          "end_ms": 1936320,
+          "quote": "548号玩家选择自爆\n本局游戏警徽流失\n所有玩家请变蓝灯\n所有玩家请变蓝灯\n昨夜多岛死亡顺序不分先后\n3号五号十号倒牌\n没有遗言\n请3号五号十号灭灯\n取满离场",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-016",
+      "phase": "day",
+      "round": 2,
+      "action": "badge_lost",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "延期竞选中的8号自爆后本局警徽流失",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            946,
+            947,
+            1495,
+            1496,
+            1497
+          ],
+          "start_ms": 1911010,
+          "end_ms": 2982320,
+          "quote": "548号玩家选择自爆\n本局游戏警徽流失\n在延期竞选环节\n8号狼人选择自爆\n本局游戏警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-017",
+      "phase": "night",
+      "round": 3,
+      "action": "turn_night",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            953,
+            955
+          ],
+          "start_ms": 1933700,
+          "end_ms": 1938120,
+          "quote": "请3号五号十号灭灯\n各位天黑请闭眼",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-018",
+      "phase": "night",
+      "round": 3,
+      "action": "dance",
+      "actor": 4,
+      "actor_physical_role": "舞者",
+      "targets": [
+        4,
+        6,
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "舞者4号将自己、假面6号和白神7号选入舞池；复盘称舞池使7号出局",
+      "details": {},
+      "note": "底牌确认4号为舞者，舞池及结算来自本局终局复盘。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1498,
+            1499,
+            1502
+          ],
+          "start_ms": 2982320,
+          "end_ms": 2997600,
+          "quote": "入夜舞者的舞池是4号舞者\n6号假面以及7号白神假面\n此时五室内7号白神被五出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-019",
+      "phase": "night",
+      "round": 3,
+      "action": "skill_resolution",
+      "actor": 6,
+      "actor_physical_role": "假面",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "假面核查4号在舞池内",
+      "details": {
+        "skill": "核查玩家是否在舞池"
+      },
+      "note": "6号为唯一假面；4号为同夜复盘公布的舞池目标。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1498,
+            1499,
+            1500
+          ],
+          "start_ms": 2982320,
+          "end_ms": 2991460,
+          "quote": "入夜舞者的舞池是4号舞者\n6号假面以及7号白神假面\n验证了4号玩家",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-020",
+      "phase": "night",
+      "round": 3,
+      "action": "wear_mask",
+      "actor": 6,
+      "actor_physical_role": "假面",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "假面6号将面具给4号舞者",
+      "details": {},
+      "note": "本局物理身份确认6号为假面；终局复盘明确面具目标4号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1500,
+            1501
+          ],
+          "start_ms": 2990340,
+          "end_ms": 2994400,
+          "quote": "验证了4号玩家\n五者在五室内给予了4号五者一张面具",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-021",
+      "phase": "night",
+      "round": 3,
+      "action": "wolf_attack",
+      "actor": 6,
+      "actor_physical_role": "假面",
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "假面刀口7号，复盘称刀阶段平安；同段先明确7号已被舞出局，实际全夜仅7死。",
+      "details": {},
+      "note": "5号被夜2毒出局、8与11号此前自爆，故6号是唯一仍可持有狼刀的狼方行动者；目标由复盘明确。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1503,
+            1504
+          ],
+          "start_ms": 2997600,
+          "end_ms": 3001680,
+          "quote": "且当夜假面牌开刀击杀7号白神\n实际行程平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-022",
+      "phase": "night",
+      "round": 3,
+      "action": "investigate",
+      "actor": 12,
+      "actor_physical_role": "预言家",
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "预言家查验1号为平民好人",
+      "details": {},
+      "note": "身份底牌确认12号为唯一预言家；终局复盘明确查验1号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1506
+          ],
+          "start_ms": 3004000,
+          "end_ms": 3007520,
+          "quote": "夜间预言家验证了一号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-023",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "7号白神被舞出局；狼刀同目标未造成另一个死者，全夜仅7号单死。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1052,
+            1053,
+            1054,
+            1502,
+            1503,
+            1504,
+            1505
+          ],
+          "start_ms": 2152690,
+          "end_ms": 3004000,
+          "quote": "3号好像警上也觉七更像昨夜7号玩家倒牌\n没有遗言\n7号玩家请灭灯取牌离场\n此时五室内7号白神被五出局\n且当夜假面牌开刀击杀7号白神\n实际行程平安夜\n但当夜依旧为7号白神单死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-024",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第三天白天确认7号无遗言倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1052,
+            1053,
+            1054,
+            1055
+          ],
+          "start_ms": 2152690,
+          "end_ms": 2161875,
+          "quote": "3号好像警上也觉七更像昨夜7号玩家倒牌\n没有遗言\n7号玩家请灭灯取牌离场\n本局游戏警告流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-025",
+      "phase": "day",
+      "round": 3,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "6号最后一狼以3票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1450,
+            1451,
+            1452,
+            1453,
+            1454,
+            1455,
+            1456,
+            1457,
+            1458,
+            1459,
+            1460,
+            1461
+          ],
+          "start_ms": 2892920,
+          "end_ms": 2912580,
+          "quote": "本局游戏仅会流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n一号投给2号\n2号投给6号\n4号投给6号\n6号投给12号\n9号投给6号\n12号投给2号\n投票结束\n6号玩家三票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-026",
+      "phase": "endgame",
+      "round": 3,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "游戏结束，好人阵营获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1461,
+            1462,
+            1463,
+            1508,
+            1509,
+            1510
+          ],
+          "start_ms": 2910600,
+          "end_ms": 3013860,
+          "quote": "6号玩家三票出局\n游戏结束\n好人阵营获胜\n场上最后一狼6号假面被公投出局\n嗯游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV19UoEBDEcH-event-027",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 12,
+      "actor_physical_role": "预言家",
+      "targets": [
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "查验5号狼人。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1494
+          ],
+          "start_ms": 2976250,
+          "end_ms": 2978950,
+          "quote": "夜间预言家验证了5号玩家为狼人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV19UoEBDEcH-ballot-01",
+      "day": 3,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        6,
+        9,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1454
+              ],
+              "start_ms": 2900560,
+              "end_ms": 2903120,
+              "quote": "一号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1455
+              ],
+              "start_ms": 2903120,
+              "end_ms": 2904160,
+              "quote": "2号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1456
+              ],
+              "start_ms": 2904160,
+              "end_ms": 2905220,
+              "quote": "4号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1457
+              ],
+              "start_ms": 2905220,
+              "end_ms": 2907080,
+              "quote": "6号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1458
+              ],
+              "start_ms": 2907080,
+              "end_ms": 2908540,
+              "quote": "9号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+              "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+              "source_segment_indices": [
+                1459
+              ],
+              "start_ms": 2908540,
+              "end_ms": 2909800,
+              "quote": "12号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 6,
+        "reported_votes": 3,
+        "other_votes": {
+          "2": 2,
+          "12": 1
+        }
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            1450,
+            1451,
+            1452,
+            1453,
+            1454,
+            1455,
+            1456,
+            1457,
+            1458,
+            1459,
+            1460,
+            1461
+          ],
+          "start_ms": 2892920,
+          "end_ms": 2912580,
+          "quote": "本局游戏仅会流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n一号投给2号\n2号投给6号\n4号投给6号\n6号投给12号\n9号投给6号\n12号投给2号\n投票结束\n6号玩家三票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEcH/transcript.selected.json",
+          "source_sha256": "1cfc33051fed5567edad2cf123777556076f8974c1407d6f4a4398df6f6b995b",
+          "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第02局_假面舞会__BV19UoEBDEcH_P01_CID37790549863.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d10cbd9050150eec56f082e3b2d07be82419600ea89a74072fc5009b8cb23299",
+          "source_segment_indices": [
+            951,
+            954,
+            1052,
+            1054,
+            1450,
+            1453
+          ],
+          "start_ms": 1930200,
+          "end_ms": 2900200,
+          "quote": "3号五号十号倒牌\n取满离场\n3号好像警上也觉七更像昨夜7号玩家倒牌\n7号玩家请灭灯取牌离场\n本局游戏仅会流失\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "现场只有这一轮完整逐票播报，6号三票出局；赛后对话提到的3比3与复投是情境推演，不是本局实际PK。"
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        1473,
+        1510
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        784,
+        790
+      ],
+      [
+        940,
+        955
+      ],
+      [
+        1052,
+        1056
+      ],
+      [
+        1450,
+        1463
+      ]
+    ],
+    "gaps": [],
+    "notes": [
+      "底牌身份以本局identity.reviewed.json为准：3女巫、4舞者、5/8/11狼人、6假面、7白神、12预言家；终局复盘角色序列存在座位错位，不据此改写角色。",
+      "Day1 11号自爆，夜2后延期竞选中8号自爆并流失警徽；夜2实际3/5/10多死，夜3实际7单死。",
+      "末日现场只有一轮6票齐全的放逐投票，6号3票出局；没有创建PK票轮。"
+    ],
+    "status": "reviewed_explicit_events"
+  },
+  "primary_audit": {
+    "spec_sha256": "135eda2fe204057bd216923ce129e19c91de9f261c992bff4563a5a1c6c315c2",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 0
+  }
+}

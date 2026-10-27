@@ -1,0 +1,58 @@
+{
+  "bvid": "BV1cEQ3BhEMe",
+  "spec_path": "data/extractions/S21/phase_specs/BV1cEQ3BhEMe.json",
+  "spec_sha256": "4c3a175d1c20f3bcf541321aa384cb29b34d5a1c0541940fae41b4fb05a4149a",
+  "identity_source_path": "data/extractions/S21/game_reviews/BV1cEQ3BhEMe/identity.reviewed.json",
+  "identity_sha256": "c88857328c26115ce3bcbf83b10621f75cc55a03602d005f71bdf5d1355439dd",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+  "selected_transcript_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+  "original_transcript_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+  "original_transcript_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+  "true_recap_spans": [
+    {
+      "bvid": "BV1cEQ3BhEMe",
+      "indices": [
+        2102,
+        2123
+      ],
+      "selected_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+      "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+      "literal_quote": "本就戏预言家\n5号女巫\n6号定序王子11号魔术师\n3号鬼术师\n12号狼人\n7号八号九号平民\n一号2号四号十号\n首页\n鬼书是更换了4号平民和5号预言家的放出\n结果魔术师空过狼人\n击杀2号平民女巫\n又要救起\n形成平安夜冤家验证6号家为好人身份\n上警环节\n8号悍跳狼获得警徽\n第一天白天7号玩家高票定序\n王子11号翻牌发动技能\n3号魔术师被抗推出局\n然后狼人阵营拍刀哦\n然后5号六号11号狼人可拍三刀\n有邪术\n狼人阵营图审获胜好"
+    }
+  ],
+  "gaps": [
+    {
+      "phase": "night",
+      "round": 1,
+      "field": "investigate_actor_after_exchange",
+      "reason": "终局复盘确认预言家验6号为好人，但同时称诡术师夜1更换4号、5号身份/牌；identity.reviewed只锁定底牌，未找到本局规则或局中原文消解更换后行动者，故行动者保留未知。",
+      "bvid": "BV1cEQ3BhEMe",
+      "indices": [
+        2110,
+        2114
+      ],
+      "literal_quote": "鬼书是更换了4号平民和5号预言家的放出\n形成平安夜冤家验证6号家为好人身份",
+      "selected_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+      "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338"
+    },
+    {
+      "phase": "endgame",
+      "round": 1,
+      "field": "endgame_attack_targets_and_order",
+      "reason": "终局复盘确认狼人阵营拍刀，但没有识别目标集合或刀序；不按“可拍三刀”补造具体目标。",
+      "bvid": "BV1cEQ3BhEMe",
+      "indices": [
+        2120,
+        2121,
+        2123
+      ],
+      "literal_quote": "然后狼人阵营拍刀哦\n然后5号六号11号狼人可拍三刀\n狼人阵营图审获胜好",
+      "selected_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+      "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338"
+    }
+  ],
+  "validation": {
+    "build": "passed",
+    "semantic_audit": []
+  }
+}

@@ -1,0 +1,85 @@
+check.result
+old_value: [{"slot":"seer_check","action":"check","actor":8,"targets":[4],"result":"平民","start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}]
+candidate_value: {"result":"好人"}
+reason: 预言家查4反馈好人，正式误填平民。
+prior_decision_check: {"prior_ai_conclusions":["9号首夜已因毒杀计入2/9双死；后文又叙述9号吞毒自爆，按复盘回顾将其记作R1白天自爆事实，不另增第二次死亡。","R2舞池为3、11、12；当夜舞池少数狼阵营3号被共舞淘汰。","R3舞池为4、5、10，面具给5号改变其舞池阵营；少数平民4号共舞出局，另有狼刀6号舞者，夜死为4/6。"],"note":"既有AI结论不是用户确认；保留已接受终局/延迟死亡/吞毒自爆结论。字段未落盘或关联字段冲突仍单列。","override_status":"not_found_in_checked_overrides","specialized_reports_checked":[{"path":"data/reports/S22_疑点推理复核.json","sha256":"ecf6f3810e25626b98a09c27a18ad07b6b30fc947ccfa01ef7d63934447ce245","matched_records":1},{〔长值节选，完整值请查原件〕
+evidence.path: data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第02局_假面舞会__BV1tj8p6RE2h_P01_CID41072592651.平台AI字幕_ai-zh_01.原始.json
+evidence.sha256: b9205f871ec7ab5e99b798281549934477394ff47bf5cc360f01da41d525ad5a
+evidence.start_ms: 2430400
+evidence.end_ms: 2433540
+证据文字节选: 8号预言家夜间为3号八号双死 / 预言家验证了4号玩家 / 平民为好人身份 / 咳咳在延期禁选环节
+
+## S22-B-141-1 BV1tj8p6RE1V 2026-08-19
+category: causal_unique_candidate
+confidence: high
+display_field: R2.day.night_deaths
+field: R2.day.night_deaths
+old_value: [{"slot":"night_deaths","action":"unknown","actor":null,"targets":[],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}]
+candidate_value: {"action":"die","targets":[12]}
+reason: 第二夜狼刀12、守7、机械女巫空过，12唯一死因成立；正式死亡unknown且game_flow第2日仍unknown，既有AI已确认刀12但死亡未落盘。
+prior_decision_check: {"prior_ai_conclusions":["首夜原文守4、刀9、毒3、验7平民；第二夜守7、刀12、机械女巫空过、验4狼人，旧候选与现档互串轮次应逐夜恢复。第三夜机械女巫继续空过明确，第四夜才毒8猎人、8单死。3号在警上“吞毒自爆”是同一毒口在竞选尚未结束时的自爆动作，记录一次自爆并不重复制造第二个3号死亡；夜间命中与白天动作分开保留。","同段关联字段已按复盘及规则一并更正。"],"note":"既有AI结论不是用户确认；保留已接受终局/延迟死亡/吞毒自爆结论。字段未落盘或关联字段冲突仍单列。","override_status":"not_found_in_checked_overrides","specialized_reports_checked":[{"path":"data/reports/S22_疑点推理复核.json","sha256":"ecf6f3810e25626b98a09c27a18ad07b6b30fc947ccfa01ef7d63934447ce24〔长值节选，完整值请查原件〕
+evidence.path: data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第03局_机械狼通灵师__BV1tj8p6RE1V_P01_CID41072594267.平台AI字幕_ai-zh_01_266c4f38c0.原始.json
+evidence.sha256: 266c4f38c0e544e4d5faaa3d69b5b40a5c7cf9460064dfcdd6cf186017625228
+evidence.start_ms: 3090800
+evidence.end_ms: 3101370
+证据文字节选: 7号平民自动当选警长 / 入夜守卫守护7号平民狼队 / 击杀12号平民女巫技能哦 / 不机械女巫技能 / 通过通灵师验证了4号玩家为狼人身份 / 在第二天的白天 / 4号狼人选择自爆 / 瑞野守卫守护一号通灵师
+
+## S22-B-141-3 BV1tj8p6RE1V 2026-08-19
+category: sourced_omission
+confidence: high
+display_field: R4.night.wolf_attack
+field: R4.night.wolf_attack
+old_value: [{"slot":"wolf_attack","action":"unknown","actor":null,"targets":[],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}]
+candidate_value: {"action":"attack","actor":6,"targets":[11]}
+reason: 复盘明确机械狼普通刀11被守挡，再另用毒8；正式只存毒8，普通刀槽unknown。保留两动作而不把平安刀当整夜无死。
+prior_decision_check: {"prior_ai_conclusions":["首夜原文守4、刀9、毒3、验7平民；第二夜守7、刀12、机械女巫空过、验4狼人，旧候选与现档互串轮次应逐夜恢复。第三夜机械女巫继续空过明确，第四夜才毒8猎人、8单死。3号在警上“吞毒自爆”是同一毒口在竞选尚未结束时的自爆动作，记录一次自爆并不重复制造第二个3号死亡；夜间命中与白天动作分开保留。","同段关联字段已按复盘及规则一并更正。"],"note":"既有AI结论不是用户确认；保留已接受终局/延迟死亡/吞毒自爆结论。字段未落盘或关联字段冲突仍单列。","override_status":"not_found_in_checked_overrides","specialized_reports_checked":[{"path":"data/reports/S22_疑点推理复核.json","sha256":"ecf6f3810e25626b98a09c27a18ad07b6b30fc947ccfa01ef7d63934447ce24〔长值节选，完整值请查原件〕
+evidence.path: data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第03局_机械狼通灵师__BV1tj8p6RE1V_P01_CID41072594267.平台AI字幕_ai-zh_01_266c4f38c0.原始.json
+evidence.sha256: 266c4f38c0e544e4d5faaa3d69b5b40a5c7cf9460064dfcdd6cf186017625228
+evidence.start_ms: 3113270
+evidence.end_ms: 3127149
+证据文字节选: 5号狼人选择自爆 / 咳咳入夜守卫守护11号平民 / 机械狼击杀11号平民 / 形成平安夜 / 在当夜发动技能毒杀8号猎人 / 当夜为8号猎人单死 / 通灵师验证6号玩家
+
+## S22-B-146-1 BV1jM8B6jEkF 2026-08-21
+category: sourced_omission
+confidence: high
+display_field: R2.night.seer_check.result
+field: R2.night.seer_check.result
+old_value: [{"slot":"seer_check","action":"check","actor":2,"targets":[4],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}]
+candidate_value: {"result":"好人","note":"原目标4，号码交换后实际验到6号魔术师"}
+reason: 完整原句明确查4实际验6魔术师为好人，正式查验目标4保留正确但结果null。
+prior_decision_check: {"prior_ai_conclusions":["R2狼队原刀6号，经号码交换实际击中4号；R2夜死名单改为4号。4号警上自爆是已中刀同一事件的延续，不再重复添加一名夜死。","R4普通夜刀2号、女巫毒杀1号后，第四天白天9号诡术师拍刀11号最后一神并结束游戏；这是终局拍刀，不是新增R5夜刀或自爆。"],"note":"既有AI结论不是用户确认；保留已接受终局/延迟死亡/吞毒自爆结论。字段未落盘或关联字段冲突仍单列。","override_status":"not_found_in_checked_overrides","specialized_reports_checked":[{"path":"data/reports/S22_正式规则对齐记录.json","sha256":"4ff1ba8aed67fc6f3a2a0e472372482ab653aa8698f3db1ce737bf8818d3de2a","matched_records":1},{"path":"data/rep〔长值节选，完整值请查原件〕
+evidence.path: data/seasons/S22/第13周_决赛周/2026-08-21/2026-08-21_S22_第13周_决赛周_第02局_诡术之境__BV1jM8B6jEkF_P01_CID41138127466.平台AI字幕_ai-zh_01_fa125c97ff.原始.json
+evidence.sha256: fa125c97ff4727f7c5f0733448b2419784720597a21fb31774b354bc868b037b
+evidence.start_ms: 3186189
+evidence.end_ms: 3191410
+证据文字节选: 狼人击杀6号实际4号玩家中刀 / 女巫通过预言家验证 / 4号实际验证到6号魔术师的身份为好人 / 第二天延期竞选警长环节
+
+## S22-B-147-1 BV18W8B6KE7C 2026-08-21
+category: sourced_omission
+confidence: high
+display_field: R1.night.mechanical_action
+field: R1.night.mechanical_action
+old_value: [{"slot":"mechanical_action","action":"unknown","actor":7,"targets":[],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}]
+candidate_value: {"action":"pass","actor":7,"targets":[],"note":"首夜未学习；第二夜才学1守卫"}
+reason: 复盘明示首夜未学/未模仿并通过，既有AI亦已接受该学习时点；正式首夜动作仍unknown，不能把未知等同已确认空过。
+prior_decision_check: {"prior_ai_conclusions":["机械狼首夜空过、第二夜才学1守卫，学习当夜不能自守，法官明确“想自守没让他守”；随后女巫毒7，故7第二夜死亡，第三夜机械技能不适用。第三夜“首位通过”指仍存活的普通守卫1号空过，不是机械守卫的未知守护目标。","同段关联字段已按复盘及规则一并更正。"],"note":"既有AI结论不是用户确认；保留已接受终局/延迟死亡/吞毒自爆结论。字段未落盘或关联字段冲突仍单列。","override_status":"not_found_in_checked_overrides","specialized_reports_checked":[{"path":"data/reports/S22_疑点推理复核.json","sha256":"ecf6f3810e25626b98a09c27a18ad07b6b30fc947ccfa01ef7d63934447ce245","matched_records":1},{"path":"data/extrac〔长值节选，完整值请查原件〕
+evidence.path: data/seasons/S22/第13周_决赛周/2026-08-21/2026-08-21_S22_第13周_决赛周_第03局_机械狼通灵师__BV18W8B6KE7C_P01_CID41138193658.平台AI字幕_ai-zh_01_eeba74856e.原始.json
+evidence.sha256: eeba74856e1b3993f65e8c8373bb0e87f1e1777939ca542ea8b8700d7d163dbb
+evidence.start_ms: 4718940
+evidence.end_ms: 4730810
+证据文字节选: 狼人击杀12号狼人女巫开药解救 / 形成平安夜通灵师验证 / 7号玩家为未学to the sun light / 未模仿的机械狼 / 首页我们7号机械狼是通过的上警环节 / 8号通灵师获得警徽
+
+## S22-V-001 BV1CGVC6cE8T 2026-06-02
+category: voting_evidence_conflict
+confidence: high_textual_evidence
+display_field: D1 ballot-2.votes[12]
+field: ballot-2.votes[12]
+old_value: {"voter":12,"target":null,"state":"abstained"}
+candidate_value: {"voter":12,"target":4,"state":"cast"}
+reason: 原字幕相邻条目的“十”与“2号”连读为12号，后一条接明确投向；完整顺序里2号已在前面唱过。分行不是新投票人，也不是弃票。
+prior_decision_check: 尊重用户默认弃票规则；此处检查规则前提是否满足，不撤销用户规则。
+evidence: [{"source_path":"data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json","source_sha256":"33d64c2907c29f98faff022e669092f34862e3b90a9218bb0337a7b139427d78","original_media_start_ms":4075380,"original_media_end_ms":4148630,"segments":[{"start_ms":4073960,"end_ms":4075380,"text":"你警上对话了一波"},{"start_ms":4075380,"end_ms":4076680,"text":"警下对话了一波"},{"start_ms":4076680,"end_ms":4078220,"text":"你是一个很讲逻辑的人"},{"start_ms":4078220,"end_ms":4079490,"text":"但是你没讲逻辑"},{"start_ms":4079490,"end_ms":4081570,"text":"所以我其实盯上你很久了"},{"start_ms":4081570,"end_ms":4083980,"text":"希望希望我看对了好吧"},{"start_ms":4083980,"end_ms":4084500,"text":"当然看错了"},{"start_ms":4084500,"end_ms":4085460,"text":"我再研究研究"},{"start_ms":4085460,"end_ms":4088040,"text":"至于5号玩家就交给狼行了"},{"start_ms":4088040,"end_ms":4089890,"text":"自求多福了对吧"},{"start_ms":4089890,"end〔长值节选，完整值请查原件〕
+
+## S22-V-002 BV1dJ7R6fEUw 2026-06-03
+category: voting_evidence_conflict
+con

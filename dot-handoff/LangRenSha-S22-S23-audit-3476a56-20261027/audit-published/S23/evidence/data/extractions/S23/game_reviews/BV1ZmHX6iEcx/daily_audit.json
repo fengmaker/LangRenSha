@@ -1,0 +1,356 @@
+{
+  "bvid": "BV1ZmHX6iEcx",
+  "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3031730,
+    "end_ms": 3120590,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1狼刀4民被救、验7狼；D1 7狼自爆。N2狼刀12女巫，女巫毒5假面但假面免疫；舞者让2狼出局，D2 2/12双死、6自爆并流徽。N3狼刀8白神被其免疫，9舞者单死；D3最后狼5被放逐，好人胜。N1假面验人及N3预言家查验未由复盘公开，保持unknown；N2预言家对4号的反馈已确认是平民/好人。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3031730,
+          "end_ms": 3120590,
+          "quote": "好给各位呢老师们做本结局的复盘\n本局版行为假面舞会深圳营预言家10号女巫\n12号舞者\n9号白申8号\n狼人阵营2号六号七号假面5号平民阵营\n一号3号四号\n11号咳\n首验狼人击杀4号平民\n牛要救起\n形成平安夜\n预言家验证7号玩家为狼人身份\n在警上竞选环节\n7号狼人选择自爆入夜无耻的舞池\n2号狼人\n4号平民及5号假面假面\n验证8号玩家白神不在舞池内\n给予5号假面一张面具\n此时五池内2号狼人被五出局\n当野狼队击杀12号女巫\n女巫毒杀5号假面\n由于我们的假面牌免疫毒药\n所以当夜为2号12号双死\n夜间通预言家验证了4号玩家\n平民认为好人身份在延期竞选环节\n6号狼人选择自爆\n本局游戏警徽流失入夜舞者的舞池\n8号白神\n9号舞者及10号预言家\n当夜舞者在舞池内五池免疫狼刀\n夜间假面验证了9号玩家\n舞者在舞室内给予了9号舞者一张面具\n并击杀8号白神\n此时夜间我们的8号白神是免疫狼刀\n所以当夜只有9号玩家舞者单死在第三天白天\n场上最后一狼5号假面被公投出局\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
+        }
+      ]
+    },
+    "用户确认假面与舞者首夜不能发动；已按开局夜/第一天夜晚/第二天夜晚分清夜次。",
+    "用户确认10/8查验依次7狼人、4好人、5狼人；假面第一天夜晚验8扣5，第二天夜晚验9扣9。"
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "masquerade_verify",
+      "changes": {
+        "action": "unavailable",
+        "actor": 5,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "masquerade_mask",
+      "changes": {
+        "action": "unavailable",
+        "actor": 5,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "dancer_dance",
+      "changes": {
+        "action": "unavailable",
+        "actor": 9,
+        "targets": [],
+        "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 10,
+        "targets": [
+          7
+        ],
+        "result": "狼人",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 10,
+        "targets": [
+          4
+        ],
+        "result": "好人",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 10,
+        "targets": [
+          5
+        ],
+        "result": "狼人",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "masquerade_verify",
+      "changes": {
+        "action": "verify",
+        "actor": 5,
+        "targets": [
+          8
+        ],
+        "result": "用户确认本夜验证8号。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "masquerade_mask",
+      "changes": {
+        "action": "give_mask",
+        "actor": 5,
+        "targets": [
+          5
+        ],
+        "result": "用户确认本夜给5号扣面具。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "masquerade_verify",
+      "changes": {
+        "action": "verify",
+        "actor": 5,
+        "targets": [
+          9
+        ],
+        "result": "用户确认本夜验证9号。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "masquerade_mask",
+      "changes": {
+        "action": "give_mask",
+        "actor": 5,
+        "targets": [
+          9
+        ],
+        "result": "用户确认本夜给9号扣面具。",
+        "inferred": false,
+        "confirmation_status": "user_confirmed"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b68-r2-seer-feedback-unresolved",
+      "status": "confirmed",
+      "conclusion": "预言家10号N2验证4号玩家，复盘明确其为平民、好人身份。",
+      "reasoning": "原文连续说“预言家验证了4号玩家”及“平民认为好人身份”，可确认实际反馈；这不是通灵师反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3084420,
+          "end_ms": 3089360,
+          "quote": "夜间通预言家验证了4号玩家平民认为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "b68-r1-masquerade-target-unresolved",
+      "status": "confirmed",
+      "title": "首夜技能按规则不适用",
+      "conclusion": "假面验证、扣面具和舞者共舞均不能在首夜发动；没有待补的首夜目标。",
+      "reasoning": "假面验证、扣面具和舞者共舞均不能在首夜发动；没有待补的首夜目标。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "假面和舞者都是第一天夜晚发动技能阿，首夜不能发动技能"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "b68-r3-seer-action-unresolved",
+      "status": "confirmed",
+      "title": "第二天夜晚查验5号狼人已确认",
+      "conclusion": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+      "reasoning": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "coverage-3-night-seer_check",
+      "status": "confirmed",
+      "title": "第二天夜晚查验5号狼人已确认",
+      "conclusion": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+      "reasoning": "第二天白天结束后的夜晚，10号预言家查验5号假面，反馈狼人；原重复缺项同时销项。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "user-20261026-masquerade-first-night",
+      "round": 1,
+      "phase": "night",
+      "field": "masquerade_verify",
+      "title": "假面、舞者首夜不能发动技能",
+      "status": "confirmed",
+      "conclusion": "首夜三项技能均不适用；从第一天白天结束后的夜晚起发动。",
+      "reasoning": "首夜三项技能均不适用；从第一天白天结束后的夜晚起发动。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "假面和舞者都是第一天夜晚发动技能阿，首夜不能发动技能"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "user-20261026-b68-seer-1",
+      "round": 1,
+      "phase": "night",
+      "field": "seer_check",
+      "title": "预言家第1轮查验已确认",
+      "status": "confirmed",
+      "conclusion": "10号预言家查验7号，反馈狼人。",
+      "reasoning": "10号预言家查验7号，反馈狼人。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "user-20261026-b68-seer-2",
+      "round": 2,
+      "phase": "night",
+      "field": "seer_check",
+      "title": "预言家第2轮查验已确认",
+      "status": "confirmed",
+      "conclusion": "10号预言家查验4号，反馈好人。",
+      "reasoning": "10号预言家查验4号，反馈好人。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "user-20261026-b68-seer-3",
+      "round": 3,
+      "phase": "night",
+      "field": "seer_check",
+      "title": "预言家第3轮查验已确认",
+      "status": "confirmed",
+      "conclusion": "10号预言家查验5号，反馈狼人。",
+      "reasoning": "10号预言家查验5号，反馈狼人。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "预言家首夜验7查杀 第一天白天结束的夜晚验的4金水 下一天5查杀"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "user-20261026-b68-mask-2",
+      "round": 2,
+      "phase": "night",
+      "field": "masquerade_mask",
+      "title": "假面第2轮验证与扣面具已确认",
+      "status": "confirmed",
+      "conclusion": "5号假面验证8号，给5号扣面具。",
+      "reasoning": "5号假面验证8号，给5号扣面具。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "假面第一天白天结束的晚上验8扣五，第二天白天结束的晚上验9扣9"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    },
+    {
+      "id": "user-20261026-b68-mask-3",
+      "round": 3,
+      "phase": "night",
+      "field": "masquerade_mask",
+      "title": "假面第3轮验证与扣面具已确认",
+      "status": "confirmed",
+      "conclusion": "5号假面验证9号，给9号扣面具。",
+      "reasoning": "5号假面验证9号，给9号扣面具。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "假面第一天白天结束的晚上验8扣五，第二天白天结束的晚上验9扣9"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    }
+  ],
+  "human_questions": []
+}

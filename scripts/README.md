@@ -12,6 +12,7 @@
 | 画面与片段复听 | 按缺口补证据 | `capture_season_speech_frames`、`capture_bilibili_frame`、`review_asr_clip`、复盘窗口规划；OCR只是候选 |
 | 推导与复核 | 先读证据，再`--stage review` | `recap_parser`、`game_flow/voting_*`及各季review/audit；S22/S23实际规则差异保留适配，不冒充任意季通用引擎 |
 | 正式记录 | `workflow ... --stage import` | `formal_entry/game_records`、S22修订批处理、S23固定快照导入；来源与事务保护保留 |
+| S21 身份专项 | `import_s21_identities.py` | 只验证座位、姓名、物理底牌；`--import-db`写入已核提取层，`reviewed_identity_seats`可查，不生成完整正式对局 |
 | 网站发布／验收 | `workflow ... --stage publish/verify` | 网站模块构建完整release、逐季悍跳同步；`website/check_publication.py`动态核对源/API/页面 |
 | 备份与清理 | `backup_database.py`、`cleanup_data.py` | 全库＋各季源基线；清理器先预览，保护DB引用、当前manifest和证据，不删原媒体 |
 | 环境与资料登记 | `local_postgres.py`、`database.py` | 本机PostgreSQL和原始资料schema；早期revision命令不等于网站发布 |

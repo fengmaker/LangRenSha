@@ -1,0 +1,203 @@
+{
+  "bvid": "BV1D1YU6rEhh",
+  "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4535440,
+    "end_ms": 4605650,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1守卫空过、狼刀10、女巫救10，平安；D1 6狼自爆。",
+    "N2狼刀5、毒杀8，机械女巫额外毒5；5/8双死。N3守卫护1、狼刀1被挡，预言家验7为猎人；9号机械狼选择交牌。"
+  ],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "changes": {
+        "action": "poison",
+        "actor": 9,
+        "targets": [
+          5
+        ],
+        "result": "机械女巫毒杀5号；与狼刀同夜造成5/8双死。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "9号机械女巫选择交牌，游戏结束，无后续放逐。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-25-night-1",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4555210,
+          "end_ms": 4559120,
+          "quote": "扭腰救起行车\n平安夜\n机械狼模仿5号女巫"
+        }
+      ]
+    },
+    {
+      "id": "phase-25-night-3",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4589920,
+          "end_ms": 4598799,
+          "quote": "入夜首位守护一号自首\n机械狼击杀一号首位形成平安夜\n当夜通灵师查验7号玩家为猎人身份"
+        }
+      ]
+    },
+    {
+      "id": "target-BV1D1YU6rEhh-r1-witch_save-3",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：10",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4551390,
+          "end_ms": 4556900,
+          "quote": "12号首夜守卫技能空过狼队击杀10号平民\n扭腰救起行车\n平安夜"
+        }
+      ]
+    },
+    {
+      "id": "target-BV1D1YU6rEhh-r3-wolf_attack-4",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：1",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4589920,
+          "end_ms": 4598799,
+          "quote": "入夜首位守护一号自首\n机械狼击杀一号首位形成平安夜\n当夜通灵师查验7号玩家为猎人身份"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1d1yu6rehh-r1-guard-recap",
+      "status": "confirmed",
+      "conclusion": "开局夜守卫技能空过，狼队击杀10号。",
+      "reasoning": "首夜复盘明确守卫技能空过；不应将空目标当作守护目标未知。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4550890,
+          "end_ms": 4556270,
+          "quote": "11号\n12号首夜守卫技能空过狼队击杀10号平民\n扭腰救起行车"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-night-mechanical_action",
+      "status": "unresolved",
+      "conclusion": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "reasoning": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4539839,
+          "end_ms": 4540999,
+          "quote": "2号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-mechanical_action",
+      "status": "unresolved",
+      "conclusion": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "reasoning": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4539839,
+          "end_ms": 4540999,
+          "quote": "2号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-exile_result",
+      "status": "inferred",
+      "conclusion": "最后一狼9号交牌直接结束，无D3放逐。",
+      "reasoning": "按复盘中自爆、交牌或游戏结束的明确顺序推断该日未进入普通放逐；不将未提技能记作空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4539839,
+          "end_ms": 4540999,
+          "quote": "2号女巫"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-2-night-mechanical_action-1",
+      "status": "confirmed",
+      "conclusion": "机械女巫毒杀5号；与狼刀同夜造成5/8双死。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4577740,
+          "end_ms": 4580060,
+          "quote": "机械女巫毒杀5号女巫"
+        }
+      ],
+      "round": 2,
+      "phase": "night",
+      "field": "rounds[2].night.mechanical_action",
+      "title": "机械女巫毒杀5号；与狼刀同夜造成5/8双死。"
+    },
+    {
+      "id": "daily-correction-3-day-exile_result-2",
+      "status": "confirmed",
+      "conclusion": "9号机械女巫选择交牌，游戏结束，无后续放逐。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+          "start_ms": 4601520,
+          "end_ms": 4603580,
+          "quote": "9号机械女巫选择交牌"
+        }
+      ],
+      "round": 3,
+      "phase": "day",
+      "field": "rounds[3].day.exile_result",
+      "title": "9号机械女巫选择交牌，游戏结束，无后续放逐。"
+    }
+  ],
+  "human_questions": []
+}

@@ -1,0 +1,2373 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1U85R63Ev5",
+  "cid": 38337251506,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+    "selected_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+    "original_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1U85R63Ev5/identity.reviewed.json",
+    "sha256": "4aa1bc68abd05979f790651e3804e2e997e3d6d68ac8bc3028393cf0e0f7661c"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1U85R63Ev5-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人8号自刀",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4880
+          ],
+          "start_ms": 9357320,
+          "end_ms": 9360890,
+          "quote": "首页8号狼人自刀女巫开药解救行程",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "save",
+      "actor": 3,
+      "actor_physical_role": "女巫",
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫救起狼刀目标8号，形成平安夜",
+      "details": {},
+      "note": "复盘明确8号狼人自刀、女巫开药解救；identity.reviewed确认3号为女巫。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4880,
+            4881
+          ],
+          "start_ms": 9357320,
+          "end_ms": 9361290,
+          "quote": "首页8号狼人自刀女巫开药解救行程\n平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "8号被救起，首夜平安",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4880,
+            4881
+          ],
+          "start_ms": 9357320,
+          "end_ms": 9361290,
+          "quote": "首页8号狼人自刀女巫开药解救行程\n平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 11,
+      "actor_physical_role": "预言家",
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "预言家11号验证3号为好人身份",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4882
+          ],
+          "start_ms": 9361290,
+          "end_ms": 9363330,
+          "quote": "预言家验证3号玩家为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-005",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_signup",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "1号、8号以外其他玩家上警",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            553,
+            554,
+            555
+          ],
+          "start_ms": 1409849,
+          "end_ms": 1415200,
+          "quote": "二一天亮了\n本游戏除一号8号外\n其他玩家上警上警",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-006",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_candidates",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2,
+        11,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "最终警长候选为2、11、12号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1250,
+            1251,
+            1252,
+            1253
+          ],
+          "start_ms": 2705760,
+          "end_ms": 2723380,
+          "quote": "5421有警上玩家2号11号12号\n请警上玩家戴盔做好投票准备\n请从2号11号12号当中选出本局游戏\n警长321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "badge_lost",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警长PK票5比5，警徽流失",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1454,
+            1455,
+            4883,
+            4884
+          ],
+          "start_ms": 3052600,
+          "end_ms": 9365000,
+          "quote": "五票比五票\n本局游戏警徽流失\n上警环节\n警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-008",
+      "phase": "day",
+      "round": 1,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "8号狼人七票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            2791,
+            2792,
+            4885
+          ],
+          "start_ms": 5458129,
+          "end_ms": 9367710,
+          "quote": "投票结束\n8号玩家七票数据请发表遗言\n第一天白天8号狼人被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-009",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀11号预言家",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4886,
+            4887
+          ],
+          "start_ms": 9367710,
+          "end_ms": 9371510,
+          "quote": "入夜狼人击杀\n11号预言家女巫毒杀10号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "poison",
+      "actor": 3,
+      "actor_physical_role": "女巫",
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "女巫3号毒杀10号狼人",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4887
+          ],
+          "start_ms": 9368910,
+          "end_ms": 9371510,
+          "quote": "11号预言家女巫毒杀10号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        10,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "10号狼人、11号预言家双死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            2911,
+            2912,
+            4887,
+            4888
+          ],
+          "start_ms": 5701659,
+          "end_ms": 9372490,
+          "quote": "所以双死死亡顺序不分先后\n10号11号倒牌\n11号预言家女巫毒杀10号狼人\n十十一双死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 11,
+      "actor_physical_role": "预言家",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "预言家验证4号为好人身份",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4889
+          ],
+          "start_ms": 9372490,
+          "end_ms": 9375150,
+          "quote": "预言家验证4号玩家为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-013",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        10,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "现场播报10号、11号倒牌，顺序不分先后",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            2911,
+            2912,
+            2913,
+            2914,
+            2915,
+            2916
+          ],
+          "start_ms": 5701659,
+          "end_ms": 5713690,
+          "quote": "所以双死死亡顺序不分先后\n10号11号倒牌\n没有遗言\n是否发动技能\n54321\n10号11号请灭灯离场",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-014",
+      "phase": "day",
+      "round": 2,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第二天2号狼人七票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            3581,
+            3582,
+            4890,
+            4891
+          ],
+          "start_ms": 6937280,
+          "end_ms": 9378590,
+          "quote": "投票结束\n2号玩家七票出局\n第二天\n2号悍跳狼人被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-015",
+      "phase": "night",
+      "round": 3,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀6号平民",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4892
+          ],
+          "start_ms": 9378590,
+          "end_ms": 9380730,
+          "quote": "入夜狼人击杀6号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-016",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "6号平民死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            3667,
+            3668,
+            4892
+          ],
+          "start_ms": 7105300,
+          "end_ms": 9380730,
+          "quote": "嗯读的话就有可能会读吧对吧对天亮了\n作业6号玩家倒牌没有遗言\n入夜狼人击杀6号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-017",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "现场播报昨夜6号倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            3667,
+            3668,
+            3669,
+            3670
+          ],
+          "start_ms": 7105300,
+          "end_ms": 7118355,
+          "quote": "嗯读的话就有可能会读吧对吧对天亮了\n作业6号玩家倒牌没有遗言\n是否发动技能\n543216号玩家请灭灯离场",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-018",
+      "phase": "day",
+      "round": 3,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "7号混血儿六票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4183,
+            4184,
+            4893
+          ],
+          "start_ms": 8086360,
+          "end_ms": 9383360,
+          "quote": "投票结束\n7号玩家六票出局\n白天7号混血儿被公投",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-019",
+      "phase": "night",
+      "round": 4,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀3号女巫",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4894
+          ],
+          "start_ms": 9383360,
+          "end_ms": 9385680,
+          "quote": "入夜狼人击杀3号女巫",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-020",
+      "phase": "night",
+      "round": 4,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "3号女巫死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4311,
+            4312,
+            4894
+          ],
+          "start_ms": 8370009,
+          "end_ms": 9385680,
+          "quote": "其实歪哥现在的明路3号玩家倒牌没有遗言\n是我发动技能\n入夜狼人击杀3号女巫",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-021",
+      "phase": "day",
+      "round": 4,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "现场播报昨夜3号倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4311,
+            4312,
+            4313
+          ],
+          "start_ms": 8370009,
+          "end_ms": 8378730,
+          "quote": "其实歪哥现在的明路3号玩家倒牌没有遗言\n是我发动技能\n543213号玩家请灭灯离场",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-022",
+      "phase": "day",
+      "round": 4,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "最后一狼12号三票出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4863,
+            4864,
+            4865,
+            4895,
+            4896
+          ],
+          "start_ms": 9324920,
+          "end_ms": 9388240,
+          "quote": "12号投给一号\n投票结束\n12号玩家三票出局\n白天最后一张狼人\n12号被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-023",
+      "phase": "endgame",
+      "round": 4,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "12号狼人出局，好人阵营获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4865,
+            4866,
+            4867,
+            4897,
+            4898
+          ],
+          "start_ms": 9328259,
+          "end_ms": 9390619,
+          "quote": "12号玩家三票出局\n游戏结束\n好人阵营获胜\n游戏结束\n浩然正义获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1U85R63Ev5-event-024",
+      "phase": "night",
+      "round": 1,
+      "action": "choose_model",
+      "actor": 7,
+      "actor_physical_role": "混血儿",
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "混血儿7号选择8号狼人为榜样，为狼人混。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4877,
+            4878,
+            4879
+          ],
+          "start_ms": 9352480,
+          "end_ms": 9357320,
+          "quote": "本球星的混血儿为7号\n榜样是8号狼人\n本球星为狼人混",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-01",
+      "day": 1,
+      "type": "sheriff",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        8
+      ],
+      "candidate_seats": [
+        2,
+        11,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1254
+              ],
+              "start_ms": 2723380,
+              "end_ms": 2725160,
+              "quote": "一号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1255
+              ],
+              "start_ms": 2725160,
+              "end_ms": 2726760,
+              "quote": "8号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tie_candidates": [
+          2,
+          11
+        ],
+        "result": "1→11、8→2，各一票，2号与11号进入PK"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1249,
+            1250,
+            1251,
+            1252,
+            1253,
+            1254,
+            1255,
+            1256,
+            1257
+          ],
+          "start_ms": 2704090,
+          "end_ms": 2730300,
+          "quote": "退水自爆环节\n5421有警上玩家2号11号12号\n请警上玩家戴盔做好投票准备\n请从2号11号12号当中选出本局游戏\n警长321请出票\n一号投给11号\n8号投给2号\n2号11号各一票\n平票pk2号",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            553,
+            554,
+            555
+          ],
+          "start_ms": 1409849,
+          "end_ms": 1415200,
+          "quote": "二一天亮了\n本游戏除一号8号外\n其他玩家上警上警",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "开局上警播报明确只有1号、8号在警下；其余当时均报名上警。"
+    },
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-02",
+      "day": 1,
+      "type": "sheriff",
+      "stage": "pk",
+      "eligible_voters": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12
+      ],
+      "candidate_seats": [
+        2,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1440
+              ],
+              "start_ms": 3033889,
+              "end_ms": 3035429,
+              "quote": "一号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1441
+              ],
+              "start_ms": 3035429,
+              "end_ms": 3036949,
+              "quote": "3号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1442
+              ],
+              "start_ms": 3036949,
+              "end_ms": 3038469,
+              "quote": "4号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1443,
+                1444
+              ],
+              "start_ms": 3038469,
+              "end_ms": 3040040,
+              "quote": "5号\n投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1445
+              ],
+              "start_ms": 3040040,
+              "end_ms": 3041520,
+              "quote": "6号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1446
+              ],
+              "start_ms": 3041520,
+              "end_ms": 3043020,
+              "quote": "7号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1447,
+                1448
+              ],
+              "start_ms": 3043020,
+              "end_ms": 3044520,
+              "quote": "8号\n投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1449,
+                1450
+              ],
+              "start_ms": 3044520,
+              "end_ms": 3045980,
+              "quote": "9号\n投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1451
+              ],
+              "start_ms": 3045980,
+              "end_ms": 3047460,
+              "quote": "10号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                1452
+              ],
+              "start_ms": 3047460,
+              "end_ms": 3049120,
+              "quote": "12号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tally": {
+          "2": 5,
+          "11": 5
+        },
+        "tie_candidates": [
+          2,
+          11
+        ],
+        "result": "PK票5比5，警徽流失"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1436,
+            1437,
+            1438,
+            1439,
+            1440,
+            1441,
+            1442,
+            1443,
+            1444,
+            1445,
+            1446,
+            1447,
+            1448,
+            1449,
+            1450,
+            1451,
+            1452,
+            1453,
+            1454,
+            1455
+          ],
+          "start_ms": 3021490,
+          "end_ms": 3055440,
+          "quote": "除2号11号外\n其他人达请戴盔做好投票准备\n请从2号11号当中选出本局游戏警长321\n请出票\n一号投给2号\n3号投给11号\n4号投给2号\n5号\n投给11号\n6号投给11号\n7号投给2号\n8号\n投给2号\n9号\n投给11号\n10号投给11号\n12号投给2号\n投票结束\n五票比五票\n本局游戏警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1436,
+            1437,
+            1438
+          ],
+          "start_ms": 3021490,
+          "end_ms": 3033089,
+          "quote": "除2号11号外\n其他人达请戴盔做好投票准备\n请从2号11号当中选出本局游戏警长321",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "依现场PK候选口令和逐人播报核算，未将前轮覆盖。"
+    },
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-03",
+      "day": 1,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2779
+              ],
+              "start_ms": 5437240,
+              "end_ms": 5439200,
+              "quote": "一号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2780
+              ],
+              "start_ms": 5439200,
+              "end_ms": 5440820,
+              "quote": "2号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2781
+              ],
+              "start_ms": 5440820,
+              "end_ms": 5442510,
+              "quote": "3号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2782
+              ],
+              "start_ms": 5442510,
+              "end_ms": 5444050,
+              "quote": "4号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2783
+              ],
+              "start_ms": 5444050,
+              "end_ms": 5445670,
+              "quote": "5号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2784
+              ],
+              "start_ms": 5445670,
+              "end_ms": 5447510,
+              "quote": "6号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2785
+              ],
+              "start_ms": 5447510,
+              "end_ms": 5449910,
+              "quote": "7号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2786
+              ],
+              "start_ms": 5449910,
+              "end_ms": 5451530,
+              "quote": "8号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2787
+              ],
+              "start_ms": 5451530,
+              "end_ms": 5453190,
+              "quote": "9号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 11,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2788
+              ],
+              "start_ms": 5453190,
+              "end_ms": 5454809,
+              "quote": "10号投给11号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2789
+              ],
+              "start_ms": 5454809,
+              "end_ms": 5456389,
+              "quote": "11号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                2790
+              ],
+              "start_ms": 5456389,
+              "end_ms": 5458129,
+              "quote": "12号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tally": {
+          "8": 7,
+          "11": 5
+        },
+        "exiled": 8,
+        "result": "8号七票出局"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            2776,
+            2777,
+            2778,
+            2779,
+            2780,
+            2781,
+            2782,
+            2783,
+            2784,
+            2785,
+            2786,
+            2787,
+            2788,
+            2789,
+            2790,
+            2791,
+            2792
+          ],
+          "start_ms": 5424620,
+          "end_ms": 5465680,
+          "quote": "各位玩家请戴盔做好投票准备\n本局游戏警徽流失作案玩家请自由投票\n321请出票\n一号投给8号\n2号投给11号\n3号投给8号\n4号投给11号\n5号投给8号\n6号投给8号\n7号投给11号\n8号投给11号\n9号投给8号\n10号投给11号\n11号投给8号\n12号投给8号\n投票结束\n8号玩家七票数据请发表遗言",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            1455,
+            1456,
+            1457,
+            2776,
+            2777
+          ],
+          "start_ms": 3054060,
+          "end_ms": 5433960,
+          "quote": "本局游戏警徽流失\n所有玩家请亮蓝灯\n昨夜平安夜\n各位玩家请戴盔做好投票准备\n本局游戏警徽流失作案玩家请自由投票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "N1为平安夜，首日投票时12座都仍在场。"
+    },
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-04",
+      "day": 2,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3571
+              ],
+              "start_ms": 6923900,
+              "end_ms": 6925440,
+              "quote": "一号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 9,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3572
+              ],
+              "start_ms": 6925440,
+              "end_ms": 6926760,
+              "quote": "2号投给9号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3573
+              ],
+              "start_ms": 6926760,
+              "end_ms": 6928160,
+              "quote": "3号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3574
+              ],
+              "start_ms": 6928160,
+              "end_ms": 6929600,
+              "quote": "4号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3575
+              ],
+              "start_ms": 6929600,
+              "end_ms": 6931120,
+              "quote": "5号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3576
+              ],
+              "start_ms": 6931120,
+              "end_ms": 6932620,
+              "quote": "6号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 9,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3577
+              ],
+              "start_ms": 6932620,
+              "end_ms": 6934280,
+              "quote": "7号投给9号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3578
+              ],
+              "start_ms": 6934280,
+              "end_ms": 6935800,
+              "quote": "9号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                3579,
+                3580
+              ],
+              "start_ms": 6935800,
+              "end_ms": 6937280,
+              "quote": "十\n2号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tally": {
+          "2": 7,
+          "9": 2
+        },
+        "exiled": 2,
+        "result": "2号七票出局"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            3567,
+            3568,
+            3569,
+            3570,
+            3571,
+            3572,
+            3573,
+            3574,
+            3575,
+            3576,
+            3577,
+            3578,
+            3579,
+            3580,
+            3581,
+            3582
+          ],
+          "start_ms": 6913100,
+          "end_ms": 6942080,
+          "quote": "4号玩家发言结束\n各位玩家请戴盔做好投票准备\n本游戏警徽流失四玩家请自我投票\n321请出票\n一号投给2号\n2号投给9号\n3号投给2号\n4号投给2号\n5号投给2号\n6号投给2号\n7号投给9号\n9号投给2号\n十\n2号投给2号\n投票结束\n2号玩家七票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            2792,
+            2912,
+            2916,
+            3567,
+            3568
+          ],
+          "start_ms": 5461720,
+          "end_ms": 6916920,
+          "quote": "8号玩家七票数据请发表遗言\n10号11号倒牌\n10号11号请灭灯离场\n4号玩家发言结束\n各位玩家请戴盔做好投票准备",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "3579“十”紧接3580“2号投给2号”，按12号→2号记录；10、11已于夜2死亡。"
+    },
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-05",
+      "day": 3,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        3,
+        4,
+        5,
+        7,
+        9,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4176
+              ],
+              "start_ms": 8076690,
+              "end_ms": 8078090,
+              "quote": "一号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4177
+              ],
+              "start_ms": 8078090,
+              "end_ms": 8079410,
+              "quote": "3号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4178
+              ],
+              "start_ms": 8079410,
+              "end_ms": 8080710,
+              "quote": "4号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4179
+              ],
+              "start_ms": 8080710,
+              "end_ms": 8082090,
+              "quote": "5号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4180
+              ],
+              "start_ms": 8082090,
+              "end_ms": 8083560,
+              "quote": "7号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4181
+              ],
+              "start_ms": 8083560,
+              "end_ms": 8084960,
+              "quote": "9号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4182
+              ],
+              "start_ms": 8084960,
+              "end_ms": 8086360,
+              "quote": "12号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tally": {
+          "7": 6,
+          "4": 1
+        },
+        "exiled": 7,
+        "result": "7号六票出局"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4171,
+            4172,
+            4173,
+            4174,
+            4175,
+            4176,
+            4177,
+            4178,
+            4179,
+            4180,
+            4181,
+            4182,
+            4183,
+            4184
+          ],
+          "start_ms": 8065300,
+          "end_ms": 8090490,
+          "quote": "玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请嗯不本局游戏警徽流失\n所有玩家请自由投票\n321请出票\n一号投给7号\n3号投给7号\n4号投给7号\n5号投给7号\n7号投给4号\n9号投给7号\n12号投给7号\n投票结束\n7号玩家六票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            3582,
+            3668,
+            3670,
+            4171,
+            4172
+          ],
+          "start_ms": 6940200,
+          "end_ms": 8069020,
+          "quote": "2号玩家七票出局\n作业6号玩家倒牌没有遗言\n543216号玩家请灭灯离场\n玩家发言结束\n各位玩家请戴盔做好投票准备",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "夜3出局6号后，D3在场的七人均有明确播报。"
+    },
+    {
+      "ballot_id": "BV1U85R63Ev5-ballot-06",
+      "day": 4,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        4,
+        5,
+        9,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4859
+              ],
+              "start_ms": 9319480,
+              "end_ms": 9320740,
+              "quote": "一号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4860
+              ],
+              "start_ms": 9320740,
+              "end_ms": 9322120,
+              "quote": "4号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4861
+              ],
+              "start_ms": 9322120,
+              "end_ms": 9323500,
+              "quote": "5号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4862
+              ],
+              "start_ms": 9323500,
+              "end_ms": 9324920,
+              "quote": "9号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 1,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+              "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+              "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+              "source_segment_indices": [
+                4863
+              ],
+              "start_ms": 9324920,
+              "end_ms": 9326300,
+              "quote": "12号投给一号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "tally": {
+          "12": 3,
+          "1": 2
+        },
+        "exiled": 12,
+        "result": "12号三票出局"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4855,
+            4856,
+            4857,
+            4858,
+            4859,
+            4860,
+            4861,
+            4862,
+            4863,
+            4864,
+            4865
+          ],
+          "start_ms": 9307540,
+          "end_ms": 9330059,
+          "quote": "四玩家发言结束\n各位玩家请戴盔做好投票准备\n本游戏警徽流失四玩家请自由投票\n三一请出票\n一号投给12号\n4号投给12号\n5号投给12号\n9号投给一号\n12号投给一号\n投票结束\n12号玩家三票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U85R63Ev5/transcript.selected.json",
+          "source_sha256": "6f3d3066253419682eebe2efe4b005e66db3e61ff1d3fd6586514380397911e7",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-14/2026-05-14_S21_第12周_决赛周_第01局_预女猎白混__BV1U85R63Ev5_P01_CID38337251506.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "00f49baeeeb6fa668223a3073ec55e394bdd07a25ac2bd8dcd3efdd058252fb3",
+          "source_segment_indices": [
+            4184,
+            4313,
+            4314,
+            4855,
+            4858
+          ],
+          "start_ms": 8088430,
+          "end_ms": 9319480,
+          "quote": "7号玩家六票出局\n543213号玩家请灭灯离场\n本局游戏警徽流失随机点数七\n四玩家发言结束\n三一请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "夜4女巫3号出局后，场上剩1、4、5、9、12五人；均有逐票播报。"
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        4868,
+        4898
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        553,
+        558
+      ],
+      [
+        1249,
+        1257
+      ],
+      [
+        1435,
+        1457
+      ],
+      [
+        2776,
+        2793
+      ],
+      [
+        2911,
+        2918
+      ],
+      [
+        3567,
+        3585
+      ],
+      [
+        3667,
+        3674
+      ],
+      [
+        4167,
+        4186
+      ],
+      [
+        4308,
+        4318
+      ],
+      [
+        4855,
+        4867
+      ]
+    ],
+    "gaps": [],
+    "notes": [
+      "物理底牌按identity.reviewed：1白神、2/8/10/12狼人、3女巫、4猎人、7混血、11预言家。",
+      "首轮警长资格由开局完整上警播报唯一确定为1号和8号；初轮1→11、8→2平票后，PK全体非候选人完整5比5，警徽流失。",
+      "D2“十”与“二号投给二号”连续拼为12→2；D2存活集合排除夜2已死的10/11。"
+    ],
+    "status": "reviewed_explicit_events"
+  },
+  "primary_audit": {
+    "spec_sha256": "47ae00f1daa51ca1e6b1810a5adaecc924c2b4aa71e732fe3fe332e8e394331e",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 0
+  }
+}

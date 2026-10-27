@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "bvid": "BV1QMRmB9Ecv",
+  "review_status": "assistant_source_reviewed_receipt",
+  "spec_path": "data/extractions/S21/phase_specs/BV1QMRmB9Ecv.json",
+  "spec_sha256": "32b62ca446ae482345a4f3ae13bf6fd9b50a7a7da0f4a18238036472bf9a8678",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1QMRmB9Ecv/transcript.selected.json",
+  "selected_transcript_sha256": "6425e656c49594756d5c994cd7b9c94524723f1bd53613974d3a5770ab71673a",
+  "identity_path": "data/extractions/S21/game_reviews/BV1QMRmB9Ecv/identity.reviewed.json",
+  "identity_sha256": "cca50ed9b7b2112081ed28fe1bdfa105a2481520106b19f0ab9c41675573ad37",
+  "true_recap_spans": [
+    [
+      2340,
+      2364
+    ]
+  ],
+  "terminal_live_event_indices": [
+    2324,
+    2325,
+    2326
+  ],
+  "terminal_live_evidence": [
+    {
+      "indices": [
+        2324,
+        2325,
+        2326
+      ],
+      "literal_quote": "不要放手三二一请出票一号投给十二号，\n其余玩家投给一号一号玩家高票出局。\n游戏结束好人阵营获胜，"
+    }
+  ],
+  "counts": {
+    "events": 23,
+    "ballots": 4,
+    "gaps": 2
+  },
+  "event_and_ballot_source_bvid_check": "passed",
+  "semantic_audit": [],
+  "gaps": [
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "initial_sheriff_ballot_unreported_choices",
+      "reason": "警长候选6、7、9、12；首轮仅明确3→9、5→7、10→7、11→9及7/9平票，其他参与者选票或弃票未逐人播报。",
+      "indices": [
+        806,
+        807,
+        808,
+        809
+      ],
+      "literal_quote": "五是三二一人流警上玩家六号七号、六号、七号、九号十二号标标延迟操作，\n请警下牙带亏在六号七号、九号十二号玩家中选出本游戏警长三二一请出票，\n三号投给九号五号投给七号十号投给七号，\n十一号投给九号七号九号平票PK出，"
+    },
+    {
+      "phase": "day",
+      "round": 3,
+      "field": "exile_individual_votes",
+      "reason": "连续终局复盘只确认1号机械狼被公投出局；未找到D3现场逐人票型，不按放逐结果补投票。",
+      "indices": [
+        2362,
+        2363,
+        2364
+      ],
+      "literal_quote": "在第三天白天，\n场上最后一狼一号机械女巫被公投出局，\n游戏结束好人阵营获胜。"
+    }
+  ],
+  "notes": [
+    "首夜狼刀11被救起，确认为平安夜；守卫3首夜明确空过。",
+    "机械狼1在N1学女巫，N2才用已解锁的毒药；与物理女巫5号的另一瓶毒分开记录。",
+    "N2真实夜死5、6、7，D2公布后7猎人带走2狼；夜死、公布和后续开枪按先后分开。",
+    "D2票文转写“九十号投给3号”与9号D1自爆冲突，故不录死者9；存活10→3由该直接段落中可识别的10号及同一投向记录。"
+  ]
+}

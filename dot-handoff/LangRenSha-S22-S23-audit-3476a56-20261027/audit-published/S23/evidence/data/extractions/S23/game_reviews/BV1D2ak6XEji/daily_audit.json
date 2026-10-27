@@ -1,0 +1,154 @@
+{
+  "bvid": "BV1D2ak6XEji",
+  "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 6330969,
+    "end_ms": 6401190,
+    "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+  },
+  "checks": [
+    {
+      "field": "complete_daily_recap",
+      "status": "confirmed",
+      "conclusion": "N1盗宝大师1选平民身份、摄梦人3首次梦游4、验11平民；用户确认盗宝大师首夜狼队禁刀，D1全员投票前无人夜死，盗宝1被放逐。N2摄梦人再梦游4、狼杀摄梦人3，3/4双死并验9狼；D2狼9自爆。N3狼杀通灵师12、其验7为蒙面人并传徽7；D3狼队交牌，好人胜。",
+      "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6330969,
+          "end_ms": 6401190,
+          "quote": "来给各位弹幕老师们做本九局的复盘\n本剧版行为\n盗宝大师神之营通灵师12号射某人\n3号猎人\n6号蒙面人\n7号狼人阵营8号九号狼王\n10号盗宝大师一号\n本局游戏为盗宝毒师\n隶属于狼队阵营\n平民阵营\n2号四号五号11号首页生梦人梦游4号平民\n当夜盗宝大师选择了平民身份\n通灵师查验了11号玩家为平民身份\n在警长竞选环节\n12号通灵师获得警徽\n在第一天的白天\n一号盗宝大师被公推出局\n对被公投出局\n入夜生梦人再次梦游4号平民\n4号平民被梦王出局\n当夜狼队击杀3号射梦人\n三四双子通灵师查验的9号玩家为狼人身份\n在第二天的白天\n9号狼人选择自爆入夜\n狼队击杀12号通灵师\n通灵师验证了7号玩家为蒙面人身份\n并在出局后将警徽移交至7号蒙面人\n在第三天的白天\n狼队选择了交牌\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
+        }
+      ]
+    }
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "forbidden",
+        "actor": null,
+        "targets": [],
+        "result": "盗宝大师板型首夜狼队禁刀。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b55-r1-night-attack-and-deaths",
+      "status": "inferred",
+      "conclusion": "N1无夜死：首夜狼队规则禁刀，摄梦人首次梦游4不会单独造成死亡；D1全员完成放逐投票。",
+      "reasoning": "以用户确认的禁刀规则和最终复盘首夜唯一技能事件推断；不把狼刀记成pass。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6330969,
+          "end_ms": 6401190,
+          "quote": "来给各位弹幕老师们做本九局的复盘\n本剧版行为\n盗宝大师神之营通灵师12号射某人\n3号猎人\n6号蒙面人\n7号狼人阵营8号九号狼王\n10号盗宝大师一号\n本局游戏为盗宝毒师\n隶属于狼队阵营\n平民阵营\n2号四号五号11号首页生梦人梦游4号平民\n当夜盗宝大师选择了平民身份\n通灵师查验了11号玩家为平民身份\n在警长竞选环节\n12号通灵师获得警徽\n在第一天的白天\n一号盗宝大师被公推出局\n对被公投出局\n入夜生梦人再次梦游4号平民\n4号平民被梦王出局\n当夜狼队击杀3号射梦人\n三四双子通灵师查验的9号玩家为狼人身份\n在第二天的白天\n9号狼人选择自爆入夜\n狼队击杀12号通灵师\n通灵师验证了7号玩家为蒙面人身份\n并在出局后将警徽移交至7号蒙面人\n在第三天的白天\n狼队选择了交牌\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
+        }
+      ]
+    },
+    {
+      "id": "b55-r3-night-death",
+      "status": "confirmed",
+      "conclusion": "D3宣布N3被击杀的12号通灵师出局，随后传徽给7号。",
+      "reasoning": "结尾复盘将狼队击杀12号、通灵师身份核验及离场传徽连在同一段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6387840,
+          "end_ms": 6389969,
+          "quote": "狼队击杀12号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6389969,
+          "end_ms": 6393169,
+          "quote": "通灵师验证了7号玩家为蒙面人身份"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6393169,
+          "end_ms": 6396350,
+          "quote": "并在出局后将警徽移交至7号蒙面人"
+        }
+      ]
+    },
+    {
+      "id": "b55-r1-dreamer-action-confirmed",
+      "status": "confirmed",
+      "conclusion": "首夜摄梦人3号梦游4号平民。",
+      "reasoning": "结尾复盘在首夜行动段明确记录梦游4号；座位3为摄梦人。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6350170,
+          "end_ms": 6355559,
+          "quote": "2号四号五号11号首页生梦人梦游4号平民"
+        }
+      ]
+    },
+    {
+      "id": "b55-r1-wolf-attack-unresolved",
+      "status": "confirmed",
+      "conclusion": "盗宝大师规则下N1 wolf_attack=forbidden（首夜禁刀），不是pass。",
+      "reasoning": "用户明确“盗宝大师首页无狼刀”；按本项目板型规则将“首页”规范为首夜，事件 action 记forbidden。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/用户确认_20261026_逐日核对.txt",
+          "source_sha256": "61446a8212150f3debeb624c40522be4d1fe05f20dc5cd4acb400b5ca67d9c59",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "盗宝大师首页无狼刀"
+        },
+        {
+          "source_path": "config/board_templates/treasure_master.json",
+          "source_sha256": "3170c18e2b6314f597f8254278b219ee9b178a2fe5b9a767492d0293edb91759",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "首夜狼队禁刀。"
+        }
+      ]
+    },
+    {
+      "id": "b55-r2-night-double-death-confirmed",
+      "status": "confirmed",
+      "conclusion": "N2摄梦人3号再次梦游4号，同时狼队击杀3号；D2公布3号和4号出局。",
+      "reasoning": "复盘顺序明确为入夜再次梦游4号、4号梦游出局、随后狼队击杀3号并总结3/4双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6371410,
+          "end_ms": 6374850,
+          "quote": "入夜生梦人再次梦游4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6375170,
+          "end_ms": 6376910,
+          "quote": "4号平民被梦王出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "start_ms": 6376910,
+          "end_ms": 6379390,
+          "quote": "当夜狼队击杀3号射梦人"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

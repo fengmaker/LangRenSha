@@ -1,0 +1,126 @@
+{
+  "bvid": "BV1tneS6kEnQ",
+  "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4079819,
+    "end_ms": 4153960,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1狼刀4、女巫救4，平安；D1 10狼自爆。N2狼刀5、毒12，5/12双死；12吞毒自爆发生在D2竞选阶段。",
+    "N3狼刀7，D3放逐8；N4狼刀1，D4放逐9，好人胜。"
+  ],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "self_destruct",
+      "changes": {
+        "action": "self_destruct",
+        "actor": 12,
+        "targets": [],
+        "result": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-35-night-2",
+      "status": "confirmed",
+      "conclusion": "N2夜死5号与12号",
+      "reasoning": "复盘说狼刀5号、毒12号并公布双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4107749,
+          "end_ms": 4116310,
+          "quote": "10号狼人选择自爆\n嗯嗯入夜狼队击杀5号狼人牛\n毒杀12号狼人"
+        }
+      ]
+    },
+    {
+      "id": "phase-35-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：7",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4126699,
+          "end_ms": 4135220,
+          "quote": "本局游戏警徽流失\n入夜狼队击杀7号平民\n预言家验证4号玩家猎人为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "phase-35-night-4",
+      "status": "confirmed",
+      "conclusion": "死者座位：1",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4138260,
+          "end_ms": 4146050,
+          "quote": "8号平民被抗推出局\n入夜狼队击杀一号预言家\n预言家验证9号玩家为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "bind-BV1tneS6kEnQ-ballot-1",
+      "status": "confirmed",
+      "conclusion": "未达绑票：狼方2+警徽半票0.0 < 好人6+警徽半票0.0。本轮实际放逐=8；本局最终宣布胜方=good。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 1096240,
+          "end_ms": 1104080,
+          "quote": "那就警下我们再说好吧啊\n最好有一轮平票pk\n比如照一下那个咱当狼也可以压个手的啊"
+        }
+      ]
+    },
+    {
+      "id": "bind-BV1tneS6kEnQ-ballot-2",
+      "status": "confirmed",
+      "conclusion": "未达绑票：狼方2+警徽半票0.0 < 好人4+警徽半票0.0。本轮实际放逐=9；本局最终宣布胜方=good。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 1096240,
+          "end_ms": 1104080,
+          "quote": "那就警下我们再说好吧啊\n最好有一轮平票pk\n比如照一下那个咱当狼也可以压个手的啊"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-2-day-self_destruct-1",
+      "status": "confirmed",
+      "conclusion": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+          "start_ms": 4124899,
+          "end_ms": 4126699,
+          "quote": "12号狼人选择吞毒自爆"
+        }
+      ],
+      "round": 2,
+      "phase": "day",
+      "field": "rounds[2].day.self_destruct",
+      "title": "12号于D2延期竞选阶段吞毒自爆，结束当日放逐。"
+    }
+  ],
+  "human_questions": []
+}

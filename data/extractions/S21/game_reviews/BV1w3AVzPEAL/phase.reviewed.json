@@ -1,0 +1,1693 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1w3AVzPEAL",
+  "cid": 36821795468,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+    "selected_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+    "original_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1w3AVzPEAL/identity.reviewed.json",
+    "sha256": "82c5aaadeb475e4ebe043d2d7560a042021a5351d3be217e86dabea5b4491719"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1w3AVzPEAL-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "steal_card",
+      "actor": 10,
+      "actor_physical_role": "盗宝大师",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "盗宝大师选择平民身份",
+      "details": {
+        "selected_identity": "平民"
+      },
+      "note": "终局复盘明确盗宝选择；identity.reviewed核实实际盗宝大师为10号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3511
+          ],
+          "start_ms": 6721770,
+          "end_ms": 6726240,
+          "quote": "盗宝大师在平民毒师的身份中选择了平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "dream",
+      "actor": 1,
+      "actor_physical_role": "摄梦人",
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "摄梦人梦游2号狼王",
+      "details": {},
+      "note": "终局复盘明说摄梦人梦游2号；identity.reviewed核实唯一摄梦人为1号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3509,
+            3510
+          ],
+          "start_ms": 6718700,
+          "end_ms": 6721770,
+          "quote": "首页圣梦人\n梦游2号狼王",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 9,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "通灵师验证6号为平民身份",
+      "details": {},
+      "note": "终局复盘断句提到通灵师验6为平民；identity.reviewed核实唯一通灵师为9号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3512,
+            3513
+          ],
+          "start_ms": 6726240,
+          "end_ms": 6731149,
+          "quote": "然后通灵师验证了四呃\n验证和6号玩家为平民身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第一天白天现场播报昨夜平安夜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            365
+          ],
+          "start_ms": 854500,
+          "end_ms": 857380,
+          "quote": "昨夜信息平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-005",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_signup",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "全员上警",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            361,
+            362
+          ],
+          "start_ms": 843220,
+          "end_ms": 846700,
+          "quote": "本局游戏全员上警\n警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-006",
+      "phase": "day",
+      "round": 1,
+      "action": "badge_lost",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "全员上警后警徽流失",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            361,
+            362,
+            3514,
+            3515,
+            3516
+          ],
+          "start_ms": 843220,
+          "end_ms": 6736070,
+          "quote": "本局游戏全员上警\n警徽流失\n在警上竞选环节\n由于本局游戏全员上警\n警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        10
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "10号盗宝大师被投出局；现场逐票7票投10、4票投4、1票投7",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            1554,
+            1555,
+            1556,
+            1557,
+            1558,
+            1559,
+            1560,
+            1561,
+            1562,
+            1563,
+            1564,
+            1565,
+            1566,
+            1567,
+            1568,
+            3518
+          ],
+          "start_ms": 3082900,
+          "end_ms": 6740430,
+          "quote": "321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给7号\n5号投给10号\n6号投给4号\n7号投给10号\n8号投给10号\n9号投给4号\n10号投给4号\n11号投给10号\n12号投给4号\n投票结束\n六七十号玩家七票出局\n10号盗宝毒师被空投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-008",
+      "phase": "night",
+      "round": 2,
+      "action": "dream",
+      "actor": 1,
+      "actor_physical_role": "摄梦人",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "摄梦人再次梦游4号狼人",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3519
+          ],
+          "start_ms": 6740430,
+          "end_ms": 6742780,
+          "quote": "入夜圣梦人梦游4号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-009",
+      "phase": "night",
+      "round": 2,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀9号通灵师",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3520
+          ],
+          "start_ms": 6742780,
+          "end_ms": 6744660,
+          "quote": "狼人击杀9号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-010",
+      "phase": "night",
+      "round": 2,
+      "action": "investigate",
+      "actor": 9,
+      "actor_physical_role": "通灵师",
+      "targets": [
+        7
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "通灵师9号验证7号为猎人身份；当夜狼刀后9号死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3521
+          ],
+          "start_ms": 6744660,
+          "end_ms": 6747140,
+          "quote": "通灵师验证7号玩家为猎人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-011",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "9号通灵师单死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3520,
+            3522
+          ],
+          "start_ms": 6742780,
+          "end_ms": 6749809,
+          "quote": "狼人击杀9号通灵师\n9号通灵师单死在第二天的白天",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-012",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        9
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "现场播报9号倒牌、无遗言",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            1764,
+            1765,
+            1766,
+            1767
+          ],
+          "start_ms": 3547620,
+          "end_ms": 3558850,
+          "quote": "9号人倒牌没有一言\n9号玩家受方技能54321\n9号玩家没能取牌离场\n本局游戏警徽流失",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-013",
+      "phase": "day",
+      "round": 2,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "5号狼人6票出局；逐票记录5号6票、6号4票",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            2811,
+            2812,
+            2813,
+            2814,
+            2815,
+            2816,
+            2817,
+            2818,
+            2819,
+            2820,
+            2821,
+            2822,
+            2823,
+            2824,
+            2825,
+            2826,
+            2827,
+            2828
+          ],
+          "start_ms": 5343720,
+          "end_ms": 5376360,
+          "quote": "请各位戴盔做好投票准备\n本局游戏警徽流失\n各位自行投票\n唱票结束前不要放手\n321请出票\n一号看不见\n一号投给6号\n2号投给6号\n3号投给5号\n4号投给6号\n5号投给6号\n6号投给5号\n7号投给5号\n8号投给5号\n11号投给5号\n12号投给5号\n投票结束\n5号玩家六票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-014",
+      "phase": "night",
+      "round": 3,
+      "action": "dream",
+      "actor": 1,
+      "actor_physical_role": "摄梦人",
+      "targets": [
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "摄梦人再次梦游4号狼人",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3524
+          ],
+          "start_ms": 6751849,
+          "end_ms": 6755720,
+          "quote": "入夜射梦人再次梦游4号狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-015",
+      "phase": "night",
+      "round": 3,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人击杀1号摄梦人",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3525
+          ],
+          "start_ms": 6755720,
+          "end_ms": 6757580,
+          "quote": "狼人击杀一号射梦人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-016",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1,
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "1号、4号双死",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3525,
+            3526
+          ],
+          "start_ms": 6755720,
+          "end_ms": 6761189,
+          "quote": "狼人击杀一号射梦人\n一号4号双双死在第三天的白天场上",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-017",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        1,
+        4
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "第三天现场播报1号、4号倒牌",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3007,
+            3008,
+            3009,
+            3010,
+            3011,
+            3526
+          ],
+          "start_ms": 5728140,
+          "end_ms": 6761189,
+          "quote": "彩蛋局第一局是把彩蛋昨夜生死死亡\n数据不分先后\n一号4号倒牌没有遗言\n一号4号是我方技能54321\n一号4号命灯取满离场\n一号4号双双死在第三天的白天场上",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-018",
+      "phase": "day",
+      "round": 3,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "2号狼王5票出局；逐票5票投2、1票投12、1票投3",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3470,
+            3471,
+            3472,
+            3473,
+            3474,
+            3475,
+            3476,
+            3477,
+            3478,
+            3479,
+            3480,
+            3481,
+            3482,
+            3483,
+            3484,
+            3485,
+            3486,
+            3487,
+            3488,
+            3527
+          ],
+          "start_ms": 6640900,
+          "end_ms": 6763549,
+          "quote": "请各位玩家带盔做好投票准备\n本酒席警卫流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n高举手\n2号投给12号\n3号投给2号\n6号投给2号\n7号\n投给几号\n7号投给2号\n8号\n投给2号\n11号\n投给2号\n12号投给3号\n投票结束\n2号玩家五票出局\n最后一狼2号狼王被公投出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1w3AVzPEAL-event-019",
+      "phase": "day",
+      "round": 3,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "2号出局后游戏结束，好人获胜",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3488,
+            3489,
+            3528,
+            3529
+          ],
+          "start_ms": 6674120,
+          "end_ms": 6765160,
+          "quote": "2号玩家五票出局\n游戏结束\n游戏结束\n好人正义获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1w3AVzPEAL-ballot-01",
+      "day": 1,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1555
+              ],
+              "start_ms": 3086050,
+              "end_ms": 3087550,
+              "quote": "一号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1556
+              ],
+              "start_ms": 3087550,
+              "end_ms": 3088790,
+              "quote": "2号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1557
+              ],
+              "start_ms": 3088790,
+              "end_ms": 3089990,
+              "quote": "3号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1558
+              ],
+              "start_ms": 3089990,
+              "end_ms": 3091510,
+              "quote": "4号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1559
+              ],
+              "start_ms": 3091510,
+              "end_ms": 3093110,
+              "quote": "5号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1560
+              ],
+              "start_ms": 3093110,
+              "end_ms": 3094770,
+              "quote": "6号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1561
+              ],
+              "start_ms": 3094770,
+              "end_ms": 3096370,
+              "quote": "7号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1562
+              ],
+              "start_ms": 3096370,
+              "end_ms": 3097900,
+              "quote": "8号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1563
+              ],
+              "start_ms": 3097900,
+              "end_ms": 3099480,
+              "quote": "9号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1564
+              ],
+              "start_ms": 3099480,
+              "end_ms": 3100920,
+              "quote": "10号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 10,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1565
+              ],
+              "start_ms": 3100920,
+              "end_ms": 3102640,
+              "quote": "11号投给10号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 4,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                1566
+              ],
+              "start_ms": 3102640,
+              "end_ms": 3104360,
+              "quote": "12号投给4号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 10,
+        "result": "10号7票出局；4号4票、7号1票"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            1550,
+            1551,
+            1552,
+            1553,
+            1554,
+            1555,
+            1556,
+            1557,
+            1558,
+            1559,
+            1560,
+            1561,
+            1562,
+            1563,
+            1564,
+            1565,
+            1566,
+            1567,
+            1568
+          ],
+          "start_ms": 3073409,
+          "end_ms": 3110100,
+          "quote": "请各位戴盔做好投票准备\n请戴盔本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给7号\n5号投给10号\n6号投给4号\n7号投给10号\n8号投给10号\n9号投给4号\n10号投给4号\n11号投给10号\n12号投给4号\n投票结束\n六七十号玩家七票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            365,
+            1550,
+            1554
+          ],
+          "start_ms": 854500,
+          "end_ms": 3086050,
+          "quote": "昨夜信息平安夜\n请各位戴盔做好投票准备\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": null
+    },
+    {
+      "ballot_id": "BV1w3AVzPEAL-ballot-02",
+      "day": 2,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2816,
+                2817
+              ],
+              "start_ms": 5351880,
+              "end_ms": 5356520,
+              "quote": "一号看不见\n一号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2818
+              ],
+              "start_ms": 5356520,
+              "end_ms": 5357860,
+              "quote": "2号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2819
+              ],
+              "start_ms": 5357860,
+              "end_ms": 5359340,
+              "quote": "3号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2820
+              ],
+              "start_ms": 5359340,
+              "end_ms": 5361280,
+              "quote": "4号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 6,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2821
+              ],
+              "start_ms": 5361280,
+              "end_ms": 5362700,
+              "quote": "5号投给6号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2822
+              ],
+              "start_ms": 5362700,
+              "end_ms": 5364360,
+              "quote": "6号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2823
+              ],
+              "start_ms": 5364360,
+              "end_ms": 5365920,
+              "quote": "7号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2824
+              ],
+              "start_ms": 5365920,
+              "end_ms": 5367200,
+              "quote": "8号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2825
+              ],
+              "start_ms": 5367200,
+              "end_ms": 5368860,
+              "quote": "11号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 5,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                2826
+              ],
+              "start_ms": 5368860,
+              "end_ms": 5370160,
+              "quote": "12号投给5号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 5,
+        "result": "5号6票出局；6号4票，全部来自逐人播报"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            2811,
+            2812,
+            2813,
+            2814,
+            2815,
+            2816,
+            2817,
+            2818,
+            2819,
+            2820,
+            2821,
+            2822,
+            2823,
+            2824,
+            2825,
+            2826,
+            2827,
+            2828
+          ],
+          "start_ms": 5343720,
+          "end_ms": 5376360,
+          "quote": "请各位戴盔做好投票准备\n本局游戏警徽流失\n各位自行投票\n唱票结束前不要放手\n321请出票\n一号看不见\n一号投给6号\n2号投给6号\n3号投给5号\n4号投给6号\n5号投给6号\n6号投给5号\n7号投给5号\n8号投给5号\n11号投给5号\n12号投给5号\n投票结束\n5号玩家六票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            1764,
+            1765,
+            1766,
+            1767,
+            2811,
+            2815
+          ],
+          "start_ms": 3547620,
+          "end_ms": 5351880,
+          "quote": "9号人倒牌没有一言\n9号玩家受方技能54321\n9号玩家没能取牌离场\n本局游戏警徽流失\n请各位戴盔做好投票准备\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": null
+    },
+    {
+      "ballot_id": "BV1w3AVzPEAL-ballot-03",
+      "day": 3,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        2,
+        3,
+        6,
+        7,
+        8,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 2,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3476
+              ],
+              "start_ms": 6655990,
+              "end_ms": 6657710,
+              "quote": "2号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3477
+              ],
+              "start_ms": 6657710,
+              "end_ms": 6659570,
+              "quote": "3号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3478
+              ],
+              "start_ms": 6659570,
+              "end_ms": 6661910,
+              "quote": "6号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3481
+              ],
+              "start_ms": 6665010,
+              "end_ms": 6666230,
+              "quote": "7号投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3482,
+                3483
+              ],
+              "start_ms": 6666230,
+              "end_ms": 6668190,
+              "quote": "8号\n投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 2,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3484,
+                3485
+              ],
+              "start_ms": 6668190,
+              "end_ms": 6669690,
+              "quote": "11号\n投给2号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+              "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+              "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+              "source_segment_indices": [
+                3486
+              ],
+              "start_ms": 6669690,
+              "end_ms": 6671050,
+              "quote": "12号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 2,
+        "result": "2号5票出局；12号1票、3号1票"
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3470,
+            3471,
+            3472,
+            3473,
+            3474,
+            3475,
+            3476,
+            3477,
+            3478,
+            3479,
+            3480,
+            3481,
+            3482,
+            3483,
+            3484,
+            3485,
+            3486,
+            3487,
+            3488
+          ],
+          "start_ms": 6640900,
+          "end_ms": 6676469,
+          "quote": "请各位玩家带盔做好投票准备\n本酒席警卫流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n高举手\n2号投给12号\n3号投给2号\n6号投给2号\n7号\n投给几号\n7号投给2号\n8号\n投给2号\n11号\n投给2号\n12号投给3号\n投票结束\n2号玩家五票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+          "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+          "source_segment_indices": [
+            3007,
+            3008,
+            3009,
+            3010,
+            3011,
+            3470,
+            3474
+          ],
+          "start_ms": 5728140,
+          "end_ms": 6652960,
+          "quote": "彩蛋局第一局是把彩蛋昨夜生死死亡\n数据不分先后\n一号4号倒牌没有遗言\n一号4号是我方技能54321\n一号4号命灯取满离场\n请各位玩家带盔做好投票准备\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": null
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        3499,
+        3529
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        357,
+        372
+      ],
+      [
+        1545,
+        1574
+      ],
+      [
+        1646,
+        1658
+      ],
+      [
+        1762,
+        1774
+      ],
+      [
+        2806,
+        2834
+      ],
+      [
+        3002,
+        3014
+      ],
+      [
+        3465,
+        3496
+      ],
+      [
+        3511,
+        3535
+      ]
+    ],
+    "gaps": [
+      {
+        "phase": "night",
+        "round": 1,
+        "field": "狼刀/保护行动及平安夜原因",
+        "reason": "现场只报昨夜平安夜；不确定狼刀目标、是否守护或其他结算，也不从平安夜推断无行动。",
+        "sources": [
+          365,
+          3509,
+          3510,
+          3511,
+          3512,
+          3513
+        ],
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV1w3AVzPEAL/transcript.selected.json",
+            "source_sha256": "7c0c787be27287411a5b630d51cabeaa67b8ec9d222bebb515bfe7f65ab8c18b",
+            "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-19/2026-03-19_S21_第04周_正赛第03期_第02局_盗宝大师__BV1w3AVzPEAL_P01_CID36821795468.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "077c9c513a1f230e4dff2f5fb02f81f38c7fc0fb43b7fe47debf2040de28e1bc",
+            "source_segment_indices": [
+              365,
+              3509,
+              3510,
+              3511,
+              3512,
+              3513
+            ],
+            "start_ms": 854500,
+            "end_ms": 6731149,
+            "quote": "昨夜信息平安夜\n首页圣梦人\n梦游2号狼王\n盗宝大师在平民毒师的身份中选择了平民\n然后通灵师验证了四呃\n验证和6号玩家为平民身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "盗宝大师按偷身份记录为steal_card，不作为机械学习或混血选择。",
+      "夜3摄梦人1号梦游4号，狼刀1号后复盘明确1/4双死；二人先于D3投票出局，不参与该轮票。",
+      "所有放逐票均按现场逐人播报保存，未由广播总数补票。"
+    ],
+    "status": "reviewed_with_explicit_gaps"
+  },
+  "primary_audit": {
+    "spec_sha256": "6b01b1450c08df5c9088bd47a105d0f7418296b52b5cd383a04b2f9b8f010fb7",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_true_terminal_recap_read",
+      "split_numeric_targets_joined",
+      "night_action_effect_vs_physical_role_checked",
+      "delegated_ballot_review_assessed",
+      "false_unknowns_removed"
+    ],
+    "gaps_retained": 1
+  }
+}

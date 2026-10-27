@@ -1,0 +1,1379 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1cEQ3BhEMe",
+  "cid": 37508222834,
+  "page": 1,
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "ballots",
+    "badge",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluffs",
+    "public_role_claims"
+  ],
+  "review_status": "assistant_reviewed_with_explicit_limits",
+  "reviewer": "codex_luna_phase_review",
+  "source": {
+    "selected_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+    "selected_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+    "original_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+    "original_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338"
+  },
+  "identity_source": {
+    "path": "data/extractions/S21/game_reviews/BV1cEQ3BhEMe/identity.reviewed.json",
+    "sha256": "6b45e7eb49629c90b8616653543748fb3c492f9a3eb6ea6f24266518bd4e5885"
+  },
+  "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+  "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+  "events": [
+    {
+      "event_id": "BV1cEQ3BhEMe-event-001",
+      "phase": "night",
+      "round": 1,
+      "action": "exchange",
+      "actor": 12,
+      "actor_physical_role": "诡术师",
+      "targets": [
+        4,
+        5
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "终局复盘称诡术师更换4号与5号身份/牌",
+      "details": {},
+      "note": "identity.reviewed确认12号底牌为诡术师；终局复盘明确4号、5号为更换对象。转写没有足够信息确定更换后的身份效果，不额外推导。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2110
+          ],
+          "start_ms": 3938730,
+          "end_ms": 3943340,
+          "quote": "鬼书是更换了4号平民和5号预言家的放出",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-002",
+      "phase": "night",
+      "round": 1,
+      "action": "exchange",
+      "actor": 3,
+      "actor_physical_role": "魔术师",
+      "targets": [],
+      "actual_targets": null,
+      "state": "pass",
+      "status": "unique_deduction",
+      "result": "终局复盘称魔术师空过",
+      "details": {},
+      "note": "identity.reviewed确认3号底牌为魔术师；终局复盘明确该角色空过。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2111
+          ],
+          "start_ms": 3943340,
+          "end_ms": 3944660,
+          "quote": "结果魔术师空过狼人",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-003",
+      "phase": "night",
+      "round": 1,
+      "action": "wolf_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "终局复盘称狼人击杀2号",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2112
+          ],
+          "start_ms": 3944660,
+          "end_ms": 3946100,
+          "quote": "击杀2号平民女巫",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-004",
+      "phase": "night",
+      "round": 1,
+      "action": "save",
+      "actor": 6,
+      "actor_physical_role": "女巫",
+      "targets": [
+        2
+      ],
+      "actual_targets": [
+        2
+      ],
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "女巫救起2号狼刀目标，形成平安夜",
+      "details": {},
+      "note": "identity.reviewed确认6号底牌为女巫；终局复盘称女巫救起2号。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2113
+          ],
+          "start_ms": 3946100,
+          "end_ms": 3946700,
+          "quote": "又要救起",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-005",
+      "phase": "night",
+      "round": 1,
+      "action": "investigate",
+      "actor": 5,
+      "actor_physical_role": "预言家",
+      "targets": [
+        6
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unknown",
+      "result": "预言家5号查验6号好人；诡术师交换的是放逐结果，不改变身份或夜间行动者。",
+      "details": {},
+      "note": "identity.reviewed初始底牌为5号预言家，复盘另称夜1诡术师更换4/5身份；缺少本季本局效果依据，保留行动者未知。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2114
+          ],
+          "start_ms": 3946700,
+          "end_ms": 3949120,
+          "quote": "形成平安夜冤家验证6号家为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-006",
+      "phase": "night",
+      "round": 1,
+      "action": "night_deaths",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "平安夜；无人死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            765
+          ],
+          "start_ms": 1458820,
+          "end_ms": 1459960,
+          "quote": "昨夜平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-007",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_candidates",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        2,
+        4,
+        5,
+        6,
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": null,
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            755,
+            756,
+            757
+          ],
+          "start_ms": 1429729,
+          "end_ms": 1442700,
+          "quote": "警上玩家2号四号五号六号八号\n请警上玩家带盔做好投票准备\n请从24568当中选出本就游戏警长",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-008",
+      "phase": "day",
+      "round": 1,
+      "action": "sheriff_elected",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        8
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "8号三票当选警长",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "start_ms": 1442700,
+          "end_ms": 1453020,
+          "quote": "321请出票\n一号投给8号\n9号投给8号\n12号投给8号\n投票结束\n8号玩家三票当选警长",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-009",
+      "phase": "day",
+      "round": 1,
+      "action": "death_announcement",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "警长竞选后播报昨夜平安夜，无人死亡",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            764,
+            765
+          ],
+          "start_ms": 1453020,
+          "end_ms": 1459960,
+          "quote": "其他玩家请亮蓝灯\n昨夜平安夜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-010",
+      "phase": "day",
+      "round": 1,
+      "action": "reveal",
+      "actor": 11,
+      "actor_physical_role": "定序王子",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "11号翻牌为定序王子",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            1930,
+            1931
+          ],
+          "start_ms": 3574460,
+          "end_ms": 3578600,
+          "quote": "等待玩家发动技能\n51号玩家翻牌为定序王子",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-011",
+      "phase": "day",
+      "round": 1,
+      "action": "prince_revote",
+      "actor": 11,
+      "actor_physical_role": "定序王子",
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "首次放逐票后发动技能并进行技能重投",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            1930,
+            1931,
+            2005,
+            2008
+          ],
+          "start_ms": 3574460,
+          "end_ms": 3759270,
+          "quote": "等待玩家发动技能\n51号玩家翻牌为定序王子\n所有玩家请戴盔\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-012",
+      "phase": "day",
+      "round": 1,
+      "action": "exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        3
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "定序王子重投后3号出局",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2024,
+            2025
+          ],
+          "start_ms": 3777720,
+          "end_ms": 3785560,
+          "quote": "投票结束\n3号玩家六票6.5票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-013",
+      "phase": "endgame",
+      "round": 1,
+      "action": "endgame_attack",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [
+        5,
+        6,
+        11
+      ],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "复盘明确拍刀5、6、11并称拍刀屠神成功。",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2120,
+            2121,
+            2122,
+            2123
+          ],
+          "start_ms": 3958060,
+          "end_ms": 3966509,
+          "quote": "然后狼人阵营拍刀哦\n然后5号六号11号狼人可拍三刀\n有邪术\n狼人阵营图审获胜好",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1cEQ3BhEMe-event-014",
+      "phase": "endgame",
+      "round": 1,
+      "action": "game_end",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "text_explicit",
+      "result": "狼人阵营获胜；未记录未播出的拍刀目标",
+      "details": {},
+      "note": null,
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2118,
+            2119,
+            2120,
+            2121,
+            2123
+          ],
+          "start_ms": 3954000,
+          "end_ms": 3966509,
+          "quote": "王子11号翻牌发动技能\n3号魔术师被抗推出局\n然后狼人阵营拍刀哦\n然后5号六号11号狼人可拍三刀\n狼人阵营图审获胜好",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "ballot_id": "BV1cEQ3BhEMe-ballot-01",
+      "day": 1,
+      "type": "sheriff",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        9,
+        12
+      ],
+      "candidate_seats": [
+        2,
+        4,
+        5,
+        6,
+        8
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                759
+              ],
+              "start_ms": 1445020,
+              "end_ms": 1446400,
+              "quote": "一号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                760
+              ],
+              "start_ms": 1446400,
+              "end_ms": 1447940,
+              "quote": "9号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                761
+              ],
+              "start_ms": 1447940,
+              "end_ms": 1449460,
+              "quote": "12号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "elected": 8,
+        "reported_votes": 3
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            755,
+            756,
+            757,
+            758,
+            759,
+            760,
+            761,
+            762,
+            763
+          ],
+          "start_ms": 1429729,
+          "end_ms": 1453020,
+          "quote": "警上玩家2号四号五号六号八号\n请警上玩家带盔做好投票准备\n请从24568当中选出本就游戏警长\n321请出票\n一号投给8号\n9号投给8号\n12号投给8号\n投票结束\n8号玩家三票当选警长",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            326,
+            327,
+            328
+          ],
+          "start_ms": 614830,
+          "end_ms": 619610,
+          "quote": "本游戏除一号9号12号外\n其他玩家上警上警\n玩家请亮红灯",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "首次完整报名口令确定警下集合，票轮逐人选择已覆盖；如报名重报，以随后完整口令及同轮播票校对。"
+    },
+    {
+      "ballot_id": "BV1cEQ3BhEMe-ballot-02",
+      "day": 1,
+      "type": "exile",
+      "stage": "initial",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1915,
+                1916
+              ],
+              "start_ms": 3544100,
+              "end_ms": 3547480,
+              "quote": "一号投给一号\n投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1917
+              ],
+              "start_ms": 3547480,
+              "end_ms": 3548960,
+              "quote": "2号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1918
+              ],
+              "start_ms": 3548960,
+              "end_ms": 3550480,
+              "quote": "3号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 8,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1919
+              ],
+              "start_ms": 3550480,
+              "end_ms": 3551990,
+              "quote": "4号投给8号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1920
+              ],
+              "start_ms": 3551990,
+              "end_ms": 3553610,
+              "quote": "5号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1921
+              ],
+              "start_ms": 3553610,
+              "end_ms": 3555170,
+              "quote": "6号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1922
+              ],
+              "start_ms": 3555170,
+              "end_ms": 3556610,
+              "quote": "7号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1923
+              ],
+              "start_ms": 3556610,
+              "end_ms": 3558050,
+              "quote": "8号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1924
+              ],
+              "start_ms": 3558050,
+              "end_ms": 3559590,
+              "quote": "9号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1925
+              ],
+              "start_ms": 3559590,
+              "end_ms": 3561150,
+              "quote": "10号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1926
+              ],
+              "start_ms": 3561150,
+              "end_ms": 3562750,
+              "quote": "11号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                1927
+              ],
+              "start_ms": 3562750,
+              "end_ms": 3564270,
+              "quote": "12号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "leading_target": 7,
+        "leading_votes": 6,
+        "provisional_before_prince_skill": true
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            1905,
+            1906,
+            1911,
+            1912,
+            1913,
+            1914,
+            1915,
+            1916,
+            1917,
+            1918,
+            1919,
+            1920,
+            1921,
+            1922,
+            1923,
+            1924,
+            1925,
+            1926,
+            1927,
+            1928,
+            1929
+          ],
+          "start_ms": 3528240,
+          "end_ms": 3574460,
+          "quote": "昨晚家发言结束\n各位玩家请戴盔做好投票准备\n今朝请归票\n警长归票3号\n各位玩家请做好投票准备\n321请出票\n一号投给一号\n投给7号\n2号投给7号\n3号投给7号\n4号投给8号\n5号投给7号\n6号投给7号\n7号投给3号\n8号投给3号\n9号投给3号\n10号投给3号\n11号投给7号\n12号投给3号\n投票结束\n7号玩家六票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            765,
+            1905,
+            1906,
+            1913,
+            1914
+          ],
+          "start_ms": 1458820,
+          "end_ms": 3544100,
+          "quote": "昨夜平安夜\n昨晚家发言结束\n各位玩家请戴盔做好投票准备\n各位玩家请做好投票准备\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": "1号播报跨1915-1916，按连续语句合读为1号投给7号；首轮领先不覆盖后续技能重投。"
+    },
+    {
+      "ballot_id": "BV1cEQ3BhEMe-ballot-03",
+      "day": 1,
+      "type": "exile",
+      "stage": "prince_repeat",
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "candidate_seats": null,
+      "votes": [
+        {
+          "voter": 1,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2009
+              ],
+              "start_ms": 3759270,
+              "end_ms": 3760790,
+              "quote": "一号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 2,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2010
+              ],
+              "start_ms": 3760790,
+              "end_ms": 3762270,
+              "quote": "2号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 3,
+          "target": 12,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2011
+              ],
+              "start_ms": 3762270,
+              "end_ms": 3763830,
+              "quote": "3号投给12号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 4,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2012
+              ],
+              "start_ms": 3763830,
+              "end_ms": 3765310,
+              "quote": "4号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2013
+              ],
+              "start_ms": 3765310,
+              "end_ms": 3766840,
+              "quote": "5号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 6,
+          "target": 7,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2014
+              ],
+              "start_ms": 3766840,
+              "end_ms": 3768420,
+              "quote": "6号投给7号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 7,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2015
+              ],
+              "start_ms": 3768420,
+              "end_ms": 3770000,
+              "quote": "7号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 8,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2016
+              ],
+              "start_ms": 3770000,
+              "end_ms": 3771560,
+              "quote": "8号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 9,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2017,
+                2018
+              ],
+              "start_ms": 3771560,
+              "end_ms": 3773120,
+              "quote": "9号\n投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 10,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2019,
+                2020
+              ],
+              "start_ms": 3773120,
+              "end_ms": 3774720,
+              "quote": "10号\n投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 11,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2021
+              ],
+              "start_ms": 3774720,
+              "end_ms": 3776260,
+              "quote": "11号投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        },
+        {
+          "voter": 12,
+          "target": 3,
+          "state": "cast",
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+              "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+              "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+              "source_segment_indices": [
+                2022,
+                2023
+              ],
+              "start_ms": 3776260,
+              "end_ms": 3777720,
+              "quote": "12号\n投给3号",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "outcome": {
+        "exiled": 3,
+        "votes_for_exiled": 6,
+        "weighted_votes": 6.5
+      },
+      "completeness": "complete_for_proven_eligible_set",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2012,
+            2013,
+            2014,
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020,
+            2021,
+            2022,
+            2023,
+            2024,
+            2025
+          ],
+          "start_ms": 3746640,
+          "end_ms": 3785560,
+          "quote": "所有玩家请戴盔\n做好投票准备\n各玩家请做好投票准备\n321请出票\n一号投给7号\n2号投给12号\n3号投给12号\n4号投给7号\n5号投给7号\n6号投给7号\n7号投给3号\n8号投给3号\n9号\n投给3号\n10号\n投给3号\n11号投给3号\n12号\n投给3号\n投票结束\n3号玩家六票6.5票出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "eligibility_evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
+          "source_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-14/2026-04-14_S21_第08周_正赛第07期_第02局_诡术之境__BV1cEQ3BhEMe_P01_CID37508222834.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "b86c49850d6cbd7b26f409b7e7cd6af2fc7e62493d08b0f1ac66ab37bb5f5338",
+          "source_segment_indices": [
+            2005,
+            2006,
+            2007,
+            2008
+          ],
+          "start_ms": 3746640,
+          "end_ms": 3759270,
+          "quote": "所有玩家请戴盔\n做好投票准备\n各玩家请做好投票准备\n321请出票",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "note": null
+    }
+  ],
+  "coverage": {
+    "recap_spans_actually_read": [
+      [
+        2102,
+        2123
+      ]
+    ],
+    "live_spans_actually_read": [
+      [
+        67,
+        82
+      ],
+      [
+        751,
+        772
+      ],
+      [
+        1843,
+        1998
+      ],
+      [
+        2002,
+        2031
+      ],
+      [
+        2079,
+        2101
+      ],
+      [
+        2079,
+        2101
+      ]
+    ],
+    "gaps": [],
+    "notes": [
+      "包装候选的1843-1998段实际包含第一轮和定序王子重投前后的局中发言与票型；已按真实内容列作live_span。",
+      "夜1终局复盘明确诡术师更换4/5、魔术师空过、狼刀2、女巫救2、预言家验6；只把不明的验人行动者保留未知。"
+    ],
+    "status": "reviewed_explicit_events"
+  },
+  "primary_audit": {
+    "spec_sha256": "40836f542305fb3ec9361739349ec73732e2a836bca7ef6061d8e87d2901b880",
+    "reviewer": "codex_primary",
+    "status": "semantic_source_checked_with_declared_gaps",
+    "checks": [
+      "independent_terminal_recap_read",
+      "live_procedure_evidence_crosscheck",
+      "frozen_identity_crosscheck",
+      "literal_vote_and_round_check",
+      "actual_death_and_announcement_distinguished",
+      "no_bluff_judgement"
+    ],
+    "gaps_retained": 0
+  }
+}

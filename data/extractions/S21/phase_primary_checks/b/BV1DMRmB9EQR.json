@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "bvid": "BV1DMRmB9EQR",
+  "review_status": "assistant_source_reviewed_receipt",
+  "spec_path": "data/extractions/S21/phase_specs/BV1DMRmB9EQR.json",
+  "spec_sha256": "aa8568844e24076355cafa376f3800251a6b03ff8a049d430d498814e0b385ca",
+  "selected_transcript_path": "data/extractions/S21/media_evidence/BV1DMRmB9EQR/transcript.selected.json",
+  "selected_transcript_sha256": "6fab8426fd34913dfd1453135975eb36354986ea96e97eddd901be7483783130",
+  "identity_path": "data/extractions/S21/game_reviews/BV1DMRmB9EQR/identity.reviewed.json",
+  "identity_sha256": "b46e430a6fcfcc31e89b7b2a5d840c7c8e377cb18511e73633ab88e0ab5ad9c5",
+  "true_recap_spans": [
+    [
+      2896,
+      2920
+    ]
+  ],
+  "terminal_live_event_indices": [
+    2888,
+    2889,
+    2890,
+    2891
+  ],
+  "terminal_live_evidence": [
+    {
+      "indices": [
+        2888,
+        2889,
+        2890,
+        2891
+      ],
+      "literal_quote": "二六狼人拍刀\n2号六号拍刀成功\n游戏结束\n狼人阵营同名获胜"
+    }
+  ],
+  "counts": {
+    "events": 14,
+    "ballots": 3,
+    "gaps": 1
+  },
+  "event_and_ballot_source_bvid_check": "passed",
+  "semantic_audit": [],
+  "gaps": [
+    {
+      "phase": "day",
+      "round": 1,
+      "field": "initial_sheriff_ballot_unreported_choices",
+      "reason": "候选为1、4、5、8、9；首轮只明确3→4、12→8并形成4/8平票，其他参与者的投向或弃票未逐人播报，故不补齐。",
+      "indices": [
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023
+      ],
+      "literal_quote": "54321人龙井上玩家\n一号4号五号八号九号请请向玩家带盔\n在一号4号五号八号九号玩家中选出本游戏\n警长321请出票\n3号投给4号\n12号投给8号\n4号\n8号平票pk"
+    }
+  ],
+  "notes": [
+    "连续终局角色列举段2897–2903与已核编号身份侧栏冲突，未用该段覆盖物理底牌；夜间行动、逐票与终局结果按可相互支持的复盘及现场程序片段分别记录。",
+    "首夜平安为狼刀12被女巫9救起；不是无夜间行动。"
+  ]
+}

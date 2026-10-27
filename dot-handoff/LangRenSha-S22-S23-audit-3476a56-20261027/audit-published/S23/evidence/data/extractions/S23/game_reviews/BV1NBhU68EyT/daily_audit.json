@@ -1,0 +1,148 @@
+{
+  "bvid": "BV1NBhU68EyT",
+  "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3776540,
+    "end_ms": 3852600,
+    "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+  },
+  "checks": [
+    {
+      "field": "complete_daily_recap",
+      "status": "confirmed",
+      "conclusion": "N1守卫5号护猎人2号，狼刀2号、女巫12号救2触发同守同救奶穿，2号死亡并开枪带走狼10号；机械狼1号学平民4号，通灵师8号验5号守卫。D1狼6号自爆、警选延期。N2守卫5号护通灵师8号、狼杀守卫5号，女巫空过；通灵师验1号平民。D2公布5号死、平民3号获警徽，狼7号出局。N3守卫5号已于N2死亡；狼杀通灵师8号、女巫毒平民9号，双死并验4号平民。D3机械狼1号被放逐，好人胜；其学习平民，不具猎人枪技。",
+      "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3776540,
+          "end_ms": 3852600,
+          "quote": "好给各位弹幕老师们做本九期的复盘\n本局版行为机械狼通灵师\n神人阵营通灵师\n8号女巫\n12号猎人\n2号首尾5号狼人阵营6号七号\n10号机械狼一号\n本局游戏为机械平民平民阵营\n3号四号九号\n11号咳咳守夜守卫守护\n2号猎人狼队击杀2号猎人女巫开药解救\n当夜2号猎人因同守同救被奶穿身亡\n暗夜机械狼模仿4号平民\n本局游戏为机械平民通灵师\n查验了5号玩家为首位身份\n在警上竞选环节\n6号狼人选择自爆\n入夜守卫守护\n8号通灵师狼队击杀5号守卫\n女巫技能空过\n当夜为5号守卫单死\n夜间通律师查验了一号玩家\n机械狼为平民身份\n在延期竞选环节\n3号平民当选警长\n比赛第二天的白天\n7号狼人被共同出局\n入夜机械狼开刀击杀8号通灵师\n女巫毒杀9号平民\n当夜为8号九号双死意见\n通灵师查验了4号玩家为平民身份\n在第三天白天\n场上最后一狼\n一号机械狼被公投出局\n游戏结束\n好人正义获胜\n各位弹幕老师们"
+        }
+      ]
+    }
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "targets": [
+          2
+        ],
+        "result": "守卫与女巫同守同救2号猎人，结算死亡；其开枪带走10号另记猎人技能。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "unavailable",
+        "actor": 5,
+        "targets": [],
+        "result": "守卫5号已于N2被狼队击杀，N3无守卫行动。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "changes": {
+        "action": "unavailable",
+        "actor": 1,
+        "targets": [],
+        "result": "机械狼1号学习平民身份；机械平民没有额外白天枪技。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-46-night-1",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3797190,
+          "end_ms": 3800790,
+          "quote": "2号猎人狼队击杀2号猎人女巫开药解救"
+        }
+      ]
+    },
+    {
+      "id": "phase-46-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：8,9",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3835200,
+          "end_ms": 3839410,
+          "quote": "入夜机械狼开刀击杀8号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3839410,
+          "end_ms": 3841230,
+          "quote": "女巫毒杀9号平民"
+        }
+      ]
+    },
+    {
+      "id": "phase-BV1NBhU68EyT-open-3-mechanical_day_skill",
+      "status": "inferred",
+      "conclusion": "1号机械狼学习平民，机械平民没有猎人开枪技能；D3无机械白天枪技。",
+      "reasoning": "复盘明确机械狼复制4号平民后本局为机械平民；行动者与机制均排除机械猎人枪。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3804950,
+          "end_ms": 3811610,
+          "quote": "暗夜机械狼模仿4号平民\n本局游戏为机械平民通灵师"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-guard",
+      "status": "inferred",
+      "conclusion": "N3守卫行动不可用：5号守卫已于N2被狼队击杀。",
+      "reasoning": "N2白天的最终夜死结算明确5号守卫出局；主审目视截图可见5号守卫已出局标记。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3819309,
+          "end_ms": 3821749,
+          "quote": "8号通灵师狼队击杀5号守卫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+          "start_ms": 3822589,
+          "end_ms": 3824480,
+          "quote": "当夜为5号守卫单死"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1NBhU68EyT/BV1NBhU68EyT_03584.660.png",
+          "source_sha256": "a5079a412d662284d51ffa3da57481f9642f80f201a0a520f5bd164012986927",
+          "start_ms": 3584660,
+          "end_ms": 3584660,
+          "quote": "5号守卫已出局（截图显示挂爪标记）。"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}
