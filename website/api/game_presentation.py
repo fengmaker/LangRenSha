@@ -12,7 +12,7 @@ from typing import Any
 
 
 _EMPTY_ACTIONS = {None, "unknown"}
-PRESENTATION_VERSION = 2
+PRESENTATION_VERSION = 3
 _KEEP_UNKNOWN_SLOTS = {
     # Unknown actions that can change survival, information, or skill access.
     "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
@@ -21,7 +21,7 @@ _KEEP_UNKNOWN_SLOTS = {
     "mixed_blood_model", "night_deaths", "wolf_king_shot", "exile_result",
     "mechanical_day_skill", "puppet_hunter_eligibility",
 }
-_DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile"}
+_DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile", "disqualify"}
 
 
 def _as_int(value: Any) -> int | None:
@@ -423,7 +423,7 @@ def _annotate_lost_badge(events: list[dict], game: dict, number: int) -> None:
                 and (event.get("action") == "none" or _is_empty_unknown(event))):
             event["action"] = "badge_lost"
             event["inferred"] = True
-            event["inference_note"] = "延期警长竞选再次被自爆中断，逐日竞选记录确认警徽流失。"
+            event["inference_note"] = "逐日竞选记录确认警徽流失；具体原因未据此推断。"
             event["description"] = "警徽流失，本局不再进行警长竞选。"
 
 
@@ -796,17 +796,44 @@ def _annotate_pending_hunter_shot(
     day_events: list[dict],
     *,
     known_deaths: set[int],
+    previously_eliminated: set[int],
     known_poison_victims: set[int],
     role_seats: dict[str, list[int]],
+    puppet_hunter_seats: set[int],
+    game: dict,
 ) -> None:
     hunter_seats = role_seats.get("猎人", [])
     if len(hunter_seats) != 1:
         return
     hunter = hunter_seats[0]
+    if any(
+        event.get("action") == "disqualify"
+        and (hunter in (event.get("targets") or []) or event.get("actor") == hunter)
+        for event in night_events + day_events
+    ):
+        return
     if hunter not in known_deaths:
         return
     if hunter in known_poison_victims:
         return
+    if hunter in puppet_hunter_seats:
+        return
+
+    if any(event.get("slot") == "hunter_shot"
+           and _actor_for_tracking(event, role_seats) == hunter
+           and event.get("blocked_by_game_end") is True for event in day_events):
+        return
+
+    # S23 pre/witch/hunter/white/mixed has a confirmed terminal rule: when its
+    # last god, the Hunter, leaves play, the game ends before a shot window.
+    if game.get("season") == "S23" and _board_code(game) == "mixed_blood":
+        god_seats = {
+            seat for role in ("预言家", "女巫", "猎人", "白神")
+            for seat in role_seats.get(role, [])
+        }
+        if (god_seats and hunter in god_seats
+                and god_seats <= known_deaths | previously_eliminated):
+            return
 
     state_events = [
         event for event in night_events
@@ -979,8 +1006,11 @@ def build_game_presentation(game: dict) -> dict:
             night,
             day,
             known_deaths=night_out,
+            previously_eliminated=eliminated_before_round,
             known_poison_victims=known_poison_victims,
             role_seats=role_seats,
+            puppet_hunter_seats=puppet_hunter_seats,
+            game=game,
         )
         filtered_day = []
         for event in day:
@@ -1029,4 +1059,18 @@ def build_game_presentation(game: dict) -> dict:
         for event in (round_.get(phase) if isinstance(round_, dict) else []) or []
         if not isinstance(event, dict)
     )
-    return {"version": PRESENTATION_VERSION, "rounds": output_rounds, "omitted_events": omitted}
+    terminal_observation = game.get("terminal_observation")
+    terminal = None
+    if (isinstance(terminal_observation, dict)
+            and type(terminal_observation.get("round")) is int
+            and terminal_observation.get("phase") in {"night", "day"}):
+        terminal_events = game.get("terminal_events")
+        terminal = {
+            "round": terminal_observation["round"],
+            "phase": terminal_observation["phase"],
+            "events": [{**deepcopy(event), "terminal": True}
+                       for event in terminal_events if isinstance(event, dict)]
+            if isinstance(terminal_events, list) else [],
+        }
+    return {"version": PRESENTATION_VERSION, "rounds": output_rounds,
+            "omitted_events": omitted, "terminal": terminal}

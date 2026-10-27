@@ -76,6 +76,8 @@ class GameDetail(GameSummary):
     seats: list[dict[str, Any]]
     rounds: list[dict[str, Any]]
     presentation: dict[str, Any] = Field(default_factory=dict)
+    terminal_observation: dict[str, Any] | None = None
+    terminal_events: list[dict[str, Any]] | None = None
     voting: dict[str, Any]
     endgame: dict[str, Any]
     source: dict[str, str]

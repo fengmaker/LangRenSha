@@ -2,7 +2,9 @@ import type { Ballot, Seat, Vote, VotingData } from "@/lib/types";
 import { voteStatusLabel } from "@/lib/format";
 
 const ballotKind: Record<string, string> = { sheriff: "警长投票", exile: "放逐投票", tie_break: "补投" };
-const ballotStage: Record<string, string> = { initial: "首轮", pk: "平票 PK 后复投", skill_revote: "技能重投" };
+const ballotStage: Record<string, string> = {
+  initial: "首轮", pk: "平票 PK 后复投", revote: "技能重投", skill_revote: "技能重投",
+};
 function seatName(number: number, seats: Seat[]) {
   const seat = seats.find((item) => item.seat === number);
   return `${number}号${seat?.name ? ` ${seat.name}` : ""}`;
@@ -22,12 +24,14 @@ function groupVotes(votes: Vote[]) {
   }
   return [...groups.entries()];
 }
-function BallotCard({ ballot, seats }: { ballot: Ballot; seats: Seat[] }) {
+function BallotCard({ ballot, seats, resultConflict }: { ballot: Ballot; seats: Seat[]; resultConflict: boolean }) {
   return <article className="ballot-card" data-ballot-id={ballot.id}>
     <header><div><span className="ballot-stage">{ballotStage[ballot.stage] ?? "其他投票轮次"}{ballot.number > 1 ? ` · 第 ${ballot.number} 轮` : ""}</span><h4>{ballotKind[ballot.kind] ?? "投票记录"}</h4></div><span className="ballot-record-status">{voteStatusLabel(ballot.status)}</span></header>
     <div className="ballot-meta">
       {ballot.candidates != null ? <span>候选：{seatsText(ballot.candidates)}</span> : null}
-      {ballot.winner != null ? <strong>本轮结果：{seatName(ballot.winner, seats)}</strong> : ballot.tied_candidates?.length ? <strong>平票：{seatsText(ballot.tied_candidates)}</strong> : null}
+      {resultConflict ? <strong>本轮结果与放逐事件记录冲突，待核实</strong>
+        : ballot.winner != null ? <strong>本轮结果：{seatName(ballot.winner, seats)}</strong>
+          : ballot.tied_candidates?.length ? <strong>平票：{seatsText(ballot.tied_candidates)}</strong> : null}
       {ballot.eligible_voters != null ? <span>本轮有票权：{seatsText(ballot.eligible_voters)}</span> : null}
     </div>
     {ballot.votes?.length ? <ul className="vote-groups">{groupVotes(ballot.votes).map(([key, group]) => <li key={key} data-vote-state={key}>
@@ -46,7 +50,9 @@ function missingRoundMessage(data: VotingData, day: number, kind: "sheriff" | "e
   if (status === "badge_lost") return "警徽流失，本局不再进行警长投票。";
   return voteStatusLabel(status);
 }
-export function BallotPanel({ voting, seats = [] }: { voting: VotingData; seats?: Seat[] }) {
+export function BallotPanel({ voting, seats = [], resultConflictIds = [] }: {
+  voting: VotingData; seats?: Seat[]; resultConflictIds?: string[];
+}) {
   const registrations = (voting.registrations ?? []).filter((row) => row.on_police != null || row.off_police != null);
   const ballots = voting.ballots ?? [];
   const statuses = (voting.days ?? []).flatMap((day) => (["sheriff", "exile"] as const).flatMap((kind) => {
@@ -61,7 +67,8 @@ export function BallotPanel({ voting, seats = [] }: { voting: VotingData; seats?
       {registration.on_police != null ? <p><span>上警</span>{seatsText(registration.on_police)}</p> : null}
       {registration.off_police != null ? <p><span>警下</span>{seatsText(registration.off_police)}</p> : null}
     </article>)}
-    {ballots.map((ballot) => <BallotCard key={ballot.id} ballot={ballot} seats={seats} />)}
+    {ballots.map((ballot) => <BallotCard key={ballot.id} ballot={ballot} seats={seats}
+      resultConflict={resultConflictIds.includes(ballot.id)} />)}
     {statuses.map((status) => <p className="ballot-day-status" key={status.key}>{status.message}</p>)}
   </div>;
 }

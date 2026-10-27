@@ -31,6 +31,52 @@ class DailyAuditTests(unittest.TestCase):
         self.assertEqual(game['review']['daily_audit_changes'][0]['before']['action'], 'unknown')
         self.assertEqual(audit, original)
 
+    def test_mixed_blood_faction_tracks_source_patched_model_target(self):
+        game = {
+            'dossier': {
+                'seats': [
+                    {'seat': 4, 'role': '混血儿', 'faction': 'good'},
+                    {'seat': 8, 'role': '狼人', 'faction': 'werewolf'},
+                    {'seat': 12, 'role': '预言家', 'faction': 'good'},
+                ],
+                'rounds': [{'number': 1, 'night': [
+                    {'slot': 'mixed_blood_model', 'action': 'choose', 'actor': 4,
+                     'targets': [12], 'result': None},
+                    {'slot': 'seer_check', 'action': 'check', 'actor': 3,
+                     'targets': [12], 'result': '平民'}], 'day': []}],
+            },
+            'review': {},
+        }
+        unrelated_game = deepcopy(game)
+        apply_events(unrelated_game, {'event_patches': [{
+            'round': 1, 'phase': 'night', 'slot': 'seer_check',
+            'changes': {'result': '好人'},
+        }]})
+        self.assertEqual(unrelated_game['dossier']['seats'][0]['faction'], 'good')
+
+        audit = {'event_patches': [{
+            'round': 1, 'phase': 'night', 'slot': 'mixed_blood_model',
+            'changes': {'targets': [8]},
+        }]}
+
+        apply_events(game, audit)
+
+        self.assertEqual(game['dossier']['rounds'][0]['night'][0]['targets'], [8])
+        self.assertEqual(game['dossier']['seats'][0]['faction'], 'werewolf')
+
+    def test_qingqiu_guard_pass_is_an_allowed_source_action(self):
+        root = Path(__file__).resolve().parents[1]
+        dossier_path = next((root / 'data/games/S23').glob('*BV1nJer63EDh/dossier.candidate.json'))
+        import json
+        dossier = json.loads(dossier_path.read_text(encoding='utf-8'))
+        board_path = root / 'config/board_templates/s23_qingqiu_night.json'
+        board = json.loads(board_path.read_text(encoding='utf-8'))
+        guard_slot = next(slot for slot in board['night_slots'] if slot['code'] == 'guard')
+        n1_guard = next(event for event in dossier['rounds'][0]['night'] if event['slot'] == 'guard')
+        self.assertIn('pass', guard_slot['actions'])
+        self.assertEqual(n1_guard['action'], 'pass')
+        self.assertIn('技能通过', n1_guard['result'])
+
     def test_display_window_does_not_remove_the_full_source_rows(self):
         rows = [{'start_ms': 0, 'end_ms': 1000, 'text': '赛前'},
                 {'start_ms': 5000, 'end_ms': 6000, 'text': '复盘'},

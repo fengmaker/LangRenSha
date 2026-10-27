@@ -37,6 +37,11 @@ class EndgameRecordTests(unittest.TestCase):
         self.assertIn("大刀击杀11号", phase["note"])
         self.assertEqual(self.phases["BV1W6jG6HEeT"]["declared_targets"], [])
 
+    def test_bv1oxmb6feq4_rush_is_the_day_after_the_night_kill(self):
+        phase = self.phases["BV1oXMB6fEQ4"]
+        self.assertEqual(phase["day"], 4)
+        self.assertIn("第四天12号", phase["note"])
+
     def test_speculative_postgame_discussion_stays_a_candidate(self):
         bvid = "BV1KkL96MEuH"
         self.assertNotIn(bvid, self.phases)

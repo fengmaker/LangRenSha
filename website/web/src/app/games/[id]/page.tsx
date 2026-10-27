@@ -75,7 +75,8 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
 
       <section className="detail-section" id="game-recap">
         <div className="section-heading"><div><h2>日夜事件与票型记录</h2><p className="section-subtitle">从首夜开始逐轮复盘，投票与对应白天一起阅读。</p></div><span className="section-index">02 / {sectionTotal}</span></div>
-        <EventBoard rounds={game.presentation?.rounds ?? game.rounds ?? []} voting={game.voting ?? {}} seats={game.seats ?? []} />
+        <EventBoard rounds={game.presentation?.rounds ?? game.rounds ?? []} voting={game.voting ?? {}}
+          seats={game.seats ?? []} terminal={game.presentation?.terminal ?? null} />
       </section>
 
       {endgamePhases.length ? <section className="detail-section endgame-section" id="game-endgame">

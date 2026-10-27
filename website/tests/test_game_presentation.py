@@ -178,7 +178,8 @@ def test_other_real_games_share_exchange_and_poisoner_inference():
     presentation = build_game_presentation(source)
     assert get_event(presentation, 1, "night", "witch_poison")["action"] == "pass"
     assert get_event(presentation, 1, "night", "witch_poison")["slot_label"] == "毒师毒药"
-    assert get_event(presentation, 2, "night", "seer_check")["result"] == "盗宝大师"
+    assert get_event(presentation, 2, "night", "seer_check")["result"] == "平民"
+    assert next(seat for seat in source["seats"] if seat["seat"] == 7)["role"] == "盗宝大师"
 
 
 def test_empty_poison_slot_is_hidden_when_all_dealt_roles_exclude_a_poisoner():
@@ -812,8 +813,11 @@ def test_real_mechanical_rebound_and_puppet_examples_project_conservatively():
     assert get_event(puppet, 1, "night", "hunter_state").get("inferred") is not True
 
     mechanical_witch = build_game_presentation(dossiers[2])
-    assert get_event(mechanical_witch, 2, "night", "mechanical_action")["action"] == "poison"
-    # The regular Witch's poison slot is still unresolved, so the second possible
-    # poison source keeps this Hunter status unknown.
-    assert get_event(mechanical_witch, 2, "night", "hunter_state")["action"] == "unknown"
+    ordinary_poison = get_event(mechanical_witch, 2, "night", "witch_poison")
+    mechanical_poison = get_event(mechanical_witch, 2, "night", "mechanical_action")
+    assert ordinary_poison["action"] == "poison" and ordinary_poison["targets"] == [11]
+    assert mechanical_poison["action"] == "poison" and mechanical_poison["targets"] == [5]
+    assert 3 not in ordinary_poison["targets"] and 3 not in mechanical_poison["targets"]
+    assert get_event(mechanical_witch, 2, "night", "hunter_state")["action"] == "can_shoot"
+    assert next(seat for seat in dossiers[2]["seats"] if seat["seat"] == 3)["role"] == "猎人"
     assert get_event(mechanical_witch, 3, "night", "mechanical_action") is None
