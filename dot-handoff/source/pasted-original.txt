@@ -1,0 +1,1041 @@
+好，直接把原文发在下面，不再等本地写入结果。我按文件分开发，保留完整补丁和测试记录。
+
+
+
+
+
+
+
+
+
+
+
+文件 1/10：deployment-s22-s23-updated/0001-prepare-s22-s23-deployment.patch
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：dc4b675df90a872531fbc3d9b605d7f0afc2c30566e16b114799d52dc829ba9a
+
+From c817727ca8000bd1b19daae606196681fd29c50e Mon Sep 17 00:00:00 2001
+From: Codex codex@openai.com
+Date: Tue, 27 Oct 2026 01:51:46 -0700
+Subject: [PATCH] fix(website): prepare complete S22 S23 deployment inputs
+
+ website/Dockerfile.api                    |  1 +
+ website/README.md                         | 49 +++++++++++-
+ website/compose.yaml                      | 21 +++++-
+ website/tests/test_deployment_contract.py | 91 +++++++++++++++++++++++
+ 4 files changed, 159 insertions(+), 3 deletions(-)
+ create mode 100644 website/tests/test_deployment_contract.py
+
+diff --git a/website/Dockerfile.api b/website/Dockerfile.api
+index eb10edf..93b4f30 100644
+--- a/website/Dockerfile.api
++++ b/website/Dockerfile.api
+@@ -9,6 +9,7 @@ COPY scripts/season_config.py /app/scripts/season_config.py
+ COPY config/seasons.json /app/config/seasons.json
+ COPY website/assets/player-photos /app/website/assets/player-photos
+ COPY website/assets/bluffs /app/website/assets/bluffs
++COPY website/assets/bluff-frames /app/website/assets/bluff-frames
+ COPY website/grant_reader.py /app/website/grant_reader.py
+ USER app
+ EXPOSE 8000
+diff --git a/website/README.md b/website/README.md
+index 14dcfdf..514b004 100644
+--- a/website/README.md
++++ b/website/README.md
+@@ -60,6 +60,51 @@ API仅导出白名单公开字段，不含本地路径、凭据或全文转写
+
+部署
+
+-compose.yaml、Dockerfile和nginx示例保留为独立部署配置，本机未以Docker实跑。部署前按目标环境配置数据库只读用户、运行时环境变量和反向代理；凭据不写入源码。API镜像需要同步config/seasons.json、注册加载器及网站资产；现有Dockerfile已使用集中依赖目录。数据发布与站点访问权限由实际部署环境管理。
+
+ 云端接续的版本基线、运行／发布资料边界和部署配置待补项见[本地与云端协作交接](../docs/17_本地与云端协作交接.md)。独立环境验收完成前，以上部署文件仍按示例配置使用。
++
++以下为独立目标环境的操作交接，不代表已经部署成功。基线 dfd2f94aaa24a71db7e61e627985f0437db353ba 的审计发现：Compose只挂载／发布S22，API镜像漏掉悍跳证据截图。本配置补齐S22/S23与 assets/bluff-frames；没有修改正式数据、数据库schema或JCMS迁移。
++
++### 配置与边界
++
++在 website 目录运行以下命令。目标机器需有Docker Compose、完整S22/S23正式JSON、投票旁证（源中存在时）、配置／网站资产；无旁证的赛季挂载目录可为空。数据不打进镜像，发布服务只读挂载指定赛季目录；API镜像包含照片、悍跳输入和截图。API运行时不挂载原始数据，不使用管理员账号。
++
++在目标环境的私有 website/.env 或受控环境变量中设置 POSTGRES_PASSWORD、POSTGRES_READER_PASSWORD（后者至少20字符），不要提交或粘贴凭据。密码用于连接URI，应使用高熵URI安全字符，或按目标环境正确处理URI编码；不要将示例值用于实际部署。SITE_PORT 默认3000，前端仅绑定127.0.0.1；公网反向代理／TLS与访问策略需另外审查。不要把 docker compose config 展开的凭据保存到公开日志，校验时使用 --quiet。
++
++### 首次发布顺序（仅在获准部署的目标环境执行）
++
++每一步成功后才继续；不要直接 up -d 启动尚未初始化的API。
++
++sh +docker compose config --quiet +docker compose build api web publish publish-bluffs reader-setup +docker compose up -d db + +# 只检查磁盘源，不连接／写数据库；必须保留全部目标赛季。 +docker compose run --rm publish --seasons S22 S23 --check +# 写入完整活动game release；自动执行 website/api/schema.sql。 +docker compose run --rm publish --seasons S22 S23 + +# 悍跳预检读取真实活动数据库；不同于上面的离线源预检。 +docker compose run --rm publish-bluffs --season S22 --check +docker compose run --rm publish-bluffs --season S23 --check +# 两季都预检成功后，分别绑定到刚发布的同一个game release。 +docker compose run --rm publish-bluffs --season S22 +docker compose run --rm publish-bluffs --season S23 + +# 仅在上述发布全部成功后，由获授权管理员运行已有脚本。 +docker compose run --rm reader-setup +# API使用masters_web_reader；发布工具才使用masters管理员连接。 +docker compose up -d api web +
++
++发布器和悍跳发布器使用同一个 website/api/schema.sql，无需运行JCMS业务迁移。publish-bluffs只读挂载 /app/config，因为完整对局数校验读取包根目录配置，不读取 MASTERS_SOURCE_ROOT。正式发布会替换整个活动集，单季或 --sample 不是追加操作；悍跳两个发布各自事务化，不是跨两季原子事务。任一失败则停止上线，排查后重跑并确认两季绑定；更新已有站点时需在获准维护窗口完成，不要让访客看到中间状态。game release变化或回退后，两季悍跳均需重新预检／同步。
++
++### 只读账号与验收
++
++沿用 website/grant_reader.py，不要手工猜测授权SQL：它要求已存在 masters_web.releases，创建或更新 masters_web_reader，设默认事务只读，仅显式授予 masters_web 的schema USAGE、现有表SELECT及当前建表者的未来表SELECT。首次正式及悍跳发布后再运行，可确保相关表已创建；后续必须由同一发布角色建表，否则需管理员重新审查默认权限。脚本会更新既有同名角色密码，拒绝已有superuser／createrole／createdb权限的同名角色。
++
++此脚本不是通用角色清理器，不撤销历史授权或角色成员关系，默认事务只读也不能替代权限隔离。对于既有数据库，同名角色的成员关系、继承权限、PUBLIC授权和跨schema写权限必须先由管理员审计；未确认最小权限时不要用于运行时。本文只描述已有授权流程，本次准备没有创建角色、设置密码或修改数据库安全配置。
++
++目标环境上线前核对：API /health、/api/v1/releases、S22/S23各148／75局、两季悍跳的game release绑定、照片和清单内102张S23截图可访问，再运行本README的通用验收（通过环境变量 MASTERS_API_URL、MASTERS_WEB_URL 指定目标地址）及桌面／手机浏览器检查。Compose没有向宿主机发布API端口，验收程序必须在获准且可达API服务的目标网络中运行，不能默认宿主机 localhost:8000 可用；不要为验收擅自开放公网API端口。源数据更新时以当前正式范围为准，不把这些基线数量当成永久规则。正式备份与恢复验证仍按上节执行；不要删除持久卷来排障。
++
++本次仅完成静态Compose配置检查、离线223局源预检及纯／mock测试；Docker构建／容器运行、PostgreSQL实际发布／授权、完整API集成与浏览器验收未运行（当前云环境相关能力受限）。这些检查通过前，不应宣称已复现有数据的完整网站或已可上线。
+diff --git a/website/compose.yaml b/website/compose.yaml
+index ea35c18..baf26d4 100644
+--- a/website/compose.yaml
++++ b/website/compose.yaml
+@@ -51,13 +51,32 @@ services:
+       MASTERS_SOURCE_ROOT: /source
+     volumes:
+       - ../data/games/S22:/source/data/games/S22:ro
+- - ../data/games/S23:/source/data/games/S23:ro
+   - ../config:/source/config:ro
+   - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro
+- - ../data/extractions/S23/voting:/source/data/extractions/S23/voting:ro
+     depends_on:
+   db:
+     condition: service_healthy
+     entrypoint: ["python", "-m", "website.api.publish"]
+- command: ["--season", "S22"]
+- # A publication replaces the complete active set; never append one season.
+- command: ["--seasons", "S22", "S23"]
+- publish-bluffs:
+- profiles: ["tools"]
+- build:
+- context: ..
+- dockerfile: website/Dockerfile.api
+- environment:
+- DATABASE_URL: postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters
+- volumes:
+- # The bluff completeness guard reads PACKAGE_ROOT/config, not /source.
+- - ../config:/app/config:ro
+- depends_on:
+- db:
+- condition: service_healthy
+- entrypoint: ["python", "-m", "website.api.publish_bluffs"]
+- # Explicit season required in the runbook; default is validation only.
+- command: ["--season", "S22", "--check"]
+   reader-setup:
+     profiles: ["tools"]
+     build:
+diff --git a/website/tests/test_deployment_contract.py b/website/tests/test_deployment_contract.py
+new file mode 100644
+index 0000000..29603fe
+--- /dev/null
++++ b/website/tests/test_deployment_contract.py
+@@ -0,0 +1,91 @@
++"""Offline deployment regressions; not a substitute for Compose/container/DB QA."""
++from future import annotations
++
++import json
++from pathlib import Path
++import re
++import shutil
++
++from website.api import bluff_store, publish, publish_bluffs
++
++ROOT = Path(file).resolve().parents[2]
++WEBSITE = ROOT / "website"
++
++
++def _service(name: str) -> str:
+- # Inspect this file's two-space service blocks without adding a YAML dependency.
+- # Docker Compose's own config --quiet is the separate schema validation step.
+- source = (WEBSITE / "compose.yaml").read_text(encoding="utf-8")
+- match = re.search(rf"^  {re.escape(name)}:\n(.*?)(?=^  [\w-]+:|^volumes:|\Z)",
+- source, re.MULTILINE | re.DOTALL)
+- assert match, f"missing deployment service: {name}"
+- return match.group(1)
+-
+-
++def test_formal_publish_mounts_cover_both_seasons_and_default_full_release(tmp_path):
+- service = _service("publish")
+- assert 'command: ["--seasons", "S22", "S23"]' in service
+- assert 'entrypoint: ["python", "-m", "website.api.publish"]' in service
+- assert "MASTERS_SOURCE_ROOT: /source" in service
+- for season in ("S22", "S23"):
+- assert f"../data/games/{season}:/source/data/games/{season}:ro" in service
+- assert f"../data/extractions/{season}/voting:/source/data/extractions/{season}/voting:ro" in service
+- # Materialize only declared mounts, without requiring Windows symlink privileges.
+- for source, target in re.findall(r"^      - (.+):(/source/[^:]+):ro$", service, re.MULTILINE):
+- destination = tmp_path / target.removeprefix("/source/")
+- destination.parent.mkdir(parents=True, exist_ok=True)
+- origin = (WEBSITE / source).resolve()
+- if origin.is_dir():
+- shutil.copytree(origin, destination)
+- else:
+- # Voting audit directories are optional; no source mutation here.
+- assert "/extractions/" in target and target.endswith("/voting")
+- destination.mkdir()
+- result = publish._preflight(tmp_path, ["S22", "S23"], None)
+- expected = publish._preflight(ROOT, ["S22", "S23"], None)
+- assert result == expected  # Includes voting-audit hashes, not just game count.
+- assert result["seasons"] == ["S22", "S23"]
+-
+-
++def test_bluff_tool_uses_package_config_and_explicit_season_cli(monkeypatch):
+- service = _service("publish-bluffs")
+- assert 'profiles: ["tools"]' in service
+- assert "../config:/app/config:ro" in service
+- assert 'entrypoint: ["python", "-m", "website.api.publish_bluffs"]' in service
+- assert 'command: ["--season", "S22", "--check"]' in service
+- calls = []
+-
+- def fake_publish(season, path, check):
+- calls.append((season, path, check))
+- return {"checked": check, "published": not check}
+-
+- monkeypatch.setattr(bluff_store, "publish_review", fake_publish)
+- for check in (True, False):
+- for season in ("S22", "S23"):
+- assert publish_bluffs.main(["--season", season] + (["--check"] if check else [])) == 0
+- assert calls == [(season, None, check) for check in (True, False) for season in ("S22", "S23")]
+- # The mounted config must include each guard's source, not just seasons.json.
+- for season in ("S22", "S23"):
+- assert bluff_store._expected_game_count(season) is not None
+-
+-
++def test_api_image_includes_all_manifest_frames():
+- dockerfile = (WEBSITE / "Dockerfile.api").read_text(encoding="utf-8")
+- assert "COPY website/assets/bluff-frames /app/website/assets/bluff-frames" in dockerfile
+- assert "COPY website/api /app/website/api" in dockerfile
+- manifest = json.loads((WEBSITE / "api/bluff_frames.json").read_text(encoding="utf-8"))
+- for season, frames in manifest["frames"].items():
+- for filename in frames:
+- assert (WEBSITE / "assets/bluff-frames" / season / filename).is_file()
+-
+-
++def test_runtime_and_publication_credentials_remain_separate():
+- api = _service("api")
+- assert "postgresql://masters_web_reader:" in api
+- assert "postgresql://masters:" not in api
+- assert "volumes:" not in api
+- for tool in ("publish", "publish-bluffs", "reader-setup"):
+- service = _service(tool)
+- assert 'profiles: ["tools"]' in service
+- assert "postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters" in service
+- assert 'command: ["python", "-m", "website.grant_reader"]' in _service("reader-setup")
+--
+2.52.0
+
+
+
+
+
+
+
+
+
+
+文件 2/10：deployment-s22-s23-updated/README.md
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：65c8c1532723e54559f3e147cffe7c61d4fca0bb960fd3de0f364f6938c1a210
+
+S22/S23 部署准备交接 — 2026-10-27
+
+已修复已复现的部署配置缺口；未部署，未完整运行有数据网站。
+- 基线：89cf2ab3db1b32117dcefbda581fcb36c1828240
+- 云端分支：task/deployment-s22-s23-89cf2ab
+- 本地提交：c817727ca8000bd1b19daae606196681fd29c50e
+- 助手身份：Codex <codex@openai.com>
+- 仅4个文件：website/compose.yaml、website/Dockerfile.api、website/README.md、website/tests/test_deployment_contract.py。
+最新上游同步
+
+已拉取 main 的 89cf2ab3db1b32117dcefbda581fcb36c1828240（仅4份文档，87行新增）。在新独立分支重新应用原部署补丁；仅website/README.md发生文本位置冲突，保留上游交接链接及完整部署说明后解决。Compose、Dockerfile和测试与原补丁逐字一致，上游docs内容未改。原分支、原提交ac340732和旧ZIP仍保留；本ZIP替换Library当前版本，不重复应用旧补丁。
+
+本轮重跑148测试、静态Compose和223局离线预检通过。最初复跑因稀疏工作区遗漏仓库已有的S23复核进度与照片验收JSON而失败；恢复该受版本控制文件后全部通过，非源码修复。上游交接文档中的“尚无补丁交付”、144测试等是此前快照；最新本补丁和148测试以此包为准。未把仓库中的自动同步文字视为dot推送权限。
+
+修改
+
+Compose补齐S22/S23正式JSON和投票旁证只读挂载，默认全量发布；增加显式悍跳发布工具，并挂载/app/config，保留实际发布器的完整局数校验。API镜像补入bluff-frames截图。说明顺序为全量正式发布 → 两季悍跳预检及分别发布 → 既有grant_reader脚本 → 只读API运行。
+
+没有修改用户电脑、正式数据、schema、共享config、workflow或依赖锁。没有推送、合并、部署、创建角色、设置凭据或操作数据库安全配置。
+
+应用补丁（用户在获准独立工作区执行）
+
+确认工作区干净、基线正确，先审阅补丁。以下仅创建本地分支/提交：
+git status --short
+git rev-parse HEAD
+# 预期 89cf2ab3db1b32117dcefbda581fcb36c1828240
+git switch -c review/deployment-s22-s23 89cf2ab3db1b32117dcefbda581fcb36c1828240
+git apply --check /path/to/0001-prepare-s22-s23-deployment.patch
+git am /path/to/0001-prepare-s22-s23-deployment.patch
+若基线不同，先人工复核兼容性，不要强行应用。接收机器git am生成的提交ID可能不同。
+
+已验证
+- 148 passed，2 deselected：144个既有纯/mock测试 + 4个新部署契约测试；另整文件排除4个真实DB API测试，共6个数据库测试未执行。
+- Compose v2.39.4静态config --quiet通过；假值插值，没有调用daemon。
+- 223局离线预检通过：148 S22 + 75 S23，2676座位、700轮、525票型、3813票。release指纹未改变：S22_S23-1c2312637b4dd6b8-805e6171-p4-s2。
+- 新测试按Compose实际挂载复制临时源，对比完整预检哈希；覆盖两季CLI、账号隔离与截图文件。无需Windows符号链接权限。基线S23投票旁证目录不存在，发布器允许为空；测试未向源树创建目录。
+- 第二位助手只读复核通过；已修正验收URL环境变量说明和Windows测试兼容性。diff检查与补丁反向应用检查通过，提交后工作区干净。
+安全验证复跑
+
+项目根目录，按仓库说明准备Python测试依赖。Windows用.\.venv\Scripts\python.exe替换python，并以PowerShell方式设置仅用于静态校验的假环境变量。
+python -m pytest website/tests -q --ignore=website/tests/test_api.py -k 'not test_publish_failure_does_not_change_active_release and not test_publish_is_idempotent_and_can_leave_active_pointer_unchanged'
+python -m website.api.publish --seasons S22 S23 --check
+# POSIX shell，仅静态配置校验：
+POSTGRES_PASSWORD=static-validation-only POSTGRES_READER_PASSWORD=static-validation-only docker compose -f website/compose.yaml config --quiet
+git diff --check
+目标环境仍需验收
+
+完整部署命令在补丁的website/README.md。获得部署/数据库授权后才执行写操作。悍跳两季不是跨季原子事务；既有账号的历史授权、成员关系、继承和PUBLIC权限必须管理员审查，grant_reader不是角色清理器。
+
+真实数据库准备且获准后，在项目根运行以下验收；DB测试会使用临时schema，仅限专用获准环境：
+python -m pytest website/tests -q
+# 先设置MASTERS_API_URL、MASTERS_WEB_URL为获准且可达的目标地址：
+python website/check_publication.py --seasons S22 S23 --api-only
+python website/check_publication.py --seasons S22 S23
+API未发布宿主机端口，验收程序必须有获准的内部API网络访问，不能默认localhost:8000可达，不为验收擅自开放公网端口。浏览器验收需目标环境安装仓库声明的Playwright浏览器。目标需核对两季局数/悍跳绑定、照片、102张基线S23截图、桌面/手机页面及备份恢复。
+
+未运行与边界
+
+云环境Docker daemon、PostgreSQL服务端socket与浏览器启动受限，未绕过限制。Docker镜像构建/容器运行、真实数据库发布/迁移/角色授权、真实API集成、完整有数据网站和浏览器视觉验收均未运行。
+
+前端此次未改。先前基线复现已有typecheck、生产构建及无API时HTTP错误壳通过，不代表有数据网站可用。原始复现证据保留在助手工作区reproduction-latest/，未混入源码。本包仅含补丁、交接说明和本次安全验证记录，无凭据、数据库内容或图片资产，未对外共享。
+
+
+
+
+
+
+
+
+
+
+文件 3/10：deployment-s22-s23-updated/compose.log
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：9eb22e2e2d1dbf5858fe2313fe07c7bf2b35e0699988059e8e681a345643d348
+
+PASS: docker-compose config --quiet; dummy environment only; no daemon invoked.
+
+
+
+
+
+
+
+
+
+
+
+文件 4/10：deployment-s22-s23-updated/preflight.json
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：6cfbf42c073af9b97ffce3894f49e5eab408a1682ab89a0b57dceb0f2e12e31e
+
+{
+  "valid": true,
+  "seasons": [
+    "S22",
+    "S23"
+  ],
+  "game_count": 223,
+  "seat_count": 2676,
+  "round_count": 700,
+  "ballot_count": 525,
+  "vote_count": 3813,
+  "source_hash": "1c2312637b4dd6b89e365b122e8ef0f7f17e006e9691c5b53051a3c65a827925",
+  "rules_hash": "805e617180aec9c9999450298da5d435aae1e8fd3298a64dc370f98ad5e445e8",
+  "release_id": "S22_S23-1c2312637b4dd6b8-805e6171-p4-s2"
+}
+
+
+
+
+
+
+
+
+
+
+
+文件 5/10：deployment-s22-s23-updated/pytest.log
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：f4ce47fe15008b5d92ba997b587eff705d81083eaf545d4d758a335afa4a6ddd
+
+........................................................................ [ 48%]
+........................................................................ [ 97%]
+....                                                                     [100%]
+148 passed, 2 deselected in 1.85s
+
+
+
+
+
+
+
+
+
+
+
+文件 6/10：actions-acceptance-handoff/0001-actions-acceptance.patch
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：ad63c9b90e9a5b4bfed6589aad35763b9e1928ed7dd50ba4653e2898fbbc1c2c
+
+From f31de2b059b54667419c68b12a16c01c76973b07 Mon Sep 17 00:00:00 2001
+From: Codex codex@openai.com
+Date: Tue, 27 Oct 2026 02:06:00 -0700
+Subject: [PATCH] ci: add isolated full S22 S23 database and browser acceptance
+
+ .github/workflows/full-acceptance.yml |  74 +++++++++++
+ website/CI_ACCEPTANCE.md              |  70 ++++++++++
+ website/check_publication.py          |  48 ++++++-
+ website/ci_acceptance.py              | 184 ++++++++++++++++++++++++++
+ website/tests/test_ci_acceptance.py   |  55 ++++++++
+ 5 files changed, 427 insertions(+), 4 deletions(-)
+ create mode 100644 .github/workflows/full-acceptance.yml
+ create mode 100644 website/CI_ACCEPTANCE.md
+ create mode 100644 website/ci_acceptance.py
+ create mode 100644 website/tests/test_ci_acceptance.py
+
+diff --git a/.github/workflows/full-acceptance.yml b/.github/workflows/full-acceptance.yml
+new file mode 100644
+index 0000000..394901d
+--- /dev/null
++++ b/.github/workflows/full-acceptance.yml
+@@ -0,0 +1,74 @@
++name: Full S22 S23 acceptance
++on:
+- workflow_dispatch:
+- push:
+- branches: ['ci/full-acceptance']
++permissions:
+- contents: read
+  +concurrency:
+- group: full-acceptance-${{ github.ref }}
+- cancel-in-progress: true
+  +jobs:
+- acceptance:
+- runs-on: ubuntu-24.04
+- timeout-minutes: 35
+- services:
+- postgres:
+- image: postgres:18-alpine
+- env:
+- POSTGRES_DB: masters_ci
+- POSTGRES_USER: masters_ci
+- # Disposable runner-only credentials, NEVER production credentials.
+- POSTGRES_PASSWORD: ci-disposable-owner-password
+- ports: ['5432:5432']
+- options: >-
+- --health-cmd "pg_isready -U masters_ci -d masters_ci"
+- --health-interval 5s --health-timeout 3s --health-retries 20
+- env:
+- CI: 'true'
+- NEXT_TELEMETRY_DISABLED: '1'
+- DATABASE_URL: postgresql://masters_ci:ci-disposable-owner-password@127.0.0.1:5432/masters_ci
+- MASTERS_READER_PASSWORD: ci-disposable-reader-password
+- API_BASE_URL: http://127.0.0.1:8000
+- steps:
+- - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+- with:
+- persist-credentials: false
+- fetch-depth: 1
+- # Sparse checkout also enables partial clone: do not add filter, which overrides it.
+- sparse-checkout: |
+- .github
+- config
+- scripts
+- requirements
+- website
+- data/games/S22
+- data/games/S23
+- data/extractions/S22/voting
+- data/extractions/S23/voting
+- data/reports
+- - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+- with:
+- python-version: '3.12'
+- - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+- with:
+- node-version: '22'
+- - name: Install only website acceptance dependencies
+- run: |
+- python -m pip install -r requirements/web.txt 'pytest>=8,<9' 'httpx>=0.28,<1' 'playwright==1.61.0'
+- python -m playwright install --with-deps chromium
+- npm ci --prefix website/web
+- - name: Publish, test, serve and verify real data
+- run: python -m website.ci_acceptance
+- - name: Upload bounded acceptance evidence (no sources, DB dumps, env or traces)
+- if: ${{ always() }}
+- uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+- with:
+- name: acceptance-${{ github.run_id }}-${{ github.run_attempt }}
+- path: |
+- website/artifacts/ci-upload/*.json
+- website/artifacts/ci-upload/*.log
+- website/artifacts/ci-upload/screenshots/*.png
+- if-no-files-found: warn
+- retention-days: 7
+- include-hidden-files: false
+diff --git a/website/CI_ACCEPTANCE.md b/website/CI_ACCEPTANCE.md
+new file mode 100644
+index 0000000..1fa7881
+--- /dev/null
++++ b/website/CI_ACCEPTANCE.md
+@@ -0,0 +1,70 @@
++# S22 + S23 GitHub Actions 全链路验收（待首次真实运行）
++
++这不是部署脚本，不操作线上网站或数据库。新增工作流 Full S22 S23 acceptance
++在一次性 ubuntu-24.04 runner 上启动与现有 Compose 相同的 postgres:18-alpine。
++不使用 production secrets，不持久化数据库，不授予仓库写权限，不使用 pull_request_target。
++
++## 运行条件与启动
++
++需要仓库维护者具有推送 .github/workflows 的权限，并且仓库允许 GitHub Actions、
++官方 actions/*、GitHub-hosted Ubuntu runner、Docker Hub、PyPI、npm、Playwright 下载。
++可能消耗 Actions 分钟／存储额度；仓库策略或依赖下载失败不能当作应用验收通过。
++
++在本机 Codex／有写权限的环境审阅并应用补丁后，可推送到专用分支 ci/full-acceptance，
++该分支的 push 会自动运行（不需要先合并到默认分支）。或者工作流已在默认分支时，
++进入 Actions → Full S22 S23 acceptance → Run workflow，选择要验收的提交分支。
++不要为了运行而直接推送默认分支。此交付本身没有推送、触发、合并或部署。
++
++## 实际检查顺序
++
++1. 稀疏检出正式 S22/S23 JSON、投票旁证、config、scripts、website、测试报告夹。
+- 包含网站照片、悍跳图片与两季悍跳发布 JSON；排除多 GB 的 S21 帧、原始媒体及备份。
+  +2. Python 3.12 + Node 22；npm ci 使用原锁文件；安装固定 Playwright 1.61.0 及 Chromium。
+- 网站 Python runtime 沿用原依赖范围，只增加 pytest/httpx；不引入采集／ASR 大依赖。
+  +3. 正式发布预检，然后用现有发布器应用 website/api/schema.sql 并发布两季。
+- 网站不依赖 JCMS 业务迁移，不导入 JCMS 生产库。
+  +4. S22/S23 悍跳各自预检并发布。任一命令非零即停止。
+  +5. 执行全部 website/tests，JUnit 必须非空、零 skip/failure/error，且包含四个指定的
+- 数据库发布／API集成测试。不接受“数据库不可用所以跳过”的假绿。
+  +6. 用现有 grant_reader 创建只读账号。核对 148 + 75 = 223 局、两季悍跳活动绑定、
+- 角色非管理员及表授权；将事务切成 READ WRITE 后仍须拒绝 UPDATE，避免仅测到只读默认值。
+  +7. 启动只读账号 API、生产 build、前端 typecheck、启动前端。API 和页面各有 90 秒就绪期限；
+- 子进程及整作业也有期限，结束时清理进程。
+  +8. 现有验收器逐一比较全部 223 局源文件与真实 API，检查 stats、两季悍跳绑定、照片哈希。
+- Chromium 1440×1000 / 390×844 各检查 18 条页面路径；检查真实积分榜赛季／选手／局数、
+- 页面错误、不可用状态、横向溢出、统计范围，并等待照片实际解码。
+- 此为两种 viewport 布局检查，不声称真实手机／WebKit／Firefox 验收。
+-
++## 证据与隐私
++
++Actions artifact acceptance-<run>-<attempt> 保留 7 天。只有指定目录内生成的 JSON、
++日志和公开网页定尺寸 viewport 截图（不截取超长整页）；不上传仓库源码、DB dump、环境文件、浏览器 trace、录像、cookies 或 storage state。
++日志及 JSON 在结束时移除 DSN、CI 两个账号密码及工作区绝对路径后，才复制到独立的上传目录。
++测试 XML 不上传；强制取消若来不及整理证据，宁可不上传，也不上传未脱敏原始日志。
++截图含网站公开比赛数据和选手海报；悍跳页面可含已获准公开的复核文字。
++首次运行后仍应人工打开 artifact 审阅失败截图及内容再转发。
++
++成功必须同时有绿色 job、result.json 的 passed、223 games、零跳过测试数、
++acceptance.json 中 36 页面及两季照片覆盖。只看到日志文件或截图不代表通过。
++失败时查看对应阶段 .log 和可能的 screenshots/failure.png。
++依赖安装失败发生在生成证据之前时，查看 Actions 安装步骤日志。
++
++## 本次已核验与尚未核验
++
++- 本地 Python 编译、YAML结构检查、diff空白检查通过；新增防假绿/目标库保护/日志脱敏测试 8 项通过。
++- 本地网站测试 156 passed, 6 skipped；六项依赖真实 PostgreSQL，未执行。
++- Docker / PostgreSQL 真实发布、只读授权、完整 API、生产前端启动及浏览器尚未在本次云环境执行。
++- 因连接器仅有 pull 权限，远端 Actions 尚未触发。本地静态结果不能升级为全链路通过。
++
++## 官方依据／固定 Action 版本
++
++- GitHub PostgreSQL service
++- Playwright CI
++- PostgreSQL 事务只读默认可被覆盖
++- checkout v4.2.2: 11bd71901bbe5b1630ceea73d27597364c9af683
++- setup-python v5.6.0: a26af69be951a213d495a4c3e4e4022e16d87065
++- setup-node v4.4.0: 49933ea5288caeca8642d1e84afbd3f7d6820020
++- upload-artifact v4.6.2: ea165f8d65b6e75b540449e92b4886f43607fa02
++
++以上完整 SHA 已逐项从官方 GitHub release → commit 链接核实；不是浮动 major tag。
++Postgres镜像及Python runtime范围沿用项目约定，未声称所有供应链组件均为不可变锁定。
+diff --git a/website/check_publication.py b/website/check_publication.py
+index fb85a44..ff01774 100644
+--- a/website/check_publication.py
++++ b/website/check_publication.py
+@@ -281,7 +281,8 @@ def check_baseline(receipt_path: Path, seasons: list[str], details: dict[str, di
+     }
+
+-def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: dict[str, dict]) -> dict:
++def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: dict[str, dict],
+- channel: str = "chrome", screenshots: Path | None = None) -> dict:
+     from playwright.sync_api import sync_playwright
+     routes = {"/": None}
+     for season in seasons:
+  @@ -304,8 +305,11 @@ def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: di
+     span = urlencode({"season_start": seasons[0], "season_end": seasons[-1]})
+     routes[f"/stats?{span}"] = (seasons[0], seasons[-1])
+     pages, errors = [], []
+- photo_pages = {season: 0 for season in seasons}
+  with sync_playwright() as playwright:
+- browser = playwright.chromium.launch(channel="chrome", headless=True)
+- browser = playwright.chromium.launch(**({} if channel == "chromium" else {"channel": channel}), headless=True)
+- if screenshots:
+- screenshots.mkdir(parents=True, exist_ok=True)
+     try:
+         page = browser.new_page()
+         page.on("pageerror", lambda error: errors.append(str(error)))
+@@ -319,17 +323,51 @@ def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: di
+                         raise RuntimeError(f"Page shows an unavailable state: {path}")
+                     if page.evaluate("document.documentElement.scrollWidth > window.innerWidth"):
+                         raise RuntimeError(f"Horizontal overflow at width {width}: {path}")
+- for season in seasons:
+- if path == f"/leaderboard?season={season}" and season in leaderboards:
+- board = leaderboards[season]
+- text = page.locator("main").inner_text()
+- if (season not in page.locator("h1").inner_text()
+- or not board["items"] or board["items"][0]["name"] not in text
+- or f'{board["game_count"]} 局' not in text):
+- raise RuntimeError(f"Leaderboard does not render real {season} data")
+- # Force lazy images to load, then check decoded pixels, not just HTTP status.
+- images = page.locator("main img")
+- for index in range(images.count()):
+- img = images.nth(index)
+- img.scroll_into_view_if_needed(timeout=10000)
+- img.evaluate("img => img.loading = 'eager'")
+- page.wait_for_function("img => img.complete && img.naturalWidth > 0",
+- arg=img.element_handle(), timeout=15000)
+- for season in seasons:
+- if path.startswith("/players?") and f"season={season}" in path:
+- if images.count() == 0:
+- raise RuntimeError(f"No player photos rendered for {season}")
+- photo_pages[season] += 1
+- page.evaluate("window.scrollTo(0, 0)")
+- if screenshots:
+- page.screenshot(path=str(screenshots / f"{width}-{len(pages):03d}.png"), full_page=False)
+                 if span is not None:
+                     start = page.locator('select[name="season_start"]').input_value()
+                     end = page.locator('select[name="season_end"]').input_value()
+                     if (start, end) != span:
+                         raise RuntimeError(f"Stats range was not retained: {path}")
+                 pages.append({"width": width, "path": path})
+- except Exception:
+- if screenshots:
+- try:
+- page.screenshot(path=str(screenshots / "failure.png"), full_page=False)
+- except Exception:
+- pass  # Preserve the original failure even if the browser crashed.
+- raise
+     finally:
+         browser.close()
+     if errors:
+     raise RuntimeError("Browser page error: " + "; ".join(errors[:8]))
+- return {"widths": [1440, 390], "page_count": len(pages), "pages": pages}
+- if any(count != 2 for count in photo_pages.values()):
+- raise RuntimeError("Both viewport sizes must render photos for every season")
+- return {"widths": [1440, 390], "page_count": len(pages), "pages": pages,
+- "photo_pages": photo_pages}
+ def run(args: argparse.Namespace) -> dict:
+@@ -363,7 +401,7 @@ def run(args: argparse.Namespace) -> dict:
+         baseline = check_baseline(path, seasons, details)
+     browser = {"skipped": True} if args.api_only else browser_check(
+         api["overview_seasons"] and [row["id"] for row in api["overview_seasons"]] or [],
+- details, leaderboards,
+- details, leaderboards, channel=args.browser_channel, screenshots=args.screenshots,
+     )
+     return {
+     "state": "passed", "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+@@ -380,6 +418,8 @@ def main(argv: list[str] | None = None) -> int:
+     parser.add_argument("--baseline", type=Path, help="backup receipt for earlier release snapshots")
+     parser.add_argument("--output", type=Path, default=ROOT / "website/artifacts/publication-acceptance.json")
+     parser.add_argument("--api-only", action="store_true", help="skip browser checks")
+- parser.add_argument("--browser-channel", choices=("chrome", "chromium"), default="chrome")
+- parser.add_argument("--screenshots", type=Path, help="public rendered pages only; no traces or source dumps")
+  args = parser.parse_args(argv)
+  try:
+  report = run(args)
+diff --git a/website/ci_acceptance.py b/website/ci_acceptance.py
+new file mode 100644
+index 0000000..046e749
+--- /dev/null
++++ b/website/ci_acceptance.py
+@@ -0,0 +1,184 @@
++"""Disposable GitHub Actions acceptance. Never point this at a real database."""
++from future import annotations
++
++import json
++import os
++from pathlib import Path
++import subprocess
++import signal
++import shutil
++import re
++import sys
++import time
++from urllib.parse import urlparse
++from urllib.request import urlopen
++import xml.etree.ElementTree as ET
++
++ROOT = Path(file).resolve().parents[1]
++OUT = ROOT / "website/artifacts/ci"
++EXPECTED = {"S22": 148, "S23": 75}
++
++
++def require_disposable_database() -> None:
+- url = urlparse(os.environ.get("DATABASE_URL", ""))
+- if (os.environ.get("CI") != "true" or url.hostname != "127.0.0.1"
+- or url.port != 5432 or url.path != "/masters_ci" or url.username != "masters_ci"):
+- raise RuntimeError("Refusing: requires CI=true and the disposable loopback masters_ci database")
+-
+-
++def require_test_execution(path: Path, required: set[str]) -> int:
+- cases = ET.parse(path).findall(".//testcase")
+- if not cases or any(case.find(tag) is not None for case in cases
+- for tag in ("skipped", "failure", "error")):
+- raise RuntimeError("Tests must actually execute: empty, skipped, failed or errored JUnit result")
+- names = {case.attrib["name"] for case in cases}
+- if not required.issubset(names):
+- raise RuntimeError("Required database integration tests did not run")
+- return len(cases)
+-
+-
++def command(label: str, args: list[str], env: dict | None = None, timeout: int = 600) -> None:
+- print(f"Running {label}", flush=True)
+- with (OUT / f"{label}.log").open("w", encoding="utf-8") as log:
+- subprocess.run(args, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT,
+- check=True, timeout=timeout)
+-
+-
++def ready(url: str, process: subprocess.Popen, timeout: int = 90) -> None:
+- deadline = time.monotonic() + timeout
+- while time.monotonic() < deadline:
+- if process.poll() is not None:
+- raise RuntimeError("Server exited before readiness; inspect server log")
+- try:
+- with urlopen(url, timeout=3) as response:
+- if response.status == 200:
+- return
+- except (OSError, TimeoutError):
+- pass
+- time.sleep(1)
+- raise RuntimeError("Server readiness deadline exceeded")
+-
+-
++def verify_reader(reader_url: str) -> None:
+- import psycopg
+- with psycopg.connect(reader_url) as conn:
+- assert conn.execute("SELECT current_user").fetchone()[0] == "masters_web_reader"
+- assert conn.execute("SHOW default_transaction_read_only").fetchone()[0] == "on"
+- assert not any(conn.execute("SELECT rolsuper, rolcreatedb, rolcreaterole, rolbypassrls "
+- "FROM pg_roles WHERE rolname=current_user").fetchone())
+- rows = conn.execute("SELECT g.season,count(*) FROM masters_web.games g "
+- "JOIN masters_web.active_release a ON a.release_id=g.release_id "
+- "GROUP BY g.season").fetchall()
+- assert dict(rows) == EXPECTED
+- rows = conn.execute("SELECT b.season FROM masters_web.active_bluff_reviews b "
+- "JOIN masters_web.active_release a ON a.release_id=b.release_id").fetchall()
+- assert sorted(row[0] for row in rows) == sorted(EXPECTED)
+- # Read-only defaults can be overridden. Verify actual grants, not just that setting.
+- conn.rollback()
+- conn.execute("SET TRANSACTION READ WRITE")
+- try:
+- conn.execute("UPDATE masters_web.active_release SET singleton=singleton WHERE false")
+- except psycopg.errors.InsufficientPrivilege:
+- conn.rollback()
+- else:
+- conn.rollback()
+- raise RuntimeError("Reader can UPDATE publication tables")
+- tables = conn.execute("SELECT tablename FROM pg_tables WHERE schemaname='masters_web'").fetchall()
+- assert tables
+- for (table,) in tables:
+- for privilege in ("INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER"):
+- assert not conn.execute("SELECT has_table_privilege(current_user,%s,%s)",
+- (f"masters_web.{table}", privilege)).fetchone()[0]
+- assert not conn.execute("SELECT has_schema_privilege(current_user,'masters_web','CREATE')").fetchone()[0]
+-
+-
+-
++def stage_artifacts(source: Path, destination: Path) -> None:
+- """Only copy allowlisted sanitized evidence to the directory Actions uploads."""
+- destination.mkdir(parents=True, exist_ok=True)
+- for path in [source.glob(".log"), source.glob(".json")]:
+- if path.is_symlink():
+- raise RuntimeError("Refusing artifact symlink")
+- value = path.read_text(encoding="utf-8", errors="replace")
+- value = re.sub(r"postgres(?:ql)?://[^\s\"']+", "[DATABASE_URL REDACTED]", value)
+- owner_password = urlparse(os.environ.get("DATABASE_URL", "")).password
+- if owner_password:
+- value = value.replace(owner_password, "[REDACTED]")
+- for name in ("MASTERS_READER_PASSWORD", "DATABASE_URL"):
+- if os.environ.get(name):
+- value = value.replace(os.environ[name], "[REDACTED]")
+- value = value.replace(str(ROOT), "[WORKSPACE]")
+- (destination / path.name).write_text(value, encoding="utf-8")
+- for path in (source / "screenshots").glob("*.png"):
+- if path.is_symlink():
+- raise RuntimeError("Refusing screenshot symlink")
+- (destination / "screenshots").mkdir(exist_ok=True)
+- shutil.copyfile(path, destination / "screenshots" / path.name)
+-
++def main() -> None:
+- require_disposable_database()
+- OUT.mkdir(parents=True, exist_ok=True)
+- py = sys.executable
+- processes, logs = [], []
+- try:
+- command("preflight", [py, "-m", "website.api.publish", "--seasons", "S22", "S23", "--check"])
+- # The existing publisher applies website/api/schema.sql; no JCMS migrations are used.
+- command("publish", [py, "-m", "website.api.publish", "--seasons", "S22", "S23"])
+- for season in EXPECTED:
+- command(f"bluffs-check-{season}", [py, "-m", "website.api.publish_bluffs", "--season", season, "--check"])
+- command(f"bluffs-{season}", [py, "-m", "website.api.publish_bluffs", "--season", season])
+- junit = OUT / "tests.xml"
+- command("tests", [py, "-m", "pytest", "website/tests", "-q", "--tb=short", f"--junitxml={junit}"])
+- executed = require_test_execution(junit, {
+- "test_publish_failure_does_not_change_active_release",
+- "test_publish_is_idempotent_and_can_leave_active_pointer_unchanged",
+- "test_read_only_contract_filtering_pagination_and_details",
+- "test_published_bluff_data_does_not_depend_on_local_review_files",
+- })
+- command("reader-setup", [py, "-m", "website.grant_reader"])
+- reader_url = "postgresql://masters_web_reader:" + os.environ["MASTERS_READER_PASSWORD"] + "@127.0.0.1:5432/masters_ci"
+- verify_reader(reader_url)
+- reader_env = {**os.environ, "DATABASE_URL": reader_url}
+- for label, args, url in (
+- ("api", [py, "-m", "uvicorn", "website.api.app:app", "--host", "127.0.0.1", "--port", "8000"], "http://127.0.0.1:8000/health"),
+- ("web", ["npm", "run", "start", "--prefix", "website/web", "--", "--hostname", "127.0.0.1"], "http://127.0.0.1:3000"),
+- ):
+- if label == "web":
+- command("build", ["npm", "run", "build", "--prefix", "website/web"], env=reader_env)
+- command("typecheck", ["npm", "run", "typecheck", "--prefix", "website/web"])
+- log = (OUT / f"{label}.log").open("w", encoding="utf-8")
+- logs.append(log)
+- process = subprocess.Popen(args, cwd=ROOT, env=reader_env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+- processes.append(process)
+- ready(url, process)
+- command("acceptance", [py, "-m", "website.check_publication", "--seasons", "S22", "S23",
+- "--browser-channel", "chromium", "--screenshots", str(OUT / "screenshots"),
+- "--output", str(OUT / "acceptance.json")], env=reader_env, timeout=900)
+- report = json.loads((OUT / "acceptance.json").read_text())
+- assert report["api"]["paginated_games"] == report["api"]["source_games_matched"] == 223
+- assert report["browser"]["page_count"] >= 36
+- assert report["api"]["photos"]["api_assets_checked"] > 0
+- for season in EXPECTED:
+- assert report["api"]["photos"]["leaderboard_photos"][season] > 0
+- assert report["api"]["bluff_bindings"][season]["inference_version"]
+- (OUT / "result.json").write_text(json.dumps({"state": "passed", "games": 223,
+- "tests_executed_without_skips": executed, "reader_permissions_verified": True,
+- "browser_pages": report["browser"]["page_count"]}, indent=2) + "\n")
+- print("223-game database/API/browser acceptance passed", flush=True)
+- finally:
+- for process in reversed(processes):
+- if process.poll() is not None:
+- continue
+- os.killpg(process.pid, signal.SIGTERM)
+- try:
+- process.wait(timeout=10)
+- except subprocess.TimeoutExpired:
+- os.killpg(process.pid, signal.SIGKILL)
+- process.wait(timeout=10)
+- for log in logs:
+- log.close()
+- stage_artifacts(OUT, ROOT / "website/artifacts/ci-upload")
+-
+-
++if name == "main":
+- main()
+diff --git a/website/tests/test_ci_acceptance.py b/website/tests/test_ci_acceptance.py
+new file mode 100644
+index 0000000..9af9464
+--- /dev/null
++++ b/website/tests/test_ci_acceptance.py
+@@ -0,0 +1,55 @@
++"""Offline guard tests; these are NOT proof of a successful live CI run."""
++from pathlib import Path
++
++import pytest
++
++from website.ci_acceptance import require_disposable_database, require_test_execution
++
++
++def test_ci_guard_refuses_non_ci_or_external_database(monkeypatch):
+- monkeypatch.setenv("CI", "true")
+- for url in ("", "postgresql://masters_ci:x@prod.example/masters_ci",
+- "postgresql://masters_ci:x@127.0.0.1:5432/production"):
+- monkeypatch.setenv("DATABASE_URL", url)
+- with pytest.raises(RuntimeError):
+- require_disposable_database()
+- monkeypatch.setenv("DATABASE_URL", "postgresql://masters_ci:x@127.0.0.1:5432/masters_ci")
+- require_disposable_database()
+- monkeypatch.setenv("CI", "false")
+- with pytest.raises(RuntimeError):
+- require_disposable_database()
+-
+-
++@pytest.mark.parametrize("content", ["", '<testcase name="db"><skipped/></testcase>',
+- '<testcase name="db"><failure/></testcase>',
+- '<testcase name="db"><error/></testcase>',
+- '<testcase name="wrong"/>'])
++def test_junit_guard_rejects_false_green(tmp_path: Path, content: str):
+- path = tmp_path / "report.xml"
+- path.write_text(f"<testsuites><testsuite>{content}</testsuite></testsuites>")
+- with pytest.raises(RuntimeError):
+- require_test_execution(path, {"db"})
+-
+-
++def test_junit_guard_accepts_executed_required_test(tmp_path: Path):
+- path = tmp_path / "report.xml"
+- path.write_text('<testsuites><testsuite><testcase name="db"/></testsuite></testsuites>')
+- assert require_test_execution(path, {"db"}) == 1
+-
+-
++def test_artifacts_only_stage_sanitized_allowlisted_files(tmp_path, monkeypatch):
+- from website.ci_acceptance import stage_artifacts, ROOT
+- source, target = tmp_path / "raw", tmp_path / "upload"
+- source.mkdir()
+- monkeypatch.setenv("DATABASE_URL", "postgresql://masters_ci:owner-password@127.0.0.1:5432/masters_ci")
+- monkeypatch.setenv("MASTERS_READER_PASSWORD", "reader-password")
+- (source / "server.log").write_text(f"owner-password reader-password {ROOT} "
+- "postgresql://user:pass@localhost/db")
+- (source / "private.xml").write_text("do not upload")
+- (source / ".env").write_text("do not upload")
+- stage_artifacts(source, target)
+- assert sorted(path.name for path in target.iterdir()) == ["server.log"]
+- value = (target / "server.log").read_text()
+- assert "owner-password" not in value and "reader-password" not in value
+- assert "postgresql://" not in value and str(ROOT) not in value
+- assert "owner-password" in (source / "server.log").read_text()
+--
+2.52.0
+
+
+
+
+
+
+
+
+
+
+文件 7/10：actions-acceptance-handoff/CI_ACCEPTANCE.md
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：1948340240776f1d49c6fc2a71441ca3a8d6dc2f3a4eb4c2909d7840e495b790
+
+S22 + S23 GitHub Actions 全链路验收（待首次真实运行）
+
+这不是部署脚本，不操作线上网站或数据库。新增工作流 Full S22 S23 acceptance
+在一次性 ubuntu-24.04 runner 上启动与现有 Compose 相同的 postgres:18-alpine。
+不使用 production secrets，不持久化数据库，不授予仓库写权限，不使用 pull_request_target。
+
+运行条件与启动
+
+需要仓库维护者具有推送 .github/workflows 的权限，并且仓库允许 GitHub Actions、
+官方 actions/*、GitHub-hosted Ubuntu runner、Docker Hub、PyPI、npm、Playwright 下载。
+可能消耗 Actions 分钟／存储额度；仓库策略或依赖下载失败不能当作应用验收通过。
+
+在本机 Codex／有写权限的环境审阅并应用补丁后，可推送到专用分支 ci/full-acceptance，
+该分支的 push 会自动运行（不需要先合并到默认分支）。或者工作流已在默认分支时，
+进入 Actions → Full S22 S23 acceptance → Run workflow，选择要验收的提交分支。
+不要为了运行而直接推送默认分支。此交付本身没有推送、触发、合并或部署。
+
+实际检查顺序
+1. 稀疏检出正式 S22/S23 JSON、投票旁证、config、scripts、website、测试报告夹。
+   包含网站照片、悍跳图片与两季悍跳发布 JSON；排除多 GB 的 S21 帧、原始媒体及备份。
+2. Python 3.12 + Node 22；npm ci 使用原锁文件；安装固定 Playwright 1.61.0 及 Chromium。
+   网站 Python runtime 沿用原依赖范围，只增加 pytest/httpx；不引入采集／ASR 大依赖。
+3. 正式发布预检，然后用现有发布器应用 website/api/schema.sql 并发布两季。
+   网站不依赖 JCMS 业务迁移，不导入 JCMS 生产库。
+4. S22/S23 悍跳各自预检并发布。任一命令非零即停止。
+5. 执行全部 website/tests，JUnit 必须非空、零 skip/failure/error，且包含四个指定的
+   数据库发布／API集成测试。不接受“数据库不可用所以跳过”的假绿。
+6. 用现有 grant_reader 创建只读账号。核对 148 + 75 = 223 局、两季悍跳活动绑定、
+   角色非管理员及表授权；将事务切成 READ WRITE 后仍须拒绝 UPDATE，避免仅测到只读默认值。
+7. 启动只读账号 API、生产 build、前端 typecheck、启动前端。API 和页面各有 90 秒就绪期限；
+   子进程及整作业也有期限，结束时清理进程。
+8. 现有验收器逐一比较全部 223 局源文件与真实 API，检查 stats、两季悍跳绑定、照片哈希。
+   Chromium 1440×1000 / 390×844 各检查 18 条页面路径；检查真实积分榜赛季／选手／局数、
+   页面错误、不可用状态、横向溢出、统计范围，并等待照片实际解码。
+   此为两种 viewport 布局检查，不声称真实手机／WebKit／Firefox 验收。
+证据与隐私
+
+Actions artifact acceptance-<run>-<attempt> 保留 7 天。只有指定目录内生成的 JSON、
+日志和公开网页定尺寸 viewport 截图（不截取超长整页）；不上传仓库源码、DB dump、环境文件、浏览器 trace、录像、cookies 或 storage state。
+日志及 JSON 在结束时移除 DSN、CI 两个账号密码及工作区绝对路径后，才复制到独立的上传目录。
+测试 XML 不上传；强制取消若来不及整理证据，宁可不上传，也不上传未脱敏原始日志。
+截图含网站公开比赛数据和选手海报；悍跳页面可含已获准公开的复核文字。
+首次运行后仍应人工打开 artifact 审阅失败截图及内容再转发。
+
+成功必须同时有绿色 job、result.json 的 passed、223 games、零跳过测试数、
+acceptance.json 中 36 页面及两季照片覆盖。只看到日志文件或截图不代表通过。
+失败时查看对应阶段 .log 和可能的 screenshots/failure.png。
+依赖安装失败发生在生成证据之前时，查看 Actions 安装步骤日志。
+
+本次已核验与尚未核验
+- 本地 Python 编译、YAML结构检查、diff空白检查通过；新增防假绿/目标库保护/日志脱敏测试 8 项通过。
+- 本地网站测试 156 passed, 6 skipped；六项依赖真实 PostgreSQL，未执行。
+- Docker / PostgreSQL 真实发布、只读授权、完整 API、生产前端启动及浏览器尚未在本次云环境执行。
+- 因连接器仅有 pull 权限，远端 Actions 尚未触发。本地静态结果不能升级为全链路通过。
+官方依据／固定 Action 版本
+- GitHub PostgreSQL service
+- Playwright CI
+- PostgreSQL 事务只读默认可被覆盖
+- checkout v4.2.2: 11bd71901bbe5b1630ceea73d27597364c9af683
+- setup-python v5.6.0: a26af69be951a213d495a4c3e4e4022e16d87065
+- setup-node v4.4.0: 49933ea5288caeca8642d1e84afbd3f7d6820020
+- upload-artifact v4.6.2: ea165f8d65b6e75b540449e92b4886f43607fa02
+以上完整 SHA 已逐项从官方 GitHub release → commit 链接核实；不是浮动 major tag。
+Postgres镜像及Python runtime范围沿用项目约定，未声称所有供应链组件均为不可变锁定。
+
+
+
+
+
+
+
+
+
+
+文件 8/10：actions-acceptance-handoff/COMMIT.txt
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：0d4ebfbb74b94ef83863c1ff0f809394feabc276cf30774c84d9d7bad39d73ec
+
+f31de2b059b54667419c68b12a16c01c76973b07
+
+
+
+
+
+
+
+
+
+
+
+文件 9/10：actions-acceptance-handoff/SHA256SUMS.txt
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：5a5f33738215176d1a380ead2dd01c976fd0d800bfc1c1b8c912917dc58dac37
+
+ad63c9b90e9a5b4bfed6589aad35763b9e1928ed7dd50ba4653e2898fbbc1c2c  0001-actions-acceptance.patch
+1948340240776f1d49c6fc2a71441ca3a8d6dc2f3a4eb4c2909d7840e495b790  CI_ACCEPTANCE.md
+0d4ebfbb74b94ef83863c1ff0f809394feabc276cf30774c84d9d7bad39d73ec  COMMIT.txt
+c71e33fc8cf8f5bd38a9f67abdf8e1e61466191c04261823d1d8082c82d98b48  START_HERE.txt
+
+
+
+
+
+
+
+
+
+
+
+文件 10/10：actions-acceptance-handoff/START_HERE.txt
+以下为完整原文。保存为 UTF-8 无 BOM，LF 换行；末尾保留换行。
+SHA256：c71e33fc8cf8f5bd38a9f67abdf8e1e61466191c04261823d1d8082c82d98b48
+
+GitHub Actions 完整验收增量包 — 不包含网站部署包，不要重复应用部署修改
+
+远端原始基线：89cf2ab
+必需前置部署提交：c817727ca8000bd1b19daae606196681fd29c50e
+本包新增提交：f31de2b059b54667419c68b12a16c01c76973b07
+本包仅改变5个CI/验收相关文件，不包含数据库、不包含凭据、不包含223局数据副本。
+这些正式数据由前置部署补丁和现有仓库提供。
+
+请让有写权限的本机 Codex：
+1. 先确认之前部署包已应用（不要重复应用）。工作区干净；保留用户现有修改。
+2. 在 c817727 或内容等价的部署状态上建专用分支 ci/full-acceptance。
+3. git apply --check /解压目录/0001-actions-acceptance.patch
+4. 检查通过后 git am /解压目录/0001-actions-acceptance.patch
+   （若已存在相同修改，不要再应用；冲突时先核对，不强制覆盖。）
+5. 审阅工作流后，由用户授权的有写权限环境推送 ci/full-acceptance 分支。
+   该分支push会触发Actions；不需要合并默认分支。不要推送或合并main来“触发测试”。
+6. 监控对应提交的Actions至终态，检查result.json、acceptance.json、截图及阶段日志。
+   失败时修复同一分支并重跑；不要把仅安装成功或部分截图解释为全链路通过。
+本次实际已做：正式源预检223局；本地网站测试156 passed / 6 skipped；8个新防护测试通过；
+Python编译/YAML结构/diff检查通过；增量patch对前置部署提交的临时index应用检查通过。
+独立审阅已完成，修复了首次构建类型生成顺序、超长截图和取消时未脱敏日志上传风险。
+
+本次未做：推送、Actions触发、PostgreSQL实际发布、只读授权实测、浏览器启动、合并、部署。
+云连接器只有pull权限；请勿将这个增量包描述为CI已跑通。
+
+详细行为、限制、隐私和验收判据见 CI_ACCEPTANCE.md。
