@@ -1,56 +1,150 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getOverview, getReleases, getStats } from "@/lib/api";
+import { getReleases, getStats } from "@/lib/api";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
 import { formatDate, formatNumber } from "@/lib/format";
+import { StatsRangeFilter } from "./stats-range-filter";
 import styles from "./stats.module.css";
 
-function first(value: string | string[] | undefined): string { return Array.isArray(value) ? (value[0] ?? "") : (value ?? ""); }
-export const metadata: Metadata = { title: "数据说明", description: "查看赛事档案的统计范围、发布版本与字段口径。" };
+function first(value: string | string[] | undefined): string {
+  return Array.isArray(value) ? (value[0] ?? "") : (value ?? "");
+}
+
+function percentage(wins: number, settled: number): string {
+  return settled > 0 ? `${(wins / settled * 100).toFixed(1)}%` : "—";
+}
+
+export const metadata: Metadata = {
+  title: "数据说明",
+  description: "按赛季范围查看身份分布、版型胜率与统计口径。",
+};
 
 export default async function StatsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const query = await searchParams;
-  const season = first(query.season) || "S22";
+  const legacySeason = first(query.season);
+  const start = first(query.season_start) || legacySeason || "S22";
+  const end = first(query.season_end) || (legacySeason && !first(query.season_start) ? start : "latest");
+
   try {
-    const [stats, overview, releases] = await Promise.all([getStats(season), getOverview(), getReleases()]);
-    return <div className={`page-wrap stats-page ${styles.statsPage}`}>
-      <PageIntro title="数据说明" description="统计基于已发布的数据版本，说明身份记录、整局胜负、选手指标与阶段积分的计算口径。" />
-      <section className="filter-panel stats-filter"><form method="get" action="/stats" className="stats-season-form"><label className="filter-field"><span>统计赛季</span><select name="season" defaultValue={season}>{overview.seasons.map((item) => <option key={item.id} value={item.id}>{item.id} · {item.name}</option>)}</select></label><button className="button button-primary" type="submit">查看赛季 <span>→</span></button></form></section>
+    const [stats, releases] = await Promise.all([getStats(start, end), getReleases()]);
+    const startSeason = stats.scope.season_start;
+    const endSeason = stats.scope.season_end;
+    const rangeLabel = end === "latest" ? `${startSeason} 至今`
+      : startSeason === endSeason ? startSeason : `${startSeason} — ${endSeason}`;
+    const totals = stats.boards.reduce((sum, board) => ({
+      good: sum.good + board.good_wins,
+      werewolf: sum.werewolf + board.werewolf_wins,
+    }), { good: 0, werewolf: 0 });
+    const settled = totals.good + totals.werewolf;
 
-      <section className="stats-topline">
-        <div className="stats-total"><span>本季纳入对局</span><strong>{formatNumber(stats.game_count)}<small>局</small></strong></div>
-        <div className="stats-callout"><span className="callout-mark" aria-hidden="true">i</span><p>未知结果会保留在分布中，不计入好人胜场或狼人胜场。</p></div>
-      </section>
-      <section className="stats-section">
-        <div className="section-heading"><div><h2>身份记录数量</h2><p className="section-subtitle">按已记录的身份出现次数汇总。</p></div></div>
-        {stats.roles.length ? <div className="role-stat-grid">{stats.roles.map((role) => <article className="role-stat-card" key={role.role}><strong>{role.role}</strong><b>{formatNumber(role.count)}</b></article>)}</div> : <div className="empty-state"><span className="empty-number">—</span><p>当前赛季没有身份统计记录。</p></div>}
-      </section>
+    return (
+      <div className={`page-wrap ${styles.statsPage}`}>
+        <PageIntro title="数据说明" action={
+          <Link className="button button-outline" href={`/players?season=${encodeURIComponent(startSeason)}`}>
+            查看选手数据 <span aria-hidden="true">→</span>
+          </Link>
+        } />
 
-      <section className="stats-section">
-        <div className="section-heading"><div><h2>版型与结果</h2><p className="section-subtitle">按整局胜方汇总。</p></div></div>
-        <div className="table-wrap"><table className="data-table stats-table"><thead><tr><th scope="col">版型</th><th scope="col">对局数</th><th scope="col">好人胜场</th><th scope="col">狼人胜场</th><th scope="col">未知结果</th></tr></thead><tbody>{stats.boards.map((board) => <tr key={board.code}><td><strong>{board.name}</strong></td><td>{formatNumber(board.games)}</td><td>{formatNumber(board.good_wins)}</td><td>{formatNumber(board.werewolf_wins)}</td><td>{formatNumber(board.unknown)}</td></tr>)}</tbody></table></div>
-      </section>
+        <section className={styles.filterPanel} aria-labelledby="stats-scope-heading">
+          <div className={styles.filterHeading}>
+            <h2 id="stats-scope-heading">统计范围</h2>
+            <span className={styles.scopeBadge}>{rangeLabel}</span>
+          </div>
+          <StatsRangeFilter
+            key={`${startSeason}:${end}`}
+            seasons={stats.available_seasons}
+            start={startSeason}
+            end={end === "latest" ? "latest" : endSeason}
+          />
+        </section>
 
-      <p className={styles.playerLink}><Link href={"/players?season=" + encodeURIComponent(season)}>查看选手胜率与每局积分 →</Link></p>
+        <section className={styles.summaryGrid} aria-label="对局统计概览">
+          <article className={styles.summaryCard}>
+            <span>纳入对局</span>
+            <strong>{formatNumber(stats.game_count)}<span className={styles.unit}>局</span></strong>
+          </article>
+          <article className={`${styles.summaryCard} ${styles.goodSummary}`}>
+            <span>好人胜率</span>
+            <strong>{percentage(totals.good, settled)}</strong>
+          </article>
+          <article className={`${styles.summaryCard} ${styles.wolfSummary}`}>
+            <span>狼人胜率</span>
+            <strong>{percentage(totals.werewolf, settled)}</strong>
+          </article>
+        </section>
 
-      <section className="methodology-section">
-        <div className="methodology-heading"><h2>口径与边界</h2><p>查看统计数字时，也请留意字段状态与发布版本。</p></div>
-        <div className="methodology-list">{stats.methodology.map((item, index) => <article key={index}><p>{item}</p></article>)}</div>
-        <div className="state-legend">
-          <div><span className="state-mark state-unknown">?</span><span><b>未知</b><small>来源不足以确认字段值。</small></span></div>
-          <div><span className="state-mark state-pass">—</span><span><b>未发动</b><small>已有记录表明该行动选择了不发动。</small></span></div>
-          <div><span className="state-mark state-na">∅</span><span><b>不适用</b><small>该槽位不适用于当前对局或阶段。</small></span></div>
+        <section className={styles.section} aria-labelledby="stats-boards-heading">
+          <h2 id="stats-boards-heading">版型与结果</h2>
+          {stats.boards.length ? (
+            <div className={styles.tableWrap} role="region" aria-label="版型与结果统计表" tabIndex={0}>
+              <table className={styles.boardTable}>
+                <thead><tr>
+                  <th scope="col">版型</th><th scope="col">对局数</th>
+                  <th scope="col">好人胜场</th><th scope="col">好人胜率</th>
+                  <th scope="col">狼人胜场</th><th scope="col">狼人胜率</th>
+                </tr></thead>
+                <tbody>{stats.boards.map((board) => {
+                  const boardSettled = board.good_wins + board.werewolf_wins;
+                  return <tr key={board.code}>
+                    <th scope="row">{board.name}</th>
+                    <td>{formatNumber(board.games)}</td>
+                    <td>{formatNumber(board.good_wins)}</td>
+                    <td className={styles.goodRate}>{percentage(board.good_wins, boardSettled)}</td>
+                    <td>{formatNumber(board.werewolf_wins)}</td>
+                    <td className={styles.wolfRate}>{percentage(board.werewolf_wins, boardSettled)}</td>
+                  </tr>;
+                })}</tbody>
+              </table>
+            </div>
+          ) : <div className="empty-state"><span className="empty-number">—</span><p>当前范围没有版型统计记录。</p></div>}
+        </section>
+
+        <section className={styles.section} aria-labelledby="stats-roles-heading">
+          <h2 id="stats-roles-heading">身份记录数量</h2>
+          {stats.roles.length ? (
+            <div className={styles.roleGrid}>{stats.roles.map((role) => (
+              <article className={styles.roleCard} key={role.role}>
+                <h3>{role.role}</h3><strong>{formatNumber(role.count)}</strong>
+              </article>
+            ))}</div>
+          ) : <div className="empty-state"><span className="empty-number">—</span><p>当前范围没有身份统计记录。</p></div>}
+        </section>
+
+        <div className={styles.detailsGroup}>
+          <details className={styles.details}>
+            <summary>统计口径与字段状态<span aria-hidden="true">＋</span></summary>
+            <div className={styles.detailsContent}>
+              <ul className={styles.methodology}>
+                <li>好人胜率与狼人胜率均以已确认胜方的对局为分母；没有有效胜负时显示“—”。</li>
+                {stats.methodology.map((item, index) => <li key={index}>{item}</li>)}
+              </ul>
+              <dl className={styles.stateLegend}>
+                <div><dt>未知</dt><dd>来源不足以确认字段值。</dd></div>
+                <div><dt>未发动</dt><dd>已有记录表明该行动选择了不发动。</dd></div>
+                <div><dt>不适用</dt><dd>该槽位不适用于当前对局或阶段。</dd></div>
+              </dl>
+            </div>
+          </details>
+          <details className={styles.details}>
+            <summary>发布版本<span aria-hidden="true">＋</span></summary>
+            <div className={styles.releaseWrap} role="region" aria-label="发布版本记录" tabIndex={0}>
+              <table className={styles.releaseTable}>
+                <thead><tr><th scope="col">版本</th><th scope="col">发布日期</th><th scope="col">对局数</th><th scope="col">状态</th></tr></thead>
+                <tbody>{releases.items.map((release) => <tr key={release.id}>
+                  <th scope="row">{release.id}</th>
+                  <td>{release.published_at ? formatDate(release.published_at.slice(0, 10)) : "未记录"}</td>
+                  <td>{formatNumber(release.game_count)}</td>
+                  <td><span className={release.active ? styles.activeRelease : undefined}>{release.active ? "当前版本" : "历史版本"}</span></td>
+                </tr>)}</tbody>
+              </table>
+            </div>
+          </details>
         </div>
-      </section>
-
-      <details className="release-details"><summary>展开查看发布版本与日期</summary><section className="release-history">
-        <div className="section-heading"><div><h2>发布版本</h2></div></div>
-        <div className="release-table"><div className="release-table-head"><span>版本</span><span>发布日期</span><span>对局数</span><span>状态</span></div>{releases.items.map((release) => <div className="release-table-row" key={release.id}><strong>{release.id}</strong><span>{release.published_at ? formatDate(release.published_at.slice(0, 10)) : "未记录"}</span><span>{formatNumber(release.game_count)}</span><span className={release.active ? "active-release" : ""}>{release.active ? "当前版本" : "历史版本"}</span></div>)}</div>
-      </section></details>
-    </div>;
+      </div>
+    );
   } catch (error) {
-    return <div className={`page-wrap ${styles.statsPage}`}><PageIntro title="数据说明" description="查看统计范围与数据边界。" /><DataProblem error={error} /></div>;
+    return <div className={`page-wrap ${styles.statsPage}`}><PageIntro title="数据说明" /><DataProblem error={error} /></div>;
   }
 }

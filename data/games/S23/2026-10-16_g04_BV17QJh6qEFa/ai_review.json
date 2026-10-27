@@ -1,0 +1,770 @@
+{
+  "bvid": "BV17QJh6qEFa",
+  "reviewer": "ai",
+  "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "N1狼队击杀8号通灵师后被女巫9号救起，D1公布平安夜；8号后续参与D2投票，至D4夜才出局。",
+  "decisions": [
+    {
+      "field": "seats[12]",
+      "before": "机械狼物理身份与查验反馈容易混淆",
+      "after": "12号物理底牌机械狼；目标5号平民，所学机械平民形态；8号对12查验反馈为平民",
+      "reasoning": "结束复盘明确12号是机械狼、模仿5号平民；8号查验反馈按其所学形态播报平民。反馈不改写物理底牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV17QJh6qEFa/BV17QJh6qEFa_04675.870.png",
+          "frame_time_ms": 4675870,
+          "quote": "1号狼人；2号狼人；3号狼人；4号平民；5号平民；6号守卫；7号猎人；8号通灵师；9号女巫；10号平民；11号平民；12号机械狼（学习机械平民）",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4671700,
+          "end_ms": 4700190,
+          "quote": "好给各位弹幕老师们做本九局的复盘\n本剧版行为机械狼通灵师神阵营通灵师\n8号女巫\n9号猎人\n7号守卫6号狼人阵营一号2号\n3号机械狼12号本就戏为机械平民平民阵营\n4号五号十号11号深夜守卫守护一号狼人\n狼队击杀8号通灵师\n女望救起\n形成平安夜\n机械狼模仿5号平民\n本就虚位\n机械平民通灵师验证一号玩家唯一狼人身份\n经商精选环节\n一号狼人选择自爆"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0..3]",
+      "before": "基线多夜动作错位并重复",
+      "after": "按复盘恢复4轮：N1守1/狼刀8被救/8验1狼；D1狼1自爆延期竞选；N2守6/狼刀毒师9/女巫空过/8验6守；D2延期警选8、放逐4；N3守8/狼刀6/8验3狼、D3狼2自爆；N4狼刀8、8验12反馈平民、传徽7，D4狼3自爆拍刀7胜",
+      "reasoning": "按终局复盘顺序清理基线重复动作，死亡放在对应白天；不添加未被说明的猎人开枪。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4694150,
+          "end_ms": 4726600,
+          "quote": "形成平安夜\n机械狼模仿5号平民\n本就虚位\n机械平民通灵师验证一号玩家唯一狼人身份\n经商精选环节\n一号狼人选择自爆\n入夜守卫守护6号自守\n狼队击杀9号女巫\n女巫技能空过9号女巫单死\n当夜通灵师验证了6号玩家为首位身份\n暂延期竞选环节\n8号通灵师获得警徽\n在第二天的白天\n4号平民被抗推出局\n入夜首位守护8号通灵师狼队击杀6号\n首位通灵师验证3号玩家为狼人身份\n在第三天白天\n2号狼人选择自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2328000,
+          "end_ms": 2334700,
+          "quote": "然后加上警上\n我觉得二如果是好人\n四就有可能做狼\n因为觉得五警上对八的剖剖析不是很像剖析\n不是很像狼"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day2]",
+      "before": "基线仅部分票型且日期不明",
+      "after": "D2放逐票完整10人：2/3/8/11/12→4，4→12，5/7→2，6/10→3；4号5.5票出局。警选仅记录字幕明确的6/7/9→8，保持partial。",
+      "reasoning": "票逐一唱出且宣布4号5.5票；延期警选字幕只列3票，未补未记录者。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3712130,
+          "end_ms": 3740980,
+          "quote": "各位玩家唱票结束前不要放手\n321请出票\n2号投给4号\n3号投给4号\n4号投给12号\n5号投给2号\n6号投给3号\n7号投给2号\n8号投给4号\n10号投给3号\n11号投给4号\n12号投给4号\n投票结束\n4号玩家5.5票出局\n请发表遗言咳"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2007700,
+          "end_ms": 2015780,
+          "quote": "在8号11号玩家中选出本就是警长\n321请出票\n6号七号九号均投票给8号\n8号玩家当选警长\n其余玩家请变蓝灯"
+        }
+      ]
+    },
+    {
+      "field": "winner_and_endgame",
+      "before": "winner werewolf;终局动作需与普通投票分开",
+      "after": "狼3自爆后狼队拍刀7号猎人成功，狼人屠神获胜；无猎人开枪记录",
+      "reasoning": "复盘明确拍刀成功和狼人获胜；底牌表显示7号猎人。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4659750,
+          "end_ms": 4670660,
+          "quote": "3号玩家选择自爆\n天黑请闭眼\n狼队拍刀\n7号拍刀成功\n游戏结束\n狼队阵营屠神获胜"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV17QJh6qEFa/BV17QJh6qEFa_04597.190.png",
+          "frame_time_ms": 4597190,
+          "quote": "7号底牌猎人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "final_primary_crosscheck_20261026",
+      "before": "代理候选或旧结果状态与连续原文仍有差异",
+      "after": "818020..826570原始报名已明确6/7/9警下；延期竞选仍由原三人投票，2007700起三票全投8，2020140竞选后才宣布9夜死，不能把9排除，也不存在其他未记选民。补完整报名和票权，去掉与独立endgame重复的日间拍刀动作，保留D4拍刀来源与原复盘口误。",
+      "reasoning": "818020..826570原始报名已明确6/7/9警下；延期竞选仍由原三人投票，2007700起三票全投8，2020140竞选后才宣布9夜死，不能把9排除，也不存在其他未记选民。补完整报名和票权，去掉与独立endgame重复的日间拍刀动作，保留D4拍刀来源与原复盘口误。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 809700,
+          "end_ms": 826570,
+          "quote": "也有可能拉杆4321天亮了\n本球戏除6号七号九号玩家外\n其余玩家均上井\n尚请玩家亮起面前红灯"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2004120,
+          "end_ms": 2028110,
+          "quote": "在8号11号玩家中选出本就是警长\n321请出票\n6号七号九号均投票给8号\n8号玩家当选警长\n其余玩家请变蓝灯\n昨夜9号领导牌没有遗言\n9号玩家受方技能54321镜头交之"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4710540,
+          "end_ms": 4748020,
+          "quote": "暂延期竞选环节\n8号通灵师获得警徽\n在第二天的白天\n4号平民被抗推出局\n入夜首位守护8号通灵师狼队击杀6号\n首位通灵师验证3号玩家为狼人身份\n在第三天白天\n2号狼人选择自爆入夜\n狼队击杀8号通灵师\n通灵师验证12号玩家机械狼为平民身份\n并在出局后将警徽移交至7号猎人\n在第三天白天\n3号狼人选择自爆后\n机械狼选择击杀场上最后一神\n7号猎人\n游戏结束\n狼队阵营屠神获胜\n各位当老师们"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.night_deaths.targets",
+      "before": [],
+      "after": [
+        8
+      ],
+      "reasoning": "结尾复盘明确N1狼队击杀8号通灵师。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4690000,
+          "end_ms": 4691920,
+          "quote": "狼队击杀8号通灵师"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.event_order",
+      "before": "N2夜死先于延期竞选",
+      "after": "6/7/9投票→8当选→公布9夜死→D2放逐",
+      "reasoning": "按直播顺序重排，不删除9号的既有警长票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2010940,
+          "end_ms": 2014340,
+          "quote": "6号七号九号均投票给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2014340,
+          "end_ms": 2015780,
+          "quote": "8号玩家当选警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2020140,
+          "end_ms": 2022400,
+          "quote": "昨夜9号领导牌没有遗言"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night.mechanical_knife_status",
+      "before": "unknown",
+      "after": "unavailable: 已学习5号平民形态",
+      "reasoning": "结尾复盘确认机械狼模仿平民，不具机械双刀狼人形态。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4694150,
+          "end_ms": 4695870,
+          "quote": "机械狼模仿5号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2010940,
+          "end_ms": 2014340,
+          "quote": "6号七号九号均投票给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2020140,
+          "end_ms": 2022400,
+          "quote": "昨夜9号领导牌没有遗言"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.night_deaths",
+      "before": {
+        "action": "die",
+        "targets": [
+          8
+        ]
+      },
+      "after": {
+        "action": "peaceful",
+        "targets": []
+      },
+      "reasoning": "The original recap explicitly says 8 was saved and the night was peaceful; the prior death entry misread the attack target as an actual death.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4690000,
+          "end_ms": 4691920,
+          "quote": "狼队击杀8号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4691920,
+          "end_ms": 4692680,
+          "quote": "女望救起"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4692680,
+          "end_ms": 4694150,
+          "quote": "形成平安夜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "狼人",
+        "狼人",
+        "狼人",
+        "平民",
+        "平民",
+        "守卫",
+        "猎人",
+        "通灵师",
+        "女巫",
+        "平民",
+        "平民",
+        "机械狼"
+      ],
+      "reasoning": "结束底牌表逐座核对；12号物理底牌为机械狼，学习目标5号及形态“机械平民”另记。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV17QJh6qEFa/BV17QJh6qEFa_04675.870.png",
+          "frame_time_ms": 4675870,
+          "quote": "1号狼人；2号狼人；3号狼人；4号平民；5号平民；6号守卫；7号猎人；8号通灵师；9号女巫；10号平民；11号平民；12号机械狼（学习机械平民）",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-26T00:00:00Z",
+  "final_primary_review": {
+    "reviewer": "ai",
+    "updated_at_utc": "2026-10-26T05:09:13.672235+00:00",
+    "conclusion": "818020..826570原始报名已明确6/7/9警下；延期竞选仍由原三人投票，2007700起三票全投8，2020140竞选后才宣布9夜死，不能把9排除，也不存在其他未记选民。补完整报名和票权，去掉与独立endgame重复的日间拍刀动作，保留D4拍刀来源与原复盘口误。",
+    "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+    "user_confirmed": false
+  },
+  "phase_findings": [
+    {
+      "id": "b87-r1-night-death",
+      "round": 1,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths; rounds[1].night.wolf_attack; rounds[1].night.witch_save",
+      "title": "D1首夜救起8号后公布平安夜",
+      "conclusion": "N1狼队击杀8号通灵师，女巫9号救起8号，D1夜死为平安夜。",
+      "reasoning": "原字幕连续记录狼队击杀8号、女巫救起、形成平安夜；故8号仍能参加D2投票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4690000,
+          "end_ms": 4691920,
+          "quote": "狼队击杀8号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4691920,
+          "end_ms": 4692680,
+          "quote": "女望救起"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 4692680,
+          "end_ms": 4694150,
+          "quote": "形成平安夜"
+        }
+      ],
+      "phase_label": "第1天白天",
+      "previous_question": "D1首夜救起8号后公布平安夜",
+      "daily_audited": true
+    },
+    {
+      "id": "b87-r2-election-before-death-announcement",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.event_order",
+      "title": "延期警选完成后才公布9号夜死",
+      "conclusion": "6/7/9完成投票，8号当选警长，随后才公布N2 9号倒牌；9号仍保留该轮投票。",
+      "reasoning": "原转写顺序和完整票型直接支持重排；既有投票逐人项保留。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2010940,
+          "end_ms": 2014340,
+          "quote": "6号七号九号均投票给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2014340,
+          "end_ms": 2015780,
+          "quote": "8号玩家当选警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2020140,
+          "end_ms": 2022400,
+          "quote": "昨夜9号领导牌没有遗言"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "延期警选完成后才公布9号夜死",
+      "daily_audited": true
+    },
+    {
+      "id": "b87-r2-witch-poison-cause-unresolved",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].night.witch_poison[9]",
+      "title": "9号女巫夜死原因未说明",
+      "conclusion": "D2 9号女巫夜死由狼队击杀造成；女巫技能空过，不是女巫毒药反噬/自毒。",
+      "reasoning": "原文明确“狼队击杀9号女巫”，紧接着“女巫技能空过，9号女巫单死”。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2010940,
+          "end_ms": 2014340,
+          "quote": "6号七号九号均投票给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2014340,
+          "end_ms": 2015780,
+          "quote": "8号玩家当选警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "start_ms": 2020140,
+          "end_ms": 2022400,
+          "quote": "昨夜9号领导牌没有遗言"
+        }
+      ],
+      "phase_label": "第1天夜晚",
+      "previous_question": "9号女巫夜死原因未说明",
+      "daily_audited": true
+    }
+  ],
+  "structural_normalizations": [
+    {
+      "field": "rounds[2].day.sheriff_vote",
+      "before": {
+        "slot": "sheriff_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "延期竞选6/7/9三票投8，完整票权；9的夜死在竞选后宣布",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "sheriff_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "延期竞选6/7/9三票投8，完整票权；9的夜死在竞选后宣布",
+        "start_seat": null,
+        "direction": null,
+        "votes": [
+          {
+            "round": 1,
+            "voter": 6,
+            "target": 8,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 7,
+            "target": 8,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 9,
+            "target": 8,
+            "abstained": false
+          }
+        ],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[2].day.exile_vote",
+      "before": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "4号平民以5.5票出局；逐人票型另见投票表",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "4号平民以5.5票出局；逐人票型另见投票表",
+        "start_seat": null,
+        "direction": null,
+        "votes": [
+          {
+            "round": 1,
+            "voter": 2,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 3,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 4,
+            "target": 12,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 5,
+            "target": 2,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 6,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 7,
+            "target": 2,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 8,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 10,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 11,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 12,
+            "target": 4,
+            "abstained": false
+          }
+        ],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    }
+  ],
+  "supplemental_events": [
+    {
+      "round": 2,
+      "phase": "night",
+      "event": {
+        "slot": "witch_save",
+        "action": "none",
+        "actor": 9,
+        "targets": [],
+        "result": "技能空过",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "reason": "现有固定槽未覆盖的明确观察；保留供人工复核，未装作普通技能。"
+    }
+  ],
+  "daily_audit": {
+    "bvid": "BV17QJh6qEFa",
+    "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 4671700,
+      "end_ms": 4747100,
+      "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+    },
+    "checks": [
+      {
+        "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+        "conclusion": "N1狼刀8通灵师被女巫救起，D1平安、1自爆。N2守卫自守、狼刀9女巫，延期竞选6/7/9投8后宣布9死；4民出局。N3守卫护8、狼刀6守卫，D3 6死并移徽7、2自爆。N4狼杀8通灵师、D4死并移徽7，3自爆后机械狼拍刀7成功狼胜；9号毒药原因已由原文确认为狼刀造成，女巫技能空过。",
+        "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 4671700,
+            "end_ms": 4747100,
+            "quote": "好给各位弹幕老师们做本九局的复盘\n本剧版行为机械狼通灵师神阵营通灵师\n8号女巫\n9号猎人\n7号守卫6号狼人阵营一号2号\n3号机械狼12号本就戏为机械平民平民阵营\n4号五号十号11号深夜守卫守护一号狼人\n狼队击杀8号通灵师\n女望救起\n形成平安夜\n机械狼模仿5号平民\n本就虚位\n机械平民通灵师验证一号玩家唯一狼人身份\n经商精选环节\n一号狼人选择自爆\n入夜守卫守护6号自守\n狼队击杀9号女巫\n女巫技能空过9号女巫单死\n当夜通灵师验证了6号玩家为首位身份\n暂延期竞选环节\n8号通灵师获得警徽\n在第二天的白天\n4号平民被抗推出局\n入夜首位守护8号通灵师狼队击杀6号\n首位通灵师验证3号玩家为狼人身份\n在第三天白天\n2号狼人选择自爆入夜\n狼队击杀8号通灵师\n通灵师验证12号玩家机械狼为平民身份\n并在出局后将警徽移交至7号猎人\n在第三天白天\n3号狼人选择自爆后\n机械狼选择击杀场上最后一神\n7号猎人\n游戏结束\n狼队阵营屠神获胜\n各位当老师们"
+          }
+        ]
+      }
+    ],
+    "event_patches": [],
+    "finding_resolutions": [
+      {
+        "id": "b87-r1-night-death",
+        "status": "confirmed",
+        "conclusion": "N1狼队击杀8号通灵师，女巫9号救起8号，D1夜死为平安夜。",
+        "reasoning": "原字幕连续记录狼队击杀8号、女巫救起、形成平安夜；故8号仍能参加D2投票。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 4690000,
+            "end_ms": 4691920,
+            "quote": "狼队击杀8号通灵师"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 4691920,
+            "end_ms": 4692680,
+            "quote": "女望救起"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 4692680,
+            "end_ms": 4694150,
+            "quote": "形成平安夜"
+          }
+        ]
+      },
+      {
+        "id": "b87-r2-election-before-death-announcement",
+        "status": "confirmed",
+        "conclusion": "6/7/9完成投票，8号当选警长，随后才公布N2 9号倒牌；9号仍保留该轮投票。",
+        "reasoning": "原转写顺序和完整票型直接支持重排；既有投票逐人项保留。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2010940,
+            "end_ms": 2014340,
+            "quote": "6号七号九号均投票给8号"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2014340,
+            "end_ms": 2015780,
+            "quote": "8号玩家当选警长"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2020140,
+            "end_ms": 2022400,
+            "quote": "昨夜9号领导牌没有遗言"
+          }
+        ]
+      },
+      {
+        "id": "b87-r2-witch-poison-cause-unresolved",
+        "status": "confirmed",
+        "conclusion": "D2 9号女巫夜死由狼队击杀造成；女巫技能空过，不是女巫毒药反噬/自毒。",
+        "reasoning": "原文明确“狼队击杀9号女巫”，紧接着“女巫技能空过，9号女巫单死”。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2010940,
+            "end_ms": 2014340,
+            "quote": "6号七号九号均投票给8号"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2014340,
+            "end_ms": 2015780,
+            "quote": "8号玩家当选警长"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+            "start_ms": 2020140,
+            "end_ms": 2022400,
+            "quote": "昨夜9号领导牌没有遗言"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "unavailable",
+      "basis": "已学习机械平民；该形态没有额外夜间技能，普通狼刀与白天开枪另列。"
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "unavailable",
+      "basis": "已学习机械平民；该形态没有额外夜间技能，普通狼刀与白天开枪另列。"
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "unavailable",
+      "basis": "已学习机械平民；该形态没有额外夜间技能，普通狼刀与白天开枪另列。"
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
+    }
+  ],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 3,
+    "inferred": 0,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

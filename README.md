@@ -1,119 +1,68 @@
 # 京城大师赛数据项目
 
-S22 官方合集的 **163 条音频已采集并验收**。2026-10-20 已完成中文优先复核目录中的 **25 条缺少中文字幕或字幕疑似截断的音频**全文转写，合计约 **34.55 小时**。每条完整音轨均已处理，保留赛前、对局与赛后内容。打开 [全文补转写目录](data/seasons/S22/S22_全文补转写目录.csv)，或在原复核目录中使用“本地全文阅读版”列；全文、SRT、JSON 均已保存，仍为未人工校对的机器稿。
+把官方媒体整理为可回溯的对局档案，并发布到本机网站。当前保留 **S22 148局、S23 75局，共223局**；原始媒体归档还包含不进入正式统计的表演／娱乐内容。
 
-2026-10-24 当前正式范围为 **148局**（136局正赛、12局决赛周），覆盖47个比赛日、1776个已命名座位。11局表演赛和4局娱乐局已移出正式统计，163条原始媒体与转写仍保留。规则以 [S22正式版型规则与录入流程](docs/12_S22正式版型规则与录入流程.md) 为准；本轮对齐逐项保留来源、推断和更正前后哈希，见 [规则对齐记录](data/reports/S22_正式规则对齐记录.json) 与 [当前规则检查](data/reports/S22_正式规则校验.json)。现存档案允许原文未说明的事实保持未知，规则检查通过不等于人工确认。
+## 从这里开始
 
-分享文件在本地生成，不纳入常规Git历史。运行下列命令后，从 `data/exports/` 发送 `S22_最终复核_离线分享版.html` 或同名ZIP。文件内嵌当前148局档案、全部转写、姓名牌截图、历史推理与本轮规则更正依据；双击使用，可导出/导入多人复核意见，无需本机服务或数据库。[离线使用说明](data/exports/S22_离线复核使用说明.txt) · [离线验收统计](data/reports/S22_离线分享版验收.json)。
+1. [全流程操作手册](docs/15_赛季数据全流程操作手册.md)：以后接入更早赛季，按顺序完成每步工作和验收，已有成果直接复用。
+2. [微博分步流程](docs/06_微博排班采集.md)：从已采到的2026-05-26边界继续向前，建立新季姓名、照片及座位对应。
+3. [复核规范](docs/16_字段证据与交叉复核规范.md)：判断新增资料的具体字段时查证据矩阵，既有定案保持。
 
-```powershell
-.\.venv\Scripts\python.exe scripts/export_s22_offline_review.py
-```
-
-原先完成的 2026-06-25 第三局「机械狼通灵师」示例继续保留，每夜8个槽位、每天11个槽位，3轮共57项。解说其人、桃子与法官豆儿啵使用统一人物表，座位从首局自我介绍建立。业务结构不含证据、完整转写片段、版本或审核状态；复核材料另存磁盘。[单局示例](data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/单局示例.html) · [对局JSON](data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json) · [数据库说明](docs/09_对局数据库与版型模板.md)。
-
-正式录入采用7种计分版型的 [规则登记册](config/S22_formal_rules.json) 和 [录入流程](docs/12_S22正式版型规则与录入流程.md)。`scripts/formal_entry.py` 提供 `init`、`check`、`import`、`audit`，最终录入使用 `--final`。原13类模板仍保留归档用途；[旧规则资料](docs/10_版型规则与夜间顺序.md)保留为历史证据，当前执行口径以新规则册为准。夜间归档槽位顺序不等于已确认的法官夜序。
-
-本地资源已在 2026-10-22 精简：采集与数据库使用 `.venv`，主转写 Paraformer 和关键片段复核 Nano 共用 `.venv-funasr39`。独立 Qwen/Whisper 试验权重与环境已移除，完整测试结论保留。[本地资源与片段复核入口](docs/08_本地资源与清理.md) · [三模型实测](docs/07_ASR三模型实测.md)。
-
-## 仓库与本地资料
-
-远程仓库：[fengmaker/LangRenSha](https://github.com/fengmaker/LangRenSha)。Git保存代码、依赖清单、数据库迁移、版型配置、说明文档、当前对局档案、转写文本、审核记录和用于对照的S22姓名牌截图。
-
-原始音视频、模型和虚拟环境、数据库实例与备份、登录凭证、批量微博原图、重复的内容寻址归档及生成的离线HTML/ZIP保留本地，由 `.gitignore` 排除。数据库通过 `db/migrations/` 重建，登录态和数据库连接配置由每位使用者在本机建立。不要把 `.secrets/`、浏览器登录缓存或数据库备份加入Git。
-
-资料和审核计划使用SHA256绑定原始字节，`.gitattributes` 禁用自动换行转换，确保克隆后证据哈希不变。数据库集成测试还需要本机PostgreSQL和已下载的样例音频；媒体采集、转写及环境准备见下方操作文档。
-
-运行测试使用主Python 3.12环境；音频窗口测试只生成合成音频，不需要安装模型：
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-test.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests
-```
-
-## S22 当前正式对局范围
-
-当前业务数据为148局：136局正赛、12局决赛周，分布在47个比赛日；147局批量档案和1个保护样例 BV1yt7v6QE3Q。7月3日3局娱乐、8月19日鬼魂新娘娱乐局及11局表演赛共15局已排除。续跑范围由 [正式范围配置](config/S22_game_scope.json) 控制，明细见 [移除记录](data/reports/S22_非正赛移除记录.json)。
-
-官方媒体与全文转写归档仍为163条，包含15局范围外场次。当前148局共1776个座位姓名均已补齐。历史推理报告保留旧范围的298项原疑点与65项关联发现；当前有效范围对应295项原疑点。本轮规则更正另存 [规则对齐记录](data/reports/S22_正式规则对齐记录.json)，原始转写、AI结论和用户确认分别保留。
-
-## 整体只有三步
-
-| 步骤 | 做什么 | 产物 | 当前安排 |
-| --- | --- | --- | --- |
-| 1. 官方媒体采集 | 下载官方视频或独立音频，保存来源、元数据和文件校验记录 | 原始资料库：媒体文件 + 来源/文件登记 | S22 的 163 条音频已完成 |
-| 2. 转写与 AI 提取 | 模型转写带时间戳的文字，AI 从文字中提取身份、座位、票型、发言和复盘候选 | 转写文本 + 结构化候选 JSON + 证据定位 | **25条全文补转写已完成；首个单局信息示例已提取** |
-| 3. 整理为对局数据 | 统一人物、从自我介绍建立座位、按版型固定槽位写入业务表 | 可查询的对局、人物职责、座位身份及逐轮事件 | S22 批处理与逐局复核已启用，当前数量以实时进度为准 |
-
-2026-10-24 已开始按整局转写补录警下名单、警徽票、逐日放逐票与平票PK各轮票型，见 [逐日投票记录说明](docs/13_S22逐日投票与警下名单.md)、[投票补录目录](data/exports/S22_投票补录.html)和[覆盖与缺口](data/reports/S22_投票补录进度.json)。票型仍有缺失且尚未人工回听，未知票不记为弃票。逐人的完整发言与高准确率转写继续作为后续目标。
-
-第一步的“原始资料入库”与第三步的“对局事实入库”不同：先保存拿到什么媒体，之后才研究媒体里发生了什么。
-
-## 操作文档
-
-1. [项目路线与阶段边界](docs/01_项目路线.md)：三步的输入、输出、字段范围和完成标准。
-2. [第一步：官方媒体采集](docs/02_第一步_官方媒体采集.md)：当前执行手册、匿名/可选登录、输出和验收。
-3. [原始数据库说明](docs/03_原始数据库说明.md)：原始文件与 PostgreSQL 如何配合，如何查看采集结果。
-4. [第二步：单音频转写](docs/04_第二步_单音频转写.md)：已有 CUDA PyTorch 的复用、样本命令和审阅方式。
-5. [当前：复盘优先与本局信息](docs/05_复盘优先与本局信息.md)：短标准样本、法官复盘验收、夜间与解说的并行关系。
-6. [微博排班采集](docs/06_微博排班采集.md)：复用微博 Cookie，保存最近一个月的官方正文、配图及排班候选。
-7. [ASR 热词与固定口令审阅](docs/06_ASR热词与固定口令审阅.md)：现有术语词包的来源与限制。
-8. [ASR 三模型实测](docs/07_ASR三模型实测.md)：实际输出、耗时和选型依据。
-9. [本地资源与清理](docs/08_本地资源与清理.md)：两套环境、保留模型与 Nano 关键片段复核命令。
-10. [对局数据库与版型模板](docs/09_对局数据库与版型模板.md)：当前业务数据结构和已完成单局模板。
-11. [版型规则与夜间顺序](docs/10_版型规则与夜间顺序.md)：S22 各版型角色、首夜/后续夜序、特殊结算及固定事件差异。
-12. [S22 批量处理与复核](docs/11_S22批量处理与复核.md)：入库、逐局修改、人工复核标记和中断续跑。
-
-2026-10-20 已使用微博 Cookie 补齐 [2026-05-26 至今的官方微博](data/weibo/2026-05-26_2026-10-20/README.md)：298 条帖子、1,278 张图片、203 条完整长文。直接查看 [S22—S23 的79份排班](data/weibo/2026-05-26_2026-10-20/比赛排班.csv)，或从[微博原件目录](data/raw/weibo/2026-05-26_2026-10-20_京城大师赛_UID7525583841/微博原件目录.csv)按发帖时间打开帖子、长文和配图。原件按发帖日期、时分秒、季期、内容类型和微博 ID 命名；列表漏出的243张图片已通过完整详情补齐。原始微博资料覆盖的赛程日期与当前47个正式比赛日口径不同；原题年份等历史说明保留在整理页。
-
-先打开新标准的 [法官复盘审阅页](data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/referee_recap.review.html)：只播放 52 秒复盘片段，保留原视频时间定位。[机器原稿](data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/referee_recap.机器原稿.txt)与整理稿分别保存；本次复核已确认“空过”和“自守”的含义，剩余异文仍附原始证据。
-
-此前最后一条 2:22:49、4,168 片段的[长样本](data/transcripts/S22/BV18W8B6KE7C_p01_funasr/README.md)保留作长音频压力样本，不再作为首个标准。该样本严格规则仅产生 1 段玩家发言候选；当前先解决最终复盘，完整发言分段后续推进。
-
-此前方案、模型研究、登录研究和试验记录已移到 [历史资料目录](docs/archive/README.md)。需要查依据时再读，避免多个“当前流程”同时生效。
-
-## 第一步的统一命令
-
-在 PowerShell 中执行：
+只启动已有网站：
 
 ```powershell
 Set-Location D:\langrensha
-python scripts/local_postgres.py start
-
-# 新采一条官方音轨：下载 → 校验 → 登记原始资料；默认匿名
-.\.venv\Scripts\python.exe scripts/collect_official_audio.py BV1tj8p6REqy
-
-# 已有音频时，离线校验并登记；不用重新下载
-.\.venv\Scripts\python.exe scripts/collect_official_audio.py BV1tj8p6REqy --register-existing
-
-# 只查看原始库，不混入转写、身份候选和正式统计
-.\.venv\Scripts\python.exe scripts/database.py raw-status
+.\.venv\Scripts\python.exe scripts/local_postgres.py start
+.\.venv\Scripts\python.exe website/run.py
 ```
 
-当前样板 `BV1tj8p6REqy` 已有约 49.6 MiB 的独立 AAC 音轨，已通过来源、文件和起始解码检查并登记原始库；没有下载完整视频。2026-10-20 复用本机已保存 Cookie 后，已取得平台 `ai-zh` 字幕轨，共 2,040 段，保存为 `data/raw/bilibili/BV1tj8p6REqy/p01/subtitle.01.raw.json`。本次没有打开浏览器或重跑模型。
+打开 <http://127.0.0.1:3000>；不需要重采、重转写或重新发布。
 
-登录态可复用：通过现有 Chrome 的 `chrome://inspect/#remote-debugging` 导出一次 Cookie，之后带 `--auth cookies --cookies-file .secrets/bilibili.cookies.txt` 采集即可，不启动浏览器。完整命令见[现有 Chrome 与 Cookie 复用](docs/02_第一步_官方媒体采集.md#4-使用谷歌-chrome-登录后采集)。
-
-早期转写、候选、复核文件和数据库试验数据保留。短标准结果放在 `data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr/`，不作为已核实对局事实入库。本轮全文结果使用独立的 `data/transcripts/S22/{BVID}_p01_funasr_full/`，并在按日期整理的音频旁导出 `.本地全文转写_funasr` 文件。积分榜和其他网站功能留到后面。
-
-## S22 整季归档
-
-该段记录媒体归档的历史采集范围：官方《曙光航纪》合集（ID 8209896）当时返回的163条音频，包括表演赛、正赛、决赛周和特辑。当前正式对局范围已收窄为148局，见上文“当前正式对局范围”。
-
-整理结果在 [data/seasons/S22](data/seasons/S22/README.md)，音频、字幕原件、SRT、带时间戳阅读文本和来源说明均使用包含日期、周次、阶段、局次、配置及 BV/CID 的文件名。音频整理副本使用硬链接，不重复占一份媒体空间。此处的163条是媒体与转写归档口径；7月3日3局娱乐局和11局表演赛不计入当前正式对局业务数据。
-
-`data/` 各目录的用途、字幕文件格式和本次清理结果见 [data 目录说明](data/README.md)。目前只保留和采集中文正文；整理目录只保留当前选用版本。
-
-2026-10-20 已完成该合集 **163/163 条音频**，约 228.19 小时、9.95 GB（9.267 GiB），全部通过来源、哈希、时长及起始解码检查并登记原始库。取得 **150 条中文字幕**：138 条未发现明显截短信号，12 条只覆盖部分内容；另 13 条经补查仍未取得中文字幕。后两类共 25 条已完成本地全文补转写，平台字幕原件与其筛查结论继续保留。执行记录见[全文补转写进度](data/reports/S22_全文补转写进度.json)。
-
-直接打开 [中文优先复核目录](data/seasons/S22/S22_中文优先复核目录.csv)：本轮 25 条按新增的“本地全文阅读版”路径阅读，其余条目按原“中文阅读版”阅读。[采集验收](data/reports/S22_采集验收.json)与[全文补转写验收](data/reports/S22_全文补转写验收.json)分别记录检查结论。平台字幕与本地机器稿均未人工校对，不能直接用于身份、票型或积分统计。
+继续处理一个赛季：
 
 ```powershell
-# 查看进度
-.\.venv\Scripts\python.exe scripts/collect_season.py status
-
-# 中断后继续：复用已完成文件及登录态，不启动浏览器
-.\.venv\Scripts\python.exe scripts/collect_season.py run --auth cookies --cookies-file .secrets/bilibili.cookies.txt --workers 2
+.\.venv\Scripts\python.exe scripts/workflow.py status --season S23
+.\.venv\Scripts\python.exe scripts/workflow.py plan --season S23
+# 按已授权的任务阶段执行；例如只核验网站
+.\.venv\Scripts\python.exe scripts/workflow.py run --season S23 --stage verify
 ```
 
-采集状态见 `data/reports/S22_采集进度.json`。字幕有无、是否疑似截短和目录日期/局次异常已在复核目录标记；采到文件不代表对局事实已经核验。命名与复核方式见[第一步操作手册](docs/02_第一步_官方媒体采集.md#9-s22-整季采集与信息命名)。
+`status`只读进度；`plan`预览命令；`run`执行指定阶段。新季身份推断与证据核对仍需逐局完成；微博独立采集，不包含在`collect`阶段内。实际进度写入报告，不另生成任务单。
+
+## 文件夹分工
+
+| 目录 | 职责与阅读入口 |
+| --- | --- |
+| [scripts](scripts/README.md) | 工作流入口和实现；日常只需`workflow.py`，需要定位实现再查职责索引 |
+| [config](config/README.md) | `seasons.json`统一赛季注册；正式范围、版型规则、模板及热词分开 |
+| [requirements](requirements/README.md) | Python依赖按主环境、网站、测试、可选OCR、ASR分组；ASR使用独立环境 |
+| [data](data/README.md) | 原始媒体、文字、证据、正式档案与发布输入；每个职责目录有说明 |
+| [website](website/README.md) | Next.js前端、只读API、快照发布和网站验收 |
+| [db](db/README.md) | PostgreSQL迁移；通过新增迁移演进，不改已执行迁移 |
+| [tests](tests/README.md) | 数据语义、采集来源、转写完整性和事务行为测试 |
+| [docs](docs/README.md) | 按当前任务选择手册，历史研究不作日常上下文 |
+| [outputs](outputs/README.md) | 模型对照、片段复听及可再生的展示／验收产物 |
+| [tmp](tmp/README.md) | 一次性调试和临时日志；不保存唯一证据或最终结论 |
+
+`.venv/`、`.venv-funasr39/`、`.models/`、`.tools/`是运行环境，`.local/`是本机数据库，`.secrets/`存本机凭据；不随普通Git克隆恢复，不作为临时文件清理。`.cache/`和`__pycache__/`才是可再生缓存，清理前确认没有任务在运行。
+
+## 配置与数据约定
+
+- 新季先在[赛季注册表](config/seasons.json)登记来源与适配，完成一局样板再批量；注册不等于已经实现该季全部规则。
+- 物理身份、个人胜利阵营、淘汰边分开；玩家自称不等于真实底牌。未知、未发动、不适用、禁止分别保存。
+- 原始证据、助手推断、用户确认和正式事实分层保存。业务术语见[CONTEXT](CONTEXT.md)。
+- 网站从磁盘正式JSON生成发布快照，不直接读取JCMS事实表；发布必须保留所有已有季。统一入口会检查活动批次中是否有本地缺失季。
+- `data/archive/`的哈希文件可能被数据库及复核引用；使用清理器的预览和引用检查，不按文件年代删。
+
+## 环境、检查与备份
+
+安装分组见[requirements说明](requirements/README.md)；主Python3.12与FunASR Python3.9的依赖不能混装。前端在`website/web`安装Node依赖。启动与生产构建细节见[网站手册](website/README.md)。
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests website/tests -q
+.\.venv\Scripts\python.exe scripts/backup_database.py
+.\.venv\Scripts\python.exe scripts/cleanup_data.py
+# 检查删除清单后才执行：scripts/cleanup_data.py --apply
+```
+
+本次结构整理记录在`data/reports/maintenance/2026-10-27/`。模型、媒体、数据库dump和登录设置保留本地；代码、规则、正式JSON和复核文字按项目Git约定保存。远程仓库：[fengmaker/LangRenSha](https://github.com/fengmaker/LangRenSha)。

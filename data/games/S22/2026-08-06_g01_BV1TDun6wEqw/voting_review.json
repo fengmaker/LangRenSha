@@ -5,53 +5,422 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "c0b996ffb1838aaf41659ba90ee33366fd5e2bd841e8cf6c44fba0c5f5b08779",
-  "question_count": 1,
-  "pending_count": 5,
-  "questions": [
+  "facts_sha256": "a174bc9c48e4bbae3a300b546bdc5178ad93b0bf79a0dc231290ccf2f7c10016",
+  "causal_decisions": [
     {
-      "id": "vote-BV1TDun6wEqw-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1TDun6wEqw-ballot-1-pk_first_missing",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "首轮警长初投完整且为2比2平票：警下2、5、6、10分别投7、7、3、3；随后才进入3/7的PK票。",
+      "reason": "登记明确警下投票者恰为2、5、6、10；2.02M首轮逐一唱出这四票，2/5投7、6/10投3，候选人3/7均未参与，形成2比2。2.37M随后由十名非候选人参加，是真正PK票。因此缺失的是一轮初投记录，不是PK中第一轮，也无缺失投向。",
+      "source_spans": [
+        {
+          "start_ms": 2339460,
+          "end_ms": 2419090,
+          "quote": "我看投票\n因为现在我觉得六肯定是狼人团队的\n3号六号是两个\n所以你们这边如果说是没有狼混的话\n就就是开两个\n如果是有狼混的话\n我再听一下其他位置应该应该不产狼了\n特别是3号玩家后面对2号玩家也有对话\n然后后面又把5号玩家单十秒\n所以我是觉得4号一号肯定我警上\n听完发言我应该是能排掉\n所以就这几个位置吧\n希望希望预言家能吃到警徽吧\n就这样吧\n过来pk环节发言结束\n请除3号七号玩家外\n其余玩家请带亏\n在3号七号玩家中选出本游戏警长\n321请出票\n一号投给7号\n2号投给7号\n4号投给3号\n5号\n投给7号\n6号投给3号\n8号\n投给7号\n9号投给3号\n10号\n投给3号\n11号\n投给3号\n12号\n投给7号\n投票结束\n五票比五票再次平票\n本游戏警徽流失\n所有玩家请别蓝灯\n所以信息平安夜\n根据随机点数九由9号玩家开始顺序发言\n10号玩家做反准备\n9号玩家请发言"
+        },
+        {
+          "start_ms": 2021219,
+          "end_ms": 2034100,
+          "quote": "321请出票咳\n2号投给7号\n5号投给7号\n6号投给3号\n10号投给3号\n投票结束\n3号七号平票pk"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1TDun6wEqw-ballot-1-pk_first_missing",
+        "code": "pk_first_missing",
+        "day": 1,
+        "target": "ballot-1",
+        "title": "平票前的票型未记录",
+        "reason": "原文明确为PK后投票，现档案尚缺平票前的票型。",
+        "severity": "question",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
+            "start_ms": 2339460,
+            "end_ms": 2419090,
+            "quote": "我看投票\n因为现在我觉得六肯定是狼人团队的\n3号六号是两个\n所以你们这边如果说是没有狼混的话\n就就是开两个\n如果是有狼混的话\n我再听一下其他位置应该应该不产狼了\n特别是3号玩家后面对2号玩家也有对话\n然后后面又把5号玩家单十秒\n所以我是觉得4号一号肯定我警上\n听完发言我应该是能排掉\n所以就这几个位置吧\n希望希望预言家能吃到警徽吧\n就这样吧\n过来pk环节发言结束\n请除3号七号玩家外\n其余玩家请带亏\n在3号七号玩家中选出本游戏警长\n321请出票\n一号投给7号\n2号投给7号\n4号投给3号\n5号\n投给7号\n6号投给3号\n8号\n投给7号\n9号投给3号\n10号\n投给3号\n11号\n投给3号\n12号\n投给7号\n投票结束\n五票比五票再次平票\n本游戏警徽流失\n所有玩家请别蓝灯\n所以信息平安夜\n根据随机点数九由9号玩家开始顺序发言\n10号玩家做反准备\n9号玩家请发言"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
           "start_ms": 2339460,
           "end_ms": 2419090,
-          "quote": "我看投票\n因为现在我觉得六肯定是狼人团队的\n3号六号是两个\n所以你们这边如果说是没有狼混的话\n就就是开两个\n如果是有狼混的话\n我再听一下其他位置应该应该不产狼了\n特别是3号玩家后面对2号玩家也有对话\n然后后面又把5号玩家单十秒\n所以我是觉得4号一号肯定我警上\n听完发言我应该是能排掉\n所以就这几个位置吧\n希望希望预言家能吃到警徽吧\n就这样吧\n过来pk环节发言结束\n请除3号七号玩家外\n其余玩家请带亏\n在3号七号玩家中选出本游戏警长\n321请出票\n一号投给7号\n2号投给7号\n4号投给3号\n5号\n投给7号\n6号投给3号\n8号\n投给7号\n9号投给3号\n10号\n投给3号\n11号\n投给3号\n12号\n投给7号\n投票结束\n五票比五票再次平票\n本游戏警徽流失\n所有玩家请别蓝灯\n所以信息平安夜\n根据随机点数九由9号玩家开始顺序发言\n10号玩家做反准备\n9号玩家请发言"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1TDun6wEqw-ballot-1-pk_first_missing",
-      "code": "pk_first_missing",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "PK前的首轮票型未记录",
-      "reason": "原文明确为PK后投票，现档案尚缺前一轮票型。",
-      "severity": "question",
-      "evidence": [
+          "quote": "10号顺验8号九号\n我看投票\n因为现在我觉得六肯定是狼人团队的\n3号六号是两个\n所以你们这边如果说是没有狼混的话\n就就是开两个\n如果是有狼混的话\n我再听一下其他位置应该应该不产狼了\n特别是3号玩家后面对2号玩家也有对话\n然后后面又把5号玩家单十秒\n所以我是觉得4号一号肯定我警上\n听完发言我应该是能排掉\n所以就这几个位置吧\n希望希望预言家能吃到警徽吧\n就这样吧\n过来pk环节发言结束\n请除3号七号玩家外\n其余玩家请带亏\n在3号七号玩家中选出本游戏警长\n321请出票\n一号投给7号\n2号投给7号\n4号投给3号\n5号\n投给7号\n6号投给3号\n8号\n投给7号\n9号投给3号\n10号\n投给3号\n11号\n投给3号\n12号\n投给7号\n投票结束\n五票比五票再次平票\n本游戏警徽流失\n所有玩家请别蓝灯\n所以信息平安夜\n根据随机点数九由9号玩家开始顺序发言\n10号玩家做反准备\n9号玩家请发言"
+        },
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
-          "start_ms": 2339460,
-          "end_ms": 2419090,
-          "quote": "我看投票\n因为现在我觉得六肯定是狼人团队的\n3号六号是两个\n所以你们这边如果说是没有狼混的话\n就就是开两个\n如果是有狼混的话\n我再听一下其他位置应该应该不产狼了\n特别是3号玩家后面对2号玩家也有对话\n然后后面又把5号玩家单十秒\n所以我是觉得4号一号肯定我警上\n听完发言我应该是能排掉\n所以就这几个位置吧\n希望希望预言家能吃到警徽吧\n就这样吧\n过来pk环节发言结束\n请除3号七号玩家外\n其余玩家请带亏\n在3号七号玩家中选出本游戏警长\n321请出票\n一号投给7号\n2号投给7号\n4号投给3号\n5号\n投给7号\n6号投给3号\n8号\n投给7号\n9号投给3号\n10号\n投给3号\n11号\n投给3号\n12号\n投给7号\n投票结束\n五票比五票再次平票\n本游戏警徽流失\n所有玩家请别蓝灯\n所以信息平安夜\n根据随机点数九由9号玩家开始顺序发言\n10号玩家做反准备\n9号玩家请发言"
+          "start_ms": 2021219,
+          "end_ms": 2034100,
+          "quote": "9号12号玩家中选出本就是警长\n321请出票咳\n2号投给7号\n5号投给7号\n6号投给3号\n10号投给3号\n投票结束\n3号七号平票pk\n其余玩家变蓝灯"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "两轮投票均平票，平安日，无人被放逐。"
     },
     {
-      "id": "vote-BV1TDun6wEqw-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号被放逐。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 4,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          6
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          4,
+          8,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          4,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
       "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "vote_count": 10,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-4",
+      "day": 2,
+      "living": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "living_count": 10,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "vote_count": 10,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-5",
+      "day": 4,
+      "living": [
+        2,
+        4,
+        8,
+        10,
+        11
+      ],
+      "living_count": 5,
+      "eligible_voters": [
+        2,
+        4,
+        8,
+        10,
+        11
+      ],
+      "vote_count": 5,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "ballot-5",
+      "field": "day",
+      "before": 3,
+      "after": 4,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    },
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 2,
+      "after": 3,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "peaceful_tie",
+      "exile_note": "两轮投票均平票，平安日，无人被放逐。",
       "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
+          "start_ms": 4656900,
+          "end_ms": 4735380,
+          "quote": "3号玩家今天只读的一号牌\n6号玩家\n你说从表情上看\n一号玩家不是狼\n那3号玩家只读一号\n为什么警下还是钢铁站边3号呢对吧\n包括10号玩家都是用一些很表情的东西\n就是我看的看着他的表情\n12的表情像狼\n一号6号玩家说看着一号玩家表情是狼\n但是从逻辑面上\n没有任何一条逻辑能说服我去站边\n你们团队好吧\n所以我应该还是投3号啊\n过了所有玩家发言结束\n请各位玩家带盔做好投票准备\n各位玩家请自行投票\n唱票结束前请不要放手\n321请出票\n一号投给3号\n2号投给12号\n3号投给12号\n4号投给12号\n5号投给3号\n6号投给12号\n7号投给3号\n8号投给3号\n9号投给3号\n10号投给12号\n11号投给12号\n12号投给3号\n投票结束\n456812346票比六票\n3号12号平票pk\n请3号玩家先发言\n9号变飘了\n我确实没想到\n那你应该不是狼吧\n8号他说7号不应该就是7号"
+        },
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
           "start_ms": 5051470,
@@ -61,13 +430,9 @@
       ]
     },
     {
-      "id": "vote-BV1TDun6wEqw-ballot-4-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 2,
-      "target": "ballot-4",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "outcome": "exiled",
+      "exile_note": "7号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
@@ -78,13 +443,15 @@
       ]
     },
     {
-      "id": "vote-BV1TDun6wEqw-ballot-5-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 3,
-      "target": "ballot-5",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取5条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "outcome": "self_destruct",
+      "exile_note": "5号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
@@ -93,68 +460,9 @@
           "quote": "底牌是张猎人牌\n所以8号经历的善意\n跟11跟经历的那个这个\n这个这个我觉得很难构例\n为11做那个倒钩狼对吧\n十一十二\n毕竟咱们这个还是狼人杀逻辑以外\n还有这个人性\n我希望我还反而希望你今天让我刮目相看的\n所以我很难是逆着八的轮次去\n优先把11投掉啊\n我会投8号\n我不会压手哦\n我过了所有玩家发言结束\n请各位玩家带盔做好投票准备\n本局游戏情会流失\n各位玩家请自行投票\n唱票结束前不要放手\n321请出票\n2号投给8号\n4号投给8号\n8号投给11号\n10号投给8号\n11号投给8号\n投票结束\n8号玩家高票出局\n游戏结束\n好人阵营获胜\n太变态了\n太能演了\n那天我以为你哎你看到他哭的人\n不是看他看他老年了都有点没对"
         }
       ]
-    },
-    {
-      "id": "vote-BV1TDun6wEqw-day-4-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 4,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第01局_预女猎白混__BV1TDun6wEqw_P01_CID40662798200.平台AI字幕_ai-zh_01_54504dc715.原始.json",
-          "start_ms": 8452500,
-          "end_ms": 8462920,
-          "quote": "9号猎人出局后开枪带走一号混血儿\n在第四天白天场上最后一狼8号被公投出局\n游戏结束\n好人阵营获胜\n以上是我们今天第一局版型",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 1,
-      "pending_count": 2,
-      "question_ids": [
-        "vote-BV1TDun6wEqw-ballot-1-eligibility_unknown",
-        "vote-BV1TDun6wEqw-ballot-1-pk_first_missing",
-        "vote-BV1TDun6wEqw-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1TDun6wEqw-ballot-4-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1TDun6wEqw-ballot-5-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 4,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1TDun6wEqw-day-4-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "64e7f5b630291aefa2ab0162c3c610cf9f563d4412d0d78e2f6ffddda913d59b",
+  "voting_sha256": "5e4a1f1d9086df8fd4dcdff5617eb32287a0e00484a6b7470552fba7a74f7d7b",
   "source_sha256": "54504dc715e9add2f2dc1b7e30370089c00fc75ef017f3bb366cc05b183f217f"
 }

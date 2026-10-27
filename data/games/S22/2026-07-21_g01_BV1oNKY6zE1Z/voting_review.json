@@ -5,122 +5,315 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "bf970a305fd261a685e61f2d56e189cab6cea41c6dd0eb368a31187129851503",
-  "question_count": 2,
-  "pending_count": 3,
-  "questions": [
+  "facts_sha256": "541fe0355349d5dc4343ba05653d02adb03fba94c2030b52421e171e62077ae6",
+  "causal_decisions": [
     {
-      "id": "vote-BV1oNKY6zE1Z-ballot-3-stage_unknown",
-      "code": "stage_unknown",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "本轮投票阶段待核",
-      "reason": "现有证据还不足以确定是首轮、PK后还是技能重投；需要核对前轮和发言衔接。\n逐段核对：现有复盘没有将9号这张票直接标注到某天，不能按剩余轮次推定；也没有足够PK阶段口令。",
-      "severity": "question",
+      "question_id": "vote-BV1oNKY6zE1Z-ballot-3-day_disputed",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第3天确有放逐投票，且该轮就是现存 ballot-3。",
+      "reason": "整局转写在本段先宣布自由投票，再逐个唱出1→9、2→9、3→9、4→12、9→12、12→9，随后宣布9号4票出局、好人获胜。与第3天日期和投票号一致，未见错日。",
+      "source_spans": [
+        {
+          "start_ms": 5189555,
+          "end_ms": 5246395,
+          "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1oNKY6zE1Z-ballot-3-day_disputed",
+        "code": "day_disputed",
+        "day": 3,
+        "target": "ballot-3",
+        "title": "当前游戏日仍需核对",
+        "reason": "现有复盘没有将9号这张票直接标注到某天，不能按剩余轮次推定；也没有足够PK阶段口令。",
+        "severity": "question",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
+            "start_ms": 5189555,
+            "end_ms": 5246395,
+            "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
           "start_ms": 5189555,
           "end_ms": 5246395,
-          "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
+          "quote": "但是也不怪你们，\n因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，\n五号猎人八号白神二号、狼人六号、九号、十号、十一号、平民一号、三号、十二号本游戏的混血儿，"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1oNKY6zE1Z-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取6条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
-          "start_ms": 5189555,
-          "end_ms": 5246395,
-          "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1oNKY6zE1Z-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
-          "start_ms": 5276345,
-          "end_ms": 5283205,
-          "quote": "十一号玩家为狼人身份。\n第二天白天，\n六号将警徽撕掉十一号狼人，\n自爆，\n入夜狼人击杀。",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1oNKY6zE1Z-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
-    },
-    {
-      "id": "vote-BV1oNKY6zE1Z-ballot-3-day_disputed",
-      "code": "day_disputed",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "当前游戏日仍需核对",
-      "reason": "现有复盘没有将9号这张票直接标注到某天，不能按剩余轮次推定；也没有足够PK阶段口令。",
-      "severity": "question",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
-          "start_ms": 5189555,
-          "end_ms": 5246395,
-          "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
-        }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
-      "question_count": 2,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1oNKY6zE1Z-ballot-3-stage_unknown",
-        "vote-BV1oNKY6zE1Z-ballot-3-eligibility_unknown",
-        "vote-BV1oNKY6zE1Z-ballot-3-day_disputed"
-      ],
-      "exile_note": null
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1oNKY6zE1Z-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "11号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1oNKY6zE1Z-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          6,
+          7
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-3",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        12
+      ],
+      "living_count": 6,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        12
+      ],
+      "vote_count": 6,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "ballot-3",
+      "field": "day",
+      "before": 1,
+      "after": 3,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
+          "start_ms": 3477110,
+          "end_ms": 3550545,
+          "quote": "八号玩家既然是个死刀狼，\n自刀狼，\n他是一个女巫，\n然后我几挥我今验一号玩家一玩家毕竟投了匪票嘛，\n几家发言我其实跟我金水一样，\n我也没有特别能听懂。\n但是你至少说我可以是一个预言家，\n你把九十都踩一块儿了，\n我自己不觉得十号下是一个狼，\n因为手下底下是第一个位置，\n说七华下可能是狼混的，\n放心。\n到所有玩家发言结束，\n各位玩家请戴盔，\n做好投票准备。\n警长请归票，\n金掌归票八号，\n各位玩家请做好投票准备。\n三二一请冲票，\n一号投给十号，\n二号投给八号三号投给十号，\n四号投给六号，\n五号投给六号，\n六号投给八号七号投给十号，\n八号投给十号，\n九号投给八号十号投给八号十一号投给八号十二号投给八号投票结束嗯，\n是八号玩家六点五票出局，\n请发表遗言。\n好像输了吧，\n试过，\n感觉好像没人能骗我，\n我感觉是输了呀，\n应该是胶牌了吧。"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-21/2026-07-21_S22_第09周_正赛第08期_第01局_预女猎白混__BV1oNKY6zE1Z_P01_CID40170687592.本地全文转写_funasr.json",
+          "start_ms": 5189555,
+          "end_ms": 5246395,
+          "quote": "因为毕竟是我投错票在先，\n我就把我的理由阐述清楚好吧，\n然后投就投十二号，\n实在不行，\n你们嗯哎算了，\n自己投吧，\n我也没有办法要安排安排平票好吗？\n再不济看你们三号是认三号是好人，\n参考一下三号的意见。\n二号。\n你觉得我是想你压个手好吧，\n因为我真没觉得你狼狼，\n所以说跟你这样过了。\n今晚的发言，\n束束各位玩家请戴亏，\n做好投票准备。\n本游戏警徽流失做玩家，\n请自由投票。\n三二一请冲票一号投给九号，\n二号投给九号，\n三号投给九号，\n四号投给十二号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四票出局，\n游戏结束好人正赢获胜。\n嗯，\n好，\n第一局游戏结束了。\n本局游戏御女猎白混血版型，\n预言家七号、女巫，"
+        }
+      ]
+    }
+  ],
   "accepted_changes": [
     {
       "id": "BV1oNKY6zE1Z-registration",
@@ -158,6 +351,6 @@
       ]
     }
   ],
-  "voting_sha256": "436603538a15e3f6999f659bf3e37d2fd0e1e5d0300e9216c7f632791ef656d9",
+  "voting_sha256": "04acf57758d485449aa81751866eac2132b154042df24e21acd3af801a709eec",
   "source_sha256": "809bc6118646322ceda581dd926eb51de6b8d0123525628f090a2f64d61dfce2"
 }

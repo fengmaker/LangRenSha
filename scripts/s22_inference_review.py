@@ -13,6 +13,7 @@ import zipfile
 import batch_s22 as batch
 from game_records import validate, validate_batch
 from game_scope import exclusion_reason
+from formal_rule_checks import has_unresolved_departures, registry
 from s22_text_review import make_round
 from s22_review_server import save_item
 
@@ -25,7 +26,7 @@ def normalized(text):
     return re.sub(r'[\W_]+', '', str(text))
 
 
-def changed_value(original, changes):
+def changed_value(original, changes, *, allow_legacy_treasure_faction=False):
     value = copy.deepcopy(original)
     for change in changes:
         kind = change['kind']
@@ -58,7 +59,8 @@ def changed_value(original, changes):
             raise ValueError('非法修正类型：' + str(kind))
     # Historical plans are replayed against their original structural contract.
     # Current saves/imports separately enforce the latest confirmed rules.
-    validate_batch(value, check_rules=False)
+    validate_batch(value, check_rules=False,
+                   allow_legacy_treasure_faction=allow_legacy_treasure_faction)
     return value
 
 
@@ -66,6 +68,11 @@ def changed_value(original, changes):
 def semantic_issues(value):
     """Cross-check known facts; current-night damage does not block same-night skills."""
     departed, issues, medicines = set(), [], {}
+    seats = {p.get("seat"): p for p in value.get("seats", []) if isinstance(p, dict)}
+    treasure = next((p for p in seats.values() if p.get("role") == "盗宝大师"), None)
+    takeover_roles = set(registry()["boards"]["treasure_master"]["board_rules"]
+                        ["ordinary_wolf_knife_takeover"]["after_all_identity_roles_departed"])
+    uncertain_departure_history = False
     previous_choices, danced, self_destructed = {}, set(), set()
     active = {"guard", "check", "poison", "save", "learn", "exchange", "dream", "choose", "verify", "give_mask", "dance", "attack"}
     for round_ in value["rounds"]:
@@ -84,6 +91,13 @@ def semantic_issues(value):
                 danced.update(event['targets'])
             if value.get('board') == 'treasure_master' and number == 1 and slot == 'wolf_attack' and action != 'forbidden':
                 issues.append('盗宝大师版型首夜必须记录规则禁刀')
+            if (number > 1 and value.get('board') == 'treasure_master' and slot == 'wolf_attack'
+                    and action in {'attack', 'pass'} and treasure
+                    and event.get('actor') == treasure.get('seat')
+                    and any(p.get('role') in takeover_roles and p.get('seat') not in departed for p in seats.values())
+                    and not uncertain_departure_history
+                    and all(p.get('role') is not None for p in seats.values())):
+                issues.append(f'第{number}夜其他初始狼队成员（狼人、狼王）仍存活，盗宝大师不能接替普通狼刀')
             if event["action"] in active:
                 if event["actor"] in departed:
                     issues.append(f"第{number}夜{event['slot']}行动者前轮已出局")
@@ -104,6 +118,8 @@ def semantic_issues(value):
                     issues.append(f"第{number}天同一狼人重复自爆")
                 self_destructed.add(event['actor'])
                 departed.add(event["actor"])
+        if value.get('board') == 'treasure_master' and has_unresolved_departures(round_):
+            uncertain_departure_history = True
     for slot, uses in medicines.items():
         if len(uses) > 1:
             issues.append(f"一次性{slot}重复用于轮次{uses}")
@@ -159,7 +175,7 @@ def later_rule_alignment_valid(bvid, old_hash, current_hash, cache):
             or not current_path.is_relative_to((batch.ROOT / 'data/games/S22').resolve())
             or batch.digest(before_path) != old_hash or batch.digest(current_path) != current_hash):
         return False
-    if changed_value(batch.read_json(before_path), row['changes']) != batch.read_json(current_path):
+    if changed_value(batch.read_json(before_path), row['changes'], allow_legacy_treasure_faction=True) != batch.read_json(current_path):
         return False
     if not row.get('evidence'):
         return False
@@ -222,7 +238,7 @@ def check():
                         before = json.loads(snapshot.read(entry['output_dir'] + '/dossier.json').decode('utf-8-sig'))
                 else:
                     before = batch.read_json(folder / 'dossier.json')
-                after = changed_value(before, game.get('changes', []))
+                after = changed_value(before, game.get('changes', []), allow_legacy_treasure_faction=True)
                 content_errors = semantic_issues(after)
                 if content_errors:
                     raise ValueError('内容交叉检查：' + '；'.join(content_errors))
@@ -236,7 +252,7 @@ def check():
               'pending': sum(not d['resolved'] for g in games for d in g['decisions'] if d['id'] in g['original_question_ids']),
               'additional_findings': sum(d['id'] not in g['original_question_ids'] for g in games for d in g['decisions']),
               'changed_games': sum(g['changed'] for g in games),
-              'content_cross_checks': 'prior_departures, living_targets, one_medicine_per_night, one_time_medicines, repeated_night_deaths, repeated_self_destruct, unique_dance_participants, consecutive_mask_verify_and_card_choices, treasure_first_night_forbidden',
+              'content_cross_checks': 'prior_departures, living_targets, one_medicine_per_night, one_time_medicines, repeated_night_deaths, repeated_self_destruct, unique_dance_participants, consecutive_mask_verify_and_card_choices, treasure_first_night_forbidden, treasure_knife_after_all_ordinary_wolves_depart',
               'plan_hashes': plan_hashes,
               'source_hashes': {batch.relative(p): batch.digest(p) for p in cache},
               'errors': errors, 'warnings': warnings}

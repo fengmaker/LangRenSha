@@ -8,6 +8,7 @@ type SeatGroup = "werewolf" | "special" | "civilian" | "review";
 const goodSpecialRoles = new Set([
   "白痴",
   "白神",
+  "白泽",
   "盗宝大师",
   "典狱长",
   "定序王子",
@@ -56,30 +57,32 @@ function personalFaction(seat: Seat): string {
   return "阵营待核";
 }
 
-function SeatCard({ seat, number, rounds }: { seat?: Seat; number: number; rounds?: GameRound[] }) {
+function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: number; rounds?: GameRound[]; season?: string }) {
   const group = groupForSeat(seat);
   const cardStyle = group === "werewolf" ? styles.wolfCard : group === "special" ? styles.specialCard : group === "civilian" ? styles.civilianCard : styles.reviewCard;
   const target = seat ? hybridTarget(seat, rounds) : null;
   const name = seat?.name || "姓名未知";
   const note = seat?.role === "混血儿"
-    ? `榜样：${target == null ? "待核" : `${target}号`} · 个人阵营：${personalFaction(seat)}。底牌仍为混血儿，不获得榜样能力。`
+    ? `榜样：${target == null ? "待核" : `${target}号`} · 个人阵营：${personalFaction(seat)}。`
     : seat?.role === "机械狼"
       ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
       : seat?.learning_target != null || seat?.learned_role
         ? [seat.learning_target != null ? `记录目标：${seat.learning_target}号` : "", seat.learned_role ? `学习身份：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
         : "";
 
-  return <article className={`${styles.seatCard} ${cardStyle}`} data-seat={number} data-faction={seat?.faction ?? "unknown"} data-role={seat?.role ?? "unknown"}>
+  return <article className={`${styles.seatCard} ${cardStyle} ${note ? styles.hasNote : ""}`} data-seat={number} data-faction={seat?.faction ?? "unknown"} data-role={seat?.role ?? "unknown"}>
     <div className={styles.seatTop}>
       <span className={styles.seatNumber}>{String(number).padStart(2, "0")}</span>
       <span className={styles.seatFaction}>{seat ? factionLabel(seat.faction) : "座位记录缺失"}</span>
     </div>
-    <h3 className={styles.seatName}>
-      {seat?.person_id
-        ? <Link href={`/players/${encodeURIComponent(seat.person_id)}`}>{name}</Link>
-        : name}
-    </h3>
-    <p className={styles.seatRole}>{seat?.role || "身份未知"}</p>
+    <div className={styles.seatIdentity}>
+      <h3 className={styles.seatName}>
+        {seat?.person_id
+          ? <Link href={`/players/${encodeURIComponent(seat.person_id)}${season ? `?season=${encodeURIComponent(season)}` : ""}`}>{name}</Link>
+          : name}
+      </h3>
+      <p className={styles.seatRole}>{seat?.role || "身份未知"}</p>
+    </div>
     {note ? <p className={styles.seatNote}>{note}</p> : null}
   </article>;
 }
@@ -90,7 +93,7 @@ const columns: { key: Exclude<SeatGroup, "review">; title: string; className: st
   { key: "civilian", title: "平民阵营", className: styles.civilianColumn },
 ];
 
-export function SeatGrid({ seats, rounds }: { seats: Seat[]; rounds?: GameRound[] }) {
+export function SeatGrid({ seats, rounds, season }: { seats: Seat[]; rounds?: GameRound[]; season?: string }) {
   const bySeat = new Map<number, Seat>();
   for (const seat of seats) {
     if (seat.seat >= 1 && seat.seat <= 12 && !bySeat.has(seat.seat)) bySeat.set(seat.seat, seat);
@@ -113,7 +116,7 @@ export function SeatGrid({ seats, rounds }: { seats: Seat[]; rounds?: GameRound[
           <span className={styles.columnCount}>{groups[column.key].length} 席</span>
         </header>
         {groups[column.key].length
-          ? <div className={styles.seatList}>{groups[column.key].map(({ seat, number }) => <SeatCard key={number} seat={seat} number={number} rounds={rounds} />)}</div>
+          ? <div className={styles.seatList}>{groups[column.key].map(({ seat, number }) => <SeatCard key={number} seat={seat} number={number} rounds={rounds} season={season} />)}</div>
           : <p className={styles.emptyGroup}>暂无已确认座位</p>}
       </section>)}
     </div>
@@ -124,7 +127,7 @@ export function SeatGrid({ seats, rounds }: { seats: Seat[]; rounds?: GameRound[
         <span className={styles.columnCount}>{groups.review.length} 席</span>
       </header>
       {groups.review.length
-        ? <div className={styles.reviewList}>{groups.review.map(({ seat, number }) => <SeatCard key={number} seat={seat} number={number} rounds={rounds} />)}</div>
+        ? <div className={styles.reviewList}>{groups.review.map(({ seat, number }) => <SeatCard key={number} seat={seat} number={number} rounds={rounds} season={season} />)}</div>
         : <p className={styles.emptyGroup}>没有待核座位。</p>}
     </section> : null}
   </section>;

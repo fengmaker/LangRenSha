@@ -43,11 +43,546 @@
     3685090
   ],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+  "day_crosscheck_changes": [
+    {
+      "target": "ballot-2",
+      "field": "day",
+      "before": 3,
+      "after": 4,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    },
+    {
+      "target": "ballot-1",
+      "field": "day",
+      "before": 3,
+      "after": 4,
+      "reason": "相邻PK或技能重投与同一日的已核放逐结果衔接。"
+    },
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 2,
+      "after": 3,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-08-13_g01_BV1GXgW6HEmA/复核记录.json",
+    "sha256": "7641976ab0bdedcf09667c7373f176eeb35223cf6b028b617baacc03e2086d61",
+    "recap_segments": [
+      {
+        "start_ms": 4075120,
+        "end_ms": 4078160,
+        "text": "因为你得向他们砍陈水好"
+      },
+      {
+        "start_ms": 4078160,
+        "end_ms": 4080240,
+        "text": "给各位藏宝师们做下本就戏的复盘"
+      },
+      {
+        "start_ms": 4080240,
+        "end_ms": 4082320,
+        "text": "本剧版行为玉女猎白混血儿神志营"
+      },
+      {
+        "start_ms": 4082320,
+        "end_ms": 4083400,
+        "text": "原家一号女巫"
+      },
+      {
+        "start_ms": 4083400,
+        "end_ms": 4084120,
+        "text": "9号猎人"
+      },
+      {
+        "start_ms": 4084120,
+        "end_ms": 4084960,
+        "text": "12号白神"
+      },
+      {
+        "start_ms": 4084960,
+        "end_ms": 4089110,
+        "text": "2号狼人阵营4号五号六号十号平民阵营"
+      },
+      {
+        "start_ms": 4089110,
+        "end_ms": 4092450,
+        "text": "3号七号八号混血儿11号"
+      },
+      {
+        "start_ms": 4092450,
+        "end_ms": 4094330,
+        "text": "本局游戏为好人混"
+      },
+      {
+        "start_ms": 4094330,
+        "end_ms": 4097890,
+        "text": "首页混血儿选择12号猎人为榜样"
+      },
+      {
+        "start_ms": 4097890,
+        "end_ms": 4099490,
+        "text": "形成好人混狼队"
+      },
+      {
+        "start_ms": 4099490,
+        "end_ms": 4100870,
+        "text": "击杀3号平民"
+      },
+      {
+        "start_ms": 4100870,
+        "end_ms": 4101650,
+        "text": "扭腰救起"
+      },
+      {
+        "start_ms": 4101650,
+        "end_ms": 4102620,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 4102620,
+        "end_ms": 4106120,
+        "text": "预言家验证了2号玩家白神为好人身份"
+      },
+      {
+        "start_ms": 4106120,
+        "end_ms": 4107380,
+        "text": "警上竞选环节"
+      },
+      {
+        "start_ms": 4107380,
+        "end_ms": 4111090,
+        "text": "6号狼人选择自爆入夜狼队击杀9号女巫"
+      },
+      {
+        "start_ms": 4111090,
+        "end_ms": 4112930,
+        "text": "女巫毒杀4号狼人"
+      },
+      {
+        "start_ms": 4112930,
+        "end_ms": 4114490,
+        "text": "4号九号双死"
+      },
+      {
+        "start_ms": 4114490,
+        "end_ms": 4117610,
+        "text": "预言家验证了3号玩家平民为好人身份"
+      },
+      {
+        "start_ms": 4117610,
+        "end_ms": 4119150,
+        "text": "在延期竞选环节"
+      },
+      {
+        "start_ms": 4119150,
+        "end_ms": 4120910,
+        "text": "4号狼人吞毒自爆"
+      },
+      {
+        "start_ms": 4120910,
+        "end_ms": 4125270,
+        "text": "本就游戏警徽流失入夜狼队击杀一号预言家"
+      },
+      {
+        "start_ms": 4125270,
+        "end_ms": 4127870,
+        "text": "预言家验证10号玩家为狼人身份"
+      },
+      {
+        "start_ms": 4127870,
+        "end_ms": 4130610,
+        "text": "一号预言家单死在第三天白天"
+      },
+      {
+        "start_ms": 4130610,
+        "end_ms": 4133170,
+        "text": "10号狼人选择自爆入夜"
+      },
+      {
+        "start_ms": 4133170,
+        "end_ms": 4135910,
+        "text": "狼队击杀12号猎人"
+      },
+      {
+        "start_ms": 4135910,
+        "end_ms": 4139500,
+        "text": "12号猎人出局后开枪带走8号平民"
+      },
+      {
+        "start_ms": 4139500,
+        "end_ms": 4141220,
+        "text": "在第四天白天"
+      },
+      {
+        "start_ms": 4141220,
+        "end_ms": 4144140,
+        "text": "11号混血儿被扛推出局后"
+      },
+      {
+        "start_ms": 4144140,
+        "end_ms": 4145200,
+        "text": "狼队拍刀"
+      },
+      {
+        "start_ms": 4145200,
+        "end_ms": 4147239,
+        "text": "2号白神拍刀成功"
+      },
+      {
+        "start_ms": 4147239,
+        "end_ms": 4147979,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 4147979,
+        "end_ms": 4149539,
+        "text": "狼队阵营屠蛇获胜"
+      },
+      {
+        "start_ms": 4149539,
+        "end_ms": 4151259,
+        "text": "以上是我们今天第一局版型"
+      },
+      {
+        "start_ms": 4151259,
+        "end_ms": 4152819,
+        "text": "预女猎白混血儿的全部内容"
+      },
+      {
+        "start_ms": 4152819,
+        "end_ms": 4154899,
+        "text": "再次感谢各位弹幕老师的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [
+    {
+      "kind": "wolf_rush",
+      "day": 4,
+      "actor": null,
+      "declared_targets": [
+        2
+      ],
+      "result": "werewolf_win",
+      "note": "第四天11号被放逐后狼队拍刀，2号白神拍刀成功，法官播报狼队屠蛇获胜。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 4139500,
+          "end_ms": 4151259,
+          "quote": "在第四天白天\n11号混血儿被扛推出局后\n狼队拍刀\n2号白神拍刀成功\n游戏结束\n狼队阵营屠蛇获胜\n以上是我们今天第一局版型"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          4,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          5,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          5,
+          7,
+          8,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          5,
+          7
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "endgame",
+      "after_day": 4,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-1",
+      "day": 4,
+      "living": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "living_count": 5,
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "vote_count": 5,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-2",
+      "day": 4,
+      "living": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "living_count": 5,
+      "eligible_voters": [
+        2,
+        3,
+        7
+      ],
+      "vote_count": 3,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 6,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 4101650,
+          "end_ms": 4114490,
+          "quote": "形成平安夜\n预言家验证了2号玩家白神为好人身份\n警上竞选环节\n6号狼人选择自爆入夜狼队击杀9号女巫\n女巫毒杀4号狼人\n4号九号双死"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 4112930,
+          "end_ms": 4133170,
+          "quote": "4号九号双死\n预言家验证了3号玩家平民为好人身份\n在延期竞选环节\n4号狼人吞毒自爆\n本就游戏警徽流失入夜狼队击杀一号预言家\n预言家验证10号玩家为狼人身份\n一号预言家单死在第三天白天\n10号狼人选择自爆入夜"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 4,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 4112930,
+          "end_ms": 4133170,
+          "quote": "4号九号双死\n预言家验证了3号玩家平民为好人身份\n在延期竞选环节\n4号狼人吞毒自爆\n本就游戏警徽流失入夜狼队击杀一号预言家\n预言家验证10号玩家为狼人身份\n一号预言家单死在第三天白天\n10号狼人选择自爆入夜"
+        }
+      ]
+    }
+  ],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "6号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "4号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "exiled",
+      "exile_note": "11号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 3657530,
+          "end_ms": 3716750,
+          "quote": "这逻辑也不是很合理啊\n对吧嗯\n所以我自己觉得狼比较像5号\n而且2号有一点说的很对\n就是你不跳白痴\n我没有办法投5号\n就是你跳了白痴\n我才有办法投到5号\n不然他是单边神\n我确实投不了他呀\n我自己是混子牌\n就这样子吧\n我是混过所有玩家\n发言结束\n请各位戴盔做好投票准备\n本局游戏仅会流失\n各位玩家自行投票\n唱票结束前不要放手\n321请出票\n2号弃票\n3号投给11号\n5号投给11号\n7号投给5号\n11号投给5号\n投票结束\n5号11号平票pk\n请11号玩家先发言\n嗯就是该说的逻辑\n我刚pk台上已经说过了对吧\n哼3号五号都投我\n我自己底牌是或者3号\n你是纯种好人牌呀对吧"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第01局_预女猎白混__BV1GXgW6HEmA_P01_CID40882605395.平台AI字幕_ai-zh_01_669e8d28d2.原始.json",
+          "start_ms": 3970160,
+          "end_ms": 4026490,
+          "quote": "我看看后置位谁跟你跳\n猎人好人是不可能有这个视角的\n对不对\n他是是十\n一定不是猎人\n后面一定有猎人\n所以他昨天的行为就是\n提前在打十去做高自己的好人面\n所以11是红狼啊\n11是认识十的红狼\n然后就没了\n嗯那那个我跟2号玩家都讲清楚了\n你投吧\npk环节发言结束\n请除5号11号玩家\n外区玩家带盔\n在5号11号玩家中选出本轮游戏放逐目标\n带亏对\n321请出票\n2号投给11号\n3号投给11号\n7号投给5号\n投票结束\n11号玩家两票出局\n请发表遗言\n嘶唉不知道怎么说好吧\n诶你不是说我是混子混的\n12号\n我不说我是混子混的\n12号"
+        }
+      ]
+    }
+  ],
   "bvid": "BV1GXgW6HEmA",
   "source_sha256": "669e8d28d21cd6cc1c4566b952749615c7a18415f6a8847f976aaf7893572e12",
   "dossier_sha256": "c290b117d74577cac5083f7a75e862dda902647e6a59713a65a792458fd45937",
-  "generated_at": "2026-10-24T23:21:28+08:00",
+  "generated_at": "2026-10-25T04:08:41+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1GXgW6HEmA-p01-g01",
@@ -76,13 +611,19 @@
     "ballots": [
       {
         "id": "ballot-1",
-        "day": 3,
+        "day": 4,
         "kind": "exile",
         "number": 1,
         "stage": "initial",
-        "status": "partial",
+        "status": "complete",
         "candidates": null,
-        "eligible_voters": null,
+        "eligible_voters": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
         "votes": [
           {
             "voter": 2,
@@ -115,20 +656,24 @@
           11
         ],
         "winner": null,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       },
       {
         "id": "ballot-2",
-        "day": 3,
+        "day": 4,
         "kind": "exile",
         "number": 2,
         "stage": "pk",
-        "status": "partial",
+        "status": "complete",
         "candidates": [
           5,
           11
         ],
-        "eligible_voters": null,
+        "eligible_voters": [
+          2,
+          3,
+          7
+        ],
         "votes": [
           {
             "voter": 2,
@@ -147,14 +692,14 @@
           }
         ],
         "tied_candidates": [],
-        "winner": null,
-        "unrecorded_voters": null
+        "winner": 11,
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [
       {
         "id": "interruption-1",
-        "day": 2,
+        "day": 3,
         "actor": 10,
         "reason": "self_destruct",
         "ends_day": true
@@ -163,23 +708,23 @@
     "days": [
       {
         "day": 1,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "deferred",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "badge_lost",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "unknown",
-        "exile": "recorded"
+        "sheriff": "badge_lost",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 4,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "badge_lost",
+        "exile": "recorded"
       }
     ]
   }

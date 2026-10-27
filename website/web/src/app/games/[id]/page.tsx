@@ -70,7 +70,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
 
       <section className="detail-section" id="game-seats">
         <div className="section-heading"><div><h2>身份与座位</h2><p className="section-subtitle">按本局阵营归类，保留每位选手的真实底牌。</p></div><span className="section-index">01 / {sectionTotal}</span></div>
-        <SeatGrid seats={game.seats ?? []} rounds={game.rounds ?? []} />
+        <SeatGrid seats={game.seats ?? []} rounds={game.rounds ?? []} season={game.season} />
       </section>
 
       <section className="detail-section" id="game-recap">

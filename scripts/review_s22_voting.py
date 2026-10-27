@@ -96,6 +96,7 @@ def apply_accepted(facts, audit, entry):
 
 def audit_game(entry, facts, audit, dossier, video_checks=None, unresolved_checks=None):
     questions = []
+    departure_gaps = {}
     evidence = audit["evidence"]
     def add(code, day, title, reason, target=None, severity="pending", ev=None):
         key = target or ("day-" + str(day))
@@ -113,15 +114,30 @@ def audit_game(entry, facts, audit, dossier, video_checks=None, unresolved_check
         if b["kind"] == "unknown":
             add("kind_unknown", day, "警徽票或放逐票待核", "尚未找到足够的法官阶段口令，需要看前后文或原视频。", key, "question")
         if b["stage"] == "unknown":
-            add("stage_unknown", day, "本轮投票阶段待核", "现有证据还不足以确定是首轮、PK后还是技能重投；需要核对前轮和发言衔接。", key, "question")
+            add("stage_unknown", day, "本次投票衔接待核", "现有证据还不足以确定是否有平票前投票或技能重投；需要核对前后投票及发言衔接。", key, "question")
         if b["unrecorded_voters"]:
-            add("votes_missing", day, "部分投票人的去向待补", "未记录的有票权座位：" + "、".join(str(n) + "号" for n in b["unrecorded_voters"]) + "。未知不记弃票。", key)
-        elif b["eligible_voters"] is None:
-            add("eligibility_unknown", day, "本轮票权与缺票范围待核", f"已提取{len(b['votes'])}条票，但完整票权名单未知，暂不宣称票型完整。", key)
+            add("votes_missing", day, "票权或默认弃票处理待核", "仍未处理的有票权座位：" + "、".join(str(n) + "号" for n in b["unrecorded_voters"]) + "；按用户确认口径，没有明确投向应记默认弃票。", key)
+        elif b["eligible_voters"] is None and not any(i.get("target") == key and i["code"] == "living_voter_conflict" for i in audit.get("rule_issues", [])):
+            row = next((r for r in (audit.get("game_flow") or {}).get("rounds", []) if r["day"] == day), {})
+            gaps = row.get("roster_gaps", []) if b["kind"] == "exile" else []
+            if gaps:
+                gap = gaps[0]
+                gap_key = (gap["round"], gap["slot"])
+                if gap_key not in departure_gaps:
+                    label = {"night_deaths": "前夜死亡播报", "exile_result": "放逐或白天结束结果",
+                             "hunter_shot": "猎人死亡技能结果", "mechanical_day_skill": "机械猎人死亡技能结果",
+                             "wolf_king_shot": "狼王死亡技能结果", "round": "阶段记录"}[gap["slot"]]
+                    add("departure-" + gap["slot"], gap["round"], f"第{gap['round']}天{label}待补充",
+                        "需补充这项原文出局信息，之后自动重算存活与票权，无需人工计算票数。受影响投票：", severity="pending")
+                    departure_gaps[gap_key] = questions[-1]
+                q = departure_gaps[gap_key]
+                q["reason"] += f"第{day}天（{key}）；"
+            else:
+                add("eligibility_unknown", day, "本轮票权名单待补充", f"已提取{len(b['votes'])}条票，但完整票权名单未知；需补齐警下等票权依据，随后自动计算。", key)
         if b["stage"] == "pk":
             prior = [p for p in facts["ballots"] if p["day"] == day and p["kind"] == b["kind"] and p["number"] < b["number"]]
             if not prior:
-                add("pk_first_missing", day, "PK前的首轮票型未记录", "原文明确为PK后投票，现档案尚缺前一轮票型。", key, "question")
+                add("pk_first_missing", day, "平票前的票型未记录", "原文明确为PK后投票，现档案尚缺平票前的票型。", key, "question")
         if b["day"] is not None and b["day"] > len(dossier["rounds"]) and dossier["rounds"]:
             add("round_disagreement", day, "游戏日与原档案轮数不一致", "全文日界与原复盘档案的轮数需要交叉核对，不能仅取较大的数字。", key, "question")
         # A seat that was definitely eliminated on a prior day cannot cast
@@ -146,10 +162,21 @@ def audit_game(entry, facts, audit, dossier, video_checks=None, unresolved_check
         b = min(candidates, key=lambda x:x[0])[1] if candidates else None
         add("source_conflict-" + hashlib.sha256(text.encode()).hexdigest()[:8], b["day"] if b else None,
             "播票原文存在冲突", text, b["id"] if b else None, "question")
+    for issue in audit.get("rule_issues", []):
+        existing = next((q for q in questions if issue.get("target") and q["target"] == issue["target"] and q["code"].startswith("source_conflict")), None)
+        if existing:
+            existing["reason"] += "\n规则核对：" + issue["reason"]
+        else:
+            add("rule-" + issue["code"], issue.get("day"), "投票与已确认规则需要核对", issue["reason"], issue.get("target"), "question")
     for d in facts["days"]:
         known_not_held = any(r["number"] == d["day"] and any(e["slot"] == "exile_vote" and e["action"] == "not_held" for e in r["day"]) for r in dossier["rounds"])
+        exploded = any(r["number"] == d["day"] and any(e["action"] == "self_destruct" for e in r["day"]) for r in dossier["rounds"])
+        if exploded and d["exile"] == "recorded":
+            add("self_destruct_with_exile", d["day"], "自爆日出现放逐票，需核对日序", "复盘记录该日狼人自爆，票型却归于同一天；需确认投票日期或自爆发生顺序。", severity="question")
         if d["exile"] == "unknown" and not known_not_held:
-            add("exile_unrecorded", d["day"], "本日放逐投票或结束原因待核", "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。")
+            add("exile_unrecorded", d["day"], "本日放逐投票待补录", "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。")
+        elif d["exile"] == "unknown" and known_not_held and not exploded:
+            add("not_held_without_self_destruct", d["day"], "未投票原因需要交叉复核", "原档案记为未举行投票，但未见白天自爆记录；需核对提前结束原因，不能据缺少票型认定没有投票。", severity="question")
     for check in (unresolved_checks or {}).get(entry["bvid"], []):
         b = next((b for b in facts["ballots"] if b["id"] == check["ballot_id"]), None)
         if b is None:
@@ -160,11 +187,21 @@ def audit_game(entry, facts, audit, dossier, video_checks=None, unresolved_check
         if "day" in check["field"]:
             add("day_disputed", b["day"], "当前游戏日仍需核对", check["reason"], b["id"], "question", check.get("evidence") or evidence.get(b["id"], []))
     # Review questions are evidence-backed flags, separate from fact completeness.
-    videos = (video_checks or {}).get(entry["bvid"], [])
+    videos = [dict(x) for x in (video_checks or {}).get(entry["bvid"], [])]
     for check in videos:
         if check.get("resolved"):
             continue
+        resolved = next((d for d in audit.get("causal_review", {}).get("decisions", [])
+                         if d["resolved"] and f"-{check['ballot_id']}-source_conflict-" in d["question_id"]), None)
+        if resolved:
+            check.update(resolved_by_causal=True, resolution=resolved["conclusion"] + "：" + resolved["reason"])
+            continue
         b = next((b for b in facts["ballots"] if b["id"] == check["ballot_id"]), None)
+        defaults = [s for a in audit.get("rule_applications", []) if a["target"] == check["ballot_id"] for s in a["voters"]]
+        if b and defaults and not any(q["target"] == b["id"] and q["code"].startswith("source_conflict") for q in questions):
+            check["resolved_by_rule"] = True
+            check["resolution"] = "画面原先不足以确定的未报投向，现按用户确认口径记默认弃票：" + "、".join(map(str,defaults)) + "号。"
+            continue
         existing = next((q for q in questions if q["target"] == check["ballot_id"] and q["severity"] == "question"), None)
         if existing:
             existing["reason"] += "\n原视频核对：" + check["finding"]
@@ -172,19 +209,25 @@ def audit_game(entry, facts, audit, dossier, video_checks=None, unresolved_check
             continue
         add("video_uncertain-" + check["id"], b["day"] if b else None, "已看原视频，仍需回听或更清晰画面",
             check["finding"], check["ballot_id"], "question", check["evidence"])
+    from causal_voting_review import disposition
+    questions, causal_decisions = disposition(questions, audit)
     days = []
     for day in sorted({d["day"] for d in facts["days"]} | {q["day"] for q in questions}, key=lambda n:(n is None,n or 0)):
         qs = [q for q in questions if q["day"] == day]
         known_not_held = any(r["number"] == day and any(e["slot"] == "exile_vote" and e["action"] == "not_held" for e in r["day"]) for r in dossier["rounds"])
         days.append({"day": day, "question_count": sum(q["severity"] == "question" for q in qs),
                      "pending_count": sum(q["severity"] == "pending" for q in qs), "question_ids": [q["id"] for q in qs],
-                     "exile_note": "原档案已明确未举行放逐投票" if known_not_held else None})
+                     "exile_note": next((x["exile_note"] for x in audit.get("day_outcomes", []) if x["day"] == day), None)})
     return {"bvid": entry["bvid"], "date": entry["date"], "game_number": entry["game_number"],
             "checked_by": "Codex", "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
             "human_reviewed": False, "facts_sha256": value_hash(facts),
+            "causal_decisions": causal_decisions,
             "question_count": sum(q["severity"] == "question" for q in questions),
             "pending_count": sum(q["severity"] == "pending" for q in questions),
             "questions": questions, "days": days, "video_checks": videos,
+            "rule_applications": audit.get("rule_applications", []), "election_flow": audit.get("election_flow", []),
+            "game_flow": audit.get("game_flow"), "eligibility_derivations": audit.get("eligibility_derivations", []),
+            "day_crosscheck_changes": audit.get("day_crosscheck_changes", []), "day_outcomes": audit.get("day_outcomes", []),
             "accepted_changes": audit.get("review_changes", [])}
 
 

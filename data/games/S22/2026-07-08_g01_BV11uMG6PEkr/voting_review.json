@@ -5,18 +5,294 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "22aa59bdb117e1714567dfc1710e6ccc297a55f4b491bd759987d583664422fc",
-  "question_count": 2,
-  "pending_count": 4,
-  "questions": [
+  "facts_sha256": "b2993864dc7604c2bd9bd0ff5f56e8b731200f20feb63a8d719b36ab9613af7c",
+  "causal_decisions": [
     {
-      "id": "vote-BV11uMG6PEkr-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "question_id": "vote-BV11uMG6PEkr-ballot-3-day_disputed",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "该ballot-3确属第3天放逐：第2天已放逐5号，夜间10号死亡后7名存活者参加第3天投票，9号出局。",
+      "reason": "复盘时间线显示第2天10号被放逐后入夜，随后第3天夜前结算10号死亡；现有ballot-3七名投票者与第3天存活者吻合，9号票获胜并触发游戏结束。",
+      "source_spans": [
+        {
+          "start_ms": 6233795,
+          "end_ms": 6290600,
+          "quote": "第3天投票唱票：1/2/3/4/6/7/9/12号依次投票；9号票获胜；游戏结束"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV11uMG6PEkr-ballot-3-day_disputed",
+        "code": "day_disputed",
+        "day": 3,
+        "target": "ballot-3",
+        "title": "当前游戏日仍需核对",
+        "reason": "现有复盘日序片段没有把9号这张票直接标到某天；不能凭轮次或相邻事件推定，stage也缺少明确前轮平票/PK结束证据。",
+        "severity": "question",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
+            "start_ms": 6233795,
+            "end_ms": 6290600,
+            "quote": "是当时我觉得一号玩家是疑似红狼，\n所以一号跟十二号不见面。\n但是我警下就没有再说这个问题了，\n因为我要确定一是好人的话，\n十二就有可能是狼。\n嗯，\n现在没有了。\n哎，\n我应该还是我那个时候就应该跟着他说，\n因为我独立听十二个比较像了，\n应该应该跟着他说定票投十二的，\n我我还是有问题。\n过了所有的环节结束，\n各玩家请戴亏，\n做好投票准备。\n警长请归票，\n警长归票九号高，\n玩家请做好投票准备。\n三二一请出票一号投给十二号，\n二号投给九号，\n四号投给十二号，\n六号投给九号七号投给九号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四点五票出局。\n要不开一下什么玩意儿，\n他们好你好，\n十一是好人，\n不十一是好人，\n我走出来好游戏结束了。\n这一版票获胜，"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
+          "start_ms": 6233795,
+          "end_ms": 6290600,
+          "quote": "我警上说十二号是好人缘，\n是当时我觉得一号玩家是疑似红狼，\n所以一号跟十二号不见面。\n但是我警下就没有再说这个问题了，\n因为我要确定一是好人的话，\n十二就有可能是狼。\n嗯，\n现在没有了。\n哎，\n我应该还是我那个时候就应该跟着他说，\n因为我独立听十二个比较像了，\n应该应该跟着他说定票投十二的，\n我我还是有问题。\n过了所有的环节结束，\n各玩家请戴亏，\n做好投票准备。\n警长请归票，\n警长归票九号高，\n玩家请做好投票准备。\n三二一请出票一号投给十二号，\n二号投给九号，\n四号投给十二号，\n六号投给九号七号投给九号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四点五票出局。\n要不开一下什么玩意儿，\n他们好你好，\n十一是好人，\n不十一是好人，\n我走出来好游戏结束了。\n这一版票获胜，"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号被放逐。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          12
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 2,
+      "living": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        12
+      ],
+      "living_count": 9,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        12
+      ],
+      "vote_count": 9,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-3",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        4,
+        6,
+        7,
+        9,
+        12
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        6,
+        7,
+        9,
+        12
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "ballot-2",
+      "field": "day",
+      "before": 1,
+      "after": 2,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    },
+    {
+      "target": "ballot-3",
+      "field": "day",
+      "before": 1,
+      "after": 3,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "exiled",
+      "exile_note": "5号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
@@ -27,75 +303,9 @@
       ]
     },
     {
-      "id": "vote-BV11uMG6PEkr-ballot-3-stage_unknown",
-      "code": "stage_unknown",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "本轮投票阶段待核",
-      "reason": "现有证据还不足以确定是首轮、PK后还是技能重投；需要核对前轮和发言衔接。\n逐段核对：现有复盘日序片段没有把9号这张票直接标到某天；不能凭轮次或相邻事件推定，stage也缺少明确前轮平票/PK结束证据。",
-      "severity": "question",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
-          "start_ms": 6233795,
-          "end_ms": 6290600,
-          "quote": "是当时我觉得一号玩家是疑似红狼，\n所以一号跟十二号不见面。\n但是我警下就没有再说这个问题了，\n因为我要确定一是好人的话，\n十二就有可能是狼。\n嗯，\n现在没有了。\n哎，\n我应该还是我那个时候就应该跟着他说，\n因为我独立听十二个比较像了，\n应该应该跟着他说定票投十二的，\n我我还是有问题。\n过了所有的环节结束，\n各玩家请戴亏，\n做好投票准备。\n警长请归票，\n警长归票九号高，\n玩家请做好投票准备。\n三二一请出票一号投给十二号，\n二号投给九号，\n四号投给十二号，\n六号投给九号七号投给九号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四点五票出局。\n要不开一下什么玩意儿，\n他们好你好，\n十一是好人，\n不十一是好人，\n我走出来好游戏结束了。\n这一版票获胜，"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV11uMG6PEkr-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取7条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
-          "start_ms": 6233795,
-          "end_ms": 6290600,
-          "quote": "是当时我觉得一号玩家是疑似红狼，\n所以一号跟十二号不见面。\n但是我警下就没有再说这个问题了，\n因为我要确定一是好人的话，\n十二就有可能是狼。\n嗯，\n现在没有了。\n哎，\n我应该还是我那个时候就应该跟着他说，\n因为我独立听十二个比较像了，\n应该应该跟着他说定票投十二的，\n我我还是有问题。\n过了所有的环节结束，\n各玩家请戴亏，\n做好投票准备。\n警长请归票，\n警长归票九号高，\n玩家请做好投票准备。\n三二一请出票一号投给十二号，\n二号投给九号，\n四号投给十二号，\n六号投给九号七号投给九号，\n九号投给十二号，\n十二号投给九号投票结束，\n九号玩家四点五票出局。\n要不开一下什么玩意儿，\n他们好你好，\n十一是好人，\n不十一是好人，\n我走出来好游戏结束了。\n这一版票获胜，"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV11uMG6PEkr-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
-          "start_ms": 6314615,
-          "end_ms": 6325705,
-          "quote": "三号预言家纽杜莎十一号平民冤家验证十一号玩家为凭为好人身份。\n第二天，\n白天五号平民被抗推，\n如夜郎击杀。\n十号女巫白天九号猎人被攻投，",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV11uMG6PEkr-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
-    },
-    {
-      "id": "vote-BV11uMG6PEkr-ballot-3-day_disputed",
-      "code": "day_disputed",
-      "day": 1,
-      "target": "ballot-3",
-      "title": "当前游戏日仍需核对",
-      "reason": "现有复盘日序片段没有把9号这张票直接标到某天；不能凭轮次或相邻事件推定，stage也缺少明确前轮平票/PK结束证据。",
-      "severity": "question",
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第07周_正赛第06期/2026-07-08/2026-07-08_S22_第07周_正赛第06期_第01局_预女猎白混__BV11uMG6PEkr_P01_CID39769670170.本地全文转写_funasr.json",
@@ -106,39 +316,6 @@
       ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 2,
-      "pending_count": 2,
-      "question_ids": [
-        "vote-BV11uMG6PEkr-ballot-2-eligibility_unknown",
-        "vote-BV11uMG6PEkr-ballot-3-stage_unknown",
-        "vote-BV11uMG6PEkr-ballot-3-eligibility_unknown",
-        "vote-BV11uMG6PEkr-ballot-3-day_disputed"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV11uMG6PEkr-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV11uMG6PEkr-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV11uMG6PEkr-registration",
@@ -182,6 +359,6 @@
       ]
     }
   ],
-  "voting_sha256": "90d2e44852aa5a77821385274ee27b24efe6403da392da963f00b76483605843",
+  "voting_sha256": "a6f0346ae7ed4912995eb7a66ad167b2897162f228577c10134d66f28f3cb50e",
   "source_sha256": "e773637c20d56e22cb550120e9a22c6e048a862d76f83f4ae8cd58454bcc1cd2"
 }

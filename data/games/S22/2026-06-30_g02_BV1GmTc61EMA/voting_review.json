@@ -5,18 +5,276 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "cc74b1ffdd20ca6063d4aeaaf5e7dc4fc943da5b53cd42a39c0d51b439aa273f",
-  "question_count": 0,
-  "pending_count": 2,
-  "questions": [
+  "facts_sha256": "0d14f76421d00990eb58210d02dec500b341f651fc9d484065f1e40787cb8e4d",
+  "causal_decisions": [
     {
-      "id": "vote-BV1GmTc61EMA-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "question_id": "vote-BV1GmTc61EMA-day-3-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第3天没有放逐投票；前夜狼队击杀最后一神后直接屠神获胜。",
+      "reason": "第2天10号狼人放逐后，复盘紧接着记载入夜击杀场上最后一神、4号预言家游戏结束、狼队屠神获胜；不曾进入第3天投票阶段。",
+      "source_spans": [
+        {
+          "start_ms": 6200520,
+          "end_ms": 6209010,
+          "quote": "第二天10号狼人被公投出局；入夜狼队击杀场上最后一神；4号预言家游戏结束；狼队阵营屠神获胜"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1GmTc61EMA-day-3-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 3,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": []
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6200520,
+          "end_ms": 6209010,
+          "quote": "在第二天的白天\n10号狼人被公投出局\n入夜狼队击杀场上最后一神\n4号预言家游戏结束\n狼队阵营屠神获胜\n以上是我们今天第二局版型"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号被放逐。"
+    },
+    {
       "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "10号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          7,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          4
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          6,
+          8,
+          9,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3天白天未发生；终局在第2天夜间。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 2,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
+      "living_count": 9,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
+      "vote_count": 9,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "5号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3908530,
+          "end_ms": 3981950,
+          "quote": "11号嗯呃我也不知道七是啥\n但如果七是呃\n七是傀儡还好\n但如果七开枪了的话\n他打走女巫\n如果守卫躲搏不到洞口的话\n是容易输的\n所以那个站对边的话就不要出七\n觉得七是公共狼把起投了\n不要这样子哦\n我们今天先出一下\n5号过了\n昨晚加班结束\n请各位玩家带盔做好投票准备\n咳警长请归票\n警长归票\n5号各位玩家唱票结束前\n请不要放手\n321请出票\n一号投给7号\n2号投给5号\n3号投给7号\n4号投给5号\n5号投给7号\n6号投给7号\n7号投给5号\n8号投给7号\n9号投给5号\n10号投给7号\n11号投给7号上哦\n十二十一号投给5号\n12号投给5号\n投票结束\n6.5票比六票5号玩家6.5票出局\n请发表遗言\n我希望好人仔细听我发言啊\n仔细听我发言\n就我的发言很关键\n因为我底牌确实不是女巫\n我跟你们讲我的想法"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第02局_唯邻是从__BV1GmTc61EMA_P01_CID39541278653.平台AI字幕_ai-zh_01.原始.json",
@@ -25,46 +283,8 @@
           "quote": "是傀儡猎人的话\n呃\n六是悍跳守卫\n七是被毒的守卫\n我们也输了呀\n因为他们三刀啊\n所以我是想出10号的嗯\n然后出10号嗯\n验的话随便验吧\n验个三吧\n警徽给你手机会给我过了\n做完加班结束\n请各位戴盔做好投票准备\n带亏\n警长请归票\n警长归票\n10号\n各位玩家唱票结束前不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给10号\n6号投给4号\n8号投给4号\n9号投给10号\n10号投给4号\n11号投给10号\n投票结束\n10号玩家6.5票出局\n请发表遗言\n那比如说4号是个预言家\n他验了6号是查杀牌\n他现在未知我的身份\n6号是查杀\n他觉得我是狼"
         }
       ]
-    },
-    {
-      "id": "vote-BV1GmTc61EMA-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1GmTc61EMA-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1GmTc61EMA-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1GmTc61EMA-registration",
@@ -108,6 +328,6 @@
       ]
     }
   ],
-  "voting_sha256": "219d5e6e353e0d6ed60e7d914f147976fdbe548f541ef8bf67fc36ceb490f058",
+  "voting_sha256": "0b0d1adec55e788ea2932b791741a9b7295857e192ca346f247da0513ce2f295",
   "source_sha256": "51fbb5f35cdc28e7fcd95c1d8011394759465e4584f5e6fbafdc283284e06ff1"
 }

@@ -5,18 +5,254 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "6b8d7d1eecb42bf77ebb2239e8a7c552520caa493e7eeb830127ec772ed557f9",
+  "facts_sha256": "628a9a6130e38600e2897d4f824839a869c87f8b54d99a3e5e7410d308f2b41c",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 1,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1YmTc6yEFd-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "3号狼人自爆，未进行放逐投票。"
+    },
+    {
       "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "12号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 9,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3266560,
+          "end_ms": 3279080,
+          "quote": "形成平安夜\n预言家验证了7号玩家为狼人身份\n在警上竞选环节\n9号狼人选择自爆\n入夜狼队击杀8号预言家\n女巫技能空过当验"
+        },
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3277340,
+          "end_ms": 3291700,
+          "quote": "女巫技能空过当验\n预言家验证了3号玩家为狼人身份\n在延期竞选环节\n3号狼人选择自爆\n本游戏警徽流失入夜\n狼队击杀一号女巫女巫女巫女巫技能继续空过"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 3,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3277340,
+          "end_ms": 3291700,
+          "quote": "女巫技能空过当验\n预言家验证了3号玩家为狼人身份\n在延期竞选环节\n3号狼人选择自爆\n本游戏警徽流失入夜\n狼队击杀一号女巫女巫女巫女巫技能继续空过"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取8条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 3,
+      "living": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ],
+      "living_count": 8,
+      "eligible_voters": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 8,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "9号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "3号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "12号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
@@ -27,33 +263,7 @@
       ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1YmTc6yEFd-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "536de0f56de1044aa6926e90214de58624d9e37dcbbf6ff5f3e26a2a2dfdd5b0",
+  "voting_sha256": "cc1f189746f5896ed011ee8b4282b7cd2afd8c6dba944ef93690029a3a8556c2",
   "source_sha256": "fa621f03e83a94fd5f9b61a924b4685c4dadf0f42bb59a162713d55c7e877754"
 }

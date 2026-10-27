@@ -1,0 +1,1021 @@
+{
+  "bvid": "BV1tneS6rEx1",
+  "reviewer": "ai",
+  "source_sha256": "5e657a9d989f585adf5b1c25753cb3cadf30251c391d78ad14a155d7cb549fdf",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引36正赛盗宝大师：逐席核对角色板并从片尾复盘确认盗宝大师1号为狼人阵营、5号通灵师得徽、7号狼王出局并带走2号摄梦人；首日夜死4/5后徽移交11，次日10出局后狼队夜杀最后神12获胜。",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "亚亚",
+        "2": "徐言雨",
+        "3": "谢朵儿",
+        "4": "葛小舞",
+        "5": "耿许儿",
+        "6": "申屠",
+        "7": "翼风",
+        "8": "牛肉干",
+        "9": "鲸鱼",
+        "10": "陈明峻",
+        "11": "宝玉妹妹",
+        "12": "园长"
+      },
+      "reasoning": "逐席读取画面姓名牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1tneS6rEx1/BV1tneS6rEx1_04061.870.png",
+          "frame_time_ms": 4061870,
+          "quote": "1盗宝大师 亚亚；2摄梦人 徐言雨；3平民 谢朵儿；4猎人 葛小舞；5通灵师 耿许儿；6平民 申屠；7狼王 翼风；8狼人 牛肉干；9平民 鲸鱼；10狼人 陈明峻；11平民 宝玉妹妹；12蒙面人 园长。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "盗宝大师",
+        "2": null,
+        "3": "平民",
+        "4": null,
+        "5": null,
+        "6": "平民",
+        "7": null,
+        "8": null,
+        "9": "平民",
+        "10": null,
+        "11": "平民",
+        "12": null
+      },
+      "after": {
+        "1": {
+          "role": "盗宝大师",
+          "faction": "werewolf"
+        },
+        "2": {
+          "role": "摄梦人",
+          "faction": "good"
+        },
+        "3": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "4": {
+          "role": "猎人",
+          "faction": "good"
+        },
+        "5": {
+          "role": "通灵师",
+          "faction": "good"
+        },
+        "6": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "7": {
+          "role": "狼王",
+          "faction": "werewolf"
+        },
+        "8": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "9": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "10": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "11": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "12": {
+          "role": "蒙面人",
+          "faction": "good"
+        }
+      },
+      "reasoning": "屏幕竖排身份牌是实际底牌；片尾明确1号盗宝大师隶属于狼人阵营。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1tneS6rEx1/BV1tneS6rEx1_04061.870.png",
+          "frame_time_ms": 4061870,
+          "quote": "1盗宝大师 亚亚；2摄梦人 徐言雨；3平民 谢朵儿；4猎人 葛小舞；5通灵师 耿许儿；6平民 申屠；7狼王 翼风；8狼人 牛肉干；9平民 鲸鱼；10狼人 陈明峻；11平民 宝玉妹妹；12蒙面人 园长。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4249500,
+          "end_ms": 4265140,
+          "quote": "本剧版行为盗宝大师申请营同灵师5号射梦人2号猎人4号蒙面人12号狼队阵营8号十号狼王7号本游戏盗宝大师为一号"
+        }
+      ]
+    },
+    {
+      "field": "rounds.1-2.actions",
+      "before": "baseline contained Sheriff/attack/death/transfer/exile placeholders",
+      "after": {
+        "day1_sheriff": 5,
+        "night1_attack": 5,
+        "treasure_master_poison": 4,
+        "day1_exile": 7,
+        "wolf_king_shot": 2,
+        "day2_exile": 10,
+        "night2_attack": 12,
+        "winner": "werewolf"
+      },
+      "reasoning": "依结尾复盘补结算，并遵循该局首夜死亡可在警徽竞选公告前参与竞选：5号先得徽，之后4/5双死，徽转11。盗宝大师角色变化仅按本局明确记载。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4282089,
+          "end_ms": 4310630,
+          "quote": "5号通灵师获得警徽在第一天白天7号狼王被公投出局并开枪带走了2号受某人乳液狼队击杀5号通灵师盗宝大师切换为毒师身份并毒杀了4号猎人当夜为4号五号双死夜间通灵师查验了一号玩家盗宝大师为毒师身份并在出局后将警徽移交至11号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4312210,
+          "end_ms": 4321330,
+          "quote": "10号狼人被公投出局入夜狼队击杀场上最后一神12号蒙面人游戏结束狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots",
+      "before": [
+        {
+          "id": "ballot-1",
+          "day": 2,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "partial",
+          "candidates": null,
+          "eligible_voters": null,
+          "votes": [
+            {
+              "voter": 1,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 10,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 10,
+          "unrecorded_voters": null
+        }
+      ],
+      "after": [
+        {
+          "id": "ballot-1",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 1,
+          "stage": "initial",
+          "status": "partial",
+          "candidates": [
+            5,
+            6,
+            8,
+            11,
+            12
+          ],
+          "eligible_voters": null,
+          "votes": [
+            {
+              "voter": 2,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 5,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 5,
+          "unrecorded_voters": null
+        },
+        {
+          "id": "ballot-2",
+          "day": 1,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "partial",
+          "candidates": null,
+          "eligible_voters": null,
+          "votes": [],
+          "tied_candidates": [],
+          "winner": 7,
+          "unrecorded_voters": null
+        },
+        {
+          "id": "ballot-3",
+          "day": 2,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "partial",
+          "candidates": null,
+          "eligible_voters": null,
+          "votes": [
+            {
+              "voter": 1,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 10,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 10,
+          "unrecorded_voters": null
+        }
+      ],
+      "reasoning": "1510秒警长口令给出5/6/8/11/12候选，2/3/9投5；另两个放逐结果分别是7和10。首轮放逐逐票没有字幕，保持partial。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1509040,
+          "end_ms": 1530090,
+          "quote": "请井向外带盔在5号六号8号11号12号玩家中选出本局游戏警长321请出票2号三号九号均投票给5号5号玩家其余玩家请变蓝灯"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3412950,
+          "end_ms": 3423660,
+          "quote": "321请出票哎呀嘿嘿嘿嘿嘿嘿嘿7号玩家12.5票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4103930,
+          "end_ms": 4124560,
+          "quote": "10号各位玩家唱票结束前不要放手321请出票一号投给6号3号投给10号6号投给10号8号投给8号投给6号9号投给10号10号投给6号11号投给10号12号投给10号投票结束10号玩家5.5票出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1-2].night/day.treasure/wolf/deaths/badge",
+      "before": {
+        "N1_wolf": {
+          "slot": "wolf_attack",
+          "action": "attack",
+          "actor": null,
+          "targets": [
+            5
+          ],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_choice": {
+          "slot": "treasure_choice",
+          "action": "choose",
+          "actor": 1,
+          "targets": [],
+          "result": "平民身份",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_skill": {
+          "slot": "treasure_card_skill",
+          "action": "poison",
+          "actor": 1,
+          "targets": [
+            4
+          ],
+          "result": "盗宝大师切换为毒师并毒杀猎人4",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_poison": {
+          "slot": "witch_poison",
+          "action": "poison",
+          "actor": 1,
+          "targets": [
+            4
+          ],
+          "result": "Treasure Master poison",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_change": {
+          "slot": "treasure_master_change",
+          "action": "change",
+          "actor": 1,
+          "targets": [],
+          "result": "civilian identity"
+        },
+        "D1_deaths": {
+          "slot": "night_deaths",
+          "action": "die",
+          "actor": null,
+          "targets": [
+            4,
+            5
+          ],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D1_badge": {
+          "slot": "badge",
+          "action": "transfer",
+          "actor": null,
+          "targets": [
+            11
+          ],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_wolf": {
+          "slot": "wolf_attack",
+          "action": "attack",
+          "actor": null,
+          "targets": [
+            12
+          ],
+          "result": "last good deity",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_choice": {
+          "slot": "treasure_choice",
+          "action": "unknown",
+          "actor": 1,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_skill": {
+          "slot": "treasure_card_skill",
+          "action": "unknown",
+          "actor": 1,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D2_deaths": {
+          "slot": "night_deaths",
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D2_badge": {
+          "slot": "badge",
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        }
+      },
+      "after": {
+        "N1_wolf": {
+          "slot": "wolf_attack",
+          "action": "skip",
+          "actor": null,
+          "targets": [],
+          "result": "首夜禁刀",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_choice": {
+          "slot": "treasure_choice",
+          "action": "choose",
+          "actor": 1,
+          "targets": [],
+          "result": "平民身份",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_skill": {
+          "slot": "treasure_card_skill",
+          "action": "unknown",
+          "actor": 1,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_poison": {
+          "slot": "witch_poison",
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N1_change": {
+          "slot": "treasure_master_change",
+          "action": "change",
+          "actor": 1,
+          "targets": [],
+          "result": "平民身份"
+        },
+        "D1_deaths": {
+          "slot": "night_deaths",
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D1_badge": {
+          "slot": "badge",
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_wolf": {
+          "slot": "wolf_attack",
+          "action": "attack",
+          "actor": null,
+          "targets": [
+            5
+          ],
+          "result": "狼队击杀5号通灵师",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_choice": {
+          "slot": "treasure_choice",
+          "action": "choose",
+          "actor": 1,
+          "targets": [],
+          "result": "毒师",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "N2_skill": {
+          "slot": "treasure_card_skill",
+          "action": "poison",
+          "actor": 1,
+          "targets": [
+            4
+          ],
+          "result": "切换毒师身份并毒杀4号猎人",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D2_deaths": {
+          "slot": "night_deaths",
+          "action": "die",
+          "actor": null,
+          "targets": [
+            4,
+            5
+          ],
+          "result": "4号猎人与5号通灵师双死",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        "D2_badge": {
+          "slot": "badge",
+          "action": "transfer",
+          "actor": null,
+          "targets": [
+            11
+          ],
+          "result": "5号通灵师出局后移交警徽",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        }
+      },
+      "reasoning": "局末复盘顺序明确：先D1警长5拿徽、7号狼王放逐后枪带2号；随后狼队击杀5号通灵师，盗宝大师切换毒师并毒杀4号猎人，4/5双死且警徽转11号。第一夜复盘说明盗宝第一天不带刀。故撤掉N1狼刀5/毒4，消除同一瓶毒在witch_poison与treasure_card_skill的双记；N1保留选择平民及查9好人，N2记录毒师/刀5/毒4及次日死亡和移徽。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 472290,
+          "end_ms": 474210,
+          "quote": "对盗宝第一天不带刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4263010,
+          "end_ms": 4280389,
+          "quote": "本游戏盗宝大师为一号隶属于狼队阵营本局游戏为盗宝毒师平民阵营3号六号9号11号嗯嗯首页圣梦人梦游11号平民盗宝大师选择切换为平民身份通灵师查验9号玩家为平民身份"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4282089,
+          "end_ms": 4307680,
+          "quote": "5号通灵师获得警徽在第一天白天7号狼王被公投出局并开枪带走了2号受某人乳液狼队击杀5号通灵师盗宝大师切换为毒师身份并毒杀了4号猎人当夜为4号五号双死夜间通灵师查验了一号玩家盗宝大师为毒师身份"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-1].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          2,
+          3,
+          9
+        ],
+        "status": "complete"
+      },
+      "reasoning": "首日警下登记为2、3、9号，原始唱票明确三人都投给5号，名单完整。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1509040,
+          "end_ms": 1530090,
+          "quote": "请井向外带盔在5号六号8号11号12号玩家中选出本局游戏警长321请出票2号三号九号均投票给5号5号玩家其余玩家请变蓝灯"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-3].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          3,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "status": "complete"
+      },
+      "reasoning": "第二天放逐投票前7号已首日出局并枪杀2号，N2狼刀5号/毒杀4号后再进行本轮；剩余八人均有逐座票型。结果10号5.5票与所记录目标一致，警徽11号计加权票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4103930,
+          "end_ms": 4124560,
+          "quote": "10号各位玩家唱票结束前不要放手321请出票一号投给6号3号投给10号6号投给10号8号投给8号投给6号9号投给10号10号投给6号11号投给10号12号投给10号投票结束10号玩家5.5票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4286730,
+          "end_ms": 4307680,
+          "quote": "7号狼王被公投出局并开枪带走了2号受某人乳液狼队击杀5号通灵师盗宝大师切换为毒师身份并毒杀了4号猎人当夜为4号五号双死夜间通灵师查验了一号玩家盗宝大师为毒师身份"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-2].votes/eligible_voters/status",
+      "before": {
+        "votes": [],
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "status": "partial"
+      },
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 2,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 10,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 7,
+            "state": "cast"
+          }
+        ],
+        "status": "complete"
+      },
+      "reasoning": "放逐投票HUD逐席显示1至12号座位的绿色数字均为7；字幕播报7号12.5票出局，且5号另持警徽，其1.5票使12张放逐票合计12.5。该图消除了此前仅有总票数的疑问。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/game_reviews/BV1tneS6rEx1/video_checks/BV1tneS6rEx1_03440.000.png",
+          "frame_time_ms": 3440000,
+          "quote": "画面1至12号座位每席绿色投票标记均为7号；5号另有红色警徽票标记。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3405160,
+          "end_ms": 3423660,
+          "quote": "所有玩家发言结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n7号各位玩家唱票结束前不要放手\n321请出票\n哎呀嘿嘿嘿嘿嘿嘿嘿\n7号玩家12.5票出局",
+          "draft_quote": "各位玩家带盔做好投票准备警长请归票警长归票7号各位玩家唱票结束前不要放手321请出票7号玩家12.5票出局",
+          "quote_normalization_note": "交付整理：摘录还原为源文件该时间窗的完整原话，不改判断；草稿用字另存draft_quote。"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "盗宝大师",
+        "摄梦人",
+        "平民",
+        "猎人",
+        "通灵师",
+        "平民",
+        "狼王",
+        "狼人",
+        "平民",
+        "狼人",
+        "平民",
+        "蒙面人"
+      ],
+      "reasoning": "竖排底牌逐席确认，盗宝大师阵营由本局复盘文本确认。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1tneS6rEx1/BV1tneS6rEx1_04061.870.png",
+          "frame_time_ms": 4061870,
+          "quote": "1盗宝大师 亚亚；2摄梦人 徐言雨；3平民 谢朵儿；4猎人 葛小舞；5通灵师 耿许儿；6平民 申屠；7狼王 翼风；8狼人 牛肉干；9平民 鲸鱼；10狼人 陈明峻；11平民 宝玉妹妹；12蒙面人 园长。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4249500,
+          "end_ms": 4265140,
+          "quote": "本剧版行为盗宝大师申请营同灵师5号射梦人2号猎人4号蒙面人12号狼队阵营8号十号狼王7号本游戏盗宝大师为一号"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 8,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "8号狼人报5号“单转”等查验结果并继续报验位，形成通灵师式起跳；未获徽，徽由真通灵师5号取得，首日最终出局的是狼王7号。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 925020,
+          "end_ms": 955600,
+          "quote": "我验一下6号验一下3号验的5号是单转因为我觉得这个信息还是有一些作用的对吧因为今天就有明确的出人目标对吧因为我的心路历程是因为双爆刀自己这个战术很久没见过了确实没见过我出局真的是盘不清双狼结构我说这个票这个票型怎么也凑凑不出两个狼来我都开始盘一三双狼了出去跟我说五是自刀的高啊真是高嗯验了五是单转"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1509040,
+          "end_ms": 1530090,
+          "quote": "请井向外带盔在5号六号8号11号12号玩家中选出本局游戏警长321请出票2号三号九号均投票给5号5号玩家其余玩家请变蓝灯"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4282089,
+          "end_ms": 4284029,
+          "quote": "5号通灵师获得警徽"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4286730,
+          "end_ms": 4289330,
+          "quote": "7号狼王被公投出局"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1tneS6rEx1/BV1tneS6rEx1_04061.870.png",
+          "frame_time_ms": 4061870,
+          "quote": "1盗宝大师 亚亚；2摄梦人 徐言雨；3平民 谢朵儿；4猎人 葛小舞；5通灵师 耿许儿；6平民 申屠；7狼王 翼风；8狼人 牛肉干；9平民 鲸鱼；10狼人 陈明峻；11平民 宝玉妹妹；12蒙面人 园长。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "实际狼人10号的竞选发言中直接自称预言家，但该局登记候选不含10号，且警徽给5号，首日放逐7号狼王，未达成功标准。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1069930,
+          "end_ms": 1108510,
+          "quote": "10号玩家请发言5号你相信我我不是倒钩狼啊我这名字他们俩打我给我打脏了我都有点害怕我肯定不是狼我直接现在井上就开始跟你表水我不是狼我是狼我是不会想出上一把继上一把之后我是不会想出那种奇怪的什么七假装给8号金水加说不低不低我自己来我是不会想到这种东西是不可能的好不好我这就是我反正至少我是狼我不是红狼他们能打出这种反的我肯定不是红狼我是大哥的话你让我多玩一天我好让我多玩一天我火锅刚开9号我觉得我肯定是预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4282089,
+          "end_ms": 4284029,
+          "quote": "5号通灵师获得警徽"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4286730,
+          "end_ms": 4289330,
+          "quote": "7号狼王被公投出局"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1tneS6rEx1/BV1tneS6rEx1_04061.870.png",
+          "frame_time_ms": 4061870,
+          "quote": "1盗宝大师 亚亚；2摄梦人 徐言雨；3平民 谢朵儿；4猎人 葛小舞；5通灵师 耿许儿；6平民 申屠；7狼王 翼风；8狼人 牛肉干；9平民 鲸鱼；10狼人 陈明峻；11平民 宝玉妹妹；12蒙面人 园长。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T18:52:46Z"
+}

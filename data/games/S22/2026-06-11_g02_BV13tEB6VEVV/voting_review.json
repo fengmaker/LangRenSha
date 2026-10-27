@@ -5,103 +5,428 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "e91d17cc3e8f9da6f1dcd705ba21e856c7c31cfa3f222ae9ebb0cbce08a8149a",
-  "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "facts_sha256": "5637a664e871e4d7601f6f72d3846fd37c980a05bd7ec83baeebc3410e8a5591",
+  "causal_decisions": [
     {
-      "id": "vote-BV13tEB6VEVV-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "question_id": "vote-BV13tEB6VEVV-day-3-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "补录第3天两轮完整票型：ballot-1初投 2→5、3→7、5→7、6→10、7→9、9→7、10→5；10号翻牌定序王子后重投；ballot-2重投 2→9、3→9、5→7、6→2、7→9、9→7、10→9，9号出局。",
+      "reason": "原文先唱出7人首轮及计票，10号翻牌定序王子并额外发言，之后有第二个完整7人票段，符合技能重投；第二轮9号四票出局。不可合并两轮。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3629200,
+          "end_ms": 3850000,
+          "quote": "唱票结束前不要放手\n321请出票来高举手\n2号投给5号\n3号投给7号\n5号投给7号\n6号投给10号\n7号投给9号\n9号投给7号\n10号投给5号\n投票结束啊\n当前票型7号玩家三票\n5号玩家二票\n10号九号各一票\n定序王子是我方技能\n10号玩家翻牌为定序\n王子可以发动技能\n请将镜头移交至10号玩家\n10号玩家请发言\n我想一想啊\n6号要保9号\n其实不然正常我肯定把9号直接投了呀\n9号就剩我一个人\n3号也投的7号\n我不知道大佬能不能自刀呀\n嗯我觉得5号七号里面7号比较像女巫吧\n5号警上说把他们打到12的团队里面\n那你更应该打一号呀\n就是按照你这个心路历程\n你应该打一号呀\n因为一号站边都是11号呀\n比如说你想把好人打到12的团队\n你应该打一号\n但你完全没打一号\n你打的是2号呀\n嗯4号上看\n比如说4号\n我觉得狼刀下去\n那刀大概率是魔术师嘛\n比如说4号如果是魔术师\n我在想他会怎么换\n4号是魔术师\n警上应该是一号5号换\n因为带他视角\n他觉得12号是一个\n就比如说他觉得12号是一个预言家\n一号5号警上都是站边站边11号的嘛对吧\n他就一号5号一号5号换有可能吗\n我觉得主要是很难换到11号吧\n然后5号说读7号魔术师换7号\n我觉得一号是魔术师\n也不会换7号啊\n一号4号\n因为我觉得场上现在是两个狼\n9号单独发言\n我就没排谁啊\n9号说我是9号\n主要说我是好人\n然后现在票型是3号\n6号单票挂我3号九号\n3号五号九号投的7号"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV13tEB6VEVV-day-3-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 3,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 4364570,
+            "end_ms": 4380120,
+            "quote": "预言家验证9号玩家为好人身份\n当夜为12号预言家单死在第三天白天\n定序王子翻牌后\n9号平民被公投出局而被抗推出局\n入夜鬼术师技能通过狼队击杀3号平民",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 2442330,
-          "end_ms": 2467770,
-          "quote": "但是狼可以自爆对吧\n天亮了\n昨夜12号玩家倒牌没有预言\n12号玩家没灯去办离场\n本局游戏警徽流失\n根据随机点数四\n由3号玩家开始逆序发言\n2号玩家做反准备\n3号玩家请发言\n啧\n我发言呢\n我说啥呀\n那不是大概率\n就是考虑5号身上有没有炸弹的事吧",
-          "note": "本日开局定位，非缺失投票的直接证据"
+          "start_ms": 3629200,
+          "end_ms": 3850000,
+          "quote": "唱票结束前不要放手\n321请出票来高举手\n2号投给5号\n3号投给7号\n5号投给7号\n6号投给10号\n7号投给9号\n9号投给7号\n10号投给5号\n投票结束啊\n当前票型7号玩家三票\n5号玩家二票\n10号九号各一票\n定序王子是我方技能\n10号玩家翻牌为定序\n王子可以发动技能\n请将镜头移交至10号玩家\n10号玩家请发言\n我想一想啊\n6号要保9号\n其实不然正常我肯定把9号直接投了呀\n9号就剩我一个人\n3号也投的7号\n我不知道大佬能不能自刀呀\n嗯我觉得5号七号里面7号比较像女巫吧\n5号警上说把他们打到12的团队里面\n那你更应该打一号呀\n就是按照你这个心路历程\n你应该打一号呀\n因为一号站边都是11号呀\n比如说你想把好人打到12的团队\n你应该打一号\n但你完全没打一号\n你打的是2号呀\n嗯4号上看\n比如说4号\n我觉得狼刀下去\n那刀大概率是魔术师嘛\n比如说4号如果是魔术师\n我在想他会怎么换\n4号是魔术师\n警上应该是一号5号换\n因为带他视角\n他觉得12号是一个\n就比如说他觉得12号是一个预言家\n一号5号警上都是站边站边11号的嘛对吧\n他就一号5号一号5号换有可能吗\n我觉得主要是很难换到11号吧\n然后5号说读7号魔术师换7号\n我觉得一号是魔术师\n也不会换7号啊\n一号4号\n因为我觉得场上现在是两个狼\n9号单独发言\n我就没排谁啊\n9号说我是9号\n主要说我是好人\n然后现在票型是3号\n6号单票挂我3号九号\n3号五号九号投的7号\n如果比如说想认为3号五号九号投的7号吗\n比如说想认为7号是狼\n就只有2号七号两个狼\n然后2号是诡术师\n7号是小狼\n但我主要我觉得女巫分辨\n我觉得7号是女巫啊\n我只在想我待会怎么归\n你知道\n因为我现在定规5号五号有可能\n就比如说因为我觉得魔术师有可能就没了\n我自己的视角是有可能魔术师没了\n比如说我把5号归了\n就有可能就是5号连了人\n就他这么发言\n我觉得5号应该是连了人的警上发言\n所以我想外面归吧\n3号九号嗯嗯3号九号主要都打过我\n3号是警上打我的\n但是9号是警上打我的\n9号唯一的好人面就是6号保了9号\n6号保了9号\n甚至要来抬\n我怀疑7号认为7号拉了两个好人上pk\n主要我不知道我能不就是该不该相信\n6号保的9号\n你知道吧\n因为我自己分辨女巫\n我觉得是7号是女巫\n我觉得5号是狼\n因为这5号说\n就我觉得他的发言跟他的行动路线不匹配\n就比如说他他比如说他要他警上\n打的位置是2号\n说我跟11号同身份站边的是11号\n我就有点想捆绑我跟11号对吧\n因为我给11号发的是查杀嘛\n就比如说他想把好人打到12号\n团队应该打一号\n不应该打2号\n所以呃我想想看啊\n我归5号的话\n5号是有炸弹\n3号九号里面归一个咳\n我归9号吧\n就这样吧\n我订票归9号定序\n王子发言结束\n请各位玩家带盔做好退票准备\n各位唱票结束前\n请不要放手\n321\n请出票来高举手\n清晰举票\n2号投给9号"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     },
     {
-      "id": "vote-BV13tEB6VEVV-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
+      "question_id": "vote-BV13tEB6VEVV-day-4-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。",
+      "reason": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+      "source_spans": [
         {
-          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 4364570,
-          "end_ms": 4380120,
-          "quote": "预言家验证9号玩家为好人身份\n当夜为12号预言家单死在第三天白天\n定序王子翻牌后\n9号平民被公投出局而被抗推出局\n入夜鬼术师技能通过狼队击杀3号平民",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "start_ms": 4380120,
+          "end_ms": 4387110
         }
-      ]
-    },
-    {
-      "id": "vote-BV13tEB6VEVV-day-4-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 4,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV13tEB6VEVV-day-4-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 4,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 4376600,
+            "end_ms": 4387110,
+            "quote": "入夜鬼术师技能通过狼队击杀3号平民\n3号平民单死在第四天白天\n狼队拍刀场上最后一名6号拍刀成功\n游戏结束\n狼队阵营获胜",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 4376600,
+          "start_ms": 4380120,
           "end_ms": 4387110,
-          "quote": "入夜鬼术师技能通过狼队击杀3号平民\n3号平民单死在第四天白天\n狼队拍刀场上最后一名6号拍刀成功\n游戏结束\n狼队阵营获胜",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "quote": "入夜鬼术师技能通过狼队击杀3号平民\n3号平民单死在第四天白天\n狼队拍刀场上最后一名6号拍刀成功\n游戏结束\n狼队阵营获胜\n以上是我们今天第二局鬼书之境的全部内容"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV13tEB6VEVV-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "11号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV13tEB6VEVV-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
     },
     {
       "day": 4,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV13tEB6VEVV-day-4-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 8,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4331350,
+          "end_ms": 4339700,
+          "quote": "牛要救起形成平安夜\n预言家验证了8号玩家为狼人身份\n警上竞选环节\n8号狼人选择自爆入夜鬼术师技能"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4349420,
+          "end_ms": 4371530,
+          "quote": "当夜为一号4号双死预言家验证\n3号玩家平民为好人身份\n延期竞选环节\n11号狼人选择自爆\n本就喜警徽流失入夜鬼术师交换6号平民\n7号狼人狼队击杀12号预言家\n预言家验证9号玩家为好人身份\n当夜为12号预言家单死在第三天白天"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 11,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4349420,
+          "end_ms": 4371530,
+          "quote": "当夜为一号4号双死预言家验证\n3号玩家平民为好人身份\n延期竞选环节\n11号狼人选择自爆\n本就喜警徽流失入夜鬼术师交换6号平民\n7号狼人狼队击杀12号预言家\n预言家验证9号玩家为好人身份\n当夜为12号预言家单死在第三天白天"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          4
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          9,
+          10
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          10
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          3
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          5,
+          6,
+          7,
+          10
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          5,
+          6,
+          7,
+          10
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "endgame",
+      "after_day": 4,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "causal-ballot-1-d3",
+      "day": 3,
+      "living": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "causal-ballot-2-d3",
+      "day": 3,
+      "living": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3629200,
+          "end_ms": 3650000,
+          "quote": "唱票结束前不要放手\n321请出票来高举手\n2号投给5号\n3号投给7号\n5号投给7号\n6号投给10号\n7号投给9号\n9号投给7号\n10号投给5号\n投票结束啊"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第02局_诡术之境__BV13tEB6VEVV_P01_CID39045500496.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3842660,
+          "end_ms": 3855000,
+          "quote": "请不要放手\n321\n请出票来高举手\n清晰举票\n2号投给9号\n3号投给9号\n5号投给7号\n6号投给2号"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "outcome": "ended_before_exile",
+      "exile_note": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "1b9a40e99649c8d137cc068dafc9c896e845fd3a2c5105b1900d6e7967e19c18",
+  "voting_sha256": "7f4719c1c41e6cddbab67ba128a3f84c74ad24584df20a04a047340a539a5a23",
   "source_sha256": "be6b7324afc1c2e455bda6c49d29b4be8d37bbdbe571eac0f32c6538e8a5c77f"
 }

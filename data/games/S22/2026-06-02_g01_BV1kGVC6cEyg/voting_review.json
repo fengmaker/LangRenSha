@@ -5,92 +5,81 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "bca1a751c34e3cdac2c325e8b592aba7589823d03a64be80abe87c63b91fef3a",
-  "question_count": 1,
-  "pending_count": 2,
-  "questions": [
+  "facts_sha256": "fe57a09cccdda0ff7df2a30de211fd25f5942ac7af95acd7d283eb24cdecaeb1",
+  "causal_decisions": [
     {
-      "id": "vote-BV1kGVC6cEyg-ballot-1-votes_missing",
-      "code": "votes_missing",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "部分投票人的去向待补",
-      "reason": "未记录的有票权座位：5号。未知不记弃票。",
-      "severity": "pending",
-      "evidence": [
+      "question_id": "vote-BV1kGVC6cEyg-day-2-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第2天没有放逐投票：5号夜死，猎人开枪带走8号，随后狼人白天交牌，游戏结束、好人获胜。",
+      "reason": "Day2开场播报5号倒牌并允许发动猎人技能，档案记录5→8；复盘随后明确第二天白天狼人阵营决定交牌，接着游戏结束、好人胜。因此放逐缺项源于白天投降终局。",
+      "source_spans": [
         {
           "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 1930900,
-          "end_ms": 2001410,
-          "quote": "内心的倾向完全没有倾向\n我只能再听一听\n确实如果你真真是预言家\n验了我\n我警上发言可能会让你失望吧哈\n因为我没办法说\n你肯定是预言家或者不是预言家\n确实我是纯纯好人好吗\n但是有点勉勉强我了\n肯定能站边\n你今天是有点勉强好吧\n我是好人\n过了请上诉玩家发言结束\n退水自爆环节\n5432166\n警上玩家\n8号十号请警下玩家带盔做好投票准备\n321\n请出票\n一号投给8号\n2号投给10号\n5号七票\n7号弃票\n11号投给8号\n投票结束\n其他玩家请拿蓝灯\n作业平安夜请紧张\n组织发言顺序\n警左或警右\n7号男性发言\n唉预言家没跳呗\n是不是又搞这些预言家不跳呀"
+          "start_ms": 4496400,
+          "end_ms": 4512030,
+          "quote": "应该会带一的吧\n应该会对\n我觉得就一般都都一样\n321天亮了\n昨夜5号玩家倒牌\n没有遗言\n是否发动技能\n55号玩家可以发动技能\n你有15秒的思考时间\n计时开始"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5043000,
+          "end_ms": 5048500,
+          "quote": "警徽移交至2号平白神\n第二天白天狼人阵营决定交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1kGVC6cEyg-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1kGVC6cEyg-day-2-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 2,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 4496400,
+            "end_ms": 4512030,
+            "quote": "应该会对\n我觉得就一般都都一样\n321天亮了\n昨夜5号玩家倒牌\n没有遗言\n是否发动技能\n55号玩家可以发动技能\n你有15秒的思考时间\n计时开始",
+            "note": "本日开局定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
           "start_ms": 4496400,
           "end_ms": 4512030,
-          "quote": "应该会对\n我觉得就一般都都一样\n321天亮了\n昨夜5号玩家倒牌\n没有遗言\n是否发动技能\n55号玩家可以发动技能\n你有15秒的思考时间\n计时开始",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1kGVC6cEyg-ballot-1-video_uncertain-BV1kGVC6cEyg-video-1",
-      "code": "video_uncertain-BV1kGVC6cEyg-video-1",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "已看原视频，仍需回听或更清晰画面",
-      "reason": "已看1975、1979秒原视频全景，无法从全景中可靠判断5号是否弃票；转写“5号七票”仍需回听确认。",
-      "severity": "question",
-      "evidence": [
-        {
-          "path": "https://www.bilibili.com/video/BV1kGVC6cEyg/",
-          "start_ms": 1975000,
-          "end_ms": 1975000,
-          "quote": "已看1975、1979秒原视频全景，无法从全景中可靠判断5号是否弃票；转写“5号七票”仍需回听确认。",
-          "frame_path": "data/extractions/S22/voting_video_frames/BV1kGVC6cEyg/BV1kGVC6cEyg_01975.000.png",
-          "bvid": "BV1kGVC6cEyg"
+          "quote": "应该会带一的吧\n应该会对\n我觉得就一般都都一样\n321天亮了\n昨夜5号玩家倒牌\n没有遗言\n是否发动技能\n55号玩家可以发动技能\n你有15秒的思考时间\n计时开始"
         },
         {
-          "path": "https://www.bilibili.com/video/BV1kGVC6cEyg/",
-          "start_ms": 1979000,
-          "end_ms": 1979000,
-          "quote": "已看1975、1979秒原视频全景，无法从全景中可靠判断5号是否弃票；转写“5号七票”仍需回听确认。",
-          "frame_path": "data/extractions/S22/voting_video_frames/BV1kGVC6cEyg/BV1kGVC6cEyg_01979.000.png",
-          "bvid": "BV1kGVC6cEyg"
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5043000,
+          "end_ms": 5048500,
+          "quote": "警徽移交至2号平白神\n第二天白天狼人阵营决定交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
-      "question_count": 1,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1kGVC6cEyg-ballot-1-votes_missing",
-        "vote-BV1kGVC6cEyg-ballot-1-video_uncertain-BV1kGVC6cEyg-video-1"
-      ],
-      "exile_note": null
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "12号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1kGVC6cEyg-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号夜死、猎人技能带走8号后狼队白天交牌终局；没有Day2放逐。"
     }
   ],
   "video_checks": [
@@ -118,10 +107,186 @@
           "frame_path": "data/extractions/S22/voting_video_frames/BV1kGVC6cEyg/BV1kGVC6cEyg_01979.000.png",
           "bvid": "BV1kGVC6cEyg"
         }
+      ],
+      "resolved_by_rule": true,
+      "resolution": "画面原先不足以确定的未报投向，现按用户确认口径记默认弃票：5号。"
+    }
+  ],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-1",
+      "day": 1,
+      "voters": [
+        5
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          9,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "5号夜死、猎人技能带走8号后狼队白天交牌终局；没有Day2放逐。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "12号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第01局_预女猎白混__BV1kGVC6cEyg_P01_CID38808521198.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4139090,
+          "end_ms": 4219570,
+          "quote": "我看你我是一个悍跳狼\n对不对\n然后我踩你是狼警下\n你说因为你太久没来了\n我是狼\n直接告诉你是狼咋了\n咱俩亲戚呗\n所以我觉得六的发言不可能是好人啊\n嗯归六吧\n就归六吧\n因为我觉得归十的话\n可能大家就是还是有那个我就出六\n然后验二好吧\n过了最好的发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票\n6号各玩家请做好投票准备\n321请出票\n一号投给6号\n2号投给12号\n3号投给6号\n4号投给12号\n5号投给12号\n6号投给12号\n7号投给12号\n8号投给6号\n9号投给一号\n10号投给12号\n11号投给12号\n12号投给6号\n投票结束\n12号玩家七票出局\n请发表遗言\n那第一天8号十号他们都说自己是预言家\n怎么我跟6pk上了\n最后嘿嗯我是平民啊\n就女巫可以读一下6号吧\n女巫毒6号吧"
+        }
       ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "5号夜死、猎人技能带走8号后狼队白天交牌终局；没有Day2放逐。",
+      "evidence": []
     }
   ],
   "accepted_changes": [],
-  "voting_sha256": "0181a1d90f655c94a00b2775ab8865f70d26f21d48440f9443b4041e95134739",
+  "voting_sha256": "3d721cbe62534667f884fb9ed1f7831d99d617749514fc5a5860bd394184740d",
   "source_sha256": "7d6cb4edcb2d2aa290c4f47aeab5b7b4b97f79a34da2b9a13fe55770f35b3b70"
 }

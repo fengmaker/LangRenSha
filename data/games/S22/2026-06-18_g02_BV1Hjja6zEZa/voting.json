@@ -151,13 +151,20 @@
     },
     {
       "id": "ballot-3",
-      "day": 2,
+      "day": 3,
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        4,
+        5,
+        7,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 2,
@@ -192,17 +199,24 @@
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-4",
       "day": 3,
       "kind": "exile",
-      "number": 1,
+      "number": 2,
       "stage": "revote",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        4,
+        5,
+        7,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 2,
@@ -237,13 +251,53 @@
       ],
       "tied_candidates": [],
       "winner": 2,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
+    },
+    {
+      "id": "causal-ballot-5-d4",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        4,
+        5,
+        7,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 4,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 5,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 5,
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [
     {
       "id": "interruption-1",
-      "day": 1,
+      "day": 2,
       "actor": 1,
       "reason": "self_destruct",
       "ends_day": true
@@ -257,18 +311,18 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "recorded"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "recorded"
     }
   ]
 }

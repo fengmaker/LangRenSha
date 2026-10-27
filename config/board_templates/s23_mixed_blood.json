@@ -1,0 +1,227 @@
+{
+  "code": "s23_mixed_blood",
+  "name": "S23 预女猎白混",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "女巫": 1,
+    "猎人": 1,
+    "白神": 1,
+    "平民": 3,
+    "混血儿": 1,
+    "狼人": 4
+  },
+  "wake_order": [],
+  "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。",
+  "night_slots": [
+    {
+      "code": "mixed_blood_model",
+      "label": "混血儿选择榜样（首夜）",
+      "actor_role": "混血儿",
+      "actions": [
+        "choose",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "女巫解药",
+      "actor_role": "女巫",
+      "actions": [
+        "save",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "女巫毒药",
+      "actor_role": "女巫",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "预言家查验",
+      "actor_role": "预言家",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_state",
+      "label": "猎人技能",
+      "actor_role": "猎人",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "mixed_blood_alignment",
+      "label": "混血儿胜利阵营",
+      "actor_role": "混血儿",
+      "actions": [
+        "good",
+        "wolf",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_shot",
+      "label": "猎人开枪",
+      "actor_role": "猎人",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "white_god_reveal",
+      "label": "白神公开身份",
+      "actor_role": "白神",
+      "actions": [
+        "reveal",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "mixed_blood_victory",
+      "label": "混血儿个人胜利条件",
+      "actor_role": "混血儿",
+      "actions": [
+        "good",
+        "wolf",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ]
+}

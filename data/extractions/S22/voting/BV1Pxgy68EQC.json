@@ -30,11 +30,443 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1Pxgy68EQC",
+    "source_sha256": "3ea5c7c975a5c26b098dc90be8c7867e2e0ec20b606dccc1105fc0fe2ebafeda",
+    "decisions": [
+      {
+        "question_id": "vote-BV1Pxgy68EQC-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐票；当日进入夜晚后狼人拍刀结束游戏。",
+        "reason": "复盘先列第1天夜里4号、5号双死，随后明确“第二天”狼队拍刀，12号与7号目标拍刀失败，游戏结束；这是终局过程而非漏掉的放逐。",
+        "source_spans": [
+          {
+            "start_ms": 5208060,
+            "end_ms": 5218410,
+            "quote": "入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出了道路是12号和7号拍刀失败"
+          },
+          {
+            "start_ms": 5215370,
+            "end_ms": 5218410,
+            "quote": "给出了道路是12号和7号拍刀失败"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1Pxgy68EQC-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 5208060,
+              "end_ms": 5218410,
+              "quote": "入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出了道路是12号和7号拍刀失败",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 5208060,
+            "end_ms": 5218410,
+            "quote": "3号预言家被抗推出局\n入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出了道路是12号和7号拍刀失败\n游戏结束"
+          },
+          {
+            "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 5215370,
+            "end_ms": 5218410,
+            "quote": "狼人可拍两刀\n给出了道路是12号和7号拍刀失败\n游戏结束"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "第2天开始后狼队直接拍刀结束游戏。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天开始后狼队直接拍刀结束游戏。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "第2天开始后狼队直接拍刀结束游戏。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-07-22_g01_BV1Pxgy68EQC/复核记录.json",
+    "sha256": "c0644d22c4917fe4b35afd61fb5928cd2016a91b478435c664feda763193ffa5",
+    "recap_segments": [
+      {
+        "start_ms": 5166359,
+        "end_ms": 5167779,
+        "text": "蟠桃失败"
+      },
+      {
+        "start_ms": 5168560,
+        "end_ms": 5169560,
+        "text": "10号白神"
+      },
+      {
+        "start_ms": 5169560,
+        "end_ms": 5170620,
+        "text": "6号猎人"
+      },
+      {
+        "start_ms": 5170620,
+        "end_ms": 5172840,
+        "text": "12号是狼混"
+      },
+      {
+        "start_ms": 5174120,
+        "end_ms": 5176920,
+        "text": "他混得久"
+      },
+      {
+        "start_ms": 5178300,
+        "end_ms": 5179300,
+        "text": "出去揍他"
+      },
+      {
+        "start_ms": 5179300,
+        "end_ms": 5182450,
+        "text": "哈哈哈哈哈好"
+      },
+      {
+        "start_ms": 5182450,
+        "end_ms": 5183410,
+        "text": "第一局游戏结束了"
+      },
+      {
+        "start_ms": 5183410,
+        "end_ms": 5185530,
+        "text": "本局游戏预女猎白混血儿版型预言家"
+      },
+      {
+        "start_ms": 5185530,
+        "end_ms": 5186250,
+        "text": "3号女巫"
+      },
+      {
+        "start_ms": 5186250,
+        "end_ms": 5186930,
+        "text": "4号猎人"
+      },
+      {
+        "start_ms": 5186930,
+        "end_ms": 5188130,
+        "text": "6号白神"
+      },
+      {
+        "start_ms": 5188130,
+        "end_ms": 5188970,
+        "text": "10号狼人"
+      },
+      {
+        "start_ms": 5188970,
+        "end_ms": 5190210,
+        "text": "5号八号九号"
+      },
+      {
+        "start_ms": 5190210,
+        "end_ms": 5192550,
+        "text": "11号平民一号2号七号"
+      },
+      {
+        "start_ms": 5192550,
+        "end_ms": 5197330,
+        "text": "本游戏的混血儿12号榜样是9号狼人短球戏为狼人混"
+      },
+      {
+        "start_ms": 5197330,
+        "end_ms": 5200410,
+        "text": "首夜狼人击杀10号白神女巫开药解救行程"
+      },
+      {
+        "start_ms": 5200410,
+        "end_ms": 5203050,
+        "text": "平安夜预言家验证一号玩家为好人身份"
+      },
+      {
+        "start_ms": 5203050,
+        "end_ms": 5203790,
+        "text": "上警环节"
+      },
+      {
+        "start_ms": 5203790,
+        "end_ms": 5205540,
+        "text": "9号悍跳狼获得警徽"
+      },
+      {
+        "start_ms": 5205540,
+        "end_ms": 5206400,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 5206400,
+        "end_ms": 5208060,
+        "text": "3号预言家被抗推出局"
+      },
+      {
+        "start_ms": 5208060,
+        "end_ms": 5212690,
+        "text": "入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死"
+      },
+      {
+        "start_ms": 5212690,
+        "end_ms": 5213550,
+        "text": "第二天白天"
+      },
+      {
+        "start_ms": 5213550,
+        "end_ms": 5214610,
+        "text": "狼人阵营决定拍刀"
+      },
+      {
+        "start_ms": 5214610,
+        "end_ms": 5215370,
+        "text": "狼人可拍两刀"
+      },
+      {
+        "start_ms": 5215370,
+        "end_ms": 5218410,
+        "text": "给出了道路是12号和7号拍刀失败"
+      },
+      {
+        "start_ms": 5218410,
+        "end_ms": 5219110,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 5219110,
+        "end_ms": 5220590,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 5220590,
+        "end_ms": 5221790,
+        "text": "好各位大梦老师们"
+      },
+      {
+        "start_ms": 5221790,
+        "end_ms": 5224350,
+        "text": "您正在收看到的节目是京城大师赛第22季"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [
+    {
+      "kind": "wolf_rush",
+      "day": 2,
+      "actor": null,
+      "declared_targets": [
+        7,
+        12
+      ],
+      "result": "good_win",
+      "note": "第二天法官明确狼队决定两刀、给出12和7号刀路但拍刀失败，随后播报好人获胜；目标数组不表示刀序。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5208060,
+          "end_ms": 5221790,
+          "quote": "入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出了道路是12号和7号拍刀失败\n游戏结束\n好人阵营获胜\n好各位大梦老师们"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          4,
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "endgame",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "3号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4224900,
+          "end_ms": 4290940,
+          "quote": "所以我的警徽流就单押一张7号\n因为我觉得退出三之后\n他们只能刀我啊\n今天我归票\n我会归3号警徽流验\n7号验出是金水\n我会飞给8号\n验出是查杀\n会飞给4号啊\n坑位我点完了\n今天投三过了四玩家发言结束\n各位玩家请戴盔做好投票准备\n各位弹幕老师们\n请上一上人气票\n谢谢大家\n警长请归票\n警长归票3号\n各位玩家请做好投票准备\n321请出票\n一号投给9号\n2号投给9号\n3号投给9号\n4号投给3号\n5号\n投给3号\n6号\n投给9号\n7号投给9号\n8号投给3号\n9号投给3号\n10号\n投给9号\n11号\n投给3号\n12号\n投给3号\n投票结束\n3号玩家6.5票数据请发表遗言\n那是我的问题啊\n是我的问题\n4号玩家啊\n是你了啊\n是你了\n但是呢其实我警上发这个言"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "第2天开始后狼队直接拍刀结束游戏。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1Pxgy68EQC",
   "source_sha256": "3ea5c7c975a5c26b098dc90be8c7867e2e0ec20b606dccc1105fc0fe2ebafeda",
   "dossier_sha256": "f10be7176f7e665442318cc4629996bf5008a79218dfe89655bc66518521dec5",
-  "generated_at": "2026-10-24T23:21:23+08:00",
+  "generated_at": "2026-10-25T04:08:39+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1Pxgy68EQC-p01-g01",
@@ -90,7 +522,7 @@
           }
         ],
         "tied_candidates": [],
-        "winner": null,
+        "winner": 9,
         "unrecorded_voters": []
       },
       {
@@ -191,7 +623,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

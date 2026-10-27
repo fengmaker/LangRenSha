@@ -8,7 +8,7 @@
       "file": "data/games/S22/2026-06-10_g03_BV1sYEo6QEyS/dossier.json",
       "before_sha256": "e9d0c17bf6e8e084b5a5b1e8a1458185733a7187ec73a9ef4ae21a06cdb7acea",
       "state": "applied",
-      "reason": "复盘明确首夜同守同救导致1号猎人出局；次夜机械女巫空过，通灵师查验2号。按唯一在场通灵师身份将查验归于6号，撤销机械女巫查验。",
+      "reason": "复盘明确首夜同守同救导致1号猎人出局；次夜机械女巫空过，通灵师查验2号。按唯一在场通灵师身份将查验归于6号，撤销机械女巫查验。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "event",
@@ -46,6 +46,31 @@
             ],
             "result": "狼人"
           }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              3
+            ]
+          }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "night",
+          "slot": "mechanical_action",
+          "fields": {
+            "actor": 5,
+            "action": "poison",
+            "targets": [
+              11
+            ]
+          }
         }
       ],
       "evidence": [
@@ -69,11 +94,23 @@
           "end_ms": 3150730,
           "quote": "狼人击杀3号守卫当夜机械女巫通过女巫通过通灵实验证2号玩家为狼人身份第二天白天",
           "source_sha256": "c062fede012f7f40074571cefd29a616934ce433d57fc12ebada2e5ac90bd692"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
         }
       ],
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1sYEo6QEyS/e9d0c17bf6e8e084b5a5b1e8a1458185733a7187ec73a9ef4ae21a06cdb7acea.json",
-      "after_sha256": "5571f6d2469d59c94cb5888f7840763a3715f74f6984357dfd6c17a6dbd9b8e9",
-      "applied_at": "2026-10-24T19:10:56+08:00"
+      "after_sha256": "aabf19ed0f0356c43318674d47c72a26095f1c5df8264212ffbe46823bf3ee24",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV13ZMp63EEB",
@@ -113,7 +150,7 @@
       "file": "data/games/S22/2026-08-04_g04_BV1oXMB6fEQ4/dossier.json",
       "before_sha256": "2fe5a91d3a8d57976474104a3c3b6cdce10640253a99df1ad9d0cdc41abdd9ab",
       "state": "applied",
-      "reason": "复盘第二夜守卫空过；第三夜才守护6号，原第二夜目标是后夜错位。",
+      "reason": "复盘第二夜守卫空过；第三夜才守护6号，原第二夜目标是后夜错位。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "event",
@@ -124,6 +161,19 @@
             "action": "pass",
             "targets": [],
             "result": null
+          }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "sheriff_result",
+          "fields": {
+            "action": "elected",
+            "targets": [
+              12
+            ],
+            "result": "首日自爆之前12号已持有警徽，竞选已完成。"
           }
         }
       ],
@@ -141,11 +191,29 @@
           "end_ms": 3195610,
           "quote": "本局游戏警徽流失入野守卫守护6号自首狼人击杀9号通灵师通灵师验证一号玩家为平民身份",
           "source_sha256": "64c2d38b129808f44721eac12a8fe8c2610bc22f4e0e0d31193de4ca8cb8e685"
+        },
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第04局_机械狼通灵师__BV1oXMB6fEQ4_P01_CID40598178390.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 581490,
+          "end_ms": 605700,
+          "quote": "那神牌应该也都找到我了\n你看唉\n再加一把\n再加一把干嘛呢\n这是嘿嘿嘿\n4321天亮了\n本游戏除一号3号五号外\n其他玩家上警上警\n玩家请亮红灯\n上警玩家请亮红灯"
+        },
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第04局_机械狼通灵师__BV1oXMB6fEQ4_P01_CID40598178390.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1098320,
+          "end_ms": 1099360,
+          "quote": "12号留言警徽\n我觉得12号好人呀"
+        },
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第04局_机械狼通灵师__BV1oXMB6fEQ4_P01_CID40598178390.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1442060,
+          "end_ms": 1444720,
+          "quote": "我说好像过了井上诉玩家发言结束\n2号玩家选择自爆"
         }
       ],
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1oXMB6fEQ4/2fe5a91d3a8d57976474104a3c3b6cdce10640253a99df1ad9d0cdc41abdd9ab.json",
-      "after_sha256": "19d8e47795a7bcefa105c4adecb53a840c9ea6b05c899a24b17549bfb3724d4c",
-      "applied_at": "2026-10-24T19:10:57+08:00"
+      "after_sha256": "1f70ea042ad694dfac61054aba711543f3702ef477ce81615d09ac91d435430c",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV1DFM26ME2o",
@@ -317,7 +385,7 @@
       "file": "data/games/S22/2026-08-21_g02_BV1jM8B6jEkF/dossier.json",
       "before_sha256": "74639188dcd906c9c809a6c017623be7dfae24414ff3ecc1281152ad462f147b",
       "state": "applied",
-      "reason": "复盘明确魔术师交换4/6；刀口与查验实际映射共同验证，撤销误归诡术师的同号交换，诡术师此夜未知。",
+      "reason": "复盘明确魔术师交换4/6；刀口与查验实际映射共同验证，撤销误归诡术师的同号交换，诡术师此夜未知。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "event",
@@ -344,6 +412,18 @@
             ],
             "result": "魔术师交换4号与6号，狼刀原6实际4，查验实际到6号魔术师"
           }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              6
+            ]
+          }
         }
       ],
       "evidence": [
@@ -353,11 +433,23 @@
           "end_ms": 3191410,
           "quote": "入夜鬼术师通过魔术师更换了4号狼人和6号自己的号码狼人击杀6号实际4号玩家中刀女巫通过预言家验证4号实际验证到6号魔术师的身份为好人第二天延期竞选警长环节",
           "source_sha256": "fa125c97ff4727f7c5f0733448b2419784720597a21fb31774b354bc868b037b"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-21/2026-08-21_S22_第13周_决赛周_第02局_诡术之境__BV1jM8B6jEkF_P01_CID41138127466.平台AI字幕_ai-zh_01_fa125c97ff.原始.json",
+          "start_ms": 1779680,
+          "end_ms": 1805050,
+          "quote": "本局游戏警徽流失随机点数四\n由2号玩家开始逆序发言\n一号玩家请做发言准备\n5号玩家选择自爆\n天黑请闭眼\n但那就是查杀的是鬼入师了呀对吧\n那就五又自爆了对吧\n那就五没自爆哦\n那这把的狼队是什么啊\n13451345对吧\n1345嗯"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-21/2026-08-21_S22_第13周_决赛周_第02局_诡术之境__BV1jM8B6jEkF_P01_CID41138127466.平台AI字幕_ai-zh_01_fa125c97ff.原始.json",
+          "start_ms": 3207710,
+          "end_ms": 3209950,
+          "quote": "王子和2号预言家的号码\n狼人追刀6号魔术师\n女巫通过当夜预言家验证了9号玩家"
         }
       ],
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1jM8B6jEkF/74639188dcd906c9c809a6c017623be7dfae24414ff3ecc1281152ad462f147b.json",
-      "after_sha256": "2beda213bf04506260e98037ce9ee8d330b59f8cd1a79b22e973d9fcdad8c224",
-      "applied_at": "2026-10-24T19:11:01+08:00"
+      "after_sha256": "db4cd1b7dc32a229d4c9debb309427c2dddcb7918b3bc814a7cd2071a2b8ef69",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV1hZMp63Esx",
@@ -489,7 +581,7 @@
       "file": "data/games/S22/2026-06-18_g03_BV1Wjja66EFz/dossier.json",
       "before_sha256": "636657dcd0469f865e4aa82a20a110139ac538280ccc40b6bcafbb2e369a0037",
       "state": "applied",
-      "reason": "复盘明确机械狼学平民，且通灵师查验该座位的反馈为平民；旧结果把底牌机械狼误作反馈。仅纠正查验反馈，保留机械狼底牌与学习形态。",
+      "reason": "复盘明确机械狼学平民，且通灵师查验该座位的反馈为平民；旧结果把底牌机械狼误作反馈。仅纠正查验反馈，保留机械狼底牌与学习形态。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "event",
@@ -498,6 +590,18 @@
           "slot": "seer_check",
           "fields": {
             "result": "平民"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 4,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              5
+            ]
           }
         }
       ],
@@ -515,11 +619,29 @@
           "end_ms": 6870620,
           "quote": "牛毒杀6号狼人6号狼人单死通灵师查验2号玩家机械狼为平民身份第二天白天",
           "source_sha256": "4b1f9259013355e696b408f3bffc0aa952bf591869e4fd1dcbd48be81c30aef0"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 6882320,
+          "end_ms": 6888199,
+          "quote": "狼队击杀4号首位4号守卫单四通灵师查验了8号玩家为平民身份\n在第三天的白天\n9号平民被抗推出局\n入夜狼人击杀5号通灵师\n通灵师查验了10号玩家为女巫身份"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 5992200,
+          "end_ms": 6053510,
+          "quote": "九二顺投\n按照逻辑上九保八说23pk\n那么就只能九九是没验过\n先投九九出局没结束\n那他是好人\n他保了八\n那么就剩23pk\n我自己是好人\n再投二\n就是这样哦\n别的也没有了\n你归吧\n过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号\n投票结束\n9号玩家四票出局\n请发表遗言\n呵呵我我我理解好人确实压力比较大\n你要是觉得我不是狼\n你就直接归2号嘛对吧\n你下次就直接归2号\n我本来想保你的\n你投2号我肯定会保你怎么投到我身上"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 6010000,
+          "end_ms": 6040000,
+          "quote": "过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号"
         }
       ],
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1Wjja66EFz/636657dcd0469f865e4aa82a20a110139ac538280ccc40b6bcafbb2e369a0037.json",
-      "after_sha256": "6e052fbcdccd98e5139bf675eda0eea7118ed7b0790a33e0d654c69d8126ac94",
-      "applied_at": "2026-10-24T19:13:22+08:00"
+      "after_sha256": "bfe1cdda263111a2fe8fad41b394c9b5f3b6d2de1238484b72687214dd913009",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV18vTi66EnN",
@@ -598,7 +720,7 @@
       "file": "data/games/S22/2026-06-09_g01_BV1iaE26kE1w/dossier.json",
       "before_sha256": "0d14eb9fb9d712f1fa31ff4d88a354e0e44991033025c2f0e8a5dc3aea80857c",
       "state": "applied",
-      "reason": "复盘第三夜明确狼刀9号猎人、猎人出局开枪，补齐夜间出局触发，保留9号开枪带5号。",
+      "reason": "复盘第三夜明确狼刀9号猎人、猎人出局开枪，补齐夜间出局触发，保留9号开枪带5号。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "event",
@@ -611,6 +733,18 @@
               9
             ]
           }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              3
+            ]
+          }
         }
       ],
       "evidence": [
@@ -620,11 +754,23 @@
           "end_ms": 4032460,
           "quote": "本局游戏警徽流失入夜狼人击杀9号猎人女巫空过猎人出局发动技能带走5号混血儿第三天白天",
           "source_sha256": "7d9b3961cd40594115ecdac4789a8b837cd130436fbce315798a30237d7016ad"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第01局_预女猎白混__BV1iaE26kE1w_P01_CID38991497968.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2544360,
+          "end_ms": 2568720,
+          "quote": "哎大卫这害怕这这不行不行\n哎呀害怕\n天亮了\n退水自爆环节\n一号玩家选择自爆\n本局游戏警徽流失\n所有玩家请亮蓝灯\n作业3号玩家倒牌没有遗言\n受发动技能543213号玩家请灭灯离场\n天黑请闭眼"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第01局_预女猎白混__BV1iaE26kE1w_P01_CID38991497968.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4016500,
+          "end_ms": 4033000,
+          "quote": "12号查杀狼人选择自爆\n入夜狼人击杀3号预言家女巫\n通过预言家验证8号玩家为好人身份\n第二天延期\n禁止进场环节\n一号狼人自爆\n本局游戏警徽流失\n入夜狼人击杀9号猎人女巫空过猎人出局\n发动技能带走5号混血儿\n第三天白天"
         }
       ],
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1iaE26kE1w/0d14eb9fb9d712f1fa31ff4d88a354e0e44991033025c2f0e8a5dc3aea80857c.json",
-      "after_sha256": "9d1b14e0ecc3f21c9fd5775991fe566aaf913e5601e53356f28ebf3b65332b15",
-      "applied_at": "2026-10-24T19:15:22+08:00"
+      "after_sha256": "8a1eeaaf908c9bd87b79e2274141be7f48ceb0e1ecb25295292b40f0148a9fdd",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV18ijD6BExh",
@@ -764,7 +910,7 @@
       "file": "data/games/S22/2026-06-04_g02_BV117EA6AEcV/dossier.json",
       "before_sha256": "50db0fd8309211042811887d83d312f06fed9b807cf0f284bbfbd05cfeee0bf3",
       "state": "applied",
-      "reason": "规则推断：官方15张候选牌减去复盘确认的12张实际底牌，唯一余牌为狼人、平民、毒师；余牌含狼人，盗宝大师应属狼阵营。首夜选平民、次夜选毒师有原文支持。原好人阵营仅来自此前AI摘要，不是原始复盘的明确播报，现撤回该无依据判断。",
+      "reason": "规则推断：官方15张候选牌减去复盘确认的12张实际底牌，唯一余牌为狼人、平民、毒师；余牌含狼人，盗宝大师应属狼阵营。首夜选平民、次夜选毒师有原文支持。原好人阵营仅来自此前AI摘要，不是原始复盘的明确播报，现撤回该无依据判断。；2026-10-25按摄梦人确认规则补正梦死名单及禁枪状态：连续两夜梦6号狼王令6号出局，狼刀10号，盗宝毒师毒4号猎人；复盘明确当夜三位倒牌。更正毒口误提为7号及死亡仅记10号的漏项。",
       "changes": [
         {
           "kind": "seat",
@@ -806,6 +952,45 @@
             "targets": [],
             "result": "毒师"
           }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "night",
+          "slot": "treasure_card_skill",
+          "fields": {
+            "targets": [
+              4
+            ],
+            "result": "盗宝大师2号切换毒师，毒杀4号猎人；原复盘和独立音频重转写支持。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              4,
+              6,
+              10
+            ],
+            "result": "4号中毒、6号连续两夜被梦游、10号狼刀，共三人出局。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 6,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
         }
       ],
       "evidence": [
@@ -841,6 +1026,25 @@
           "original_path": "config/S22_formal_rules.json",
           "quote": "\"alignment_from_unused_cards\": \"wolf if any unused card is a werewolf role; otherwise good\"",
           "source_sha256": "4df7af0d238f7205b5ef416ef8cf287e681c161e356b76ea65b5d2a8cd050dbc"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+          "start_ms": 5275190,
+          "end_ms": 5291005,
+          "quote": "入夜社会人再次梦游六号狼王狼人击杀十号通灵师盗宝大师七号为毒尸身份毒杀，\n四号猎人当一为。\n三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份，\n并在出局后将警徽移交至八号射。"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        },
+        {
+          "path": "data/extractions/S22/skill_settlement_review_20261025/audio/results.json",
+          "start_ms": 5274000,
+          "end_ms": 5293000,
+          "quote": "公投出局入夜摄报人再次梦游六号狼王狼人击杀十号通灵师盗宝大师切换为毒师身份毒杀四号猎人当夜为三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份并在出局后将警徽移交至",
+          "note": "独立原音频机器转写，不作为人工听核。"
         }
       ],
       "inference": {
@@ -852,15 +1056,15 @@
         ]
       },
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV117EA6AEcV/50db0fd8309211042811887d83d312f06fed9b807cf0f284bbfbd05cfeee0bf3.json",
-      "after_sha256": "c430567a628948334489a4cb6611b9c02e2461e37dc7b1605dcb59c2ad69c89d",
-      "applied_at": "2026-10-24T19:23:28+08:00"
+      "after_sha256": "0e2158ac4a1e25f9ff8768c2f580beb1095c3ff3c5eab5a1715d238696eab382",
+      "applied_at": "2026-10-25T04:08:16+08:00"
     },
     {
       "bvid": "BV1Hej66FE1Y",
       "file": "data/games/S22/2026-06-19_g02_BV1Hej66FE1Y/dossier.json",
       "before_sha256": "9465ee720f53cd0ba43bf5290330608ad021281e74cac0867ef3e3efc2bf3ebe",
       "state": "applied",
-      "reason": "规则推断：官方15张候选牌减去复盘确认的12张实际底牌，唯一余牌为狼人、平民、毒师；余牌含狼人，盗宝大师应属狼阵营。首夜选平民、次夜选毒师有原文支持。原好人阵营仅来自此前AI摘要，不是原始复盘的明确播报，现撤回该无依据判断。",
+      "reason": "规则推断：官方15张候选牌减去复盘确认的12张实际底牌，唯一余牌为狼人、平民、毒师；余牌含狼人，盗宝大师应属狼阵营。首夜选平民、次夜选毒师有原文支持。原好人阵营仅来自此前AI摘要，不是原始复盘的明确播报，现撤回该无依据判断。；2026-10-25逐项因果复核补正出局和技能时点。",
       "changes": [
         {
           "kind": "seat",
@@ -902,6 +1106,29 @@
             "targets": [],
             "result": "毒师"
           }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              9
+            ],
+            "result": "复盘5753450ms明确狼队击杀9号，随后警徽交至7号。"
+          }
         }
       ],
       "evidence": [
@@ -937,6 +1164,24 @@
           "original_path": "config/S22_formal_rules.json",
           "quote": "\"alignment_from_unused_cards\": \"wolf if any unused card is a werewolf role; otherwise good\"",
           "source_sha256": "4df7af0d238f7205b5ef416ef8cf287e681c161e356b76ea65b5d2a8cd050dbc"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-19/2026-06-19_S22_第04周_正赛第03期_第02局_盗宝大师__BV1Hej66FE1Y_P01_CID39246956631.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1634000,
+          "end_ms": 1645000,
+          "quote": "其余玩家请变蓝灯\n昨夜信息平安夜\n警长选择发言顺序\n10号玩家请发言哦\n又到我了\n我也没什么可说的\n我刚都说完了嗯"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-19/2026-06-19_S22_第04周_正赛第03期_第02局_盗宝大师__BV1Hej66FE1Y_P01_CID39246956631.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3894220,
+          "end_ms": 3921080,
+          "quote": "各位玩家唱票结束前请不要放手\n321请出票嗯\n一号投给5号\n2号投给5号\n3号投给7号\n4号投给7号\n5号投给11号\n6号投给5号\n7号投给5号\n8号投给7号\n9号投给5号\n10号投给5号\n11号投给5号\n12号投给5号\n投票结束\n5号玩家八点5号出局"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-19/2026-06-19_S22_第04周_正赛第03期_第02局_盗宝大师__BV1Hej66FE1Y_P01_CID39246956631.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5753450,
+          "end_ms": 5759510,
+          "quote": "12号圣梦人入夜\n狼队击杀9号平民\n9号平民出局后\n警徽交至7号平民\n第三天白天\n3号盗宝大师被公投出局后"
         }
       ],
       "inference": {
@@ -948,8 +1193,8 @@
         ]
       },
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1Hej66FE1Y/9465ee720f53cd0ba43bf5290330608ad021281e74cac0867ef3e3efc2bf3ebe.json",
-      "after_sha256": "6fd2bb521fcef7e03ed1b3d290081799d214a65e7f715ff4f1b60630f8d4f7a6",
-      "applied_at": "2026-10-24T19:23:29+08:00"
+      "after_sha256": "62b915d6215b7b647a2ccb273ee69a6b424846ee233024a678501f42fea00701",
+      "applied_at": "2026-10-25T03:36:39+08:00"
     },
     {
       "bvid": "BV1747L6QETh",
@@ -1046,9 +1291,711 @@
       "before_snapshot": "data/archive/S22_formal_rule_alignment/BV1747L6QETh/2db23fba8b0415e565146b691edffddfee4f370e89474e32fb051b072122f26d.json",
       "after_sha256": "95d927efabed5d5656119ce4011e440444d741df747aa7a2b83b0a2a4f802fff",
       "applied_at": "2026-10-24T19:23:30+08:00"
+    },
+    {
+      "bvid": "BV1pGVC6cEbW",
+      "file": "data/games/S22/2026-06-02_g03_BV1pGVC6cEbW/dossier.json",
+      "before_sha256": "5372949f59d07d0a6b0b40323f907eb0b96cc0e64cf8a12dc5f2f8a97e7f4205",
+      "before_snapshot": "data/archive/S22_formal_rule_alignment/20261025/BV1pGVC6cEbW_5372949f59d07d0a6b0b40323f907eb0b96cc0e64cf8a12dc5f2f8a97e7f4205.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 4,
+          "phase": "day",
+          "slot": "exile_result",
+          "fields": {
+            "action": "none",
+            "targets": [],
+            "result": "两轮投票均平票，平安日，无人被放逐；随后狼人拍刀。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              8
+            ]
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "白天如果两轮投票都平票就是平安日，无人被放逐。6月2日第三局第四天白天两轮平票平安日，无人被放逐，随后狼人拍刀。",
+          "source_sha256": "ce4642fa5c8cd4deee2d125ed3034446076eaf8f5334b7125cbdd01edbd87c22",
+          "source_type": "user_confirmation"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1pGVC6cEbW_P01_CID38808781676.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1625000,
+          "end_ms": 1635000,
+          "quote": "话说我双刀亮了\n昨夜8号玩家倒牌\n没有遗言\n是否发动技能\n543218号玩家请灭灯离场"
+        }
+      ],
+      "reason": "2026-10-25按用户确认补正盗宝阵营或平票平安日。；2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "691632ce50b9944c38d9115104727006b562cb74eed0bb42be67be9402a607dd",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1xm3J6wEbr",
+      "file": "data/games/S22/2026-07-29_g02_BV1xm3J6wEbr/dossier.json",
+      "before_sha256": "40e05a7211917df8b78d779f1ada0c86d498deb39dd85f2690ed8614915447e4",
+      "before_snapshot": "data/archive/S22_formal_rule_alignment/20261025/BV1xm3J6wEbr_40e05a7211917df8b78d779f1ada0c86d498deb39dd85f2690ed8614915447e4.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "seat",
+          "seat": 7,
+          "fields": {
+            "faction": "werewolf"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": [],
+            "result": "平安夜"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "京城大师赛的盗宝大师一定是狼人阵营的，其他小狼都出局后带刀。",
+          "source_sha256": "ce4642fa5c8cd4deee2d125ed3034446076eaf8f5334b7125cbdd01edbd87c22",
+          "source_type": "user_confirmation"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第02局_盗宝大师__BV1xm3J6wEbr_P01_CID40417297759.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 482529,
+          "end_ms": 503220,
+          "quote": "因为这个板子本来就存在就盗宝的可能性\n所以不一定会低\n这样的话机枪通灵师可能就低了\n好玩的老师们好\n三枪战二一天亮了\n本游戏除3号四号外\n其他玩家上警上警玩家请亮红灯\n上警玩家请亮红灯"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第02局_盗宝大师__BV1xm3J6wEbr_P01_CID40417297759.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5018750,
+          "end_ms": 5019430,
+          "quote": "毒师毒杀5号狼人\n五六双死\n当夜通灵实验证4号玩家为平民身份"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第02局_盗宝大师__BV1xm3J6wEbr_P01_CID40417297759.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4897969,
+          "end_ms": 4919600,
+          "quote": "有很多人给三也给三也行\n给四也就四投二吗\n42都没有\n四四投二啊\n四投24号天亮了\n所以双死\n死亡顺序不分先后\n一号11号倒牌\n没有遗言\n手有发动技能\n543211号11号请灭灯离场\n警左警右\n4号或9号"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第02局_盗宝大师__BV1xm3J6wEbr_P01_CID40417297759.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5037080,
+          "end_ms": 5039440,
+          "quote": "当夜通灵身验证2号玩家为狼人身份\n第三天白天最后一张狼人2号选择交牌\n游戏结束"
+        }
+      ],
+      "reason": "2026-10-25按用户确认补正盗宝阵营或平票平安日。；2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "f35b6a7c9cb5e458f2fae0a8a6ae9981dcb79b95afe162ba714f1d77b15ac385",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1aXgW6nE6E",
+      "file": "data/games/S22/2026-08-13_g02_BV1aXgW6nE6E/dossier.json",
+      "before_sha256": "c4bf3a15250cff1dbba928bc6f53e74f5e784b69db2ac9ce4e47b3bdaa97a62c",
+      "before_snapshot": "data/archive/S22_formal_rule_alignment/20261025/BV1aXgW6nE6E_c4bf3a15250cff1dbba928bc6f53e74f5e784b69db2ac9ce4e47b3bdaa97a62c.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "seat",
+          "seat": 7,
+          "fields": {
+            "faction": "werewolf"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": [],
+            "result": "N1禁刀且全席后续存活"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 4,
+          "phase": "day",
+          "slot": "masked_delayed_death",
+          "fields": {
+            "action": "die_after_speech",
+            "actor": 3,
+            "targets": [
+              3
+            ],
+            "result": "夜间刀中后延迟至白天发言结束死亡，随后游戏结束。"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "京城大师赛的盗宝大师一定是狼人阵营的，其他小狼都出局后带刀。",
+          "source_sha256": "ce4642fa5c8cd4deee2d125ed3034446076eaf8f5334b7125cbdd01edbd87c22",
+          "source_type": "user_confirmation"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第02局_盗宝大师__BV1aXgW6nE6E_P01_CID40882735089.本地全文转写_funasr.json",
+          "start_ms": 640595,
+          "end_ms": 660525,
+          "quote": "Ok.\n好，\n我来开了啊，\n来了来了来了来了来了来了开看。\n天亮了本局游戏，\n除三号、四号、六号、七号玩家外，\n其余玩家均上警上警玩家亮起面前红灯，\n到时候给你好呗，\n红颜好香。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第02局_盗宝大师__BV1aXgW6nE6E_P01_CID40882735089.本地全文转写_funasr.json",
+          "start_ms": 3070655,
+          "end_ms": 3089285,
+          "quote": "请出票一号投给十号二号投给十号，\n三号投给十号。\n四号投给六号，\n五号投给十号，\n六号投给十号。\n七号投给六号，\n八号投给十号八号投给十号九号投给六号，\n十一号投给十号，\n二号投给十号。\n投票结束，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第02局_盗宝大师__BV1aXgW6nE6E_P01_CID40882735089.本地全文转写_funasr.json",
+          "start_ms": 5181095,
+          "end_ms": 5194465,
+          "quote": "当夜为十二号毒师单死。\n第三天白天，\n一号平民被抗推出，\n局入夜盗宝大师开刀击杀。\n三号蒙面人在第二天白天三号蒙面人发言后倒牌，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第02局_盗宝大师__BV1aXgW6nE6E_P01_CID40882735089.本地全文转写_funasr.json",
+          "start_ms": 4769155,
+          "end_ms": 4779690,
+          "quote": "一号投给九号二号投给一号三号投给一号四号弃票，\n七号投给四号，\n九号投给一号投票结束，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第02局_盗宝大师__BV1aXgW6nE6E_P01_CID40882735089.本地全文转写_funasr.json",
+          "start_ms": 5183725,
+          "end_ms": 5196745,
+          "quote": "一号平民被抗推出，\n局入夜盗宝大师开刀击杀。\n三号蒙面人在第二天白天三号蒙面人发言后倒牌，\n游戏结束，\n狼人阵营突神获胜。\n以上是我们今天第二局版型盗宝大师的全部内容，"
+        }
+      ],
+      "reason": "2026-10-25按用户确认补正盗宝阵营或平票平安日。；2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "22deeb7c7ec538868dbc681fbce12da6339fae40190f98d62ee98f91c5da82bb",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1CGVC6cE8T",
+      "file": "data/games/S22/2026-06-02_g02_BV1CGVC6cE8T/dossier.json",
+      "before_sha256": "a55001c0ef89147715116ff9cc18cdeda9339c3f2128dbb9687ef9ebf399c3b8",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1CGVC6cE8T_a55001c0ef89147715116ff9cc18cdeda9339c3f2128dbb9687ef9ebf399c3b8.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "pass",
+            "actor": 7,
+            "targets": [],
+            "result": "因果复核：7号梦亡后无枪杀；其余6名存活者全部参加当日放逐投票。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 7,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1949000,
+          "end_ms": 1962000,
+          "quote": "最后3分钟\n大家一起冲冲塔\n守守塔\n感谢各位的支持\n送一送人气票了\n谢谢大家作业\n平安夜请警长组织翻顺序\n井左或警右\n9号或11号\n9号玩家请发言"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6507740,
+          "end_ms": 6569540,
+          "quote": "但是当时我在我的心里\n十十一也有可能是两个狼\n10号的发言我一向听不出来\n那我自然偏平\n我就算倾向于十位\n说我还没分那么太清\n但七发完言\n我觉得七座狼也只能做五的同伴\n所以十是通灵师\n只是没有那么多时间去讲这些东西\n并不是你说的什么前后不一致\n对啊没有这些东西就投一下12呗\n好过了\n作玩家发起数个玩家请戴盔\n做好投票准备\n警长请归票\n警长归票\n12号\n各玩家请做好投票准备\n321请出票\n3号玩家弃票\n6号投给12号\n8号投给12号\n9号投给12号\n11号投给12号\n12号投给8号\n投票结束\n12号将4.5票出局\n请发表言\n你是不是觉得我戴耳机是装的\n为什么我怀疑9号不行呢\n那9号我觉得他是好人的话\n我第一个给了G6\n都是好人\n他的心理倾向肯定是8号呀"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 7441700,
+          "end_ms": 7455170,
+          "quote": "第二天白天\n2号狼人自爆入夜摄梦人梦游7号狼王\n7号连续两夜被梦王出局\n狼人击杀\n10号通灵师\n通灵师验证9号玩家为狼人身份\n10号出局\n将警徽移交至8号平民\n第三天白天"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。；2026-10-25按摄梦人确认规则补正梦死名单及禁枪状态：7号狼王因连续梦游出局，按用户补充规则无法开枪；把原先仅从无额外死者推出的主动空过，精确改为技能不可用。",
+      "after_sha256": "378aa611152a06712ef17ef53253e8db5c7e5c3dbe1f5b539c3611f34c53cbf9",
+      "applied_at": "2026-10-25T04:08:16+08:00"
+    },
+    {
+      "bvid": "BV119TJ6pEtC",
+      "file": "data/games/S22/2026-07-02_g02_BV119TJ6pEtC/dossier.json",
+      "before_sha256": "a54fba55c829734f9088d7d2f59d8a30b5dc3d03432088fe2317df01481742f6",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV119TJ6pEtC_a54fba55c829734f9088d7d2f59d8a30b5dc3d03432088fe2317df01481742f6.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-07-02/2026-07-02_S22_第06周_正赛第05期_第02局_盗宝大师__BV119TJ6pEtC_P01_CID39599211166.本地全文转写_funasr.json",
+          "start_ms": 4280620,
+          "end_ms": 4322530,
+          "quote": "做好投票准备。\n警长请归票。\n警长归票。\n十号各玩家请做好投票准备。\n三二一请冲票，\n一号投给七号，\n二号投给七号，\n三号投给十号四号投给十号五号投给十号六号投给十一号。\n七号投给十二号八号投给十号九号，\n举高九号投给十号，\n十号投给十号，\n十一号投给十二号，\n十二号行投给十一号投票结束，\n十号玩家，\n六点五票出局，\n请发表遗言。"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "8e6bc1a8ed214c017e1cbaa0a8c9f6aaf190c597ea25ead66751e1e7c2d1779a",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1BjMh63ED9",
+      "file": "data/games/S22/2026-07-07_g02_BV1BjMh63ED9/dossier.json",
+      "before_sha256": "b6d1a66298695d0d516b3735a0e86cac027512f447cea2191dc7f7fa93c69e50",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1BjMh63ED9_b6d1a66298695d0d516b3735a0e86cac027512f447cea2191dc7f7fa93c69e50.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第07周_正赛第06期/2026-07-07/2026-07-07_S22_第07周_正赛第06期_第02局_盗宝大师__BV1BjMh63ED9_P01_CID39740048233.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3507630,
+          "end_ms": 3539000,
+          "quote": "我过了4号玩家发言结束\n五个玩家请戴盔做好投票准备\n警长请归票\n警长归票\n3号高玩家请做好投票准备\n321请出票\n一号投给11号\n2号投给11号\n3号投给3号\n4号投给3号\n5号\n投给3号\n6号\n投给11号\n7号投给3号\n8号\n投给11号\n9号投给3号\n10号投给3号\n11号投给3号\n12号投给11号\n投票结束"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "28fc0a9c9ba56fe914855a2ffe57cebd591e598989a86b54c1c8b45dee86a85f",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1BPNB6QE4z",
+      "file": "data/games/S22/2026-07-15_g03_BV1BPNB6QE4z/dossier.json",
+      "before_sha256": "75ccdfd9511820bda9b22fc01ee87e52cb99607d78998b6bfb3487f480062099",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1BPNB6QE4z_75ccdfd9511820bda9b22fc01ee87e52cb99607d78998b6bfb3487f480062099.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "sheriff_result",
+          "fields": {
+            "action": "none",
+            "targets": [],
+            "result": "首日唯一警下8号自爆后法官宣布警徽流失。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "badge",
+          "fields": {
+            "action": "none",
+            "targets": [],
+            "result": "原文已宣布警徽流失。"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第08周_正赛第07期/2026-07-15/2026-07-15_S22_第08周_正赛第07期_第03局_机械狼通灵师__BV1BPNB6QE4z_P01_CID39985152770.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3375460,
+          "end_ms": 3379130,
+          "quote": "5号玩家为狼人身份上警环节\n8号唯一警下狼人自爆\n本局游戏警徽流失\n入夜守卫守护"
+        },
+        {
+          "path": "data/seasons/S22/第08周_正赛第07期/2026-07-15/2026-07-15_S22_第08周_正赛第07期_第03局_机械狼通灵师__BV1BPNB6QE4z_P01_CID39985152770.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3389660,
+          "end_ms": 3394969,
+          "quote": "发动技能带走一号机械双刀狼人\n第二天白天5号狼人自爆\n入夜首位空过狼人击杀7号通灵师女巫\n空过通灵师验证2号玩家为狼人身份"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "db686b2397c4657211ddb72079f973e9e20f54f4bb29d056009277a8af497a61",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1RGgx6xEP9",
+      "file": "data/games/S22/2026-07-23_g03_BV1RGgx6xEP9/dossier.json",
+      "before_sha256": "60868d77b20db3209b0a200a47d649d753da9904d00c8b5c943ab664082fdb24",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1RGgx6xEP9_60868d77b20db3209b0a200a47d649d753da9904d00c8b5c943ab664082fdb24.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": [],
+            "result": "平安夜"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-23/2026-07-23_S22_第09周_正赛第08期_第03局_机械狼通灵师__BV1RGgx6xEP9_P01_CID40233730820.本地全文转写_funasr.json",
+          "start_ms": 3216940,
+          "end_ms": 3245945,
+          "quote": "唱票结束前，\n不要放手三二一，\n请冲票一号投给七号二号投给十二号，\n三号投给十号四号投给七号七号投给十号九号投给三号十号投给七号十一号投给十二号，\n十二号投给七号投票结束嗯，"
+        },
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-23/2026-07-23_S22_第09周_正赛第08期_第03局_机械狼通灵师__BV1RGgx6xEP9_P01_CID40233730820.本地全文转写_funasr.json",
+          "start_ms": 3609980,
+          "end_ms": 3611280,
+          "quote": "狼队击杀八号通灵师，\n形成平安夜牛毒杀。\n五号狼人通灵师茶叶十二号，"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "7bdab37acc9962390a62d41813b95e3233c672bc2301fec9f520cf586c721cc2",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1JNgj6gEta",
+      "file": "data/games/S22/2026-08-12_g03_BV1JNgj6gEta/dossier.json",
+      "before_sha256": "11de4cbf5717a39e98344fae760899cd18fd24cf4c2148811a0c58fabbb88cc8",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1JNgj6gEta_11de4cbf5717a39e98344fae760899cd18fd24cf4c2148811a0c58fabbb88cc8.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "night",
+          "slot": "witch_poison",
+          "fields": {
+            "action": "poison",
+            "actor": 8,
+            "targets": [
+              2
+            ]
+          }
+        },
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              2
+            ]
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              8
+            ]
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3819025,
+          "end_ms": 3827585,
+          "quote": "当夜通灵师验证，\n十号将为平民身份第二天延期竞选竞展环节。\n六号狼人自爆本局游戏警徽流失，\n入夜，\n守卫守护。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3814815,
+          "end_ms": 3816795,
+          "quote": "入夜守卫空过狼人追刀八号，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3795605,
+          "end_ms": 3809995,
+          "quote": "守卫十一号机械狼，\n四号狼人二号、六号、七号平民一号、三号、九号十号首夜守卫守护八号女巫狼人姬杀八号形成平安夜牛犊杀二号狼人当夜机械狼模仿一号平民本游戏为机械平民通知验证四号玩家，\n机械平民为平民身份上警环节。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3831565,
+          "end_ms": 3832365,
+          "quote": "五号通灵师行成，\n平安夜通灵事件，\n只有一号甲为平民身份。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3809995,
+          "end_ms": 3813075,
+          "quote": "四号狼人二号、六号、七号平民一号、三号、九号十号首夜守卫守护八号女巫狼人姬杀八号形成平安夜牛犊杀二号狼人当夜机械狼模仿一号平民本游戏为机械平民通知验证四号玩家，\n机械平民为平民身份上警环节。\n七号悍跳狼人自爆，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3813075,
+          "end_ms": 3814410,
+          "quote": "机械平民为平民身份上警环节。\n七号悍跳狼人自爆，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3816815,
+          "end_ms": 3818690,
+          "quote": "女巫女巫无法自救空过，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3819025,
+          "end_ms": 3819965,
+          "quote": "当夜通灵师验证，\n十号将为平民身份第二天延期竞选竞展环节。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3819965,
+          "end_ms": 3822960,
+          "quote": "当夜通灵师验证，\n十号将为平民身份第二天延期竞选竞展环节。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3823325,
+          "end_ms": 3825620,
+          "quote": "六号狼人自爆本局游戏警徽流失，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3826225,
+          "end_ms": 3826780,
+          "quote": "入夜，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3826905,
+          "end_ms": 3827585,
+          "quote": "守卫守护。"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3827605,
+          "end_ms": 3830445,
+          "quote": "五号通灵师机械平民开刀击杀，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3830465,
+          "end_ms": 3831565,
+          "quote": "五号通灵师行成，\n平安夜通灵事件，"
+        },
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-12/2026-08-12_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1JNgj6gEta_P01_CID40851081689.本地全文转写_funasr.json",
+          "start_ms": 3832365,
+          "end_ms": 3833820,
+          "quote": "平安夜通灵事件，\n只有一号甲为平民身份。"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "ede24550bd13103294501cc6d4afb597efeb5d7c93cc189530ac99c84cbc6442",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1kG8A6dEye",
+      "file": "data/games/S22/2026-08-20_g02_BV1kG8A6dEye/dossier.json",
+      "before_sha256": "a17c18bc0e15bd214017ca427f2e1f55599b82ae9498cdc2bab6f3400ad6f6c7",
+      "before_snapshot": "data/archive/S22_causal_review/20261025/BV1kG8A6dEye_a17c18bc0e15bd214017ca427f2e1f55599b82ae9498cdc2bab6f3400ad6f6c7.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": [],
+            "result": "N1禁刀且全席后续存活"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-20/2026-08-20_S22_第13周_决赛周_第02局_盗宝大师__BV1kG8A6dEye_P01_CID41105100206.平台AI字幕_ai-zh_01_25fbaee675.原始.json",
+          "start_ms": 524560,
+          "end_ms": 547280,
+          "quote": "本游戏上架玩家一号3号六号八号九号十号\n11号12号\n共有四名玩家在警下\n2号四号五号和7号随机点数一\n由一号玩家开始正式发言\n3号玩家请做发言准备\n一号玩家请发言\n这把都这么多人不上警吗\n万一来个什么盗宝通灵呢对吧\n这个警下不过还好\n好像是也是双数呀也行吧对吧\n这把稍微盯一下二好吧"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-20/2026-08-20_S22_第13周_决赛周_第02局_盗宝大师__BV1kG8A6dEye_P01_CID41105100206.平台AI字幕_ai-zh_01_25fbaee675.原始.json",
+          "start_ms": 3429960,
+          "end_ms": 3435660,
+          "quote": "第二天\n第三天\n第四天到第四天没刀了\n哎我觉得十不是大佬\n你要不把十归了吧\n把十归了\n明天我们再去琢磨这个盗宝这盗宝那的事嗯"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-20/2026-08-20_S22_第13周_决赛周_第02局_盗宝大师__BV1kG8A6dEye_P01_CID41105100206.平台AI字幕_ai-zh_01_25fbaee675.原始.json",
+          "start_ms": 4972650,
+          "end_ms": 4975870,
+          "quote": "3号射梦人入夜\n盗宝大师选择平民身份击杀最后一神\n11号猎人"
+        }
+      ],
+      "reason": "2026-10-25逐项因果复核补正出局和技能时点。",
+      "after_sha256": "fd6f4ba45492670660ed3f9911b60561257bd13b2dc85dd47deb14c3f9574cde",
+      "applied_at": "2026-10-25T03:36:39+08:00"
+    },
+    {
+      "bvid": "BV1jaE26kELR",
+      "file": "data/games/S22/2026-06-09_g02_BV1jaE26kELR/dossier.json",
+      "before_sha256": "4e2b19154e2c62a5851e4e2b5fa07b2202b89a045f01f95dd321c653498d5173",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV1jaE26kELR_4e2b19154e2c62a5851e4e2b5fa07b2202b89a045f01f95dd321c653498d5173.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "night",
+          "slot": "dreamer_action",
+          "fields": {
+            "result": "首夜摄梦人11号梦游12号蒙面人；12号不是狼王。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              7,
+              9,
+              11
+            ],
+            "result": "狼刀11号摄梦人连带7号狼王，盗宝毒师毒9号猎人，共三人出局。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 7,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+          "start_ms": 4569960,
+          "end_ms": 4583109,
+          "quote": "10号平民被抗推出局\n入夜射门人梦游7号狼王\n狼人击杀11号射梦人\n71双子盗宝大师选择了毒师身份\n毒杀9号猎人九七十134\n当夜通灵师证3号那位狼人身份\n第二天白天狼人阵营互认拍刀游戏结束"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        },
+        {
+          "path": "data/extractions/S22/skill_settlement_review_20261025/audio/results.json",
+          "start_ms": 4569000,
+          "end_ms": 4584000,
+          "quote": "强推出局入夜摄梦人梦游七号狼王狼人击杀十一号摄梦人七十一双子盗宝大师选择了毒师身份毒杀九号猎人九七十一三四当夜通灵师验证三号玩家为狼人身份第二天白天狼人",
+          "note": "独立原音频机器转写，不作为人工听核。"
+        }
+      ],
+      "reason": "狼刀11号摄梦人，11号当夜梦7号狼王，连带7号出局；盗宝毒9号猎人，故完整死亡为7/9/11，原档案漏7号。",
+      "after_sha256": "e021c847df336a47dffc4ee2feedfd385497700c2c837c3abf8c86de70d24e8a",
+      "applied_at": "2026-10-25T04:08:16+08:00"
+    },
+    {
+      "bvid": "BV1h33z6tEqx",
+      "file": "data/games/S22/2026-07-28_g02_BV1h33z6tEqx/dossier.json",
+      "before_sha256": "506dbb42e46a924d2ed62df23a235f9dc9d241370945788109477463b534bd75",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV1h33z6tEqx_506dbb42e46a924d2ed62df23a235f9dc9d241370945788109477463b534bd75.json",
+      "state": "applied",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 6,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        }
+      ],
+      "reason": "6号狼王在第二夜被4号摄梦人连续两夜梦游出局，按用户确认规则不能开枪。死亡名单已有6号，仅补正开枪状态。",
+      "after_sha256": "d35fefd5a8c552d913dfa909acb2c32f464c12944fcb7f2ade6dba814b2d16f6",
+      "applied_at": "2026-10-25T04:08:16+08:00"
     }
   ],
   "completed_at": "2026-10-24T19:23:30+08:00",
   "state": "complete",
-  "changed_games": 22
+  "changed_games": 22,
+  "updated_at": "2026-10-25T04:08:16+08:00"
 }

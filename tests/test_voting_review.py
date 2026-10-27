@@ -21,6 +21,20 @@ def facts():
 
 
 class VotingReviewTests(unittest.TestCase):
+    def test_shared_death_gap_requests_source_once_instead_of_vote_arithmetic(self):
+        value = facts()
+        value['ballots'].append({**copy.deepcopy(value['ballots'][0]), 'id': 'ballot-2', 'day': 2})
+        audit = {'issues': [], 'evidence': {'ballot-1': [], 'ballot-2': []},
+                 'game_flow': {'rounds': [{'day': d, 'roster_gaps': [{'round': 1, 'slot': 'night_deaths'}]}
+                                          for d in (1, 2)]}}
+        result = review.audit_game({'bvid': 'BVtest', 'date': '2026-06-02', 'game_number': 1},
+                                   value, audit, {'rounds': []})
+        gaps = [q for q in result['questions'] if q['code'] == 'departure-night_deaths']
+        self.assertEqual(len(gaps), 1)
+        self.assertIn('ballot-1', gaps[0]['reason'])
+        self.assertIn('ballot-2', gaps[0]['reason'])
+        self.assertNotIn('eligibility_unknown', {q['code'] for q in result['questions']})
+
     def test_uncertainty_counts_match_questions_and_do_not_claim_human_review(self):
         value=facts();value['ballots'][0].update(day=None,kind='unknown')
         entry={'bvid':'BVtest','date':'2026-06-02','game_number':1}

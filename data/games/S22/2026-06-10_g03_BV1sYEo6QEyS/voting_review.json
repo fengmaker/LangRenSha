@@ -5,106 +5,247 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "9ab2e7f383cda0b53533eb19b896c79300af082e7b34ab4d3dd8240372873cba",
-  "question_count": 0,
-  "pending_count": 4,
-  "questions": [
+  "facts_sha256": "51e45c6bec0a9105ae7fb0541286bb7e23331eeb58a99a4280d467f7dd7171a6",
+  "causal_decisions": [
     {
-      "id": "vote-BV1sYEo6QEyS-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1sYEo6QEyS-day-3-rule-terminal_conflict",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "终局在第3夜：狼刀与好人获胜条件同夜达成，结算狼胜（狼刀先结算）。",
+      "reason": "复盘明确同一夜双方同时达到获胜条件并判狼阵营屠神胜。当前replay先查狼牌清空而误判好人胜；应按狼刀先于其他夜间行动结算，不是Day3有票。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1sYEo6QEyS-day-3-rule-terminal_conflict",
+        "code": "rule-terminal_conflict",
+        "day": 3,
+        "target": null,
+        "title": "投票与已确认规则需要核对",
+        "reason": "出局记录推导的屠边时间或胜方与后续实际事件/公布胜方冲突，需核对出局记录。",
+        "severity": "question",
+        "evidence": []
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 1783860,
-          "end_ms": 1874430,
-          "quote": "我不太喜欢在大师赛就捆绑\n这个就是比较玩的比较厉害的玩家\n我觉得大家都会有可能会有错的时候啊\n所以我就二四的警徽流\n然后其实剩下的我觉得还是得看投票啊\n还得看投票\n我现在能给的\n比如七八里面大概率七是好人啊\n八大概率是狼啊\n这都是大概率的事件\n不是绝对的时间对吧\n从这个票赢上这些来说的话\n然后我是通灵师好吧\n就这样过了\npk发言结束\n除6号十号外\n其他玩家请戴盔做好投票准备\n请从6号十号当中选出本局游戏警长321\n请出票\n一号投给6号\n2号投给10号\n3号七票\n4号投给6号\n5号投给6号\n7号\n投给6号\n8号投给10号\n9号投给6号\n11号\n投给6号\n12号投给6号\n投票结束\n其他玩家请亮蓝灯\n作业一号玩家倒牌请发表言\n谢谢北影全球粉丝后援会\n哎不对呀\n我能发动技能哎\n谁奶死我的\n研究一下"
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     },
     {
-      "id": "vote-BV1sYEo6QEyS-day-1-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 1,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "question_id": "vote-BV1sYEo6QEyS-day-3-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第3天没有白天放逐；第3夜行动后即终局。",
+      "reason": "同夜胜利条件在第3夜达成。复盘还原第2夜狼刀3号守卫，第3夜机械女巫毒11号、普通女巫毒5号；按夜间结算即结束，未进入Day3。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1sYEo6QEyS-day-3-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 3,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": []
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 500900,
-          "end_ms": 521860,
-          "quote": "我的天哪\n二一天亮了\n本局游戏除一号2号七号八号外\n其他玩家上警上警\n玩家请亮红灯\n上警玩家请亮红灯\n4号",
-          "note": "本日开局定位，非缺失投票的直接证据"
+          "start_ms": 3161570,
+          "end_ms": 3170780,
+          "quote": "女巫毒杀5号最后一张狼\n在我们的狼人杀游戏当中\n同一夜晚当中\n如果是好人阵营\n狼人阵营同时达成获胜条件\n结算为狼人获胜\n也就是我们俗称的狼刀在先啊\n所以最终是狼人阵营屠神获胜"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1sYEo6QEyS-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第03局_机械狼通灵师__BV1sYEo6QEyS_P01_CID39018891109.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 3419520,
-          "end_ms": 3428179,
-          "quote": "是不是要回\n第二天回必须吃饱了\n回真的吗\n那我们私是要赢\n塞四粑粑今天多C呀",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1sYEo6QEyS-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
-      "pending_count": 2,
-      "question_ids": [
-        "vote-BV1sYEo6QEyS-ballot-2-eligibility_unknown",
-        "vote-BV1sYEo6QEyS-day-1-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1sYEo6QEyS-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1sYEo6QEyS-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-2",
+      "day": 1,
+      "voters": [
+        3
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          4,
+          5,
+          6,
+          7,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          5,
+          6,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          4,
+          7,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": "god"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "2号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "e1a6db4e6030a0f83b702e702dccc63e927621b97ac631751da372c81e09afa4",
+  "voting_sha256": "53795b58656cb20dcdeb791a532bdf9f66b6d6f7c0aec1982ca546ee04dd4d57",
   "source_sha256": "c062fede012f7f40074571cefd29a616934ce433d57fc12ebada2e5ac90bd692"
 }

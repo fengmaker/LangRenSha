@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+from contextlib import nullcontext
 import csv
 import html
 import json
@@ -246,7 +247,8 @@ def extract(segments, dossier, source_path):
         if not tied and candidates is not None and len(candidates) == 2 and re.search(r"(?:平票|凭票|评委)[,.，。]*pk", suffix, re.I):
             tied = list(candidates)
         winner = None
-        match = re.search(rf"({NUM})号(?:玩家)?(?:[一二三四五六七八九十\d.点票]+)?(?:出局|当选警长|当选为警长|成为警长)", suffix)
+        result_text = re.sub(r"[，,、。；;：:]", "", suffix)
+        match = re.search(rf"({NUM})号(?:玩家)?(?:你要|将|仅|共|获得|获得了|以)?(?:[一二两三四五六七八九十高\d.点票]+)?(?:出局|当选警长|当选为警长|成为警长)", result_text)
         if match:
             winner = number(match.group(1))
         for voter in conflicts:
@@ -276,7 +278,8 @@ def extract(segments, dossier, source_path):
                 problems.append(f"{start}ms投向候选名单之外的票{unexpected}未作合法票入库，待核对原文")
         if eligible is None and len(per_voter) == 12 and not conflicts:
             eligible = list(range(1,13))
-        # Every unannounced seat remains unknown; it is never an abstention.
+        # Raw extraction leaves unannounced choices unset; confirmed rules are
+        # applied after source-bound corrections and voter eligibility checks.
         known = sorted(per_voter.values(), key=lambda v: v["voter"])
         missing = sorted(set(eligible) - set(per_voter)) if eligible is not None else None
         if conflicts:
@@ -339,6 +342,15 @@ def validate(facts):
         raise ReviewError("投票档案版本或对局关联不合法")
     def seat_list(value):
         return isinstance(value, list) and len(value) == len(set(value)) and all(type(n) is int and 1 <= n <= 12 for n in value)
+    days = set()
+    for d in facts["days"]:
+        if type(d["day"]) is not int or d["day"] < 1 or d["day"] in days:
+            raise ReviewError("每日投票覆盖的日序重复或不合法")
+        days.add(d["day"])
+        if d["sheriff"] not in {"recorded", "unknown", "deferred", "badge_lost", "not_applicable"}:
+            raise ReviewError("警长竞选状态不合法")
+        if d["exile"] not in {"recorded", "unknown", "interrupted_self_destruct", "none"}:
+            raise ReviewError("放逐投票状态不合法")
     seen = set()
     for r in facts["registrations"]:
         if not seat_list(r["on_police"]) or not seat_list(r["off_police"]) or set(r["on_police"]) & set(r["off_police"]) or set(r["on_police"] + r["off_police"]) != set(range(1,13)):
@@ -357,7 +369,7 @@ def validate(facts):
         voters = []
         for v in b["votes"]:
             if v["state"] not in {"cast", "abstained"} or (v["target"] is None) != (v["state"] == "abstained") or not seat_list([v["voter"]]) or v["target"] is not None and not seat_list([v["target"]]):
-                raise ReviewError("未知票不能记为弃票，投票座位须合法")
+                raise ReviewError("弃票须无投向，有投向的选票必须指向合法座位")
             voters.append(v["voter"])
         if not seat_list(voters):
             raise ReviewError("同轮投票者重复")
@@ -368,10 +380,11 @@ def validate(facts):
             raise ReviewError("票权未知或缺票不能标为完整")
 
 
-def import_voting(facts):
+def import_voting(facts, conn=None):
     """Replace only this game's voting supplement, atomically and idempotently."""
     validate(facts)
-    with connect() as conn:
+    transaction = connect() if conn is None else nullcontext(conn)
+    with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-" + facts["game_slug"],))
         game = conn.execute("SELECT id FROM games WHERE slug=%s", (facts["game_slug"],)).fetchone()
         if game is None:
@@ -408,9 +421,34 @@ def run(write_database=False):
         dossier_path = folder / "dossier.json"
         dossier = batch.read_json(dossier_path)
         source = batch.ROOT / entry["source_path"]
-        facts, audit = extract(batch.load_segments(source), dossier, entry["source_path"])
+        segments = batch.load_segments(source)
+        facts, audit = extract(segments, dossier, entry["source_path"])
+        audit["source_path"] = entry["source_path"]
         from review_s22_voting import apply_accepted
         apply_accepted(facts, audit, entry)
+        from causal_voting_review import apply as apply_causal
+        apply_causal(facts, audit, entry)
+        if audit.get("causal_review", {}).get("patches"):
+            from review_s22_voting import rebuild_days
+            rebuild_days(facts)
+        from voting_crosscheck import reconcile, day_outcomes
+        reconcile(facts, audit, dossier)
+        review_path = folder / "复核记录.json"
+        if review_path.is_file():
+            audit["day_crosscheck_source"] = {"path": batch.relative(review_path),
+                "sha256": batch.digest(review_path), "recap_segments": batch.read_json(review_path).get("recap_segments", [])}
+        from game_flow import collect_death_announcements
+        audit["night_death_supplements"] = collect_death_announcements(segments, dossier, facts, audit)
+        endgame_path = folder / "endgame.json"
+        if endgame_path.is_file():
+            endgame = batch.read_json(endgame_path)
+            if endgame["source_sha256"] != batch.digest(source):
+                raise ValueError("拍刀原文已变化，请先重新复核：" + bvid)
+            audit["endgame_phases"] = endgame["phases"]
+        from voting_rules import apply_rules
+        apply_rules(facts, audit, dossier)
+        from causal_voting_review import day_outcomes as causal_day_outcomes
+        audit["day_outcomes"] = causal_day_outcomes(day_outcomes(facts, audit, dossier), audit)
         validate(facts)
         audit.update(bvid=bvid, source_sha256=batch.digest(source), dossier_sha256=batch.digest(dossier_path),
                      generated_at=batch.now(), facts=facts)
@@ -425,14 +463,20 @@ def run(write_database=False):
                 "unknown_day_ballots": sum(b["day"] is None for b in facts["ballots"]),
                 "unknown_kind_ballots": sum(b["kind"] == "unknown" for b in facts["ballots"]),
                 "complete_ballots": sum(b["status"] == "complete" for b in facts["ballots"]),
+                "default_abstentions": sum(len(a["voters"]) for a in audit.get("rule_applications", [])),
+                "deferred_elections": sum(x["status"] == "deferred" for x in audit.get("election_flow", [])),
+                "badge_lost_after_second_self_destruct": sum(x["status"] == "badge_lost" for x in audit.get("election_flow", [])),
                 "issues": audit["issues"], "database": receipt}
         items.append(item)
         for b in facts["ballots"]:
             for v in b["votes"]:
                 ev = audit["evidence"][b["id"]][0]
+                defaulted = any(a["target"] == b["id"] and v["voter"] in a["voters"] for a in audit.get("rule_applications", []))
+                confirmed = any(a["target"] == b["id"] and v["voter"] in a["voters"] for a in audit.get("human_confirmations", []))
+                basis = "用户人工确认" if confirmed else "按规则默认弃票" if defaulted else "原文明确弃票" if v["state"] == "abstained" else "原文明确投向"
                 csv_rows.append([entry["date"], entry["game_number"], bvid, b["day"], b["kind"], b["number"], b["stage"],
-                                 v["voter"], v["target"], v["state"], ev["start_ms"], entry["source_path"]])
-    counts = {key: sum(i[key] for i in items) for key in ("registrations", "ballots", "votes", "pk_ballots", "unknown_day_ballots", "unknown_kind_ballots", "complete_ballots")}
+                                 v["voter"], v["target"], v["state"], ev["start_ms"], entry["source_path"], basis])
+    counts = {key: sum(i[key] for i in items) for key in ("registrations", "ballots", "votes", "pk_ballots", "unknown_day_ballots", "unknown_kind_ballots", "complete_ballots", "default_abstentions", "deferred_elections", "badge_lost_after_second_self_destruct")}
     report = {"generated_at": batch.now(), "games": len(items), "database_written": write_database,
               **counts, "games_with_votes": sum(i["votes"] > 0 for i in items),
               "games_without_registration": sum(i["registrations"] == 0 for i in items),
@@ -441,11 +485,11 @@ def run(write_database=False):
     export = batch.ROOT / "data/exports/S22_逐人投票.csv"
     with export.open("w", encoding="utf-8-sig", newline="") as stream:
         writer = csv.writer(stream)
-        writer.writerow(["日期", "局次", "BVID", "游戏日", "投票类型", "本日轮号", "阶段", "投票人", "投给", "票状态", "原文起点毫秒", "转写来源"])
+        writer.writerow(["日期", "局次", "BVID", "游戏日", "投票类型", "本日轮号", "阶段", "投票人", "投给", "票状态", "原文起点毫秒", "转写来源", "录入依据"])
         writer.writerows(csv_rows)
     summary = {k: v for k,v in report.items() if k != "items"}
     page = ["<!doctype html><meta charset='utf-8'><title>S22 投票补录</title><style>body{font:16px/1.7 system-ui;margin:30px;color:#19364a}table{border-collapse:collapse}td,th{padding:7px;border:1px solid #ddd}</style>",
-            "<h1>S22 投票补录</h1><p>来自整局机器转写，尚未人工回听。未知票不等于弃票；日序、类别或票权不明时保留待核。PK 前后分别记录。</p>",
+            "<h1>S22 投票补录</h1><p>有票权玩家未明确报出投向时按确认口径默认弃票，原文明确弃票与规则推导分别标注。延期竞选只延至次日，再次自爆则流徽；PK前后分别记录。票权、日序或投票是否举行不明时仍待核。</p>",
             "<p>" + html.escape(json.dumps(summary,ensure_ascii=False)) + "</p>", "<a href='S22_逐人投票.csv'>逐人投票 CSV</a><table><tr><th>日期 / 局次</th><th>BV</th><th>上警名单组</th><th>投票轮</th><th>逐人票</th><th>PK轮</th><th>档案</th></tr>"]
     for i in items:
         folder = batch.ROOT / state["items"][i["bvid"]]["output_dir"]
@@ -464,20 +508,48 @@ def run(write_database=False):
 
 def render_html(facts, audit):
     out = ["<!doctype html><meta charset='utf-8'><title>逐日投票记录</title><style>body{font:16px/1.7 system-ui;margin:30px;max-width:1100px;color:#19364a}pre{white-space:pre-wrap}section{border:1px solid #ccc;padding:15px;margin:12px 0}table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:6px}</style>",
-           "<h1>逐日投票记录</h1><p>机器转写待核。未播报的票保持未知；缺少完整票权名单时不宣称票型完整。</p>"]
+           "<h1>逐日投票记录</h1><p>有票权玩家没有明确投向时按确认口径默认弃票；原文明确弃票与默认弃票分别标注。票权名单未知时不补造玩家。</p>"]
     def ev(key):
         return "".join(f"<details><summary>原文 {e['start_ms']/1000:.2f}–{e['end_ms']/1000:.2f} 秒</summary><pre>{html.escape(e['quote'])}</pre></details>" for e in audit["evidence"].get(key,[]))
+    flow = audit.get("game_flow", {})
+    if flow:
+        out.append("<h2>存活人数与票权计算</h2><p>按夜间死亡、先前公投及技能出局重放；当次公投之后的开枪不扣减本次票权。</p>")
+        for r in flow["rounds"]:
+            if r["day"] in flow["days"]:
+                living = r["living_before_vote"]
+                label = f"{len(living)}人，座位{living}" if living is not None else "死亡或出局信息不足"
+                out.append(f"<p>第{r['day']}天放逐投票前：{label}。</p>")
+        t = flow.get("terminal")
+        if t:
+            label = f"第{t['after_day']}天" + {"night": "夜晚", "day": "白天", "endgame": "拍刀结算"}[t["phase"]]
+            out.append(f"<p><strong>{label}游戏结束；后续不再生成白天投票缺口。</strong></p>")
     for r in facts["registrations"]:
         out.append(f"<section>第{r['day'] or '待核'}天：上警 {r['on_police']}；警下 {r['off_police']}{ev(r['id'])}</section>")
     for b in facts["ballots"]:
         label = {"sheriff":"警徽票","exile":"放逐票","unknown":"类别待核"}[b["kind"]]
-        stage = {"initial":"首轮","pk":"平票 PK 后","revote":"技能重投","unknown":"阶段待核"}[b["stage"]]
-        out.append(f"<section><h2>第{b['day'] or '待核'}天 · {label} · 第{b['number']}轮 · {stage}</h2><p>候选人：{b['candidates']}；票权名单：{b['eligible_voters']}；缺票：{b['unrecorded_voters']}；平票：{b['tied_candidates']}；公布结果：{b['winner']}</p><table><tr><th>投票人</th><th>投给</th></tr>")
+        stage = ballot_stage_label(b, facts["ballots"])
+        count = str(len(b['eligible_voters'])) + "张选票" if b['eligible_voters'] is not None else "票权待核"
+        out.append(f"<section><h2>第{b['day'] or '待核'}天 · {label}{' · '+stage if stage else ''}</h2><p>候选人：{b['candidates']}；票权名单：{b['eligible_voters']}；{count}；缺票：{b['unrecorded_voters']}；平票：{b['tied_candidates']}；公布结果：{b['winner']}</p><table><tr><th>投票人</th><th>投给</th></tr>")
         for v in b["votes"]:
-            out.append(f"<tr><td>{v['voter']}号</td><td>{'明确弃票' if v['state']=='abstained' else str(v['target'])+'号'}</td></tr>")
+            defaulted = any(a["target"] == b["id"] and v["voter"] in a["voters"] for a in audit.get("rule_applications", []))
+            label = "按规则默认弃票" if defaulted else "原文明确弃票" if v["state"] == "abstained" else str(v["target"])+"号"
+            confirmed = any(a["target"] == b["id"] and v["voter"] in a["voters"] for a in audit.get("human_confirmations", []))
+            out.append(f"<tr><td>{v['voter']}号</td><td>{label}{'（用户人工确认）' if confirmed else ''}</td></tr>")
         out.append("</table>" + ev(b["id"]) + "</section>")
-    out.append("<h2>每日覆盖</h2><pre>" + html.escape(json.dumps(facts["days"],ensure_ascii=False,indent=2)) + "</pre>")
+    out.append("<h2>每日放逐结果与缺口</h2>" + "".join(f"<p>第{x['day']}天：{html.escape(x['exile_note'])}</p>" for x in audit.get("day_outcomes", [])))
+    for p in audit.get("endgame_phases", []):
+        result = {"werewolf_win": "拍刀成功，狼人阵营获胜", "good_win": "拍刀失败，好人阵营获胜", "unknown": "结算待核"}[p["result"]]
+        targets = "、".join(str(n)+"号" for n in p["declared_targets"]) or "未明确播报"
+        out.append(f"<section><h2>第{p['day'] or '待核'}天 · 狼人拍刀（独立环节）</h2><p>明确目标：{targets}；{result}</p><p>{html.escape(p['note'])}</p>" + "".join(f"<details><summary>拍刀原文</summary><pre>{html.escape(e['quote'])}</pre></details>" for e in p["evidence"]) + "</section>")
     return "".join(out)
+
+
+def ballot_stage_label(ballot, ballots):
+    count = sum(b["day"] == ballot["day"] and b["kind"] == ballot["kind"] for b in ballots)
+    if ballot["stage"] == "initial":
+        return ("平票前投票" if any(b["day"] == ballot["day"] and b["kind"] == ballot["kind"] and b["stage"] == "pk" for b in ballots)
+                else "技能重投前投票") if count > 1 else ""
+    return {"pk": "平票PK后再次投票", "revote": "技能触发重新投票", "unknown": "投票衔接待核"}[ballot["stage"]]
 
 
 if __name__ == "__main__":

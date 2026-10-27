@@ -1,0 +1,60 @@
+{
+  "bvid": "BV17QJh6qEVo",
+  "source_sha256": "b18984c34a62d568d272cfec3be84c4d49bb7e292c8c09c616ae3e70216ef7ee",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4267740,
+    "end_ms": 4323510,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1守卫护8、狼刀8且女巫同救，8同守同救出局；机械狼学通灵师、验3守卫。D1警长10、7自爆。N2守卫护10、狼刀5、女巫毒2机械狼、机械通灵师验5民、通灵师验9猎人；D2 2/5双死、6狼放逐，好人胜。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV17QJh6qEVo_P01_CID42799599178.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "b18984c34a62d568d272cfec3be84c4d49bb7e292c8c09c616ae3e70216ef7ee",
+          "start_ms": 4267740,
+          "end_ms": 4323510,
+          "quote": "不知道我没问30组\n来给各位当老师们做下本局游戏的复盘\n本剧版行为\n机械狼通灵师\n神人阵营通灵师\n10号女巫\n4号猎人\n9号守卫3号狼人阵营6号七号\n12号机械狼2号\n本球游戏为机械通灵平民阵营\n一号5号八号11号守夜守卫\n守护8号平民狼队\n击杀8号平民女巫\n救起8号平民\n同手同救奶穿身亡\n当夜机械狼模仿10号通灵师\n本局游戏为机械通灵通灵师\n验证3号玩家为首位身份警上竞选环节\n10号通灵师获得警徽\n在第一天白天\n7号狼人选择自爆瑞守卫守护10号通灵师\n狼队击杀5号平民女巫\n毒杀2号机械狼\n2号五号伤死机械狼也将验证\n5号玩家为平民身份\n通灵师查验\n9号玩家为猎人身份\n在第二天白天\n6号狼人没公投出局后\n狼队选择交牌\n游戏结束\n好人阵营获胜\n各位担保师们"
+        }
+      ]
+    }
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "b86-d2-mechanical-day-skill-ineligible",
+      "status": "inferred",
+      "conclusion": "2号机械狼模仿10号通灵师，N2被女巫毒杀；D2机械猎人技能不可用。",
+      "reasoning": "学习目标/反馈与毒杀有直接复盘；其既非Hunter形态，又在D2前已死亡。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV17QJh6qEVo_P01_CID42799599178.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "b18984c34a62d568d272cfec3be84c4d49bb7e292c8c09c616ae3e70216ef7ee",
+          "start_ms": 4292780,
+          "end_ms": 4294700,
+          "quote": "当夜机械狼模仿10号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV17QJh6qEVo_P01_CID42799599178.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "b18984c34a62d568d272cfec3be84c4d49bb7e292c8c09c616ae3e70216ef7ee",
+          "start_ms": 4308330,
+          "end_ms": 4309770,
+          "quote": "毒杀2号机械狼"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV17QJh6qEVo_P01_CID42799599178.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "b18984c34a62d568d272cfec3be84c4d49bb7e292c8c09c616ae3e70216ef7ee",
+          "start_ms": 4309770,
+          "end_ms": 4312450,
+          "quote": "2号五号伤死机械狼也将验证"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

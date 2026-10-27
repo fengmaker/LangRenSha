@@ -5,88 +5,174 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "758232c15ec3c0e7a6e0bb93aeb03403199c8b95c1a5f670aef85632ac34b344",
+  "facts_sha256": "ede02a884ce1fd6e430b4c9f4c7cbad076af225349c15e2eec03757bce42ed01",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 3,
-  "questions": [
-    {
-      "id": "vote-BV1yigN6JE5Y-day-1-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 1,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-14/2026-08-14_S22_第12周_正赛第11期_第02局_孤注一掷__BV1yigN6JE5Y_P01_CID40915108386.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 531550,
-          "end_ms": 555920,
-          "quote": "对我们双成对跳了对哦\n双成对跳了\n如果我们关注一下\n双双成对跳嗯\n本局游戏除3号九号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯\n来上警\n玩家亮起面前红灯\n嗯没我给你AR好",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1yigN6JE5Y-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-14/2026-08-14_S22_第12周_正赛第11期_第02局_孤注一掷__BV1yigN6JE5Y_P01_CID40915108386.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 3619070,
-          "end_ms": 3632150,
-          "quote": "并在出局后将警徽移交至2号摄梦人\n在第二天的白天\n一号狼人选择自爆入夜\n典狱长选择2号售梦人\n以及8号典狱长进行交易",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1yigN6JE5Y-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
-    }
-  ],
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yigN6JE5Y-day-1-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "12号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yigN6JE5Y-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yigN6JE5Y-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "1号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          7,
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          9,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "12号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "1号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "9f9c12b31f7c54c98f59b2cb958b81860ebc371a5c9db943ff1bb6969a09d93c",
+  "voting_sha256": "39a678020c8950ea13ca0774ca7d2b2234d9926058a90feb01a6fe602f2e3ad5",
   "source_sha256": "b039fd7248de70f0c33216124f6268584d78bdd749858b41a25d968ecc854345"
 }

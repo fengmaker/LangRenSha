@@ -5,62 +5,273 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "f6999aa77e9b6789d96f355c7e7ee9b1acb23ddadf081738304bfaed68dbbd67",
-  "question_count": 0,
-  "pending_count": 1,
-  "questions": [
+  "facts_sha256": "4c932f72a2b510c8f76915c0ab1256bbe5e64a32cc9332e9ef347237dcacee2d",
+  "causal_decisions": [
     {
-      "id": "vote-BV1tj8p6RE1V-day-4-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 4,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "question_id": "vote-BV1tj8p6RE1V-day-4-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第4天没有放逐；最后狼6号机械女巫选择交牌，游戏结束。",
+      "reason": "复盘明确第4天最后一狼6号交牌，随后游戏终止，好人获胜。",
+      "source_spans": [
+        {
+          "start_ms": 3128969,
+          "end_ms": 3135520,
+          "quote": "机械狼为女巫身份\n在第四天的白天\n场上\n最后一狼\n6号机械女巫选择交牌"
+        },
+        {
+          "start_ms": 3133380,
+          "end_ms": 3135520,
+          "quote": "6号机械女巫选择交牌"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1tj8p6RE1V-day-4-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 4,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第03局_机械狼通灵师__BV1tj8p6RE1V_P01_CID41072594267.平台AI字幕_ai-zh_01_266c4f38c0.原始.json",
+            "start_ms": 3128969,
+            "end_ms": 3135520,
+            "quote": "机械狼为女巫身份\n在第四天的白天\n场上\n最后一狼\n6号机械女巫选择交牌",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第03局_机械狼通灵师__BV1tj8p6RE1V_P01_CID41072594267.平台AI字幕_ai-zh_01_266c4f38c0.原始.json",
           "start_ms": 3128969,
           "end_ms": 3135520,
-          "quote": "机械狼为女巫身份\n在第四天的白天\n场上\n最后一狼\n6号机械女巫选择交牌",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "quote": "通灵师验证6号玩家\n机械狼为女巫身份\n在第四天的白天\n场上\n最后一狼\n6号机械女巫选择交牌\n游戏结束"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-19/2026-08-19_S22_第13周_决赛周_第03局_机械狼通灵师__BV1tj8p6RE1V_P01_CID41072594267.平台AI字幕_ai-zh_01_266c4f38c0.原始.json",
+          "start_ms": 3133380,
+          "end_ms": 3135520,
+          "quote": "最后一狼\n6号机械女巫选择交牌\n游戏结束"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "3号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "4号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "5号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 4,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1tj8p6RE1V-day-4-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "最后一狼交牌后游戏结束。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          3,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          7
+        ],
+        "night_basis": "announcement",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "最后一狼交牌后游戏结束。"
+    },
+    "deductions": [
+      {
+        "round": 3,
+        "slot": "night_deaths",
+        "targets": [
+          7
+        ],
+        "basis": "announcement"
+      }
+    ],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "3号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "4号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "5号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "ended_before_exile",
+      "exile_note": "最后一狼交牌后游戏结束。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [
     {
       "id": "BV1tj8p6RE1V-registration",
@@ -104,6 +315,6 @@
       ]
     }
   ],
-  "voting_sha256": "ae5a50eb83f94711613f8741d556dd258e4a961f961fedc80b10da20a97d1c5b",
+  "voting_sha256": "a86808bd337a97ebe2bf09365a92327b17617c6cba528cda7ac8395bae2680ea",
   "source_sha256": "266c4f38c0e544e4d5faaa3d69b5b40a5c7cf9460064dfcdd6cf186017625228"
 }

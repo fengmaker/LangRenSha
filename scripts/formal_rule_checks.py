@@ -6,10 +6,21 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+DEPARTURE_OUTCOME_SLOTS = frozenset({
+    "night_deaths", "exile_result", "hunter_shot", "wolf_king_shot",
+    "self_destruct", "masked_delayed_death",
+})
 
 
 def registry():
     return json.loads((ROOT / "config/S22_formal_rules.json").read_text(encoding="utf-8"))
+
+
+def has_unresolved_departures(round_):
+    """Whether this day leaves a possible departure outcome unknown or unrecorded."""
+    events = {e["slot"]: e for e in round_["day"]}
+    return any(slot not in events or events[slot]["action"] == "unknown"
+               for slot in DEPARTURE_OUTCOME_SLOTS)
 
 
 def issues(value):
@@ -54,9 +65,11 @@ def issues(value):
     used = {"dancer_dance": set(), "warden_trade_targets": set(), "guile_exchange": set()}
     uncertain_guile_usage = set()
     mixed = next((p for p in seats.values() if p["role"] == "混血儿"), None)
+    treasure = next((p for p in seats.values() if p["role"] == "盗宝大师"), None)
     mech = next((p for p in seats.values() if p["role"] == "机械狼"), None)
     model_factions = set()
     treasure_remainder = None
+    uncertain_departure_history = False
     if board == "treasure_master" and all(p["role"] for p in seats.values()):
         pool = Counter({r["physical_identity"]: r["count"] for r in rules["boards"][board]["role_pool"]})
         dealt = Counter(p["role"] for p in seats.values())
@@ -64,13 +77,11 @@ def issues(value):
             add("treasure_presence", "盗宝大师版型必须有一名实际在场的盗宝大师")
         if not dealt - pool:
             treasure_remainder = pool - dealt
-            thief = next((p for p in seats.values() if p["role"] == "盗宝大师"), None)
-            expected = "werewolf" if any(treasure_remainder[r] for r in ("狼人", "狼王")) else "good"
-            if thief and thief["faction"] is not None and thief["faction"] != expected:
-                add("treasure_alignment", "盗宝大师胜利阵营由三张余牌是否含狼人阵营牌决定")
     for p in seats.values():
-        if p["role"] in {"混血儿", "盗宝大师"} and p["faction"] not in {None, "good", "werewolf"}:
-            add("personal_faction", "混血儿或盗宝大师的个人胜利阵营只可为好人或狼人")
+        if p["role"] == "混血儿" and p["faction"] not in {None, "good", "werewolf"}:
+            add("personal_faction", "混血儿的个人胜利阵营只可为好人或狼人")
+        if board == "treasure_master" and p["role"] == "盗宝大师" and p["faction"] not in {None, "werewolf"}:
+            add("treasure_alignment", "盗宝大师始终属于狼人阵营，不随余牌或技能牌改变")
     departed = set()
     learned_at = next((r["number"] for r in rounds for e in r["night"]
                        if e["slot"] == "mechanical_action" and e["action"] == "learn"), None)
@@ -246,6 +257,24 @@ def issues(value):
             knife = event(r, "wolf_attack")
             if number == 1 and knife["action"] in {"attack", "pass"}:
                 add("treasure_first_night_forbidden", "盗宝大师首夜规则禁刀，不能记狼刀或主动空刀", number, "wolf_attack")
+            takeover = rules["boards"][board]["board_rules"]["ordinary_wolf_knife_takeover"]
+            if (number > 1 and treasure and knife["actor"] == treasure["seat"]
+                    and knife["action"] in {"attack", "pass"}):
+                initial_wolves_not_departed = any(
+                    p["role"] in takeover["after_all_identity_roles_departed"] and p["seat"] not in departed
+                    for p in seats.values()
+                )
+                unknown_roles = any(p["role"] is None for p in seats.values())
+                if initial_wolves_not_departed:
+                    if unknown_roles or uncertain_departure_history:
+                        add("treasure_knife_timing_unknown", "身份或此前出局记录不完整，暂不能确认盗宝大师接刀时点",
+                            number, "wolf_attack", "pending")
+                    else:
+                        add("treasure_knife_timing", "除盗宝大师外的初始狼队成员（狼人、狼王）尚未全部出局，不能接替普通狼刀",
+                            number, "wolf_attack")
+                elif unknown_roles:
+                    add("treasure_knife_timing_unknown", "仍有身份未知，暂不能确认其他初始狼队成员均已出局后的接刀时点",
+                        number, "wolf_attack", "pending")
             choice = event(r, "treasure_choice")
             if known_action(choice, "choose") and treasure_remainder is not None and not treasure_remainder[choice["result"]]:
                 add("treasure_remaining_choice", "盗宝大师每夜只能选择三张实际余牌中的牌", number, "treasure_choice")
@@ -260,6 +289,8 @@ def issues(value):
                 neighboring_roles = {seats[s]["role"] for s in adjacent}
                 if None not in neighboring_roles and not neighboring_roles & {"狼人", "狼王"}:
                     add("puppet_adjacency", "傀儡必须与至少一名狼人座位相邻，1号和12号相邻", number, "puppet_select")
+        if board == "treasure_master" and has_unresolved_departures(r):
+            uncertain_departure_history = True
         departed.update(current_departures)
     if len(model_factions) > 1:
         add("mixed_alignment_changed", "混血儿胜利阵营不能在局中改变")

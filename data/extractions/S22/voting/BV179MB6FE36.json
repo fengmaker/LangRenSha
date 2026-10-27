@@ -44,7 +44,8 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第02局_假面舞会__BV179MB6FE36_P01_CID40597917177.本地全文转写_funasr.json",
   "review_changes": [
     {
       "id": "BV179MB6FE36-registration",
@@ -88,10 +89,371 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV179MB6FE36",
+    "source_sha256": "5d62b4324632ac2728490f3625e37eab2017c5383b33808121814ba19a6ac2bf",
+    "decisions": [
+      {
+        "question_id": "vote-BV179MB6FE36-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐；最后狼队交牌后游戏结束。",
+        "reason": "复盘将第2天的发言直接接到狼人交牌与好人胜利，没有进入投票阶段。",
+        "source_spans": [
+          {
+            "start_ms": 5577490,
+            "end_ms": 5589100,
+            "quote": "而且蛮坚定的起来以后这个肯定是打的进攻。\n第二把让第二天起来要跳跃，\n舞者说不回头了。\n因为他舞者跳起来了，\n就肯定觉得自己没错嘛，"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV179MB6FE36-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第02局_假面舞会__BV179MB6FE36_P01_CID40597917177.本地全文转写_funasr.json",
+              "start_ms": 5577490,
+              "end_ms": 5589100,
+              "quote": "而且蛮坚定的起来以后这个肯定是打的进攻。\n第二把让第二天起来要跳跃，\n舞者说不回头了。\n因为他舞者跳起来了，\n就肯定觉得自己没错嘛，",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第02局_假面舞会__BV179MB6FE36_P01_CID40597917177.本地全文转写_funasr.json",
+            "start_ms": 5577490,
+            "end_ms": 5589100,
+            "quote": "而且蛮坚定的起来以后这个肯定是打的进攻。\n第二把让第二天起来要跳跃，\n舞者说不回头了。\n因为他舞者跳起来了，\n就肯定觉得自己没错嘛，\n就错了的话，"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "狼队交牌终止当局。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "狼队交牌终止当局。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "狼队交牌终止当局。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-08-04_g02_BV179MB6FE36/复核记录.json",
+    "sha256": "47be1616dd9474f2496209045757b75419f3ce68f4f5f85cd02575579a153d5b",
+    "recap_segments": [
+      {
+        "start_ms": 5363330,
+        "end_ms": 5366710,
+        "text": "当时啊什么那个我们也什么好，"
+      },
+      {
+        "start_ms": 5366730,
+        "end_ms": 5367930,
+        "text": "第二局游戏结束了，"
+      },
+      {
+        "start_ms": 5367930,
+        "end_ms": 5368990,
+        "text": "本局游戏预言家，"
+      },
+      {
+        "start_ms": 5369010,
+        "end_ms": 5369890,
+        "text": "八号女巫，"
+      },
+      {
+        "start_ms": 5369910,
+        "end_ms": 5373930,
+        "text": "五号舞者十号白神一号假面十二号，"
+      },
+      {
+        "start_ms": 5373930,
+        "end_ms": 5378395,
+        "text": "狼人六号、七号、十一号平民二号、三号、四号、九号。"
+      },
+      {
+        "start_ms": 5378920,
+        "end_ms": 5387050,
+        "text": "首夜狼姬杀一号白神女巫开药解救行程平安夜冤家验证三号安家伟好人身份上警环节警徽流失。"
+      },
+      {
+        "start_ms": 5387050,
+        "end_ms": 5387790,
+        "text": "第一天白天，"
+      },
+      {
+        "start_ms": 5387790,
+        "end_ms": 5388230,
+        "text": "六号，"
+      },
+      {
+        "start_ms": 5388230,
+        "end_ms": 5389645,
+        "text": "狼人被公投出局，"
+      },
+      {
+        "start_ms": 5390200,
+        "end_ms": 5392400,
+        "text": "入夜舞者跟我的对象为三号平民，"
+      },
+      {
+        "start_ms": 5392420,
+        "end_ms": 5396100,
+        "text": "四号平民和十二号假面假面验证。"
+      },
+      {
+        "start_ms": 5396140,
+        "end_ms": 5397600,
+        "text": "八号预言家不在舞池，"
+      },
+      {
+        "start_ms": 5397600,
+        "end_ms": 5399340,
+        "text": "给十号舞者扣了面具。"
+      },
+      {
+        "start_ms": 5399340,
+        "end_ms": 5399980,
+        "text": "舞池当中，"
+      },
+      {
+        "start_ms": 5399980,
+        "end_ms": 5401845,
+        "text": "十二号假面被公务出局，"
+      },
+      {
+        "start_ms": 5402260,
+        "end_ms": 5404080,
+        "text": "狼人空刀女巫毒杀七号，"
+      },
+      {
+        "start_ms": 5404140,
+        "end_ms": 5405100,
+        "text": "狼人七十二，"
+      },
+      {
+        "start_ms": 5405100,
+        "end_ms": 5407545,
+        "text": "双子预言家验证九号两位好人身份。"
+      },
+      {
+        "start_ms": 5407950,
+        "end_ms": 5410550,
+        "text": "第二天白天最后一张狼人十一号选择招牌，"
+      },
+      {
+        "start_ms": 5410590,
+        "end_ms": 5411325,
+        "text": "游戏结束，"
+      },
+      {
+        "start_ms": 5411610,
+        "end_ms": 5412605,
+        "text": "好人正义获胜，"
+      },
+      {
+        "start_ms": 5413650,
+        "end_ms": 5416870,
+        "text": "一局好人一个都没出局的加冕舞会啊，"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          7,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "狼队交牌终止当局。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "6号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-04/2026-08-04_S22_第11周_正赛第10期_第02局_假面舞会__BV179MB6FE36_P01_CID40597917177.本地全文转写_funasr.json",
+          "start_ms": 3916320,
+          "end_ms": 3997445,
+          "quote": "十一十号，\n很难同裁，\n就同时很难很难采六号七号、十一号十二号，\n所以我先把票投给了这个七号。\n尽管七号说我有可能是贾明听完警下发言呢，\n我依然觉得二号是狼，\n三号四号里面呢，\n我说说没听出来，\n但十一发言我觉得不知道啊，\n十一号发言我觉得是好人，\n所以我的票还是很难投，\n但我估计还是会投五号好吧，\n我只能说就是呃我感觉有可能是要六七十，\n但是我嗯可能会投五号好吧。\n滚嗯完家发言结束，\n我跟玩家请戴亏做好投票准备。\n本节游戏警徽流失送玩家，\n请自由投票。\n三二一请出票，\n一号投给六号，\n二号投给六号，\n三号投给六号，\n四号投给六号，\n五号投给六号，\n六号投给五号七号投给五号八号投给六号，\n九号投给五号十号投给六号，\n十一号投给五号十二号投给五号投票结束嗯，\n六号玩家七票出局，\n请发表遗言。\n咋听的呀？\n我天哪姐我天哪，\noh my god,\n你吓到我了，\n这二不是狼吗？"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "狼队交牌终止当局。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV179MB6FE36",
   "source_sha256": "5d62b4324632ac2728490f3625e37eab2017c5383b33808121814ba19a6ac2bf",
   "dossier_sha256": "4b3cad05d57bc5b79eef81645d10584e4332dd84ee52d7238ab4af86753d6171",
-  "generated_at": "2026-10-24T23:21:26+08:00",
+  "generated_at": "2026-10-25T04:08:40+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV179MB6FE36-p01-g02",
@@ -330,7 +692,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

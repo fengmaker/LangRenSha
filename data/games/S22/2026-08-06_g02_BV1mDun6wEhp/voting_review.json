@@ -5,18 +5,300 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "33b6dd9a59455b78a8f0591921ce7050f735bcc4fb960fa0d993fa47a47cf82c",
+  "facts_sha256": "5dcce710e58da25de3bf0421f2ef00e884766395653906de5e40c30838a68081",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1mDun6wEhp-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号狼人自爆，未进行放逐投票。"
+    },
+    {
       "day": 4,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "4号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 8,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4207020,
+          "end_ms": 4219520,
+          "quote": "要救起\n形成平安夜预言家验证\n2号玩家为狼人身份警上竞选环节\n8号狼人选择自爆入夜鬼术之技\n技能空过狼魔术师选择交换了5号平民\n6号预言家"
+        },
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4226100,
+          "end_ms": 4234520,
+          "quote": "女巫为好人身份\n当夜为3号魔术师单死在爷七近远环节\n2号狼人选择自爆\n本就游戏警徽流失入夜"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 2,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4226100,
+          "end_ms": 4234520,
+          "quote": "女巫为好人身份\n当夜为3号魔术师单死在爷七近远环节\n2号狼人选择自爆\n本就游戏警徽流失入夜"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          6
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          4,
+          5,
+          7,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          4,
+          5,
+          7,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          5,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          4,
+          7,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          7,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "endgame",
+      "after_day": 4,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取5条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 4,
+      "living": [
+        1,
+        4,
+        7,
+        10,
+        11
+      ],
+      "living_count": 5,
+      "eligible_voters": [
+        1,
+        4,
+        7,
+        10,
+        11
+      ],
+      "vote_count": 5,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "2号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "9号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "exiled",
+      "exile_note": "4号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
@@ -46,81 +328,8 @@
           "note": "保留完整时间范围原句，核对依据见更正理由。"
         }
       ]
-    },
-    {
-      "id": "vote-BV1mDun6wEhp-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 3995320,
-          "end_ms": 4026430,
-          "quote": "本局游戏警徽流失\n各位玩家请自行投票\n唱票结束前不要放手\n321请出票\n一号投给11号\n4号投给4号\n7号投给4号\n10号投给7号\n11号投给4号\n投票结束\n当前票情4号玩家三票\n并须王子受方技能54321",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1mDun6wEhp-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-06/2026-08-06_S22_第11周_正赛第10期_第02局_诡术之境__BV1mDun6wEhp_P01_CID40663059547.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 4244000,
-          "end_ms": 4255790,
-          "quote": "鬼术师为狼人身份\n在第三天白天\n9号狼人选择自爆\n入夜诡术师交换10号诡术师以及11号平民\n狼队击杀12号女巫",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1mDun6wEhp-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1mDun6wEhp-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 4,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1mDun6wEhp-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1mDun6wEhp-ballot-1-kind-review",
@@ -178,6 +387,6 @@
       "ballot_start_ms": 3961870
     }
   ],
-  "voting_sha256": "ab92194a9381903a8828b8530ac2773792ecc2e61b33b9a6d154ad3bd7daf9d6",
+  "voting_sha256": "a1f41d52f85aaa95fa8ea3d321c083871b00d1538bbc2451770e3d46c2b9100a",
   "source_sha256": "1e4c6a9472e2efcddea1452057616e18e9ecba7d696a614ae559802f08fb1cf2"
 }

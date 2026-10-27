@@ -38,11 +38,436 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1yKJ56PEak",
+    "source_sha256": "70057a3404ea87172f79a10b221e5f8c2b991c2469c3da7e74d50875dbfcea58",
+    "decisions": [
+      {
+        "question_id": "vote-BV1yKJ56PEak-day-3-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第3天没有放逐投票；第3夜终局，狼队屠神获胜。",
+        "reason": "复盘在第3天白天前直接宣告游戏结束和狼队屠神胜利，属于夜间终局。",
+        "source_spans": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+            "start_ms": 4496080,
+            "end_ms": 4498480,
+            "quote": "游戏结束\n狼队阵营屠神获胜"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1yKJ56PEak-day-3-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 3,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": []
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+            "start_ms": 4496080,
+            "end_ms": 4498480,
+            "quote": "6号预言家\n游戏结束\n狼队阵营屠神获胜\n以上是我们今天第二局版型"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 3,
+        "outcome": "ended_before_exile",
+        "exile_note": "第3夜终局，未进入白天投票。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3夜终局，未进入白天投票。"
+    }
+  },
+  "causal_terminal": {
+    "round": 3,
+    "phase": "night",
+    "after_day": 2,
+    "winner": "werewolf",
+    "eliminated_side": null,
+    "reason": "第3夜终局，未进入白天投票。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/复核记录.json",
+    "sha256": "aabc0c2f7cbef8071cd716bab1f44d79a2f13317537d0e29948b6bd140534985",
+    "recap_segments": [
+      {
+        "start_ms": 4433500,
+        "end_ms": 4439580,
+        "text": "还有9年的一号是好的直线"
+      },
+      {
+        "start_ms": 4439580,
+        "end_ms": 4444040,
+        "text": "然后来给各位弹幕老师们做本游戏的复盘"
+      },
+      {
+        "start_ms": 4444040,
+        "end_ms": 4448420,
+        "text": "本局版行为唯一零是从神阵营预言家6号女巫"
+      },
+      {
+        "start_ms": 4448420,
+        "end_ms": 4450299,
+        "text": "12号猎人"
+      },
+      {
+        "start_ms": 4450299,
+        "end_ms": 4454439,
+        "text": "7号守卫11号狼人阵营5号八号狼王10号"
+      },
+      {
+        "start_ms": 4454439,
+        "end_ms": 4457790,
+        "text": "本局傀儡为7号猎人"
+      },
+      {
+        "start_ms": 4457790,
+        "end_ms": 4461480,
+        "text": "平民阵营一号2号三号四号九五号"
+      },
+      {
+        "start_ms": 4461480,
+        "end_ms": 4464900,
+        "text": "首页首位守护5号狼人狼人击杀11号守卫"
+      },
+      {
+        "start_ms": 4464900,
+        "end_ms": 4465500,
+        "text": "牛药救起"
+      },
+      {
+        "start_ms": 4465500,
+        "end_ms": 4466320,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 4466320,
+        "end_ms": 4469150,
+        "text": "狼队当夜选择了7号猎人成为傀儡"
+      },
+      {
+        "start_ms": 4469150,
+        "end_ms": 4469810,
+        "text": "预言家"
+      },
+      {
+        "start_ms": 4469810,
+        "end_ms": 4471430,
+        "text": "验证了7号玩家"
+      },
+      {
+        "start_ms": 4471430,
+        "end_ms": 4474450,
+        "text": "猎人实际验证为7号傀儡为狼人身份"
+      },
+      {
+        "start_ms": 4474450,
+        "end_ms": 4475570,
+        "text": "警上竞选环节"
+      },
+      {
+        "start_ms": 4475570,
+        "end_ms": 4477210,
+        "text": "6号预言家获得警徽"
+      },
+      {
+        "start_ms": 4477210,
+        "end_ms": 4478090,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 4478090,
+        "end_ms": 4480870,
+        "text": "10号狼王被共同出局"
+      },
+      {
+        "start_ms": 4480870,
+        "end_ms": 4482290,
+        "text": "开枪带走"
+      },
+      {
+        "start_ms": 4482290,
+        "end_ms": 4484110,
+        "text": "12号女巫入夜守卫"
+      },
+      {
+        "start_ms": 4484110,
+        "end_ms": 4486670,
+        "text": "守护6号预言家狼人击杀11号守卫"
+      },
+      {
+        "start_ms": 4486670,
+        "end_ms": 4487889,
+        "text": "11号守卫单四"
+      },
+      {
+        "start_ms": 4487889,
+        "end_ms": 4490249,
+        "text": "预言家验证8号玩家为狼人身份"
+      },
+      {
+        "start_ms": 4490249,
+        "end_ms": 4491009,
+        "text": "第二天白天"
+      },
+      {
+        "start_ms": 4491009,
+        "end_ms": 4492809,
+        "text": "8号狼人选择自爆入夜"
+      },
+      {
+        "start_ms": 4492809,
+        "end_ms": 4494809,
+        "text": "狼队击杀场上最后一神"
+      },
+      {
+        "start_ms": 4494809,
+        "end_ms": 4496080,
+        "text": "6号预言家"
+      },
+      {
+        "start_ms": 4496080,
+        "end_ms": 4497000,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 4497000,
+        "end_ms": 4498480,
+        "text": "狼队阵营屠神获胜"
+      },
+      {
+        "start_ms": 4498480,
+        "end_ms": 4500080,
+        "text": "以上是我们今天第二局版型"
+      },
+      {
+        "start_ms": 4500080,
+        "end_ms": 4501440,
+        "text": "唯令侍从的全部内容"
+      },
+      {
+        "start_ms": 4501440,
+        "end_ms": 4502990,
+        "text": "感谢各位弹幕老师的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 3,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3夜终局，未进入白天投票。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+          "start_ms": 3930940,
+          "end_ms": 4003110,
+          "quote": "你表现相当的好\n因为我的长相非常的像一个狼\n如果不是你那一票\n那个票型是出不来的\n所以我直接给你保掉好吧\n我觉得你这个好人干的相当的漂亮呃\n所以我就验8号\n定义一下9号和一号\n那今天我就在70里面归一个\n反正人生就是一场豪赌嘛\n买码买错了\n下次我继续买\n就这样过\n所有加班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n10号各位玩家唱票结束前请不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给10号\n5号投给10号\n6号投给10号\n7号投给11号\n8号投给10号\n9号投给一号\n10号投给10号\n11号投给10号\n12号投给10号\n投票结束\n10号玩家10.5票出局\n请发表遗言\n我今天中午睡觉做了个梦\n梦见我在树林里是个猎人\n救了一个人\n我也不知道救了谁\n醒来以后没想起来救了谁"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1yKJ56PEak",
   "source_sha256": "70057a3404ea87172f79a10b221e5f8c2b991c2469c3da7e74d50875dbfcea58",
   "dossier_sha256": "9b619b896fdafef65fb8f7e5817d562f47cc1ab110de62de141c8be9ae3d3605",
-  "generated_at": "2026-10-24T23:21:16+08:00",
+  "generated_at": "2026-10-25T04:08:35+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1yKJ56PEak-p01-gunknown",
@@ -121,12 +546,23 @@
         "kind": "sheriff",
         "number": 2,
         "stage": "pk",
-        "status": "partial",
+        "status": "complete",
         "candidates": [
           6,
           7
         ],
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
         "votes": [
           {
             "voter": 1,
@@ -181,7 +617,7 @@
         ],
         "tied_candidates": [],
         "winner": null,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       },
       {
         "id": "ballot-3",
@@ -281,13 +717,8 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
-        "exile": "unknown"
-      },
-      {
-        "day": 3,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
       }
     ]
   }

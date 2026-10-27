@@ -1,8 +1,9 @@
-"""Offline completeness and subtitle-coverage audit for the downloaded S22 archive."""
+"""Offline completeness and subtitle-coverage audit for a downloaded season archive."""
 
 from __future__ import annotations
 
 from collections import Counter
+import argparse
 import csv
 from datetime import datetime,timezone
 import hashlib
@@ -15,8 +16,10 @@ from collect_bilibili_audio import save_json
 import database
 from media_ingest import validate_media
 from season_naming import validate_cues
+from season_config import load_season, season_codes
 
 ROOT=Path(__file__).resolve().parents[1]
+DEFAULT_SEASON=season_codes(ROOT)[0]
 
 
 def coverage(cues: list[dict],duration: float) -> dict:
@@ -43,9 +46,12 @@ def coverage(cues: list[dict],duration: float) -> dict:
             'warnings':warnings,'accuracy_verified':False}
 
 
-def audit() -> dict:
-    plan=json.loads((ROOT/'data/indexes/S22_采集计划.json').read_text(encoding='utf-8'))
-    progress=json.loads((ROOT/'data/reports/S22_采集进度.json').read_text(encoding='utf-8'))
+def audit(season: str = DEFAULT_SEASON) -> dict:
+    season_config=load_season(season,ROOT)
+    plan=json.loads((ROOT/f'data/indexes/{season}_采集计划.json').read_text(encoding='utf-8'))
+    progress=json.loads((ROOT/f'data/reports/{season}_采集进度.json').read_text(encoding='utf-8'))
+    if plan.get('season') != season or plan.get('collection_id') != season_config['collection_id']:
+        raise ValueError('冻结计划与验收赛季不一致')
     rows=[];problems=[];total_bytes=0;raw_tracks=0
     for entry in plan['entries']:
         key=f"{entry['bvid']}:{entry['cid']}"
@@ -101,8 +107,8 @@ def audit() -> dict:
             row['音频状态']='audit_failed'
             problems.append({'bvid':entry['bvid'],'reason':str(error)})
         rows.append(row)
-    target=ROOT/'data/seasons/S22'
-    output=target/'S22_中文优先复核目录.csv'
+    target=ROOT/f'data/seasons/{season}'
+    output=target/f'{season}_中文优先复核目录.csv'
     with output.open('w',encoding='utf-8-sig',newline='') as stream:
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
     chinese_rows=[row for row in rows if row['中文字幕状态']=='downloaded']
@@ -133,12 +139,17 @@ def audit() -> dict:
             'scope_note':plan['coverage_note'],'quality_note':'时间覆盖和段数只是缺失筛查；无截短信号不等于内容正确或完整。未运行本地ASR或事实提取。',
             'game_facts_created':False,'full_videos_downloaded':False,'audio_export_mode':'hardlinks_no_second_media_copy'}
     progress['final_audit']=report
-    save_json(ROOT/'data/reports/S22_采集进度.json',progress)
-    save_json(ROOT/'data/reports/S22_采集验收.json',report)
-    save_json(target/'S22_中文优先复核目录.json',{'summary':report,'entries':rows})
+    save_json(ROOT/f'data/reports/{season}_采集进度.json',progress)
+    save_json(ROOT/f'data/reports/{season}_采集验收.json',report)
+    save_json(target/f'{season}_中文优先复核目录.json',{'summary':report,'entries':rows})
     return report
 
 
 if __name__=='__main__':
     sys.stdout.reconfigure(encoding='utf-8')
-    print(json.dumps(audit(),ensure_ascii=False,indent=2))
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--season',choices=season_codes(ROOT),default=DEFAULT_SEASON)
+    args=parser.parse_args()
+    report=audit(args.season)
+    print(json.dumps(report,ensure_ascii=False,indent=2))
+    raise SystemExit(1 if report['audio_or_file_errors'] or report['database_missing_sources'] or report['database_missing_selected_artifacts'] else 0)

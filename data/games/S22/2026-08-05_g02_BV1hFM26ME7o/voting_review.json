@@ -5,49 +5,117 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "b9a140ca22bdada17cd5113770e9fd3a0d5f89580a8c06aa25f88a92a7d29f7f",
+  "facts_sha256": "9eb1b5a2957f0904b5564b85f07c32891a15cef4a27bb1a4575b54095edd8428",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 1,
-  "questions": [
-    {
-      "id": "vote-BV1hFM26ME7o-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-05/2026-08-05_S22_第11周_正赛第10期_第02局_盗宝大师__BV1hFM26ME7o_P01_CID40630029695.平台AI字幕_ai-zh_01_838667c342.原始.json",
-          "start_ms": 3896540,
-          "end_ms": 3907580,
-          "quote": "当野盗宝大师选择平民身份\n第二天白天一号最后一张狼人自爆游戏结束\n好人阵营获胜\n好各位弹幕老师们\n这里是京城大师赛第22季曙光航迹",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    }
-  ],
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "8号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1hFM26ME7o-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "1号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          10,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-05/2026-08-05_S22_第11周_正赛第10期_第02局_盗宝大师__BV1hFM26ME7o_P01_CID40630029695.平台AI字幕_ai-zh_01_838667c342.原始.json",
+          "start_ms": 3290180,
+          "end_ms": 3362370,
+          "quote": "那个这个这个这个蒙面人\n那你明天切了啊\n那不能验你\n你这样呗\n你你们俩反而站我边的话\n就去读这个10号对吧\n我验一下你郭子行吧\n我验一下你\n反正你们俩也不可能互毒\n你就你毒狼枪嘛\n我投7号对吧\n我验一下2号\n这没毛病哈\n4号的发言结束\n五个玩家请戴盔做好投票准备\n警长请归票\n警长归票\n7号个人家请做好投票准备\n321请出票\n一号投给7号\n2号投给8号\n3号投给8号\n4号投给8号\n5号\n投给8号\n6号投给8号\n7号投给8号\n8号投给7号\n9号投给8号\n10号\n投给7号\n11号\n投给10号\n12号投给8号\n投票结束\n8号玩家八票出局\n请发表遗言\n这不对\n跳毒师都投了吗\n对不对\n我觉得这把得那个仔细听发言\n我警上的发言说的是"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "1号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "ba34f8e2b1c29de7a71b40cdf78766b8c221bf6832b399ff53f1a328c878f6de",
+  "voting_sha256": "4ca8cf6498ec3747f45b7991f15cb471134326cc4269d1644a1ee7d3cc4be5b9",
   "source_sha256": "838667c34268f109246d143a36522cbc34a59cd252c0fe60b63e8ba3598b6636"
 }

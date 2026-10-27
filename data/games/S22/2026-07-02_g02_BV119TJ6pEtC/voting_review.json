@@ -5,18 +5,250 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "c20542ae9a40352d583623e6343788a527da2b66fabc931b8bebddbe7cc99b4f",
-  "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "facts_sha256": "4776f797ea7e5b085c012d27f983a1ff63bac6e11d6a99cf7d93f9bdaa022640",
+  "causal_decisions": [
     {
-      "id": "vote-BV119TJ6pEtC-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "question_id": "vote-BV119TJ6pEtC-day-1-departure-night_deaths",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第1天开局夜死亡名单为空：首日放逐唱票前12名全员仍在且都投票；应登记平安夜/无人死亡。",
+      "reason": "第1天放逐的唱票序列包含1至12全部玩家（其中12→11也在原转写中），存活名单完整；目前死亡项缺失是漏录，不是无法判断。",
+      "source_spans": [
+        {
+          "start_ms": 4280620,
+          "end_ms": 4322530,
+          "quote": "第1天放逐唱票中1至12号均依次投票；12号投给11号"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV119TJ6pEtC-day-1-departure-night_deaths",
+        "code": "departure-night_deaths",
+        "day": 1,
+        "target": null,
+        "title": "第1天前夜死亡播报待补充",
+        "reason": "需补充这项原文出局信息，之后自动重算存活与票权，无需人工计算票数。受影响投票：第1天（ballot-2）；",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第06周_正赛第05期/2026-07-02/2026-07-02_S22_第06周_正赛第05期_第02局_盗宝大师__BV119TJ6pEtC_P01_CID39599211166.本地全文转写_funasr.json",
+            "start_ms": 701010,
+            "end_ms": 721835,
+            "quote": "你上来神都跳了也很难的。\n所以这局游戏还是比较考验好人的。\nOk,\n我们把画面交戏除十一号在外，\n其他大家上镜上镜玩家请亮红灯上景玩家请亮红灯，",
+            "note": "本日开局定位，非缺失投票的直接证据"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第06周_正赛第05期/2026-07-02/2026-07-02_S22_第06周_正赛第05期_第02局_盗宝大师__BV119TJ6pEtC_P01_CID39599211166.本地全文转写_funasr.json",
+          "start_ms": 4280620,
+          "end_ms": 4322530,
+          "quote": "做好投票准备。\n警长请归票。\n警长归票。\n十号各玩家请做好投票准备。\n三二一请冲票，\n一号投给七号，\n二号投给七号，\n三号投给十号四号投给十号五号投给十号六号投给十一号。\n七号投给十二号八号投给十号九号，\n举高九号投给十号，\n十号投给十号，\n十一号投给十二号，\n十二号行投给十一号投票结束，\n十号玩家，\n六点五票出局，\n请发表遗言。"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "10号被放逐。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "3号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "4号狼人自爆，未进行放逐投票。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          4,
+          5,
+          7,
+          8,
+          9,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          5,
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取11条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第06周_正赛第05期/2026-07-02/2026-07-02_S22_第06周_正赛第05期_第02局_盗宝大师__BV119TJ6pEtC_P01_CID39599211166.本地全文转写_funasr.json",
@@ -27,64 +259,18 @@
       ]
     },
     {
-      "id": "vote-BV119TJ6pEtC-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第06周_正赛第05期/2026-07-02/2026-07-02_S22_第06周_正赛第05期_第02局_盗宝大师__BV119TJ6pEtC_P01_CID39599211166.本地全文转写_funasr.json",
-          "start_ms": 6437530,
-          "end_ms": 6445490,
-          "quote": "一是一双死当夜盗宝大师选择平民身份。\n第二天白天，\n三号狼人自爆，\n入夜，\n盗宝大师选择通灵师身份验证。",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
+      "outcome": "self_destruct",
+      "exile_note": "3号狼人自爆，未进行放逐投票。",
+      "evidence": []
     },
     {
-      "id": "vote-BV119TJ6pEtC-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "outcome": "self_destruct",
+      "exile_note": "4号狼人自爆，未进行放逐投票。",
       "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV119TJ6pEtC-ballot-2-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV119TJ6pEtC-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV119TJ6pEtC-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV119TJ6pEtC-registration",
@@ -128,6 +314,6 @@
       ]
     }
   ],
-  "voting_sha256": "2bc956316a5e7556a7b4a63a082848e39bca8ba3fafe4d1ef7227b97104b8b43",
+  "voting_sha256": "0ed2c6d629c733b6acb9893fc8dd1a8c9791b08fe32d7abb7332ac3d43711f0e",
   "source_sha256": "8fa1a23e537d4b76042fc3f95549558cbc821a7ce305e120f738e88623000f5b"
 }

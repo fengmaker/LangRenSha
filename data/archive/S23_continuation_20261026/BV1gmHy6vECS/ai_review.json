@@ -1,0 +1,138 @@
+{
+  "bvid": "BV1gmHy6vECS",
+  "reviewer": "ai",
+  "source_sha256": "78677a9ebee17ab6f959cfeb6052f40779e38aa558cf638340e9afd096c86527",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "逐局核对完整尾声、警徽与每轮放逐原文，并查看第四天画面。此局是本批次的新增魔幻规则局之一，按当局复盘保留明确角色与动作：首次投票后定序王子翻牌，随后重投；首轮/重投两票分开。结尾依次确认第二天5号、第三天1号、第四天4号出局，最终好人获胜；没有把角色交换/放逐效果按S22规则补推。",
+  "decisions": [
+    {
+      "field": "voting.ballots[2].stage",
+      "before": "unknown",
+      "after": "skill_revote",
+      "reasoning": "复盘明确6号首轮高票后8号定序王子翻牌，随后7号被投出；复投性质来自本局复盘，不外推S22规则。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6761920,
+          "end_ms": 6768340,
+          "quote": "6号狼人高票8号定序王子翻牌之后\n7号悍跳狼人被公投出局"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[3].day",
+      "before": "1",
+      "after": "2",
+      "reasoning": "结尾复盘将5号放逐明确放在第二天白天。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6787860,
+          "end_ms": 6790300,
+          "quote": "第二天白天\n5号平民被可退出局"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[4].day",
+      "before": "2",
+      "after": "3",
+      "reasoning": "结尾复盘将1号放逐明确放在第三天白天。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6799570,
+          "end_ms": 6802580,
+          "quote": "第三天白天\n一号鬼出师被公投出局"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[5].day",
+      "before": "3",
+      "after": "4",
+      "reasoning": "结尾复盘将4号作为最后一狼放逐明确放在第四天白天。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6805689,
+          "end_ms": 6810749,
+          "quote": "验证4号玩家为狼人身份\n第四天八天最后一张狼人4号被公投出局\n游戏结束"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "诡术师",
+        "女巫",
+        "平民",
+        "狼人",
+        "平民",
+        "狼人",
+        "狼人",
+        "定序王子",
+        "平民",
+        "预言家",
+        "平民",
+        "魔术师"
+      ],
+      "reasoning": "截图中可读角色侧签与基线一致；用画面直接读到的称谓保留，不把转写中错位的8/12号角色名强行校正为不同物理身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gmHy6vECS/BV1gmHy6vECS_06590.090.png",
+          "frame_time_ms": 6590090,
+          "quote": "屏幕角色侧签可读：1诡术师、2女巫、3平民、4狼人、6/7狼人、8定序王子、10预言家、12魔术师",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6733679,
+          "end_ms": 6744930,
+          "quote": "本局游戏鬼畜之境版型预言家\n11号女巫\n2号定序王子\n8号魔术师\n12号鬼术师\n一号狼人\n4号六号\n7号平民\n3号五号九号十号"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 7,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "复盘称7号为悍跳狼人且其在首日被公投出局；按本局定义，未取得警徽且首日出局的是狼人，判定悍跳失败。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第02局_诡术之境__BV1gmHy6vECS_P01_CID42546890452.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6765640,
+          "end_ms": 6768340,
+          "quote": "7号悍跳狼人被公投出局"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T16:44:20Z"
+}

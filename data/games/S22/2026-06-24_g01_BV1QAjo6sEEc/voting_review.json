@@ -5,18 +5,225 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "d9443774eebf4fb0e41a4c97ff35d5ed1dde7d09bf37ba9403bffec8509b58f5",
+  "facts_sha256": "72d8f284d0a5ebfa5f968f2188b7df60d12bec201ae1ce2a1853f1d1d112d3d6",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 2,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1QAjo6sEEc-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号被放逐。"
+    },
+    {
       "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          4
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          6,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 3,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "endgame",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取8条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 2,
+      "living": [
+        2,
+        3,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 8,
+      "eligible_voters": [
+        2,
+        3,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 8,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-24/2026-06-24_S22_第05周_正赛第04期_第01局_预女猎白混__BV1QAjo6sEEc_P01_CID39376193236.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4256440,
+          "end_ms": 4342750,
+          "quote": "如果你们认为在六七里面\n你们猜的比较难站\n人家猎人起跳了\n我认为这个边就不难站了\n对不对\n然后一号玩家和3号玩家和八的坑位都不一样\n8号玩家保的牌一三都在打\n所以狼队的意见也不是统一的好吗\n出就出一下八啊\n然后这就能分清了\n然后晚上女巫也帮助大家读人八开不出枪\n你们完全就可以读\n对人好不好过了\n4号玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票\n8号高玩家请做好投票准备\n321请出票\n一号投给5号\n2号投给5号\n3号投给5号\n4号投给8号\n5号投给8号\n6号投给5号\n7号投给8号\n8号投给5号\n9号投给5号\n10号投给8号\n11号投给8号\n12号投给8号\n投票结束\n8号玩家6.5票出局\n请发表言\n你们都说我保了4号\n但是我当时的原话是说我我说那个567 16\n我说6号十号没有排水567十\n然后二次再听一下发言\n因为当时有一句话就是嗯"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "exiled",
+      "exile_note": "7号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第05周_正赛第04期/2026-06-24/2026-06-24_S22_第05周_正赛第04期_第01局_预女猎白混__BV1QAjo6sEEc_P01_CID39376193236.平台AI字幕_ai-zh_01.原始.json",
@@ -25,47 +232,9 @@
           "quote": "投了你他们身份不一定找得准\n那你要是狼\n我们把混子投了是必输啊\n12号明天表水好\n表水要投你了\n过了7号拿去放言咳\n谢谢艾斯的投食\n我的问题我确实听说KS是好人了\n但是唉有点自负了\n我觉得KS站错边了\n我觉得我自己站对边了\n我的问题我过了\n投四玩家发言结束\n各位玩家请戴盔做好投票准备\nThe qu\n警长请归票\n警长归票\n7号高玩家请做好投票准备\n321请出票\n2号投给7号\n3号投给7号\n6号投给7号\n7号投给7号\n9号投给7号\n10号投给7号\n11号投给7号\n12号投给7号\n投票结束\n7号人的全票出局\n请发表言嗯\n一刀2号一刀11号就差不多了嗯\n过了7号玩家预言结束\n是否移交警徽\n3号玩家\n既然警长"
         }
       ]
-    },
-    {
-      "id": "vote-BV1QAjo6sEEc-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1QAjo6sEEc-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1QAjo6sEEc-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "8b7ab717d9952395390e4e156c7d03f6731f79db96944411cd899bc79e45c364",
+  "voting_sha256": "b383575e7599f48c5286582994e6d746f1c3508889776c74d1d1b3ab86d048b4",
   "source_sha256": "a9170ee4235974194cc4c02a3ad0460be570bdab97086c60d7eb7522592446ff"
 }

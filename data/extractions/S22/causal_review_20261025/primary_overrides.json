@@ -1,0 +1,663 @@
+{
+  "items": [
+    {
+      "bvid": "BV1CGVC6cE8T",
+      "patches": [
+        {
+          "type": "round",
+          "round": 3,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "pass",
+            "actor": 7,
+            "targets": [],
+            "result": "因果复核：7号梦亡后无枪杀；其余6名存活者全部参加当日放逐投票。"
+          },
+          "reason": "第3夜梦亡7、刀死10后，3/6/8/9/11/12六人均明确投票，且12当日放逐、9次日放逐，其余后续存活，排除额外枪杀。"
+        }
+      ],
+      "supporting_spans": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6507740,
+          "end_ms": 6569540,
+          "quote": "十十一也有可能是两个狼\n10号的发言我一向听不出来\n那我自然偏平\n我就算倾向于十位\n说我还没分那么太清\n但七发完言\n我觉得七座狼也只能做五的同伴\n所以十是通灵师\n只是没有那么多时间去讲这些东西\n并不是你说的什么前后不一致\n对啊没有这些东西就投一下12呗\n好过了\n作玩家发起数个玩家请戴盔\n做好投票准备\n警长请归票\n警长归票\n12号\n各玩家请做好投票准备\n321请出票\n3号玩家弃票\n6号投给12号\n8号投给12号\n9号投给12号\n11号投给12号\n12号投给8号\n投票结束\n12号将4.5票出局\n请发表言\n你是不是觉得我戴耳机是装的\n为什么我怀疑9号不行呢\n那9号我觉得他是好人的话\n我第一个给了G6\n都是好人"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1Hej66FE1Y",
+      "patches": [
+        {
+          "type": "round",
+          "round": 3,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              9
+            ],
+            "result": "复盘5753450ms明确狼队击杀9号，随后警徽交至7号。"
+          },
+          "reason": "第2天狼王出局开枪带走12后，入夜刀9；9号出局移徽7，对应第3天前夜唯一死亡。"
+        }
+      ],
+      "supporting_spans": [
+        {
+          "start_ms": 5753450,
+          "end_ms": 5759510
+        }
+      ]
+    },
+    {
+      "bvid": "BV1fX7C6qESY",
+      "decisions": [
+        {
+          "question_id": "vote-BV1fX7C6qESY-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "已展开省略式唱票：5→7；7/10/11/12→5，5号高票出局。",
+          "reason": "Fun-ASR-Nano对原音频5,331,000–5,360,000ms复核清晰输出“小仓投给Y哥，其余所有玩家投票给小仓，小仓高票出局”。该局D4投票前存活名单[5,7,10,11,12]，第5号在唱票提示中直接称为“小仓”；依该局玩家席位/昵称映射Y哥为7号JY。于是全体5张票可展开为5→7、7/10/11/12→5；5号得4票、7号1票，与复盘“5号高票出局”相符，没有反例。",
+          "needs_video": false,
+          "source_spans": [
+            {
+              "start_ms": 5342680,
+              "end_ms": 5348930,
+              "quote": "警长归票五号小仓各位玩家唱票就是先不要放手三二一，"
+            },
+            {
+              "start_ms": 5350130,
+              "end_ms": 5357610,
+              "quote": "小仓投给Y哥，其余所有玩家投票给小仓，小仓高票出局，游戏结束，好人阵营获胜。",
+              "note": "此引号来自本地Nano对该29秒原音频片段的复核转写；原机器稿未校听。"
+            },
+            {
+              "start_ms": 5476960,
+              "end_ms": 5484065,
+              "quote": "白神单死在第四天；白天场上最后一狼五号假面被公投出局；游戏结束；好人阵营获胜。",
+              "note": "复盘确认日序和出局者；逐人票由原音频复核及“其余所有玩家”汇总语展开。"
+            }
+          ]
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-day4-exile",
+          "action": "insert",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              5,
+              7,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 5,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 5,
+                "state": "cast"
+              }
+            ],
+            "winner": 5,
+            "tied_candidates": []
+          },
+          "reason": "Nano原音频转写直接说“小仓投给Y哥，其余所有玩家投票给小仓”；结合投票时五名存活玩家，逐人展开。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV17f8g6BEFQ",
+      "decisions": [
+        {
+          "question_id": "vote-BV17f8g6BEFQ-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天完整票型：1/4/6/7/8/9→12，12→6；12号6票出局。",
+          "reason": "用户查看后明确确认“其他人全部投给12号”，并补充“12投给了6号”。该轮存活1、4、6、7、8、9、12号，故六人投12、12投6，共七张明确投票；12号6票出局，与原文高票出局一致。本轮无默认弃票。",
+          "needs_video": false,
+          "media_evidence": [
+            {
+              "path": "https://www.bilibili.com/video/BV17f8g6BEFQ/",
+              "start_ms": 2649000,
+              "end_ms": 2649000,
+              "quote": "已看原视频44:05–44:17；全景可见举手，但未能可靠辨认全部七人的具体手势/投向。",
+              "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV17f8g6BEFQ_2649.png"
+            }
+          ],
+          "human_reviewed": true,
+          "method": "user_confirmed",
+          "user_confirmation": {
+            "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+            "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+          },
+          "evidence": [
+            {
+              "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+              "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+              "start_ms": 2643190,
+              "end_ms": 2658980,
+              "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+              "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+            }
+          ]
+        }
+      ],
+      "day_outcomes": [
+        {
+          "day": 4,
+          "outcome": "exiled",
+          "exile_note": "用户已确认完整七票：1/4/6/7/8/9→12，12→6；12号6票出局。",
+          "evidence": [
+            {
+              "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+              "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+              "start_ms": 2643190,
+              "end_ms": 2658980,
+              "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+              "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+            }
+          ]
+        }
+      ],
+      "user_confirmation": {
+        "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+        "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+      },
+      "human_confirmations": [
+        {
+          "target": "causal-ballot-day4-exile-d4",
+          "voters": [
+            1,
+            4,
+            6,
+            7,
+            8,
+            9,
+            12
+          ],
+          "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+          "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-day4-exile",
+          "action": "insert",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": null,
+            "eligible_voters": [
+              1,
+              4,
+              6,
+              7,
+              8,
+              9,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 6,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 12,
+            "unrecorded_voters": []
+          },
+          "reason": "用户查看后明确确认“其他人全部投给12号”，并补充“12投给了6号”。该轮存活1、4、6、7、8、9、12号，故六人投12、12投6，共七张明确投票；12号6票出局，与原文高票出局一致。本轮无默认弃票。",
+          "source_time_ms": [
+            2643190,
+            2658980
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV12GEA6iEx5",
+      "decisions": [
+        {
+          "question_id": "vote-BV12GEA6iEx5-ballot-2-source_conflict-6a1384b0",
+          "media_evidence": [
+            {
+              "path": "data/extractions/S22/causal_review_20261025/audio/results.json",
+              "start_ms": 2315000,
+              "end_ms": 2345000,
+              "quote": "除七号十二号玩家外其余玩家带亏在七号十二号玩家中选出本局警长三二一请出票一号投给七号二号投给七号三号投给七号四号投给十二号五号投给七号六号投给十二号八号投给八号弃票九号投给七号十号投给十二号十一号投给七号投票结束",
+              "note": "Fun-ASR-Nano独立原音频重转写，未人工逐字听核。",
+              "audio_sha256": "aa405ed99d6c859ca944ab9862569285087840b0b1fd022b0664bc0324b59749",
+              "clip_sha256": "3a5b0ed7fdff9195331d9fdee841d54a66f974b4e83d200ae9eaeefc61734cd9"
+            },
+            {
+              "path": "https://www.bilibili.com/video/BV12GEA6iEx5/",
+              "start_ms": 2334000,
+              "end_ms": 2334000,
+              "quote": "已打开并查看本段原视频全景；画面没有完整逐席票表，结合原音频重转写、唱票顺序和前后因果核定。",
+              "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV12GEA6iEx5_2334.png"
+            }
+          ]
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV1suMG6PEYP",
+      "decisions": [
+        {
+          "question_id": "vote-BV1suMG6PEYP-ballot-2-source_conflict-4e165ee1",
+          "media_evidence": [
+            {
+              "path": "data/extractions/S22/causal_review_20261025/audio/results.json",
+              "start_ms": 3799000,
+              "end_ms": 3829000,
+              "quote": "警长请归票警长归票十号各玩家请做好投票准备三二一请出票一号投给五号二号投给十号三号弃票四号投给五号五号投给十号六号投给五号七号投给十号八号投给五号九号投给十号十号投给五号十一号投给五号十二号投给十号投票结束",
+              "note": "Fun-ASR-Nano独立原音频重转写，未人工逐字听核。",
+              "audio_sha256": "c18250d7a56730d962591675c2731c34af35731bc65b25a8057fe8ced825f276",
+              "clip_sha256": "00078814f9fad699dc30393117dbf8eaf6c2f16f12dc31c43d4393b3f13e3f7a"
+            },
+            {
+              "path": "https://www.bilibili.com/video/BV1suMG6PEYP/",
+              "start_ms": 3813000,
+              "end_ms": 3813000,
+              "quote": "已打开并查看本段原视频全景；画面没有完整逐席票表，结合原音频重转写、唱票顺序和前后因果核定。",
+              "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV1suMG6PEYP_3813.png"
+            }
+          ]
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV19Ggx6xEqE",
+      "decisions": [
+        {
+          "question_id": "vote-BV19Ggx6xEqE-ballot-2-source_conflict-6bc2d47f",
+          "media_evidence": [
+            {
+              "path": "data/extractions/S22/causal_review_20261025/audio/results.json",
+              "start_ms": 3735000,
+              "end_ms": 3765000,
+              "quote": "请不要放手三二一请出票一号投给七号二号投给一号三号投给七号四号投给七号五号投给七号六号投给七号七号投给一号八号投给一号九号投给一号十号投给七号十一号投给七号十二号投给七号投票结束当前票型七号玩家八票定序王子是我",
+              "note": "Fun-ASR-Nano独立原音频重转写，未人工逐字听核。",
+              "audio_sha256": "08baf33fea721c6beb9b5ee40b0438f1606ef5720abea22ab1f1b56aafbe6292",
+              "clip_sha256": "6644dc15445ddf55a096ab35a45a37787063ec493106cdded26d6d78cc961dac"
+            },
+            {
+              "path": "https://www.bilibili.com/video/BV19Ggx6xEqE/",
+              "start_ms": 3748000,
+              "end_ms": 3748000,
+              "quote": "已打开并查看本段原视频全景；画面没有完整逐席票表，结合原音频重转写、唱票顺序和前后因果核定。",
+              "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV19Ggx6xEqE_3748.png"
+            }
+          ]
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV1iDGK61E1c",
+      "decisions": [
+        {
+          "question_id": "vote-BV1iDGK61E1c-ballot-2-source_conflict-dabbbaa4",
+          "media_evidence": [
+            {
+              "path": "data/extractions/S22/causal_review_20261025/audio/results.json",
+              "start_ms": 3892000,
+              "end_ms": 3922000,
+              "quote": "警长请归票警长归票五号各位玩家唱票结束前不要放手三二一请出票一号投给十一号二号投给五号三号投给五号四号投给五号五号投给十一号六号投给五号七号投给七号弃票八号投给五号九号投给十一号十号投给五号十一号投给五号十二号投给五号投票结束",
+              "note": "Fun-ASR-Nano独立原音频重转写，未人工逐字听核。",
+              "audio_sha256": "9a53588f1776f27bb7f7b07ede37dd7ac199235be1433a072c055b060830c78e",
+              "clip_sha256": "20bfaa5fefba0ee2a082e9c8f009497650f76f548e6948782f8c5e5e4f510db4"
+            },
+            {
+              "path": "https://www.bilibili.com/video/BV1iDGK61E1c/",
+              "start_ms": 3905000,
+              "end_ms": 3905000,
+              "quote": "已打开并查看本段原视频全景；画面没有完整逐席票表，结合原音频重转写、唱票顺序和前后因果核定。",
+              "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV1iDGK61E1c_3905.png"
+            }
+          ]
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV1oXMB6fEQ4",
+      "patches": [
+        {
+          "type": "round",
+          "round": 1,
+          "phase": "day",
+          "slot": "sheriff_result",
+          "fields": {
+            "action": "elected",
+            "targets": [
+              12
+            ],
+            "result": "首日自爆之前12号已持有警徽，竞选已完成。"
+          },
+          "reason": "根据自爆前后对12号警长/警徽的发言可推竞选已完成，不能当作未完延期。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1BPNB6QE4z",
+      "patches": [
+        {
+          "type": "round",
+          "round": 1,
+          "phase": "day",
+          "slot": "sheriff_result",
+          "fields": {
+            "action": "none",
+            "targets": [],
+            "result": "首日唯一警下8号自爆后法官宣布警徽流失。"
+          },
+          "reason": "唯一警下已出局，无剩余原警下票权可续选；原文直接播报警徽流失。"
+        },
+        {
+          "type": "round",
+          "round": 1,
+          "phase": "day",
+          "slot": "badge",
+          "fields": {
+            "action": "none",
+            "targets": [],
+            "result": "原文已宣布警徽流失。"
+          },
+          "reason": "与法官流徽播报一致。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV13tEB6VEVV",
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "fields": {
+            "exile": "not_applicable"
+          },
+          "reason": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。"
+        },
+        {
+          "type": "terminal",
+          "round": 4,
+          "phase": "day",
+          "after_day": 4,
+          "winner": "werewolf",
+          "reason": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。"
+        }
+      ],
+      "decisions": [
+        {
+          "question_id": "vote-BV13tEB6VEVV-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。",
+          "reason": "第4天白天直接拍刀场上最后一名6号，游戏结束，未举行放逐投票。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 4380120,
+              "end_ms": 4387110
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV1gvTi66EFF",
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "fields": {
+            "exile": "not_applicable"
+          },
+          "reason": "第4天白天狼队直接拍刀最后一张平民12号，游戏结束，未举行放逐投票。"
+        },
+        {
+          "type": "terminal",
+          "round": 4,
+          "phase": "day",
+          "after_day": 4,
+          "winner": "werewolf",
+          "reason": "第4天白天狼队直接拍刀最后一张平民12号，游戏结束，未举行放逐投票。"
+        }
+      ],
+      "decisions": [
+        {
+          "question_id": "vote-BV1gvTi66EFF-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天白天狼队直接拍刀最后一张平民12号，游戏结束，未举行放逐投票。",
+          "reason": "第4天白天狼队直接拍刀最后一张平民12号，游戏结束，未举行放逐投票。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 3632819,
+              "end_ms": 3642460
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV1bWKY6tEri",
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "fields": {
+            "exile": "not_applicable"
+          },
+          "reason": "第3天9号放逐后入夜拍刀1、3号屠神结束，不存在第4天白天。"
+        },
+        {
+          "type": "terminal",
+          "round": 4,
+          "phase": "night",
+          "after_day": 3,
+          "winner": "werewolf",
+          "reason": "第3天9号放逐后入夜拍刀1、3号屠神结束，不存在第4天白天。"
+        }
+      ],
+      "decisions": [
+        {
+          "question_id": "vote-BV1bWKY6tEri-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天9号放逐后入夜拍刀1、3号屠神结束，不存在第4天白天。",
+          "reason": "第3天9号放逐后入夜拍刀1、3号屠神结束，不存在第4天白天。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 6954870,
+              "end_ms": 6966890
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV1sKJ56PEey",
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 2,
+          "fields": {
+            "exile": "not_applicable"
+          },
+          "reason": "第2天白天狼队选择交牌，未举行放逐投票。"
+        },
+        {
+          "type": "terminal",
+          "round": 2,
+          "phase": "day",
+          "after_day": 2,
+          "winner": "good",
+          "reason": "第2天白天狼队选择交牌，未举行放逐投票。"
+        }
+      ],
+      "decisions": [
+        {
+          "question_id": "vote-BV1sKJ56PEey-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第2天白天狼队选择交牌，未举行放逐投票。",
+          "reason": "第2天白天狼队选择交牌，未举行放逐投票。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 5220630,
+              "end_ms": 5224440
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV1aXgW6nE6E",
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "fields": {
+            "exile": "not_applicable"
+          },
+          "reason": "第3天后夜间刀中3号蒙面人，随后白天3号发言后倒牌，游戏结束，未举行放逐投票。"
+        },
+        {
+          "type": "terminal",
+          "round": 4,
+          "phase": "day",
+          "after_day": 4,
+          "winner": "werewolf",
+          "reason": "第3天后夜间刀中3号蒙面人，随后白天3号发言后倒牌，游戏结束，未举行放逐投票。"
+        },
+        {
+          "type": "round",
+          "round": 4,
+          "phase": "day",
+          "slot": "masked_delayed_death",
+          "fields": {
+            "action": "die_after_speech",
+            "actor": 3,
+            "targets": [
+              3
+            ],
+            "result": "夜间刀中后延迟至白天发言结束死亡，随后游戏结束。"
+          },
+          "reason": "第3天后夜间刀中3号蒙面人，随后白天3号发言后倒牌，游戏结束，未举行放逐投票。"
+        }
+      ],
+      "decisions": [
+        {
+          "question_id": "vote-BV1aXgW6nE6E-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天后夜间刀中3号蒙面人，随后白天3号发言后倒牌，游戏结束，未举行放逐投票。",
+          "reason": "第3天后夜间刀中3号蒙面人，随后白天3号发言后倒牌，游戏结束，未举行放逐投票。 依完整复盘的阶段衔接判断，不能把拍刀/发言后死亡误写为缺少放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 5183725,
+              "end_ms": 5196745
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bvid": "BV1jM8B6jE2i",
+      "patches": [
+        {
+          "type": "registration",
+          "id": "registration-causal-1",
+          "fields": {
+            "id": "registration-causal-1",
+            "day": 1,
+            "on_police": [
+              1,
+              3,
+              5,
+              6,
+              8,
+              11,
+              12
+            ],
+            "off_police": [
+              2,
+              4,
+              7,
+              9,
+              10
+            ]
+          },
+          "reason": "主代理确认应将复核已恢复的初始名单实际写回voting.registrations。"
+        }
+      ]
+    }
+  ]
+}

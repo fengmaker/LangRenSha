@@ -5,36 +5,318 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "bcd7429d2d2ea283dca52a9a07e40a7c57ea5debd27a10b33fa3384d44228511",
-  "question_count": 0,
-  "pending_count": 4,
-  "questions": [
+  "facts_sha256": "cf88a4d5c90ec72edbca871bca88b07fff14131440183613a9f69730b767dc3c",
+  "causal_decisions": [
     {
-      "id": "vote-BV1zX7C6qEmR-day-1-registration_missing",
-      "code": "registration_missing",
-      "day": 1,
-      "target": null,
-      "title": "首日警下名单待核",
-      "reason": "尚未取得完整初始报名名单；退水后的候选人不能用来推导初始警下名单。",
-      "severity": "pending",
+      "question_id": "vote-BV1zX7C6qEmR-day-1-registration_missing",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "首日报名警下为9、11、12号；其余座位上警。",
+      "reason": "原文“除鲸鱼、陈俊杰、园长外，其余玩家上警”，三人按座位对应9、11、12号。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 855800,
+          "end_ms": 876520,
+          "quote": "54321天亮了\n上警玩家亮起面前红灯\n都不上善\n本局游戏除鲸鱼陈俊杰园长\n外区玩家俊上警上警\n玩家亮起面前红灯"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1zX7C6qEmR-day-1-registration_missing",
+        "code": "registration_missing",
+        "day": 1,
+        "target": null,
+        "title": "首日警下名单待核",
+        "reason": "尚未取得完整初始报名名单；退水后的候选人不能用来推导初始警下名单。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 855800,
+            "end_ms": 876520,
+            "quote": "54321天亮了\n上警玩家亮起面前红灯\n都不上善\n本局游戏除鲸鱼陈俊杰园长\n外区玩家俊上警上警",
+            "note": "本日开局定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
           "start_ms": 855800,
           "end_ms": 876520,
-          "quote": "54321天亮了\n上警玩家亮起面前红灯\n都不上善\n本局游戏除鲸鱼陈俊杰园长\n外区玩家俊上警上警",
-          "note": "本日开局定位，非缺失投票的直接证据"
+          "quote": "54321天亮了\n上警玩家亮起面前红灯\n都不上善\n本局游戏除鲸鱼陈俊杰园长\n外区玩家俊上警上警\n玩家亮起面前红灯"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "12号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "10号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "3号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-1",
+      "day": 3,
+      "voters": [
+        1,
+        2,
+        4,
+        5,
+        11
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 12,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3601160,
+          "end_ms": 3612940,
+          "quote": "本局游戏为机械女巫\n通灵师查验了5号玩家为首位身份\n警上竞选环节\n12号悍跳\n12号狼人选择自爆\n入夜守卫守护7号通灵师\n狼人击杀8号平民女巫"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3620890,
+          "end_ms": 3634710,
+          "quote": "延期竞选环节\n10号狼人选择自爆\n本局游戏警徽流失入夜\n首位技能空过机械狼击杀7号呃\n吉祥狼击杀6号女巫\n并且毒杀7号"
         }
       ]
     },
     {
-      "id": "vote-BV1zX7C6qEmR-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 2,
+      "status": "badge_lost",
+      "actor": 10,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3620890,
+          "end_ms": 3634710,
+          "quote": "延期竞选环节\n10号狼人选择自爆\n本局游戏警徽流失入夜\n首位技能空过机械狼击杀7号呃\n吉祥狼击杀6号女巫\n并且毒杀7号"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          8,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          6,
+          7
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          11
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取1条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11
+      ],
+      "living_count": 6,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        11
+      ],
+      "vote_count": 6,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "ballot-1",
+      "field": "day",
+      "before": 2,
+      "after": 3,
+      "reason": "投票结束播报的出局座位与法官复盘该日唯一放逐座位一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "12号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "3号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
@@ -43,76 +325,9 @@
           "quote": "所以这个东西只就是就相当于就是告知\n就6号为什么会死在夜里\n而不是扛扛推在白天\n我觉得只是个话术的问题好吧\n所以别的信息没啥了\n然后我的倾向性\n我在我的视角里\n我我找的话\n我肯定会找一分啊\n然后但是没啥了啊\n我我我听啊\n没没啥听的了\n好吧嗯\n我过了结束\n请各位带盔做好投票准备\n本局游戏仅会流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n3号投给4号\n其余所有玩家投票给3号\n3号玩家高票出局\n游戏结束\n好人阵营获胜\n机械女巫3号女亚毒对对对对\n是谁是猎人\n谁生日\n我妈都很难没有\n因因为你们俩你们俩已经在那个超市上了"
         }
       ]
-    },
-    {
-      "id": "vote-BV1zX7C6qEmR-day-1-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 1,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 855800,
-          "end_ms": 876520,
-          "quote": "54321天亮了\n上警玩家亮起面前红灯\n都不上善\n本局游戏除鲸鱼陈俊杰园长\n外区玩家俊上警上警",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1zX7C6qEmR-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-05/2026-06-05_S22_第02周_正赛第01期_第03局_机械狼通灵师__BV1zX7C6qEmR_P01_CID38889260610.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 3637850,
-          "end_ms": 3646200,
-          "quote": "通灵师查验了4号玩家为平民身份\n在第三天白天\n场上最后一狼\n3号机械女巫被公投出局\n游戏结束",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 2,
-      "question_ids": [
-        "vote-BV1zX7C6qEmR-day-1-registration_missing",
-        "vote-BV1zX7C6qEmR-day-1-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1zX7C6qEmR-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1zX7C6qEmR-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "f47a9fffb1a4632e95c70a18217f76d5bff259d7ec3bc33138266ea75f4c7515",
+  "voting_sha256": "827d28644b9d581999f752c1aa93d4a4ef9c88738fd81c3f4dea62b4ebcab538",
   "source_sha256": "28095fb5717366e274d0c19f4369cf75353f86a79546aae794f217e9b3a2da3a"
 }

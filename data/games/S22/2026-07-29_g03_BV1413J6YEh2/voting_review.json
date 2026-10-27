@@ -5,42 +5,283 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "a822003a70de1fdf959e69169343e69de143a14959409b96b77e60517ad22c18",
+  "facts_sha256": "675a6d274a8001fbff4cca256ed90650dc371ff77c4256f5b477fc1c7c1ed07c",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1413J6YEh2-ballot-1-votes_missing",
-      "code": "votes_missing",
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号被放逐。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
       "target": "ballot-1",
-      "title": "部分投票人的去向待补",
-      "reason": "未记录的有票权座位：3号。未知不记弃票。",
-      "severity": "pending",
+      "day": 1,
+      "voters": [
+        3
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    },
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-3",
+      "day": 3,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-3",
+      "day": 3,
+      "living": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        12
+      ],
+      "living_count": 8,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        12
+      ],
+      "vote_count": 8,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1413J6YEh2_P01_CID40418084488.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 1295790,
-          "end_ms": 1368900,
-          "quote": "然后看看三的票型吗\n如果说7号跟11号的话\n其实觉得11号力度大一点\n然后7号呢就很像\n就是以为六是通灵查杀\n到了5号大哥没有见过\n5号直接给给后置位\n8号扣个查杀\n就是这种感觉吗\n所以如果说站边11号的话\n我我是觉得五六比较像白牌\n其他的就没啥了\n我就过了\n井上诉玩家发言结束\n退水自爆环节\n54321人了\n警上玩家2号七号11号\n请警下玩家带盔做好的标准备\n321请出票\n3号七票\n4号投给11号\n9号投给11号\n10号投给7号\n投票结束\n其他玩家请亮蓝灯\n作业平安夜请紧张\n组织发言顺序\n请左紧右10号或12号\n10号呢请发言\n呃我谢个投食\n谢谢赫赫"
-        },
-        {
-          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1413J6YEh2_P01_CID40418084488.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 1293510,
-          "end_ms": 1369940,
-          "quote": "我只是单纯的那个就是听感嘛\n然后看看三的票型吗\n如果说7号跟11号的话\n其实觉得11号力度大一点\n然后7号呢就很像\n就是以为六是通灵查杀\n到了5号大哥没有见过\n5号直接给给后置位\n8号扣个查杀\n就是这种感觉吗\n所以如果说站边11号的话\n我我是觉得五六比较像白牌\n其他的就没啥了\n我就过了\n井上诉玩家发言结束\n退水自爆环节\n54321人了\n警上玩家2号七号11号\n请警下玩家带盔做好的标准备\n321请出票\n3号七票\n4号投给11号\n9号投给11号\n10号投给7号\n投票结束\n其他玩家请亮蓝灯\n作业平安夜请紧张\n组织发言顺序\n请左紧右10号或12号\n10号呢请发言\n呃我谢个投食\n谢谢赫赫\n谢谢糖宝",
-          "note": "保留完整时间范围原句，核对依据见更正理由。"
+          "start_ms": 3337090,
+          "end_ms": 3395330,
+          "quote": "一号12号\n因为是4号人\n肯定是好人\n他不是狼\n不然他不会认为我是\n同理\n是要去投8号了对吧\n那我们今天就投7号啊\n那6号肯定是好人\n其他就没了\n12顺验吧\n你今天投7号\n我过了4号\n玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票7号\n各位玩家请做好投票准备\n321请出票\n一号投给8号\n2号投给8号\n3号投给8号\n4号投给8号\n5号投给8号\n6号投给8号\n7号投给8号\n8号投给7号\n9号投给7号\n10号\n投给8号\n11号\n投给7号\n12号投给8号\n投票结束\n8号玩家九票出局\n请发表遗言\n九票出去没关系啊\n嗯我觉得我就对话一下3号吧\n确实站错边了\n就是你把这一局其实你对我的质疑\n我一会给你解答"
         }
       ]
     },
     {
-      "id": "vote-BV1413J6YEh2-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "9号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
       "day": 3,
-      "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取7条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "outcome": "exiled",
+      "exile_note": "2号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1413J6YEh2_P01_CID40418084488.平台AI字幕_ai-zh_01.原始.json",
@@ -61,56 +302,8 @@
           "quote": "第三天白天最后一张狼人\n2号机械平民被公投出局\n游戏结束"
         }
       ]
-    },
-    {
-      "id": "vote-BV1413J6YEh2-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-29/2026-07-29_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1413J6YEh2_P01_CID40418084488.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 4003870,
-          "end_ms": 4028200,
-          "quote": "只死了我们一个波比啊\n只死了一个人\n天亮了\n昨夜平安夜\n请警长组织发音顺序\n警左或警右\n2号或4号\n4号男性发言\n5号玩家请发言\n吼吼吼\n这都能平安夜吗\n这啥狼呀\n这个狼我守的三\n他为什么不刀你啊",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1413J6YEh2-ballot-1-votes_missing"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1413J6YEh2-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1413J6YEh2-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1413J6YEh2-ballot-1-kind-review",
@@ -166,6 +359,6 @@
       ]
     }
   ],
-  "voting_sha256": "748b414bc66612ae93aef15941d28adeb21cb21f5d67490ff0cf26b6a36c928c",
+  "voting_sha256": "efb20c45dd286974e7da4e61d9195bbd3383605c68eae1fa88ef31ac8d7cf645",
   "source_sha256": "8d12542da295368356a658099d4786ce68f88711241c40f0d1bd1e640291d490"
 }

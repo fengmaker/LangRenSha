@@ -77,7 +77,8 @@
     4003395
   ],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
   "review_changes": [
     {
       "id": "BV1hb7R6XEtD-ballot-2-day-recap-review",
@@ -115,10 +116,596 @@
       ]
     }
   ],
+  "day_crosscheck_changes": [
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 1,
+      "after": 2,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-06-03_g01_BV1hb7R6XEtD/复核记录.json",
+    "sha256": "7b465a3a3603bc176e9458589d8774c79b99a689cf6d4c62ebac5dbfb50d36d4",
+    "recap_segments": [
+      {
+        "start_ms": 4986115,
+        "end_ms": 4987970,
+        "text": "其他就没什么了过来。"
+      },
+      {
+        "start_ms": 4988405,
+        "end_ms": 4988645,
+        "text": "嗯，"
+      },
+      {
+        "start_ms": 4989555,
+        "end_ms": 4990795,
+        "text": "哦狼人拍到九号，"
+      },
+      {
+        "start_ms": 4990875,
+        "end_ms": 4991455,
+        "text": "游戏结束，"
+      },
+      {
+        "start_ms": 4991455,
+        "end_ms": 4996560,
+        "text": "狼人阵营同名获胜四十板。"
+      },
+      {
+        "start_ms": 5005805,
+        "end_ms": 5006025,
+        "text": "好，"
+      },
+      {
+        "start_ms": 5006025,
+        "end_ms": 5006925,
+        "text": "第一局游戏结束了。"
+      },
+      {
+        "start_ms": 5006925,
+        "end_ms": 5008565,
+        "text": "本游戏域女猎白混血儿版型，"
+      },
+      {
+        "start_ms": 5008565,
+        "end_ms": 5014135,
+        "text": "预言家十一号、女巫十二号、猎人三号、白神四号、狼人五号、六号、七号、十号，"
+      },
+      {
+        "start_ms": 5014155,
+        "end_ms": 5015715,
+        "text": "平民一号八号九号。"
+      },
+      {
+        "start_ms": 5015715,
+        "end_ms": 5020625,
+        "text": "本球席的混血二号榜样是六号狼人本球席为狼人混守夜，"
+      },
+      {
+        "start_ms": 5020625,
+        "end_ms": 5021485,
+        "text": "狼人击杀九号，"
+      },
+      {
+        "start_ms": 5021485,
+        "end_ms": 5023385,
+        "text": "平民女巫开药姐旧星辰，"
+      },
+      {
+        "start_ms": 5023385,
+        "end_ms": 5026225,
+        "text": "平安夜冤将验证八号玩家为平民身份呃，"
+      },
+      {
+        "start_ms": 5026225,
+        "end_ms": 5028230,
+        "text": "好人身份上警环节。"
+      },
+      {
+        "start_ms": 5028575,
+        "end_ms": 5029095,
+        "text": "七号汉代，"
+      },
+      {
+        "start_ms": 5029095,
+        "end_ms": 5029615,
+        "text": "狼人自爆，"
+      },
+      {
+        "start_ms": 5029635,
+        "end_ms": 5030555,
+        "text": "入夜狼人击杀，"
+      },
+      {
+        "start_ms": 5030555,
+        "end_ms": 5034235,
+        "text": "十一号预言家女巫通过冤将验证十二号两位好人身份，"
+      },
+      {
+        "start_ms": 5034235,
+        "end_ms": 5034995,
+        "text": "第二天延期，"
+      },
+      {
+        "start_ms": 5034995,
+        "end_ms": 5035835,
+        "text": "请选进场环节。"
+      },
+      {
+        "start_ms": 5035835,
+        "end_ms": 5036830,
+        "text": "六号狼人自爆，"
+      },
+      {
+        "start_ms": 5037245,
+        "end_ms": 5040655,
+        "text": "入夜狼藉沙八号平民当夜女巫空过。"
+      },
+      {
+        "start_ms": 5040835,
+        "end_ms": 5041655,
+        "text": "第三天白天，"
+      },
+      {
+        "start_ms": 5041675,
+        "end_ms": 5043555,
+        "text": "十号狼人被公投出局，"
+      },
+      {
+        "start_ms": 5043615,
+        "end_ms": 5046390,
+        "text": "入夜狼击杀十二号女巫牛毒杀一号平民。"
+      },
+      {
+        "start_ms": 5046945,
+        "end_ms": 5048240,
+        "text": "第四天白天，"
+      },
+      {
+        "start_ms": 5048685,
+        "end_ms": 5050760,
+        "text": "二号混血儿被扛推出局，"
+      },
+      {
+        "start_ms": 5051175,
+        "end_ms": 5053935,
+        "text": "然后狼人最后击杀了最后一张平民，"
+      },
+      {
+        "start_ms": 5053935,
+        "end_ms": 5054355,
+        "text": "牌九号，"
+      },
+      {
+        "start_ms": 5054355,
+        "end_ms": 5054935,
+        "text": "游戏结束，"
+      },
+      {
+        "start_ms": 5054995,
+        "end_ms": 5056560,
+        "text": "狼人阵营同名获胜。"
+      },
+      {
+        "start_ms": 5057530,
+        "end_ms": 5057770,
+        "text": "好，"
+      },
+      {
+        "start_ms": 5057770,
+        "end_ms": 5059670,
+        "text": "京城大赛第二十二季，"
+      },
+      {
+        "start_ms": 5059770,
+        "end_ms": 5060330,
+        "text": "曙光航迹。"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [
+    {
+      "kind": "wolf_rush",
+      "day": 4,
+      "actor": null,
+      "declared_targets": [
+        9
+      ],
+      "result": "werewolf_win",
+      "note": "结束播报称狼人拍到9号并获胜；后续复盘称第四天狼人击杀最后一张平民，作为同一终局的复核证据。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 4989555,
+          "end_ms": 4996560,
+          "quote": "哦狼人拍到九号，\n游戏结束，\n狼人阵营同名获胜四十板。"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5046945,
+          "end_ms": 5056560,
+          "quote": "第四天白天，\n二号混血儿被扛推出局，\n然后狼人最后击杀了最后一张平民，\n牌九号，\n游戏结束，\n狼人阵营同名获胜。"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "night_settlement",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          8
+        ],
+        "night_basis": "night_settlement",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          12
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          1,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          9
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          4,
+          5,
+          9
+        ]
+      },
+      {
+        "day": 5,
+        "night_deaths": [
+          9
+        ],
+        "night_basis": "night_settlement",
+        "living_before_vote": [
+          3,
+          4,
+          5
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 5,
+      "phase": "night",
+      "after_day": 4,
+      "winner": "werewolf",
+      "eliminated_side": "civilian"
+    },
+    "deductions": [
+      {
+        "round": 1,
+        "slot": "night_deaths",
+        "targets": [],
+        "basis": "night_settlement"
+      },
+      {
+        "round": 3,
+        "slot": "night_deaths",
+        "targets": [
+          8
+        ],
+        "basis": "night_settlement"
+      },
+      {
+        "round": 5,
+        "slot": "night_deaths",
+        "targets": [
+          9
+        ],
+        "basis": "night_settlement"
+      }
+    ],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      },
+      {
+        "round": 5,
+        "phase": "night",
+        "label": "第4天夜晚"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-1",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10,
+        12
+      ],
+      "living_count": 8,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10,
+        12
+      ],
+      "vote_count": 8,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-2",
+      "day": 4,
+      "living": [
+        2,
+        3,
+        4,
+        5,
+        9
+      ],
+      "living_count": 5,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        5,
+        9
+      ],
+      "vote_count": 5,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 7,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5021485,
+          "end_ms": 5029615,
+          "quote": "平民女巫开药姐旧星辰，\n平安夜冤将验证八号玩家为平民身份呃，\n好人身份上警环节。\n七号汉代，\n狼人自爆，"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5029635,
+          "end_ms": 5040655,
+          "quote": "入夜狼人击杀，\n十一号预言家女巫通过冤将验证十二号两位好人身份，\n第二天延期，\n请选进场环节。\n六号狼人自爆，\n入夜狼藉沙八号平民当夜女巫空过。"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 6,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5029635,
+          "end_ms": 5040655,
+          "quote": "入夜狼人击杀，\n十一号预言家女巫通过冤将验证十二号两位好人身份，\n第二天延期，\n请选进场环节。\n六号狼人自爆，\n入夜狼藉沙八号平民当夜女巫空过。"
+        }
+      ]
+    }
+  ],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "7号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "6号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 3975155,
+          "end_ms": 4043195,
+          "quote": "刚才进来晚三号在那边递话说啊，\n你是不是个混子来替换我，\n不好意思，\n我我不是好吧，\n所以说今天就投三好吗？\n你在你们视角，\n你也也不会有任何亏。\n因为我是个狼，\n我推猎人轮次还是领先，\n他把我带了女巫当做护犊，\n是不是好人还是赢？\n所以说先说一下今天初三好吧，\n其他就没什么了。\n过了作家发言结束，\n各位玩家请戴盔，\n做好他们的准备。\n本角戏警徽流失送玩家，\n请自由投票。\n三二一请冲票一号投给十号，\n二号投给三号，\n三号投给二号，\n四号投给十号五号投给十号九号投给十号，\n十号投给三号十二号投给十号投票结束，\n十号玩家五票出局，\n请发表言过，\n十号牙人员结束，\n手发动技能五四。\n三二一天黑请别OK家人们，\n我们又回来了。\n我们的混血儿汤米加维选择了一条不寻常的路。"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "outcome": "exiled",
+      "exile_note": "2号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 4926155,
+          "end_ms": 4988645,
+          "quote": "他发爆了，\n他警上不自爆，\n为什么他不自爆？\n九杀又要挑猎人去扛，\n推让自己出局。\n在他眼里，\n十号是他就跳混子呀，\n他就说他是混子呀，\n我们都给他穿了混子衣服，\n他就说他是混子呀，\n他肯定触不到他呀，\n对吧？\n为什么他要跳猎人呀？\n这个我没有觉得它很像红狼的原因吧，\n所以我觉得老在四号、五号里面，\n但我赚钱呢嗯再想想做完的发言结束，\n各位玩家请戴辉做好投票准备。\n大奎本游戏警徽流失所玩家请自由投票。\n三二一请出票。\n二号投给二号三号投给二号，\n四号投给五号，\n五号投给二号九号投给四号投票结束，\n二号玩家三票出局，\n请发表言，\n狼头们带我赢吧。\n好吧，\n狼坑们能带我赢了啊，\n其他就没什么了过来。\n嗯，"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5046945,
+          "end_ms": 5048240,
+          "quote": "第四天白天，"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 5048685,
+          "end_ms": 5050760,
+          "quote": "二号混血儿被扛推出局，"
+        },
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-03/2026-06-03_S22_第02周_正赛第01期_第01局_预女猎白混__BV1hb7R6XEtD_P01_CID38839521120.本地全文转写_funasr.json",
+          "start_ms": 4978725,
+          "end_ms": 4980385,
+          "quote": "二号玩家三票出局，"
+        }
+      ]
+    }
+  ],
   "bvid": "BV1hb7R6XEtD",
   "source_sha256": "8b65b96a0abf18ded79f0cc75869599a552a7ebea4a0e79b83b6259c9c212a00",
   "dossier_sha256": "e1b9ba1664646076fa076f18a207763ac9475acaf7e92e25051214fa03d92eea",
-  "generated_at": "2026-10-24T23:21:14+08:00",
+  "generated_at": "2026-10-25T04:08:34+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1hb7R6XEtD-p01-g01",
@@ -151,9 +738,18 @@
         "kind": "exile",
         "number": 1,
         "stage": "initial",
-        "status": "partial",
+        "status": "complete",
         "candidates": null,
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          10,
+          12
+        ],
         "votes": [
           {
             "voter": 1,
@@ -198,17 +794,23 @@
         ],
         "tied_candidates": [],
         "winner": 10,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       },
       {
         "id": "ballot-2",
         "day": 4,
         "kind": "exile",
         "number": 1,
-        "stage": "unknown",
-        "status": "partial",
+        "stage": "initial",
+        "status": "complete",
         "candidates": null,
-        "eligible_voters": null,
+        "eligible_voters": [
+          2,
+          3,
+          4,
+          5,
+          9
+        ],
         "votes": [
           {
             "voter": 2,
@@ -238,13 +840,13 @@
         ],
         "tied_candidates": [],
         "winner": 2,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [
       {
         "id": "interruption-1",
-        "day": 1,
+        "day": 2,
         "actor": 6,
         "reason": "self_destruct",
         "ends_day": true
@@ -267,28 +869,23 @@
     "days": [
       {
         "day": 1,
-        "sheriff": "unknown",
+        "sheriff": "deferred",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "badge_lost",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "unknown",
+        "sheriff": "badge_lost",
         "exile": "recorded"
       },
       {
         "day": 4,
-        "sheriff": "unknown",
+        "sheriff": "badge_lost",
         "exile": "recorded"
-      },
-      {
-        "day": 5,
-        "sheriff": "unknown",
-        "exile": "unknown"
       }
     ]
   }

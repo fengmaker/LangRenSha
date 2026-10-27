@@ -1,0 +1,675 @@
+{
+  "bvid": "BV1nJer63EDh",
+  "reviewer": "ai",
+  "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引33正赛青丘夜影：逐席核对底牌和姓名；补正预言家首验、九尾标记/白泽清除与第四天免毒及猎杀结算。三次自爆分别中断第1至第3天，没有凭空补投票。；日夜复核追加4项原文支持的更正",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "林花花",
+        "2": "圈圈",
+        "3": "Duu",
+        "4": "谢朵儿",
+        "5": "Ted",
+        "6": "KS",
+        "7": "JY",
+        "8": "牛肉干",
+        "9": "小苍",
+        "10": "陈明峻",
+        "11": "宝玉妹妹",
+        "12": "大卫"
+      },
+      "reasoning": "逐席读取 1080p 角色侧栏和姓名牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1nJer63EDh/BV1nJer63EDh_03685.440.png",
+          "frame_time_ms": 3685440,
+          "quote": "1平民 林花花；2白泽 圈圈；3守卫 Duu；4女巫 谢朵儿；5狼人 Ted；6平民 KS；7预言家 JY；8平民 牛肉干；9狼人 小苍；10狼人 陈明峻；11九尾狐 宝玉妹妹；12平民 大卫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "平民",
+        "2": null,
+        "3": "守卫",
+        "4": "女巫",
+        "5": "狼人",
+        "6": "平民",
+        "7": null,
+        "8": "平民",
+        "9": "狼人",
+        "10": "狼人",
+        "11": null,
+        "12": "平民"
+      },
+      "after": {
+        "1": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "2": {
+          "role": "白泽",
+          "faction": "good"
+        },
+        "3": {
+          "role": "守卫",
+          "faction": "good"
+        },
+        "4": {
+          "role": "女巫",
+          "faction": "good"
+        },
+        "5": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "6": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "7": {
+          "role": "预言家",
+          "faction": "good"
+        },
+        "8": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "9": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "10": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "11": {
+          "role": "九尾狐",
+          "faction": "werewolf"
+        },
+        "12": {
+          "role": "平民",
+          "faction": "good"
+        }
+      },
+      "reasoning": "实际身份按绿/红竖排底牌；九尾狐作为狼人阵营额外记录，不将标记者身份混同为狼人普通牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1nJer63EDh/BV1nJer63EDh_03685.440.png",
+          "frame_time_ms": 3685440,
+          "quote": "1平民 林花花；2白泽 圈圈；3守卫 Duu；4女巫 谢朵儿；5狼人 Ted；6平民 KS；7预言家 JY；8平民 牛肉干；9狼人 小苍；10狼人 陈明峻；11九尾狐 宝玉妹妹；12平民 大卫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "rounds.1-4.board_actions",
+      "before": "baseline omission / wrong first check",
+      "after": [
+        {
+          "day": 1,
+          "actor": 10,
+          "action": "self_destruct"
+        },
+        {
+          "day": 1,
+          "seer_check": 2,
+          "mark": 4
+        },
+        {
+          "day": 2,
+          "actor": 9,
+          "action": "self_destruct",
+          "clear": 4,
+          "mark": 1,
+          "attack": 3,
+          "check": 12
+        },
+        {
+          "day": 3,
+          "actor": 5,
+          "action": "self_destruct",
+          "clear": 8,
+          "mark": 8,
+          "attack": 7,
+          "check": 8
+        },
+        {
+          "day": 4,
+          "clear": 12,
+          "mark": 12,
+          "attack": 6,
+          "poison": 11,
+          "hunt": [
+            2,
+            4
+          ]
+        }
+      ],
+      "reasoning": "将画面状态栏与片尾连续结算交叉对齐；首验为2号白泽，第四夜11号九尾狐免毒，第四天按标记人数结算成功。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3734800,
+          "end_ms": 3743820,
+          "quote": "7号女巫4号守卫3号白泽2号狼人阵营5号九号十号九尾狐11号平民阵营一号6号八号12号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3818230,
+          "end_ms": 3844380,
+          "quote": "我们九尾狐免疫毒药所以当夜为6号平民单死在第四天白天九尾狐选择发动猎杀时刻技能当夜呃当日我们以身上有标记的玩家为一号平民8号平民以及12号平民加上我们九尾狐本身11号玩家四张牌大于仅剩的两张牌2号白泽以及4号女巫所以技能发动成功"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": "werewolf",
+      "after": "werewolf",
+      "reasoning": "片尾明确猎杀成功并宣布狼队阵营屠神获胜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3822930,
+          "end_ms": 3848640,
+          "quote": "九尾狐选择发动猎杀时刻技能当夜呃当日我们以身上有标记的玩家为一号平民8号平民以及12号平民加上我们九尾狐本身11号玩家四张牌大于仅剩的两张牌2号白泽以及4号女巫所以技能发动成功2号四号出局游戏结束狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.interruptions / ballots",
+      "before": {
+        "interruptions": [
+          {
+            "id": "interruption-1",
+            "day": 1,
+            "actor": 10,
+            "reason": "self_destruct",
+            "ends_day": true
+          },
+          {
+            "id": "interruption-2",
+            "day": 2,
+            "actor": 5,
+            "reason": "self_destruct",
+            "ends_day": true
+          }
+        ],
+        "ballots": []
+      },
+      "after": [
+        {
+          "id": "interruption-1",
+          "day": 1,
+          "actor": 10,
+          "reason": "self_destruct",
+          "ends_day": true
+        },
+        {
+          "id": "interruption-2",
+          "day": 2,
+          "actor": 9,
+          "reason": "self_destruct",
+          "ends_day": true
+        },
+        {
+          "id": "interruption-3",
+          "day": 3,
+          "actor": 5,
+          "reason": "self_destruct",
+          "ends_day": true
+        }
+      ],
+      "reasoning": "连续结算记录10、9、5号分别在第1、2、3天自爆，警徽票/放逐票被中断；因此不从讨论性发言补造投票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3756770,
+          "end_ms": 3759550,
+          "quote": "10号狼人选择自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3756770,
+          "end_ms": 3759550,
+          "quote": "10号狼人选择自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3800879,
+          "end_ms": 3806270,
+          "quote": "5号狼人选择自爆入夜白泽选择清除12号平民的标记"
+        }
+      ]
+    },
+    {
+      "field": "voting.days/sheriff_result/interruptions",
+      "before": "结果字段未与已核自爆和警徽结算同步",
+      "after": "D1狼10自爆延期，D2狼9再爆流徽；第二日徽流失应同步到投票覆盖。",
+      "reasoning": "D1狼10自爆延期，D2狼9再爆流徽；第二日徽流失应同步到投票覆盖。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3751430,
+          "end_ms": 3781450,
+          "quote": "当演预言家验证了2号玩家白泽为好人身份\n警上竞选环节\n10号狼人选择自爆入夜\n首位守护7号预言家白泽\n选择清除4号女巫的标记\n成功清除掉\n然后我们九尾狐选择标记了一号平民\n当夜狼队击杀3号守卫女巫\n技能空过预言家验证\n12号玩家平民为好人身份\n在第二天的延期竞选环节\n9号狼人选择自爆\n本局游戏警徽流失入夜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "peaceful",
+        "targets": []
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3750540,
+          "end_ms": 3751430,
+          "quote": "形成平安夜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          3
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3769550,
+          "end_ms": 3772330,
+          "quote": "当夜狼队击杀3号守卫女巫"
+        }
+      ]
+    },
+    {
+      "field": "rounds[3].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          7
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3790230,
+          "end_ms": 3793530,
+          "quote": "夜间狼队七狼队击杀7号预言家"
+        }
+      ]
+    },
+    {
+      "field": "rounds[4].day.night_deaths",
+      "before": {
+        "action": "die",
+        "targets": [
+          6
+        ]
+      },
+      "after": {
+        "action": "deaths",
+        "targets": [
+          6,
+          11
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3809990,
+          "end_ms": 3814630,
+          "quote": "当夜九尾狐开刀击杀6号平民女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3814630,
+          "end_ms": 3816810,
+          "quote": "毒杀11号九尾狐"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "平民",
+        "白泽",
+        "守卫",
+        "女巫",
+        "狼人",
+        "平民",
+        "预言家",
+        "平民",
+        "狼人",
+        "狼人",
+        "九尾狐",
+        "平民"
+      ],
+      "reasoning": "画面身份竖牌直接区分实际角色；黄色边注为讨论/自称，只用于识别声明，不覆盖竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1nJer63EDh/BV1nJer63EDh_03685.440.png",
+          "frame_time_ms": 3685440,
+          "quote": "1平民 林花花；2白泽 圈圈；3守卫 Duu；4女巫 谢朵儿；5狼人 Ted；6平民 KS；7预言家 JY；8平民 牛肉干；9狼人 小苍；10狼人 陈明峻；11九尾狐 宝玉妹妹；12平民 大卫。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "狼牌发言报12号、5号查验结果并保留警徽流，属于预言家式起跳；当日自爆中断竞选，没有证据表明其拿警徽或促成首日好人最终出局。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 733510,
+          "end_ms": 768830,
+          "quote": "验12号验12号十二十一顺眼十二十一顺眼因为验12号其实本来12是能看站边但是我怕他比如说是呃猎人的话呃出局怕他会带好人所以去验一下12号得我验的5号是金水啊5号心路历程就是他老追着我杀之前来拿狼给我发猎人还是抢歪哥的跳然后这一次拿狼直接给我发查杀了所以我就验5号吗他如果是狼我没什么心心心心理负担我就直接就狠狠的把他投出去他如果是好人的话"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3756770,
+          "end_ms": 3759550,
+          "quote": "10号狼人选择自爆入夜"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1nJer63EDh/BV1nJer63EDh_03685.440.png",
+          "frame_time_ms": 3685440,
+          "quote": "1平民 林花花；2白泽 圈圈；3守卫 Duu；4女巫 谢朵儿；5狼人 Ted；6平民 KS；7预言家 JY；8平民 牛肉干；9狼人 小苍；10狼人 陈明峻；11九尾狐 宝玉妹妹；12平民 大卫。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T17:54:19Z",
+  "phase_findings": [
+    {
+      "id": "phase-33-night-1",
+      "round": 1,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3749200,
+          "end_ms": 3755210,
+          "quote": "首位女巫要救起\n形成平安夜\n当演预言家验证了2号玩家白泽为好人身份"
+        }
+      ],
+      "phase_label": "第1天白天",
+      "previous_question": "第1轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-33-night-2",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "死者座位：3",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3766289,
+          "end_ms": 3773530,
+          "quote": "然后我们九尾狐选择标记了一号平民\n当夜狼队击杀3号守卫女巫\n技能空过预言家验证"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "第2轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-33-night-3",
+      "round": 3,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[3].day.night_deaths",
+      "title": "第3轮夜间死亡结算",
+      "conclusion": "死者座位：7",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3786790,
+          "end_ms": 3794630,
+          "quote": "而当夜九尾狐选择标记8号平民\n夜间狼队七狼队击杀7号预言家\n女巫技能继续空过"
+        }
+      ],
+      "phase_label": "第3天白天",
+      "previous_question": "第3轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-33-night-4",
+      "round": 4,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[4].day.night_deaths",
+      "title": "第4轮夜间死亡结算",
+      "conclusion": "死者座位：6,11",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3806950,
+          "end_ms": 3816810,
+          "quote": "而九尾狐在夜间选择标记12号平民\n当夜九尾狐开刀击杀6号平民女巫\n毒杀11号九尾狐"
+        }
+      ],
+      "phase_label": "第4天白天",
+      "previous_question": "第4轮夜间死亡结算",
+      "daily_audited": true
+    }
+  ],
+  "structural_normalizations": [],
+  "supplemental_events": [],
+  "daily_audit": {
+    "bvid": "BV1nJer63EDh",
+    "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 3731880,
+      "end_ms": 3848640,
+      "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+    },
+    "checks": [
+      "N1狼刀3、女巫救3，平安；D1 10狼自爆。",
+      "N2狼刀3守卫、白泽清标记、狐标记1；3单死。N3狼刀7，7单死；D3 5狼自爆。",
+      "N4狼刀6、毒11但狐免疫毒，复盘明确只有6单死；狐猎杀时刻技能使2、4出局。"
+    ],
+    "event_patches": [
+      {
+        "round": 4,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "die",
+          "actor": null,
+          "targets": [
+            6
+          ],
+          "result": "狼刀6号平民；毒11号九尾狐因特殊规则免疫，因此6单死。"
+        }
+      }
+    ],
+    "finding_resolutions": [
+      {
+        "id": "phase-33-night-1",
+        "status": "confirmed",
+        "conclusion": "无人死亡",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "start_ms": 3749200,
+            "end_ms": 3755210,
+            "quote": "首位女巫要救起\n形成平安夜\n当演预言家验证了2号玩家白泽为好人身份"
+          }
+        ]
+      },
+      {
+        "id": "phase-33-night-2",
+        "status": "confirmed",
+        "conclusion": "死者座位：3",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "start_ms": 3766289,
+            "end_ms": 3773530,
+            "quote": "然后我们九尾狐选择标记了一号平民\n当夜狼队击杀3号守卫女巫\n技能空过预言家验证"
+          }
+        ]
+      },
+      {
+        "id": "phase-33-night-3",
+        "status": "confirmed",
+        "conclusion": "死者座位：7",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "start_ms": 3786790,
+            "end_ms": 3794630,
+            "quote": "而当夜九尾狐选择标记8号平民\n夜间狼队七狼队击杀7号预言家\n女巫技能继续空过"
+          }
+        ]
+      },
+      {
+        "id": "phase-33-night-4",
+        "status": "confirmed",
+        "conclusion": "死者座位：6,11",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "start_ms": 3806950,
+            "end_ms": 3816810,
+            "quote": "而九尾狐在夜间选择标记12号平民\n当夜九尾狐开刀击杀6号平民女巫\n毒杀11号九尾狐"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "deaths",
+        "actor": null,
+        "targets": [
+          6,
+          11
+        ],
+        "result": null
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          6
+        ],
+        "result": "狼刀6号平民；毒11号九尾狐因特殊规则免疫，因此6单死。"
+      }
+    }
+  ],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 4,
+    "inferred": 0,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

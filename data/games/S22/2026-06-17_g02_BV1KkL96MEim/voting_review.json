@@ -5,103 +5,270 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "7cfa91b23a04a025942c7f9977d47ff83258bb61951746ae48fb33d0afa08acf",
-  "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "facts_sha256": "3dd97ae1253bc0a6328196382ea514463d142bce5550b1bef7746b09fc957725",
+  "causal_decisions": [
     {
-      "id": "vote-BV1KkL96MEim-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
+      "question_id": "vote-BV1KkL96MEim-day-4-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第4天没有放逐投票；末狼9号选择交牌，游戏结束、好人胜。",
+      "reason": "复盘明确末狼9号交牌后宣布游戏结束和好人胜利。",
+      "source_spans": [
         {
           "path": "data/seasons/S22/第04周_正赛第03期/2026-06-17/2026-06-17_S22_第04周_正赛第03期_第02局_假面舞会__BV1KkL96MEim_P01_CID39195443791.平台AI字幕_ai-zh_01_dd02dc47cf.原始.json",
-          "start_ms": 3212020,
-          "end_ms": 3223190,
-          "quote": "第二页的时候是二三双死\n第二天白天\n6号狼人自爆\n入野舞者共舞的对象为一号预言家\n5号舞者和7号平民假面验证",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "start_ms": 3245000,
+          "end_ms": 3253230,
+          "quote": "10号被公务出局击杀\n5号武者武士双死\n第四天白天\n最后一张狼人9号假面选择交牌\n游戏结束\n好人阵营获胜"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1KkL96MEim-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-17/2026-06-17_S22_第04周_正赛第03期_第02局_假面舞会__BV1KkL96MEim_P01_CID39195443791.平台AI字幕_ai-zh_01_dd02dc47cf.原始.json",
-          "start_ms": 3228320,
-          "end_ms": 3239660,
-          "quote": "狼人击杀一号\n第三天白天\n11号狼人自爆\n入夜舞者共有的对象为4号平民\n10号白神和12号女巫假面验证",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1KkL96MEim-day-4-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 4,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1KkL96MEim-day-4-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 4,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第04周_正赛第03期/2026-06-17/2026-06-17_S22_第04周_正赛第03期_第02局_假面舞会__BV1KkL96MEim_P01_CID39195443791.平台AI字幕_ai-zh_01_dd02dc47cf.原始.json",
+            "start_ms": 3245000,
+            "end_ms": 3253230,
+            "quote": "5号武者武士双死\n第四天白天\n最后一张狼人9号假面选择交牌\n游戏结束\n好人阵营获胜",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第04周_正赛第03期/2026-06-17/2026-06-17_S22_第04周_正赛第03期_第02局_假面舞会__BV1KkL96MEim_P01_CID39195443791.平台AI字幕_ai-zh_01_dd02dc47cf.原始.json",
           "start_ms": 3245000,
           "end_ms": 3253230,
-          "quote": "5号武者武士双死\n第四天白天\n最后一张狼人9号假面选择交牌\n游戏结束\n好人阵营获胜",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "quote": "10号被公务出局击杀\n5号武者武士双死\n第四天白天\n最后一张狼人9号假面选择交牌\n游戏结束\n好人阵营获胜"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1KkL96MEim-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "6号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1KkL96MEim-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "11号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 4,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1KkL96MEim-day-4-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "末狼交牌后终局，无常规放逐。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 3,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          },
+          {
+            "round": 3,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          5,
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 2,
+            "slot": "night_deaths"
+          },
+          {
+            "round": 3,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "末狼交牌后终局，无常规放逐。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [
+    {
+      "target": "interruption-2",
+      "field": "day",
+      "before": 1,
+      "after": 2,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "6号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "ended_before_exile",
+      "exile_note": "末狼交牌后终局，无常规放逐。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "2e8b70c392d07ca9036c9b123a0dc3e5d4e75c051116f589760c425271852177",
+  "voting_sha256": "7419de43ab937e915d45e2058bb3101d373e490c254635832a34e0ddf8c75aab",
   "source_sha256": "dd02dc47cfcd856774308b05bad80225e8744a0696bae2f62c7511dfe69d909c"
 }

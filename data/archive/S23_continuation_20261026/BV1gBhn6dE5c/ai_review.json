@@ -1,0 +1,244 @@
+{
+  "bvid": "BV1gBhn6dE5c",
+  "reviewer": "ai",
+  "source_sha256": "52fdc23075a5345be636f9cd9d7aea233e5e9dbc795a45c11ec886a1f71d6b5d",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "已核对第4天末局截图、玩家座位与身份牌、终局复盘和逐人票型。4号狼人为预言家悍跳并取得警徽，8号混血儿榜样为4号且个人胜利阵营随狼人；狼方最终屠神获胜。",
+  "decisions": [
+    {
+      "field": "seats[].name",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        "郭小炜Winnie",
+        "亚亚NiaNia",
+        "徐言雨",
+        "大彭彭_ff",
+        "在动物园散步的又又",
+        "陈俊洁C",
+        "大申屠007",
+        "赵鑫华_HZz",
+        "Ted_Dragon",
+        "笑笑Mieie",
+        "宝玉妹妹_",
+        "BobbyJ波比儿"
+      ],
+      "reasoning": "逐座对照截图头像旁的牌名，再与本局 roster 中唯一对应人物核对；保留本局规范姓名。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dE5c/BV1gBhn6dE5c_05863.580.png",
+          "frame_time_ms": 5863580,
+          "quote": "01 郭小炜；02 亚亚；03 徐言雨；04 彭彭；05 又又；06 陈俊洁；07 申屠；08 华仔仔；09 Ted；10 笑笑；11 宝玉妹妹；12 Bobby",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats[8].faction",
+      "before": null,
+      "after": "werewolf",
+      "reasoning": "8号物理身份仍为混血儿；首夜选4号，复盘确认4号是狼人，且混血儿个人胜利阵营随榜样，本局跟随狼人胜利。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6269780,
+          "end_ms": 6272520,
+          "quote": "本游戏的混血儿8号榜样是4号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6272520,
+          "end_ms": 6274090,
+          "quote": "本游戏为狼人混"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6307670,
+          "end_ms": 6310080,
+          "quote": "狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": null,
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          7,
+          12
+        ],
+        "result": "7号女巫与12号白神双死"
+      },
+      "reasoning": "夜间总结明示狼人击杀7号女巫，女巫毒杀12号白神，形成7、12双死；不将夜间结果归到第一夜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6287570,
+          "end_ms": 6288650,
+          "quote": "狼人击杀7号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6288650,
+          "end_ms": 6290910,
+          "quote": "女巫毒杀12号白神72双死"
+        }
+      ]
+    },
+    {
+      "field": "rounds[4].day.exile_result",
+      "before": {
+        "targets": [
+          11
+        ]
+      },
+      "after": {
+        "targets": [
+          11
+        ],
+        "result": "11号猎人被抗推出局"
+      },
+      "reasoning": "末局复盘明示第四天11号猎人被抗推出局，之后狼人屠神获胜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6303610,
+          "end_ms": 6304850,
+          "quote": "白天最后一张神职牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6304850,
+          "end_ms": 6306850,
+          "quote": "11号猎人被抗推出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6307670,
+          "end_ms": 6310080,
+          "quote": "狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day1,sheriff].winner",
+      "before": null,
+      "after": 4,
+      "reasoning": "警下三位投票人均投给4号；终局复盘确认4号悍跳狼人获得警徽。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1818540,
+          "end_ms": 1819800,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1819800,
+          "end_ms": 1820940,
+          "quote": "2号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1820940,
+          "end_ms": 1822100,
+          "quote": "10号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6280590,
+          "end_ms": 6282550,
+          "quote": "4号悍跳狼人获得警徽"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "平民",
+        "平民",
+        "预言家",
+        "狼人",
+        "狼人",
+        "狼人",
+        "女巫",
+        "混血儿",
+        "平民",
+        "狼人",
+        "猎人",
+        "白神"
+      ],
+      "reasoning": "逐座核对可读画面的竖排身份牌；黄色数字注记作为自称/局势信息，不当作实际底牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dE5c/BV1gBhn6dE5c_05863.580.png",
+          "frame_time_ms": 5863580,
+          "quote": "1 平民；2 平民；3 预言家；4 狼人；5 狼人；6 狼人；7 女巫；8 混血儿；9 平民；10 狼人；11 猎人；12 白神",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 4,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": true,
+      "reasoning": "截图中4号的角色栏为狼人，黄色记述为验9金水/警徽流，终局复盘明示4号悍跳狼人获得警徽；依定义拿到警徽即成功。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dE5c/BV1gBhn6dE5c_05863.580.png",
+          "frame_time_ms": 5863580,
+          "quote": "04 狼人；验9金水；警徽流11-12",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6280590,
+          "end_ms": 6282550,
+          "quote": "4号悍跳狼人获得警徽"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T16:51:25Z"
+}

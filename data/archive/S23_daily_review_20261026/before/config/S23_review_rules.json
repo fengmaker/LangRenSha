@@ -1,0 +1,168 @@
+{
+  "season": "S23",
+  "status": "ai_review_reference_pending_human_acceptance",
+  "reference_rulebook": "docs/12_S22正式版型规则与录入流程.md",
+  "reference_sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+  "scope": {
+    "regular_games": 75,
+    "showmatches_included": false
+  },
+  "new_board_role_counts": {
+    "qingqiu_night": {
+      "预言家": 1,
+      "女巫": 1,
+      "守卫": 1,
+      "白泽": 1,
+      "狼人": 3,
+      "九尾狐": 1,
+      "平民": 4
+    },
+    "magic_duel": {
+      "预言家": 1,
+      "女巫": 1,
+      "猎人": 1,
+      "魔术师": 1,
+      "狼人": 3,
+      "狼术师": 1,
+      "平民": 4
+    }
+  },
+  "source_label_note": "S23假面舞会画面采用白神字样；计数检查可与S22白痴槽对应，但不据字样推定技能边界。",
+  "rules": [
+    {
+      "id": "fox_hunt_threshold",
+      "statement": "已标记存活人数加九尾狐自身严格大于未标记存活人数，猎杀时刻才成功；结算出局的是未标记方。",
+      "status": "ai_crosschecked_in_game",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4545390,
+          "end_ms": 4575340,
+          "quote": "12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第02局_青丘夜影__BV1saaT6jEyK_P01_CID42171630894.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
+          "start_ms": 4054940,
+          "end_ms": 4076650,
+          "quote": "平民为好人身份\n在第三天白天\n9号玩家九尾狐选择发动技能\n此时的结算为2号玩家身上有标记\n且3号玩家身上有标记\n加上九尾狐\n9号玩家场上一共是三个人\n然后我们剩余没有标记的玩家一共是四个人\n所以没有严格大于九尾狐技能发动失败\n发动失败后"
+        }
+      ]
+    },
+    {
+      "id": "fox_poison_immunity",
+      "statement": "九尾狐免疫普通女巫毒药，原用毒动作仍保存，免疫结算另记。",
+      "status": "ai_crosschecked_in_game",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "start_ms": 3809990,
+          "end_ms": 3822930,
+          "quote": "当夜九尾狐开刀击杀6号平民女巫\n毒杀11号九尾狐\n由于特殊结算规则\n我们九尾狐免疫毒药\n所以当夜为6号平民单死\n在第四天白天"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 4028740,
+          "end_ms": 4045620,
+          "quote": "4号六号十号首页守卫守护3号狼人\n当夜九尾对9号玩家女巫进行标记\n狼人击杀9号女巫毒杀8号九尾毒杀失败\n当夜9号玩家被刀出局"
+        }
+      ]
+    },
+    {
+      "id": "fox_sheriff_vote_mark",
+      "statement": "本局九尾狐8号的警徽票为5号带来额外标记；不得将5号标记错补为夜间标记。是否所有投票类型都触发，仍不从这一个场次扩展。",
+      "status": "ai_crosschecked_in_game",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 899460,
+          "end_ms": 910290,
+          "quote": "带了一刀九对\n因为这板子这个在警下九尾能投一票\n可以出第一个标记\n所以狼在警下可以伪造成这个对"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 2345270,
+          "end_ms": 2353100,
+          "quote": "你一下是这意思吗\n比投了两票五\n他多一个标记\n然后他外置位杀嗯\n这还有啥呀"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 2482740,
+          "end_ms": 2489420,
+          "quote": "你肯定标记的五\n因为你投了五晚上\n你标记了别人\n那你肯定是清了五"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 4110260,
+          "end_ms": 4126029,
+          "quote": "狼人阵营屠神获胜\n这局游戏场上到最后身上有标记的是2号五号\n10号\n还有8号九尾啊\n这个是A阵营\n然后猎杀时刻的时候是B阵营的玩家出局\n而不是身上有标记的玩家出局啊\n这个是跟大家来说明一下的好了"
+        }
+      ]
+    },
+    {
+      "id": "baize_inheritance",
+      "statement": "9月29日白泽1号夜间出局后传承技能给4号平民；9月11日白泽6号被猎杀时刻带走时无法发动技能。具体触发边界以当局法官为准。",
+      "status": "observed_cases_only",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+          "start_ms": 4081850,
+          "end_ms": 4089530,
+          "quote": "预言家验证5号玩家自己是好人身份\n白泽出局之后\n传承技能于4号平民\n第三天白天"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "start_ms": 4562720,
+          "end_ms": 4578740,
+          "quote": "所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀"
+        }
+      ]
+    },
+    {
+      "id": "magic_exchange_resolution",
+      "statement": "魔幻对决的原始座位底牌与交换目标、实际命中分开；10月9日魔术师交换2/5后，女巫用毒目标5实际命中2。",
+      "status": "ai_crosschecked_in_game",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5562580,
+          "end_ms": 5582250,
+          "quote": "7号预言家被抗推出局\n入夜魔术师交换2号狼人及5号女巫\n当夜狼人击杀6号魔术师\n女巫毒杀5号女巫\n实际毒杀2号狼人\n当夜为2号六号双死"
+        }
+      ]
+    },
+    {
+      "id": "sorcerer_self_destruct",
+      "statement": "10月16日当局口播明确狼术师可以自爆。",
+      "status": "ai_crosschecked_in_game",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第02局_魔幻对决__BV17QJh6qEid_P01_CID42799531683.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "240434fb2bf0d97ed664ab4ac90bb70c7f7e88867dd16184cbaa82cef6c19918",
+          "start_ms": 4714050,
+          "end_ms": 4722870,
+          "quote": "哈哈呃\n10号是狼术士是可以自爆的\n可以自爆的鬼畜是都见面狼就可以自爆\n对好给各位大宝老师们做本角色的复盘"
+        }
+      ]
+    },
+    {
+      "id": "mixed_blood_vote_control_user_confirmed",
+      "statement": "预女猎白混按个人胜利阵营计放逐票（包括狼混），狼人阵营有效票数>=好人阵营票数构成绑票；警长额外半票计入其阵营，等人数且好人持徽时不能忽略半票。条件达成与实际获胜宣布分开记录。",
+      "status": "user_confirmed",
+      "confirmed_on": "2026-10-26",
+      "source_path": "data/extractions/S23/用户确认_20261026_日夜待核与绑票.txt",
+      "source_sha256": "218f38f74da25ac228c3f6df5d63d8013c4086fbfbc2b20dc6ee375682d31a8c"
+    }
+  ],
+  "formal_database_writes": false
+}

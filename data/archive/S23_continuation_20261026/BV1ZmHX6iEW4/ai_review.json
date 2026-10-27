@@ -1,0 +1,329 @@
+{
+  "bvid": "BV1ZmHX6iEW4",
+  "reviewer": "ai",
+  "source_sha256": "47f3dd4d51dea21ada1425559471a5343cd823631df87a6048e0e35e16f0cfef",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "逐段核对截图、结尾复盘及警徽投票。角色为1/4/11/12平民、2女巫、3/5/10狼人、6通灵师、7机械狼（学习3得机械双刀狼）、8守卫、9猎人；D1警上3自爆，N2毒中10但尚未公布夜死时，10在延期竞选中吞毒自爆并流徽；N2公布8与10双死。D3最后一狼5自爆后7拍2、9，狼队屠神获胜。",
+  "decisions": [
+    {
+      "field": "seats",
+      "before": "baseline角色表",
+      "after": "逐座截图角色；7号机械狼学习3号机械双刀狼",
+      "reasoning": "画面角色栏和学习对象与角色牌直接对应。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "机械狼",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "学3机械双刀",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].night/day",
+      "before": "1夜部分未知；D1仅记自爆，但错误归在放逐阶段",
+      "after": "守卫8守11；狼刀12被女巫2救起；7学习3为机械双刀狼；6查9猎人；3在警上悍跳后自爆中断竞选",
+      "reasoning": "逐cue核对开局复盘，并校正首日中断点为警上竞选。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3024550,
+          "end_ms": 3027550,
+          "quote": "12号守夜守卫守护11号平民狼队"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3030630,
+          "end_ms": 3032870,
+          "quote": "机械狼模仿3号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3034430,
+          "end_ms": 3035230,
+          "quote": "通灵师验证"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3037279,
+          "end_ms": 3038759,
+          "quote": "在警上竞选环节"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2..3]/voting.days",
+      "before": "后两天行动缺漏，只有D1中断记录",
+      "after": "D2延期竞选10自爆流徽；D3夜狼刀6、通灵师查7为机械狼，5自爆后7拍2和9，狼队获胜",
+      "reasoning": "口播明确列出N2毒10、随后延期竞选时10吞毒自爆并流徽；夜死公告在竞选后公布8/10双死。公告先后不改变夜间动作顺序，保留两条明确动作。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3052070,
+          "end_ms": 3053670,
+          "quote": "10号狼人吞毒自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3053670,
+          "end_ms": 3055880,
+          "quote": "本就游戏警徽流失入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3055880,
+          "end_ms": 3057120,
+          "quote": "狼队击杀6号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3057120,
+          "end_ms": 3060319,
+          "quote": "通灵师验证7号玩家机械狼为狼人身份"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3061519,
+          "end_ms": 3063199,
+          "quote": "5号狼人选择自爆后"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3063199,
+          "end_ms": 3066140,
+          "quote": "机械双刀狼选择拍到2号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3066140,
+          "end_ms": 3068240,
+          "quote": "9号猎人拍刀成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3069100,
+          "end_ms": 3070710,
+          "quote": "狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day=1,kind=sheriff]",
+      "before": "4名警下人均有票，winner为空",
+      "after": "保留4票完整，因3号竞选自爆未产生警长；后续延期竞选爆炸流徽",
+      "reasoning": "投票结束前的原票逐个对照baseline；该轮无选出警长的口播。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1416130,
+          "end_ms": 1420130,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1421720,
+          "end_ms": 1423200,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1423200,
+          "end_ms": 1425360,
+          "quote": "5号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1425360,
+          "end_ms": 1427220,
+          "quote": "7号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3038759,
+          "end_ms": 3040579,
+          "quote": "3号悍跳狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3053670,
+          "end_ms": 3055880,
+          "quote": "本就游戏警徽流失入夜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        4,
+        11,
+        12
+      ],
+      "roles": [
+        "平民"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "平民",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        2
+      ],
+      "roles": [
+        "女巫"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "女巫",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        3,
+        5,
+        10
+      ],
+      "roles": [
+        "狼人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "狼人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        6
+      ],
+      "roles": [
+        "通灵师"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "通灵师",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        7
+      ],
+      "roles": [
+        "机械狼"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "机械狼",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        8
+      ],
+      "roles": [
+        "守卫"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "守卫",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        9
+      ],
+      "roles": [
+        "猎人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ZmHX6iEW4/BV1ZmHX6iEW4_02875.490.png",
+          "frame_time_ms": 2875490,
+          "quote": "猎人",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 3,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "复盘明确称3号狼人“悍跳”后在首日警上自爆；没有拿到警徽，也没有首日放逐好人。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3038759,
+          "end_ms": 3040579,
+          "quote": "3号悍跳狼人选择自爆"
+        }
+      ]
+    },
+    {
+      "seat": 10,
+      "day": 2,
+      "claimed_role": null,
+      "attempted": null,
+      "success": null,
+      "reasoning": "只将剧本明确称的吞毒自爆保留，不据此推断10号是否作过悍跳。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1ZmHX6iEW4_P01_CID42572777183.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3052070,
+          "end_ms": 3053670,
+          "quote": "10号狼人吞毒自爆"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:08:27Z"
+}

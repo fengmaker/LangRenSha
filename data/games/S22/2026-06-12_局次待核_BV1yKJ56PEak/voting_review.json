@@ -5,87 +5,245 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "303f329fd19774fd06d06be63bfc48e5b768408193744e07fe54bc89ecc05d79",
-  "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "facts_sha256": "956735a6f5e57b238ab37ab71ff1de1d583cf5661eecde94520f50c6e70d895b",
+  "causal_decisions": [
     {
-      "id": "vote-BV1yKJ56PEak-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1yKJ56PEak-day-3-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第3天没有放逐投票；第3夜终局，狼队屠神获胜。",
+      "reason": "复盘在第3天白天前直接宣告游戏结束和狼队屠神胜利，属于夜间终局。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+          "start_ms": 4496080,
+          "end_ms": 4498480,
+          "quote": "游戏结束\n狼队阵营屠神获胜"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1yKJ56PEak-day-3-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 3,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": []
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
-          "start_ms": 1809980,
-          "end_ms": 1887280,
-          "quote": "我是冲着那个二三的逻辑关系\n包括因为我我现在觉得4号是狼\n我就在三五里面选验一张\n然后第二警徽流10号十号是给7号投票的\n假设我是狼\n我也希望你们投票给我\n因为我这么扣杀那么准呐\n我扣了一个精准扣杀\n不会还有人\n等会还站边7号吧\n真的被你们气笑了好吗\n就这样啊\n呃我是预言家牌验的\n7号是查杀过pk环节\n发言结束\n请除6号七号玩家\n外区玩家带盔咳\n在6号七号玩家中选出本游戏警长321\n请出票\n一号投给6号\n2号投给6号\n3号投给6号\n4号投给6号\n5号投给6号\n8号投给6号\n9号投给7号\n10号投给7号\n11号投给6号\n12号投给6号\n投票结束\n其余玩家请别蓝灯\n昨夜信息平安夜\n警长选择发言顺序\n请左警右\n7号玩家请发言\n我是狼枪敢出我吗\n啊我是狼枪敢出我吗"
+          "start_ms": 4496080,
+          "end_ms": 4498480,
+          "quote": "6号预言家\n游戏结束\n狼队阵营屠神获胜\n以上是我们今天第二局版型"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1yKJ56PEak-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
-          "start_ms": 4487889,
-          "end_ms": 4496080,
-          "quote": "预言家验证8号玩家为狼人身份\n第二天白天\n8号狼人选择自爆入夜\n狼队击杀场上最后一神\n6号预言家",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1yKJ56PEak-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yKJ56PEak-ballot-2-eligibility_unknown"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "10号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yKJ56PEak-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1yKJ56PEak-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 3,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3夜终局，未进入白天投票。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-12/2026-06-12_S22_第03周_正赛第02期_局次待核_唯邻是从__BV1yKJ56PEak_P01_CID39070991291.平台AI字幕_ai-zh_01_70057a3404.原始.json",
+          "start_ms": 3930940,
+          "end_ms": 4003110,
+          "quote": "你表现相当的好\n因为我的长相非常的像一个狼\n如果不是你那一票\n那个票型是出不来的\n所以我直接给你保掉好吧\n我觉得你这个好人干的相当的漂亮呃\n所以我就验8号\n定义一下9号和一号\n那今天我就在70里面归一个\n反正人生就是一场豪赌嘛\n买码买错了\n下次我继续买\n就这样过\n所有加班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n10号各位玩家唱票结束前请不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给10号\n5号投给10号\n6号投给10号\n7号投给11号\n8号投给10号\n9号投给一号\n10号投给10号\n11号投给10号\n12号投给10号\n投票结束\n10号玩家10.5票出局\n请发表遗言\n我今天中午睡觉做了个梦\n梦见我在树林里是个猎人\n救了一个人\n我也不知道救了谁\n醒来以后没想起来救了谁"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "57f648207e7390fc5bc01283a78921bca04bc5103cfaae7d208f8409f67109f9",
+  "voting_sha256": "a8e6ca4e64b827ce24cd6ee093c9b93b05a6f3ac6aab1821844169bef975f883",
   "source_sha256": "70057a3404ea87172f79a10b221e5f8c2b991c2469c3da7e74d50875dbfcea58"
 }

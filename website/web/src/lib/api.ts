@@ -65,8 +65,9 @@ const getPlayerRequest = (id: string, params: URLSearchParams) => {
   return request<PlayerDetail>(`/api/v1/players/${encodeURIComponent(id)}?${params.toString()}`);
 }
 
-export const getPlayer = cache((id: string, season = "S22", phase = "all") => {
+export const getPlayer = cache((id: string, season = "S22", phase = "all", seasonEnd?: string) => {
   const params = new URLSearchParams({ season, phase });
+  if (seasonEnd) { params.set("season_start", season); params.set("season_end", seasonEnd); }
   return getPlayerRequest(id, params);
 });
 
@@ -75,12 +76,13 @@ export function getLeaderboard(season = "S22", phase: "all" | "finals_week" = "a
   return request<Leaderboard>(`/api/v1/leaderboard?${params.toString()}`);
 }
 
-export function getBluffReview(season = "S22", status: "all" | "pending" = "pending", player = "") {
+export function getBluffReview(season = "S22", status: "all" | "pending" | "assistant_pending" = "pending", player = "") {
   return request<BluffReview>(`/api/v1/bluff-review?${new URLSearchParams({ season, status, player })}`);
 }
 
-export function getStats(season = "S22") {
+export function getStats(season = "S22", seasonEnd?: string) {
   const params = new URLSearchParams({ season });
+  if (seasonEnd) { params.set("season_start", season); params.set("season_end", seasonEnd); }
   return request<Stats>(`/api/v1/stats?${params.toString()}`);
 }
 

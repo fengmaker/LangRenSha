@@ -74,9 +74,22 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -95,7 +108,7 @@
         },
         {
           "voter": 4,
-          "target": 1,
+          "target": 7,
           "state": "cast"
         },
         {
@@ -104,8 +117,18 @@
           "state": "cast"
         },
         {
-          "voter": 7,
+          "voter": 6,
           "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 1,
           "state": "cast"
         },
         {
@@ -131,14 +154,14 @@
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",
       "day": 1,
       "kind": "exile",
       "number": 2,
-      "stage": "unknown",
+      "stage": "revote",
       "status": "complete",
       "candidates": null,
       "eligible_voters": [

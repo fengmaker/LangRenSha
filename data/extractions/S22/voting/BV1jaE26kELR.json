@@ -30,11 +30,355 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1jaE26kELR",
+    "source_sha256": "1c3db025e08f9bd3a7b488017fcc2f425038abb97ad267b7d9d1f728ad4986b6",
+    "decisions": [
+      {
+        "question_id": "vote-BV1jaE26kELR-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐投票；夜间死亡结算后狼人白天拍刀终局，狼队获胜。",
+        "reason": "复盘直接记录第2天白天狼队互认拍刀、游戏结束并宣布狼胜。",
+        "source_spans": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+            "start_ms": 4580000,
+            "end_ms": 4590000,
+            "quote": "毒杀9号猎人九七十134\n当夜通灵师证3号那位狼人身份\n第二天白天狼人阵营互认拍刀游戏结束\n狼人阵营屠神获胜\n好各位弹幕老师们\n这里是京城大师赛第22季曙光航季"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1jaE26kELR-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+              "start_ms": 4721780,
+              "end_ms": 4734670,
+              "quote": "我实话实说啊\n刚才最后第二天狼队要拍刀那一天\n沉底KS接麦起来的时候\n脸都是苦涩\n他都是他就起来了哈",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+            "start_ms": 4580000,
+            "end_ms": 4590000,
+            "quote": "毒杀9号猎人九七十134\n当夜通灵师证3号那位狼人身份\n第二天白天狼人阵营互认拍刀游戏结束\n狼人阵营屠神获胜\n好各位弹幕老师们\n这里是京城大师赛第22季曙光航季"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "狼人白天拍刀终局，无Day2放逐。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "狼人白天拍刀终局，无Day2放逐。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "werewolf",
+    "eliminated_side": null,
+    "reason": "狼人白天拍刀终局，无Day2放逐。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-06-09_g02_BV1jaE26kELR/复核记录.json",
+    "sha256": "c8946b3e5b33ae35b50e7763a1bee264c90dfcb041b82ae554bc1f1358b14b4b",
+    "recap_segments": [
+      {
+        "start_ms": 4538979,
+        "end_ms": 4541000,
+        "text": "我们就准许加速进程了"
+      },
+      {
+        "start_ms": 4541000,
+        "end_ms": 4542000,
+        "text": "好各位大萌老师"
+      },
+      {
+        "start_ms": 4542000,
+        "end_ms": 4542840,
+        "text": "第二局游戏结束了"
+      },
+      {
+        "start_ms": 4542840,
+        "end_ms": 4544160,
+        "text": "盗宝大师版型通灵师"
+      },
+      {
+        "start_ms": 4544160,
+        "end_ms": 4545320,
+        "text": "6号猎人"
+      },
+      {
+        "start_ms": 4545320,
+        "end_ms": 4546080,
+        "text": "9号圣魔人"
+      },
+      {
+        "start_ms": 4546080,
+        "end_ms": 4546880,
+        "text": "11号蒙面人"
+      },
+      {
+        "start_ms": 4546880,
+        "end_ms": 4548760,
+        "text": "12号狼王"
+      },
+      {
+        "start_ms": 4548760,
+        "end_ms": 4550360,
+        "text": "7号狼人2号三号"
+      },
+      {
+        "start_ms": 4550360,
+        "end_ms": 4553100,
+        "text": "本局游戏的盗宝大师8号隶属狼人阵营"
+      },
+      {
+        "start_ms": 4553100,
+        "end_ms": 4555920,
+        "text": "可以选择的底牌是平民和毒师"
+      },
+      {
+        "start_ms": 4555920,
+        "end_ms": 4559940,
+        "text": "冰冰一号4号五号十号首页圣梦而梦游12号"
+      },
+      {
+        "start_ms": 4559940,
+        "end_ms": 4562660,
+        "text": "蒙面人盗宝大师选择平民身份"
+      },
+      {
+        "start_ms": 4562660,
+        "end_ms": 4563340,
+        "text": "通灵师验证"
+      },
+      {
+        "start_ms": 4563340,
+        "end_ms": 4564680,
+        "text": "10号交为平民"
+      },
+      {
+        "start_ms": 4564680,
+        "end_ms": 4565720,
+        "text": "上警环节"
+      },
+      {
+        "start_ms": 4565720,
+        "end_ms": 4567500,
+        "text": "7号悍跳狼王获得警徽"
+      },
+      {
+        "start_ms": 4567500,
+        "end_ms": 4568140,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 4568140,
+        "end_ms": 4569960,
+        "text": "10号平民被抗推出局"
+      },
+      {
+        "start_ms": 4569960,
+        "end_ms": 4572200,
+        "text": "入夜射门人梦游7号狼王"
+      },
+      {
+        "start_ms": 4572200,
+        "end_ms": 4573980,
+        "text": "狼人击杀11号射梦人"
+      },
+      {
+        "start_ms": 4573980,
+        "end_ms": 4577340,
+        "text": "71双子盗宝大师选择了毒师身份"
+      },
+      {
+        "start_ms": 4577340,
+        "end_ms": 4580549,
+        "text": "毒杀9号猎人九七十134"
+      },
+      {
+        "start_ms": 4580549,
+        "end_ms": 4583109,
+        "text": "当夜通灵师证3号那位狼人身份"
+      },
+      {
+        "start_ms": 4583109,
+        "end_ms": 4586789,
+        "text": "第二天白天狼人阵营互认拍刀游戏结束"
+      },
+      {
+        "start_ms": 4586789,
+        "end_ms": 4588540,
+        "text": "狼人阵营屠神获胜"
+      },
+      {
+        "start_ms": 4588860,
+        "end_ms": 4589940,
+        "text": "好各位弹幕老师们"
+      },
+      {
+        "start_ms": 4589940,
+        "end_ms": 4592860,
+        "text": "这里是京城大师赛第22季曙光航季"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [
+    {
+      "kind": "wolf_rush",
+      "day": 2,
+      "actor": null,
+      "declared_targets": [],
+      "result": "werewolf_win",
+      "note": "第二天法官播报狼人阵营互认拍刀并结束游戏，未公布刀路或行动人。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+          "start_ms": 4580549,
+          "end_ms": 4588540,
+          "quote": "当夜通灵师证3号那位狼人身份\n第二天白天狼人阵营互认拍刀游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          7,
+          9,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "endgame",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+          "start_ms": 3616160,
+          "end_ms": 3704980,
+          "quote": "我肯定不太愿意别人聊盗宝通灵对吧\n所以我就验验4号\n一号5号都是好人\n然后今天我就归10号啊\n然后设梦哦\n我我安排工作\n设梦晚上去设6号呃\n读诗呢就去读9号呃\n这是我安排的工作\n其他的没\n我今天晚上单验个4号就差不多了\n好吧\n我过了四\n玩家发言结束\n各位玩家请戴盔做好投票准备\n紧张请归票\n警长归票10号\n各位玩家请做好投票准备\n321请出票\n一号投给8号\n2号投给10号\n3号投给10号\n4号投给6号\n5号投给10号\n6号投给8号\n7号投给10号\n8号投给6号\n9号投给8号\n10号投给6号\n11号投给8号\n12号投给6号\n投票结束\n10号玩家4.5票出局\n请发表遗言\n一号9号投的8号\n一号6号九号投入8号\n7号归我\n6号跟7号对跳\n我投6号"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "狼人白天拍刀终局，无Day2放逐。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1jaE26kELR",
   "source_sha256": "1c3db025e08f9bd3a7b488017fcc2f425038abb97ad267b7d9d1f728ad4986b6",
-  "dossier_sha256": "4e2b19154e2c62a5851e4e2b5fa07b2202b89a045f01f95dd321c653498d5173",
-  "generated_at": "2026-10-24T23:21:15+08:00",
+  "dossier_sha256": "e021c847df336a47dffc4ee2feedfd385497700c2c837c3abf8c86de70d24e8a",
+  "generated_at": "2026-10-25T04:08:35+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1jaE26kELR-p01-g02",
@@ -199,7 +543,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

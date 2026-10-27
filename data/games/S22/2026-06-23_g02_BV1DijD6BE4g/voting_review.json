@@ -5,68 +5,247 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "d812e798e98ea004d585e47fb06eb179094f65e3b8650d533b9b7db71a1ebd8d",
-  "question_count": 0,
-  "pending_count": 2,
-  "questions": [
+  "facts_sha256": "93999f8a3b0995b21717ba0c1999506388987a418183be57dc5e0415acaad712",
+  "causal_decisions": [
     {
-      "id": "vote-BV1DijD6BE4g-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
+      "question_id": "vote-BV1DijD6BE4g-day-2-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第2天没有放逐投票：预言家夜间验出4号狼人后，4号在白天交牌，直接结束。",
+      "reason": "复盘字幕明确从第1夜跳到第2天白天4号交牌并宣布游戏结束；不是漏记一轮实际唱票。",
+      "source_spans": [
         {
-          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-23/2026-06-23_S22_第05周_正赛第04期_第02局_诡术之境__BV1DijD6BE4g_P01_CID39350764794.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 2494780,
-          "end_ms": 2568570,
-          "quote": "我觉得不是特别的像狼\n但是这仅仅是我井上这一轮的听感\n一二排排水的位置是一号\n11号三号\n我甚至都没有觉得5号五号六号就里面开狼\n5号就是4号\n8号里面\n我现在找的比较像狼的\n是4号九号\n这是我排水的位置\n所以我的警徽流\n那我就验一下10号四号顺眼\n其他没有了\n那过了pk发结束\n除2号七号外\n其他玩家请戴盔做好投票准备\n请从2号七号当中选出本局游戏警长\n321\n请出票\n一号投给7号\n3号投给7号\n4号投给2号\n5号\n投给7号\n6号投给7号\n8号\n投给2号\n9号投给2号\n10号\n投给2号\n11号\n投给2号\n十\n2号投给2号\n投票结束\n2号玩家六票当选警长\n其他玩家请亮蓝灯\n作业平安夜\n请警长组织翻顺序\n警左或警右\n3号玩家请发言\n嗯因为我听完4号发言"
+          "start_ms": 5432200,
+          "end_ms": 5438240,
+          "quote": "当夜预言家验证4号玩家为狼人身份；第二天白天最后一张狼人4号选择交牌；游戏结束"
         }
-      ]
-    },
-    {
-      "id": "vote-BV1DijD6BE4g-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1DijD6BE4g-day-2-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 2,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第05周_正赛第04期/2026-06-23/2026-06-23_S22_第05周_正赛第04期_第02局_诡术之境__BV1DijD6BE4g_P01_CID39350764794.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 5432200,
+            "end_ms": 5441100,
+            "quote": "当夜预言家验证4号玩家为狼人身份\n第二天白天最后一张狼人4号选择交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第05周_正赛第04期/2026-06-23/2026-06-23_S22_第05周_正赛第04期_第02局_诡术之境__BV1DijD6BE4g_P01_CID39350764794.平台AI字幕_ai-zh_01.原始.json",
           "start_ms": 5432200,
-          "end_ms": 5441100,
-          "quote": "当夜预言家验证4号玩家为狼人身份\n第二天白天最后一张狼人4号选择交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "end_ms": 5438240,
+          "quote": "牛毒杀7号悍跳狼人三七双死\n当夜预言家验证4号玩家为狼人身份\n第二天白天最后一张狼人4号选择交牌\n游戏结束\n好人阵营获胜"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1DijD6BE4g-ballot-2-eligibility_unknown"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "6号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1DijD6BE4g-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "第2天最后一狼交牌并直接终局，没有放逐票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-2",
+      "day": 1,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          7
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天最后一狼交牌并直接终局，没有放逐票。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "6号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-23/2026-06-23_S22_第05周_正赛第04期_第02局_诡术之境__BV1DijD6BE4g_P01_CID39350764794.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4891420,
+          "end_ms": 4972110,
+          "quote": "是不是很容易是其中一张牌\n所以至于另外一张牌绑在谁身上\n六还是七\n我其实作为预言家并不太知道\n我会去验一手4号玩家\n如果还有未知验\n那就再顺验回来吧\n四八行不行啊\n然后再三就这样子啊\n其实最好是能验到鬼术师的位置\n这样他就能他们就会纷纷为鬼术是自自爆\n这是最好的啊\n嗯算完\n在发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票\n6号各玩家请做好投票准备\n321请出票\n一号投给6号\n2号投给6号\n3号投给12号\n4号投给12号\n5号投给6号\n6号投给12号\n7号投给12号\n8号投给6号\n9号投给6号\n10号投给6号\n11号投给6号\n12号投给6号\n投票结束\n6号玩家发票\n等待玩家发动技能\n54321\n6号玩家8.5票出局\n请发表言\n嗯我觉得他末置位沉底\n刚才那个归我的那段发言"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "第2天最后一狼交牌并直接终局，没有放逐票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "8d3712f8985e65bf268e15b15d7660516025e4c12df69b6afc4c25edf082cd27",
+  "voting_sha256": "04872650887c1c3c8d719190717b3f55d730f4458314b1b2d9ee8a7bb3c71169",
   "source_sha256": "d1a67da48146e8917b328eda7e67b7555db56c2853dd088af90852bc2a73ba4a"
 }

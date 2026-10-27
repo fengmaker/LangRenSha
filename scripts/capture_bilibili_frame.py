@@ -9,9 +9,9 @@ from collect_bilibili_audio import Collector
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def capture(bvid, cid, seconds, out):
+def capture(bvid, cid, seconds, out, auth="none", cookies_file=None):
     import av
-    client = Collector(quiet=True)
+    client = Collector(auth, cookies_file, quiet=True)
     play = client.api("/x/player/playurl", {"bvid": bvid, "cid": cid, "fnval": 16, "fnver": 0, "qn": 80})["data"]
     tracks = [v for v in play.get("dash", {}).get("video", []) if (v.get("baseUrl") or v.get("base_url"))]
     if not tracks:

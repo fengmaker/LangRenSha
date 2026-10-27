@@ -1,0 +1,340 @@
+{
+  "bvid": "BV1ddY46sEzY",
+  "reviewer": "ai",
+  "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引18正赛：读取连续复盘和报票上下文，目视核对12席姓名及实际身份；胜方依据复盘收尾核实。对转写缺失的票保留partial/null。",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "翼风",
+        "2": "二妖",
+        "3": "徐言雨",
+        "4": "彭彭",
+        "5": "果冻",
+        "6": "KS",
+        "7": "小苍",
+        "8": "郭小炜",
+        "9": "笑笑",
+        "10": "陈明峻",
+        "11": "亚亚",
+        "12": "佩玖"
+      },
+      "reasoning": "逐席读取本局截图上的姓名标牌，未以 roster 顺序代替座位对应。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "狼人",
+        "2": "守卫",
+        "3": "女巫",
+        "4": "平民",
+        "5": "狼人",
+        "6": "狼人",
+        "7": "平民",
+        "8": "通灵师",
+        "9": "机械狼",
+        "10": "平民",
+        "11": "猎人",
+        "12": "平民"
+      },
+      "after": {
+        "1": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "2": {
+          "role": "守卫",
+          "faction": "good"
+        },
+        "3": {
+          "role": "女巫",
+          "faction": "good"
+        },
+        "4": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "5": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "6": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "7": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "8": {
+          "role": "通灵师",
+          "faction": "good"
+        },
+        "9": {
+          "role": "机械狼",
+          "faction": "werewolf"
+        },
+        "10": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "11": {
+          "role": "猎人",
+          "faction": "good"
+        },
+        "12": {
+          "role": "平民",
+          "faction": "good"
+        }
+      },
+      "reasoning": "按截图中的实际身份竖牌逐座核对，自称/黄色分析文字不覆盖真实角色。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": null,
+      "after": "good",
+      "reasoning": "复盘结束段明示胜方。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5348480,
+          "end_ms": 5350320,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting_review",
+      "before": "baseline.voting.json",
+      "after": "voting.reviewed.json",
+      "reasoning": "对照本局显式出票/投票/结算 cues；原来部分票型继续保留未知。#19补入首轮警上可确认的三张投票；#20补入5/6平票后的 PK 明确票列；#22把已完整的首轮警徽多数票结果记为5号。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3273760,
+          "end_ms": 3276520,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3276520,
+          "end_ms": 3278080,
+          "quote": "一号投给2号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5341160,
+          "end_ms": 5342840,
+          "quote": "12号投给9号"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-3].stage",
+      "before": "unknown",
+      "after": "initial",
+      "reasoning": "该轮只有一次321放逐唱票及9号出局播报，没有PK或技能重投证据；因此阶段可判为首轮。日期/票权依复盘顺序仍冲突，保持未完成。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5327380,
+          "end_ms": 5347580,
+          "quote": "321请出票一号投给12号呃呃2号投给12号3号投给9号4号投给9号8号投给12号9号投给12号11号投给9号12号投给9号投票结束9号玩家四票出局"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        3
+      ],
+      "roles": [
+        "女巫"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        2
+      ],
+      "roles": [
+        "守卫"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        4,
+        7,
+        10,
+        12
+      ],
+      "roles": [
+        "平民"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        9
+      ],
+      "roles": [
+        "机械狼"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        1,
+        5,
+        6
+      ],
+      "roles": [
+        "狼人"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        11
+      ],
+      "roles": [
+        "猎人"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        8
+      ],
+      "roles": [
+        "通灵师"
+      ],
+      "reasoning": "同一截图的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1ddY46sEzY/BV1ddY46sEzY_04995.840.png",
+          "frame_time_ms": 4995840,
+          "quote": "画面侧栏角色：1狼人、2守卫、3女巫、4平民、5狼人、6狼人、7平民、8通灵师、9机械狼、10平民、11猎人、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [],
+  "human_questions": [
+    {
+      "id": "q-s18-day-voters",
+      "field": "voting.ballots[ballot-3].day/eligible_voters",
+      "question": "这轮9号出局的放逐票应归属第几天，实际投票座位为何？逐票字幕有1、2、3、4、8、9、11、12号；局末复盘却说第二天1号狼人自爆并击杀10号后，第三天才放逐9号，时间顺序与票表冲突。",
+      "options": [
+        "第二天投票，复盘日序/死亡日序有一项错位",
+        "第三天投票，逐票中的1号座位或其他记录误识别",
+        "其他（请说明）"
+      ],
+      "reason": "字幕可确认首轮放逐和结果，但无法同时满足复盘日序以及逐票座位；不伪造第3天票权或弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5327380,
+          "end_ms": 5347580,
+          "quote": "321请出票一号投给12号呃呃2号投给12号3号投给9号4号投给9号8号投给12号9号投给12号11号投给9号12号投给9号投票结束9号玩家四票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5380370,
+          "end_ms": 5403950,
+          "quote": "第一天白天5号狼人被公投出局入夜守卫守护2号自首狼人击杀7号平民女巫毒杀6号狼人六七双死通灵实验证9号玩家机械平民为平民身份第二天白天一号狼人自爆入野守卫守护8号通灵师狼人击杀10号平民通灵师验证12号玩家为平民身份第三天白天最后一张狼人9号机械平民被公投出局"
+        }
+      ]
+    }
+  ],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T18:41:21Z"
+}

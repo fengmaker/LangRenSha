@@ -10,9 +10,10 @@ import re
 from typing import Any
 
 from website.api.analytics import effective_faction
+from website.api.bluff_frames import public_image_url
 
 ASSET_ROOT = Path(__file__).resolve().parents[1] / "assets" / "bluffs"
-WOLF_ROLES = {"狼人", "狼王", "机械狼", "盗宝大师", "假面", "诡术师", "典狱长", "黑狼王", "白狼王"}
+WOLF_ROLES = {"狼人", "狼王", "机械狼", "盗宝大师", "假面", "诡术师", "典狱长", "黑狼王", "白狼王", "九尾狐", "狼术师"}
 METHODOLOGY = [
     "悍跳必须同时满足狼人底牌和公开自称预言家或通灵师；同一选手同一局只计一次，好人诈身份、狼混及仅说自己取得某技能不直接计入。",
     "主要核查第一天的警上、PK及警下发言，直到实际入夜或自爆结束白天；竞选延期到次日单独标注。晚期复盘可佐证首日，但不能把后日发言直接当作首日自称。",
@@ -20,6 +21,11 @@ METHODOLOGY = [
     "以最终放逐结果为准，不把平票首轮、夜间死亡、技能出局、首日自爆中断后的次日放逐算作首日成功。",
     "悍跳身份由转写、复盘及警徽票交叉推断；仅上警、成为候选人或拿徽不能单独证明悍跳。用户明确填写的复核结论及备注优先，已确认记录和助手推断分别标注。",
     "悍跳归属不确定时不计为已识别次数；成功结果不确定时排除在成功率分母之外，并列入待复核。三项技能正确率仍留空。",
+]
+S23_VIDEO_METHODOLOGY = [
+    "优先核对首日警上最后一位发言临近结束时的原视频截图；自爆提前中断时核对中断前画面，必要时补看PK、警下或延期竞选。",
+    "导播座位摘要中的验人、身份与警徽流须结合本人发言确认；引用他人、讨论站边和仅缺少摘要均不能单独决定是否悍跳。",
+    "正式对局未记录、但法官和终局复盘均明确宣布的警徽流失，可由带定位证据的专项复核补充；与正式当选结果冲突时拒绝采用。",
 ]
 
 
@@ -88,7 +94,8 @@ def _final_exile(game: dict, day: int) -> tuple[int | None, bool, list[str]]:
     return None, False, ["首日最终放逐结果缺失"]
 
 
-def _badge_result(game: dict, seat: int, claim_day: int = 1) -> tuple[bool | None, list[str]]:
+def _badge_result(game: dict, seat: int, claim_day: int = 1,
+                  result_review: dict | None = None) -> tuple[bool | None, list[str]]:
     elected = {target for round_ in game.get("rounds", []) for event in round_.get("day", [])
                if event.get("slot") == "sheriff_result" and event.get("action") == "elected"
                for target in event.get("targets", [])}
@@ -132,13 +139,16 @@ def _badge_result(game: dict, seat: int, claim_day: int = 1) -> tuple[bool | Non
                      for row in (game.get("voting") or {}).get("registrations", [])):
         # A complete registration with everyone on police leaves no sheriff voters.
         return False, []
+    if result_review and result_review.get('badge')=='lost' and result_review.get('evidence'):
+        return False, []
     return None, ["最终警长竞选结果缺失"]
 
 
-def evaluate_success(game: dict, seat_number: int, claim_day: int | str | None = 1) -> dict:
-    if claim_day not in {1, 2}:
+def evaluate_success(game: dict, seat_number: int, claim_day: int | str | None = 1,
+                     *, result_review: dict | None = None) -> dict:
+    if type(claim_day) is not int or claim_day < 1:
         return {"value": None, "reasons": [], "questions": ["悍跳发生天数待确认，暂不判断成功"]}
-    badge, badge_questions = _badge_result(game, seat_number, claim_day)
+    badge, badge_questions = _badge_result(game, seat_number, claim_day, result_review)
     target, final_known, questions = _final_exile(game, 1)
     target_seat = next((seat for seat in game.get("seats", []) if seat["seat"] == target), None)
     faction = effective_faction(game, target_seat) if target_seat else None
@@ -150,6 +160,9 @@ def evaluate_success(game: dict, seat_number: int, claim_day: int | str | None =
                         "text": f"首日最终放逐{target}号好人，按狼队战术结果计成功"})
     if reasons:
         return {"value": True, "reasons": reasons, "questions": []}
+    if claim_day > 2 and badge is False:
+        return {"value":False,"reasons":[{"kind":"later_claim_without_badge",
+                "text":"已确认在后续天数起跳，起跳后没有竞选拿徽；此前的首日放逐不追溯计为这次尝试的成功"}],"questions":[]}
     if final_known and target is not None and faction not in {"good", "werewolf"}:
         questions.append("首日最终被放逐者的个人胜利阵营不明确")
     if badge is False and final_known and not questions:
@@ -182,7 +195,12 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
             if decision == "yes" and not record.get("evidence") and record.get("verification_status") != "user_confirmed":
                 decision = "uncertain"
                 questions.append("悍跳判断缺少定位证据")
-            success = evaluate_success(game, seat["seat"], record.get("claim_day", 1)) if decision == "yes" else {
+            success_day=record.get("claim_day",1) if record else None
+            actual_day=record.get("actual_claim_day") if record else None
+            if success_day=='later' and type(actual_day) is int and actual_day>2:
+                success_day=actual_day
+            success = evaluate_success(game, seat["seat"], success_day,
+                                       result_review=source.get('result_review') if valid else None) if decision == "yes" else {
                 "value": None, "reasons": [], "questions": []}
             questions.extend(success["questions"])
             if decision == "uncertain" and not questions:
@@ -192,11 +210,18 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
             for entry in record.get("evidence", []) if record else []:
                 public = {key: entry[key] for key in ("kind", "text", "start_ms", "end_ms", "interpretation")
                           if key in entry}
+                screenshot=public_image_url(entry.get("image_url"))
+                if screenshot:
+                    public["image_url"]=screenshot
                 if isinstance(bvid, str) and re.fullmatch(r"BV[0-9A-Za-z]{10}", bvid):
                     start = entry.get("start_ms")
                     seconds = max(0, int(start / 1000)) if isinstance(start, (int, float)) else 0
                     public["url"] = f"https://www.bilibili.com/video/{bvid}/?t={seconds}"
                 evidence.append(public)
+            needs_review=decision=='uncertain' or bool(questions)
+            stage=record.get('review_stage') if record else None
+            user_review=needs_review and bool(record.get('requires_user_review',stage!='assistant_pending') if record else True)
+            assistant_pending=stage=='assistant_pending' or (needs_review and not user_review)
             output.append({
                 "review_id": f"{bvid}:{seat['seat']}",
                 "source_fingerprint": source_fingerprint(game),
@@ -207,13 +232,15 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
                 "physical_role": seat.get("role"), "claimed_role": record.get("claimed_role") if record else None,
                 "decision": decision, "confidence": record.get("confidence", "low") if record else "low",
                 "claim_day": record.get("claim_day") if record else None,
+                "actual_claim_day":actual_day,
                 "first_day_claim": record.get("first_day_claim") if record else None,
                 "decision_note": record.get("decision_note", "") if record else "",
                 "verification_status": record.get("verification_status", "assistant_inferred") if record else "assistant_inferred",
                 "evidence": evidence,
                 "success": success["value"], "success_reasons": success["reasons"],
                 "review_questions": list(dict.fromkeys(questions)),
-                "needs_review": decision == "uncertain" or bool(questions),
+                "needs_review": needs_review,
+                "requires_user_review":user_review,"assistant_pending":assistant_pending,"review_stage":stage,
             })
     return output
 

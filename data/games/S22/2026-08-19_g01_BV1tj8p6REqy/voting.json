@@ -1,12 +1,33 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV1tj8p6REqy-p01-g01",
-  "registrations": [],
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        12
+      ],
+      "off_police": [
+        9,
+        11
+      ]
+    }
+  ],
   "ballots": [],
   "interruptions": [
     {
       "id": "interruption-1",
-      "day": null,
+      "day": 2,
       "actor": 11,
       "reason": "self_destruct",
       "ends_day": true
@@ -15,22 +36,22 @@
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "unknown"
     }
   ]

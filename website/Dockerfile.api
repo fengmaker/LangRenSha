@@ -1,10 +1,12 @@
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY website/requirements.txt /app/website/requirements.txt
-RUN pip install --no-cache-dir -r /app/website/requirements.txt \
+COPY requirements/base.txt requirements/web.txt /app/requirements/
+RUN pip install --no-cache-dir -r /app/requirements/web.txt \
     && useradd --create-home --uid 10001 app
 COPY website/api /app/website/api
+COPY scripts/season_config.py /app/scripts/season_config.py
+COPY config/seasons.json /app/config/seasons.json
 COPY website/assets/player-photos /app/website/assets/player-photos
 COPY website/assets/bluffs /app/website/assets/bluffs
 COPY website/grant_reader.py /app/website/grant_reader.py

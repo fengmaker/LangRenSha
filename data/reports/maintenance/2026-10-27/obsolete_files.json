@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "path": "special_report.py",
+      "bytes": 3332,
+      "sha256": "9af1470669fe2acc1f2f97b6e2209e114e52c838006e32f821d760135915bfaa",
+      "reason": "一次性打印S22特殊问题上下文，不是工作流入口；正式结论已在逐项复核旁证中。"
+    },
+    {
+      "path": "special_report.txt",
+      "bytes": 212499,
+      "sha256": "9dbf7430092b827345161553adcc8ed8b2a061a0a95db5787c3caaa529a027b0",
+      "reason": "上述一次性脚本的冗余打印输出。"
+    },
+    {
+      "path": "scripts/transcribe_audio.py",
+      "bytes": 5030,
+      "sha256": "a5ef632a56b5c32bd08b2717735c0a43ad5ea928c0e188902b1bcc45caad8d8b",
+      "reason": "已弃用Whisper运行器；环境和权重已移除，相关专用测试同步删除。"
+    },
+    {
+      "path": "scripts/benchmark_qwen_asr.py",
+      "bytes": 12630,
+      "sha256": "8c994859f97f126cda2c75551034fb5b290e090befd86ad0f674726adef14ba7",
+      "reason": "已弃用独立Qwen横评运行器；结论和原始对照结果保留。"
+    },
+    {
+      "path": "scripts/import_game_dossier.py",
+      "bytes": 14992,
+      "sha256": "d62680fb0d2a79abbb443d3667f62538375dffdfa410f4ac9e4d03e1777edb1c",
+      "reason": "旧候选schema导入实现不可达，CLI又转调现有game_records；正式流程已有明确入口。"
+    },
+    {
+      "path": "scripts/build_game_sample.py",
+      "bytes": 34881,
+      "sha256": "64d0d83defccc16d2aa9a791a700e0c1c8092322c06cb4f3ac36b9419db643ae",
+      "reason": "2026-10-22旧候选样例生成器；正式保护样例和当前生成器保留。"
+    },
+    {
+      "path": "scripts/backup_s23_prepublication.py",
+      "bytes": 2777,
+      "sha256": "1672e544be94f84d9d6fe991d43a6b674064c2eb2df54490ccd8c489164fce5b",
+      "reason": "由支持全部保留赛季的backup_database.py替代。"
+    },
+    {
+      "path": "website/api/catalog.json",
+      "bytes": 121,
+      "sha256": "f1eda193e64d1d18be93e832714fe02b5d6db6025f66273eb907f0655aeb46b7",
+      "reason": "名称/状态已合并进config/seasons.json，API与采集使用同一注册表。"
+    },
+    {
+      "path": "website/check_site.py",
+      "bytes": 9407,
+      "sha256": "84504b3228d890f84c859964b3616b0c0f1e9c9e95f76c1314c602a0a9fa4624",
+      "reason": "固定148局整份release的旧验收，当前223局已不适用，通用check_publication覆盖其职责。"
+    },
+    {
+      "path": "website/check_players.py",
+      "bytes": 9862,
+      "sha256": "b605c153dde62370b7567a909e80a2933d3defd2cee9580d000d3f7b82c85856",
+      "reason": "固定S22数据量和旧UI卡片数的专用端到端入口；通用验收与现行analytics语义测试分别承接。"
+    }
+  ]
+}

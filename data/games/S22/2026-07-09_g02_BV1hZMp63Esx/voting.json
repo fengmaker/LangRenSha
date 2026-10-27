@@ -143,9 +143,19 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
       "votes": [
         {
           "voter": 1,
@@ -195,27 +205,127 @@
       ],
       "tied_candidates": [],
       "winner": 3,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
+    },
+    {
+      "id": "causal-ballot-review-day-4-exile-initial-d4",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "votes": [
+        {
+          "voter": 4,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 6,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": null,
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-4",
       "day": 4,
       "kind": "exile",
-      "number": 1,
+      "number": 2,
       "stage": "revote",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        4,
+        5,
+        6,
+        7
+      ],
       "votes": [
         {
+          "voter": 4,
+          "target": null,
+          "state": "abstained"
+        },
+        {
           "voter": 5,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 6,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 7,
           "target": null,
           "state": "abstained"
         }
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
+    },
+    {
+      "id": "causal-ballot-review-day-4-exile-revote-d4",
+      "day": 4,
+      "kind": "exile",
+      "number": 3,
+      "stage": "revote",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "votes": [
+        {
+          "voter": 4,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 6,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 4,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 4,
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -223,21 +333,21 @@
     {
       "day": 1,
       "sheriff": "recorded",
-      "exile": "unknown"
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]

@@ -11,11 +11,11 @@ export default async function HomePage() {
     const totalGames = data.totals.games || 1;
     return <div className={"page-wrap home-page " + styles.home}>
       <section className="home-hero">
-        <div className="hero-copy"><h1>每一局，<br /><em>都有迹可循。</em></h1><p>把桌上的每一个座位、夜里的每一次选择、白天的每一张票，整理成可以查阅的赛事档案。</p><div className="hero-actions"><Link className="button button-primary" href="/games">浏览全部对局 <span>↗</span></Link><Link className="text-link" href="/leaderboard?season=S22&phase=all">查看积分榜 <span>→</span></Link><Link className="text-link" href="/stats">阅读数据说明 <span>→</span></Link></div></div>
+        <div className="hero-copy"><h1>每一局，<br /><em>都有迹可循。</em></h1><p>把桌上的每一个座位、夜里的每一次选择、白天的每一张票，整理成可以查阅的赛事档案。</p><div className="hero-actions"><Link className="button button-primary" href="/games">浏览全部对局 <span>↗</span></Link><Link className="text-link" href="/leaderboard">查看积分榜 <span>→</span></Link><Link className="text-link" href="/stats">阅读数据说明 <span>→</span></Link></div></div>
         <div className="hero-graphic" aria-label="12座位档案索引">
           <div className="seat-orbit orbit-one" /><div className="seat-orbit orbit-two" />
           <div className="hero-seats">{Array.from({ length: 12 }, (_, i) => <span key={i} className={"hero-seat hero-seat-" + i}>{String(i + 1).padStart(2, "0")}</span>)}</div>
-          <div className="hero-center"><span>S22</span></div>
+          <div className="hero-center"><span>档案</span></div>
         </div>
       </section>
 

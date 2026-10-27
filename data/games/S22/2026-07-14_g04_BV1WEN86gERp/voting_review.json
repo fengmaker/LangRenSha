@@ -5,35 +5,195 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "c9f2513c215b96f5c74265875c01da70c070771cb390afa8abeeafd6e371ef9c",
+  "facts_sha256": "269f33ea9b2f06ef10f00c88dbd82fe9098f66b92f069efe161f9ed7f4eac290",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 4,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1WEN86gERp-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 1,
-      "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第08周_正赛第07期/2026-07-14/2026-07-14_S22_第08周_正赛第07期_第04局_机械狼通灵师__BV1WEN86gERp_P01_CID39951731181.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 1599230,
-          "end_ms": 1669520,
-          "quote": "因为在我来在我的世界里来讲\n6号是狼\n他知道我是通灵\n给我发个查杀八\n好友不跳了\n你不跳你\n你倒拉一下4号身份啊\n你也不拉\n你就报了个金水\n反正但但这不是我该关心的\n反正我我不用管什么什么大不大狼\n我就知道6号八号是两狼就可以了对吧\n其他没了\n我过了\npk发言结束\n除7号八号外\n其他玩家请戴盔做好投票准备\n请从7号八号当中选出本局游戏警长321\n请出票\n一号投给8号\n2号投给8号\n3号投给7号\n4号\n投给7号\n5号\n投给7号\n6号\n投给8号\n9号\n投给8号\n10号\n投给8号\n11号\n投给7号\n12号\n投给7号\n投票结束\n7号八号各五票\n本局游戏警徽流失\n所有玩家请亮蓝灯\n所以双死死亡顺序不分先后\n6号十号倒牌\n6号安达\n请发表遗言"
-        }
-      ]
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号被放逐。"
     },
     {
-      "id": "vote-BV1WEN86gERp-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号狼人自爆，未进行放逐投票。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          6,
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          9,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          9,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 3,
+            "slot": "hunter_shot"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": "god"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "living_count": 10,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "vote_count": 10,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 1,
+      "after": 2,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "8号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第08周_正赛第07期/2026-07-14/2026-07-14_S22_第08周_正赛第07期_第04局_机械狼通灵师__BV1WEN86gERp_P01_CID39951731181.平台AI字幕_ai-zh_01.原始.json",
@@ -44,66 +204,13 @@
       ]
     },
     {
-      "id": "vote-BV1WEN86gERp-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第08周_正赛第07期/2026-07-14/2026-07-14_S22_第08周_正赛第07期_第04局_机械狼通灵师__BV1WEN86gERp_P01_CID39951731181.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 3723879,
-          "end_ms": 3746900,
-          "quote": "因为7号警上提到了什么\n关于这些女巫什么什啥恋人\n乱七八糟的一天亮了\n昨夜一号玩家倒牌游戏结束\n狼人阵营屠神获胜\n机械双刀咳\n他说了肯定是双刀\n肯定是商刀\n五是接商\n他说肯定是上当\n我以为他说12肯定守不住平安",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1WEN86gERp-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "outcome": "self_destruct",
+      "exile_note": "7号狼人自爆，未进行放逐投票。",
       "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 2,
-      "question_ids": [
-        "vote-BV1WEN86gERp-ballot-2-eligibility_unknown",
-        "vote-BV1WEN86gERp-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1WEN86gERp-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1WEN86gERp-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "3b597abcb0be7cad133459787e373574bd037ba6575eacfa9005bdf3a2afb19b",
+  "voting_sha256": "8783cd5523d1c315750064c0f22c9a5785d943756d03c0535266e276f6911b9d",
   "source_sha256": "5c4b321416db40947067317026920fc1d7185b2ff41610169d5dc42e25bc011f"
 }

@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1juPwzfEj5",
+  "cid": 36431266150,
+  "status": "primary_ai_reviewed_with_explicit_limits",
+  "reviewer": "codex_primary",
+  "reviewed_at_utc": "2026-10-27T06:39:21.612720+00:00",
+  "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+  "input_files": {
+    "dossier.reviewed.json": "71580a70de8fd8b3bbdc37f6746be52f1798a6644314e540a76486057d0df6ba",
+    "voting.reviewed.json": "b8971785dd0bf94f914301bb057d9d9b2442ee925400d3ccc646e38c8cd39418",
+    "ai_review.json": "69d5a5c4f43ff8474d4242e58a8815b95fecc7a992fd1f2d017222de668f8c39",
+    "daily_audit.json": "aa85f4187960e427c8373f2096952e84793859e2ba5c66ed8558af88fc8bb8a5",
+    "visual_review.json": "0f36c8496e441aa41a55d94e440e4d430fe59dc7e6b954918e5e22558dd4d3bb"
+  },
+  "decisions": [
+    {
+      "field": "day1_exile_ballot.voter_seat_of_last_report",
+      "before": {
+        "voter_seat": 2,
+        "target_seat": 4,
+        "evidence": [
+          {
+            "evidence_status": "text_explicit",
+            "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+            "origin": "platform_original_chinese_subtitle",
+            "bvid": "BV1juPwzfEj5",
+            "cid": 36431266150,
+            "page": 1,
+            "source_segment_index": 2097,
+            "start_ms": 4006750,
+            "end_ms": 4006970,
+            "quote": "十"
+          },
+          {
+            "evidence_status": "text_explicit",
+            "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+            "origin": "platform_original_chinese_subtitle",
+            "bvid": "BV1juPwzfEj5",
+            "cid": 36431266150,
+            "page": 1,
+            "source_segment_index": 2098,
+            "start_ms": 4006970,
+            "end_ms": 4008250,
+            "quote": "2号投给4号"
+          }
+        ],
+        "conflicts_with_same_voter_report": true,
+        "note": "segment 2097 is the isolated caption '十'; following segment explicitly says '2号投给4号'. Preserve as a conflicting second report; do not resolve."
+      },
+      "after": 12,
+      "reason": "连续相邻字幕2097“十”与2098“2号投给4号”组成“十二号投给四号”；不是又一次二号投票。",
+      "evidence": [
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+          "bvid": "BV1juPwzfEj5",
+          "cid": 36431266150,
+          "page": 1,
+          "source_segment_index": 2097,
+          "start_ms": 4006750,
+          "end_ms": 4006970,
+          "quote": "十"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+          "bvid": "BV1juPwzfEj5",
+          "cid": 36431266150,
+          "page": 1,
+          "source_segment_index": 2098,
+          "start_ms": 4006970,
+          "end_ms": 4008250,
+          "quote": "2号投给4号"
+        }
+      ]
+    },
+    {
+      "field": "sheriff_signup_and_vote_completeness",
+      "before": {
+        "initial_signup": null,
+        "final_candidate_seats": [
+          2,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "reported_vote_completeness": "partial_subtitle_reports_only_3_announcements; no full tally reconstructed"
+      },
+      "after": {
+        "registered_candidate_seats": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "off_sheriff_seats": [
+          1,
+          3,
+          10
+        ],
+        "status": "text_explicit_complement_of_explicit_exceptions",
+        "evidence": [
+          {
+            "evidence_status": "text_explicit",
+            "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+            "bvid": "BV1juPwzfEj5",
+            "cid": 36431266150,
+            "page": 1,
+            "source_segment_index": 451,
+            "start_ms": 990180,
+            "end_ms": 992060,
+            "quote": "本游戏除一号3号十号外"
+          },
+          {
+            "evidence_status": "text_explicit",
+            "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+            "bvid": "BV1juPwzfEj5",
+            "cid": 36431266150,
+            "page": 1,
+            "source_segment_index": 452,
+            "start_ms": 992060,
+            "end_ms": 993680,
+            "quote": "其他玩家上警上警"
+          },
+          {
+            "evidence_status": "text_explicit",
+            "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第01局_预女猎白混__BV1juPwzfEj5_P01_CID36431266150.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "ce5f60561681d27207920773db2c70665a0b170e3a98fc33f58e2cab0ef67387",
+            "bvid": "BV1juPwzfEj5",
+            "cid": 36431266150,
+            "page": 1,
+            "source_segment_index": 453,
+            "start_ms": 993680,
+            "end_ms": 995700,
+            "quote": "玩家请亮红灯"
+          }
+        ],
+        "note": "本游戏除一号、三号、十号外，其他玩家上警。"
+      },
+      "reason": "初次报名完整列出三名警下，恰为后续三名报票人；不能以最终六名候选反推警下。"
+    }
+  ],
+  "visual_checked": [
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_03818.400.png",
+      "sha256": "5af9247250d639ce0ae15127619790f776b9b20447ef9f69991393df23eb3956"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_04328.000.png",
+      "sha256": "257c49a06f9666d7afbdd9abe1fc09b953336808232f313757faefb6f9499cd1"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_01987.500.png",
+      "sha256": "8cbbe45f03d907c3eaa1c006502abcf09d8cfd00188ad20db68914ff3bab36f8"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_01993.000.png",
+      "sha256": "a05243f817218b81ed506098ca99ff7bf583e04b54ae1f0e1c44e4a44464ce07"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_04009.000.png",
+      "sha256": "0d530f74e9deac5bcf41aa35d29c9f99b67d0ca6148142bf0ffefd37237f0618"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_04016.000.png",
+      "sha256": "bf8872d8ce75a699629f91ff53a55ba01493c173f1bcf09bc3eae25ee2dfca51"
+    },
+    {
+      "path": "data/extractions/S21/frames/BV1juPwzfEj5/BV1juPwzfEj5_04040.000.png",
+      "sha256": "6ab3586ed1c4a084cf15ca2213be2f8591293492f31c7ff66f485f9981b0264f"
+    }
+  ],
+  "visual_findings": "白天身份栏与结算页12座一致；新抓投票时点只有桌景，没有清晰票型图层，不从手势/人脸推票。",
+  "checks": {
+    "identity_seat_count": 12,
+    "day1_unique_voters": 12,
+    "day1_raw_ballot_count": 12,
+    "sheriff_eligible_voters": 3,
+    "sheriff_reported_votes": 3,
+    "exile_announcement_matches_recap": true,
+    "badge_winner_and_shred_match_recap": true,
+    "night1_actions_match_peaceful_night": true,
+    "terminal_decision_vs_announcement_distinguished": true
+  },
+  "limits": [
+    "字幕及复盘按连续上下文核对，未逐字听完音轨。",
+    "其它实体狼缺少明确预言家/通灵师自称的结论只是有限负面检索。",
+    "一般票重未定，不计算加权票力。"
+  ],
+  "outputs": [
+    "dossier.primary.json",
+    "voting.primary.json",
+    "daily_audit.primary.json"
+  ],
+  "note": "primary派生版应用以下修订；reviewed原文件原判断保持原字节，便于追溯。"
+}

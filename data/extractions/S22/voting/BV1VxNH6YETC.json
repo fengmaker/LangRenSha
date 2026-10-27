@@ -44,7 +44,8 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第03局_机械狼通灵师__BV1VxNH6YETC_P01_CID39830883181.平台AI字幕_ai-zh_01_1114f53ecd.原始.json",
   "review_changes": [
     {
       "id": "BV1VxNH6YETC-registration",
@@ -88,10 +89,376 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1VxNH6YETC",
+    "source_sha256": "1114f53ecde8b3297dd28bb7aac66981b562e3861eabf0a2ca9a49cec7a6ae5f",
+    "decisions": [
+      {
+        "question_id": "vote-BV1VxNH6YETC-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天不存在放逐票：第1天自爆后，次夜猎人10死亡并带走最后机械狼6，狼队投降终局。",
+        "reason": "夜间结算后猎人开枪带走最后狼，游戏立即结束；本日未进入放逐投票。",
+        "source_spans": [
+          {
+            "start_ms": 2913129,
+            "end_ms": 2925310,
+            "quote": "第2天猎人10被夜间击杀并发动技能带走6号最后机械狼；狼人选择交牌，游戏结束"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1VxNH6YETC-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": []
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第03局_机械狼通灵师__BV1VxNH6YETC_P01_CID39830883181.平台AI字幕_ai-zh_01_1114f53ecd.原始.json",
+            "start_ms": 2913129,
+            "end_ms": 2925310,
+            "quote": "7号通灵师\n狼队击杀10号猎人\n通灵师验证了9号玩家为首位身份\n10号猎人出局后开枪带走6号机械双刀狼后\n狼队选择交牌\n游戏结束\n好人阵营获胜"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-07-10_g03_BV1VxNH6YETC/复核记录.json",
+    "sha256": "f70f623b0c7776329e5087377a61e57fee692e1227f8e37a54f493e439b670ff",
+    "recap_segments": [
+      {
+        "start_ms": 2874680,
+        "end_ms": 2877460,
+        "text": "对要加加班的嗯"
+      },
+      {
+        "start_ms": 2877580,
+        "end_ms": 2879660,
+        "text": "来给各位大老师们做本游戏的复盘"
+      },
+      {
+        "start_ms": 2879660,
+        "end_ms": 2880540,
+        "text": "本局版新规即将"
+      },
+      {
+        "start_ms": 2880540,
+        "end_ms": 2881020,
+        "text": "狼通灵师"
+      },
+      {
+        "start_ms": 2881020,
+        "end_ms": 2882660,
+        "text": "稍后会为我们为各位大佬老师"
+      },
+      {
+        "start_ms": 2882660,
+        "end_ms": 2884430,
+        "text": "老师们带来我们第四局游戏哦"
+      },
+      {
+        "start_ms": 2884430,
+        "end_ms": 2886120,
+        "text": "千万不要离开我们直播间"
+      },
+      {
+        "start_ms": 2886120,
+        "end_ms": 2888400,
+        "text": "本剧版型机械狼通灵师神阵营通灵师"
+      },
+      {
+        "start_ms": 2888400,
+        "end_ms": 2888960,
+        "text": "7号女巫"
+      },
+      {
+        "start_ms": 2888960,
+        "end_ms": 2889440,
+        "text": "4号猎人"
+      },
+      {
+        "start_ms": 2889440,
+        "end_ms": 2891240,
+        "text": "10号首尾9号狼人阵营5号八号"
+      },
+      {
+        "start_ms": 2891240,
+        "end_ms": 2892200,
+        "text": "11号机械狼6号"
+      },
+      {
+        "start_ms": 2892200,
+        "end_ms": 2893900,
+        "text": "本游戏为机械双刀狼"
+      },
+      {
+        "start_ms": 2893900,
+        "end_ms": 2894580,
+        "text": "平民阵营"
+      },
+      {
+        "start_ms": 2894580,
+        "end_ms": 2896540,
+        "text": "一号2号三号12号守夜守卫技能"
+      },
+      {
+        "start_ms": 2896540,
+        "end_ms": 2899340,
+        "text": "空过狼队击杀4号女巫女巫毒杀11号狼人"
+      },
+      {
+        "start_ms": 2899340,
+        "end_ms": 2901220,
+        "text": "4号11号双死机械狼"
+      },
+      {
+        "start_ms": 2901220,
+        "end_ms": 2902100,
+        "text": "模仿11号狼人"
+      },
+      {
+        "start_ms": 2902100,
+        "end_ms": 2903700,
+        "text": "本局游戏为机械双刀狼"
+      },
+      {
+        "start_ms": 2903700,
+        "end_ms": 2904300,
+        "text": "通灵师"
+      },
+      {
+        "start_ms": 2904300,
+        "end_ms": 2906649,
+        "text": "验证了10号玩家为猎人身份"
+      },
+      {
+        "start_ms": 2906649,
+        "end_ms": 2907729,
+        "text": "警上竞选环节"
+      },
+      {
+        "start_ms": 2907729,
+        "end_ms": 2909329,
+        "text": "7号通灵师获得警徽"
+      },
+      {
+        "start_ms": 2909329,
+        "end_ms": 2909889,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 2909889,
+        "end_ms": 2911269,
+        "text": "5号狼人选择自爆"
+      },
+      {
+        "start_ms": 2911269,
+        "end_ms": 2912369,
+        "text": "入夜守卫守护"
+      },
+      {
+        "start_ms": 2912369,
+        "end_ms": 2913129,
+        "text": "7号通灵师"
+      },
+      {
+        "start_ms": 2913129,
+        "end_ms": 2914610,
+        "text": "狼队击杀10号猎人"
+      },
+      {
+        "start_ms": 2914610,
+        "end_ms": 2918530,
+        "text": "通灵师验证了9号玩家为首位身份"
+      },
+      {
+        "start_ms": 2918530,
+        "end_ms": 2923530,
+        "text": "10号猎人出局后开枪带走6号机械双刀狼后"
+      },
+      {
+        "start_ms": 2923530,
+        "end_ms": 2924650,
+        "text": "狼队选择交牌"
+      },
+      {
+        "start_ms": 2924650,
+        "end_ms": 2925310,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 2925310,
+        "end_ms": 2926390,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 2926390,
+        "end_ms": 2929110,
+        "text": "以上是我们今天第三局版型的全部内容"
+      },
+      {
+        "start_ms": 2929110,
+        "end_ms": 2930390,
+        "text": "非常感谢各位家人的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          4,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          7,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "5号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1VxNH6YETC",
   "source_sha256": "1114f53ecde8b3297dd28bb7aac66981b562e3861eabf0a2ca9a49cec7a6ae5f",
   "dossier_sha256": "d0ec66ac2a59b8d491832b5307becd1c5c4bc41c2e2e87edffd2a532b0cd79e2",
-  "generated_at": "2026-10-24T23:21:21+08:00",
+  "generated_at": "2026-10-25T04:08:38+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1VxNH6YETC-p01-g03",
@@ -261,7 +628,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

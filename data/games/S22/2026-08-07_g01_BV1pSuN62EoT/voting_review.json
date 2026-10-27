@@ -6,6 +6,7 @@
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
   "facts_sha256": "22f2ec176c5d736402da7c56c647cedd9ac01a5d2e67927664ce196b73220d3c",
+  "causal_decisions": [],
   "question_count": 0,
   "pending_count": 0,
   "questions": [],
@@ -15,10 +16,120 @@
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "11号被放逐。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "11号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第11周_正赛第10期/2026-08-07/2026-08-07_S22_第11周_正赛第10期_第01局_预女猎白混__BV1pSuN62EoT_P01_CID40694124102.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3859800,
+          "end_ms": 3924840,
+          "quote": "都让人家刚子爆水\n这怎么爆水\n你别说他能不能爆水\n那他如果比如说好人的时候都爆水\n那狼怎么玩对吧\n你不能说让人家爆水去站边\n你听发言呗\n对不对\n呃\n就这样吧\n验一下4号\n注意一下\n11号过了\n所有玩家发言结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n11号各位玩家唱票结束前不要放手\n321请出票\n一号投给7号\n2号投给11号\n3号投给11号\n4号投给11号\n5号投给7号\n6号投给8号\n7号投给11号\n8号投给11号\n9号投给11号\n10号投给11号\n11号投给8号\n12号投给11号\n投票结束\n11号玩家8.5票出局\n请发表遗言\n我是预言家牌\n我让八给我干\n出局了\n完了这个我的站边\n我的好人还还分票分票了"
+        }
+      ]
+    }
+  ],
   "accepted_changes": [
     {
       "id": "BV1pSuN62EoT-registration",

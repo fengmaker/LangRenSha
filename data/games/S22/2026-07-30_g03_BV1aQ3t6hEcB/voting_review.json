@@ -5,53 +5,349 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "fe87821535c75a9222a0ca692ab1f6b0d84261ba59a07f12cb0e378ca20fd19c",
-  "question_count": 0,
-  "pending_count": 6,
-  "questions": [
+  "facts_sha256": "cea70010fc176ca45b1bf0edecc1f0f6c12b6b759b2edc6d57a839d540d38bbf",
+  "causal_decisions": [
     {
-      "id": "vote-BV1aQ3t6hEcB-day-1-registration_missing",
-      "code": "registration_missing",
-      "day": 1,
-      "target": null,
-      "title": "首日警下名单待核",
-      "reason": "尚未取得完整初始报名名单；退水后的候选人不能用来推导初始警下名单。",
-      "severity": "pending",
+      "question_id": "vote-BV1aQ3t6hEcB-day-1-registration_missing",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第1天上警名单为1、2、3、4、5、7、8、12；警下为6、9、10、11。",
+      "reason": "开局转写明确“除6、9、10、11外，其余玩家均上警”，因此无需从票数推算名单。",
+      "source_spans": [
+        {
+          "start_ms": 355120,
+          "end_ms": 375080,
+          "quote": "然后直接验出来一手守卫牌\n就形成了一个60对跳4321天亮了\n本局游戏除6号九六号九号十号11号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1aQ3t6hEcB-day-1-registration_missing",
+        "code": "registration_missing",
+        "day": 1,
+        "target": null,
+        "title": "首日警下名单待核",
+        "reason": "尚未取得完整初始报名名单；退水后的候选人不能用来推导初始警下名单。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
+            "start_ms": 355120,
+            "end_ms": 375080,
+            "quote": "然后直接验出来一手守卫牌\n就形成了一个60对跳4321天亮了\n本局游戏除6号九六号九号十号11号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯",
+            "note": "本日开局定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
           "start_ms": 355120,
           "end_ms": 375080,
-          "quote": "然后直接验出来一手守卫牌\n就形成了一个60对跳4321天亮了\n本局游戏除6号九六号九号十号11号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯",
-          "note": "本日开局定位，非缺失投票的直接证据"
+          "quote": "他去验了我们的君王\n然后直接验出来一手守卫牌\n就形成了一个60对跳4321天亮了\n本局游戏除6号九六号九号十号11号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     },
     {
-      "id": "vote-BV1aQ3t6hEcB-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取4条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1aQ3t6hEcB-ballot-1-eligibility_unknown",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "首轮警长票权为警下6、9、10、11，四票分别为6→8、9→8、10→8、11→5。",
+      "reason": "在已恢复的警下名单中，四名投票者完整对应；原转写逐项唱出四个投向，8号得3票。",
+      "source_spans": [
+        {
+          "start_ms": 1078540,
+          "end_ms": 1176360,
+          "quote": "觉得5号还可以\n然后警上觉得7号像好人\n所以2号视角和我差不多\n我觉得2号像好人\n然后开局前抿了11号\n11号应该这把不是平民牌啊\n11号亲吻自己的那张牌\n这么喜欢张牌肯定不是平民好吧\n呃我就想知道11号这把是什么\n我觉得11号有身份吧\n然后我是好人\n就这样吧\n我过了警上发言结束\n退水自爆环节\n54321人流警上玩家4号\n你是不要延迟操作了啊\n人头警上玩家4号五号八号请请向玩家带盔\n在4号五号八号玩家中选出本就是警长\n321请出票\n6号投给8号\n9号投给8号\n10号投给8号\n11号投给5号\n投票结束\n其余玩家请变蓝灯\n所以信息平安夜经常选择翻顺序\n行左警右\n7号或9号\n9号玩家请发言\n干嘛等一下\n呃这个发言顺序和一位呢硬座跟10号的不见面关系吗"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1aQ3t6hEcB-ballot-1-eligibility_unknown",
+        "code": "eligibility_unknown",
+        "day": 1,
+        "target": "ballot-1",
+        "title": "本轮票权名单待补充",
+        "reason": "已提取4条票，但完整票权名单未知；需补齐警下等票权依据，随后自动计算。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
+            "start_ms": 1078540,
+            "end_ms": 1176360,
+            "quote": "觉得5号还可以\n然后警上觉得7号像好人\n所以2号视角和我差不多\n我觉得2号像好人\n然后开局前抿了11号\n11号应该这把不是平民牌啊\n11号亲吻自己的那张牌\n这么喜欢张牌肯定不是平民好吧\n呃我就想知道11号这把是什么\n我觉得11号有身份吧\n然后我是好人\n就这样吧\n我过了警上发言结束\n退水自爆环节\n54321人流警上玩家4号\n你是不要延迟操作了啊\n人头警上玩家4号五号八号请请向玩家带盔\n在4号五号八号玩家中选出本就是警长\n321请出票\n6号投给8号\n9号投给8号\n10号投给8号\n11号投给5号\n投票结束\n其余玩家请变蓝灯\n所以信息平安夜经常选择翻顺序\n行左警右\n7号或9号\n9号玩家请发言\n干嘛等一下\n呃这个发言顺序和一位呢硬座跟10号的不见面关系吗"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
           "start_ms": 1078540,
           "end_ms": 1176360,
-          "quote": "觉得5号还可以\n然后警上觉得7号像好人\n所以2号视角和我差不多\n我觉得2号像好人\n然后开局前抿了11号\n11号应该这把不是平民牌啊\n11号亲吻自己的那张牌\n这么喜欢张牌肯定不是平民好吧\n呃我就想知道11号这把是什么\n我觉得11号有身份吧\n然后我是好人\n就这样吧\n我过了警上发言结束\n退水自爆环节\n54321人流警上玩家4号\n你是不要延迟操作了啊\n人头警上玩家4号五号八号请请向玩家带盔\n在4号五号八号玩家中选出本就是警长\n321请出票\n6号投给8号\n9号投给8号\n10号投给8号\n11号投给5号\n投票结束\n其余玩家请变蓝灯\n所以信息平安夜经常选择翻顺序\n行左警右\n7号或9号\n9号玩家请发言\n干嘛等一下\n呃这个发言顺序和一位呢硬座跟10号的不见面关系吗"
+          "quote": "毕竟守卫发出来了\n觉得5号还可以\n然后警上觉得7号像好人\n所以2号视角和我差不多\n我觉得2号像好人\n然后开局前抿了11号\n11号应该这把不是平民牌啊\n11号亲吻自己的那张牌\n这么喜欢张牌肯定不是平民好吧\n呃我就想知道11号这把是什么\n我觉得11号有身份吧\n然后我是好人\n就这样吧\n我过了警上发言结束\n退水自爆环节\n54321人流警上玩家4号\n你是不要延迟操作了啊\n人头警上玩家4号五号八号请请向玩家带盔\n在4号五号八号玩家中选出本就是警长\n321请出票\n6号投给8号\n9号投给8号\n10号投给8号\n11号投给5号\n投票结束\n其余玩家请变蓝灯\n所以信息平安夜经常选择翻顺序\n行左警右\n7号或9号\n9号玩家请发言\n干嘛等一下\n呃这个发言顺序和一位呢硬座跟10号的不见面关系吗"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号狼人自爆，未进行放逐投票。"
     },
     {
-      "id": "vote-BV1aQ3t6hEcB-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 4,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "3号狼人自爆，未进行放逐投票。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          10,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          12
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          6,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          4,
+          6,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 2,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "living_count": 9,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "vote_count": 9,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 2,
+      "after": 3,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "5号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
@@ -74,101 +370,18 @@
       ]
     },
     {
-      "id": "vote-BV1aQ3t6hEcB-day-1-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 1,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
-          "start_ms": 355120,
-          "end_ms": 375080,
-          "quote": "然后直接验出来一手守卫牌\n就形成了一个60对跳4321天亮了\n本局游戏除6号九六号九号十号11号玩家外\n其余玩家均上警上警\n玩家亮起面前红灯",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1aQ3t6hEcB-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
-          "start_ms": 4791000,
-          "end_ms": 4800260,
-          "quote": "并在出局后将警徽移交至一号平民\n在第三天的白天\n7号狼人选择自爆\n入夜守卫守护12号平民\n狼队击杀一号平民",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1aQ3t6hEcB-day-4-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 4,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1aQ3t6hEcB_P01_CID40450262799.平台AI字幕_ai-zh_01_bf377b7688.原始.json",
-          "start_ms": 4800260,
-          "end_ms": 4808760,
-          "quote": "一号平民出局后将警徽移交至6号守卫\n在第四天白天\n场上最后一狼3号玩家选择自爆游戏\n结束\n好人阵营获胜",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    }
-  ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 3,
-      "question_ids": [
-        "vote-BV1aQ3t6hEcB-day-1-registration_missing",
-        "vote-BV1aQ3t6hEcB-ballot-1-eligibility_unknown",
-        "vote-BV1aQ3t6hEcB-day-1-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1aQ3t6hEcB-ballot-2-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1aQ3t6hEcB-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "outcome": "self_destruct",
+      "exile_note": "7号狼人自爆，未进行放逐投票。",
+      "evidence": []
     },
     {
       "day": 4,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1aQ3t6hEcB-day-4-exile_unrecorded"
-      ],
-      "exile_note": null
+      "outcome": "self_destruct",
+      "exile_note": "3号狼人自爆，未进行放逐投票。",
+      "evidence": []
     }
   ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1aQ3t6hEcB-ballot-2-day-recap-review",
@@ -200,6 +413,6 @@
       ]
     }
   ],
-  "voting_sha256": "458786caf9153ca68f1f53e3434b85ee43f48fe51442c46ec9c99a3e5fb64c3e",
+  "voting_sha256": "4563f60ee6b4d1a4e8b0f1e895ca30d17b14950203b9fa7d1af935d44ebb2e26",
   "source_sha256": "bf377b76883f79cbd5e4f3f2ba26dac65c6f31b55c3cdefc4e293117d0c0819e"
 }

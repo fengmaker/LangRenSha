@@ -1,0 +1,170 @@
+{
+  "bvid": "BV1NBhU68EUy",
+  "reviewer": "ai",
+  "source_sha256": "539d3116df9bce3f3c4db1cf0d95146d86b4c35e7c018a1928b798c1ecb21635",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "核对底牌、票型及完整复盘：3号混血儿选10号预言家为榜样；首夜10被救，4被毒。8首日自爆延警，11次日再爆后流徽；随后10出局、2/4双死，12号末狼被票出，好人胜。",
+  "decisions": [
+    {
+      "field": "seats[].name / seats[].role",
+      "before": "座位姓名未填，10号底牌未知",
+      "after": {
+        "names": [
+          "辣味蛋黄派",
+          "Qqqquan圈",
+          "Ted_Dragon",
+          "荣耀Forry",
+          "耿许儿",
+          "Ksssssss陈彬",
+          "小苍cany",
+          "牛肉干干丶",
+          "小鲸鱼Whale-",
+          "陈明峻-",
+          "冰辰不橙",
+          "李鬼鬼Supr"
+        ],
+        "roles": [
+          "女巫",
+          "平民",
+          "混血儿",
+          "狼人",
+          "平民",
+          "猎人",
+          "平民",
+          "狼人",
+          "白神",
+          "预言家",
+          "狼人",
+          "狼人"
+        ],
+        "mixed_blood_3_faction": "good"
+      },
+      "reasoning": "逐座读取画面昵称和绿底身份牌，并以复盘中的榜样和行动相互核对。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1NBhU68EUy/BV1NBhU68EUy_03534.270.png",
+          "frame_time_ms": 3534270,
+          "quote": "01蛋黄派；02圈圈；03TED；04荣耀；05耿许儿；06KS；07小苍；08牛肉干；09鲸鱼；10陈明峻；11冰辰；12鬼鬼；实际身份牌依次为女巫、平民、混血儿、狼人、平民、猎人、平民、狼人、白神、预言家、狼人、狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3640280,
+          "end_ms": 3649600,
+          "quote": "本游戏为好人混\n首页混圈选择10号预言家为榜样\n新春好人混狼队击杀10号预言家牛腰救起\n形成平安夜预言家验证"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1..3]",
+      "before": "首夜记为平安但漏记10预言家被救；次夜/复盘死亡信息不全",
+      "after": "N1救10、验3好；D1 8爆；N2杀10并验11狼；D2 11爆流徽；N3杀2毒4双死；D3票出12。",
+      "reasoning": "将首夜和两次自爆按实际日期排列；复盘说明第二天再次自爆流徽，不将两次中断合并。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3644750,
+          "end_ms": 3647590,
+          "quote": "新春好人混狼队击杀10号预言家牛腰救起"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3652380,
+          "end_ms": 3655330,
+          "quote": "在警上竞选环节\n8号狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3657970,
+          "end_ms": 3664760,
+          "quote": "女巫技能空过预言家验证\n11号玩家为狼人身份\n在延期竞选环节\n11号狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3664760,
+          "end_ms": 3677120,
+          "quote": "本局游戏警徽流失入夜狼队击杀2号平民牛\n毒杀4号狼人\n2号四号双死在第三天白天\n场上最后一狼12号被公投出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3677980,
+          "end_ms": 3679150,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "女巫",
+        "平民",
+        "混血儿",
+        "狼人",
+        "平民",
+        "猎人",
+        "平民",
+        "狼人",
+        "白神",
+        "预言家",
+        "狼人",
+        "狼人"
+      ],
+      "reasoning": "底牌依据身份栏实读；黄色笔记只用于识别自称或行动。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1NBhU68EUy/BV1NBhU68EUy_03534.270.png",
+          "frame_time_ms": 3534270,
+          "quote": "1女巫；2平民；3混血儿；4狼人；5平民；6猎人；7平民；8狼人；9白神；10预言家；11狼人；12狼人",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 8,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "8号狼人以验3金水和警徽流自称预言家；首日竞选中自爆，未拿徽，首日也未放逐好人。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1NBhU68EUy/BV1NBhU68EUy_03534.270.png",
+          "frame_time_ms": 3534270,
+          "quote": "08 狼人；验3金水；警徽流12-1",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3652380,
+          "end_ms": 3655330,
+          "quote": "在警上竞选环节\n8号狼人选择自爆"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-26T00:00:00Z"
+}

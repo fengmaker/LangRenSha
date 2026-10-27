@@ -30,9 +30,17 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        9,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -72,7 +80,7 @@
       ],
       "tied_candidates": [],
       "winner": 5,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-2",
@@ -80,19 +88,45 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        7,
+        12
+      ],
       "votes": [
+        {
+          "voter": 1,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 2,
+          "target": null,
+          "state": "abstained"
+        },
         {
           "voter": 4,
           "target": 7,
           "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 12,
+          "target": null,
+          "state": "abstained"
         }
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [
@@ -114,22 +148,22 @@
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
+      "sheriff": "deferred",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "recorded"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "recorded"
     }
   ]

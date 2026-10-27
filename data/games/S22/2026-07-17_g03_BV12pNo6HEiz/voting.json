@@ -77,12 +77,23 @@
       "kind": "sheriff",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         6,
         8
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -137,7 +148,7 @@
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",
@@ -145,9 +156,19 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -197,7 +218,7 @@
       ],
       "tied_candidates": [],
       "winner": 4,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-4",
@@ -205,19 +226,57 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
+        {
+          "voter": 2,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 3,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 5,
+          "target": null,
+          "state": "abstained"
+        },
         {
           "voter": 9,
           "target": 2,
           "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 11,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 12,
+          "target": null,
+          "state": "abstained"
         }
       ],
       "tied_candidates": [],
-      "winner": null,
-      "unrecorded_voters": null
+      "winner": 9,
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -225,16 +284,16 @@
     {
       "day": 1,
       "sheriff": "recorded",
-      "exile": "unknown"
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]

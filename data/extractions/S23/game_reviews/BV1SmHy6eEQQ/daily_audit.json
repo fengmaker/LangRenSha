@@ -1,0 +1,90 @@
+{
+  "bvid": "BV1SmHy6eEQQ",
+  "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4880700,
+    "end_ms": 4923510,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1混血选12狼，狼刀7女巫、女巫毒5狼，D1双死；2号获警徽、12自爆。N2狼刀2预言家，D2 2死且移徽8，10狼出局。N3狼刀11白神，D3最后狼4出局，好人胜。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4880700,
+          "end_ms": 4923510,
+          "quote": "好第一局游戏结束了\n本局游戏预言家\n2号女巫\n7号猎人\n3号白神\n11号狼人\n4号五号十号\n12号平民\n6号八号九号\n本球戏的混血儿\n一号榜样是12号狼人\n本游戏为狼人混\n首夜狼人击杀7号女巫女巫毒杀5号狼人\n五七双子预言家验证12号那位狼人身份\n上警环节\n2号预言家获得警徽\n第一天白天12号狼人自爆\n入夜狼人击杀2号预言家\n预言家验证8号玩家为好人身份\n2号出局\n将警徽移交至8号平民\n第二天白天10号狼人被公投出局\n入夜狼人击杀11号白神\n白天最后一张狼人4号被公投出局\n游戏结束\n好人阵营获胜"
+        }
+      ]
+    }
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "b64-d1-night-deaths",
+      "status": "confirmed",
+      "conclusion": "N1狼刀7号女巫、毒5号狼人，D1双死。",
+      "reasoning": "结尾复盘逐日直接列出夜间击杀/毒杀对象。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4895110,
+          "end_ms": 4898330,
+          "quote": "首夜狼人击杀7号女巫女巫毒杀5号狼人"
+        }
+      ]
+    },
+    {
+      "id": "b64-d2-night-deaths",
+      "status": "confirmed",
+      "conclusion": "N2狼刀2号预言家，D2单死。",
+      "reasoning": "结尾复盘逐日直接列出夜间击杀/毒杀对象。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4906580,
+          "end_ms": 4908940,
+          "quote": "入夜狼人击杀2号预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4908940,
+          "end_ms": 4910960,
+          "quote": "预言家验证8号玩家为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "b64-d3-night-deaths",
+      "status": "confirmed",
+      "conclusion": "N3狼刀11号白神，D3公布夜死。",
+      "reasoning": "结尾复盘逐日直接列出夜间击杀/毒杀对象。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4916910,
+          "end_ms": 4918670,
+          "quote": "入夜狼人击杀11号白神"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-07/2026-10-07_S23_第06周_正赛第05期_第01局_预女猎白混__BV1SmHy6eEQQ_P01_CID42546824086.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb0c555cf5205dbfe3e28dff795e1e6d3d9b2d3f0bca52cf440a0a8f93633946",
+          "start_ms": 4918670,
+          "end_ms": 4920930,
+          "quote": "白天最后一张狼人4号被公投出局"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

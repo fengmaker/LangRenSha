@@ -1,42 +1,20 @@
-# Masters website API
+# 只读API与发布
 
-Run the API from the repository root with `uvicorn website.api.app:app --host 127.0.0.1 --port 8000`.
-The deployed API needs this package and `DATABASE_URL`; it reads only the `masters_web` schema.
-For local development without `DATABASE_URL`, it reuses the repository's existing `scripts.database`
-connection configuration. API requests run in PostgreSQL read-only transactions.
+运行时：`uvicorn website.api.app:app --host 127.0.0.1 --port 8000`。本机优先用`website/run.py`同时管理前端；部署配置`DATABASE_URL`并使用只读账号。
 
-Publish the selected season with `python -m website.api.publish --season S22`. The publisher creates
-an immutable release in the separate `masters_web` schema and switches its active pointer in the same
-transaction. It does not run the JCMS migrations. The optional `--root` argument or
-`MASTERS_SOURCE_ROOT` environment variable points at a read-only source root containing `data/games`,
-`data/extractions`, and the required `config` files.
+| 文件 | 职责 |
+| --- | --- |
+| `app.py` | 参数校验、分页与范围查询；赛季名称／状态读取统一`config/seasons.json` |
+| `publisher.py`、`publish.py` | 从磁盘正式JSON构建不可变game release，白名单公开字段，事务切活动指针 |
+| `analytics.py` | 有效阵营、胜率、投票指标、排名与积分；不改源快照 |
+| `game_presentation.py` | 在保留原事件的基础上整理展示日序、夜间结算和终局边界 |
+| `bluffs.py`、`bluff_store.py`、`publish_bluffs.py` | 悍跳定义、逐季独立版本及绑定game release的发布 |
+| `photos.py`、`player_photos.json` | 同季照片清单与允许访问的静态原图，清单缓存需API重启刷新 |
+| `bluff_frames.py`、`bluff_frames.json` | 悍跳证据截图的清单与静态访问 |
+| `schema.sql` | 独立`masters_web`发布schema，不运行JCMS业务迁移 |
 
-`--check` validates and counts the selected source without writing. `--sample BV1yt7v6QE3Q` selects
-only that in-scope video. `--list` prints the current in-scope **source game list**; it does not list
-published releases. Use `GET /api/v1/releases` for release history. `--activate RELEASE` switches to
-an existing immutable release. The publication format and statistics versions are part of each
-release ID and manifest, so a changed public mapping can create a new batch without rewriting old data.
+常用GET：`/overview`、`/games`、`/games/{id}`、`/players`、`/players/{id}`、`/leaderboard`、`/stats`、`/bluff-review`、`/releases`，统一前缀`/api/v1`。
 
-The snapshot allowlist excludes local paths, transcript text, credentials, and review evidence.
-It retains source hashes, selected voting rule applications, and per-vote abstention basis.
+选手详情与stats支持`season_start/season_end=latest`；旧`season=S22`保持单季兼容。榜单仍按季，`phase=all|finals_week`只改变积分榜范围，其他个人指标按整季。未知阵营／胜负不当成负场，零有效样本比例为null。
 
-Publish the separate bluff review records with `python -m website.api.publish_bluffs --season S22`;
-add `--check` for a read-only preflight. The publication binds the full reviewed season to the active
-game release, checks every source fingerprint and actor identity, stores immutable review versions
-and per-wolf decisions, then atomically changes the review pointer. Repeating the same input is
-idempotent. The leaderboard, player detail and review endpoints read these database records;
-`website/assets/bluffs/S22.json` is publication input rather than a runtime data source.
-
-Player analytics are computed from the active immutable snapshots. `GET /api/v1/players`
-and `/api/v1/players/{id}` accept `season=S22` and return full-season metrics including finals week; legacy player `phase` queries are ignored.
-`GET /api/v1/leaderboard` accepts `season` and `phase=all|finals_week` and keeps
-a full-season points ranking and a finals-week-only championship ranking. Non-point metrics on both boards remain full-season. Legacy leaderboard `phase=regular` is an alias for `all`. Responses carry a separate `analytics_version`.
-Win points are +1.5 for wolves and +1 for good players; every loss is -1. A mixed-blood
-player with a missing faction inherits the faction of the recorded exemplar. Ratios
-include numerator, denominator, excluded count, and supporting game IDs; no samples
-produce a null rate rather than zero.
-
-`player_photos.json` maps reviewed names to season-specific image hashes. Deploy
-`website/assets/player-photos` with the API. `GET /api/v1/photos/{season}/{filename}`
-serves only manifest-listed images; the Next.js `/media/player-photos` route proxies
-them on the website origin. The public manifest contains no source filesystem paths.
+发布与回退使用[网站README](../README.md)或`workflow.py`，不要用早期`database.py publish`。一个活动game release代表完整数据集，悍跳按每个保留季分别同步。

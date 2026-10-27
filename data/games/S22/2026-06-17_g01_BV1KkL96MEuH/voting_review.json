@@ -6,6 +6,7 @@
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
   "facts_sha256": "132c8d6c0114ed22812a751a1cbba9c9d0d806244ab27ea564a1c606dda4a55f",
+  "causal_decisions": [],
   "question_count": 0,
   "pending_count": 0,
   "questions": [],
@@ -15,10 +16,120 @@
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "11号被放逐。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "11号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-17/2026-06-17_S22_第04周_正赛第03期_第01局_预女猎白混__BV1KkL96MEuH_P01_CID39195313752.平台AI字幕_ai-zh_01_a8b90d067c.原始.json",
+          "start_ms": 4339179,
+          "end_ms": 4412520,
+          "quote": "然后那就2367呗\n其他没有任何位置\n那外置位置全部都是好人牌啊\n然后这个3号玩家因为跳了十的身份\n所以10号玩家你不用想的对吧\n你无脑的投跟你对跳的就可以了\n你就投一下三\n而且外置位的坑位都是非常简单的\n我们这边只能是五八十一\n你现在10号玩家也跳了个混子对吧\n在你们眼里\n对面就是2367\n投就投一下我的查杀三啊\n过了做完大饭结束\n个人家请大亏做好投票准备\n警长请归票\n警长归票\n3号购玩家请做好投票准备\n321请出票\n一号投给11号\n2号投给11号\n3号投给11号\n4号投给11号\n5号投给3号\n6号投给11号\n7号投给11号\n8号投给3号\n9号投给11号\n10号投给3号\n11号投给3号\n12号投给11号\n投票结束\n11号玩家八票出局\n请发表言\n肯定是没招的呀\n我听完大家发言\n在最后我发言的时候\n那边全部都在吃饭\n所以你就肯定不会"
+        }
+      ]
+    }
+  ],
   "accepted_changes": [],
   "voting_sha256": "eceec159d28402439b7bf4dcb93e4b8bcb3b666724cccea7c9a124007eccef05",
   "source_sha256": "a8b90d067cee8e2911b4026cbb6e9cc5f161715c55500e1848b1ce574d36871b"

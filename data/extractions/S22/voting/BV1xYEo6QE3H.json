@@ -30,11 +30,434 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第01局_预女猎白混__BV1xYEo6QE3H_P01_CID39018627145.平台AI字幕_ai-zh_01_061d6758e1.原始.json",
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1xYEo6QE3H",
+    "source_sha256": "061d6758e124e4b971021f8561437ee1c647d319d63895f2d5e3789ef710af95",
+    "decisions": [
+      {
+        "question_id": "vote-BV1xYEo6QE3H-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐投票；狼人白天交牌，游戏结束、好人获胜。",
+        "reason": "复盘在Day1放逐与夜间出局后明确第二天白天狼人交牌并结束游戏。",
+        "source_spans": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第01局_预女猎白混__BV1xYEo6QE3H_P01_CID39018627145.平台AI字幕_ai-zh_01_061d6758e1.原始.json",
+            "start_ms": 4955549,
+            "end_ms": 4964310,
+            "quote": "毒杀3号狼人\n三八双四预言家验证6号玩家为好人身份\n第二天白天狼人阵营决定交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们\n您正在收看到的节目是京城大师赛第22季"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1xYEo6QE3H-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第01局_预女猎白混__BV1xYEo6QE3H_P01_CID39018627145.平台AI字幕_ai-zh_01_061d6758e1.原始.json",
+              "start_ms": 4955549,
+              "end_ms": 4964310,
+              "quote": "三八双四预言家验证6号玩家为好人身份\n第二天白天狼人阵营决定交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第01局_预女猎白混__BV1xYEo6QE3H_P01_CID39018627145.平台AI字幕_ai-zh_01_061d6758e1.原始.json",
+            "start_ms": 4955549,
+            "end_ms": 4964310,
+            "quote": "毒杀3号狼人\n三八双四预言家验证6号玩家为好人身份\n第二天白天狼人阵营决定交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们\n您正在收看到的节目是京城大师赛第22季"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "狼人白天交牌终局，无Day2放逐。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "狼人白天交牌终局，无Day2放逐。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "狼人白天交牌终局，无Day2放逐。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-06-10_g01_BV1xYEo6QE3H/复核记录.json",
+    "sha256": "2d19cd91c3357158fec1cd70e0cb60c5c23d14d2693f3e79f756d6e1f153260c",
+    "recap_segments": [
+      {
+        "start_ms": 4906280,
+        "end_ms": 4907400,
+        "text": "那就交牌了啊"
+      },
+      {
+        "start_ms": 4907400,
+        "end_ms": 4908760,
+        "text": "交牌了"
+      },
+      {
+        "start_ms": 4909630,
+        "end_ms": 4911450,
+        "text": "狼人正义绝对将牌游戏结束"
+      },
+      {
+        "start_ms": 4911450,
+        "end_ms": 4913110,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 4916800,
+        "end_ms": 4917200,
+        "text": "Long"
+      },
+      {
+        "start_ms": 4919280,
+        "end_ms": 4922900,
+        "text": "long女咳好"
+      },
+      {
+        "start_ms": 4922900,
+        "end_ms": 4923840,
+        "text": "第一局游戏结束了"
+      },
+      {
+        "start_ms": 4923840,
+        "end_ms": 4925280,
+        "text": "预女猎白混血儿版型预言家"
+      },
+      {
+        "start_ms": 4925280,
+        "end_ms": 4925840,
+        "text": "一号女巫"
+      },
+      {
+        "start_ms": 4925840,
+        "end_ms": 4926520,
+        "text": "6号猎人"
+      },
+      {
+        "start_ms": 4926520,
+        "end_ms": 4927320,
+        "text": "5号白神"
+      },
+      {
+        "start_ms": 4927320,
+        "end_ms": 4928080,
+        "text": "11号狼人"
+      },
+      {
+        "start_ms": 4928080,
+        "end_ms": 4929360,
+        "text": "2号三号七号"
+      },
+      {
+        "start_ms": 4929360,
+        "end_ms": 4930539,
+        "text": "12号平民"
+      },
+      {
+        "start_ms": 4930539,
+        "end_ms": 4933659,
+        "text": "4号八号984号8号十号"
+      },
+      {
+        "start_ms": 4933659,
+        "end_ms": 4934619,
+        "text": "本局游戏的混血儿"
+      },
+      {
+        "start_ms": 4934619,
+        "end_ms": 4936780,
+        "text": "9号榜样是5号猎人"
+      },
+      {
+        "start_ms": 4936780,
+        "end_ms": 4937980,
+        "text": "本就系为好人"
+      },
+      {
+        "start_ms": 4937980,
+        "end_ms": 4940120,
+        "text": "混首夜狼人击杀4号平民女巫"
+      },
+      {
+        "start_ms": 4940120,
+        "end_ms": 4941600,
+        "text": "开药解救新春平安夜"
+      },
+      {
+        "start_ms": 4941600,
+        "end_ms": 4943860,
+        "text": "预言家验证11号家位好人身份"
+      },
+      {
+        "start_ms": 4943860,
+        "end_ms": 4944740,
+        "text": "上警环节"
+      },
+      {
+        "start_ms": 4944740,
+        "end_ms": 4946700,
+        "text": "12号悍跳狼获得警徽"
+      },
+      {
+        "start_ms": 4946700,
+        "end_ms": 4947540,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 4947540,
+        "end_ms": 4950309,
+        "text": "12号悍跳狼人被公投出局"
+      },
+      {
+        "start_ms": 4950309,
+        "end_ms": 4954429,
+        "text": "警徽移交至6号女巫入夜狼人击杀8号平民女巫"
+      },
+      {
+        "start_ms": 4954429,
+        "end_ms": 4955549,
+        "text": "毒杀3号狼人"
+      },
+      {
+        "start_ms": 4955549,
+        "end_ms": 4959150,
+        "text": "三八双四预言家验证6号玩家为好人身份"
+      },
+      {
+        "start_ms": 4959150,
+        "end_ms": 4960870,
+        "text": "第二天白天狼人阵营决定交牌"
+      },
+      {
+        "start_ms": 4960870,
+        "end_ms": 4961410,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 4961410,
+        "end_ms": 4963030,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 4963030,
+        "end_ms": 4964310,
+        "text": "好各位弹幕老师们"
+      },
+      {
+        "start_ms": 4964310,
+        "end_ms": 4967210,
+        "text": "您正在收看到的节目是京城大师赛第22季"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "狼人白天交牌终局，无Day2放逐。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "12号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-10/2026-06-10_S22_第03周_正赛第02期_第01局_预女猎白混__BV1xYEo6QE3H_P01_CID39018627145.平台AI字幕_ai-zh_01_061d6758e1.原始.json",
+          "start_ms": 4545350,
+          "end_ms": 4622550,
+          "quote": "我就验一个8号投9号毒一号\n9号一号的行为跟发言都不能做预言家和反向金水混子牌\n大家能理解吧\n4号是好人\n11号是好人\n跟我投票\n你们警上一轮站边没站错\n我目前怀疑的位置就是一号5号九号我验8号八是好人牌\n真有可能四是最后一个狼八\n先到4号玩家发言结束\n各位玩家请戴盔做好投票准备\n各位弹幕老师们\n我们正在冲击半小时的抖音人气榜单\n大家记得送送人气票\n谢谢大家\n警长请归票\n警长归票\n9号各玩家请做好投票准备\n321请出票\n一号投给12号\n2号投给9号\n3号投给9号\n4号投给12号\n5号投给12号\n6号投给9号\n7号投给9号\n8号投给12号\n9号投给12号\n10号投给12号\n11号投给12号\n12号投给9号\n投票结束\n12行家七票出局\n请发表言\n那就是一号5号九号三郎\n4号八号出一狼嗯\n看情况应该是4号狼\n因为歪哥是混子牌混的8号\n如果8号是一个狼牌"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "狼人白天交牌终局，无Day2放逐。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1xYEo6QE3H",
   "source_sha256": "061d6758e124e4b971021f8561437ee1c647d319d63895f2d5e3789ef710af95",
   "dossier_sha256": "1b57353c711c4cedcaeeba2bc34faabd25faeadd17997bfcb0c36377cbdb2d9c",
-  "generated_at": "2026-10-24T23:21:15+08:00",
+  "generated_at": "2026-10-25T04:08:35+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1xYEo6QE3H-p01-g01",
@@ -199,7 +622,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

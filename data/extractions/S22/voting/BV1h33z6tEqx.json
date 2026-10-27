@@ -53,7 +53,8 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
   "review_changes": [
     {
       "id": "BV1h33z6tEqx-registration",
@@ -97,10 +98,390 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1h33z6tEqx",
+    "source_sha256": "b02a867f9eaeedecc8afa8bcb008b9a072a4f03b52efdf137677648102cf0a58",
+    "decisions": [
+      {
+        "question_id": "vote-BV1h33z6tEqx-day-3-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第3天没有放逐票；第2天夜间梦杀导致终局。",
+        "reason": "复盘将第二天夜间盗宝大师刀4号圣梦人、4号与2号双死直接接到游戏结束；没有第3天白天。",
+        "source_spans": [
+          {
+            "start_ms": 4408500,
+            "end_ms": 4409500,
+            "quote": "第二局游戏结束了"
+          },
+          {
+            "start_ms": 4434490,
+            "end_ms": 4437240,
+            "quote": "第一天白天10号悍跳狼人被公投出局"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1h33z6tEqx-day-3-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 3,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": []
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
+            "start_ms": 4408500,
+            "end_ms": 4409500,
+            "quote": "那你好\n第二局游戏结束了\n本局游戏版型盗宝大师通灵师"
+          },
+          {
+            "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
+            "start_ms": 4434490,
+            "end_ms": 4437240,
+            "quote": "一号通灵师获得警徽\n第一天白天10号悍跳狼人被公投出局\n入夜射梦人梦游6号狼王"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 3,
+        "outcome": "ended_before_exile",
+        "exile_note": "第2天夜间双死后游戏已结束。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天夜间双死后游戏已结束。"
+    }
+  },
+  "causal_terminal": {
+    "round": 3,
+    "phase": "night",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "第2天夜间双死后游戏已结束。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-07-28_g02_BV1h33z6tEqx/复核记录.json",
+    "sha256": "a72760fb2bd7ef95b2ba2631e8a0517c69d4e38b90c33e6b214910f3a83ede54",
+    "recap_segments": [
+      {
+        "start_ms": 4404950,
+        "end_ms": 4406810,
+        "text": "读读诗啊"
+      },
+      {
+        "start_ms": 4406810,
+        "end_ms": 4408500,
+        "text": "那你好"
+      },
+      {
+        "start_ms": 4408500,
+        "end_ms": 4409500,
+        "text": "第二局游戏结束了"
+      },
+      {
+        "start_ms": 4409500,
+        "end_ms": 4411980,
+        "text": "本局游戏版型盗宝大师通灵师"
+      },
+      {
+        "start_ms": 4411980,
+        "end_ms": 4412740,
+        "text": "一号猎人"
+      },
+      {
+        "start_ms": 4412740,
+        "end_ms": 4413540,
+        "text": "8号圣某人"
+      },
+      {
+        "start_ms": 4413540,
+        "end_ms": 4414460,
+        "text": "4号蒙面人"
+      },
+      {
+        "start_ms": 4414460,
+        "end_ms": 4415610,
+        "text": "9号狼王"
+      },
+      {
+        "start_ms": 4415610,
+        "end_ms": 4416490,
+        "text": "6号狼人"
+      },
+      {
+        "start_ms": 4416490,
+        "end_ms": 4417290,
+        "text": "10号11号"
+      },
+      {
+        "start_ms": 4417290,
+        "end_ms": 4419830,
+        "text": "本局游戏的盗宝大师隶属狼人阵营"
+      },
+      {
+        "start_ms": 4419830,
+        "end_ms": 4422290,
+        "text": "可以选择的底牌是平民和毒师"
+      },
+      {
+        "start_ms": 4422290,
+        "end_ms": 4427740,
+        "text": "平民2号三号五号七号首页盗宝大师选择平民身份"
+      },
+      {
+        "start_ms": 4427740,
+        "end_ms": 4432290,
+        "text": "摄梦人梦游6号狼王通灵师验证4号玩家为射梦人身份"
+      },
+      {
+        "start_ms": 4432290,
+        "end_ms": 4433210,
+        "text": "上警环节"
+      },
+      {
+        "start_ms": 4433210,
+        "end_ms": 4434490,
+        "text": "一号通灵师获得警徽"
+      },
+      {
+        "start_ms": 4434490,
+        "end_ms": 4437240,
+        "text": "第一天白天10号悍跳狼人被公投出局"
+      },
+      {
+        "start_ms": 4437240,
+        "end_ms": 4440300,
+        "text": "入夜射梦人梦游6号狼王"
+      },
+      {
+        "start_ms": 4440300,
+        "end_ms": 4441930,
+        "text": "6号被梦王出局"
+      },
+      {
+        "start_ms": 4441930,
+        "end_ms": 4442810,
+        "text": "狼人击杀"
+      },
+      {
+        "start_ms": 4442810,
+        "end_ms": 4445510,
+        "text": "一号通灵师一号被刀出局"
+      },
+      {
+        "start_ms": 4445510,
+        "end_ms": 4448400,
+        "text": "当夜通灵验证11号玩家为狼人身份"
+      },
+      {
+        "start_ms": 4448400,
+        "end_ms": 4450460,
+        "text": "盗宝大师选择毒师身份"
+      },
+      {
+        "start_ms": 4450460,
+        "end_ms": 4453850,
+        "text": "毒杀8号猎人1683死"
+      },
+      {
+        "start_ms": 4453850,
+        "end_ms": 4455450,
+        "text": "第二天白天一号出局"
+      },
+      {
+        "start_ms": 4455450,
+        "end_ms": 4457410,
+        "text": "将警徽移交至4号射梦人"
+      },
+      {
+        "start_ms": 4457410,
+        "end_ms": 4459750,
+        "text": "11号狼人自爆入夜"
+      },
+      {
+        "start_ms": 4459750,
+        "end_ms": 4460530,
+        "text": "圣某人梦游"
+      },
+      {
+        "start_ms": 4460530,
+        "end_ms": 4462310,
+        "text": "12号盗宝大师"
+      },
+      {
+        "start_ms": 4462310,
+        "end_ms": 4464990,
+        "text": "当夜盗宝大师开刀击杀4号圣某人"
+      },
+      {
+        "start_ms": 4464990,
+        "end_ms": 4466930,
+        "text": "42双死游戏结束"
+      },
+      {
+        "start_ms": 4466930,
+        "end_ms": 4468565,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 4468930,
+        "end_ms": 4470010,
+        "text": "好各位弹幕老师们"
+      },
+      {
+        "start_ms": 4470010,
+        "end_ms": 4472470,
+        "text": "您正在收看到的节目是京城大赛第22季"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          6,
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          4,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天夜间双死后游戏已结束。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第02局_盗宝大师__BV1h33z6tEqx_P01_CID40385184468.平台AI字幕_ai-zh_01_b02a867f9e.原始.json",
+          "start_ms": 3797510,
+          "end_ms": 3877120,
+          "quote": "验平民给7号好吧\n这就可以了\n验平民给7号\n验猎人给验出非健康的毒师或狼给4号\n然后我今天投10号\n健康毒师\n毒12号守门人真6号\n警徽流是11号\n5号验好吧\n呃就是都站队\n我就不阐述逻辑\n不阐述我为什么通灵师了好吧\n那就是那个什么吧\n过4号玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票\n10号各玩家请做好投票准备\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号投给10号\n5号投给10号\n6号投给7号\n7号投给10号\n8号投给10号\n9号投给10号\n10号投给7号\n11号投给10号\n12号投给7号\n投票结束\n10号玩家9.5票数据请发表言\n原来一是通灵在狼人视角里这么难打呀\n第一把原来是这感觉\n我说实话警上到我这发言没人跳\n我看他呲着大牙冲我乐呢\n我就感觉好像哈哈哈\n我就感觉好像这把要捐呵呵唉得想想怎么怎么着啊"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1h33z6tEqx",
   "source_sha256": "b02a867f9eaeedecc8afa8bcb008b9a072a4f03b52efdf137677648102cf0a58",
-  "dossier_sha256": "506dbb42e46a924d2ed62df23a235f9dc9d241370945788109477463b534bd75",
-  "generated_at": "2026-10-24T23:21:24+08:00",
+  "dossier_sha256": "d35fefd5a8c552d913dfa909acb2c32f464c12944fcb7f2ade6dba814b2d16f6",
+  "generated_at": "2026-10-25T04:08:39+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1h33z6tEqx-p01-g02",
@@ -358,13 +739,8 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "interrupted_self_destruct"
-      },
-      {
-        "day": 3,
-        "sheriff": "unknown",
-        "exile": "unknown"
       }
     ]
   }

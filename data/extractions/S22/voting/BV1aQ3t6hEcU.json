@@ -53,7 +53,8 @@
     5269950
   ],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
   "review_changes": [
     {
       "id": "BV1aQ3t6hEcU-ballot-3-day-recap-review",
@@ -85,10 +86,606 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1aQ3t6hEcU",
+    "source_sha256": "04a1fb7b6779d50fa836af8672834724333fa99282524da20615a777c0c0edc4",
+    "decisions": [
+      {
+        "question_id": "vote-BV1aQ3t6hEcU-day-4-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第4天没有放逐票；第3天投出12号后，夜间击杀最后一神并立即结束。",
+        "reason": "整局复盘依序记载第3天12号狼人被公投出局、随后入夜假面处理并击杀最后一神，8号女巫被击杀成功，游戏结束并由狼队屠神获胜；所以不存在第4天白天放逐。",
+        "source_spans": [
+          {
+            "start_ms": 5685200,
+            "end_ms": 5685860,
+            "quote": "游戏结束"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1aQ3t6hEcU-day-4-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 4,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": []
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 5685200,
+            "end_ms": 5685860,
+            "quote": "8号女巫击杀成功\n游戏结束\n狼队阵营屠神获胜"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 4,
+        "outcome": "ended_before_exile",
+        "exile_note": "第3天放逐后夜间屠神终局，不进入第4天白天。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 4,
+      "phase": "night",
+      "after_day": 3,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3天放逐后夜间屠神终局，不进入第4天白天。"
+    }
+  },
+  "causal_terminal": {
+    "round": 4,
+    "phase": "night",
+    "after_day": 3,
+    "winner": "werewolf",
+    "eliminated_side": null,
+    "reason": "第3天放逐后夜间屠神终局，不进入第4天白天。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-07-30_g02_BV1aQ3t6hEcU/复核记录.json",
+    "sha256": "d39b1b80b38973602b8dba849d35b12babd15b27014d0f50a395a3cdb85dbaab",
+    "recap_segments": [
+      {
+        "start_ms": 5586980,
+        "end_ms": 5588360,
+        "text": "对你听错了"
+      },
+      {
+        "start_ms": 5588360,
+        "end_ms": 5589640,
+        "text": "90舞者对对对"
+      },
+      {
+        "start_ms": 5589640,
+        "end_ms": 5591000,
+        "text": "我以为90好"
+      },
+      {
+        "start_ms": 5591000,
+        "end_ms": 5592640,
+        "text": "给各位弹幕老师们做一下本局局的复盘"
+      },
+      {
+        "start_ms": 5592640,
+        "end_ms": 5595670,
+        "text": "本剧版行为假面舞会神人阵营预言家"
+      },
+      {
+        "start_ms": 5595670,
+        "end_ms": 5596630,
+        "text": "7号女巫"
+      },
+      {
+        "start_ms": 5596630,
+        "end_ms": 5597630,
+        "text": "8号舞者"
+      },
+      {
+        "start_ms": 5597630,
+        "end_ms": 5598550,
+        "text": "9号白神"
+      },
+      {
+        "start_ms": 5598550,
+        "end_ms": 5601050,
+        "text": "3号狼人阵营6号十号"
+      },
+      {
+        "start_ms": 5601050,
+        "end_ms": 5603710,
+        "text": "12号假面一号平民阵营"
+      },
+      {
+        "start_ms": 5603710,
+        "end_ms": 5607990,
+        "text": "2号四号五号11号首夜狼人击杀2号平民"
+      },
+      {
+        "start_ms": 5607990,
+        "end_ms": 5608730,
+        "text": "女娲救起"
+      },
+      {
+        "start_ms": 5608730,
+        "end_ms": 5610010,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 5610010,
+        "end_ms": 5613890,
+        "text": "当预言家验证了10号玩家为狼人身份"
+      },
+      {
+        "start_ms": 5613890,
+        "end_ms": 5615310,
+        "text": "在警上竞选环节"
+      },
+      {
+        "start_ms": 5615310,
+        "end_ms": 5617230,
+        "text": "10号悍跳狼人获得警徽"
+      },
+      {
+        "start_ms": 5617230,
+        "end_ms": 5618410,
+        "text": "第一天的白天"
+      },
+      {
+        "start_ms": 5618410,
+        "end_ms": 5621500,
+        "text": "7号预言家被抗推出局"
+      },
+      {
+        "start_ms": 5621500,
+        "end_ms": 5623320,
+        "text": "入夜无主的舞池"
+      },
+      {
+        "start_ms": 5623320,
+        "end_ms": 5625100,
+        "text": "一号假面"
+      },
+      {
+        "start_ms": 5625100,
+        "end_ms": 5627700,
+        "text": "4号平民以及11号平民"
+      },
+      {
+        "start_ms": 5627700,
+        "end_ms": 5629540,
+        "text": "当夜假面验证了2号玩家"
+      },
+      {
+        "start_ms": 5629540,
+        "end_ms": 5632660,
+        "text": "平民不在五池内给予11号平民一张面具"
+      },
+      {
+        "start_ms": 5632660,
+        "end_ms": 5636510,
+        "text": "此时五池内4号平民被五出局"
+      },
+      {
+        "start_ms": 5636910,
+        "end_ms": 5640920,
+        "text": "当夜狼队击杀3号白神牛"
+      },
+      {
+        "start_ms": 5640920,
+        "end_ms": 5642200,
+        "text": "又毒杀10号狼人"
+      },
+      {
+        "start_ms": 5642200,
+        "end_ms": 5644980,
+        "text": "当夜为3号四号十号督导"
+      },
+      {
+        "start_ms": 5644980,
+        "end_ms": 5646200,
+        "text": "在第二天的白天"
+      },
+      {
+        "start_ms": 5646200,
+        "end_ms": 5648480,
+        "text": "6号狼人选择自爆"
+      },
+      {
+        "start_ms": 5649720,
+        "end_ms": 5651760,
+        "text": "入夜舞者的舞池"
+      },
+      {
+        "start_ms": 5651760,
+        "end_ms": 5653280,
+        "text": "8号女巫"
+      },
+      {
+        "start_ms": 5653280,
+        "end_ms": 5658780,
+        "text": "9号舞者以及12号狼人假面验证了8号玩家"
+      },
+      {
+        "start_ms": 5659049,
+        "end_ms": 5661849,
+        "text": "女巫在舞池内局8号女巫一张面具"
+      },
+      {
+        "start_ms": 5661849,
+        "end_ms": 5664830,
+        "text": "此时舞池内9号武者被误出局"
+      },
+      {
+        "start_ms": 5664830,
+        "end_ms": 5666410,
+        "text": "狼队击杀8号女巫"
+      },
+      {
+        "start_ms": 5666410,
+        "end_ms": 5669110,
+        "text": "由于舞者在舞池内五持免疫狼刀"
+      },
+      {
+        "start_ms": 5669110,
+        "end_ms": 5671950,
+        "text": "所以当夜为9号舞者单死"
+      },
+      {
+        "start_ms": 5671950,
+        "end_ms": 5673190,
+        "text": "在第三天白天"
+      },
+      {
+        "start_ms": 5673190,
+        "end_ms": 5675410,
+        "text": "12号狼人被公投出局"
+      },
+      {
+        "start_ms": 5675410,
+        "end_ms": 5678100,
+        "text": "入夜假面验证2号玩家不在五"
+      },
+      {
+        "start_ms": 5678100,
+        "end_ms": 5678420,
+        "text": "十"
+      },
+      {
+        "start_ms": 5678420,
+        "end_ms": 5679780,
+        "text": "2号平民不在五池内"
+      },
+      {
+        "start_ms": 5679780,
+        "end_ms": 5681920,
+        "text": "给予了5号平民一张面具"
+      },
+      {
+        "start_ms": 5681920,
+        "end_ms": 5683700,
+        "text": "并最后击杀场上最后一神"
+      },
+      {
+        "start_ms": 5683700,
+        "end_ms": 5685200,
+        "text": "8号女巫击杀成功"
+      },
+      {
+        "start_ms": 5685200,
+        "end_ms": 5685860,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 5685860,
+        "end_ms": 5687240,
+        "text": "狼队阵营屠神获胜"
+      },
+      {
+        "start_ms": 5687240,
+        "end_ms": 5688840,
+        "text": "以上是我们今天第二局版型"
+      },
+      {
+        "start_ms": 5688840,
+        "end_ms": 5689880,
+        "text": "假面舞会的全部内容"
+      },
+      {
+        "start_ms": 5689880,
+        "end_ms": 5691630,
+        "text": "非常感谢各位弹幕老师的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          3,
+          4,
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          5,
+          6,
+          8,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          5,
+          8,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          5,
+          8,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          5,
+          8,
+          11
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 4,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "night",
+      "after_day": 3,
+      "winner": "werewolf",
+      "eliminated_side": null,
+      "reason": "第3天放逐后夜间屠神终局，不进入第4天白天。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-3",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        5,
+        8,
+        11,
+        12
+      ],
+      "living_count": 6,
+      "eligible_voters": [
+        1,
+        2,
+        5,
+        8,
+        11,
+        12
+      ],
+      "vote_count": 6,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "7号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3173560,
+          "end_ms": 3242750,
+          "quote": "他这都要站边\n7号四还不是狼\n然后9号说站边4号\n所以我没觉得9号我肯定奔狼验的好吧\n大概反正点我就点457\n然后投就投7号\n反正六是狼\n女巫就毒六对吧\n如果你们当中有女巫就毒六\n六不是狼\n他自己会读\n大概就这样吧\n我验9号投7号过作文加番结束\n请各位戴盔做好投票准备\n警长请归票\n警长归票\n7号\n各位玩家唱票结束前请不要放手\n321请出票\n一号投给7号\n2号投给10号\n3号投给10号\n4号投给10号\n5号投给10号\n6号投给7号\n7号投给10号\n8号投给10号\n9号投给7号\n10号投给7号\n11号投给7号\n12号投给7号\n投票结束\n6.5票比六票\n7号玩家6.5票出局\n请发表遗言\n169十是吧\n十不是说九是狼吗\n九还能帮十头呢\n一一应该也是狼一警下站边的理由"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "6号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "12号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5233710,
+          "end_ms": 5309430,
+          "quote": "九是五者怎么五呢\n九是五者\n好难想象\n9号是五者\n我也不觉得九是平民\n但是9号是舞者\n他昨天怎么舞能自己死掉了\n我他还有谁\n然后假面扣了谁\n就是如果九是就是就是假面肯定在场\n因为我感觉死掉的人里面也没有假面啊\n九不太能做假面\n六又是自爆的\n那么到所有玩家发言结束\n请各位玩家带盔做好投票准备\n本局游戏仅会流失\n各位玩家请自行投票\n唱票结束前不要放手\n321请出票\n一号投给11号\n2号投给11号\n5号投给12号\n8号投给12号\n11号投给12号\n12号投给一号\n投票结束\n12号玩家三票出局\n请发表遗言\n哇这把五是啥呀\n五这把因为我很难像好人吧\n打我全是强打\n说你看我我站错边\n我确实说了"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5669110,
+          "end_ms": 5675410,
+          "quote": "所以当夜为9号舞者单死\n在第三天白天\n12号狼人被公投出局"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-30/2026-07-30_S22_第10周_正赛第09期_第02局_假面舞会__BV1aQ3t6hEcU_P01_CID40450129975.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5671950,
+          "end_ms": 5678100,
+          "quote": "在第三天白天\n12号狼人被公投出局\n入夜假面验证2号玩家不在五"
+        }
+      ]
+    }
+  ],
   "bvid": "BV1aQ3t6hEcU",
   "source_sha256": "04a1fb7b6779d50fa836af8672834724333fa99282524da20615a777c0c0edc4",
   "dossier_sha256": "83ee00ccb5ed5d61d09f6dcd6c58b4a1f589000ce556dc6dc6cb524a50c16c1d",
-  "generated_at": "2026-10-24T23:21:25+08:00",
+  "generated_at": "2026-10-25T04:08:40+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1aQ3t6hEcU-p01-g02",
@@ -252,9 +849,16 @@
         "kind": "exile",
         "number": 1,
         "stage": "initial",
-        "status": "partial",
+        "status": "complete",
         "candidates": null,
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          2,
+          5,
+          8,
+          11,
+          12
+        ],
         "votes": [
           {
             "voter": 1,
@@ -289,7 +893,7 @@
         ],
         "tied_candidates": [],
         "winner": 12,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [],
@@ -301,18 +905,13 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "recorded"
-      },
-      {
-        "day": 4,
-        "sheriff": "unknown",
-        "exile": "unknown"
       }
     ]
   }

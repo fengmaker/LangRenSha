@@ -47,11 +47,376 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第11周_正赛第10期/2026-08-07/2026-08-07_S22_第11周_正赛第10期_第02局_唯邻是从__BV1pSuN62Ekr_P01_CID40694318865.平台AI字幕_ai-zh_01_3f59c9e5b4.原始.json",
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV1pSuN62Ekr",
+    "source_sha256": "3f59c9e5b4a8eeb127a91d371b15e92c2e4e56f225e6b64113110bab253d11f3",
+    "decisions": [
+      {
+        "question_id": "vote-BV1pSuN62Ekr-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐；狼队直接交牌结束。",
+        "reason": "复盘说明第1天10号狼王自爆，夜间后第2天狼队直接交牌、好人获胜，因此没有第2天放逐。",
+        "source_spans": [
+          {
+            "start_ms": 2883820,
+            "end_ms": 2907440,
+            "quote": "所以他自爆守卫只会自首\n那么这个时候他只会自首情况下321天亮了\n所谓信息\n平安夜经常选择发言顺序\n警左警右\n5号或7号\n5号玩家请发言\n其实我刚刚想说的就是守到平安夜就能赢"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV1pSuN62Ekr-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第11周_正赛第10期/2026-08-07/2026-08-07_S22_第11周_正赛第10期_第02局_唯邻是从__BV1pSuN62Ekr_P01_CID40694318865.平台AI字幕_ai-zh_01_3f59c9e5b4.原始.json",
+              "start_ms": 2883820,
+              "end_ms": 2907440,
+              "quote": "所以他自爆守卫只会自首\n那么这个时候他只会自首情况下321天亮了\n所谓信息\n平安夜经常选择发言顺序\n警左警右\n5号或7号\n5号玩家请发言\n其实我刚刚想说的就是守到平安夜就能赢",
+              "note": "本日开局定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第11周_正赛第10期/2026-08-07/2026-08-07_S22_第11周_正赛第10期_第02局_唯邻是从__BV1pSuN62Ekr_P01_CID40694318865.平台AI字幕_ai-zh_01_3f59c9e5b4.原始.json",
+            "start_ms": 2883820,
+            "end_ms": 2907440,
+            "quote": "有没有可能是就是六是狼队阵营的\n所以他自爆守卫只会自首\n那么这个时候他只会自首情况下321天亮了\n所谓信息\n平安夜经常选择发言顺序\n警左警右\n5号或7号\n5号玩家请发言\n其实我刚刚想说的就是守到平安夜就能赢\n那不出所料"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "第2天狼队交牌后游戏结束。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天狼队交牌后游戏结束。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "第2天狼队交牌后游戏结束。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-08-07_g02_BV1pSuN62Ekr/复核记录.json",
+    "sha256": "cc144774b09b50c78965b6c96cfb217fa5b3115fe67c8a02dcd3c467f5496195",
+    "recap_segments": [
+      {
+        "start_ms": 3133059,
+        "end_ms": 3134339,
+        "text": "烦死人"
+      },
+      {
+        "start_ms": 3134339,
+        "end_ms": 3136079,
+        "text": "来给各位大佬们弹幕"
+      },
+      {
+        "start_ms": 3136079,
+        "end_ms": 3138050,
+        "text": "老师们做一下本局游戏的复盘"
+      },
+      {
+        "start_ms": 3139850,
+        "end_ms": 3142970,
+        "text": "本机版行为为林是从"
+      },
+      {
+        "start_ms": 3144310,
+        "end_ms": 3145510,
+        "text": "神人阵营预言家"
+      },
+      {
+        "start_ms": 3145510,
+        "end_ms": 3146650,
+        "text": "6号女巫"
+      },
+      {
+        "start_ms": 3146650,
+        "end_ms": 3147850,
+        "text": "9号猎人"
+      },
+      {
+        "start_ms": 3147850,
+        "end_ms": 3149350,
+        "text": "11号守卫"
+      },
+      {
+        "start_ms": 3149350,
+        "end_ms": 3152340,
+        "text": "12号狼人阵营2号"
+      },
+      {
+        "start_ms": 3152340,
+        "end_ms": 3154000,
+        "text": "5号狼王"
+      },
+      {
+        "start_ms": 3154000,
+        "end_ms": 3156000,
+        "text": "10号傀儡4号"
+      },
+      {
+        "start_ms": 3156000,
+        "end_ms": 3159800,
+        "text": "本游戏为傀儡平民平民阵营一号3号"
+      },
+      {
+        "start_ms": 3159800,
+        "end_ms": 3160400,
+        "text": "7号"
+      },
+      {
+        "start_ms": 3160400,
+        "end_ms": 3162180,
+        "text": "8号首页首位"
+      },
+      {
+        "start_ms": 3162180,
+        "end_ms": 3166189,
+        "text": "即能通过狼队选择4号平民成为傀儡"
+      },
+      {
+        "start_ms": 3166189,
+        "end_ms": 3168410,
+        "text": "并击杀了9号女巫"
+      },
+      {
+        "start_ms": 3168410,
+        "end_ms": 3169910,
+        "text": "当夜9号女巫开毒"
+      },
+      {
+        "start_ms": 3169910,
+        "end_ms": 3170770,
+        "text": "8号平民"
+      },
+      {
+        "start_ms": 3170770,
+        "end_ms": 3173850,
+        "text": "8号九号双死预言家验证了7号玩家"
+      },
+      {
+        "start_ms": 3173850,
+        "end_ms": 3176280,
+        "text": "平民为好人身份晋升竞演环节"
+      },
+      {
+        "start_ms": 3176280,
+        "end_ms": 3177980,
+        "text": "6号预言家获得警徽"
+      },
+      {
+        "start_ms": 3177980,
+        "end_ms": 3180270,
+        "text": "在第一天的白天"
+      },
+      {
+        "start_ms": 3180270,
+        "end_ms": 3183060,
+        "text": "咳咳10号狼王选择自爆"
+      },
+      {
+        "start_ms": 3183060,
+        "end_ms": 3185060,
+        "text": "入夜守卫守护6号预言家"
+      },
+      {
+        "start_ms": 3185060,
+        "end_ms": 3186980,
+        "text": "狼队击杀6号预言家"
+      },
+      {
+        "start_ms": 3186980,
+        "end_ms": 3187820,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 3187820,
+        "end_ms": 3190720,
+        "text": "预言家验证2号玩家为狼人身份"
+      },
+      {
+        "start_ms": 3190720,
+        "end_ms": 3192300,
+        "text": "在第二天的白天"
+      },
+      {
+        "start_ms": 3192300,
+        "end_ms": 3194180,
+        "text": "狼队直接交牌游戏结束"
+      },
+      {
+        "start_ms": 3194180,
+        "end_ms": 3195280,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 3195280,
+        "end_ms": 3197220,
+        "text": "以上是我们今天第二局版型为零"
+      },
+      {
+        "start_ms": 3197220,
+        "end_ms": 3198140,
+        "text": "侍从的全部内容"
+      },
+      {
+        "start_ms": 3198140,
+        "end_ms": 3200200,
+        "text": "非常感谢各位弹幕老师的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          8,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天狼队交牌后游戏结束。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "第2天狼队交牌后游戏结束。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1pSuN62Ekr",
   "source_sha256": "3f59c9e5b4a8eeb127a91d371b15e92c2e4e56f225e6b64113110bab253d11f3",
   "dossier_sha256": "16a959255afb134f9c6bcd7d9579763f7ed25a4e1eb89ddf4fa397f52e5dd05e",
-  "generated_at": "2026-10-24T23:21:27+08:00",
+  "generated_at": "2026-10-25T04:08:41+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1pSuN62Ekr-p01-g02",
@@ -127,13 +492,23 @@
         "kind": "sheriff",
         "number": 2,
         "stage": "pk",
-        "status": "partial",
+        "status": "complete",
         "candidates": [
           6,
           10,
           12
         ],
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          11
+        ],
         "votes": [
           {
             "voter": 1,
@@ -183,7 +558,7 @@
         ],
         "tied_candidates": [],
         "winner": null,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [
@@ -210,7 +585,7 @@
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

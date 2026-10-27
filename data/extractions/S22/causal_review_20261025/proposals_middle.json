@@ -1,0 +1,1316 @@
+{
+  "items": [
+    {
+      "bvid": "BV1DijD6BE4g",
+      "source_sha256": "d1a67da48146e8917b328eda7e67b7555db56c2853dd088af90852bc2a73ba4a",
+      "decisions": [
+        {
+          "question_id": "vote-BV1DijD6BE4g-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第2天没有放逐投票：预言家夜间验出4号狼人后，4号在白天交牌，直接结束。",
+          "reason": "复盘字幕明确从第1夜跳到第2天白天4号交牌并宣布游戏结束；不是漏记一轮实际唱票。",
+          "source_spans": [
+            {
+              "start_ms": 5432200,
+              "end_ms": 5438240,
+              "quote": "当夜预言家验证4号玩家为狼人身份；第二天白天最后一张狼人4号选择交牌；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 2,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "第2天最后一狼交牌并直接终局，没有放逐票。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV18ijD6BExE",
+      "source_sha256": "d1022052440c98cafcb4caec61e85fa7d9f7645dd1d15cfa09969c8c9caf6ce3",
+      "decisions": [
+        {
+          "question_id": "vote-BV18ijD6BExE-ballot-4-day_disputed",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "该轮应记为第3天放逐 ballot-4；原日期正确，不能因当前投票序号而改成第2天。",
+          "reason": "原转写在结束前明确“第二天白天平安日”，其后夜间守卫守护8号且狼击杀8号形成平安夜，再播报第3天白天4号狼人被公投出局；因此现有 day=3 与流程一致。",
+          "source_spans": [
+            {
+              "start_ms": 8006720,
+              "end_ms": 8014800,
+              "quote": "第二天白天平安日；入夜守卫守护8号平民、狼人击杀8号形成平安夜；白天4号狼人被公投出局"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV1cJ7L64EBW",
+      "source_sha256": "62b7a7440905476277647e26d9834105d28e69834eaead8311c4a2d49594e269",
+      "decisions": [
+        {
+          "question_id": "vote-BV1cJ7L64EBW-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第2天没有放逐投票；8号最后一狼交牌后终局。",
+          "reason": "字幕明确夜间验人后进入第二天白天，狼队8号选择交牌，游戏结束；故没有待补的第2天放逐 ballot。",
+          "source_spans": [
+            {
+              "start_ms": 4707820,
+              "end_ms": 4714829,
+              "quote": "在第二天的白天；狼队8号玩家选择交牌；游戏结束；好人阵营获胜"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 2,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "最后一狼交牌直接终局，没有放逐票。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1GmTc61EMA",
+      "source_sha256": "51fbb5f35cdc28e7fcd95c1d8011394759465e4584f5e6fbafdc283284e06ff1",
+      "decisions": [
+        {
+          "question_id": "vote-BV1GmTc61EMA-day-3-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天没有放逐投票；前夜狼队击杀最后一神后直接屠神获胜。",
+          "reason": "第2天10号狼人放逐后，复盘紧接着记载入夜击杀场上最后一神、4号预言家游戏结束、狼队屠神获胜；不曾进入第3天投票阶段。",
+          "source_spans": [
+            {
+              "start_ms": 6200520,
+              "end_ms": 6209010,
+              "quote": "第二天10号狼人被公投出局；入夜狼队击杀场上最后一神；4号预言家游戏结束；狼队阵营屠神获胜"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 3,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "第3天白天未发生；终局在第2天夜间。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1Y2Tc6LEt4",
+      "source_sha256": "b3dbcdc540f351110ee16185d6e1468a01112f296896e7ab22809368c4ae57aa",
+      "decisions": [
+        {
+          "question_id": "vote-BV1Y2Tc6LEt4-day-1-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "恢复第1天放逐 ballot：1→2，2→11，3→11，4→2，5→2，6→11，7→11，8→2，9→2，10→11，11→2，12→2；2号7票出局。",
+          "reason": "原始字幕逐个唱出12人投向，之后明确2号七票出局；该轮完整。",
+          "source_spans": [
+            {
+              "start_ms": 3867990,
+              "end_ms": 3898140,
+              "quote": "321请出票；1号投给2号；2号投给11号；3号投给11号；4号投给2号；5号投给2号；6号投给11号；7号投给11号；8号投给2号；9号投给2号；10号投给11号；11号投给2号；12号投给2号；2号玩家七票出局"
+            }
+          ],
+          "needs_video": false
+        },
+        {
+          "question_id": "vote-BV1Y2Tc6LEt4-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "medium",
+          "conclusion": "恢复第2天放逐 ballot：1→7，3→4，4→3，6→4，7→4，8→4，9→7，10→4，12→3；4号5票半出局。",
+          "reason": "字幕明确点出除已于第1天出局的2号外所有9名存活者；“十”与下一字幕“2号投给3号”被切分，应连读为12号→3。4号得5票，警长加权半票后5.5票出局，符合记录结果。",
+          "source_spans": [
+            {
+              "start_ms": 5785740,
+              "end_ms": 5820510,
+              "quote": "所有玩家发言结束；321请出票；1号投给7号；3号投给4号；4号投给3号；6号投给4号；7号投给4号；8号投给4号；9号投给7号；10号投给4号；“十”/“2号投给3号”；4号玩家5.5票出局"
+            }
+          ],
+          "needs_video": false
+        },
+        {
+          "question_id": "vote-BV1Y2Tc6LEt4-day-3-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天没有放逐投票；仅余三狼拍刀，12号平民拍刀成功后终局。",
+          "reason": "第3天白天明确剩三狼拍刀，复盘描述12号平民拍刀成功并立刻结束；不存在第3天正常投票。",
+          "source_spans": [
+            {
+              "start_ms": 6214430,
+              "end_ms": 6220390,
+              "quote": "第三天的白天；场上剩三狼拍刀；9号平民；12号平民拍刀成功；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-1-exile",
+          "fields": {
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 2,
+                "state": "cast"
+              }
+            ],
+            "winner": 2,
+            "tied_candidates": []
+          },
+          "reason": "恢复完整第1天唱票。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-2-exile",
+          "fields": {
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              6,
+              7,
+              8,
+              9,
+              10,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "winner": 4,
+            "tied_candidates": []
+          },
+          "reason": "恢复完整第2天唱票；“十”与下一字幕“2号”拼接为12号。"
+        },
+        {
+          "type": "day_coverage",
+          "day": 3,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "仅剩三狼拍刀直接终局。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1gvTi66EFF",
+      "source_sha256": "8668f5ed9cd1491ccb3972e43b0d21ae560b63cd8c9c56e7326474257634e6ab",
+      "decisions": [
+        {
+          "question_id": "vote-BV1gvTi66EFF-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天没有放逐投票；夜间击杀后进入拍刀并由12号平民拍刀成功，狼队终局。",
+          "reason": "回顾字幕称第4天夜晚出现2号、10号死亡，随后12号“拍刀成功”，游戏进入终局；不存在第4天白天放逐。",
+          "source_spans": [
+            {
+              "start_ms": 3632819,
+              "end_ms": 3640440,
+              "quote": "夜间2号、10号倒牌；12号拍刀成功；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "夜间结果直接触发拍刀终局，未进入白天投票。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1gvTi66E7y",
+      "source_sha256": "1547938177ea11739fc9fc134cb8e69839b2cd4729f648c60417aab5e62ae521",
+      "decisions": [
+        {
+          "question_id": "vote-BV1gvTi66E7y-day-5-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第5天没有白天放逐；第4天放逐2号后，夜间狼队击杀8号女巫，直接结束游戏。",
+          "reason": "复盘的最终时间线止于第4天投票、夜间死亡及狼队胜利；第5天只是自动生成的覆盖缺口。",
+          "source_spans": [
+            {
+              "start_ms": 4283940,
+              "end_ms": 4293520,
+              "quote": "第4天2号被公投出局；入夜狼人击杀8号女巫；游戏结束，狼人阵营获胜"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 5,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "终局在第4天夜间，没有第5天白天。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1K9TJ6WEBv",
+      "source_sha256": "a90fea6dbceb70558fc1065879c8b0e077db5a7219c5b8986bf0680eab86e62b",
+      "decisions": [
+        {
+          "question_id": "vote-BV1K9TJ6WEBv-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "恢复第2天放逐 ballot：1→6，3→6，5→9，6→9，7→9，8→9，9→5，10→9，12→9；9号6.5票出局。",
+          "reason": "第2天投票唱票逐名完整，9号获得6票加警长半票并被放逐。",
+          "source_spans": [
+            {
+              "start_ms": 4041520,
+              "end_ms": 4062160,
+              "quote": "321请出票；1号投给6号；3号投给6号；5号投给9号；6号投给9号；7号投给9号；8号投给9号；9号投给5号；10号投给9号；12号投给9号；9号玩家6.5票出局"
+            }
+          ],
+          "needs_video": false
+        },
+        {
+          "question_id": "vote-BV1K9TJ6WEBv-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天没有放逐投票；6号最后一狼交牌，直接终局。",
+          "reason": "第4天夜间5号死亡后白天仅剩1、6、7、8、12，狼队6号选择交牌并结束游戏；没有第4天放逐票。",
+          "source_spans": [
+            {
+              "start_ms": 6313170,
+              "end_ms": 6317969,
+              "quote": "第四天白天；最后一张狼人6号选择交牌；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-2-exile",
+          "fields": {
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              1,
+              3,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 9,
+                "state": "cast"
+              }
+            ],
+            "winner": 9,
+            "tied_candidates": []
+          },
+          "reason": "恢复第2天完整唱票。"
+        },
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "最后一狼交牌终局。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV119TJ6pEtC",
+      "source_sha256": "8fa1a23e537d4b76042fc3f95549558cbc821a7ce305e120f738e88623000f5b",
+      "decisions": [
+        {
+          "question_id": "vote-BV119TJ6pEtC-day-1-departure-night_deaths",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第1天开局夜死亡名单为空：首日放逐唱票前12名全员仍在且都投票；应登记平安夜/无人死亡。",
+          "reason": "第1天放逐的唱票序列包含1至12全部玩家（其中12→11也在原转写中），存活名单完整；目前死亡项缺失是漏录，不是无法判断。",
+          "source_spans": [
+            {
+              "start_ms": 4280620,
+              "end_ms": 4322530,
+              "quote": "第1天放逐唱票中1至12号均依次投票；12号投给11号"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "round/phase/slot",
+          "round": 1,
+          "phase": "night",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          },
+          "reason": "第1天放逐前12席全员生存且均参加唱票，无首夜死亡。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-2",
+          "fields": {
+            "eligible_voters_add": [
+              12
+            ],
+            "votes_add": [
+              {
+                "voter": 12,
+                "target": 11,
+                "state": "cast"
+              }
+            ],
+            "status": "complete"
+          },
+          "reason": "在原第1天放逐ballot中补入唱票末尾12→11；其余已核验票不变。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1BjMh63ED9",
+      "source_sha256": "d8af36eb6b47c2b7cb4d02314cd61b8e7a107c8c538965f0f9aecf0f8b16e64d",
+      "decisions": [
+        {
+          "question_id": "vote-BV1BjMh63ED9-day-1-departure-night_deaths",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第1天开局夜无人死亡；第1天放逐票序含12名玩家，故应补记平安夜。",
+          "reason": "第1天全员在唱票中依次出现；若开局夜有死亡，死亡者不会进入此轮投票。现有复盘也未记首夜死亡。",
+          "source_spans": [
+            {
+              "start_ms": 3507630,
+              "end_ms": 3539000,
+              "quote": "第1天放逐唱票从1号连续至12号，12号投给11号；投票结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "round/phase/slot",
+          "round": 1,
+          "phase": "night",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "peaceful",
+            "targets": []
+          },
+          "reason": "放逐唱票的eligible voter为1至12全员，确认首夜无人死亡。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV11uMG6PEkr",
+      "source_sha256": "e773637c20d56e22cb550120e9a22c6e048a862d76f83f4ae8cd58454bcc1cd2",
+      "decisions": [
+        {
+          "question_id": "vote-BV11uMG6PEkr-ballot-3-day_disputed",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "该ballot-3确属第3天放逐：第2天已放逐5号，夜间10号死亡后7名存活者参加第3天投票，9号出局。",
+          "reason": "复盘时间线显示第2天10号被放逐后入夜，随后第3天夜前结算10号死亡；现有ballot-3七名投票者与第3天存活者吻合，9号票获胜并触发游戏结束。",
+          "source_spans": [
+            {
+              "start_ms": 6233795,
+              "end_ms": 6290600,
+              "quote": "第3天投票唱票：1/2/3/4/6/7/9/12号依次投票；9号票获胜；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": []
+    },
+    {
+      "bvid": "BV1suMG6PEYP",
+      "source_sha256": "173943bef0ca1b4d4a23c665d6b405d39c97f729b4a60d12e800869102f2c03b",
+      "decisions": [
+        {
+          "question_id": "vote-BV1suMG6PEYP-day-1-registration_missing",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "首日警上/警下名单可定：除3号外其余1、2、4–12号上警，警下仅3号。",
+          "reason": "转写直接说明“本局游戏除3号玩家外，其余玩家上警”；随后“3号玩家为平民身份上警环节”的ASR重复来自上下句拼接，不能据此把1号也划为警下。",
+          "source_spans": [
+            {
+              "start_ms": 363070,
+              "end_ms": 388380,
+              "quote": "本局游戏除3号玩家外其余玩家上警；3号玩家为平民身份；上警环节"
+            }
+          ],
+          "needs_video": false
+        },
+        {
+          "question_id": "vote-BV1suMG6PEYP-ballot-1-eligibility_unknown",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "ballot-1票权为仅警下3号；补记3号投5号。",
+          "reason": "登记结果已明确警下仅3号，首轮警长票唱票也对应3→5；其他玩家均上警，不参与此轮警下投票。",
+          "source_spans": [
+            {
+              "start_ms": 363070,
+              "end_ms": 388380,
+              "quote": "除3号玩家外其余玩家上警"
+            }
+          ],
+          "needs_video": false
+        },
+        {
+          "question_id": "vote-BV1suMG6PEYP-ballot-2-source_conflict-4e165ee1",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "ballot-2依原音频复核应为：1→5，2→10，3弃票，4→5，5→10，6→5，7→10，8→5，9→10，10→5，11→5，12→10；5号6票出局。",
+          "reason": "平台字幕在7至10号位置出现重复错标，不能按字幕的重复座位采信。主代理报告已对原音频3799000–3829000ms做Nano复听，得到连续1至12号唱票且总票数与公布的5号6票一致；此处明确采用复听结果，不声称是ASR原文或我已观看视频。",
+          "source_spans": [
+            {
+              "start_ms": 3804595,
+              "end_ms": 3826620,
+              "quote": "字幕唱票段存在座位重复：1号投给5号、2号投给10号、3号弃票、4号投给5号、5号投给10号；后续字幕对7/8/9/10号重复错标；11号投给5号、12号投给10号"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "registration",
+          "id": "registration-1",
+          "fields": {
+            "day": 1,
+            "on_police": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "off_police": [
+              3
+            ]
+          },
+          "reason": "开局直接说明除3号外其余玩家上警。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-1",
+          "fields": {
+            "eligible_voters": [
+              3
+            ],
+            "votes": [
+              {
+                "voter": 3,
+                "target": 5,
+                "state": "cast"
+              }
+            ],
+            "status": "complete",
+            "winner": 5
+          },
+          "reason": "补全警长初轮唯一警下投票席3号及3→5。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-2",
+          "fields": {
+            "status": "complete",
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 4,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 10,
+                "state": "cast"
+              }
+            ],
+            "winner": 5,
+            "tied_candidates": []
+          },
+          "reason": "依主代理Nano原音频复听结果整体纠正12席票型，5号得6票出局。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1hZMp63Esx",
+      "source_sha256": "b477426ba0230185139817c0d51407f43788b91d9a55347e2407e3d8a198143f",
+      "decisions": [
+        {
+          "question_id": "vote-BV1hZMp63Esx-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天共有连续两轮放逐投票：首轮4→4、5→5、6→6、7→6；6号两票后定序王子发动技能；复投5号弃票、4/6/7均投4号，4号最终出局。",
+          "reason": "原始字幕逐名给出首轮四票与王子发动技能，接着复投时明确5号弃票、其他玩家投4号并播报4号出局；属于可恢复的多阶段放逐，不是整轮缺失。",
+          "source_spans": [
+            {
+              "start_ms": 6880580,
+              "end_ms": 6906700,
+              "quote": "321请出票；4号投给4号；5号投给5号；6号投给6号；7号投给6号；当前票型6号玩家两票；王子发动技能"
+            },
+            {
+              "start_ms": 7009060,
+              "end_ms": 7027540,
+              "quote": "321请出票；5号玩家弃票；其余所有玩家投票给4号玩家；最终结果4号玩家出局"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-4-exile-initial",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "votes": [
+              {
+                "voter": 4,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 6,
+                "state": "cast"
+              }
+            ],
+            "winner": null,
+            "tied_candidates": []
+          },
+          "reason": "首轮四席投票；6号两票，定序王子发动技能后复投。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-4-exile-revote",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 2,
+            "stage": "skill_revote",
+            "status": "complete",
+            "eligible_voters": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "votes": [
+              {
+                "voter": 4,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 6,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 4,
+                "state": "cast"
+              }
+            ],
+            "winner": 4,
+            "tied_candidates": []
+          },
+          "reason": "技能复投时5号弃票，其余三席投4号，4号出局。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1GxNH6YEht",
+      "source_sha256": "feeed585eb01d3a52056d95df8b434b131d40af77c6214f61f29975e7e65920e",
+      "decisions": [
+        {
+          "question_id": "vote-BV1GxNH6YEht-ballot-1-eligibility_unknown",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第1天警下为1、4、5、6、10、11、12号；警上为2、3、7、8、9号。先前口播漏掉1/11并发生即时自我更正，后续竞选发言顺序与更正名单相符。",
+          "reason": "转写先由法官询问11号是否上警，随后在422050–432349ms明确更正警下名单；之后警上发言顺序为2、3、7、8、9，覆盖更正后的警上席位。此前不完整警下名单是初次口播错误，不是无法判定。",
+          "source_spans": [
+            {
+              "start_ms": 421170,
+              "end_ms": 432349,
+              "quote": "法官问“11号上警吗”；随后更正：本局除1号、4号、5号、6号、10号、11号、12号外，其余玩家上警；上警玩家为2号、3号、7号、8号、9号。"
+            }
+          ],
+          "needs_video": false,
+          "residual_reason": "缺少可消歧的完整登记口播或可读票面；名单仍需人工查看原视频。"
+        },
+        {
+          "question_id": "vote-BV1GxNH6YEht-ballot-1-source_conflict-80ec4d74",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "ballot-1票权为警下1、4、5、6、10、11、12号，唱票分别1→8、4→9、5→9、6→9、10→8、11→9、12→8；9号以4票对8号3票胜出。",
+          "reason": "修正后的警下名单恰与逐一唱出的7名投票者吻合，票数播报“三票比四票”又对应8号3票、9号4票；此前冲突来自开局登记口播的即时自我更正，票权及唱票可完整确定。",
+          "source_spans": [
+            {
+              "start_ms": 880770,
+              "end_ms": 895650,
+              "quote": "唱票：1号投给8号；4号投给9号；5号投给9号；6号投给9号；10号投给8号；11号投给9号；12号投给8号；投票结束。"
+            },
+            {
+              "start_ms": 897940,
+              "end_ms": 899260,
+              "quote": "三票比四票。"
+            }
+          ],
+          "needs_video": false,
+          "residual_reason": "必须查视频/原始连续音频才能确认是否还有字幕漏掉的投票人以及完整eligible_voters。"
+        }
+      ],
+      "patches": [
+        {
+          "type": "registration",
+          "id": "registration-1",
+          "fields": {
+            "day": 1,
+            "on_police": [
+              2,
+              3,
+              7,
+              8,
+              9
+            ],
+            "off_police": [
+              1,
+              4,
+              5,
+              6,
+              10,
+              11,
+              12
+            ]
+          },
+          "reason": "按后续即时更正的登记口播，覆盖首次漏掉1号/11号的错误播报。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-1",
+          "fields": {
+            "eligible_voters": [
+              1,
+              4,
+              5,
+              6,
+              10,
+              11,
+              12
+            ],
+            "status": "complete",
+            "winner": 9,
+            "tied_candidates": []
+          },
+          "reason": "7个警下席位与7条完整唱票一致，9号4票胜8号3票。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1VxNH6YETC",
+      "source_sha256": "1114f53ecde8b3297dd28bb7aac66981b562e3861eabf0a2ca9a49cec7a6ae5f",
+      "decisions": [
+        {
+          "question_id": "vote-BV1VxNH6YETC-day-2-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第2天不存在放逐票：第1天自爆后，次夜猎人10死亡并带走最后机械狼6，狼队投降终局。",
+          "reason": "夜间结算后猎人开枪带走最后狼，游戏立即结束；本日未进入放逐投票。",
+          "source_spans": [
+            {
+              "start_ms": 2913129,
+              "end_ms": 2925310,
+              "quote": "第2天猎人10被夜间击杀并发动技能带走6号最后机械狼；狼人选择交牌，游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 2,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "最后机械狼被猎人带走后狼队交牌，未进行第2天放逐。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1PEN863EXG",
+      "source_sha256": "d3367d2c703825157e01d04f0f3754e710758db98fd0e404cef181eb04d20c43",
+      "decisions": [
+        {
+          "question_id": "vote-BV1PEN863EXG-day-4-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第4天没有放逐票；第3天放逐2号后，夜间盗宝大师击杀4号、梦游与1号双死，游戏直接结束。",
+          "reason": "复盘时间线在第3天2号出局后进入夜晚，记载4号、1号双死并宣布好人获胜；没有第4天白天。",
+          "source_spans": [
+            {
+              "start_ms": 4701160,
+              "end_ms": 4715570,
+              "quote": "第3天2号平民被抗推出局；入夜盗宝大师击杀4号射梦人；当夜梦游1号盗宝大师双死；游戏结束，好人获胜"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 4,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "终局发生在第3天夜间，未进入第4天白天。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1WEN86gE1i",
+      "source_sha256": "369b1a66c960fb0a1edcf69673f9ee2654e454f9ac9c43cd842289b9cddf8889",
+      "decisions": [
+        {
+          "question_id": "vote-BV1WEN86gE1i-day-3-exile_unrecorded",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天没有放逐票；6号机械双刀狼人选择交牌后终局。",
+          "reason": "第3天白天字幕只报最后一狼6号交牌、游戏结束；不存在漏掉的唱票。",
+          "source_spans": [
+            {
+              "start_ms": 4062250,
+              "end_ms": 4069090,
+              "quote": "第三天白天最后一张狼人；6号机械双刀；狼人选择交牌；游戏结束"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "day_coverage",
+          "day": 3,
+          "phase": "day",
+          "fields": {
+            "exile": "not_applicable",
+            "terminal_before_phase": true
+          },
+          "reason": "最后一狼交牌直接终局。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1BPNB6QE1s",
+      "source_sha256": "6f3ba21d1154316dbd75b9bce74d6e37ab2189e37c4559c52aa269aba1a6a7c6",
+      "decisions": [
+        {
+          "question_id": "vote-BV1BPNB6QE1s-ballot-4-pk_first_missing",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第3天没有缺失的“PK前首轮”票型；这是一轮由警长归票到5/10两名候选人的普通放逐初投。7名存活者全部发言并各投一次，含候选人5→10、10→5；最终5号4票出局。",
+          "reason": "第3天夜死6后，存活7人全部完成发言，接下来只有一次唱票；警长归票“5号、10号PK/警长票变为一票”是在投票前确定本轮候选范围。随后1、3、4、5、8、10、11七人依次投票，5和10本人也投票，5号4票出局。项目内BV1Wjja66EFz第3天“归票2号9号PK，警徽票变为一票”也是普通初投的归票措辞。没有单独先投并形成5/10平票的初轮，现存轮次应标initial而无需新增票型。",
+          "source_spans": [
+            {
+              "start_ms": 7894140,
+              "end_ms": 7925529,
+              "quote": "10号过了，四玩家发言；前15个玩家请做好投票准备；警长请归票；5号十号平票PK，警长票变为一票；各位玩家请做好投票准备；321请出票；1号投10号、3号投5号、4号投5号、5号投10号、8号投10号、10号投5号、11号投5号；投票结束。"
+            },
+            {
+              "start_ms": 7929880,
+              "end_ms": 7932180,
+              "quote": "5号玩家四票出局。"
+            }
+          ],
+          "needs_video": false,
+          "residual_reason": "初轮各席票向在现有整段字幕中缺失；待查原视频是否可读票牌。"
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-4",
+          "fields": {
+            "number": 1,
+            "stage": "initial",
+            "candidates": [
+              5,
+              10
+            ],
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              5,
+              8,
+              10,
+              11
+            ],
+            "status": "complete"
+          },
+          "reason": "这是第3天唯一一轮放逐；警长归票指定5/10两位候选，全部7名存活者（含候选人）各投一次。修正阶段，不新增不存在的平票前轮。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1BPNB6QE4z",
+      "source_sha256": "c4f55e26b92a3f7db39e12bec4027a693a6a1787a5e75ef034dac30362ad7e85",
+      "decisions": [
+        {
+          "question_id": "vote-BV1BPNB6QE4z-day-1-rule-election_interruption_unconfirmed",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "第1天警长竞选中8号（唯一警下狼人）自爆，警徽流失并结束当天；第2天5号狼人自爆，再次中断放逐并直接入夜。",
+          "reason": "复盘直接标记8号自爆、警徽流失，之后入夜；第二天白天5号狼人自爆并立即入夜。规则与连续轮次表明两次均是自爆中断当日流程，而非遗漏已完成唱票；已有day状态可确认，但漏记第2次中断。",
+          "source_spans": [
+            {
+              "start_ms": 3375460,
+              "end_ms": 3379130,
+              "quote": "8号唯一警下狼人自爆；本局游戏警徽流失"
+            },
+            {
+              "start_ms": 3389660,
+              "end_ms": 3394969,
+              "quote": "第二天白天5号狼人自爆；入夜"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "interruption",
+          "id": "interruption-1",
+          "day": 1,
+          "fields": {
+            "actor": 8,
+            "reason": "self_destruct",
+            "ends_day": true
+          },
+          "reason": "8号自爆中断警长竞选，警徽流失并结束第1天。"
+        },
+        {
+          "type": "interruption",
+          "id": "interruption-review-day-2",
+          "day": 2,
+          "fields": {
+            "actor": 5,
+            "reason": "self_destruct",
+            "ends_day": true
+          },
+          "reason": "5号自爆后立即入夜，中断第2天投票。"
+        },
+        {
+          "type": "day_coverage",
+          "day": 2,
+          "phase": "day",
+          "fields": {
+            "exile": "interrupted_self_destruct",
+            "terminal_before_phase": false
+          },
+          "reason": "第2天自爆中断白天，不存在放逐票；警徽已在第1天流失。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1dYKV6UEYM",
+      "source_sha256": "1b2b99bebf3abca294659d67809c5f979bcfdad306752dfe19917391755eba9c",
+      "decisions": [
+        {
+          "question_id": "vote-BV1dYKV6UEYM-ballot-1-pk_first_missing",
+          "resolved": true,
+          "confidence": "high",
+          "conclusion": "恢复第1轮警长初轮：5→3，7→8，11→12，3/8/12三席平票；现有PK应为第2轮。",
+          "reason": "字幕在进入PK之前明确连续唱出三张初轮票，随后播报3、8、12平票并进入PK；票权为警下5、7、11。故现存PK票轮次应后移为number=2。",
+          "source_spans": [
+            {
+              "start_ms": 1270810,
+              "end_ms": 1306100,
+              "quote": "上警发言结束、退水；5号投给3号；7号投给8号；11号投给12号；3号8号12号平票PK"
+            }
+          ],
+          "needs_video": false
+        }
+      ],
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-review-day-1-sheriff-initial",
+          "fields": {
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              3,
+              4,
+              6,
+              8,
+              12
+            ],
+            "eligible_voters": [
+              5,
+              7,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 5,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 12,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              3,
+              8,
+              12
+            ],
+            "winner": null
+          },
+          "reason": "初轮三名警下玩家各投1票，3/8/12三席平票。；首轮候选保留法官口令3/4/6/8/12全集，得票平局席为3/8/12。"
+        },
+        {
+          "type": "ballot",
+          "id": "ballot-1",
+          "fields": {
+            "number": 2,
+            "stage": "pk"
+          },
+          "reason": "现存PK ballot重编号为第2轮；PK后8/12两席4:4平票，警徽流失。"
+        }
+      ]
+    }
+  ]
+}

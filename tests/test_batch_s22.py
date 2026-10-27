@@ -100,6 +100,13 @@ class BatchS22Tests(unittest.TestCase):
         self.assertTrue(all(s["role"] is None for s in value["seats"][1:]))
         self.assertEqual(value["rounds"], [])
 
+    def test_treasure_master_is_wolf_aligned_when_batch_building_dossier(self):
+        entry = {**self.entry(), "board": "treasure_master"}
+        value, _, _ = batch.build_dossier(entry, {
+            "seats": [{"seat": 12, "role": "盗宝大师"}], "rounds": []})
+        self.assertEqual(batch.faction_for("盗宝大师"), "werewolf")
+        self.assertEqual(value["seats"][11]["faction"], "werewolf")
+
     def test_two_shots_in_one_slot_are_preserved_for_review_not_overwritten(self):
         extracted = {"seats": [{"seat": 1, "role": "猎人"}], "rounds": [{"number": 1, "night": [], "day": [
             {"slot": "hunter_shot", "action": "shoot", "actor": 1, "targets": [2], "result": None},

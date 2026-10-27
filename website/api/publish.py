@@ -16,8 +16,9 @@ import psycopg
 from . import publisher
 
 
-def _preflight(root: Path, season: str, sample: str | None) -> dict:
-    entries, source_hash, rules_hash = publisher.load_publication(root, season, sample)
+def _preflight(root: Path, season: str | list[str], sample: str | None) -> dict:
+    seasons = publisher.publication_seasons(season)
+    entries, source_hash, rules_hash = publisher.load_release(root, seasons, sample)
     names = {seat["name"] for item in entries for seat in item["dossier"].get("seats", [])}
     identities = {
         name: str(uuid.uuid5(publisher.PERSON_NAMESPACE, name.strip().casefold())) for name in names
@@ -30,10 +31,10 @@ def _preflight(root: Path, season: str, sample: str | None) -> dict:
         ballots += doc["ballot_count"]
         votes += sum(len(ballot["votes"]) for ballot in doc["voting"]["ballots"])
         seats += len(doc["seats"])
-    return {"valid": True, "season": season, "game_count": len(entries), "seat_count": seats,
+    return {"valid": True, "seasons": seasons, "game_count": len(entries), "seat_count": seats,
             "round_count": rounds, "ballot_count": ballots, "vote_count": votes,
             "source_hash": source_hash, "rules_hash": rules_hash,
-            "release_id": publisher._release_id(season, source_hash, rules_hash)}
+            "release_id": publisher._release_id("_".join(seasons), source_hash, rules_hash)}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -44,13 +45,16 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path,
                         default=Path(os.environ.get("MASTERS_SOURCE_ROOT", publisher.DEFAULT_SOURCE_ROOT)))
-    parser.add_argument("--season", default="S22")
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--season", default=None)
+    selection.add_argument("--seasons", nargs="+", help="publish all selected seasons in one atomic release")
     parser.add_argument("--sample", metavar="BVID", help="publish only the selected sample video")
     parser.add_argument("--list", action="store_true", help="list current in-scope game IDs")
     parser.add_argument("--activate", metavar="RELEASE", help="activate an existing immutable release")
     parser.add_argument("--check", action="store_true", help="validate source and publication data without writes")
     parser.add_argument("--debug", action="store_true", help="print a local traceback on command failure")
     args = parser.parse_args(argv)
+    args.season = args.seasons or args.season or "S22"
     if args.sample and not re.fullmatch(r"BV[0-9A-Za-z]{10}", args.sample):
         parser.error("--sample expects a valid BVID")
     if args.activate and (args.sample or args.check or args.list):

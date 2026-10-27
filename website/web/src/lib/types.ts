@@ -23,9 +23,11 @@ export type Metric = {
   rate: number | null;
   excluded: number;
   game_ids: string[];
+  samples?: { game_id: string; positive: number; negative: number }[];
 };
 export type PlayerPhoto = { url: string; season: string; source_url: string; source_date: string };
 export type PlayerLedgerEntry = {
+  season?: string;
   game_id: string;
   date: string;
   game_number: number | null;
@@ -38,6 +40,21 @@ export type PlayerLedgerEntry = {
   points: number | null;
   cumulative_points: number;
   pending_count: number;
+};
+export type RankingEntry = { id: string; name: string; rank: number; tied: boolean; value: number; sample_count: number; appearances: number; effective_game_count?: number };
+export type MetricRanking = { rank: number; total: number; tied: boolean };
+export type PlayerRankingKey = "points" | "appearances" | "attendance" | "total_win_rate" | "wins" | "losses" | "werewolf_win_rate" | "good_win_rate" | "sheriff_registration_rate" | "seer_follow_rate" | "sheriff_seer_vote_rate";
+export type PlayerBoardStats = {
+  code: string | null;
+  name: string | null;
+  appearances: number;
+  wins: number;
+  losses: number;
+  pending_games: number;
+  win_rate: number | null;
+  metric: Metric;
+  ranking: MetricRanking | null;
+  ranking_board: RankingEntry[];
 };
 export type PlayerStats = {
   appearances: number;
@@ -54,7 +71,10 @@ export type PlayerStats = {
   sheriff_registration_rate: Metric;
   seer_follow_rate: Metric;
   sheriff_seer_vote_rate: Metric;
-  roles: { role: string; appearances: number; wins: number; losses: number; pending_games: number; win_rate: number | null }[];
+  rankings?: Partial<Record<PlayerRankingKey, MetricRanking | null>>;
+  ranking_boards?: Partial<Record<PlayerRankingKey, RankingEntry[]>>;
+  roles: { role: string; appearances: number; wins: number; losses: number; pending_games: number; win_rate: number | null; ranking?: MetricRanking | null; ranking_board?: RankingEntry[]; metric?: Metric }[];
+  boards?: PlayerBoardStats[];
   ledger: PlayerLedgerEntry[];
   notes: string[];
 };
@@ -94,6 +114,8 @@ export type PageResult<T> = {
 export type GameEvent = {
   inferred?: boolean;
   inference_note?: string;
+  invalidated?: boolean;
+  blocked_by_game_end?: boolean;
   resolved_targets?: number[];
   slot?: string | null;
   slot_label?: string | null;
@@ -173,7 +195,7 @@ export type PlayerDetail = {
   games: GameSummary[];
   release_id: string;
   stats?: PlayerStats;
-  scope?: { season: string; phase: string; games: number };
+  scope?: { season: string; phase: string; games: number; season_start?: string; season_end?: string; seasons?: string[] };
   available_seasons?: string[];
   photo?: PlayerPhoto | null;
 };
@@ -211,19 +233,21 @@ export type BluffReview = {
   release_id: string;
   analytics_version: number;
   season: string;
-  status: "all" | "pending";
+  status: "all" | "pending" | "assistant_pending";
   player: string;
   inference_version: string | null;
-  summary: { games: number; wolf_appearances: number; identified_bluffs: number; successes: number; pending: number };
+  summary: { games: number; wolf_appearances: number; identified_bluffs: number; successes: number; pending: number; assistant_pending?: number; reviewed_games?: number | null };
   notes: string[];
   items: {
     review_id: string; source_fingerprint: string; game_id: string; date: string; game_number: number | null; bvid: string | null;
     player_id: string; seat: number; name: string; physical_role: string; claimed_role: string | null;
     decision: "yes" | "no" | "uncertain"; confidence: "high" | "medium" | "low";
     claim_day: 1 | 2 | "later" | null; first_day_claim: boolean | null; decision_note: string; verification_status: string;
-    evidence: { kind: string; text: string; start_ms?: number; end_ms?: number; url?: string; interpretation?: string }[];
+    actual_claim_day?: number | null;
+    evidence: { kind: string; text: string; start_ms?: number; end_ms?: number; url?: string; image_url?: string; interpretation?: string }[];
     success: boolean | null; success_reasons: { kind: string; text: string; target?: number }[];
     review_questions: string[]; needs_review: boolean;
+    requires_user_review?: boolean; assistant_pending?: boolean; review_stage?: string | null;
   }[];
 };
 export type Leaderboard = {
@@ -239,6 +263,8 @@ export type Leaderboard = {
 };
 export type Stats = {
   release_id: string;
+  available_seasons: string[];
+  scope: { season_start: string; season_end: string; seasons: string[] };
   game_count: number;
   roles: RoleCount[];
   boards: {

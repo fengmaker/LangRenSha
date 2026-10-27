@@ -8,6 +8,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import batch_s22 as batch
+from formal_entry import make_entry
+from game_records import ReviewError, validate_batch
 from s22_inference_review import active_scope_entries, semantic_issues, changed_value, later_rule_alignment_valid
 
 
@@ -16,6 +18,19 @@ def event(slot, action, actor=None, targets=()):
 
 
 class InferenceContentTests(unittest.TestCase):
+    def test_historical_replay_can_read_old_good_thief_but_current_validation_rejects_it(self):
+        before = make_entry("treasure_master", "2026-08-21", 2)
+        before["seats"][0].update(role="盗宝大师", faction="good")
+        with self.assertRaisesRegex(ReviewError, "身份与阵营不一致"):
+            changed_value(before, [])
+
+        corrected = changed_value(before, [{"kind": "seat", "seat": 1,
+            "fields": {"faction": "werewolf"}}], allow_legacy_treasure_faction=True)
+        self.assertEqual(corrected["seats"][0]["faction"], "werewolf")
+        validate_batch(corrected, check_rules=False)
+        with self.assertRaisesRegex(ReviewError, "身份与阵营不一致"):
+            validate_batch(before, check_rules=False)
+
     def test_later_sourced_revision_does_not_rewrite_or_bypass_historic_hashes(self):
         real_root = Path(__file__).resolve().parents[1]
         sample = real_root / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json"
@@ -76,6 +91,25 @@ class InferenceContentTests(unittest.TestCase):
         issues = "；".join(semantic_issues(value))
         self.assertIn("同夜使用两药", issues)
         self.assertIn("一次性witch_poison重复", issues)
+
+    def test_treasure_master_cannot_take_knife_while_wolf_king_remains_and_unknown_departure_stays_unresolved(self):
+        value = {"board": "treasure_master", "seats": [
+            {"seat": 1, "role": "盗宝大师", "faction": "werewolf"},
+            {"seat": 2, "role": "狼人", "faction": "werewolf"},
+            {"seat": 3, "role": "狼王", "faction": "werewolf"}], "rounds": [
+                {"number": 1, "night": [event("wolf_attack", "forbidden")], "day": [
+                    event("night_deaths", "peaceful"), event("exile_result", "exile", targets=[2]),
+                    event("self_destruct", "none"), event("hunter_shot", "unavailable"),
+                    event("wolf_king_shot", "unavailable"), event("masked_delayed_death", "not_triggered")]},
+                {"number": 2, "night": [event("wolf_attack", "attack", 1, [4])], "day": []}]}
+        self.assertTrue(any("狼王" in issue for issue in semantic_issues(value)))
+
+        value["rounds"][0]["day"][0] = event("night_deaths", "unknown")
+        self.assertEqual(semantic_issues(value), [])
+
+        value["rounds"][0]["day"][0] = event("night_deaths", "peaceful")
+        value["rounds"][0]["day"][1] = event("exile_result", "exile", targets=[2, 3])
+        self.assertEqual(semantic_issues(value), [])
 
     def test_departed_target_and_repeated_night_death_are_rejected(self):
         value = {"rounds": [

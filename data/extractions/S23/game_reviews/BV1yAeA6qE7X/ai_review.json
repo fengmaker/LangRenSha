@@ -1,0 +1,637 @@
+{
+  "bvid": "BV1yAeA6qE7X",
+  "reviewer": "ai",
+  "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引30正赛：阅读连续复盘、核对逐日投票并目视查看 12 席姓名与实际身份。可直接确认的票数已补；仍未能从字幕还原的保留partial。；日夜复核追加3项原文支持的更正",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "翼风",
+        "2": "Moony",
+        "3": "二妖",
+        "4": "猫儿曼",
+        "5": "耿许儿",
+        "6": "陈俊洁",
+        "7": "小苍",
+        "8": "圈圈",
+        "9": "笑笑",
+        "10": "华仔仔",
+        "11": "Happy",
+        "12": "李舒服"
+      },
+      "reasoning": "逐席核对画面姓名牌，空缺处结合本局 roster 与姓名牌补全。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "狼人",
+        "2": "平民",
+        "3": "诡术师",
+        "4": "定序王子",
+        "5": "魔术师",
+        "6": "狼人",
+        "7": "狼人",
+        "8": "预言家",
+        "9": "平民",
+        "10": "平民",
+        "11": "平民",
+        "12": "女巫"
+      },
+      "after": {
+        "1": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "2": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "3": {
+          "role": "诡术师",
+          "faction": "good"
+        },
+        "4": {
+          "role": "定序王子",
+          "faction": "good"
+        },
+        "5": {
+          "role": "魔术师",
+          "faction": "good"
+        },
+        "6": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "7": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "8": {
+          "role": "预言家",
+          "faction": "good"
+        },
+        "9": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "10": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "11": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "12": {
+          "role": "女巫",
+          "faction": "good"
+        }
+      },
+      "reasoning": "按画面实际身份牌核对角色和阵营；黄色解说/玩家自称没有覆盖底牌。混血儿目标和对齐阵营分别记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": "good",
+      "after": "good",
+      "reasoning": "复盘明确给出阵营胜方。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5954660,
+          "end_ms": 5956170,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting_review",
+      "before": "baseline.voting.json",
+      "after": "voting.reviewed.json",
+      "reasoning": "把原始报票序列与baseline比较。#30补警长首轮获徽8；#31将两张可确认候选票归入首轮警长票，胜者7；#32 day3公布的最后一票按第四天记录，群组cue明确余下票投1。其他不完整票不推定。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1828850,
+          "end_ms": 1831280,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1831280,
+          "end_ms": 1832660,
+          "quote": "一号投给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3930860,
+          "end_ms": 3932300,
+          "quote": "2号投给3号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5441310,
+          "end_ms": 5443070,
+          "quote": "2号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5450780,
+          "end_ms": 5452440,
+          "quote": "12号投给11号"
+        }
+      ]
+    },
+    {
+      "field": "final_primary_crosscheck_20261026",
+      "before": "代理候选或旧结果状态与连续原文仍有差异",
+      "after": "撤销“首日放逐好人3所以成功”的错误结论：裁判明确3号诡术师为狼人，首轮高票1又被王子重投推翻，按最终放逐计，6号悍跳未成功。",
+      "reasoning": "撤销“首日放逐好人3所以成功”的错误结论：裁判明确3号诡术师为狼人，首轮高票1又被王子重投推翻，按最终放逐计，6号悍跳未成功。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+          "start_ms": 5907400,
+          "end_ms": 5924530,
+          "quote": "平安夜冤家\n验证了10号玩家为好人身份上警环节\n8号预言家获得警徽\n第一天白天一号玩家高票4号定序\n王子翻牌之后\n3号鬼术师被公投出局\n入夜魔术师更换了5号自己和6号狼人的号码"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "deaths",
+        "targets": [
+          6,
+          8
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5925650,
+          "end_ms": 5927170,
+          "quote": "实际6号中毒出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5927170,
+          "end_ms": 5928670,
+          "quote": "狼人击杀8号预言家"
+        }
+      ]
+    },
+    {
+      "field": "rounds[3].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          4
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5941340,
+          "end_ms": 5942980,
+          "quote": "狼人击杀4号定局王子"
+        }
+      ]
+    },
+    {
+      "field": "rounds[4].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          5
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5949770,
+          "end_ms": 5951460,
+          "quote": "狼人击杀5号魔术师"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].night.witch_save",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "save",
+        "targets": [
+          11
+        ]
+      },
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5904270,
+          "end_ms": 5907400,
+          "quote": "结果狼人击杀11号平民女巫开药解救星程"
+        }
+      ]
+    },
+    {
+      "id": "primary-20261026-fixed-role-factions",
+      "field": "seats.faction",
+      "before": [
+        {
+          "seat": 3,
+          "faction": "good"
+        }
+      ],
+      "after": [
+        {
+          "seat": 3,
+          "faction": "werewolf"
+        }
+      ],
+      "reasoning": "底牌已核实后，固定身份依版型规则所属胜利阵营：假面、诡术师、狼人及九尾狐为狼人方；本板其他固定好人角色为好人方。混血儿须随榜样，本次不据固定身份覆盖。",
+      "rule_basis": {
+        "path": "config/S22_formal_rules.json",
+        "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+        "s23_cases": "config/S23_review_rules.json"
+      }
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        12
+      ],
+      "roles": [
+        "女巫"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        4
+      ],
+      "roles": [
+        "定序王子"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        2,
+        9,
+        10,
+        11
+      ],
+      "roles": [
+        "平民"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        1,
+        6,
+        7
+      ],
+      "roles": [
+        "狼人"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        3
+      ],
+      "roles": [
+        "诡术师"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        8
+      ],
+      "roles": [
+        "预言家"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        5
+      ],
+      "roles": [
+        "魔术师"
+      ],
+      "reasoning": "同一画面的实际角色竖牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1yAeA6qE7X/BV1yAeA6qE7X_05848.450.png",
+          "frame_time_ms": 5848450,
+          "quote": "画面侧栏：1狼人、2平民、3诡术师、4定序王子、5魔术师、6狼人、7狼人、8预言家、9平民、10平民、11平民、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 6,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "6号狼人本人公开自称，未退水；8号真预言家拿徽。首日先高票1后定序王子翻牌重投，最终公投3号诡术师，3号属于狼人，非好人，因此不满足成功条件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 817730,
+          "end_ms": 819810,
+          "quote": "6号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 823810,
+          "end_ms": 828030,
+          "quote": "又是预言家牌验的3号玩家是一张金水牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 830230,
+          "end_ms": 832160,
+          "quote": "验的三是金水"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1478680,
+          "end_ms": 1480440,
+          "quote": "6号玩家如果最后退水"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1825530,
+          "end_ms": 1828850,
+          "quote": "请从2号四号六号八号当中选出本游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+          "start_ms": 5907400,
+          "end_ms": 5924530,
+          "quote": "平安夜冤家\n验证了10号玩家为好人身份上警环节\n8号预言家获得警徽\n第一天白天一号玩家高票4号定序\n王子翻牌之后\n3号鬼术师被公投出局\n入夜魔术师更换了5号自己和6号狼人的号码"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:21:00Z",
+  "resolved_followups": [
+    {
+      "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+      "item": "复查6号817730..896310的查验自称、退水及是否构成尝试。",
+      "resolved": "已核本人首日公开预言家自称；6号后来仍列入最终警长候选，所谓退水是他人条件句。6号未获徽，但首日放逐好人3号，悍跳尝试成立且按规则成功。",
+      "remaining_items": [],
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 817730,
+          "end_ms": 819810,
+          "quote": "6号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 823810,
+          "end_ms": 828030,
+          "quote": "又是预言家牌验的3号玩家是一张金水牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 830230,
+          "end_ms": 832160,
+          "quote": "验的三是金水"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1478680,
+          "end_ms": 1480440,
+          "quote": "6号玩家如果最后退水"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1825530,
+          "end_ms": 1828850,
+          "quote": "请从2号四号六号八号当中选出本游戏警长"
+        }
+      ]
+    }
+  ],
+  "final_primary_review": {
+    "reviewer": "ai",
+    "updated_at_utc": "2026-10-26T05:09:13.701534+00:00",
+    "conclusion": "撤销“首日放逐好人3所以成功”的错误结论：裁判明确3号诡术师为狼人，首轮高票1又被王子重投推翻，按最终放逐计，6号悍跳未成功。",
+    "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+    "user_confirmed": false
+  },
+  "phase_findings": [
+    {
+      "id": "phase-30-night-1",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5907400,
+          "end_ms": 5908480,
+          "quote": "平安夜冤家"
+        }
+      ]
+    },
+    {
+      "id": "phase-30-night-2",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "死者座位：6,8",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5925650,
+          "end_ms": 5927170,
+          "quote": "实际6号中毒出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5927170,
+          "end_ms": 5928670,
+          "quote": "狼人击杀8号预言家"
+        }
+      ]
+    },
+    {
+      "id": "phase-30-night-3",
+      "round": 3,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[3].day.night_deaths",
+      "title": "第3轮夜间死亡结算",
+      "conclusion": "死者座位：4",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5941340,
+          "end_ms": 5942980,
+          "quote": "狼人击杀4号定局王子"
+        }
+      ]
+    },
+    {
+      "id": "phase-30-night-4",
+      "round": 4,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[4].day.night_deaths",
+      "title": "第4轮夜间死亡结算",
+      "conclusion": "死者座位：5",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5949770,
+          "end_ms": 5951460,
+          "quote": "狼人击杀5号魔术师"
+        }
+      ]
+    },
+    {
+      "id": "target-BV1yAeA6qE7X-r1-witch_save-5",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].night.witch_save",
+      "title": "D1夜 witch_save目标复核",
+      "conclusion": "行动目标座位：11",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5904270,
+          "end_ms": 5907400,
+          "quote": "结果狼人击杀11号平民女巫开药解救星程"
+        }
+      ]
+    }
+  ]
+}

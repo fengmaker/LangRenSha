@@ -1,0 +1,133 @@
+{
+  "bvid": "BV1ZmHX6iEcx",
+  "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3031730,
+    "end_ms": 3120590,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1狼刀4民被救、验7狼；D1 7狼自爆。N2狼刀12女巫，女巫毒5假面但假面免疫；舞者让2狼出局，D2 2/12双死、6自爆并流徽。N3狼刀8白神被其免疫，9舞者单死；D3最后狼5被放逐，好人胜。N1假面验人及N3预言家查验未由复盘公开，保持unknown；N2预言家对4号的反馈已确认是平民/好人。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3031730,
+          "end_ms": 3120590,
+          "quote": "好给各位呢老师们做本结局的复盘\n本局版行为假面舞会深圳营预言家10号女巫\n12号舞者\n9号白申8号\n狼人阵营2号六号七号假面5号平民阵营\n一号3号四号\n11号咳\n首验狼人击杀4号平民\n牛要救起\n形成平安夜\n预言家验证7号玩家为狼人身份\n在警上竞选环节\n7号狼人选择自爆入夜无耻的舞池\n2号狼人\n4号平民及5号假面假面\n验证8号玩家白神不在舞池内\n给予5号假面一张面具\n此时五池内2号狼人被五出局\n当野狼队击杀12号女巫\n女巫毒杀5号假面\n由于我们的假面牌免疫毒药\n所以当夜为2号12号双死\n夜间通预言家验证了4号玩家\n平民认为好人身份在延期竞选环节\n6号狼人选择自爆\n本局游戏警徽流失入夜舞者的舞池\n8号白神\n9号舞者及10号预言家\n当夜舞者在舞池内五池免疫狼刀\n夜间假面验证了9号玩家\n舞者在舞室内给予了9号舞者一张面具\n并击杀8号白神\n此时夜间我们的8号白神是免疫狼刀\n所以当夜只有9号玩家舞者单死在第三天白天\n场上最后一狼5号假面被公投出局\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
+        }
+      ]
+    }
+  ],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 10,
+        "targets": [
+          4
+        ],
+        "result": "预言家验证4号玩家平民为好人身份"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b68-r1-masquerade-target-unresolved",
+      "status": "not_observed",
+      "conclusion": "最终复盘未公开假面N1验证目标，目标保持unknown。",
+      "reasoning": "本局复盘列出首验、救药、通灵师验7，但没有公开假面首夜对象；之后的8号验证明确发生在N2，不回填至N1。该字段属于资料未公开，不形成用户问题。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3051260,
+          "end_ms": 3054480,
+          "quote": "首验狼人击杀4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3060490,
+          "end_ms": 3063270,
+          "quote": "7号狼人选择自爆入夜无耻的舞池"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3068580,
+          "end_ms": 3070660,
+          "quote": "验证8号玩家白神不在舞池内"
+        }
+      ]
+    },
+    {
+      "id": "b68-r2-seer-feedback-unresolved",
+      "status": "confirmed",
+      "conclusion": "预言家10号N2验证4号玩家，复盘明确其为平民、好人身份。",
+      "reasoning": "原文连续说“预言家验证了4号玩家”及“平民认为好人身份”，可确认实际反馈；这不是通灵师反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3084420,
+          "end_ms": 3089360,
+          "quote": "夜间通预言家验证了4号玩家平民认为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "b68-r3-seer-action-unresolved",
+      "status": "not_observed",
+      "conclusion": "最终复盘未公开N3预言家10号是否查验、查验目标或反馈；相应字段保持unknown。",
+      "reasoning": "全文复盘说明假面验证9号及舞者互动、当夜只有9号舞者单死，没有公开预言家查验信息。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3100290,
+          "end_ms": 3102370,
+          "quote": "夜间假面验证了9号玩家"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3110860,
+          "end_ms": 3114950,
+          "quote": "所以当夜只有9号玩家舞者单死在第三天白天"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-seer_check",
+      "status": "not_observed",
+      "conclusion": "重复覆盖项：N3预言家查验未由复盘公开，保持unknown；已由b68-r3-seer-action-unresolved统一记录。",
+      "reasoning": "与b68-r3-seer-action-unresolved指向同一槽位，不另造用户问题。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3100290,
+          "end_ms": 3102370,
+          "quote": "当夜舞者在舞池内五池免疫狼刀\n夜间假面验证了9号玩家\n舞者在舞室内给予了9号舞者一张面具"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第02局_假面舞会__BV1ZmHX6iEcx_P01_CID42572710760.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "da501f40e6d1d5889d969d04d7bd60ffb242575c5f5e16cd6f83511ab4c1b1d1",
+          "start_ms": 3110860,
+          "end_ms": 3114950,
+          "quote": "此时夜间我们的8号白神是免疫狼刀\n所以当夜只有9号玩家舞者单死在第三天白天\n场上最后一狼5号假面被公投出局"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

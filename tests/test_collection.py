@@ -15,7 +15,6 @@ def script(name):
 
 
 collector = script('collect_bilibili_audio')
-transcriber = script('transcribe_audio')
 
 
 class AcquisitionBoundaryTests(unittest.TestCase):
@@ -43,15 +42,6 @@ class AcquisitionBoundaryTests(unittest.TestCase):
                          collector.parse_bvid('BV1tj8p6REqy'))
         with self.assertRaises(collector.CollectionError):
             collector.parse_bvid('BV1tj8p6REqyOTHER')
-
-    def test_clips_cannot_silently_extend_past_actual_audio(self):
-        with self.assertRaises(ValueError):
-            transcriber.parse_clips('3755:3936', 3935.53)
-        self.assertEqual(transcriber.parse_clips('0:120,3755:3935', 3935.53),
-                         [(0, 120), (3755, 3935)])
-
-    def test_media_times_preserve_hour_boundary(self):
-        self.assertEqual(transcriber.clock(3600.125), '01:00:00,125')
 
     def test_login_gated_empty_subtitles_are_not_reported_as_absent(self):
         result = collector.subtitle_availability({'need_login_subtitle': True,

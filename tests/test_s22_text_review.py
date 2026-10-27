@@ -45,6 +45,18 @@ class TextReviewTests(unittest.TestCase):
         self.assertFalse(questions)
         self.assertEqual(len(changes), 2)
 
+    def test_treasure_master_identity_correction_sets_wolf_and_rejects_good_override(self):
+        original = copy.deepcopy(self.value)
+        original["board"] = "treasure_master"
+        original["rounds"] = []
+        for seat in original["seats"]:
+            seat.update(role=None, faction=None)
+        reviewed, _, questions = merge_review(original, {"seats": [
+            {"seat": 1, "role": "盗宝大师", "faction": "good"}], "events": []})
+        self.assertEqual(reviewed["seats"][0]["role"], "盗宝大师")
+        self.assertEqual(reviewed["seats"][0]["faction"], "werewolf")
+        self.assertTrue(any("冲突候选" in q["reason"] for q in questions))
+
     def test_uncertain_or_conflicting_candidates_do_not_erase_known_identity(self):
         reviewed, _, questions = merge_review(self.value, {"seats": [
             {"seat": 10, "role": None}, {"seat": 10, "role": "女巫"}], "events": []})

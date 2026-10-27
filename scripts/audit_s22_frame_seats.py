@@ -214,7 +214,7 @@ def resolve_frame_stage_snapshot(bvid: str, output_dir: str, receipt_sha256: str
 
 def replay_inference_changes(dossier: dict, changes: list[dict]) -> dict:
     from s22_inference_review import changed_value
-    return changed_value(dossier, changes)
+    return changed_value(dossier, changes, allow_legacy_treasure_faction=True)
 
 
 def later_rule_alignment_is_valid(bvid: str, before_sha256: str, current_sha256: str,

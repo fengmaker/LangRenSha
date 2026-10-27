@@ -1,0 +1,428 @@
+{
+  "bvid": "BV1U3p86dEHL",
+  "reviewer": "ai",
+  "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "逐cue阅读FunASR的segments正文及复盘、投票和截图。混血儿11以5号平民为榜样，所属/胜利阵营为好人；夜1狼队刀7被女巫2救起、预言家7验12狼。警徽票12获4票当选，12被首日放逐；徽转给11。次夜狼刀2、女巫毒1，两人双死；余下两狼交牌，好人获胜。",
+  "decisions": [
+    {
+      "field": "seats/rounds[1].night.mixed_blood_model",
+      "before": "底牌多数未知；模型演员误指5",
+      "after": "11号混血儿选5号平民为榜样；11号好人混并随好人胜",
+      "reasoning": "按角色在前、号码在后的完整名单连续阅读；截图显示11号混血儿。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5125340,
+          "end_ms": 5127495,
+          "quote": "一号、六号、八号十二号，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5128380,
+          "end_ms": 5130720,
+          "quote": "三号、五号、九号混血儿十一号。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5130720,
+          "end_ms": 5137850,
+          "quote": "本游戏好人混首先混场选择五号平民为榜样牺牲好人混狼队击杀七号预言家牛腰救起，"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "混血儿",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day=1,kind=sheriff]",
+      "before": "票记录完整，winner为空",
+      "after": "12号4票当选",
+      "reasoning": "逐名核对警下五票，12获4票，2投7。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 2452110,
+          "end_ms": 2460810,
+          "quote": "十二号玩家中选出本游戏警长三二一请出票一号投给十二号，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 2461050,
+          "end_ms": 2463970,
+          "quote": "二号投给七号六号投给十二号，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 2464230,
+          "end_ms": 2465570,
+          "quote": "八号投给十二号，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 2465810,
+          "end_ms": 2467410,
+          "quote": "十一号投给十二号。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 2469830,
+          "end_ms": 2471310,
+          "quote": "十二号玩家四票当选出游，"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.badge/exile_result",
+      "before": "未知",
+      "after": "12号狼人被放逐；警徽移交11号混血儿",
+      "reasoning": "复盘明确先记首日放逐，再移交警徽。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5146650,
+          "end_ms": 5159035,
+          "quote": "狼人被公托出局警徽交至十一号混血儿入夜狼队击杀二号女物牛毒杀一号狼人一号二号双子预言家验验十一号玩家混血而为好人身份。"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night/day/winner",
+      "before": "仅有狼刀目标2",
+      "after": "狼刀2；女巫毒1；1/2双死；剩余两狼交牌，好人获胜",
+      "reasoning": "逐cue记录复盘结算；混血儿身份胜利阵营保持独立字段。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5146650,
+          "end_ms": 5159035,
+          "quote": "狼人被公托出局警徽交至十一号混血儿入夜狼队击杀二号女物牛毒杀一号狼人一号二号双子预言家验验十一号玩家混血而为好人身份。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5160490,
+          "end_ms": 5162285,
+          "quote": "场上两狼选择交牌，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5163370,
+          "end_ms": 5164475,
+          "quote": "好人阵营获胜。"
+        }
+      ]
+    },
+    {
+      "field": "bluffs.seat12",
+      "before": "unknown",
+      "after": "12号狼人悍跳预言家并拿警徽、首日推出真实预言家7，按成功计",
+      "reasoning": "成功条件符合警徽或首日放逐好人；本局两项均达成。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5137850,
+          "end_ms": 5145170,
+          "quote": "形成平安夜预言家验验十二号玩家为狼人身份在警上竞选环节十二号悍跳狼人获得警徽。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5145170,
+          "end_ms": 5146590,
+          "quote": "在第一天白天十二号，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5146650,
+          "end_ms": 5159035,
+          "quote": "狼人被公托出局警徽交至十一号混血儿入夜狼队击杀二号女物牛毒杀一号狼人一号二号双子预言家验验十一号玩家混血而为好人身份。"
+        }
+      ]
+    },
+    {
+      "field": "continuation_crosscheck_20261026",
+      "before": "上一轮未决或矛盾候选（完整原稿已归档）",
+      "after": "N2预言家7查11号混血儿，复盘明确反馈好人身份；11榜样为5号平民、个人胜利阵营为好人。物理底牌仍混血儿，不把查验改成身份透视。",
+      "reasoning": "N2预言家7查11号混血儿，复盘明确反馈好人身份；11榜样为5号平民、个人胜利阵营为好人。物理底牌仍混血儿，不把查验改成身份透视。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5128380,
+          "end_ms": 5164475,
+          "quote": "三号、五号、九号混血儿十一号。\n本游戏好人混首先混场选择五号平民为榜样牺牲好人混狼队击杀七号预言家牛腰救起，\n形成平安夜预言家验验十二号玩家为狼人身份在警上竞选环节十二号悍跳狼人获得警徽。\n在第一天白天十二号，\n狼人被公托出局警徽交至十一号混血儿入夜狼队击杀二号女物牛毒杀一号狼人一号二号双子预言家验验十一号玩家混血而为好人身份。\n在第二天白天，\n场上两狼选择交牌，\n游戏结束，\n好人阵营获胜。"
+        }
+      ]
+    },
+    {
+      "field": "dossier.rounds[0].day.night_deaths; rounds[1].day.exile_vote/exile_result; voting.days[2].exile",
+      "before": "D1夜死、D2放逐状态unknown",
+      "after": "D1平安夜；N2双死后两狼交牌，D2无放逐",
+      "reasoning": "复盘明示女巫救起与平安夜，并于D2直接交牌结束。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5130720,
+          "end_ms": 5137850,
+          "quote": "本游戏好人混首先混场选择五号平民为榜样牺牲好人混狼队击杀七号预言家牛腰救起"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5137850,
+          "end_ms": 5145170,
+          "quote": "形成平安夜预言家验验十二号玩家为狼人身份在警上竞选环节十二号悍跳狼人获得警徽"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5160490,
+          "end_ms": 5162285,
+          "quote": "场上两狼选择交牌"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        6,
+        8,
+        12
+      ],
+      "roles": [
+        "狼人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "狼人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        2
+      ],
+      "roles": [
+        "女巫"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "女巫",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        3,
+        5,
+        9
+      ],
+      "roles": [
+        "平民"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "平民",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        4
+      ],
+      "roles": [
+        "白神"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "白神",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        7
+      ],
+      "roles": [
+        "预言家"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "预言家",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        10
+      ],
+      "roles": [
+        "猎人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "猎人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        11
+      ],
+      "roles": [
+        "混血儿"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "混血儿",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 12,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": true,
+      "reasoning": "12号狼人悍跳并取得警徽，随后首日真实预言家7被放逐；按用户规则判成功。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEHL/BV1U3p86dEHL_04994.375.png",
+          "frame_time_ms": 4994375,
+          "quote": "预言家",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5137850,
+          "end_ms": 5145170,
+          "quote": "形成平安夜预言家验验十二号玩家为狼人身份在警上竞选环节十二号悍跳狼人获得警徽。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json",
+          "start_ms": 5145170,
+          "end_ms": 5146590,
+          "quote": "在第一天白天十二号，"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:08:27Z",
+  "continuation_review": {
+    "reviewer": "ai",
+    "reviewed_at_utc": "2026-10-25T19:19:09.458416+00:00",
+    "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+    "result": "N2预言家7查11号混血儿，复盘明确反馈好人身份；11榜样为5号平民、个人胜利阵营为好人。物理底牌仍混血儿，不把查验改成身份透视。",
+    "human_confirmed": false
+  },
+  "phase_findings": [
+    {
+      "id": "b71-r1-peaceful",
+      "round": 1,
+      "phase": "day",
+      "status": "inferred",
+      "field": "rounds[1].day.night_deaths",
+      "title": "N1刀7被女巫救起，D1平安夜",
+      "conclusion": "7号预言家被狼刀，女巫救起；D1公布平安夜。",
+      "reasoning": "复盘连续给出榜样、狼刀7号与女巫救起，随后明确形成平安夜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5130720,
+          "end_ms": 5137850,
+          "quote": "本游戏好人混首先混场选择五号平民为榜样牺牲好人混狼队击杀七号预言家牛腰救起"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5137850,
+          "end_ms": 5145170,
+          "quote": "形成平安夜预言家验验十二号玩家为狼人身份在警上竞选环节十二号悍跳狼人获得警徽"
+        }
+      ]
+    },
+    {
+      "id": "b71-d2-surrender-no-exile",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.exile_vote; rounds[2].day.exile_result; voting.days[2].exile",
+      "title": "两狼交牌后D2无放逐",
+      "conclusion": "N2 1、2双死后，剩余两狼交牌结束游戏，D2未进入放逐。",
+      "reasoning": "原文先报第二天白天，随后明确场上两狼选择交牌、游戏结束；sidecar日状态改为not_held，D1投票不动。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5159390,
+          "end_ms": 5160350,
+          "quote": "在第二天白天"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5160490,
+          "end_ms": 5162285,
+          "quote": "场上两狼选择交牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5162690,
+          "end_ms": 5163350,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第01局_预女猎白混__BV1U3p86dEHL_P01_CID42601873907.本地全文转写_funasr.json",
+          "source_sha256": "113227fb8c7bbf0f953f0370c0e8cce1d08b9c236fd33a63f043edb08bc88870",
+          "start_ms": 5163370,
+          "end_ms": 5164475,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    }
+  ]
+}

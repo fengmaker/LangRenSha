@@ -60,12 +60,26 @@
 }
 
 .seatCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 36px 1fr;
+  align-items: center;
+  height: 124px;
   min-width: 0;
   padding: 13px 14px;
   border: 1px solid var(--line, rgba(222, 235, 221, .12));
   border-left-width: 3px;
   background: var(--panel, #101e1e);
   overflow-wrap: anywhere;
+}
+
+.seatIdentity {
+  min-width: 0;
+}
+
+.hasNote {
+  grid-template-columns: minmax(100px, .85fr) minmax(0, 1.15fr);
+  column-gap: 14px;
 }
 
 .wolfCard {
@@ -85,6 +99,7 @@
 }
 
 .seatTop {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,7 +127,7 @@
 }
 
 .seatName {
-  margin: 10px 0 2px;
+  margin: 0 0 2px;
   color: var(--text, #f0f1e9);
   font-size: 18px;
   line-height: 1.35;
@@ -141,10 +156,10 @@
 }
 
 .seatNote {
-  margin: 7px 0 0;
+  margin: 0;
   color: var(--muted, #a0b1aa);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .emptyGroup {
@@ -165,7 +180,7 @@
   margin-top: 14px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 960px) {
   .columns {
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;

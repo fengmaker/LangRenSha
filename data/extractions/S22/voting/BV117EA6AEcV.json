@@ -29,6 +29,14 @@
         "end_ms": 542400,
         "quote": "其余玩家均上警上警玩家亮起面前红灯来，"
       }
+    ],
+    "causal-ballot-3-d1": [
+      {
+        "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+        "start_ms": 4173230,
+        "end_ms": 4223320,
+        "quote": "警长请归票。\n警长归票一号，\n各位玩家，\n唱票结束前，\n不要放手三二一请出票，\n高举。\n手一号投给十号，\n二号投给十号，\n三号投给一号，\n四号投给一号五号投给一号六号投给十号七号投给一号八号投给一号，\n九号投给十号，\n十号投给一号，\n十一号投给一号，\n十二号投给一号投票结束，\n汤米虾为八点五票出局，\n请发表遗言。\n创杰太狠了，\n我是狼，\n我必须是倒钩狼，\n必须是做身份的狼，\n你把我归在第一天吗？\n怎么可能呢？\n关键是你还把十一十二的票都骗了，\n对吗？\n你把宝玉和那个张扬的票都骗了，\n我们侍狼，\n现在不就是直接交牌吗？"
+      }
     ]
   },
   "day_anchors_ms": [
@@ -36,7 +44,8 @@
   ],
   "inferred_day_anchors_ms": [],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
   "review_changes": [
     {
       "id": "BV117EA6AEcV-registration",
@@ -80,10 +89,481 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV117EA6AEcV",
+    "source_sha256": "290cb8340902bd39f8ad4ca276c2f1b5bd61de0b2816383c4833171165c350ad",
+    "decisions": [
+      {
+        "question_id": "vote-BV117EA6AEcV-day-1-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "补录第1天ballot-1：1→10、2→10、3→1、4→1、5→1、6→10、7→1、8→1、9→10、10→1、11→1、12→1；1号8票出局。",
+        "reason": "原文完整唱票覆盖12席，末尾宣布1号8票出局；时间与Day1存活名单一致。",
+        "source_spans": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+            "start_ms": 4181030,
+            "end_ms": 4197605,
+            "quote": "高举。\n手一号投给十号，\n二号投给十号，\n三号投给一号，\n四号投给一号五号投给一号六号投给十号七号投给一号八号投给一号，\n九号投给十号，\n十号投给一号，\n十一号投给一号，\n十二号投给一号投票结束，"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV117EA6AEcV-day-1-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 1,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+              "start_ms": 520919,
+              "end_ms": 551880,
+              "quote": "第二天进这个房场的，\n对不对？\n所以力度很大。\n加油吧，\n两个旋风啊旋风CP天亮了，\n超超级墨水本局游戏。\n除JY及宝玉妹妹外，\n其余玩家均上警上警玩家亮起面前红灯来，\n上级玩家亮起面前红灯就是要根据随机点数五，",
+              "note": "本日开局定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+            "start_ms": 4181030,
+            "end_ms": 4197605,
+            "quote": "高举。\n手一号投给十号，\n二号投给十号，\n三号投给一号，\n四号投给一号五号投给一号六号投给十号七号投给一号八号投给一号，\n九号投给十号，\n十号投给一号，\n十一号投给一号，\n十二号投给一号投票结束，"
+          }
+        ],
+        "method": "contextual_causal_review"
+      },
+      {
+        "question_id": "vote-BV117EA6AEcV-day-2-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第2天没有放逐投票；狼人白天交牌，游戏结束、好人获胜。",
+        "reason": "复盘明确第二天白天狼人选择交牌，接着游戏结束并宣布好人胜；属于投票前投降终局。",
+        "source_spans": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+            "start_ms": 5291005,
+            "end_ms": 5301725,
+            "quote": "三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份，\n并在出局后将警徽移交至八号射。\n某人在第二天白天场上狼队选择交牌，\n游戏结束，\n好人阵营获胜。\n以上是我们今天第二局版型盗宝大师的全部内容，\n感谢各位担宝石的陪伴。"
+          }
+        ],
+        "needs_video": false,
+        "original_question": {
+          "id": "vote-BV117EA6AEcV-day-2-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 2,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+              "start_ms": 5291005,
+              "end_ms": 5301725,
+              "quote": "并在出局后将警徽移交至八号射。\n某人在第二天白天场上狼队选择交牌，\n游戏结束，\n好人阵营获胜。\n以上是我们今天第二局版型盗宝大师的全部内容，",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+            "start_ms": 5291005,
+            "end_ms": 5301725,
+            "quote": "三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份，\n并在出局后将警徽移交至八号射。\n某人在第二天白天场上狼队选择交牌，\n游戏结束，\n好人阵营获胜。\n以上是我们今天第二局版型盗宝大师的全部内容，\n感谢各位担宝石的陪伴。"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [
+      {
+        "kind": "ballot_add",
+        "after": {
+          "id": "causal-ballot-3-d1",
+          "day": 1,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": null,
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 4,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 7,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 10,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 1,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 1,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 1,
+          "unrecorded_voters": []
+        },
+        "reason": "1号8票出局。",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+            "start_ms": 4173230,
+            "end_ms": 4223320,
+            "quote": "警长请归票。\n警长归票一号，\n各位玩家，\n唱票结束前，\n不要放手三二一请出票，\n高举。\n手一号投给十号，\n二号投给十号，\n三号投给一号，\n四号投给一号五号投给一号六号投给十号七号投给一号八号投给一号，\n九号投给十号，\n十号投给一号，\n十一号投给一号，\n十二号投给一号投票结束，\n汤米虾为八点五票出局，\n请发表遗言。\n创杰太狠了，\n我是狼，\n我必须是倒钩狼，\n必须是做身份的狼，\n你把我归在第一天吗？\n怎么可能呢？\n关键是你还把十一十二的票都骗了，\n对吗？\n你把宝玉和那个张扬的票都骗了，\n我们侍狼，\n现在不就是直接交牌吗？"
+          }
+        ]
+      }
+    ],
+    "day_outcomes": [
+      {
+        "day": 2,
+        "outcome": "ended_before_exile",
+        "exile_note": "Day2白天狼人交牌，投票前终局。",
+        "evidence": []
+      }
+    ],
+    "additional_evidence": [],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "Day2白天狼人交牌，投票前终局。"
+    }
+  },
+  "causal_terminal": {
+    "round": 2,
+    "phase": "day",
+    "after_day": 2,
+    "winner": "good",
+    "eliminated_side": null,
+    "reason": "Day2白天狼人交牌，投票前终局。"
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-06-04_g02_BV117EA6AEcV/复核记录.json",
+    "sha256": "076855b796624fe84adb23df550c97f2e451ad8c0c4bc72b1b434778687badfb",
+    "recap_segments": [
+      {
+        "start_ms": 5229100,
+        "end_ms": 5236290,
+        "text": "那我肯定要工告报告里面是注意归下对嫌疑人是吧？"
+      },
+      {
+        "start_ms": 5238140,
+        "end_ms": 5244325,
+        "text": "那精准的直播的猎容就是真的可以弄一个好给各位大脑老师们做一下本游戏的复盘，"
+      },
+      {
+        "start_ms": 5245700,
+        "end_ms": 5248450,
+        "text": "你不愿意会嗯本剧本行为。"
+      },
+      {
+        "start_ms": 5248450,
+        "end_ms": 5250190,
+        "text": "盗宝大师深申莹，"
+      },
+      {
+        "start_ms": 5250190,
+        "end_ms": 5250610,
+        "text": "通灵师，"
+      },
+      {
+        "start_ms": 5250610,
+        "end_ms": 5253240,
+        "text": "十号盛某人八号猎人，"
+      },
+      {
+        "start_ms": 5253520,
+        "end_ms": 5253880,
+        "text": "四号，"
+      },
+      {
+        "start_ms": 5253880,
+        "end_ms": 5254240,
+        "text": "蒙面人，"
+      },
+      {
+        "start_ms": 5254240,
+        "end_ms": 5254600,
+        "text": "十二号，"
+      },
+      {
+        "start_ms": 5254600,
+        "end_ms": 5256380,
+        "text": "狼人阵营一号九号狼王六号。"
+      },
+      {
+        "start_ms": 5256460,
+        "end_ms": 5259380,
+        "text": "盗宝大师二号本游戏盗宝毒师萌人阵营，"
+      },
+      {
+        "start_ms": 5259380,
+        "end_ms": 5262600,
+        "text": "三号五号七号十一号首夜圣梦人，"
+      },
+      {
+        "start_ms": 5262600,
+        "end_ms": 5263815,
+        "text": "梦游六号狼王。"
+      },
+      {
+        "start_ms": 5264310,
+        "end_ms": 5265990,
+        "text": "盗宝大师选择平民身份，"
+      },
+      {
+        "start_ms": 5266010,
+        "end_ms": 5270310,
+        "text": "通灵师查验了八号玩家为赦梦人身份在警上竞选环节，"
+      },
+      {
+        "start_ms": 5270470,
+        "end_ms": 5271970,
+        "text": "十号通灵师傅的警徽。"
+      },
+      {
+        "start_ms": 5271970,
+        "end_ms": 5274835,
+        "text": "那天白天一号狼人被公投出局，"
+      },
+      {
+        "start_ms": 5275190,
+        "end_ms": 5283290,
+        "text": "入夜社会人再次梦游六号狼王狼人击杀十号通灵师盗宝大师七号为毒尸身份毒杀，"
+      },
+      {
+        "start_ms": 5283450,
+        "end_ms": 5284875,
+        "text": "四号猎人当一为。"
+      },
+      {
+        "start_ms": 5285945,
+        "end_ms": 5291005,
+        "text": "三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份，"
+      },
+      {
+        "start_ms": 5291005,
+        "end_ms": 5293865,
+        "text": "并在出局后将警徽移交至八号射。"
+      },
+      {
+        "start_ms": 5293865,
+        "end_ms": 5296725,
+        "text": "某人在第二天白天场上狼队选择交牌，"
+      },
+      {
+        "start_ms": 5296805,
+        "end_ms": 5297385,
+        "text": "游戏结束，"
+      },
+      {
+        "start_ms": 5297405,
+        "end_ms": 5298285,
+        "text": "好人阵营获胜。"
+      },
+      {
+        "start_ms": 5298605,
+        "end_ms": 5301725,
+        "text": "以上是我们今天第二局版型盗宝大师的全部内容，"
+      },
+      {
+        "start_ms": 5301725,
+        "end_ms": 5303005,
+        "text": "感谢各位担宝石的陪伴。"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          4,
+          6,
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "Day2白天狼人交牌，投票前终局。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-2",
+      "day": 1,
+      "voters": [
+        7
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "1号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+          "start_ms": 4173230,
+          "end_ms": 4223320,
+          "quote": "警长请归票。\n警长归票一号，\n各位玩家，\n唱票结束前，\n不要放手三二一请出票，\n高举。\n手一号投给十号，\n二号投给十号，\n三号投给一号，\n四号投给一号五号投给一号六号投给十号七号投给一号八号投给一号，\n九号投给十号，\n十号投给一号，\n十一号投给一号，\n十二号投给一号投票结束，\n汤米虾为八点五票出局，\n请发表遗言。\n创杰太狠了，\n我是狼，\n我必须是倒钩狼，\n必须是做身份的狼，\n你把我归在第一天吗？\n怎么可能呢？\n关键是你还把十一十二的票都骗了，\n对吗？\n你把宝玉和那个张扬的票都骗了，\n我们侍狼，\n现在不就是直接交牌吗？"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "Day2白天狼人交牌，投票前终局。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV117EA6AEcV",
   "source_sha256": "290cb8340902bd39f8ad4ca276c2f1b5bd61de0b2816383c4833171165c350ad",
-  "dossier_sha256": "c430567a628948334489a4cb6611b9c02e2461e37dc7b1605dcb59c2ad69c89d",
-  "generated_at": "2026-10-24T23:21:14+08:00",
+  "dossier_sha256": "0e2158ac4a1e25f9ff8768c2f580beb1095c3ff3c5eab5a1715d238696eab382",
+  "generated_at": "2026-10-25T04:08:34+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV117EA6AEcV-p01-g02",
@@ -150,12 +630,23 @@
         "kind": "sheriff",
         "number": 2,
         "stage": "pk",
-        "status": "partial",
+        "status": "complete",
         "candidates": [
           6,
           10
         ],
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
         "votes": [
           {
             "voter": 1,
@@ -183,6 +674,11 @@
             "state": "cast"
           },
           {
+            "voter": 7,
+            "target": null,
+            "state": "abstained"
+          },
+          {
             "voter": 8,
             "target": 10,
             "state": "cast"
@@ -205,7 +701,95 @@
         ],
         "tied_candidates": [],
         "winner": null,
-        "unrecorded_voters": null
+        "unrecorded_voters": []
+      },
+      {
+        "id": "causal-ballot-3-d1",
+        "day": 1,
+        "kind": "exile",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 10,
+            "state": "cast"
+          },
+          {
+            "voter": 2,
+            "target": 10,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 10,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 10,
+            "state": "cast"
+          },
+          {
+            "voter": 10,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 1,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 1,
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [],
@@ -213,11 +797,11 @@
       {
         "day": 1,
         "sheriff": "recorded",
-        "exile": "unknown"
+        "exile": "recorded"
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "not_applicable",
         "exile": "unknown"
       }
     ]

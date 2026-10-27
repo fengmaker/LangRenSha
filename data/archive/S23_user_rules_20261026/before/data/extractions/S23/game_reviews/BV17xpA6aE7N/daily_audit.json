@@ -1,0 +1,317 @@
+{
+  "bvid": "BV17xpA6aE7N",
+  "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5658670,
+    "end_ms": 5716690,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1盗宝大师2选平民身份，首夜普通狼刀按既定规则禁止；摄梦人梦游10，通灵师验3平民。D1狼王12放逐并带走10；N2盗宝改选毒师、毒5，狼刀7，梦游3，D2 3/5/7出局；1号自爆中断D2放逐。N3狼刀4，D3 PK复投6出局；N4盗宝大师接普通狼刀击杀最后神牌8，夜终局狼胜、不进入D4。 完整原始字幕另明确播报首夜平安夜。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5658670,
+          "end_ms": 5716690,
+          "quote": "还有两个没好\n第二局游戏盗宝大师结束了\n本局游戏通灵师10号猎人\n8号射梦人\n5号蒙面人\n7号狼王\n12号狼人\n一号6号\n本游戏的盗宝大师为2号\n隶属狼人阵营\n可以选择的底盘是毒师和平民平民3号四号\n9号11号\n首页盗宝大师选择平民身份\n圣梦人梦游\n10号通灵师\n通灵师验证3号玩家为平民身份\n上警环节\n警徽流失\n第一天白天\n12号狼王被公投出局\n发动技能带走\n10号通灵师入夜射梦人\n梦游3号平民盗宝大师选择毒师身份\n毒杀5号射梦人\n三五生死狼人\n击杀7号蒙面人\n第二天白天\n一号狼人自爆入夜狼人击杀4号平民\n盗马大师选择平民身份\n第三天白天\n6号狼人被公投出局\n入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    "主审补齐首日狼王12放逐；终局按法官N4结束播报截断，旧supplemental同目标shoot只是同一次狼刀别名，不再显示为第二刀。"
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "forbidden",
+        "actor": null,
+        "targets": [],
+        "result": "盗宝大师首夜规则禁刀；用户确认首夜无狼刀。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "attack",
+        "actor": 2,
+        "targets": [
+          8
+        ],
+        "result": "盗宝大师接替普通狼刀击杀最后神牌8号猎人，游戏结束。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          8
+        ],
+        "result": "终局夜狼刀击杀8号猎人，未进入D4。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_vote",
+      "changes": {
+        "action": "not_held",
+        "actor": null,
+        "targets": [],
+        "result": "N4终局狼刀后游戏结束，未进入D4放逐。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "终局夜游戏结束，无D4放逐结果。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": "最终复盘窗口未逐列N1夜死；完整原始字幕在D1警长环节后明确播报“昨夜平安夜”，确认首夜无死亡。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "exile",
+        "targets": [
+          12
+        ],
+        "result": "首日12号狼王被公投出局，随即开枪带走10号通灵师。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 12,
+        "targets": [],
+        "result": "本轮被放逐后实际成功开枪带走10号，资格由实际发动互证。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b62-d3-pk-result-moved-from-d4",
+      "status": "confirmed",
+      "conclusion": "D3首轮6/9各2票平票后PK复投，6号狼人3票出局；完整逐人票型保留在voting.reviewed.json。",
+      "reasoning": "转写先标第三天白天，随后宣告6号出局；入夜后盗宝大师击杀8号猎人并结束游戏。固定槽中只保留一个exile_vote和一个exile_result，避免同一日多轮票被重复实体化。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5707480,
+          "end_ms": 5708700,
+          "quote": "第三天白天"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5708700,
+          "end_ms": 5710460,
+          "quote": "6号狼人被公投出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5710460,
+          "end_ms": 5713140,
+          "quote": "入夜盗宝大师开刀击杀最后一张神之牌"
+        }
+      ]
+    },
+    {
+      "id": "b62-r4-terminal-wolf-attack-unresolved",
+      "status": "inferred",
+      "conclusion": "盗宝大师2号接替普通狼刀击杀8号猎人，狼方终局；D4未开始。",
+      "reasoning": "复盘直述盗宝大师击杀最后神牌；按场上初始狼队（1、6、12）已于先前出局，依据盗宝大师接刀规则推断此为普通狼刀。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5710460,
+          "end_ms": 5713140,
+          "quote": "入夜盗宝大师开刀击杀最后一张神之牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5713140,
+          "end_ms": 5714720,
+          "quote": "8号猎人游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5714720,
+          "end_ms": 5716690,
+          "quote": "狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-night-wolf_attack",
+      "status": "confirmed",
+      "conclusion": "首夜按盗宝大师规则禁刀，应记forbidden。",
+      "reasoning": "最终复盘说首夜盗宝大师选平民；结合用户确认的禁刀口径。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5677410,
+          "end_ms": 5679390,
+          "quote": "9号11号\n首页盗宝大师选择平民身份\n圣梦人梦游"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N1无夜间死亡。",
+      "reasoning": "完整原始转写在D1警长流程后、白天发言开始前明确播报“昨夜平安夜”；首夜盗宝大师选平民且狼队规则禁刀，与此结算一致。未以candidate自动补出的eligible_voters列表作为证据。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 1076530,
+          "end_ms": 1091840,
+          "quote": "本局游戏全员上警警徽流失所有玩家保持蓝灯昨夜平安夜本局游戏警徽流失随机点数十"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "终局N4狼刀8号猎人并立即宣布游戏结束，夜死记8号；没有D4公布阶段。",
+      "reasoning": "复盘明确盗宝大师击杀最后神牌8号后游戏结束。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5710460,
+          "end_ms": 5714720,
+          "quote": "6号狼人被公投出局\n入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-exile_result",
+      "status": "confirmed",
+      "conclusion": "N4夜终局后没有D4白天或放逐投票，放逐结果记none。",
+      "reasoning": "复盘在终局狼刀后直接宣布游戏结束，无后续白天。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5713140,
+          "end_ms": 5716690,
+          "quote": "入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-hunter_shot",
+      "status": "not_observed",
+      "title": "终局猎人响应未在节目中公布",
+      "conclusion": "8号猎人在终局夜被击杀后直接宣布屠神获胜；录制未给出枪技响应，保留未知。",
+      "reasoning": "无需据此补造白天开枪或推定资格；实际夜刀、目标与胜负均有原文。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5710460,
+          "end_ms": 5716800,
+          "quote": "入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-night-wolf_king_state",
+      "status": "inferred",
+      "title": "狼王本轮开枪资格由实际发动互证",
+      "conclusion": "12号放逐后实际成功开枪带走10号，本轮具有开枪资格。",
+      "reasoning": "不由未知药量猜资格，而由已公布实际发动结果确认。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5686350,
+          "end_ms": 5692800,
+          "quote": "第一天白天\n12号狼王被公投出局\n发动技能带走\n10号通灵师入夜射梦人"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "primary-b62-exiled-wolf-king",
+      "round": 1,
+      "phase": "day",
+      "field": "exile_result",
+      "title": "首日12号狼王放逐已补齐",
+      "status": "confirmed",
+      "conclusion": "12号被公投出局并开枪带走10号通灵师；不能保留原放逐none状态。",
+      "reasoning": "连续复盘直接说明，放逐与狼王开枪分列。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+          "start_ms": 5686350,
+          "end_ms": 5692800,
+          "quote": "第一天白天\n12号狼王被公投出局\n发动技能带走\n10号通灵师入夜射梦人"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "terminal_observation": {
+    "round": 4,
+    "phase": "night",
+    "reason": "法官明确播报夜刀最后神牌8号猎人后游戏结束，未进入第四天。",
+    "evidence": [
+      {
+        "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-06/2026-10-06_S23_第06周_正赛第05期_第02局_盗宝大师__BV17xpA6aE7N_P01_CID42519955818.平台AI字幕_ai-zh_01.原始.json",
+        "source_sha256": "c91fff930cae2821b924176bd01e4ca6f50c74969dd773ff5febec4524e6ad55",
+        "start_ms": 5710460,
+        "end_ms": 5716800,
+        "quote": "入夜盗宝大师开刀击杀最后一张神之牌\n8号猎人游戏结束\n狼人阵营屠神获胜"
+      }
+    ]
+  },
+  "supplemental_suppressions": [
+    {
+      "round": 4,
+      "slot": "treasure_extra_attack",
+      "reason": "旧shoot别名与已核同一次终局狼刀目标8重复；原观察留在审计，不另算一刀。"
+    }
+  ]
+}

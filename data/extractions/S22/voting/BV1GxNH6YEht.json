@@ -3,9 +3,21 @@
     "registration-1": [
       {
         "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
-        "start_ms": 411840,
-        "end_ms": 423549,
-        "quote": "来上警玩家亮起面前红灯\n本游戏除4号五号六号十号12号玩家外\n其余玩家均上警\n11号上警吗"
+        "start_ms": 421170,
+        "end_ms": 432349,
+        "quote": "本游戏除4号五号六号十号12号玩家外\n其余玩家均上警\n11号上警吗\n好\n本球戏除一号4号五号六号十号11号\n12号玩家\n外区玩家上警上警"
+      },
+      {
+        "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+        "start_ms": 880770,
+        "end_ms": 895650,
+        "quote": "在8号九号玩家中选出本九曲警长321\n请出票\n一号投给8号\n4号投给9号\n5号投给9号\n6号投给9号\n10号投给8号\n11号投给9号\n12号投给8号\n投票结束"
+      },
+      {
+        "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+        "start_ms": 897940,
+        "end_ms": 899260,
+        "quote": "三票比四票"
       }
     ],
     "ballot-1": [
@@ -21,14 +33,611 @@
     402470
   ],
   "inferred_day_anchors_ms": [],
-  "issues": [
+  "issues": [],
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+  "resolved_issues": [
     "880770ms警徽票出现警下名单之外的1号，整轮票权待核"
   ],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "causal_review": {
+    "bvid": "BV1GxNH6YEht",
+    "source_sha256": "feeed585eb01d3a52056d95df8b434b131d40af77c6214f61f29975e7e65920e",
+    "decisions": [
+      {
+        "question_id": "vote-BV1GxNH6YEht-ballot-1-eligibility_unknown",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第1天警下为1、4、5、6、10、11、12号；警上为2、3、7、8、9号。先前口播漏掉1/11并发生即时自我更正，后续竞选发言顺序与更正名单相符。",
+        "reason": "转写先由法官询问11号是否上警，随后在422050–432349ms明确更正警下名单；之后警上发言顺序为2、3、7、8、9，覆盖更正后的警上席位。此前不完整警下名单是初次口播错误，不是无法判定。",
+        "source_spans": [
+          {
+            "start_ms": 421170,
+            "end_ms": 432349,
+            "quote": "法官问“11号上警吗”；随后更正：本局除1号、4号、5号、6号、10号、11号、12号外，其余玩家上警；上警玩家为2号、3号、7号、8号、9号。"
+          }
+        ],
+        "needs_video": false,
+        "residual_reason": "缺少可消歧的完整登记口播或可读票面；名单仍需人工查看原视频。",
+        "original_question": {
+          "id": "vote-BV1GxNH6YEht-ballot-1-eligibility_unknown",
+          "code": "eligibility_unknown",
+          "day": 1,
+          "target": "ballot-1",
+          "title": "本轮票权名单待补充",
+          "reason": "已提取7条票，但完整票权名单未知；需补齐警下等票权依据，随后自动计算。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+              "start_ms": 836790,
+              "end_ms": 916430,
+              "quote": "就是等于边儿也没交言\n也没怎么发\n也没有什么逻辑基点嗯\n然后就顶听出来一次\n一号3号不是很像见面\n但我觉得直接压入警徽流嘛也没啥用\n所以我就先把悍跳的呃\n金水押进第一警徽流10号哦\n第二警徽流6号嗯\n验的11是好人啊\n别的就没什么了\n过了井上发言结束\n退水自爆环节\n54321\n然后请上玩家\n8号九号请警下玩家带亏\n请警下玩家带窥闭眼\n在8号九号玩家中选出本九曲警长321\n请出票\n一号投给8号\n4号投给9号\n5号投给9号\n6号投给9号\n10号投给8号\n11号投给9号\n12号投给8号\n投票结束\n三票比四票\n其余玩家请变蓝灯\n昨夜信息平安夜\n尽量选择发言顺序\n警左警右\n8号玩家请发言嗯\n警下456 11投给91"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 421170,
+            "end_ms": 432349,
+            "quote": "本游戏除4号五号六号十号12号玩家外\n其余玩家均上警\n11号上警吗\n好\n本球戏除一号4号五号六号十号11号\n12号玩家\n外区玩家上警上警"
+          }
+        ],
+        "method": "contextual_causal_review"
+      },
+      {
+        "question_id": "vote-BV1GxNH6YEht-ballot-1-source_conflict-80ec4d74",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "ballot-1票权为警下1、4、5、6、10、11、12号，唱票分别1→8、4→9、5→9、6→9、10→8、11→9、12→8；9号以4票对8号3票胜出。",
+        "reason": "修正后的警下名单恰与逐一唱出的7名投票者吻合，票数播报“三票比四票”又对应8号3票、9号4票；此前冲突来自开局登记口播的即时自我更正，票权及唱票可完整确定。",
+        "source_spans": [
+          {
+            "start_ms": 880770,
+            "end_ms": 895650,
+            "quote": "唱票：1号投给8号；4号投给9号；5号投给9号；6号投给9号；10号投给8号；11号投给9号；12号投给8号；投票结束。"
+          },
+          {
+            "start_ms": 897940,
+            "end_ms": 899260,
+            "quote": "三票比四票。"
+          }
+        ],
+        "needs_video": false,
+        "residual_reason": "必须查视频/原始连续音频才能确认是否还有字幕漏掉的投票人以及完整eligible_voters。",
+        "original_question": {
+          "id": "vote-BV1GxNH6YEht-ballot-1-source_conflict-80ec4d74",
+          "code": "source_conflict-80ec4d74",
+          "day": 1,
+          "target": "ballot-1",
+          "title": "播票原文存在冲突",
+          "reason": "880770ms警徽票出现警下名单之外的1号，整轮票权待核\n规则核对：警徽票出现原警下名单之外的投票者，不能以本规则修正座号或名单。",
+          "severity": "question",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+              "start_ms": 836790,
+              "end_ms": 916430,
+              "quote": "就是等于边儿也没交言\n也没怎么发\n也没有什么逻辑基点嗯\n然后就顶听出来一次\n一号3号不是很像见面\n但我觉得直接压入警徽流嘛也没啥用\n所以我就先把悍跳的呃\n金水押进第一警徽流10号哦\n第二警徽流6号嗯\n验的11是好人啊\n别的就没什么了\n过了井上发言结束\n退水自爆环节\n54321\n然后请上玩家\n8号九号请警下玩家带亏\n请警下玩家带窥闭眼\n在8号九号玩家中选出本九曲警长321\n请出票\n一号投给8号\n4号投给9号\n5号投给9号\n6号投给9号\n10号投给8号\n11号投给9号\n12号投给8号\n投票结束\n三票比四票\n其余玩家请变蓝灯\n昨夜信息平安夜\n尽量选择发言顺序\n警左警右\n8号玩家请发言嗯\n警下456 11投给91"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 880770,
+            "end_ms": 895650,
+            "quote": "在8号九号玩家中选出本九曲警长321\n请出票\n一号投给8号\n4号投给9号\n5号投给9号\n6号投给9号\n10号投给8号\n11号投给9号\n12号投给8号\n投票结束"
+          },
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 897940,
+            "end_ms": 899260,
+            "quote": "三票比四票"
+          }
+        ],
+        "method": "contextual_causal_review"
+      }
+    ],
+    "patches": [
+      {
+        "kind": "registration_set",
+        "before": [
+          {
+            "id": "registration-1",
+            "day": 1,
+            "on_police": [
+              1,
+              2,
+              3,
+              7,
+              8,
+              9,
+              11
+            ],
+            "off_police": [
+              4,
+              5,
+              6,
+              10,
+              12
+            ]
+          }
+        ],
+        "after": [
+          {
+            "id": "registration-1",
+            "day": 1,
+            "on_police": [
+              2,
+              3,
+              7,
+              8,
+              9
+            ],
+            "off_police": [
+              1,
+              4,
+              5,
+              6,
+              10,
+              11,
+              12
+            ]
+          }
+        ],
+        "reason": "按后续即时更正的登记口播，覆盖首次漏掉1号/11号的错误播报。",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 421170,
+            "end_ms": 432349,
+            "quote": "本游戏除4号五号六号十号12号玩家外\n其余玩家均上警\n11号上警吗\n好\n本球戏除一号4号五号六号十号11号\n12号玩家\n外区玩家上警上警"
+          },
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 880770,
+            "end_ms": 895650,
+            "quote": "在8号九号玩家中选出本九曲警长321\n请出票\n一号投给8号\n4号投给9号\n5号投给9号\n6号投给9号\n10号投给8号\n11号投给9号\n12号投给8号\n投票结束"
+          },
+          {
+            "path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+            "start_ms": 897940,
+            "end_ms": 899260,
+            "quote": "三票比四票"
+          }
+        ]
+      },
+      {
+        "kind": "ballot",
+        "id": "ballot-1",
+        "before": {
+          "eligible_voters": null,
+          "status": "partial",
+          "winner": null
+        },
+        "after": {
+          "eligible_voters": [
+            1,
+            4,
+            5,
+            6,
+            10,
+            11,
+            12
+          ],
+          "status": "complete",
+          "winner": 9
+        },
+        "reason": "7个警下席位与7条完整唱票一致，9号4票胜8号3票。"
+      }
+    ],
+    "day_outcomes": [],
+    "additional_evidence": []
+  },
+  "day_crosscheck_changes": [],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-07-10_g02_BV1GxNH6YEht/复核记录.json",
+    "sha256": "fb689373f5579936009eecb62088a7908d92a6844d9e58491092eba88e812ed7",
+    "recap_segments": [
+      {
+        "start_ms": 2640400,
+        "end_ms": 2641880,
+        "text": "你两个能走对"
+      },
+      {
+        "start_ms": 2641880,
+        "end_ms": 2643840,
+        "text": "来给各位大老师们做本局游戏的副版"
+      },
+      {
+        "start_ms": 2643840,
+        "end_ms": 2646160,
+        "text": "本届版新假面舞会深圳正义原家9号女巫"
+      },
+      {
+        "start_ms": 2646160,
+        "end_ms": 2647330,
+        "text": "3号舞者"
+      },
+      {
+        "start_ms": 2647330,
+        "end_ms": 2648370,
+        "text": "4号白神"
+      },
+      {
+        "start_ms": 2648370,
+        "end_ms": 2649330,
+        "text": "5号狼人阵营"
+      },
+      {
+        "start_ms": 2649330,
+        "end_ms": 2650570,
+        "text": "一号2号八号假面"
+      },
+      {
+        "start_ms": 2650570,
+        "end_ms": 2651650,
+        "text": "10号平民阵营"
+      },
+      {
+        "start_ms": 2651650,
+        "end_ms": 2652330,
+        "text": "6号七号"
+      },
+      {
+        "start_ms": 2652330,
+        "end_ms": 2652730,
+        "text": "11号"
+      },
+      {
+        "start_ms": 2652730,
+        "end_ms": 2655430,
+        "text": "12号首夜狼队击杀10号假面女"
+      },
+      {
+        "start_ms": 2655430,
+        "end_ms": 2655910,
+        "text": "要救济"
+      },
+      {
+        "start_ms": 2655910,
+        "end_ms": 2656550,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 2656550,
+        "end_ms": 2659360,
+        "text": "预言家验证11号玩家平民为好人身份"
+      },
+      {
+        "start_ms": 2659360,
+        "end_ms": 2660480,
+        "text": "警车敬酒环节"
+      },
+      {
+        "start_ms": 2660480,
+        "end_ms": 2661960,
+        "text": "9号预言家获得警徽"
+      },
+      {
+        "start_ms": 2661960,
+        "end_ms": 2662680,
+        "text": "第一天白天"
+      },
+      {
+        "start_ms": 2662680,
+        "end_ms": 2665910,
+        "text": "8号狼人选择自爆入夜舞者的舞池"
+      },
+      {
+        "start_ms": 2665910,
+        "end_ms": 2667370,
+        "text": "一号狼人"
+      },
+      {
+        "start_ms": 2667370,
+        "end_ms": 2668710,
+        "text": "2号狼人"
+      },
+      {
+        "start_ms": 2668710,
+        "end_ms": 2672690,
+        "text": "5号白神假面验证了4号玩家"
+      },
+      {
+        "start_ms": 2672690,
+        "end_ms": 2674550,
+        "text": "五者不在舞池内"
+      },
+      {
+        "start_ms": 2674550,
+        "end_ms": 2676610,
+        "text": "给予了12号平民一张面具"
+      },
+      {
+        "start_ms": 2676610,
+        "end_ms": 2679865,
+        "text": "此时五池内5号白神被五出局"
+      },
+      {
+        "start_ms": 2680310,
+        "end_ms": 2681410,
+        "text": "当夜狼队击杀"
+      },
+      {
+        "start_ms": 2681410,
+        "end_ms": 2683810,
+        "text": "9号预言家牛毒杀一号狼人"
+      },
+      {
+        "start_ms": 2683810,
+        "end_ms": 2685130,
+        "text": "一号5号"
+      },
+      {
+        "start_ms": 2685130,
+        "end_ms": 2688250,
+        "text": "9号多岛预言家夜间验证了10号玩家"
+      },
+      {
+        "start_ms": 2688250,
+        "end_ms": 2689330,
+        "text": "假面为狼人身份"
+      },
+      {
+        "start_ms": 2689330,
+        "end_ms": 2692880,
+        "text": "并在出局后将警徽移交至11号平民"
+      },
+      {
+        "start_ms": 2692880,
+        "end_ms": 2694240,
+        "text": "在第二天的白天"
+      },
+      {
+        "start_ms": 2694240,
+        "end_ms": 2697480,
+        "text": "2号狼人选择自爆入夜舞者的舞池"
+      },
+      {
+        "start_ms": 2697480,
+        "end_ms": 2699020,
+        "text": "7号平民"
+      },
+      {
+        "start_ms": 2699020,
+        "end_ms": 2700360,
+        "text": "10号假面"
+      },
+      {
+        "start_ms": 2700360,
+        "end_ms": 2704160,
+        "text": "11号平民当夜假面验证了7号玩家"
+      },
+      {
+        "start_ms": 2704160,
+        "end_ms": 2706460,
+        "text": "平民在五室内给予7号玩家一张面具"
+      },
+      {
+        "start_ms": 2706460,
+        "end_ms": 2708880,
+        "text": "击杀4号舞者"
+      },
+      {
+        "start_ms": 2708880,
+        "end_ms": 2710580,
+        "text": "当夜为4号"
+      },
+      {
+        "start_ms": 2710580,
+        "end_ms": 2711960,
+        "text": "11号双子"
+      },
+      {
+        "start_ms": 2711960,
+        "end_ms": 2715440,
+        "text": "在第三天白天场上最后一狼假面选择交牌"
+      },
+      {
+        "start_ms": 2715440,
+        "end_ms": 2716100,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 2716100,
+        "end_ms": 2717140,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 2717140,
+        "end_ms": 2719680,
+        "text": "以上是我们今天第二局假面舞会的全部内容"
+      },
+      {
+        "start_ms": 2719680,
+        "end_ms": 2720890,
+        "text": "感谢下午的投食"
+      },
+      {
+        "start_ms": 2720890,
+        "end_ms": 2721330,
+        "text": "感谢"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          1,
+          5,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          4,
+          6,
+          7,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          4,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          3,
+          6,
+          7,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          6,
+          7,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [],
+  "election_flow": [],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "2号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "bvid": "BV1GxNH6YEht",
   "source_sha256": "feeed585eb01d3a52056d95df8b434b131d40af77c6214f61f29975e7e65920e",
   "dossier_sha256": "5296435e96dba40faf9d0b2f439dc2d7795ab491e636f8d0dfa2b8b3141c3619",
-  "generated_at": "2026-10-24T23:21:21+08:00",
+  "generated_at": "2026-10-25T04:08:38+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV1GxNH6YEht-p01-g02",
@@ -37,19 +646,19 @@
         "id": "registration-1",
         "day": 1,
         "on_police": [
-          1,
           2,
           3,
           7,
           8,
-          9,
-          11
+          9
         ],
         "off_police": [
+          1,
           4,
           5,
           6,
           10,
+          11,
           12
         ]
       }
@@ -61,12 +670,20 @@
         "kind": "sheriff",
         "number": 1,
         "stage": "initial",
-        "status": "partial",
+        "status": "complete",
         "candidates": [
           8,
           9
         ],
-        "eligible_voters": null,
+        "eligible_voters": [
+          1,
+          4,
+          5,
+          6,
+          10,
+          11,
+          12
+        ],
         "votes": [
           {
             "voter": 1,
@@ -105,8 +722,8 @@
           }
         ],
         "tied_candidates": [],
-        "winner": null,
-        "unrecorded_voters": null
+        "winner": 9,
+        "unrecorded_voters": []
       }
     ],
     "interruptions": [],
@@ -114,17 +731,17 @@
       {
         "day": 1,
         "sheriff": "recorded",
-        "exile": "unknown"
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 2,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
       }
     ]
   }

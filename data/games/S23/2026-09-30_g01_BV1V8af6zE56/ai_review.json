@@ -1,0 +1,518 @@
+{
+  "bvid": "BV1V8af6zE56",
+  "reviewer": "ai",
+  "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "逐席截图确认3号狼人悍跳预言家并拿到警徽、首日放逐12号真预言家；7号混血儿选择2号狼作榜样，跟随狼队。首夜4号被刀后女巫救起；首日12号预言家被放逐。次夜狼刀6号女巫、女巫毒死10号狼形成双死，狼队随后拍刀命中1号白神和8号猎人，屠神获胜。",
+  "decisions": [
+    {
+      "field": "seats[].name / seats[].role / seats[7].faction",
+      "before": "身份牌、姓名与混血儿阵营待核",
+      "after": {
+        "names": [
+          "李鬼鬼Supr",
+          "Qqqquan圈",
+          "章亿阳狼人杀",
+          "陈俊洁C",
+          "赵鑫华_HZz",
+          "园长LA",
+          "JY戴士",
+          "Ted_Dragon",
+          "小苍cany",
+          "陈明峻-",
+          "冰辰不橙",
+          "BobbyJ波比儿"
+        ],
+        "roles": [
+          "白神",
+          "狼人",
+          "狼人",
+          "平民",
+          "狼人",
+          "女巫",
+          "混血儿",
+          "猎人",
+          "平民",
+          "狼人",
+          "平民",
+          "预言家"
+        ],
+        "seat7_faction": "werewolf",
+        "model": 2
+      },
+      "reasoning": "截图逐席读取真实底牌；复盘明确7号混血儿选择2号狼人为榜样。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE56/BV1V8af6zE56_04234.450.png",
+          "frame_time_ms": 4234450,
+          "quote": "画面身份栏：1白神、2/3/5/10狼人、4/9/11平民、6女巫、7混血儿、8猎人、12预言家；结算栏明确混血儿7，榜样2号狼人。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4333280,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局\n入夜狼人击杀6号女巫女巫毒杀10号狼人\n60双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出的道路是一号8号白神和猎人\n游戏结束\n拍刀成功\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1..2].night/day",
+      "before": "首夜救人、首日淘汰、次夜双死和终局拍刀目标需复核",
+      "after": "N1刀4被救、12验8；D1 3狼获徽、12预言家出局；N2刀6毒10双死；狼队拍刀1/8获胜。",
+      "reasoning": "将夜间击杀、女巫救人和毒药及警徽票/放逐票分开，按终局播报确认刀路。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4333280,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局\n入夜狼人击杀6号女巫女巫毒杀10号狼人\n60双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出的道路是一号8号白神和猎人\n游戏结束\n拍刀成功\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[D1 sheriff/exile]",
+      "before": "警长与首日放逐票型结果待复核",
+      "after": "警徽票1→3、5→3、6→12，3当选；D1全员票将12号预言家放逐。",
+      "reasoning": "逐票字幕与结局报出的3号获徽、12号首日出局交叉核验。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1625200,
+          "end_ms": 1637020,
+          "quote": "带盔请从三九十二当中选出本局游戏警长\n321请出票\n一号投给3号\n5号投给3号\n6号投给12号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3647960,
+          "end_ms": 3675700,
+          "quote": "一号投给3号\n2号投给12号\n3号投给12号\n4号投给3号\n5号投给12号\n6号投给3号\n7号投给12号\n8号投给12号\n9号投给3号\n10号投给12号\n11号投给3号\n12号投给3号\n投票结束\n12号玩家6.5票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4333280,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局\n入夜狼人击杀6号女巫女巫毒杀10号狼人\n60双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出的道路是一号8号白神和猎人\n游戏结束\n拍刀成功\n狼人阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "bluffs[D1 seat 3]",
+      "before": "预言家自称的说话座位不明",
+      "after": {
+        "seat": 3,
+        "claimed_role": "预言家",
+        "attempted": true,
+        "success": true
+      },
+      "reasoning": "法官明确点名3号发言，紧接着这一发言自称验2金水、单边预言家并给出警徽流；3狼拿到警徽且首日真预言家12被放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1536570,
+          "end_ms": 1573310,
+          "quote": "我过了3号请发言\n五验的2号金水\n2号是金水\n现在是\n哦那单边预言家吧好吧\n那怎么说\n那看你们是双爆杀我还是还是让我归呗\n让我归的话\n我现在已经狼赢基本都知道了好吧\n然后这个了\n然后现在基本都知道了\n如果说你们让我归的话\n应该是下周直接续上了好吧\n如果让我跪的话\n如果不让我归\n那也行好吧呃警徽流\n我就一就一号5号顺验呗"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1625200,
+          "end_ms": 1637020,
+          "quote": "带盔请从三九十二当中选出本局游戏警长\n321请出票\n一号投给3号\n5号投给3号\n6号投给12号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4318900,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局"
+        }
+      ]
+    },
+    {
+      "field": "game_number",
+      "before": 2,
+      "after": 1,
+      "reasoning": "官方投稿标题误标第二局；视频内裁判明确称第一局结束，与当日诡术之境第二局、机械狼第三局一致。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4289410,
+          "end_ms": 4289410,
+          "quote": "好第一局游戏结束了"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "白神",
+        "狼人",
+        "狼人",
+        "平民",
+        "狼人",
+        "女巫",
+        "混血儿",
+        "猎人",
+        "平民",
+        "狼人",
+        "平民",
+        "预言家"
+      ],
+      "reasoning": "截图实际角色条逐座读取；结算复盘校对混血儿与榜样关系。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE56/BV1V8af6zE56_04234.450.png",
+          "frame_time_ms": 4234450,
+          "quote": "画面身份栏：1白神、2/3/5/10狼人、4/9/11平民、6女巫、7混血儿、8猎人、12预言家；结算栏明确混血儿7，榜样2号狼人。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4333280,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局\n入夜狼人击杀6号女巫女巫毒杀10号狼人\n60双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出的道路是一号8号白神和猎人\n游戏结束\n拍刀成功\n狼人阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 3,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": true,
+      "reasoning": "3号是狼人；其被法官点名后声称2号为金水、表示单边预言家并给出警徽流。3号赢得警徽，且首日放逐好人预言家12号，满足两项成功判据。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE56/BV1V8af6zE56_04234.450.png",
+          "frame_time_ms": 4234450,
+          "quote": "座位3真实身份牌为狼人；黄色发言注释与绿色底牌分开。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1536570,
+          "end_ms": 1573310,
+          "quote": "我过了3号请发言\n五验的2号金水\n2号是金水\n现在是\n哦那单边预言家吧好吧\n那怎么说\n那看你们是双爆杀我还是还是让我归呗\n让我归的话\n我现在已经狼赢基本都知道了好吧\n然后这个了\n然后现在基本都知道了\n如果说你们让我归的话\n应该是下周直接续上了好吧\n如果让我跪的话\n如果不让我归\n那也行好吧呃警徽流\n我就一就一号5号顺验呗"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1625200,
+          "end_ms": 1637020,
+          "quote": "带盔请从三九十二当中选出本局游戏警长\n321请出票\n一号投给3号\n5号投给3号\n6号投给12号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4290810,
+          "end_ms": 4318900,
+          "quote": "本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T17:29:39Z",
+  "phase_findings": [
+    {
+      "id": "b51-d2-terminal-hunter-shot-response",
+      "round": 2,
+      "phase": "day",
+      "status": "inferred",
+      "field": "rounds[2].day.hunter_shot[8]",
+      "title": "终局拍刀击中猎人后的开枪资格",
+      "conclusion": "D2狼队拍刀击中8号猎人后立即宣布屠神胜；最终复盘没有记载终局后枪口。按主审口径不列人工项，槽位保持unknown。",
+      "reasoning": "复盘直接给出拍刀命中及胜利公告；不把未提当作pass，也不要求复核终局之后不影响本局胜负的技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+          "start_ms": 4326740,
+          "end_ms": 4330160,
+          "quote": "给出的道路是一号8号白神和猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+          "start_ms": 4330800,
+          "end_ms": 4331400,
+          "quote": "拍刀成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+          "start_ms": 4331400,
+          "end_ms": 4333280,
+          "quote": "狼人阵营屠神获胜"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "终局拍刀击中猎人后的开枪资格",
+      "daily_audited": true
+    }
+  ],
+  "primary_review": {
+    "dossier_field_overrides": {
+      "game_number": 1
+    },
+    "decisions": [
+      {
+        "field": "game_number",
+        "before": 2,
+        "after": 1,
+        "reasoning": "官方投稿标题误标第二局；视频内裁判明确称第一局结束，与当日诡术之境第二局、机械狼第三局一致。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 4289410,
+            "end_ms": 4289410,
+            "quote": "好第一局游戏结束了"
+          }
+        ]
+      }
+    ],
+    "bvid": "BV1V8af6zE56",
+    "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e"
+  },
+  "structural_normalizations": [
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "death",
+        "actor": null,
+        "targets": [
+          6,
+          10
+        ],
+        "result": "6号女巫与10号狼人双死",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          6,
+          10
+        ],
+        "result": "6号女巫与10号狼人双死",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "voting.days[2].sheriff",
+      "before": "not_held",
+      "after": "not_applicable",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    },
+    {
+      "field": "voting.days[2].exile",
+      "before": "not_held",
+      "after": "unknown",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    }
+  ],
+  "supplemental_events": [
+    {
+      "round": 2,
+      "phase": "day",
+      "event": {
+        "slot": "wolf_shot",
+        "action": "shoot",
+        "actor": null,
+        "targets": [
+          1,
+          8
+        ],
+        "result": "狼队拍刀击中1号白神和8号猎人，屠神获胜",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "reason": "现有固定槽未覆盖的明确观察；保留供人工复核，未装作普通技能。"
+    }
+  ],
+  "daily_audit": {
+    "bvid": "BV1V8af6zE56",
+    "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 4290810,
+      "end_ms": 4331400,
+      "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+    },
+    "checks": [
+      {
+        "field": "complete_daily_recap",
+        "status": "confirmed",
+        "conclusion": "N1狼刀平民4被女巫救起，平安；验8猎人好人。D1狼3获警徽、预言家12被放逐。N2狼杀女巫6、女巫毒狼10，双死；D2狼队拍刀击中最后神职目标并宣布屠神胜，猎人终局后响应不作为人工核查项。",
+        "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4290810,
+            "end_ms": 4331400,
+            "quote": "好第一局游戏结束了\n本局游戏预女猎白混血儿版型预言家\n12号女巫\n6号猎人\n8号白神\n一号狼人\n2号三号五号\n10号平民\n4号九号11号\n本游戏的混血儿是7号\n榜样是2号狼人\n本球游戏为狼人混\n深夜狼人击杀4号平民女巫\n开药解救\n形成平安夜\n当夜预言家验证8号玩家猎人为好人身份\n上警环节\n3号狼人获得警徽\n第一天白天\n12号预言家被抗推出局\n入夜狼人击杀6号女巫女巫毒杀10号狼人\n60双死\n第二天白天\n狼人阵营决定拍刀\n狼人可拍两刀\n给出的道路是一号8号白神和猎人\n游戏结束\n拍刀成功\n狼人阵营屠神获胜"
+          }
+        ]
+      }
+    ],
+    "event_patches": [
+      {
+        "round": 2,
+        "phase": "day",
+        "slot": "exile_result",
+        "changes": {
+          "action": "none",
+          "targets": [],
+          "result": "狼队转入拍刀，未进行D2放逐。"
+        }
+      }
+    ],
+    "finding_resolutions": [
+      {
+        "id": "b51-d2-terminal-hunter-shot-response",
+        "status": "inferred",
+        "conclusion": "D2狼队拍刀击中8号猎人后立即宣布屠神胜；最终复盘没有记载终局后枪口。按主审口径不列人工项，槽位保持unknown。",
+        "reasoning": "复盘直接给出拍刀命中及胜利公告；不把未提当作pass，也不要求复核终局之后不影响本局胜负的技能。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4326740,
+            "end_ms": 4330160,
+            "quote": "给出的道路是一号8号白神和猎人"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4330800,
+            "end_ms": 4331400,
+            "quote": "拍刀成功"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4331400,
+            "end_ms": 4333280,
+            "quote": "狼人阵营屠神获胜"
+          }
+        ]
+      },
+      {
+        "id": "coverage-2-day-exile_result",
+        "status": "confirmed",
+        "conclusion": "狼队D2转入拍刀，未进行普通放逐。",
+        "reasoning": "复盘在第二天直接宣布拍刀和刀路，没有D2放逐轮。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4322480,
+            "end_ms": 4323440,
+            "quote": "第二天白天"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4323440,
+            "end_ms": 4324920,
+            "quote": "狼人阵营决定拍刀"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第01局_预女猎白混__BV1V8af6zE56_P01_CID42346155695.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "25c7f8f6f9431ac3c68e5c30ad9a3691fc3caead8ec6e59018292ffc8d75a41e",
+            "start_ms": 4326740,
+            "end_ms": 4330160,
+            "quote": "给出的道路是一号8号白神和猎人"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "before": {
+        "slot": "exile_result",
+        "action": "unknown",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "exile_result",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "狼队转入拍刀，未进行D2放逐。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    }
+  ],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 0,
+    "inferred": 1,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

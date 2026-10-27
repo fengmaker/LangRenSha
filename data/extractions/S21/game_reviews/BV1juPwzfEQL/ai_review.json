@@ -1,0 +1,2322 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1juPwzfEQL",
+  "cid": 36431268966,
+  "page": 1,
+  "status": "ai_semantically_reviewed_pending_primary_agent_check",
+  "review_label": "AI语义核对，不是用户确认",
+  "reviewed_at_utc": "2026-10-27T06:44:42+00:00",
+  "reviewer": "codex_subagent_semantic_review",
+  "source": {
+    "path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+    "sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+    "selected_transcript_path": "data/extractions/S21/media_evidence/BV1juPwzfEQL/transcript.selected.json"
+  },
+  "visual_cross_check": {
+    "winner": {
+      "value": "good",
+      "status": "frame_explicit_cross_checked_with_text",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03093.240.png",
+          "sha256": "649efec5ca8cf53f460d794486f6bd70b2cdaa3d84300e965e5dcc03f77765cb",
+          "requested_time_ms": 3093240,
+          "actual_frame_time_ms": 3093247,
+          "time_kind": "capture_receipt_actual_frame_time",
+          "kind": "visible_game_result_sign",
+          "observed_text": {
+            "winner": "好人胜利"
+          }
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1467,
+          "start_ms": 3164140,
+          "end_ms": 3166140,
+          "quote": "由邪术好人正义获胜"
+        }
+      ]
+    },
+    "identity_count": 12,
+    "finding": "姓名和真实底牌来自正常白天编号侧栏真实身份栏；9号假面属于狼阵营由法官复盘称9号狼人交叉确认。"
+  },
+  "decisions": [
+    {
+      "field": "actual_roles_and_names",
+      "status": "frame_explicit_with_faction_status_stated",
+      "values": [
+        {
+          "seat": 1,
+          "name": "郭小炜",
+          "name_status": "frame_explicit",
+          "actual_role": "平民",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 1,
+              "name": "郭小炜",
+              "actual_role": "平民"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 1,
+                "name": "郭小炜",
+                "actual_role": "平民"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 2,
+          "name": "圈圈",
+          "name_status": "frame_explicit",
+          "actual_role": "狼人",
+          "role_status": "frame_explicit",
+          "faction": "wolf",
+          "faction_status": "frame_explicit",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 2,
+              "name": "圈圈",
+              "actual_role": "狼人"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 2,
+                "name": "圈圈",
+                "actual_role": "狼人"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 3,
+          "name": "小张",
+          "name_status": "frame_explicit",
+          "actual_role": "女巫",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 3,
+              "name": "小张",
+              "actual_role": "女巫"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 3,
+                "name": "小张",
+                "actual_role": "女巫"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 4,
+          "name": "海王慕",
+          "name_status": "frame_explicit",
+          "actual_role": "狼人",
+          "role_status": "frame_explicit",
+          "faction": "wolf",
+          "faction_status": "frame_explicit",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 4,
+              "name": "海王慕",
+              "actual_role": "狼人"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 4,
+                "name": "海王慕",
+                "actual_role": "狼人"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 5,
+          "name": "翼风",
+          "name_status": "frame_explicit",
+          "actual_role": "白神",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 5,
+              "name": "翼风",
+              "actual_role": "白神"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 5,
+                "name": "翼风",
+                "actual_role": "白神"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "name_status": "frame_explicit",
+          "actual_role": "舞者",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 6,
+              "name": "KS",
+              "actual_role": "舞者"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 6,
+                "name": "KS",
+                "actual_role": "舞者"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "name_status": "frame_explicit",
+          "actual_role": "平民",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 7,
+              "name": "JY",
+              "actual_role": "平民"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 7,
+                "name": "JY",
+                "actual_role": "平民"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "name_status": "frame_explicit",
+          "actual_role": "狼人",
+          "role_status": "frame_explicit",
+          "faction": "wolf",
+          "faction_status": "frame_explicit",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 8,
+              "name": "牛肉干",
+              "actual_role": "狼人"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 8,
+                "name": "牛肉干",
+                "actual_role": "狼人"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 9,
+          "name": "陈俊洁",
+          "name_status": "frame_explicit",
+          "actual_role": "假面",
+          "role_status": "frame_explicit",
+          "faction": "wolf",
+          "faction_status": "text_explicit",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 9,
+              "name": "陈俊洁",
+              "actual_role": "假面"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 9,
+                "name": "陈俊洁",
+                "actual_role": "假面"
+              }
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 1430,
+              "start_ms": 3095460,
+              "end_ms": 3097740,
+              "quote": "6号白神5号假面9号狼人"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 1434,
+              "start_ms": 3103800,
+              "end_ms": 3107240,
+              "quote": "平安夜冤家验证9号玩家假面为狼人身份"
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 10,
+          "name": "陈明峻",
+          "name_status": "frame_explicit",
+          "actual_role": "平民",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 10,
+              "name": "陈明峻",
+              "actual_role": "平民"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 10,
+                "name": "陈明峻",
+                "actual_role": "平民"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        },
+        {
+          "seat": 11,
+          "name": "Jamie",
+          "name_status": "frame_explicit",
+          "actual_role": "平民",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 11,
+              "name": "Jamie",
+              "actual_role": "平民"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 11,
+                "name": "Jamie",
+                "actual_role": "平民"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap",
+          "name_review_note": "仅采用本局 BV1juPwzfEQL 03048.550 白天侧栏姓名牌，显示Jamie；未将其他BVID上的申屠映射到本局。",
+          "name_evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 11,
+              "name": "Jamie",
+              "actual_role": "平民"
+            }
+          }
+        },
+        {
+          "seat": 12,
+          "name": "李舒服",
+          "name_status": "frame_explicit",
+          "actual_role": "预言家",
+          "role_status": "frame_explicit",
+          "faction": "good",
+          "faction_status": "unique_inference_from_named_role",
+          "evidence": {
+            "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+            "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+            "requested_time_ms": 3048550,
+            "actual_frame_time_ms": 3048578,
+            "time_kind": "capture_receipt_actual_frame_time",
+            "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+            "observed_text": {
+              "seat": 12,
+              "name": "李舒服",
+              "actual_role": "预言家"
+            }
+          },
+          "faction_evidence": [
+            {
+              "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+              "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+              "requested_time_ms": 3048550,
+              "actual_frame_time_ms": 3048578,
+              "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+              "observed_text": {
+                "seat": 12,
+                "name": "李舒服",
+                "actual_role": "预言家"
+              }
+            }
+          ],
+          "faction_basis": "actual role label; for seat 9 in EQL and Mechanical Wolf 8 in Egi, faction cross-checked in judge recap"
+        }
+      ]
+    },
+    {
+      "field": "night_day_actions",
+      "status": "semantically_reviewed_unknowns_retained",
+      "values": [
+        {
+          "night": "night_1",
+          "events": [
+            {
+              "kind": "wolf_attack",
+              "target_seat": 10,
+              "target_role": "平民",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1432,
+                  "start_ms": 3100420,
+                  "end_ms": 3103000,
+                  "quote": "11号首夜狼人击杀10号平民女巫"
+                }
+              ]
+            },
+            {
+              "kind": "witch_save",
+              "actor_seat": 3,
+              "target_seat": 10,
+              "status": "unique_inference",
+              "reason": "紧邻字幕先报狼刀10，后报女巫用药救起，下一句称平安夜。",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1432,
+                  "start_ms": 3100420,
+                  "end_ms": 3103000,
+                  "quote": "11号首夜狼人击杀10号平民女巫"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1433,
+                  "start_ms": 3103000,
+                  "end_ms": 3103800,
+                  "quote": "用药救起行人"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1434,
+                  "start_ms": 3103800,
+                  "end_ms": 3107240,
+                  "quote": "平安夜冤家验证9号玩家假面为狼人身份"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 3,
+                  "name": "小张",
+                  "actual_role": "女巫"
+                }
+              }
+            },
+            {
+              "kind": "night_result",
+              "value": "平安夜",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1434,
+                  "start_ms": 3103800,
+                  "end_ms": 3107240,
+                  "quote": "平安夜冤家验证9号玩家假面为狼人身份"
+                }
+              ]
+            },
+            {
+              "kind": "seer_check",
+              "actor_seat": 12,
+              "target_seat": 9,
+              "result": "wolf",
+              "status": "text_explicit_cross_checked_with_role_frame",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1434,
+                  "start_ms": 3103800,
+                  "end_ms": 3107240,
+                  "quote": "平安夜冤家验证9号玩家假面为狼人身份"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 12,
+                  "name": "李舒服",
+                  "actual_role": "预言家"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "night": "night_2",
+          "events": [
+            {
+              "kind": "dancer_pool",
+              "seats": [
+                5,
+                10,
+                11
+              ],
+              "status": "text_explicit_recap",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1437,
+                  "start_ms": 3110320,
+                  "end_ms": 3112780,
+                  "quote": "入夜五者共有的对象为5号白神"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1438,
+                  "start_ms": 3112780,
+                  "end_ms": 3113480,
+                  "quote": "10号11号"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1439,
+                  "start_ms": 3113480,
+                  "end_ms": 3115110,
+                  "quote": "两张平民假面证"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1440,
+                  "start_ms": 3115110,
+                  "end_ms": 3116430,
+                  "quote": "12号预言家不在舞池",
+                  "purpose": "连续复盘确认共舞目标5、10、11，且12不在舞池"
+                }
+              ]
+            },
+            {
+              "kind": "mask_effect",
+              "actor_seat": 9,
+              "target_seat": 10,
+              "target_role": "平民",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1441,
+                  "start_ms": 3116430,
+                  "end_ms": 3118490,
+                  "quote": "给10号玩家平民扣了面具"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 9,
+                  "name": "陈俊洁",
+                  "actual_role": "假面"
+                }
+              }
+            },
+            {
+              "kind": "death",
+              "target_seat": 10,
+              "cause": "dancer_group",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1442,
+                  "start_ms": 3118490,
+                  "end_ms": 3119690,
+                  "quote": "10号被共五出局"
+                }
+              ],
+              "note": "复盘明确称10号被共舞出局。"
+            },
+            {
+              "kind": "wolf_attack",
+              "target_seat": 1,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1443,
+                  "start_ms": 3119690,
+                  "end_ms": 3120370,
+                  "quote": "狼人击杀"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1444,
+                  "start_ms": 3120370,
+                  "end_ms": 3122140,
+                  "quote": "一号平民一时双死"
+                }
+              ]
+            },
+            {
+              "kind": "deaths_same_night",
+              "target_seats": [
+                1,
+                10
+              ],
+              "status": "text_explicit_recap",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1442,
+                  "start_ms": 3118490,
+                  "end_ms": 3119690,
+                  "quote": "10号被共五出局"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1443,
+                  "start_ms": 3119690,
+                  "end_ms": 3120370,
+                  "quote": "狼人击杀"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1444,
+                  "start_ms": 3120370,
+                  "end_ms": 3122140,
+                  "quote": "一号平民一时双死"
+                }
+              ],
+              "note": "法官复盘明确“狼刀1号”并称一时双死；结合紧邻10号被共舞出局，记录1、10同夜出局。"
+            },
+            {
+              "kind": "witch_action",
+              "actor_seat": 3,
+              "value": "pass",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1445,
+                  "start_ms": 3122140,
+                  "end_ms": 3122980,
+                  "quote": "女巫空过"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 3,
+                  "name": "小张",
+                  "actual_role": "女巫"
+                }
+              }
+            },
+            {
+              "kind": "seer_check",
+              "actor_seat": 12,
+              "target_seat": 10,
+              "result": "good",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1446,
+                  "start_ms": 3122980,
+                  "end_ms": 3125520,
+                  "quote": "当夜预言家验证10号玩家为好人身份"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 12,
+                  "name": "李舒服",
+                  "actual_role": "预言家"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "night": "night_3",
+          "events": [
+            {
+              "kind": "dancer_pool",
+              "seats": [
+                6,
+                7,
+                12
+              ],
+              "excluded_from_pool": [
+                9
+              ],
+              "status": "text_explicit_recap",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1450,
+                  "start_ms": 3129950,
+                  "end_ms": 3132650,
+                  "quote": "入夜舞者跟我的对象为6号舞者"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1451,
+                  "start_ms": 3132650,
+                  "end_ms": 3136230,
+                  "quote": "7号平民和12号预言家假面证"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1452,
+                  "start_ms": 3136230,
+                  "end_ms": 3137430,
+                  "quote": "9号自己不在舞池",
+                  "purpose": "连续复盘列出舞者6号、7号和12号，且9号不在舞池"
+                }
+              ]
+            },
+            {
+              "kind": "mask_effect",
+              "actor_seat": 9,
+              "target_seat": 5,
+              "target_role": "白神",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1453,
+                  "start_ms": 3137430,
+                  "end_ms": 3139750,
+                  "quote": "给5号玩家白神扣了面具"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 9,
+                  "name": "陈俊洁",
+                  "actual_role": "假面"
+                }
+              }
+            },
+            {
+              "kind": "wolf_attack",
+              "target_seat": 12,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1455,
+                  "start_ms": 3140990,
+                  "end_ms": 3142830,
+                  "quote": "狼人击杀12号预言家"
+                }
+              ]
+            },
+            {
+              "kind": "protection",
+              "target_seat": 12,
+              "reason": "预言家12和舞者6同时在舞池",
+              "status": "text_explicit_recap",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1456,
+                  "start_ms": 3142830,
+                  "end_ms": 3146190,
+                  "quote": "由于预言家和舞者同时在舞池受到狼刀保护"
+                }
+              ],
+              "note": "保留法官所述“狼刀保护”结果，不泛化为S21规则。"
+            },
+            {
+              "kind": "night_result",
+              "value": "平安夜",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1457,
+                  "start_ms": 3146190,
+                  "end_ms": 3147240,
+                  "quote": "形成了平安夜"
+                }
+              ]
+            },
+            {
+              "kind": "witch_action",
+              "actor_seat": 3,
+              "value": "pass",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1458,
+                  "start_ms": 3147240,
+                  "end_ms": 3148720,
+                  "quote": "当夜女巫空过冤家"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 3,
+                  "name": "小张",
+                  "actual_role": "女巫"
+                }
+              }
+            },
+            {
+              "kind": "seer_check",
+              "actor_seat": 12,
+              "target_seat": 5,
+              "result": "good",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1459,
+                  "start_ms": 3148720,
+                  "end_ms": 3150300,
+                  "quote": "验证5号在为好人身份"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 12,
+                  "name": "李舒服",
+                  "actual_role": "预言家"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "night": "night_4",
+          "events": [
+            {
+              "kind": "mask_effect",
+              "actor_seat": 9,
+              "target_seat": 11,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1462,
+                  "start_ms": 3152880,
+                  "end_ms": 3157640,
+                  "quote": "假面面具技能用在了11号平民身上"
+                }
+              ],
+              "actor_actual_role_evidence": {
+                "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+                "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+                "requested_time_ms": 3048550,
+                "actual_frame_time_ms": 3048578,
+                "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+                "observed_text": {
+                  "seat": 9,
+                  "name": "陈俊洁",
+                  "actual_role": "假面"
+                }
+              }
+            },
+            {
+              "kind": "wolf_attack",
+              "target_seat": 7,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1463,
+                  "start_ms": 3157640,
+                  "end_ms": 3159500,
+                  "quote": "击杀7号平民"
+                }
+              ]
+            },
+            {
+              "kind": "death",
+              "target_seat": 7,
+              "cause": "wolf_attack",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1463,
+                  "start_ms": 3157640,
+                  "end_ms": 3159500,
+                  "quote": "击杀7号平民"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1464,
+                  "start_ms": 3159500,
+                  "end_ms": 3160420,
+                  "quote": "7号被刀出局"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "day": "day_1",
+          "events": [
+            {
+              "kind": "registration",
+              "value": "除7号外玩家上警",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 539,
+                  "start_ms": 1211460,
+                  "end_ms": 1212940,
+                  "quote": "本游戏除7号玩家外"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 540,
+                  "start_ms": 1212940,
+                  "end_ms": 1216340,
+                  "quote": "其他玩家上警上警玩家请亮红灯"
+                }
+              ]
+            },
+            {
+              "kind": "wolf_self_destruct",
+              "seat": 8,
+              "status": "text_explicit_in_recap",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1435,
+                  "start_ms": 3107240,
+                  "end_ms": 3108220,
+                  "quote": "上警环节"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1436,
+                  "start_ms": 3108220,
+                  "end_ms": 3110320,
+                  "quote": "8号狼人自爆"
+                }
+              ]
+            },
+            {
+              "kind": "ballot_round",
+              "value": "no_text_explicit_ballot_found",
+              "status": "unknown_absence_reviewed",
+              "reason": "找不到实际出票口令、逐座报票及结果；投9或PK的讨论不作为实际票。",
+              "evidence_search": {
+                "source_segment_count": 1508,
+                "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                "baseline_vote_round_candidate_count": 0
+              }
+            }
+          ]
+        },
+        {
+          "day": "day_2",
+          "events": [
+            {
+              "kind": "phase",
+              "value": "delayed_sheriff_election",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1447,
+                  "start_ms": 3125520,
+                  "end_ms": 3127660,
+                  "quote": "第二天延期竞选警长环节"
+                }
+              ]
+            },
+            {
+              "kind": "wolf_self_destruct",
+              "seat": 2,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1448,
+                  "start_ms": 3127660,
+                  "end_ms": 3128660,
+                  "quote": "2号狼人自爆"
+                }
+              ]
+            },
+            {
+              "kind": "badge",
+              "value": "lost",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1449,
+                  "start_ms": 3128660,
+                  "end_ms": 3129950,
+                  "quote": "本局游戏警徽流失"
+                }
+              ]
+            },
+            {
+              "kind": "badge_transfer",
+              "value": "not_reported_before_loss",
+              "status": "unknown"
+            },
+            {
+              "kind": "ballot_round",
+              "value": "no_text_explicit_ballot_found",
+              "status": "unknown_absence_reviewed",
+              "reason": "未找到警长候选投票/逐座报票。",
+              "evidence_search": {
+                "source_segment_count": 1508,
+                "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16"
+              }
+            }
+          ]
+        },
+        {
+          "day": "day_3",
+          "events": [
+            {
+              "kind": "wolf_self_destruct",
+              "seat": 4,
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1460,
+                  "start_ms": 3150300,
+                  "end_ms": 3151280,
+                  "quote": "第三天白天"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1461,
+                  "start_ms": 3151280,
+                  "end_ms": 3152880,
+                  "quote": "4号狼人自爆入夜"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "day": "day_4",
+          "events": [
+            {
+              "kind": "final_concession",
+              "seat": 9,
+              "role": "假面",
+              "status": "text_explicit",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1465,
+                  "start_ms": 3160420,
+                  "end_ms": 3162460,
+                  "quote": "女巫通过第四天八天最后一张狼人"
+                },
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1466,
+                  "start_ms": 3162460,
+                  "end_ms": 3164140,
+                  "quote": "9号假面选择交牌"
+                }
+              ],
+              "note": "第4天复盘语境后，9号假面选择交牌。"
+            },
+            {
+              "kind": "game_winner",
+              "value": "good",
+              "status": "frame_explicit_cross_checked_with_text",
+              "evidence": [
+                {
+                  "evidence_status": "text_explicit",
+                  "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+                  "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+                  "origin": "platform_original_chinese_subtitle",
+                  "bvid": "BV1juPwzfEQL",
+                  "cid": 36431268966,
+                  "page": 1,
+                  "source_segment_index": 1467,
+                  "start_ms": 3164140,
+                  "end_ms": 3166140,
+                  "quote": "由邪术好人正义获胜"
+                },
+                {
+                  "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03093.240.png",
+                  "sha256": "649efec5ca8cf53f460d794486f6bd70b2cdaa3d84300e965e5dcc03f77765cb",
+                  "requested_time_ms": 3093240,
+                  "actual_frame_time_ms": 3093247,
+                  "kind": "visible_game_result_sign",
+                  "observed_text": {
+                    "winner": "好人胜利"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "field": "ballots",
+      "status": "no_text_explicit_ballot_found",
+      "values": [],
+      "absence_review": {
+        "status": "no_text_explicit_ballot_found",
+        "source_segment_count": 1508,
+        "baseline_candidate_round_count": 0,
+        "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+        "search_terms": [
+          "321请出票",
+          "请出票",
+          "N号投给N号",
+          "投票结束",
+          "N号玩家N票出局"
+        ],
+        "note": "不把战略发言中的投9、PK等当作实际票。"
+      }
+    },
+    {
+      "field": "self_claims_and_bluffs",
+      "status": "turn_context_and_actual_roles_cross_checked",
+      "values": [
+        {
+          "speaker_seat": 8,
+          "actual_role": "狼人",
+          "claim": "以验人、金水、警徽流建立预言家身份",
+          "claim_kind": "seer_claim",
+          "claim_status": "text_explicit_by_turn_content",
+          "speaker_attribution_status": "turn_cue_explicit",
+          "turn_start_segment_index": 544,
+          "turn_end_segment_index": 571,
+          "classification": "狼牌悍跳预言家候选",
+          "classification_status": "unique_inference",
+          "reason": "8号底牌为狼人，完整警上发言以验人、金水和警徽流建立预言家身份；法官复盘称8号狼人自爆。",
+          "evidence": [
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 544,
+              "start_ms": 1239140,
+              "end_ms": 1241340,
+              "quote": "8号玩家请发言"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 545,
+              "start_ms": 1243600,
+              "end_ms": 1247910,
+              "quote": "哎呀留个好记点警徽流吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 546,
+              "start_ms": 1247910,
+              "end_ms": 1250870,
+              "quote": "就234这么验吧好吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 547,
+              "start_ms": 1250870,
+              "end_ms": 1251790,
+              "quote": "234这么验的"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 548,
+              "start_ms": 1251790,
+              "end_ms": 1252630,
+              "quote": "九是金水"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 549,
+              "start_ms": 1252630,
+              "end_ms": 1256500,
+              "quote": "9号玩家开牌之前说我赌你是狼"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 550,
+              "start_ms": 1256500,
+              "end_ms": 1257780,
+              "quote": "说毒我是狼"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 551,
+              "start_ms": 1257780,
+              "end_ms": 1259180,
+              "quote": "我看看你是啥呗"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 552,
+              "start_ms": 1259180,
+              "end_ms": 1260740,
+              "quote": "我发动一下技能"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 553,
+              "start_ms": 1260740,
+              "end_ms": 1261780,
+              "quote": "看看你是啥"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 554,
+              "start_ms": 1261780,
+              "end_ms": 1263280,
+              "quote": "金水牌"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 555,
+              "start_ms": 1263280,
+              "end_ms": 1264760,
+              "quote": "金水拍也挺好的呀"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 556,
+              "start_ms": 1264760,
+              "end_ms": 1266500,
+              "quote": "然后警徽流好记一点"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 557,
+              "start_ms": 1266500,
+              "end_ms": 1267940,
+              "quote": "我就直接234了好吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 558,
+              "start_ms": 1267940,
+              "end_ms": 1269940,
+              "quote": "然后里面有起跳的就顺延一下"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 559,
+              "start_ms": 1269940,
+              "end_ms": 1270420,
+              "quote": "没有起"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 560,
+              "start_ms": 1270420,
+              "end_ms": 1273020,
+              "quote": "没有起跳的就二三对吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 561,
+              "start_ms": 1273020,
+              "end_ms": 1275460,
+              "quote": "警下就7号一张牌肯定是不用经验的"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 562,
+              "start_ms": 1275460,
+              "end_ms": 1277400,
+              "quote": "我觉得就看7号玩家的投票就行"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 563,
+              "start_ms": 1277400,
+              "end_ms": 1279020,
+              "quote": "我觉得他是狼"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 564,
+              "start_ms": 1279020,
+              "end_ms": 1281020,
+              "quote": "几乎也不可能倒钩我对吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 565,
+              "start_ms": 1281020,
+              "end_ms": 1281580,
+              "quote": "他是好人"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 566,
+              "start_ms": 1281580,
+              "end_ms": 1284260,
+              "quote": "就会直接大概率能找到我对吧"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 567,
+              "start_ms": 1284260,
+              "end_ms": 1287630,
+              "quote": "所以7号这张牌不需要留进警徽流"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 568,
+              "start_ms": 1287990,
+              "end_ms": 1290410,
+              "quote": "没有特别多好聊的了"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 569,
+              "start_ms": 1290410,
+              "end_ms": 1291630,
+              "quote": "就这样呗"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 570,
+              "start_ms": 1291630,
+              "end_ms": 1294510,
+              "quote": "嗯234的警徽流验的九是好人"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 571,
+              "start_ms": 1294510,
+              "end_ms": 1295520,
+              "quote": "过了啊",
+              "purpose": "8号警上完整连续话轮：请发言至过了"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 1436,
+              "start_ms": 3108220,
+              "end_ms": 3110320,
+              "quote": "8号狼人自爆",
+              "purpose": "法官复盘称8号狼人自爆"
+            }
+          ]
+        },
+        {
+          "speaker_seat": 12,
+          "actual_role": "预言家",
+          "claim": "本人称预言家；报9号查杀并报验10号好人",
+          "claim_status": "text_explicit",
+          "speaker_attribution_status": "turn_cue_explicit",
+          "classification": "真实预言家主张",
+          "classification_status": "frame_explicit_cross_checked_with_text",
+          "evidence": [
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 705,
+              "start_ms": 1558560,
+              "end_ms": 1559909,
+              "quote": "查杀了9号"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 741,
+              "start_ms": 1622850,
+              "end_ms": 1623770,
+              "quote": "我是一个预言家"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 749,
+              "start_ms": 1635190,
+              "end_ms": 1636690,
+              "quote": "8号是悍跳狼啊"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 751,
+              "start_ms": 1638110,
+              "end_ms": 1638830,
+              "quote": "我是预言家"
+            },
+            {
+              "evidence_status": "text_explicit",
+              "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+              "origin": "platform_original_chinese_subtitle",
+              "bvid": "BV1juPwzfEQL",
+              "cid": 36431268966,
+              "page": 1,
+              "source_segment_index": 752,
+              "start_ms": 1638830,
+              "end_ms": 1641790,
+              "quote": "过了一号家请发言嗯"
+            }
+          ]
+        },
+        {
+          "review_note": "核对实际狼座2、4、8、9的本人话轮：确认8号的预言家式主张；未发现2、4、9本人清晰自称预言家或通灵师。",
+          "negative_search_basis": {
+            "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+            "transcript_segment_count": 1508,
+            "method": "逐字搜索预言家/通灵师身份主张并与发言交接、底牌座位交叉核对"
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "issue": "sheriff_ballots",
+      "status": "not_found",
+      "detail": "法官提及警上环节与自爆；未找到实际投票过程。"
+    },
+    {
+      "issue": "badge_transfer",
+      "status": "not_reported",
+      "detail": "报告徽流失但无传递对象。"
+    }
+  ],
+  "revision_history": [
+    {
+      "field": "8_witch_claim",
+      "old": "erroneous claim entry",
+      "status": "retracted",
+      "reason": "opening commentary mistaken for player turn; no 8 witch claim supported."
+    },
+    {
+      "field": "seat10_death_cause",
+      "old": "unknown",
+      "new": "dancer group caused exit",
+      "status": "corrected",
+      "evidence": [
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1442,
+          "start_ms": 3118490,
+          "end_ms": 3119690,
+          "quote": "10号被共五出局"
+        }
+      ]
+    },
+    {
+      "field": "dancer_groups",
+      "old": "ambiguous",
+      "new": "N2=5/10/11; N3=6/7/12",
+      "status": "corrected",
+      "evidence": [
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1437,
+          "start_ms": 3110320,
+          "end_ms": 3112780,
+          "quote": "入夜五者共有的对象为5号白神"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1438,
+          "start_ms": 3112780,
+          "end_ms": 3113480,
+          "quote": "10号11号"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1439,
+          "start_ms": 3113480,
+          "end_ms": 3115110,
+          "quote": "两张平民假面证"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1440,
+          "start_ms": 3115110,
+          "end_ms": 3116430,
+          "quote": "12号预言家不在舞池"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1450,
+          "start_ms": 3129950,
+          "end_ms": 3132650,
+          "quote": "入夜舞者跟我的对象为6号舞者"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1451,
+          "start_ms": 3132650,
+          "end_ms": 3136230,
+          "quote": "7号平民和12号预言家假面证"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1452,
+          "start_ms": 3136230,
+          "end_ms": 3137430,
+          "quote": "9号自己不在舞池"
+        }
+      ]
+    },
+    {
+      "field": "day_boundary",
+      "old": "concession on D3",
+      "new": "D3 seat4 explosion; N4 seat7 death; D4 seat9 concession",
+      "status": "corrected",
+      "evidence": [
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1460,
+          "start_ms": 3150300,
+          "end_ms": 3151280,
+          "quote": "第三天白天"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1461,
+          "start_ms": 3151280,
+          "end_ms": 3152880,
+          "quote": "4号狼人自爆入夜"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1462,
+          "start_ms": 3152880,
+          "end_ms": 3157640,
+          "quote": "假面面具技能用在了11号平民身上"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1463,
+          "start_ms": 3157640,
+          "end_ms": 3159500,
+          "quote": "击杀7号平民"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1464,
+          "start_ms": 3159500,
+          "end_ms": 3160420,
+          "quote": "7号被刀出局"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1465,
+          "start_ms": 3160420,
+          "end_ms": 3162460,
+          "quote": "女巫通过第四天八天最后一张狼人"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1466,
+          "start_ms": 3162460,
+          "end_ms": 3164140,
+          "quote": "9号假面选择交牌"
+        },
+        {
+          "evidence_status": "text_explicit",
+          "source_path": "data/seasons/S21/第02周_正赛第01期/2026-03-03/2026-03-03_S21_第02周_正赛第01期_第02局_假面舞会__BV1juPwzfEQL_P01_CID36431268966.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cc2ef23495ff6e0cb7a76ecde4ff89b0b7d35ee77852b9e087137938f8d2af16",
+          "origin": "platform_original_chinese_subtitle",
+          "bvid": "BV1juPwzfEQL",
+          "cid": 36431268966,
+          "page": 1,
+          "source_segment_index": 1467,
+          "start_ms": 3164140,
+          "end_ms": 3166140,
+          "quote": "由邪术好人正义获胜"
+        }
+      ]
+    },
+    {
+      "field": "seat11_name",
+      "old": "申屠 (wrong cross-game import)",
+      "new": "Jamie",
+      "status": "corrected_by_same_BVID_frame",
+      "reason": "BV1juPwzfEQL direct frame 03048.550 shows Jamie. 申屠 belongs to BV1UMPqzjEvH and is not mapped across games.",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S21/frames/BV1juPwzfEQL/BV1juPwzfEQL_03048.550.png",
+          "sha256": "193c25022222b4ba60e43e429daaababefa26817aa3ec806280a34b7ef16c02a",
+          "requested_time_ms": 3048550,
+          "actual_frame_time_ms": 3048578,
+          "kind": "daytime_speech_numbered_sidebars_actual_roles_and_names",
+          "observed_text": {
+            "seat": 11,
+            "name": "Jamie",
+            "actual_role": "平民"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -5,18 +5,396 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "bbd610fa15ba01874dc88a57c2868c4cd014628e8780c26e1e1490f294a87a37",
-  "question_count": 1,
-  "pending_count": 4,
-  "questions": [
+  "facts_sha256": "78812d5f715f00124bda3cdefc47b738b7369e0199a86d302f0f6b4c037db021",
+  "causal_decisions": [
     {
-      "id": "vote-BV1Wjja66EFz-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "question_id": "vote-BV1Wjja66EFz-day-4-departure-night_deaths",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第4天前夜5号通灵师死亡。",
+      "reason": "复盘明确Day3投票9号出局后，入夜狼人击杀5号通灵师；补到Day4投票前死亡名单。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 6882320,
+          "end_ms": 6888199,
+          "quote": "狼队击杀4号首位4号守卫单四通灵师查验了8号玩家为平民身份\n在第三天的白天\n9号平民被抗推出局\n入夜狼人击杀5号通灵师\n通灵师查验了10号玩家为女巫身份"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1Wjja66EFz-day-4-departure-night_deaths",
+        "code": "departure-night_deaths",
+        "day": 4,
+        "target": null,
+        "title": "第4天前夜死亡播报待补充",
+        "reason": "需补充这项原文出局信息，之后自动重算存活与票权，无需人工计算票数。受影响投票：第4天（ballot-5）；",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+            "start_ms": 6891259,
+            "end_ms": 6899210,
+            "quote": "并在出局后将警徽移交至10号女巫\n在第四天白天\n场上最后一狼\n2号机械狼被公投出局\n游戏结束",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 6882320,
+          "end_ms": 6888199,
+          "quote": "狼队击杀4号首位4号守卫单四通灵师查验了8号玩家为平民身份\n在第三天的白天\n9号平民被抗推出局\n入夜狼人击杀5号通灵师\n通灵师查验了10号玩家为女巫身份"
+        }
+      ],
+      "method": "contextual_causal_review"
+    },
+    {
+      "question_id": "vote-BV1Wjja66EFz-ballot-4-rule-living_voter_conflict",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "ballot-4删除4号孤立投票残片，保留5→2；其余2→9、3→9、8→9、9→2、10→9。",
+      "reason": "独立Nano复听为“2→9、3→9、4号呃5号→2、8→9、9→2、10→9”；4号前夜已死，原字幕仅孤立“4号”没有目标，结合口误和接续唱词应保留5→2并删4号伪票。其他票使9号正好四票出局。",
+      "source_spans": [
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 5992200,
+          "end_ms": 6053510,
+          "quote": "九二顺投\n按照逻辑上九保八说23pk\n那么就只能九九是没验过\n先投九九出局没结束\n那他是好人\n他保了八\n那么就剩23pk\n我自己是好人\n再投二\n就是这样哦\n别的也没有了\n你归吧\n过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号\n投票结束\n9号玩家四票出局\n请发表遗言\n呵呵我我我理解好人确实压力比较大\n你要是觉得我不是狼\n你就直接归2号嘛对吧\n你下次就直接归2号\n我本来想保你的\n你投2号我肯定会保你怎么投到我身上"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.音频.m4a",
+          "start_ms": 6010000,
+          "end_ms": 6040000,
+          "quote": "独立Nano机器复听：所有玩家发言结束请各位玩家戴盔做好投票准备警长请归票警长归票二号九号PK警徽票变为一票各位玩家唱票结束前请不要放手三二一请出票二号投给九号三号投给九号四号呃五号投给二号八号投给九号九号投给二号十号投给九号"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1Wjja66EFz-ballot-4-rule-living_voter_conflict",
+        "code": "rule-living_voter_conflict",
+        "day": 3,
+        "target": "ballot-4",
+        "title": "投票与已确认规则需要核对",
+        "reason": "播报投票者与当时存活名单冲突：[4]；需核对出局时点、日序或号码。",
+        "severity": "question",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+            "start_ms": 5992200,
+            "end_ms": 6053510,
+            "quote": "按照逻辑上九保八说23pk\n那么就只能九九是没验过\n先投九九出局没结束\n那他是好人\n他保了八\n那么就剩23pk\n我自己是好人\n再投二\n就是这样哦\n别的也没有了\n你归吧\n过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号\n投票结束\n9号玩家四票出局\n请发表遗言\n呵呵我我我理解好人确实压力比较大\n你要是觉得我不是狼\n你就直接归2号嘛对吧\n你下次就直接归2号\n我本来想保你的"
+          },
+          {
+            "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+            "start_ms": 6874560,
+            "end_ms": 6886219,
+            "quote": "狼队击杀4号首位4号守卫单四通灵师查验了8号玩家为平民身份\n在第三天的白天\n9号平民被抗推出局"
+          },
+          {
+            "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+            "start_ms": 6882320,
+            "end_ms": 6888199,
+            "quote": "在第三天的白天\n9号平民被抗推出局\n入夜狼人击杀5号通灵师"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 5992200,
+          "end_ms": 6053510,
+          "quote": "九二顺投\n按照逻辑上九保八说23pk\n那么就只能九九是没验过\n先投九九出局没结束\n那他是好人\n他保了八\n那么就剩23pk\n我自己是好人\n再投二\n就是这样哦\n别的也没有了\n你归吧\n过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号\n投票结束\n9号玩家四票出局\n请发表遗言\n呵呵我我我理解好人确实压力比较大\n你要是觉得我不是狼\n你就直接归2号嘛对吧\n你下次就直接归2号\n我本来想保你的\n你投2号我肯定会保你怎么投到我身上"
+        },
+        {
+          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
+          "start_ms": 6010000,
+          "end_ms": 6040000,
+          "quote": "过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号被放逐。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "11号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
+    },
+    {
+      "day": 4,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [
+          1
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          6
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          4
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          5,
+          8,
+          9,
+          10
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          5,
+          8,
+          10
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          8,
+          10
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          8,
+          10
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "living": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "living_count": 10,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "vote_count": 10,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-4",
+      "day": 3,
+      "living": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
+      "living_count": 6,
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
+      "vote_count": 6,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-5",
+      "day": 4,
+      "living": [
+        2,
+        3,
+        8,
+        10
+      ],
+      "living_count": 4,
+      "eligible_voters": [
+        2,
+        3,
+        8,
+        10
+      ],
+      "vote_count": 4,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "7号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
@@ -27,13 +405,15 @@
       ]
     },
     {
-      "id": "vote-BV1Wjja66EFz-ballot-4-stage_unknown",
-      "code": "stage_unknown",
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
       "day": 3,
-      "target": "ballot-4",
-      "title": "本轮投票阶段待核",
-      "reason": "现有证据还不足以确定是首轮、PK后还是技能重投；需要核对前轮和发言衔接。\n逐段核对：转写虽有“2号9号PK警徽票变为一票”，但没有证据证明上一轮放逐平票或PK发言结束；依核查规则不据此确认stage=pk。",
-      "severity": "question",
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
@@ -56,42 +436,9 @@
       ]
     },
     {
-      "id": "vote-BV1Wjja66EFz-ballot-4-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 3,
-      "target": "ballot-4",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取7条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
-          "start_ms": 5992200,
-          "end_ms": 6053510,
-          "quote": "按照逻辑上九保八说23pk\n那么就只能九九是没验过\n先投九九出局没结束\n那他是好人\n他保了八\n那么就剩23pk\n我自己是好人\n再投二\n就是这样哦\n别的也没有了\n你归吧\n过了班结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n2号九号pk警徽票变为一票\n各位玩家唱票结束前\n请不要放手\n321请出票\n2号投给9号\n3号投给9号\n4号\n5号投给2号\n8号投给9号\n9号投给2号\n10号投给9号\n投票结束\n9号玩家四票出局\n请发表遗言\n呵呵我我我理解好人确实压力比较大\n你要是觉得我不是狼\n你就直接归2号嘛对吧\n你下次就直接归2号\n我本来想保你的"
-        },
-        {
-          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
-          "start_ms": 6874560,
-          "end_ms": 6886219,
-          "quote": "狼队击杀4号首位4号守卫单四通灵师查验了8号玩家为平民身份\n在第三天的白天\n9号平民被抗推出局"
-        },
-        {
-          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
-          "start_ms": 6882320,
-          "end_ms": 6888199,
-          "quote": "在第三天的白天\n9号平民被抗推出局\n入夜狼人击杀5号通灵师"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1Wjja66EFz-ballot-5-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 4,
-      "target": "ballot-5",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取4条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "outcome": "exiled",
+      "exile_note": "2号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
@@ -118,66 +465,8 @@
           "quote": "场上最后一狼\n2号机械狼被公投出局\n游戏结束"
         }
       ]
-    },
-    {
-      "id": "vote-BV1Wjja66EFz-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第04周_正赛第03期/2026-06-18/2026-06-18_S22_第04周_正赛第03期_第03局_机械狼通灵师__BV1Wjja66EFz_P01_CID39223102418.平台AI字幕_ai-zh_01_4b1f925901.原始.json",
-          "start_ms": 6793120,
-          "end_ms": 6816629,
-          "quote": "2号八号pk请回票变为一票\n各位玩家唱票结束前不要放手\n321请出票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局\n游戏结束\n好人阵营获胜\n他确实是缺了九的机械\n对对对",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1Wjja66EFz-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1Wjja66EFz-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 1,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1Wjja66EFz-ballot-4-stage_unknown",
-        "vote-BV1Wjja66EFz-ballot-4-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 4,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1Wjja66EFz-ballot-5-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1Wjja66EFz-ballot-4-day-recap-review",
@@ -244,6 +533,6 @@
       ]
     }
   ],
-  "voting_sha256": "ede34626e496ce171c21e944593d15d8868eff6b018e95253fc58fcba8fee52c",
+  "voting_sha256": "4c1a4f073d84d86a5f3a062e8baa2f94db8758c931feb668b7448a25b401ef7c",
   "source_sha256": "4b1f9259013355e696b408f3bffc0aa952bf591869e4fd1dcbd48be81c30aef0"
 }

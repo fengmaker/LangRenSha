@@ -1,0 +1,728 @@
+{
+  "bvid": "BV1U3p86dEJY",
+  "reviewer": "ai",
+  "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "底牌为3狼人（1/6/10）、机械狼5、神职2守卫/3猎人/9女巫/12通灵师，平民4/7/8/11。首夜9与10双死，6在D1竞选自爆中断，1在延期竞选再爆流徽。N2刀12；N3刀8、机械狼5毒7，D3放逐5后好人胜。10号仅在裁判点名遗言后自称通灵师，未在警上/警下活跃阶段起跳；作为遗言诈身份候选单列，不先并入常规悍跳统计。",
+  "decisions": [
+    {
+      "field": "rounds[2].night.wolf_attack",
+      "before": "unknown",
+      "after": "狼刀8号平民",
+      "reasoning": "第三夜狼队击杀8号；同夜机械狼毒7号。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3526920,
+          "end_ms": 3529850,
+          "quote": "机械狼击杀8号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night.mechanical_action",
+      "before": "毒7被错误归入本职女巫药槽",
+      "after": "机械狼5用复制女巫技能毒7；本职女巫9的N3毒药不可用",
+      "reasoning": "来源称5号模仿9号女巫后取得技能并毒7；女巫9在N1已出局。本职药与机械狼复制技能分别记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3501260,
+          "end_ms": 3502380,
+          "quote": "模仿9号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3529850,
+          "end_ms": 3531910,
+          "quote": "选择毒杀7号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": "unknown",
+      "after": "7号、8号双死",
+      "reasoning": "守卫守7但毒仍致7死亡，狼刀8，因此D3公布两人双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3524020,
+          "end_ms": 3526920,
+          "quote": "入夜守卫守护7号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3526920,
+          "end_ms": 3529850,
+          "quote": "机械狼击杀8号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3529850,
+          "end_ms": 3531910,
+          "quote": "选择毒杀7号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3531910,
+          "end_ms": 3535150,
+          "quote": "当以为7号八号双死在第三天白天"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[0]",
+      "before": "day2 partial",
+      "after": "day3 complete; 2,3,4,5,11 vote; 5 is expelled",
+      "reasoning": "逐票显示五名存活玩家均投5；并播报5号四票出局。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3439869,
+          "end_ms": 3442819,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3442819,
+          "end_ms": 3444319,
+          "quote": "2号投给5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3444319,
+          "end_ms": 3445439,
+          "quote": "3号投给5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3445439,
+          "end_ms": 3446519,
+          "quote": "4号投给5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3446519,
+          "end_ms": 3447519,
+          "quote": "5号投给2号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3452509,
+          "end_ms": 3453229,
+          "quote": "游戏结束"
+        }
+      ]
+    },
+    {
+      "field": "continuation_crosscheck_20261026",
+      "before": "上一轮未决或矛盾候选（完整原稿已归档）",
+      "after": "首夜查机械狼5反馈女巫：原复盘3504060..3507440已明确，学习9号与当夜反馈互证。第二夜12查1反馈狼人。纠正D2自爆却标recorded、D3已投票却标unknown的覆盖。10号遗言自称事实已清楚，是否纳入常规悍跳仍属统计口径问题，保留一项用户判断。",
+      "reasoning": "首夜查机械狼5反馈女巫：原复盘3504060..3507440已明确，学习9号与当夜反馈互证。第二夜12查1反馈狼人。纠正D2自爆却标recorded、D3已投票却标unknown的覆盖。10号遗言自称事实已清楚，是否纳入常规悍跳仍属统计口径问题，保留一项用户判断。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3501260,
+          "end_ms": 3524020,
+          "quote": "模仿9号女巫\n本游戏为机械女巫\n通灵师\n查验5号玩家\n机械狼为女巫身份\n在警上竞选环节\n6号狼人选择自爆\n入夜守卫守护2号自首\n狼队击杀12号通灵师\n机械女巫技能通过通灵试验证\n一号玩家为狼人身份\n在延期禁选环节\n一号狼人选择自爆\n本九戏警徽流失"
+        }
+      ]
+    },
+    {
+      "field": "bluffs/separate_identity_claims",
+      "before": "另列说明仅在文字中，记录仍混在bluffs数组",
+      "after": "统计口径待用户决定，暂不计常规悍跳",
+      "reasoning": "将已确认非同一统计口径的自称移到独立数组，页面仍保留原句与推导，避免按attempted=true直接计入物理狼人悍跳。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1771070,
+          "end_ms": 1788760,
+          "quote": "过了10号玩家请发言\n你是猎人\n他拉中他拉中身份不是狼悍跳吗\n他不是\n他是预呃\n他是预言家\n肯定不会给你发真身份呀\n对吧\n你是猎人\n他不是悍跳吗\n我站边6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2039120,
+          "end_ms": 2045540,
+          "quote": "双方技能54321十号玩家请发表遗言"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2047320,
+          "end_ms": 2048840,
+          "quote": "唉我是通灵师啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2066260,
+          "end_ms": 2068710,
+          "quote": "然后我是通灵师验的三金水"
+        }
+      ]
+    },
+    {
+      "field": "dossier.rounds[2].day.mechanical_day_skill",
+      "before": "unknown",
+      "after": "unavailable",
+      "reasoning": "5号机械狼学习女巫，不具备机械猎人白天开枪技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3501260,
+          "end_ms": 3502380,
+          "quote": "模仿9号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3536130,
+          "end_ms": 3537950,
+          "quote": "5号机械狼被公投出局"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "狼人",
+        "守卫",
+        "猎人",
+        "平民",
+        "机械狼",
+        "狼人",
+        "平民",
+        "平民",
+        "女巫",
+        "狼人",
+        "平民",
+        "通灵师"
+      ],
+      "reasoning": "按结尾连续名单逐cue解析并用第三天画面角色条交叉核对；5号底牌仍为机械狼，模仿9号只改变可用技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3478570,
+          "end_ms": 3481540,
+          "quote": "机械狼通灵师深圳营通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3481540,
+          "end_ms": 3482800,
+          "quote": "12号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3482800,
+          "end_ms": 3483680,
+          "quote": "9号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3483680,
+          "end_ms": 3487120,
+          "quote": "3号守卫2号狼人阵营一号6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3487120,
+          "end_ms": 3488380,
+          "quote": "10号机械狼5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3488380,
+          "end_ms": 3492350,
+          "quote": "本游戏机械女巫平民阵营4号七号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3492350,
+          "end_ms": 3496130,
+          "quote": "8号11号首页首尾守护一号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3501260,
+          "end_ms": 3502380,
+          "quote": "模仿9号女巫"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEJY/BV1U3p86dEJY_03073.449.png",
+          "frame_time_ms": 3073449,
+          "quote": "狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEJY/BV1U3p86dEJY_03073.449.png",
+          "frame_time_ms": 3073449,
+          "quote": "守卫",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEJY/BV1U3p86dEJY_03073.449.png",
+          "frame_time_ms": 3073449,
+          "quote": "平民",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEJY/BV1U3p86dEJY_03073.449.png",
+          "frame_time_ms": 3073449,
+          "quote": "女巫",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEJY/BV1U3p86dEJY_03073.449.png",
+          "frame_time_ms": 3073449,
+          "quote": "通灵师",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 6,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "confirmation_status": "user_confirmed",
+      "reasoning": "用户明确确认6号是本局悍跳；法官点名6号发言后，6号报验10号金水、给出警徽流并与另一通灵师自称形成对跳。6号在首日竞选环节自爆，未取得警徽，也没有首日放逐好人的结果；按既有统计口径为悍跳尝试、未成功。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/用户确认_20261026_六号悍跳.txt",
+          "source_sha256": "efa6b4cb341aed1ea8df277cbc8624f13a9761d38abb612241532790a98cea15",
+          "quote": "这把六号是悍跳"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 1356500,
+          "end_ms": 1387399,
+          "quote": "过了6号玩家请发言\n斯噩梦有些时候就是会来的嘛对吧\n警徽流留下一号好吧哈\n请问这一号因为前面有逻辑关系的\n好像就只有一跟你像\n比如跟五啊\n跟二啊对吧\n他们都还有逻辑关系\n所以是验一下一号收益会更大一点嘛\n三其实无所谓的\n三比如说你看他也可以就是一个狼对吧\n在跟9号玩家去拉9号的杆\n另外呢他有可能就是想操作\n他也没找到谁是通灵师\n可以他一个机会是可以的是吧\n我验了我验了十是金水牌\n主要是上一把10号也那个了"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3507440,
+          "end_ms": 3510360,
+          "quote": "在警上竞选环节\n6号狼人选择自爆"
+        }
+      ]
+    }
+  ],
+  "human_questions": [
+    {
+      "id": "q_s73_eulogy_identity_claim_counting",
+      "field": "bluffs.eulogy_false_identity_claim_counting",
+      "question": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+      "options": [
+        "不计入常规悍跳，另列遗言诈身份（推荐）",
+        "计为尝试，但不计悍跳成功",
+        "计入常规悍跳统计"
+      ],
+      "reason": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2039120,
+          "end_ms": 2045540,
+          "quote": "双方技能54321十号玩家请发表遗言"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2047320,
+          "end_ms": 2048840,
+          "quote": "唉我是通灵师啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2066260,
+          "end_ms": 2068710,
+          "quote": "然后我是通灵师验的三金水"
+        }
+      ],
+      "round": 1,
+      "phase": "day",
+      "phase_label": "第1天白天"
+    }
+  ],
+  "reviewed_at_utc": "2026-10-25T17:56:47Z",
+  "continuation_review": {
+    "reviewer": "ai",
+    "reviewed_at_utc": "2026-10-25T19:19:09.475948+00:00",
+    "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+    "result": "首夜查机械狼5反馈女巫：原复盘3504060..3507440已明确，学习9号与当夜反馈互证。第二夜12查1反馈狼人。纠正D2自爆却标recorded、D3已投票却标unknown的覆盖。10号遗言自称事实已清楚，是否纳入常规悍跳仍属统计口径问题，保留一项用户判断。",
+    "human_confirmed": false
+  },
+  "separate_identity_claims": [
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": null,
+      "success": null,
+      "reasoning": "裁判先明确点名10号发表遗言，10号随后自称通灵师并称验3金水；此前10号活跃发言没有自称通灵师。此为遗言诈身份候选，不是警上或警下悍跳；是否纳入常规悍跳统计留待口径决定。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1771070,
+          "end_ms": 1788760,
+          "quote": "过了10号玩家请发言\n你是猎人\n他拉中他拉中身份不是狼悍跳吗\n他不是\n他是预呃\n他是预言家\n肯定不会给你发真身份呀\n对吧\n你是猎人\n他不是悍跳吗\n我站边6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2039120,
+          "end_ms": 2045540,
+          "quote": "双方技能54321十号玩家请发表遗言"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2047320,
+          "end_ms": 2048840,
+          "quote": "唉我是通灵师啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2066260,
+          "end_ms": 2068710,
+          "quote": "然后我是通灵师验的三金水"
+        }
+      ],
+      "category_label": "遗言自称",
+      "counting_note": "统计口径待用户决定，暂不计常规悍跳",
+      "count_in_physical_wolf_bluffs": false
+    }
+  ],
+  "phase_findings": [
+    {
+      "id": "b73-d3-mechanical-day-skill-ineligible",
+      "round": 3,
+      "phase": "day",
+      "status": "inferred",
+      "field": "rounds[3].day.mechanical_day_skill",
+      "title": "机械狼学习女巫形态，无猎人白天技能",
+      "conclusion": "5号机械狼学习9号女巫形态，D3出局时机械猎人枪不可用。",
+      "reasoning": "学习形态及D3放逐均有原文；该形态不授予猎人开枪技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3501260,
+          "end_ms": 3502380,
+          "quote": "模仿9号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 3536130,
+          "end_ms": 3537950,
+          "quote": "5号机械狼被公投出局"
+        }
+      ],
+      "phase_label": "第3天白天",
+      "previous_question": "机械狼学习女巫形态，无猎人白天技能",
+      "daily_audited": true
+    },
+    {
+      "id": "question-q_s73_eulogy_identity_claim_counting",
+      "question_id": "q_s73_eulogy_identity_claim_counting",
+      "round": 1,
+      "phase": "day",
+      "phase_label": "第1天白天",
+      "status": "unresolved",
+      "field": "bluffs.eulogy_false_identity_claim_counting",
+      "title": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+      "conclusion": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+      "reasoning": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 2039120,
+          "end_ms": 2045540,
+          "quote": "双方技能54321十号玩家请发表遗言"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 2047320,
+          "end_ms": 2048840,
+          "quote": "唉我是通灵师啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "start_ms": 2066260,
+          "end_ms": 2068710,
+          "quote": "然后我是通灵师验的三金水"
+        }
+      ],
+      "origin": "human_question",
+      "previous_question": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+      "daily_audited": true
+    }
+  ],
+  "structural_normalizations": [],
+  "supplemental_events": [],
+  "daily_audit": {
+    "bvid": "BV1U3p86dEJY",
+    "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 3475170,
+      "end_ms": 3540029,
+      "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+    },
+    "checks": [
+      {
+        "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+        "conclusion": "N1守卫护1狼、狼刀9女巫、女巫毒10狼，机械狼5学女巫、验5反馈；D1 9/10双死、6自爆。N2守卫自守、狼刀12通灵师，D2 12死、1自爆。N3守卫护7民、机械女巫毒7、狼刀8，D3 7/8双死、5机械狼出局。10号在法官点名遗言后诈称通灵师的统计口径仍待用户定。",
+        "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 3475170,
+            "end_ms": 3540029,
+            "quote": "那不是狼怎么多拿点位吗\n怎么都给各位弹幕老师们做本节约的复盘\n本剧本行为\n机械狼通灵师深圳营通灵师\n12号女巫\n9号猎人\n3号守卫2号狼人阵营一号6号\n10号机械狼5号\n本游戏机械女巫平民阵营4号七号\n8号11号首页首尾守护一号狼人\n狼队击杀9号女巫\n女巫毒杀10号狼人\n9号十号双死\n机械狼\n模仿9号女巫\n本游戏为机械女巫\n通灵师\n查验5号玩家\n机械狼为女巫身份\n在警上竞选环节\n6号狼人选择自爆\n入夜守卫守护2号自首\n狼队击杀12号通灵师\n机械女巫技能通过通灵试验证\n一号玩家为狼人身份\n在延期禁选环节\n一号狼人选择自爆\n本九戏警徽流失\n入夜守卫守护7号平民\n机械狼击杀8号平民\n选择毒杀7号平民\n当以为7号八号双死在第三天白天\n场上最后一狼\n5号机械狼被公投出局\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
+          }
+        ]
+      },
+      "用户本轮确认6号悍跳，补记6号公开跳通灵师的尝试；10号遗言身份另列，原统计口径问题保留。"
+    ],
+    "event_patches": [],
+    "finding_resolutions": [
+      {
+        "id": "b73-d3-mechanical-day-skill-ineligible",
+        "status": "inferred",
+        "conclusion": "5号机械狼学习9号女巫形态，D3出局时机械猎人枪不可用。",
+        "reasoning": "学习形态及D3放逐均有原文；该形态不授予猎人开枪技能。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 3501260,
+            "end_ms": 3502380,
+            "quote": "模仿9号女巫"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 3536130,
+            "end_ms": 3537950,
+            "quote": "5号机械狼被公投出局"
+          }
+        ]
+      },
+      {
+        "id": "question-q_s73_eulogy_identity_claim_counting",
+        "status": "unresolved",
+        "conclusion": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+        "reasoning": "该身份宣称发生在裁判宣布遗言阶段；复核的先前活跃发言未发现其自称通灵师。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2039120,
+            "end_ms": 2045540,
+            "quote": "双方技能54321十号玩家请发表遗言"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2047320,
+            "end_ms": 2048840,
+            "quote": "唉我是通灵师啊"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2066260,
+            "end_ms": 2068710,
+            "quote": "然后我是通灵师验的三金水"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [],
+    "human_questions": [
+      {
+        "id": "question-q_s73_eulogy_identity_claim_counting",
+        "round": 1,
+        "phase": "day",
+        "field": "bluffs.eulogy_false_identity_claim_counting",
+        "title": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+        "question": "10号在裁判点名遗言后自称通灵师，这类遗言诈身份是否计入常规悍跳统计？",
+        "reasoning": "身份宣称事实已由完整原文确认，但“裁判点名遗言后的诈身份是否计入常规悍跳统计”属于统计口径，用户尚未答复，按要求保留口径项。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2039120,
+            "end_ms": 2045540,
+            "quote": "双方技能54321十号玩家请发表遗言"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2047320,
+            "end_ms": 2048840,
+            "quote": "唉我是通灵师啊"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 2066260,
+            "end_ms": 2068710,
+            "quote": "然后我是通灵师验的三金水"
+          }
+        ]
+      }
+    ],
+    "bluff_overrides": [
+      {
+        "seat": 6,
+        "day": 1,
+        "claimed_role": "通灵师",
+        "attempted": true,
+        "success": false,
+        "confirmation_status": "user_confirmed",
+        "reasoning": "用户明确确认6号是本局悍跳；法官点名6号发言后，6号报验10号金水、给出警徽流并与另一通灵师自称形成对跳。6号在首日竞选环节自爆，未取得警徽，也没有首日放逐好人的结果；按既有统计口径为悍跳尝试、未成功。",
+        "evidence": [
+          {
+            "source_path": "data/extractions/S23/用户确认_20261026_六号悍跳.txt",
+            "source_sha256": "efa6b4cb341aed1ea8df277cbc8624f13a9761d38abb612241532790a98cea15",
+            "quote": "这把六号是悍跳"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 1356500,
+            "end_ms": 1387399,
+            "quote": "过了6号玩家请发言\n斯噩梦有些时候就是会来的嘛对吧\n警徽流留下一号好吧哈\n请问这一号因为前面有逻辑关系的\n好像就只有一跟你像\n比如跟五啊\n跟二啊对吧\n他们都还有逻辑关系\n所以是验一下一号收益会更大一点嘛\n三其实无所谓的\n三比如说你看他也可以就是一个狼对吧\n在跟9号玩家去拉9号的杆\n另外呢他有可能就是想操作\n他也没找到谁是通灵师\n可以他一个机会是可以的是吧\n我验了我验了十是金水牌\n主要是上一把10号也那个了"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 3507440,
+            "end_ms": 3510360,
+            "quote": "在警上竞选环节\n6号狼人选择自爆"
+          }
+        ]
+      }
+    ]
+  },
+  "daily_audit_changes": [],
+  "daily_bluff_changes": [
+    {
+      "before": null,
+      "after": {
+        "seat": 6,
+        "day": 1,
+        "claimed_role": "通灵师",
+        "attempted": true,
+        "success": false,
+        "confirmation_status": "user_confirmed",
+        "reasoning": "用户明确确认6号是本局悍跳；法官点名6号发言后，6号报验10号金水、给出警徽流并与另一通灵师自称形成对跳。6号在首日竞选环节自爆，未取得警徽，也没有首日放逐好人的结果；按既有统计口径为悍跳尝试、未成功。",
+        "evidence": [
+          {
+            "source_path": "data/extractions/S23/用户确认_20261026_六号悍跳.txt",
+            "source_sha256": "efa6b4cb341aed1ea8df277cbc8624f13a9761d38abb612241532790a98cea15",
+            "quote": "这把六号是悍跳"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 1356500,
+            "end_ms": 1387399,
+            "quote": "过了6号玩家请发言\n斯噩梦有些时候就是会来的嘛对吧\n警徽流留下一号好吧哈\n请问这一号因为前面有逻辑关系的\n好像就只有一跟你像\n比如跟五啊\n跟二啊对吧\n他们都还有逻辑关系\n所以是验一下一号收益会更大一点嘛\n三其实无所谓的\n三比如说你看他也可以就是一个狼对吧\n在跟9号玩家去拉9号的杆\n另外呢他有可能就是想操作\n他也没找到谁是通灵师\n可以他一个机会是可以的是吧\n我验了我验了十是金水牌\n主要是上一把10号也那个了"
+          },
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "start_ms": 3507440,
+            "end_ms": 3510360,
+            "quote": "在警上竞选环节\n6号狼人选择自爆"
+          }
+        ]
+      }
+    }
+  ],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械女巫，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "pass",
+      "basis": "复制毒药只一瓶，已明确第3夜才用毒，本夜保留毒药。"
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械女巫，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "carrying",
+      "basis": "此前普通狼人已全部出局，机械狼接普通狼刀。"
+    }
+  ],
+  "phase_review_counts": {
+    "unresolved": 1,
+    "confirmed": 0,
+    "inferred": 1,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

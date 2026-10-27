@@ -5,76 +5,241 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "57973c24aa5d1b0368f8b6b041a5065daad412eabdf8f4de2acf02827de0aa3a",
+  "facts_sha256": "75bc024c685d80ab587444e295bb00ef41a68f69348a8fe9b43ee8852894b6d2",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 2,
-  "questions": [
-    {
-      "id": "vote-BV1XXgW6nEZ5-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1XXgW6nEZ5_P01_CID40882867189.平台AI字幕_ai-zh_01_4f90b087f5.原始.json",
-          "start_ms": 4472650,
-          "end_ms": 4496260,
-          "quote": "再来再来一次再来一次再来一次再来一次啊\n不二一天亮了\n昨夜9号玩家倒牌没有一言\n9号玩家是我方技能54321\n9号玩家没登取外离场\n即将选择发言顺序\n死左死右\n8号或12号\n8号玩家请发言",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1XXgW6nEZ5-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1XXgW6nEZ5_P01_CID40882867189.平台AI字幕_ai-zh_01_4f90b087f5.原始.json",
-          "start_ms": 5016000,
-          "end_ms": 5026710,
-          "quote": "通灵师验证了5号玩家为平民身份\n在第三天白天\n8号狼人选择自爆\n场上最后一狼\n7号机械女巫选择拍到场上最后一神",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
-    }
-  ],
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "10号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1XXgW6nEZ5-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "4号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1XXgW6nEZ5-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "8号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          6,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "endgame",
+      "after_day": 3,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "10号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第12周_正赛第11期/2026-08-13/2026-08-13_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1XXgW6nEZ5_P01_CID40882867189.平台AI字幕_ai-zh_01_4f90b087f5.原始.json",
+          "start_ms": 3634490,
+          "end_ms": 3700440,
+          "quote": "确实力度很大\n但如果一会狼人出局了\n就7号是我狼同伴\n我们不差这一刀\n你懂我意思不\n你就压毒可以吧\n就如果一会九出局了\n你可以压毒对吧\n那其实我狼同伴我们也不差\n你这一瓶毒了对吧\n你懂我意思\n所以大概就这样投9号\n然后我十二一顺验好吧\n过所有玩家发言结束\n请各位玩家带盔做好投票准备\n警长请归票\n警长归票\n9号各位玩家唱票结束前不要放手\n321请出票\n一号投给10号\n2号投给10号\n3号投给10号\n4号\n投给9号\n5号\n投给10号\n6号\n投给10号\n7号\n投给9号\n8号\n投给9号\n9号\n投给10号\n10号\n投给9号\n11号\n投给9号\n12号投给10号\n投票结束\n10号玩家七票出局\n请发表遗言\n八回头了\n569 12是狼吧\n应该是12吧\n我感觉是12吧\n感觉是我刚好打了你一下"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "4号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "8号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "a78a665f49656fa4e6e3e7fd0d186243f597cb7b1a35aebf3c74589e3a65cc10",
+  "voting_sha256": "7e0cf37f9ed33a2cd817386f7d9d4e8e1dd2d9e05ac488bc5b56f4bf2e2cb224",
   "source_sha256": "4f90b087f5ab8d081e243ef6a97465180f428469540ca7793b48eb1754fc9e0e"
 }

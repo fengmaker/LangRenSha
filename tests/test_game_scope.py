@@ -111,13 +111,6 @@ class GameScopeTests(unittest.TestCase):
         self.assertEqual((original, additional), (2, 1))
         self.assertEqual(sum(d["original_question"] is not None for d in decisions), original)
 
-    def test_offline_template_uses_runtime_scope_counts(self):
-        page = (Path(__file__).resolve().parents[1] / "scripts/templates/s22_offline_review.html").read_text(encoding="utf-8")
-        for old_count in ("149局", "1788", "363项", "298项", "65项", "78张"):
-            self.assertNotIn(old_count, page)
-        self.assertIn("data.counts.games", page)
-        self.assertIn("c.additional_findings", page)
-
     def test_loaded_old_progress_filters_excluded_game(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

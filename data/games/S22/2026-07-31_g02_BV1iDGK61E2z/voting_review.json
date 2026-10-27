@@ -5,41 +5,183 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "3dad565f7123f4da47bea10eb4fa0c77c42763dcbfe2a223e843574272bfff60",
+  "facts_sha256": "4830a36fc0f7ab3c01bc17f1efc7193dfe477accf1b2c440f00d910c967c03fa",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 1,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1iDGK61E2z-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "9号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
       "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取11条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-31/2026-07-31_S22_第10周_正赛第09期_第02局_诡术之境__BV1iDGK61E2z_P01_CID40480410663.平台AI字幕_ai-zh_01_2a2f5098b4.原始.json",
           "start_ms": 3847920,
           "end_ms": 3930079,
           "quote": "比如说你觉得这个跟我想的不一样\n你就翻牌\n你就重新安排毒\n谁验谁全部听你的\n但你翻牌你就要把所有东西都安排好好吧\n7号七号不就7号\n我想想7号不就是个平民\n我觉得推七应该也能炸死个狼\n我估计感觉啊感觉出你也能炸死个狼\n嗯算了好吧\n这么着吧\n呃初一验九独六啊\n做完加班结束\n请各位戴盔做好投票准备\n警长请归票\n警长归票一号\n各位玩家唱票结束前\n请不要放手\n321请出票\n一号投给8号\n2号投给8号\n3号投给一号\n4号投给一号\n5号投给8号\n6号投给8号\n7号投给一号\n8号投给一号\n9号投给一号\n10号投给一号\n十\n一号投给一号\n十\n2号投给一号\n投票结束\n当前票型\n一号玩家8.5票\n定序王子是我方的技能\n12号玩家翻牌为定序王子\n请投一交至12号玩家\n12号玩家请发言\n我几几乎等于裸奔了"
+        },
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-31/2026-07-31_S22_第10周_正赛第09期_第02局_诡术之境__BV1iDGK61E2z_P01_CID40480410663.平台AI字幕_ai-zh_01_2a2f5098b4.原始.json",
+          "start_ms": 3991740,
+          "end_ms": 4072250,
+          "quote": "那个呃那个那什么是有\n确实是有点有点紧张\n那我我我把话讲完\n那个你去验一号牌\n魔术师白白换这个一号牌了\n完了你随便随便读\n我我我我因为我因为我怕我晚上就没了没了\n我那别人你们还得猜\n我是他都已经逮着我了\n我听其实我听他确实这样了\n然后我想勇敢一把\n我就归9号牌\n希望希望我因为我龙门也归了个鬼术师\n我这把我就试试\n就贵就贵\n九出出出出了定序\n王子发言结束\n所有玩家请戴盔唱票结束前不要放手\n321请出票\n一号投给8号\n2号投给9号\n3号投给9号\n4号投给9号\n5号投给8号\n6号投给8号\n7号投给9号\n8号投给9号\n9号投给一号\n10号投给9号\n11号投给9号\n12号投给9号\n投票结束\n最终结果\n9号玩家八票出局\n请发表遗言\n我还祈祷着能炸死一个外边的\n狼呢哇天哪\n现在都兴\n这么晚都行"
         }
       ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1iDGK61E2z-ballot-2-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "dd96ac544ae614ad5569f0ce89d11452782c1da51dc48e990475b370deca1c12",
+  "voting_sha256": "320cbf32d4c13edc29a04e458459a808a6c0ee44d2e42ce3c7c77edd03c902a7",
   "source_sha256": "2a2f5098b481659b097b152c82196ac050c056e83ef85b0aec099002e85d7542"
 }

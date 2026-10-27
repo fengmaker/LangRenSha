@@ -5,47 +5,205 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "0dd6c12435cc81ede93eeb8cde3f867f69a78df83cd4dfb6684e3d87a5102e15",
+  "facts_sha256": "c22adb7b561df0c35c79d87e94a5781664321f64bb295d58a2f2d27e3a6aa6b5",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 1,
-  "questions": [
-    {
-      "id": "vote-BV1o47L6DECA-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": []
-    }
-  ],
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "7号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 2,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1o47L6DECA-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "exile_note": "10号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 7,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-26/2026-06-26_S22_第05周_正赛第04期_第01局_预女猎白混__BV1o47L6DECA_P01_CID39433932177.平台AI字幕_ai-zh_01_d16200d32c.原始.json",
+          "start_ms": 1052030,
+          "end_ms": 1060810,
+          "quote": "形成平安夜预言家验证\n7号玩家为狼人身份\n警上竞选环节\n7号狼人选择自爆入夜\n狼队击杀6号猎人\n女巫技能通过预言家验证"
+        },
+        {
+          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-26/2026-06-26_S22_第05周_正赛第04期_第01局_预女猎白混__BV1o47L6DECA_P01_CID39433932177.平台AI字幕_ai-zh_01_d16200d32c.原始.json",
+          "start_ms": 1062920,
+          "end_ms": 1076090,
+          "quote": "6号猎人出局后开枪带走\n一号狼人\n在延期禁选环节\n10号狼人选择自爆\n本九\n其警徽流失入夜\n狼人击杀2号预言家女巫\n毒杀场上最后一张狼人牌"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 10,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第05周_正赛第04期/2026-06-26/2026-06-26_S22_第05周_正赛第04期_第01局_预女猎白混__BV1o47L6DECA_P01_CID39433932177.平台AI字幕_ai-zh_01_d16200d32c.原始.json",
+          "start_ms": 1062920,
+          "end_ms": 1076090,
+          "quote": "6号猎人出局后开枪带走\n一号狼人\n在延期禁选环节\n10号狼人选择自爆\n本九\n其警徽流失入夜\n狼人击杀2号预言家女巫\n毒杀场上最后一张狼人牌"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          6
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          2,
+          8
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          3,
+          4,
+          5,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "night",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "7号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [
     {
       "id": "BV1o47L6DECA-registration",
@@ -95,6 +253,6 @@
       ]
     }
   ],
-  "voting_sha256": "0a071a7c03d6c62c561450881bed85694fcb4fa3018bc892fee9848724081e33",
+  "voting_sha256": "aed7983df9e8993963b98537a5bbcc69a018001033b0248df76ae3e52f8c5e04",
   "source_sha256": "d16200d32c3930174f03451016fc85c7fbe7799b59f2957903d8829be552ffb3"
 }

@@ -72,12 +72,23 @@
       "kind": "sheriff",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         6,
         11
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -88,6 +99,11 @@
           "voter": 2,
           "target": 6,
           "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": null,
+          "state": "abstained"
         },
         {
           "voter": 4,
@@ -127,7 +143,7 @@
       ],
       "tied_candidates": [],
       "winner": 6,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",
@@ -227,8 +243,8 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     }
   ]
 }

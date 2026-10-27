@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from fractions import Fraction
 from typing import Any
 
 
@@ -12,14 +13,20 @@ SEER_ROLE = "预言家"
 MEDIUM_ROLE = "通灵师"
 MIXED_BLOOD_ROLE = "混血儿"
 SELF_EXPLOSION_ACTIONS = {"self_destruct"}
+PLAYER_RANKING_KEYS = (
+    "points", "appearances", "attendance", "total_win_rate", "wins", "losses",
+    "werewolf_win_rate", "good_win_rate", "sheriff_registration_rate",
+    "seer_follow_rate", "sheriff_seer_vote_rate",
+)
 
 
-def scope_games(games: list[dict[str, Any]], season: str, phase: str = "all") -> list[dict[str, Any]]:
-    """Select and chronologically order the requested season/phase snapshots."""
+def scope_games(games: list[dict[str, Any]], season: str | list[str], phase: str = "all") -> list[dict[str, Any]]:
+    """Select and chronologically order the requested season(s)/phase snapshots."""
     if phase not in PHASES:
         raise ValueError(f"unsupported phase: {phase}")
+    seasons = {season} if isinstance(season, str) else set(season)
     selected = [game for game in games
-                if game.get("season") == season and (phase == "all" or game.get("phase") == phase)]
+                if game.get("season") in seasons and (phase == "all" or game.get("phase") == phase)]
     return sorted(selected, key=_game_sort_key)
 
 
@@ -131,21 +138,212 @@ def _metric_result(acc: dict[str, Any]) -> dict[str, Any]:
         "rate": acc["numerator"] / denominator if denominator else None,
         "excluded": acc["excluded"],
         "game_ids": list(dict.fromkeys(acc["game_ids"])),
+        "samples": [
+            {"game_id": game_id, **counts}
+            for game_id, counts in acc["samples_by_game"].items()
+        ],
     }
 
 
 def _new_metric() -> dict[str, Any]:
-    return {"numerator": 0, "denominator": 0, "excluded": 0, "game_ids": []}
+    return {"numerator": 0, "denominator": 0, "excluded": 0, "game_ids": [], "samples_by_game": {}}
 
 
 def _add_denominator(metric: dict[str, Any], game_id: str, *, success: bool = False) -> None:
     metric["denominator"] += 1
     metric["numerator"] += int(success)
     metric["game_ids"].append(game_id)
+    counts = metric["samples_by_game"].setdefault(game_id, {"positive": 0, "negative": 0})
+    counts["positive" if success else "negative"] += 1
 
 
 def _add_excluded(metric: dict[str, Any]) -> None:
     metric["excluded"] += 1
+
+
+def _rank_values(values: dict[str, int | Fraction], *, descending: bool = True) -> dict[str, dict[str, Any]]:
+    """Assign competition ranks, grouping exact values and leaving ties at the same rank."""
+    groups: dict[int | Fraction, list[str]] = defaultdict(list)
+    for player_id, value in values.items():
+        groups[value].append(player_id)
+
+    result: dict[str, dict[str, Any]] = {}
+    position = 1
+    total = len(values)
+    for value in sorted(groups, reverse=descending):
+        player_ids = groups[value]
+        ranking = {"rank": position, "total": total, "tied": len(player_ids) > 1}
+        for player_id in player_ids:
+            result[player_id] = ranking.copy()
+        position += len(player_ids)
+    return result
+
+
+def _player_rank_value(acc: dict[str, Any], key: str) -> tuple[int | Fraction | None, int]:
+    """Return an exact ranking value and its sample count for one profile metric."""
+    known_results = acc["wins"] + acc["losses"]
+    if key == "points":
+        return (acc["points_half"], known_results) if known_results else (None, 0)
+    if key == "wins":
+        return (acc["wins"], known_results) if known_results else (None, 0)
+    if key == "losses":
+        return (acc["losses"], known_results) if known_results else (None, 0)
+    if key == "appearances":
+        appearances = acc["appearances"]
+        return (appearances, appearances) if appearances else (None, 0)
+    if key == "attendance":
+        if acc["scope_games"] <= 0 or acc["appearances"] <= 0:
+            return None, 0
+        return Fraction(acc["appearances"], acc["scope_games"]), acc["scope_games"]
+
+    metric_sources = {
+        "total_win_rate": acc["total_win_rate"],
+        "werewolf_win_rate": acc["faction_win_rates"]["werewolf"],
+        "good_win_rate": acc["faction_win_rates"]["good"],
+        "sheriff_registration_rate": acc["registration"],
+        "seer_follow_rate": acc["follow"],
+        "sheriff_seer_vote_rate": acc["sheriff_seer"],
+    }
+    metric = metric_sources[key]
+    denominator = metric["denominator"]
+    if denominator <= 0:
+        return None, 0
+    return Fraction(metric["numerator"], denominator), denominator
+
+
+def _ranked_order(values: dict[str, int | Fraction], players: dict[str, dict[str, Any]],
+                  *, descending: bool = True) -> list[str]:
+    """Order a ranked cohort by value, then stable name and ID tie-breakers."""
+    return sorted(values, key=lambda player_id: (
+        -values[player_id] if descending else values[player_id],
+        str(players[player_id]["name"]).casefold(), str(players[player_id]["name"]), player_id,
+    ))
+
+
+def _board_value(value: int | Fraction, *, points: bool = False) -> int | float:
+    if points:
+        return value / 2
+    return float(value) if isinstance(value, Fraction) else value
+
+
+def _player_rankings(
+    players: dict[str, dict[str, Any]],
+) -> tuple[dict[str, dict[str, dict[str, Any] | None]], dict[str, list[dict[str, Any]]]]:
+    """Build player ranks and ordered boards from one already accumulated scope."""
+    values: dict[str, dict[str, int | Fraction]] = {key: {} for key in PLAYER_RANKING_KEYS}
+    samples: dict[str, dict[str, int]] = {key: {} for key in PLAYER_RANKING_KEYS}
+    for player_id, acc in players.items():
+        for key in PLAYER_RANKING_KEYS:
+            value, sample_count = _player_rank_value(acc, key)
+            if value is not None:
+                values[key][player_id] = value
+                samples[key][player_id] = sample_count
+
+    rankings: dict[str, dict[str, dict[str, Any] | None]] = {
+        player_id: {key: None for key in PLAYER_RANKING_KEYS} for player_id in players
+    }
+    boards: dict[str, list[dict[str, Any]]] = {}
+    vote_metric_sources = {
+        "sheriff_registration_rate": "registration",
+        "seer_follow_rate": "follow",
+        "sheriff_seer_vote_rate": "sheriff_seer",
+    }
+    for key, cohort in values.items():
+        descending = key != "losses"
+        ranked = _rank_values(cohort, descending=descending)
+        for player_id, ranking in ranked.items():
+            rankings[player_id][key] = ranking
+        board_rows = []
+        for player_id in _ranked_order(cohort, players, descending=descending):
+            row = {
+                "id": player_id, "name": players[player_id]["name"],
+                "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
+                "value": _board_value(cohort[player_id], points=(key == "points")),
+                "sample_count": samples[key][player_id],
+                "appearances": players[player_id]["appearances"],
+            }
+            metric_source = vote_metric_sources.get(key)
+            if metric_source is not None:
+                metric = players[player_id][metric_source]
+                row["effective_game_count"] = len(set(metric["game_ids"]))
+            board_rows.append(row)
+        boards[key] = board_rows
+    return rankings, boards
+
+
+def _role_rankings(
+    players: dict[str, dict[str, Any]],
+) -> tuple[dict[str, dict[str, dict[str, Any] | None]], dict[str, list[dict[str, Any]]]]:
+    """Build role ranks and boards within each role's decided-result cohort."""
+    role_cohorts: dict[str, dict[str, Fraction]] = defaultdict(dict)
+    for player_id, acc in players.items():
+        for role, role_acc in acc["roles"].items():
+            metric = role_acc["win_loss_metric"]
+            if metric["denominator"] > 0:
+                role_cohorts[role][player_id] = Fraction(metric["numerator"], metric["denominator"])
+
+    rankings: dict[str, dict[str, dict[str, Any] | None]] = {
+        player_id: {role: None for role in acc["roles"]}
+        for player_id, acc in players.items()
+    }
+    boards: dict[str, list[dict[str, Any]]] = {}
+    for role, cohort in role_cohorts.items():
+        ranked = _rank_values(cohort)
+        for player_id, ranking in ranked.items():
+            rankings[player_id][role] = ranking
+        boards[role] = [{
+            "id": player_id, "name": players[player_id]["name"],
+            "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
+            "value": float(cohort[player_id]),
+            "sample_count": players[player_id]["roles"][role]["win_loss_metric"]["denominator"],
+            "appearances": players[player_id]["roles"][role]["appearances"],
+        } for player_id in _ranked_order(cohort, players)]
+    return rankings, boards
+
+
+def _board_identity(game: dict[str, Any]) -> tuple[tuple[str, str], str | None, str | None]:
+    """Return a stable board key, grouping by code or falling back to name."""
+    board = game.get("board") or {}
+    raw_code = board.get("code")
+    raw_name = board.get("name")
+    code = str(raw_code).strip() if raw_code is not None and str(raw_code).strip() else None
+    name = str(raw_name).strip() if raw_name is not None and str(raw_name).strip() else None
+    if code is not None:
+        return ("code", code), code, name
+    return ("name", name or ""), None, name
+
+
+def _board_rankings(
+    players: dict[str, dict[str, Any]],
+) -> tuple[
+    dict[str, dict[tuple[str, str], dict[str, Any] | None]],
+    dict[tuple[str, str], list[dict[str, Any]]],
+]:
+    """Rank each board's players by win rate using decided results only."""
+    board_cohorts: dict[tuple[str, str], dict[str, Fraction]] = defaultdict(dict)
+    for player_id, acc in players.items():
+        for board_key, board_acc in acc["boards"].items():
+            metric = board_acc["metric"]
+            if metric["denominator"] > 0:
+                board_cohorts[board_key][player_id] = Fraction(metric["numerator"], metric["denominator"])
+
+    rankings: dict[str, dict[tuple[str, str], dict[str, Any] | None]] = {
+        player_id: {board_key: None for board_key in acc["boards"]}
+        for player_id, acc in players.items()
+    }
+    ranking_boards: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for board_key, cohort in board_cohorts.items():
+        ranked = _rank_values(cohort)
+        for player_id, ranking in ranked.items():
+            rankings[player_id][board_key] = ranking
+        ranking_boards[board_key] = [{
+            "id": player_id, "name": players[player_id]["name"],
+            "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
+            "value": float(cohort[player_id]),
+            "sample_count": players[player_id]["boards"][board_key]["metric"]["denominator"],
+            "appearances": players[player_id]["boards"][board_key]["appearances"],
+        } for player_id in _ranked_order(cohort, players)]
+    return rankings, ranking_boards
 
 
 def _new_player_acc(seat: dict[str, Any], game_count: int) -> dict[str, Any]:
@@ -153,9 +351,13 @@ def _new_player_acc(seat: dict[str, Any], game_count: int) -> dict[str, Any]:
         "id": _seat_person_id(seat), "name": seat.get("name", ""),
         "appearances": 0, "wins": 0, "losses": 0, "pending_games": 0,
         "werewolf_appearances": 0,
-        "points_half": 0, "known_result_game_ids": [], "pending_game_ids": [],
+        "points_half": 0, "pending_game_ids": [],
+        "total_win_rate": _new_metric(),
         "roles": defaultdict(lambda: {"appearances": 0, "wins": 0, "losses": 0, "pending_games": 0,
-                                       "game_ids": [], "pending_game_ids": []}),
+                                       "game_ids": [], "pending_game_ids": [],
+                                       "win_loss_metric": _new_metric()}),
+        "faction_win_rates": {"werewolf": _new_metric(), "good": _new_metric()},
+        "boards": {},
         "registration": _new_metric(), "follow": _new_metric(), "sheriff_seer": _new_metric(),
         "wolf_vote": _new_metric(), "werewolf_draw": _new_metric(),
         "werewolf_self_explosion": _new_metric(), "werewolf_registration": _new_metric(),
@@ -209,7 +411,8 @@ def _known_information_candidate(game: dict[str, Any], ballot: dict[str, Any]) -
     return information_seat, voted_for_role
 
 
-def _accumulate(games: list[dict[str, Any]], season: str, phase: str) -> tuple[dict[str, dict[str, Any]], list[str]]:
+def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str,
+                *, include_boards: bool = False) -> tuple[dict[str, dict[str, Any]], list[str]]:
     scoped = scope_games(games, season, phase)
     game_count = len(scoped)
     players: dict[str, dict[str, Any]] = {}
@@ -220,6 +423,8 @@ def _accumulate(games: list[dict[str, Any]], season: str, phase: str) -> tuple[d
         seats = game.get("seats") or []
         information_roles = _information_seats(seats)
         game_players: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
+        if include_boards:
+            board_key, board_code, board_name = _board_identity(game)
         explosion_actors = _self_explosion_actors(game)
         first = _first_registration(game.get("voting") or {})
 
@@ -234,6 +439,18 @@ def _accumulate(games: list[dict[str, Any]], season: str, phase: str) -> tuple[d
             role_name = _role(seat)
             role_acc = acc["roles"][role_name]
             role_acc["appearances"] += 1
+            board_acc = None
+            if include_boards:
+                board_acc = acc["boards"].get(board_key)
+                if board_acc is None:
+                    board_acc = {
+                        "code": board_code, "name": board_name, "appearances": 0,
+                        "wins": 0, "losses": 0, "pending_games": 0, "metric": _new_metric(),
+                    }
+                    acc["boards"][board_key] = board_acc
+                elif board_acc["name"] is None and board_name is not None:
+                    board_acc["name"] = board_name
+                board_acc["appearances"] += 1
             faction, _ = _effective_faction_detail(game, seat)
             if faction in DECIDED_WINNERS:
                 _add_denominator(acc["werewolf_draw"], game_id, success=(faction == "werewolf"))
@@ -260,20 +477,43 @@ def _accumulate(games: list[dict[str, Any]], season: str, phase: str) -> tuple[d
             if result == "win":
                 acc["wins"] += 1
                 role_acc["wins"] += 1
-                acc["known_result_game_ids"].append(game_id)
                 role_acc["game_ids"].append(game_id)
+                _add_denominator(acc["total_win_rate"], game_id, success=True)
+                _add_denominator(role_acc["win_loss_metric"], game_id, success=True)
+                if board_acc is not None:
+                    board_acc["wins"] += 1
+                    _add_denominator(board_acc["metric"], game_id, success=True)
                 acc["points_half"] += 3 if faction == "werewolf" else 2
             elif result == "loss":
                 acc["losses"] += 1
                 role_acc["losses"] += 1
-                acc["known_result_game_ids"].append(game_id)
                 role_acc["game_ids"].append(game_id)
+                _add_denominator(acc["total_win_rate"], game_id)
+                _add_denominator(role_acc["win_loss_metric"], game_id)
+                if board_acc is not None:
+                    board_acc["losses"] += 1
+                    _add_denominator(board_acc["metric"], game_id)
                 acc["points_half"] -= 2
             else:
                 acc["pending_games"] += 1
                 role_acc["pending_games"] += 1
                 acc["pending_game_ids"].append(game_id)
                 role_acc["pending_game_ids"].append(game_id)
+                _add_excluded(acc["total_win_rate"])
+                _add_excluded(role_acc["win_loss_metric"])
+                if board_acc is not None:
+                    board_acc["pending_games"] += 1
+                    _add_excluded(board_acc["metric"])
+
+            if faction is None:
+                for metric in acc["faction_win_rates"].values():
+                    _add_excluded(metric)
+            elif faction in acc["faction_win_rates"]:
+                if game.get("winner") not in DECIDED_WINNERS:
+                    _add_excluded(acc["faction_win_rates"][faction])
+                else:
+                    _add_denominator(acc["faction_win_rates"][faction], game_id,
+                                     success=(game.get("winner") == faction))
 
         # Attendance and first sheriff registration have explicit denominators.
         if first is not None:
@@ -444,7 +684,13 @@ def _methodology_notes(games: list[dict[str, Any]]) -> list[str]:
 
 
 def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: str, notes: list[str],
-                      attendance_games: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+                      attendance_games: list[dict[str, Any]] | None = None,
+                      rankings: dict[str, dict[str, Any] | None] | None = None,
+                      role_rankings: dict[str, dict[str, Any] | None] | None = None,
+                      ranking_boards: dict[str, list[dict[str, Any]]] | None = None,
+                      role_ranking_boards: dict[str, list[dict[str, Any]]] | None = None,
+                      board_rankings: dict[tuple[str, str], dict[str, Any] | None] | None = None,
+                      board_ranking_boards: dict[tuple[str, str], list[dict[str, Any]]] | None = None) -> dict[str, Any]:
     player_id = acc["id"]
     appearances = acc["appearances"]
     attendance_games = attendance_games if attendance_games is not None else games
@@ -452,51 +698,37 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
         any(_seat_person_id(seat) == player_id for seat in game.get("seats", []))
         for game in attendance_games
     )
-    metric_overall = {
-        "numerator": acc["wins"],
-        "denominator": acc["wins"] + acc["losses"],
-        "excluded": acc["pending_games"],
-        "game_ids": list(dict.fromkeys(acc["known_result_game_ids"])),
-    }
-    metric_overall["rate"] = (metric_overall["numerator"] / metric_overall["denominator"]
-                               if metric_overall["denominator"] else None)
-
-    faction_metrics = {}
-    faction_results = {"werewolf": [0, 0, 0, []], "good": [0, 0, 0, []]}
-    for game in games:
-        seat = next((item for item in game.get("seats", []) if _seat_person_id(item) == player_id), None)
-        if seat is None:
-            continue
-        faction, _ = _effective_faction_detail(game, seat)
-        winner = game.get("winner")
-        if faction is None:
-            for value in faction_results.values():
-                value[2] += 1
-            continue
-        if faction not in faction_results:
-            continue
-        values = faction_results[faction]
-        if winner not in DECIDED_WINNERS:
-            values[2] += 1
-        else:
-            values[1] += 1
-            values[0] += int(winner == faction)
-            values[3].append(str(game.get("id", "")))
-    for faction, (numerator, denominator, excluded, game_ids) in faction_results.items():
-        faction_metrics[faction] = {
-            "numerator": numerator, "denominator": denominator,
-            "rate": numerator / denominator if denominator else None,
-            "excluded": excluded, "game_ids": list(dict.fromkeys(game_ids)),
-        }
+    metric_overall = _metric_result(acc["total_win_rate"])
+    faction_metrics = {faction: _metric_result(metric)
+                       for faction, metric in acc["faction_win_rates"].items()}
 
     roles = []
     for role, value in sorted(acc["roles"].items()):
-        denominator = value["wins"] + value["losses"]
+        role_metric = _metric_result(value["win_loss_metric"])
         roles.append({
             "role": role, "appearances": value["appearances"], "wins": value["wins"],
             "losses": value["losses"], "pending_games": value["pending_games"],
-            "win_rate": value["wins"] / denominator if denominator else None,
+            "win_rate": role_metric["rate"], "metric": role_metric,
+            "ranking": (role_rankings or {}).get(role),
+            "ranking_board": (role_ranking_boards or {}).get(role, []),
         })
+
+    board_stats = []
+    if board_rankings is not None:
+        for board_key, board_acc in sorted(
+                acc["boards"].items(),
+                key=lambda item: (-item[1]["appearances"],
+                                  str(item[1]["name"] or "").casefold(),
+                                  str(item[1]["name"] or ""), str(item[1]["code"] or ""))):
+            metric = _metric_result(board_acc["metric"])
+            board_stats.append({
+                "code": board_acc["code"], "name": board_acc["name"],
+                "appearances": board_acc["appearances"], "wins": board_acc["wins"],
+                "losses": board_acc["losses"], "pending_games": board_acc["pending_games"],
+                "win_rate": metric["rate"], "metric": metric,
+                "ranking": board_rankings.get(board_key),
+                "ranking_board": (board_ranking_boards or {}).get(board_key, []),
+            })
 
     cumulative_half_points = 0
     cumulative_pending = 0
@@ -519,7 +751,8 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
             ledger_points = None
             cumulative_pending += 1
         ledger.append({
-            "game_id": game.get("id"), "date": game.get("date"), "game_number": game.get("game_number"),
+            "game_id": game.get("id"), "season": game.get("season"),
+            "date": game.get("date"), "game_number": game.get("game_number"),
             "phase": game.get("phase"), "board_name": (game.get("board") or {}).get("name"),
             "role": seat.get("role"), "faction": faction, "faction_inferred": faction_inferred,
             "result": result,
@@ -527,7 +760,7 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
             "pending_count": cumulative_pending,
         })
 
-    return {
+    result = {
         "appearances": appearances,
         "scope_games": acc["scope_games"],
         "wins": acc["wins"], "losses": acc["losses"], "pending_games": acc["pending_games"],
@@ -554,23 +787,42 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
         "ledger": ledger,
         "notes": notes,
     }
+    if rankings is not None:
+        result["rankings"] = rankings
+        result["ranking_boards"] = ranking_boards or {key: [] for key in PLAYER_RANKING_KEYS}
+    if board_rankings is not None:
+        result["boards"] = board_stats
+    return result
 
 
 def compute_player_stats(player_id: str, games: list[dict[str, Any]], *, season: str = "S22",
-                         phase: str = "all", name: str | None = None) -> dict[str, Any]:
-    """Compute one player's season-wide metrics and scoring ledger.
+                         phase: str = "all", name: str | None = None,
+                         seasons: list[str] | None = None) -> dict[str, Any]:
+    """Compute one player's metrics and scoring ledger across selected seasons.
 
     `phase` is accepted for API compatibility; player analytics always describe
-    the full season, including attendance and the chronological cumulative ledger.
+    the full selected scope, including attendance and the chronological cumulative ledger.
     """
-    season_games = scope_games(games, season, "all")
-    players, notes = _accumulate(season_games, season, "all")
+    selected_seasons: str | list[str] = seasons if seasons is not None else season
+    season_games = scope_games(games, selected_seasons, "all")
+    players, notes = _accumulate(season_games, selected_seasons, "all", include_boards=True)
     player_id = str(player_id)
     if player_id not in players:
         acc = _new_player_acc({"person_id": player_id, "name": name or ""}, len(season_games))
     else:
         acc = players[player_id]
-    result = _serialize_player(acc, season_games, "all", notes, attendance_games=season_games)
+    rankings_by_player, ranking_boards = _player_rankings(players)
+    role_rankings_by_player, role_ranking_boards = _role_rankings(players)
+    board_rankings_by_player, board_ranking_boards = _board_rankings(players)
+    ranking = rankings_by_player.get(
+        player_id, {key: None for key in PLAYER_RANKING_KEYS},
+    )
+    role_ranking = role_rankings_by_player.get(player_id, {})
+    board_ranking = board_rankings_by_player.get(player_id, {})
+    result = _serialize_player(acc, season_games, "all", notes, attendance_games=season_games,
+                               rankings=ranking, role_rankings=role_ranking,
+                               ranking_boards=ranking_boards, role_ranking_boards=role_ranking_boards,
+                               board_rankings=board_ranking, board_ranking_boards=board_ranking_boards)
     return result
 
 

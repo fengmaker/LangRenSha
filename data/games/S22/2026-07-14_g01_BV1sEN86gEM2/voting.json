@@ -26,13 +26,20 @@
   "ballots": [
     {
       "id": "ballot-1",
-      "day": 2,
+      "day": 3,
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        5,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 5,
@@ -70,20 +77,25 @@
         11
       ],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-2",
-      "day": 2,
+      "day": 3,
       "kind": "exile",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         10,
         11
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        5,
+        7,
+        9,
+        12
+      ],
       "votes": [
         {
           "voter": 5,
@@ -108,13 +120,13 @@
       ],
       "tied_candidates": [],
       "winner": 10,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [
     {
       "id": "interruption-1",
-      "day": 1,
+      "day": 2,
       "actor": 8,
       "reason": "self_destruct",
       "ends_day": true
@@ -123,18 +135,18 @@
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
+      "sheriff": "deferred",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "recorded"
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "badge_lost",
+      "exile": "recorded"
     }
   ]
 }

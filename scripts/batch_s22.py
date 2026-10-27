@@ -269,7 +269,9 @@ def protect_existing(entry, old):
 
 
 def faction_for(role):
-    if role is None or role in {"盗宝大师", "傀儡", "混血儿"}:
+    if role == "盗宝大师":
+        return "werewolf"
+    if role is None or role in {"傀儡", "混血儿"}:
         return None
     return "werewolf" if role in WOLF_ROLES else "third_party" if role == "鬼魂新娘" else "good"
 

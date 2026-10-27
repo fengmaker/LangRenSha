@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getPlayers } from "@/lib/api";
+import { getOverview, getPlayers } from "@/lib/api";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
@@ -23,12 +23,16 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
   const params = new URLSearchParams({ page: String(page), page_size: String(PAGE_SIZE), season, phase });
   if (q) params.set("q", q);
   let data: Awaited<ReturnType<typeof getPlayers>>;
+  let overview: Awaited<ReturnType<typeof getOverview>>;
   try {
-    data = await getPlayers(params);
+    [data, overview] = await Promise.all([getPlayers(params), getOverview()]);
   } catch (error) {
     return <div className={`page-wrap ${styles.directory}`}><PageIntro title="选手索引" description="按赛季搜索选手并查看出场与胜率。" /><DataProblem error={error} /></div>;
   }
   const pageSize = data.page_size || PAGE_SIZE;
+  const seasons = overview.seasons.some((item) => item.id === season)
+    ? overview.seasons
+    : [{ id: season, name: season, games: 0, days: 0 }, ...overview.seasons];
   const lastPage = Math.max(1, Math.ceil(data.total / pageSize));
   if (data.total > 0 && page > lastPage) {
     params.set("page", String(lastPage));
@@ -41,7 +45,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     browserParams.set("phase", phase);
     return <div className={`page-wrap ${styles.directory}`}>
       <PageIntro title="选手索引" description="按赛季搜索选手并查看出场与胜率。" action={<Link className="button button-outline" href={`/leaderboard?season=${encodeURIComponent(season)}&phase=all`}>查看积分榜 <span>→</span></Link>} />
-      <section className="filter-panel player-filter-panel"><form method="get" action="/players" className="player-search-form"><label className="filter-field filter-search"><span>选手姓名</span><input name="q" type="search" placeholder="搜索选手姓名" defaultValue={q} /></label><label className="filter-field"><span>赛季</span><input name="season" type="text" defaultValue={season} /></label><button className="button button-primary" type="submit">筛选选手 <span>→</span></button>{q || season !== "S22" || phase !== "all" ? <Link className="clear-link" href="/players">清除</Link> : null}</form></section>
+      <section className="filter-panel player-filter-panel"><form method="get" action="/players" className="player-search-form"><label className="filter-field filter-search"><span>选手姓名</span><input name="q" type="search" placeholder="搜索选手姓名" defaultValue={q} /></label><label className="filter-field"><span>赛季</span><select name="season" defaultValue={season}>{seasons.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.id}</option>)}</select></label><button className="button button-primary" type="submit">筛选选手 <span>→</span></button>{q || season !== "S22" || phase !== "all" ? <Link className="clear-link" href="/players">清除</Link> : null}</form></section>
       <section className="player-directory">
         {data.items.length ? <div className="player-grid">{data.items.map((player) => <Link href={`/players/${encodeURIComponent(player.id)}?season=${encodeURIComponent(season)}&phase=${phase}`} className="player-card player-photo-card" key={player.id}>
           <div className="player-card-photo">{player.photo ? <img loading="lazy" decoding="async" src={player.photo.url} alt={`${player.name} · ${player.photo.season}`} /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>

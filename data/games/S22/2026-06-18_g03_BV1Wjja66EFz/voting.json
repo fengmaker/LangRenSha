@@ -145,9 +145,20 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
       "votes": [
         {
           "voter": 2,
@@ -202,17 +213,27 @@
       ],
       "tied_candidates": [],
       "winner": 7,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-4",
       "day": 3,
       "kind": "exile",
       "number": 1,
-      "stage": "unknown",
-      "status": "partial",
-      "candidates": null,
-      "eligible_voters": null,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        2,
+        9
+      ],
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
       "votes": [
         {
           "voter": 2,
@@ -222,11 +243,6 @@
         {
           "voter": 3,
           "target": 9,
-          "state": "cast"
-        },
-        {
-          "voter": 4,
-          "target": 2,
           "state": "cast"
         },
         {
@@ -252,7 +268,7 @@
       ],
       "tied_candidates": [],
       "winner": 9,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-5",
@@ -260,9 +276,14 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        3,
+        8,
+        10
+      ],
       "votes": [
         {
           "voter": 2,
@@ -287,7 +308,7 @@
       ],
       "tied_candidates": [],
       "winner": 2,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -299,17 +320,17 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]

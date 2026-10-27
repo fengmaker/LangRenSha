@@ -5,95 +5,296 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "58889da3dadbdfe44cc6c96d2e6ff833b2cd5790ae5bfb0ccc466826bb8e7ecd",
+  "facts_sha256": "c7c64dae581e8000523820212b110761860ca1e73b7654675e1be1f0d614b074",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 3,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1iMgq6ZE5t-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "10号狼人自爆，未进行放逐投票。"
+    },
+    {
       "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "12号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "已记录放逐投票，结果待核。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 10,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
+          "start_ms": 3181780,
+          "end_ms": 3187680,
+          "quote": "形成平安夜预言家，\n验证。\n十号玩家为狼人身份情商竞尾环节，\n十号狼人选择自爆，"
+        },
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
+          "start_ms": 3193320,
+          "end_ms": 3207030,
+          "quote": "三号玩家为狼人身份延期禁尾环节。\n十二号狼人选择自爆本游戏警徽流失。\n入夜，\n狼队击杀七号平民七号平民单死在第三天。\n白天十一号，"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 12,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
+          "start_ms": 3193320,
+          "end_ms": 3207030,
+          "quote": "三号玩家为狼人身份延期禁尾环节。\n十二号狼人选择自爆本游戏警徽流失。\n入夜，\n狼队击杀七号平民七号平民单死在第三天。\n白天十一号，"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          4,
+          9
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          11
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          7
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          8,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          8
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "endgame",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取7条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        11
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        11
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "12号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "recorded",
+      "exile_note": "已记录放逐投票，结果待核。",
       "evidence": [
         {
           "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
           "start_ms": 3055610,
           "end_ms": 3120130,
           "quote": "警下只有三张牌的情况下，\n四号是在他视角里的狼牌走的，\n第一视角会进入到警下。\n有可能开双狼吗？\n应该不太会吧，\n所以我觉得这一点你们可以考虑一下，\n因为对我来说肯定没有视角难度，\n对于外置位的好人来说其实比较难。\n因为你们前置位已经在我没发言的时候就已经给我判了死刑。\n但是我希望的是，\n你们能认真听一下我的发言。\n关于我是怎么思考？\n所有玩家发言结束，\n请各位玩家带亏，\n做好投票准备。\n本局游戏警徽流失，\n各位玩家请自行投票。\n钞票结束前，\n不要放手三二一请冲票一号投给十一号二号投给三号三号投给十一号五号投给十一号六号投给十一号八号投给十一号，\n十一号投给三号突票结束，\n十一号玩家五票出局，\n翻盘为白神，\n请发表遗言。\n查上应该是双朗吧，\n应该不是孤朗吧，\n但是孤狼也输了呀，\n因为前面没有人跳女巫，\n我其实当时夜间就是四死掉之后，"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1iMgq6ZE5t-day-1-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 1,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
+        },
         {
           "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
-          "start_ms": 1076545,
-          "end_ms": 1099570,
-          "quote": "警上格局出来其实就基本上有可能我们很快就又要见面了。\n老师们是吧？\n那我们敬请期待，\n第一把的白天三二一天亮了，\n上级玩家亮起灭前红灯。\n本局游戏除四号、六号、七号、十一号玩家外，\n其余玩家均上警，",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1iMgq6ZE5t-day-3-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 3,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
-          "start_ms": 3201990,
-          "end_ms": 3211870,
-          "quote": "入夜，\n狼队击杀七号平民七号平民单死在第三天。\n白天十一号，\n白神被扛推出局后，\n狼队拍刀二号猎人拍刀失败，",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "start_ms": 3196320,
+          "end_ms": 3209150,
+          "quote": "十二号狼人选择自爆本游戏警徽流失。\n入夜，\n狼队击杀七号平民七号平民单死在第三天。\n白天十一号，\n白神被扛推出局后，"
         }
       ]
     }
   ],
-  "days": [
+  "accepted_changes": [
     {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1iMgq6ZE5t-day-1-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1iMgq6ZE5t-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1iMgq6ZE5t-day-3-exile_unrecorded"
-      ],
-      "exile_note": null
+      "id": "BV1iMgq6ZE5t-ballot-1-recap-day-crosscheck-20261025",
+      "bvid": "BV1iMgq6ZE5t",
+      "source_sha256": "dda20dad19d676db143fe8ce79cff7dee0aacf5e7ea1282b1aac15a9047e87d4",
+      "target": "ballot-1",
+      "ballot_start_ms": 3055610,
+      "before": {
+        "day": 2
+      },
+      "after": {
+        "day": 3
+      },
+      "method": "transcript_recap_day_crosscheck",
+      "reason": "复盘明确延期竞选时12号自爆，入夜7号死亡，第三天白天11号白神被投票后翻牌；不能将本次票型归于第二天自爆日。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-24/2026-07-24_S22_第09周_正赛第08期_第01局_预女猎白混__BV1iMgq6ZE5t_P01_CID40264141958.本地全文转写_funasr.json",
+          "start_ms": 3196320,
+          "end_ms": 3209150,
+          "quote": "十二号狼人选择自爆本游戏警徽流失。\n入夜，\n狼队击杀七号平民七号平民单死在第三天。\n白天十一号，\n白神被扛推出局后，"
+        }
+      ]
     }
   ],
-  "video_checks": [],
-  "accepted_changes": [],
-  "voting_sha256": "c47c98626bfcf0e581901d2281158753ea344a1d876688b41fda59edeaf9284e",
+  "voting_sha256": "5a67cf53defc37d1f9b26d1525b3d4746bd911b4e525b3d2484c313f168381f9",
   "source_sha256": "dda20dad19d676db143fe8ce79cff7dee0aacf5e7ea1282b1aac15a9047e87d4"
 }

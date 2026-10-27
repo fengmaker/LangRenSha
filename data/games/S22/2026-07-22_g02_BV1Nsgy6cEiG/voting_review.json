@@ -5,49 +5,167 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "c5c8879108414fa68f8e2107da16c75de358bdd4787b6250e3d9c91ad95c8f48",
-  "question_count": 0,
-  "pending_count": 1,
-  "questions": [
+  "facts_sha256": "d0e261fa3eb4646c33d18469c821ecfc96b07331ffd413dde0479bb40ef189db",
+  "causal_decisions": [
     {
-      "id": "vote-BV1Nsgy6cEiG-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
+      "question_id": "vote-BV1Nsgy6cEiG-day-2-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第2天没有放逐票；狼队在该日交牌结束。",
+      "reason": "复盘原文把“第二天”直接接到狼队交牌、游戏结束、好人获胜，没有出现放逐投票阶段。",
+      "source_spans": [
+        {
+          "start_ms": 5563100,
+          "end_ms": 5569180,
+          "quote": "23634\n第二天白天狼人阵营绝对交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1Nsgy6cEiG-day-2-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 2,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第02局_盗宝大师赛__BV1Nsgy6cEiG_P01_CID40202996799.平台AI字幕_ai-zh_01_1c28d57ef1.原始.json",
+            "start_ms": 5563100,
+            "end_ms": 5569180,
+            "quote": "23634\n第二天白天狼人阵营绝对交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第02局_盗宝大师赛__BV1Nsgy6cEiG_P01_CID40202996799.平台AI字幕_ai-zh_01_1c28d57ef1.原始.json",
           "start_ms": 5563100,
           "end_ms": 5569180,
-          "quote": "23634\n第二天白天狼人阵营绝对交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
+          "quote": "毒杀6号狼王\n23634\n第二天白天狼人阵营绝对交牌\n游戏结束\n好人阵营获胜\n好各位弹幕老师们\n您正在收看到的节目是京城大师赛第22季"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     }
   ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
   "days": [
     {
       "day": 1,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "9号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1Nsgy6cEiG-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "第2天狼队交牌后游戏结束。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": null,
+        "night_basis": "unknown",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          2,
+          3,
+          6
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": null,
+        "roster_gaps": [
+          {
+            "round": 1,
+            "slot": "night_deaths"
+          }
+        ],
+        "living_after_day": null
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "day",
+      "after_day": 2,
+      "winner": "good",
+      "eliminated_side": null,
+      "reason": "第2天狼队交牌后游戏结束。"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第02局_盗宝大师赛__BV1Nsgy6cEiG_P01_CID40202996799.平台AI字幕_ai-zh_01_1c28d57ef1.原始.json",
+          "start_ms": 4706730,
+          "end_ms": 4790430,
+          "quote": "这是常识啊\n然后没了我就出\n我就出十\n晚上验验五\n你就随便设吧\n好吧嗯\n读诗去读六就行啊\n我站站谁边\n你都得读六嘛对吧\n然后你们可以再思考一下啊\n这个2号六号七号谁和谁能撞车\n呃\n其实这个想明白这个就就就挺简单的了好吧\n我出十过4号玩家发言结束\n五个玩家请戴盔做好投票准备\n警长请归票\n警长归票\n10号各玩家请做好投票准备\n321请出票\n一号投给10号\n2号投给9号\n3号投给9号\n4号投给9号\n5号投给9号\n6号投给7号\n7号投给10号\n8号投给10号\n9号投给10号\n10号投给9号\n11号投给9号\n12号投给9号\n投票结束\n9号玩家七票出局\n请发表遗言\n赢是赢了\n平民出局是呃是这样啊\n首先我工作安排一下售梦人\n你能不能行\n哪个哪个点把你骗了"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "ended_before_exile",
+      "exile_note": "第2天狼队交牌后游戏结束。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "f9a7f4fe53af3b6807be204aab99fcca45ad092fb2de50e7ec64cfc43a8a893b",
+  "voting_sha256": "19be390d263763d0cb5c1aad4f4f2b4195003399430f2e6fb4f409f5077d1301",
   "source_sha256": "1c28d57ef14013032e740ade070c55fd2dfc7f7a4b932bd27c6c1681ea5287bf"
 }

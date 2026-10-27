@@ -1,223 +1,229 @@
+/* 个人页卡片的字号与比例在这里调整；手机端变量覆盖位于文件末尾。 */
+.profile {
+  --profile-card-title-size: 20px;
+  --profile-card-value-size: 22px;
+  --profile-card-rank-size: 17px;
+  --profile-card-rank-number-size: 22px;
+  --profile-card-height: 160px;
+  --profile-card-padding: 20px;
+  --profile-card-row-gap: 10px;
+}
+
 .profile :global(.player-profile-hero) {
-  grid-template-columns: minmax(210px, 26%) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 44px);
-  padding-bottom: 22px;
+  grid-template-columns: minmax(150px, 21%) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  padding-bottom: 28px;
 }
-
-.profile :global(.profile-photo-frame) {
-  height: clamp(250px, 28vw, 350px);
+.profile :global(.profile-photo-frame) { height: clamp(210px, 23vw, 285px); }
+.profile :global(.profile-hero-copy h1) { margin: 0 0 12px; }
+.profile :global(.profile-range-label) { margin: 0 0 24px; font-size: 17px; color: var(--muted); }
+.profile :global(.profile-filter-form) { padding: 0; gap: 12px; }
+.profile :global(.profile-filter-form .filter-field) { width: auto; flex: 1 1 130px; max-width: 200px; }
+.profile :global(.profile-filter-form .button) { min-height: 43px; white-space: nowrap; }
+.profile :global(.profile-filter-form select) { height: 43px; font-size: 15px; }
+.profile :global(.range-divider) { padding-bottom: 12px; color: var(--faint); }
+.profile :global(.profile-stat-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+.profile :global(.profile-two-col) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; padding-top: 36px; align-items: start; }
+.profile :global(.role-bars) { border: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.profile :global(.profile-games) { padding-top: 40px; }
+.profile :global(.ledger-table) { min-width: 680px; }
+.profile :global(.ledger-table th), .profile :global(.ledger-table td) { padding: 16px; font-size: 14px; }
+.profile :global(.ledger-table td small) { font-size: 13px; line-height: 1.5; }
+@media (max-width: 960px) {
+  .profile :global(.profile-two-col) { grid-template-columns: 1fr; }
 }
-
-.profile :global(.profile-hero-copy h1) {
-  margin: 0 0 8px;
-}
-
-.profile :global(.profile-hero-copy > p:not(.eyebrow)) {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.profile :global(.profile-hero-meta) {
-  gap: 20px;
-  margin-top: 16px;
-  font-size: 13px;
-}
-
-.profile :global(.photo-credit) {
-  margin-top: 12px;
-  font-size: 13px;
-}
-
-.profile :global(.profile-filter) {
-  margin-top: 16px;
-}
-
-.profile :global(.profile-scope-note) {
-  margin-top: -3px;
-  font-size: 13px;
-}
-
-.profile :global(.profile-stat-grid) {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 17px;
-}
-
-.profile :global(.profile-stat-card) {
-  min-height: 112px;
-  padding: 14px 16px;
-}
-
-.profile :global(.profile-stat-card > span) {
-  font-size: 13px;
-}
-
-.profile :global(.profile-stat-card > strong) {
-  margin-top: 6px;
-  font-size: 24px;
-}
-
-.profile :global(.profile-stat-card > small) {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.profile :global(.metric-samples) {
-  margin-top: 8px;
-}
-
-.profile :global(.metric-samples summary) {
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.profile :global(.metric-samples > div) {
-  max-height: 150px;
-  gap: 5px;
-  padding-top: 8px;
-}
-
-.profile :global(.metric-samples p) {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.profile :global(.metric-samples ul) {
-  display: grid;
-  gap: 5px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.profile :global(.metric-samples a) {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.profile :global(.profile-two-col) {
-  gap: 30px;
-  padding-top: 26px;
-}
-
-.profile :global(.profile-performance) {
-  padding-top: 26px;
-}
-
-.profile :global(.role-rate-row > small) {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.profile :global(.board-chip) {
-  font-size: 13px;
-}
-
-.profile :global(.profile-games) {
-  padding-top: 32px;
-}
-
-.profile :global(.ledger-table th),
-.profile :global(.ledger-table td) {
-  padding: 12px 14px;
-  font-size: 13px;
-}
-
-.profile :global(.ledger-table td small) {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.profile :global(.methodology-details) {
-  margin-top: 24px;
-  padding: 15px 17px;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.profile :global(.methodology-details summary) {
-  font-size: 14px;
-}
-
-.profile :global(.metric-definition-note) {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.profile :global(.methodology-details ul) {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
 @media (max-width: 760px) {
-  .profile :global(.player-profile-hero) {
-    grid-template-columns: minmax(128px, 36%) minmax(0, 1fr);
-    gap: 18px;
-    padding-bottom: 18px;
-  }
+  .profile :global(.player-profile-hero) { grid-template-columns: 140px minmax(0, 1fr); gap: 22px; }
+  .profile :global(.profile-photo-frame) { height: 220px; }
+  .profile :global(.profile-filter-form) { gap: 10px; }
+  .profile :global(.profile-filter-form .filter-field) { flex-basis: 100px; }
+  .profile :global(.range-divider) { display: none; }
+  .profile :global(.profile-stat-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .profile :global(.player-profile-hero) { grid-template-columns: 100px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .profile :global(.profile-photo-frame) { height: 160px; }
+  .profile :global(.profile-hero-copy h1) { font-size: 36px; }
+  .profile :global(.profile-range-label) { margin-bottom: 18px; font-size: 15px; }
+  .profile :global(.profile-filter-form .filter-field) { max-width: none; }
+  .profile :global(.profile-filter-form .button) { width: 100%; }
+}
 
-  .profile :global(.profile-photo-frame) {
-    height: clamp(205px, 45vw, 290px);
-  }
+.profile :global(.profile-performance .section-heading) { min-height: 36px; margin-bottom: 20px; }
+.profile :global(.profile-sample-control) { margin-top: 14px; }
+.profile :global(.sample-trigger) { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; }
+.profile :global(.sample-trigger:hover) { border-color: var(--mint); color: var(--mint); }
+.profile :global(.sample-dialog) { width: min(720px, calc(100vw - 32px)); max-height: min(760px, calc(100dvh - 48px)); margin: auto; padding: 26px; overflow-y: auto; color: var(--text); background: var(--ink-soft); border: 1px solid var(--line-strong); box-shadow: 0 24px 80px #0009; }
+.profile :global(.sample-dialog::backdrop) { background: #020808c9; backdrop-filter: blur(4px); }
+.profile :global(.sample-dialog-header) { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.profile :global(.sample-dialog-header h2) { margin: 0; font-size: 22px; font-weight: 550; }
+.profile :global(.sample-close) { display: grid; place-items: center; flex: 0 0 36px; height: 36px; padding: 0; color: var(--muted); background: transparent; border: 1px solid var(--line); font-size: 25px; cursor: pointer; }
+.profile :global(.sample-description) { margin: 16px 0 20px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+.profile :global(.sample-switch) { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.profile :global(.sample-switch button) { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; min-height: 46px; padding: 10px 14px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); font-size: 15px; cursor: pointer; }
+.profile :global(.sample-switch button[aria-pressed="true"]) { color: var(--mint); border-color: var(--mint); background: #18342b; }
+.profile :global(.sample-switch button span) { font-size: 13px; }
+.profile :global(.sample-count) { margin: 20px 0 12px; color: var(--muted); font-size: 13px; }
+.profile :global(.sample-game-list) { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.profile :global(.sample-game-list a) { display: block; padding: 16px; background: var(--panel); border: 1px solid var(--line); }
+.profile :global(.sample-game-list a:hover) { border-color: #7ce1bf66; }
+.profile :global(.sample-game-main), .profile :global(.sample-game-meta) { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.profile :global(.sample-game-main strong) { font-size: 15px; font-weight: 500; }
+.profile :global(.sample-game-main > span) { font-size: 13px; }
+.profile :global(.sample-positive) { color: var(--mint); }
+.profile :global(.sample-negative) { color: #e69b9b; }
+.profile :global(.sample-game-meta) { justify-content: flex-start; margin-top: 8px; color: var(--muted); font-size: 13px; }
+.profile :global(.sample-game-meta > span:last-child) { margin-left: auto; }
+.profile :global(.sample-empty) { padding: 28px 16px; color: var(--muted); border: 1px solid var(--line); text-align: center; font-size: 14px; }
+.profile :global(.sample-excluded) { margin: 18px 0 0; color: var(--faint); font-size: 13px; }
+@media (max-width: 480px) {
+  .profile :global(.sample-dialog) { padding: 18px; }
+  .profile :global(.sample-dialog-header h2) { font-size: 19px; }
+  .profile :global(.sample-game-list a) { padding: 13px; }
+  .profile :global(.sample-switch button) { flex-direction: column; gap: 4px; }
+}
 
-  .profile :global(.profile-stat-grid) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.profile :global(.metric-rank) { display: inline-flex; align-items: baseline; gap: 3px; padding: 4px 0; min-height: 36px; border: 0; border-radius: 0; background: transparent; color: var(--text); font-size: var(--profile-card-rank-size); font-weight: 600; line-height: 1.35; white-space: nowrap; }
+.profile :global(button.metric-rank) { cursor: pointer; }
+.profile :global(button.metric-rank:hover) { color: var(--mint); }
+.profile :global(.metric-rank b) { color: var(--mint); font: 650 var(--profile-card-rank-number-size)/1.1 var(--mono); }
+
+.profile :global(.rank-total) { color: var(--muted); font-size: 14px; font-weight: 500; }
+.profile :global(.rank-arrow) { color: var(--muted); font-size: 13px; }
+.profile :global(.ranking-dialog) { width: min(860px, calc(100vw - 32px)); text-align: left; }
+.profile :global(.ranking-table-scroll) { max-height: min(480px, 55dvh); overflow: auto; border: 1px solid var(--line); scrollbar-color: #315347 #0b1516; }
+.profile :global(.ranking-table) { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+.profile :global(.ranking-table th) { position: sticky; top: 0; z-index: 1; padding: 13px 16px; background: var(--panel-strong); color: var(--muted); font-size: 13px; font-weight: 500; }
+.profile :global(.ranking-table td) { padding: 13px 16px; border-top: 1px solid var(--line); color: var(--text); }
+.profile :global(.ranking-table th:first-child) { width: 18%; }
+.profile :global(.ranking-table th:nth-child(2)) { width: 30%; }
+.profile :global(.ranking-table th:nth-child(3)) { width: 28%; }
+.profile :global(.ranking-table tr[data-current="true"]) { background: #18342b; }
+.profile :global(.ranking-table tr[data-current="true"] td:first-child) { box-shadow: inset 3px 0 var(--mint); }
+.profile :global(.ranking-table a) { color: inherit; }
+.profile :global(.ranking-table a:hover) { color: var(--mint); }
+.profile :global(.ranking-table small) { display: block; margin-top: 3px; color: var(--mint); font-size: 11px; }
+.profile :global(.ranking-table .ranking-value) { color: var(--mint); font-family: var(--mono); }
+.profile :global(.ranking-note) { margin: 16px 0 0; color: var(--faint); font-size: 13px; line-height: 1.6; }
+@media (max-width: 600px) {
+  .profile :global(.profile-stat-grid) { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .profile :global(.ranking-table th), .profile :global(.ranking-table td) { padding: 11px 6px; font-size: 12px; }
+}
+
+.profile :global(.profile-stat-card),
+.profile :global(.role-rate-row) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: repeat(2, minmax(44px, 1fr));
+  grid-template-areas: "label ranking" "value samples";
+  align-items: center;
+  column-gap: 12px;
+  row-gap: var(--profile-card-row-gap);
+  min-width: 0;
+  min-height: var(--profile-card-height);
+  padding: var(--profile-card-padding);
+}
+.profile :global(.role-rate-row) { border: 1px solid var(--line); background: var(--panel); }
+.profile :global(.metric-copy),
+.profile :global(.metric-actions),
+.profile :global(.role-rate-title),
+.profile :global(.role-card-footer) { display: contents; }
+.profile :global(.metric-copy > span),
+.profile :global(.role-rate-title > strong) {
+  grid-area: label;
+  align-self: center;
+  margin: 0;
+  color: var(--text);
+  font-size: var(--profile-card-title-size);
+  line-height: 1.35;
+  font-weight: 650;
+}
+.profile :global(.metric-copy > strong),
+.profile :global(.role-rate-title > span) {
+  grid-area: value;
+  align-self: center;
+  justify-self: start;
+  margin: 0;
+  color: var(--mint);
+  font: 550 var(--profile-card-value-size)/1.2 var(--mono);
+}
+.profile :global(.profile-metric-ranks),
+.profile :global(.role-card-footer > .ranking-control),
+.profile :global(.role-card-footer > .rank-unavailable) {
+  grid-area: ranking;
+  align-self: center;
+  justify-self: end;
+  margin: 0;
+}
+.profile :global(.metric-actions > .profile-sample-control),
+.profile :global(.role-card-footer > .profile-sample-control) {
+  grid-area: samples;
+  align-self: center;
+  justify-self: end;
+  margin: 0;
+}
+.profile :global(.metric-copy > small) { grid-column: 1 / -1; grid-row: 3; margin: 0; color: var(--faint); font-size: 13px; line-height: 1.5; }
+@media (max-width: 600px) {
+  .profile :global(.role-bars) { grid-template-columns: 1fr; }
+}
+@media (max-width: 1100px) {
+  .profile :global(.profile-stat-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile :global(.profile-two-col) { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .profile :global(.profile-stat-grid) { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .profile {
+    --profile-card-title-size: 19px;
+    --profile-card-value-size: 21px;
+    --profile-card-rank-size: 16px;
+    --profile-card-rank-number-size: 21px;
+    --profile-card-height: 156px;
+    --profile-card-padding: 18px;
   }
 }
 
+/* 样本按钮与排名入口使用相近的高度，四个区域在各自行内居中。 */
+.profile :global(.metric-actions > .profile-sample-control .sample-trigger),
+.profile :global(.role-card-footer > .profile-sample-control .sample-trigger) { min-height: 36px; font-size: 14px; }
+
+/* 胜率排行榜：最低有效场次与自定义门槛。 */
+.profile :global(.ranking-filter-status) { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.profile :global(.ranking-empty) { margin: 0; padding: 24px 12px; color: var(--muted); font-size: 14px; line-height: 1.6; text-align: center; border: 1px solid var(--line); border-top: 0; }
 @media (max-width: 480px) {
-  .profile :global(.player-profile-hero) {
-    grid-template-columns: minmax(100px, 34%) minmax(0, 1fr);
-    gap: 13px;
-  }
+  .profile :global(.ranking-empty) { padding: 18px 10px; font-size: 13px; }
+}
 
-  .profile :global(.profile-photo-frame) {
-    height: 205px;
-  }
+/* 排行榜头部摘要置右，场次条件默认折叠。 */
+.profile :global(.ranking-dialog-header) { display: grid; grid-template-columns: minmax(0, 1fr) auto 36px; grid-template-areas: "title meta close"; align-items: center; gap: 16px; margin-bottom: 18px; }
+.profile :global(.ranking-dialog-header h2) { grid-area: title; min-width: 0; }
+.profile :global(.ranking-header-meta) { grid-area: meta; max-width: 300px; justify-self: end; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; text-align: right; }
+.profile :global(.ranking-dialog-header .sample-close) { grid-area: close; }
+.profile :global(.ranking-table .ranking-round-count) { color: var(--muted); font-size: 11px; white-space: nowrap; }
+@media (max-width: 600px) {
+  .profile :global(.ranking-dialog-header) { grid-template-columns: minmax(0, 1fr) 36px; grid-template-areas: "title close" "meta meta"; row-gap: 10px; }
+  .profile :global(.ranking-header-meta) { max-width: 100%; font-size: 12px; }
+}
 
-  .profile :global(.profile-hero-copy h1) {
-    font-size: clamp(27px, 8vw, 36px);
-  }
-
-  .profile :global(.profile-hero-copy > p:not(.eyebrow)) {
-    font-size: 13px;
-  }
-
-  .profile :global(.profile-hero-meta) {
-    gap: 8px 14px;
-    margin-top: 12px;
-    font-size: 12px;
-  }
-
-  .profile :global(.profile-hero-meta b) {
-    font-size: 14px;
-  }
-
-  .profile :global(.photo-credit) {
-    font-size: 12px;
-  }
-
-  .profile :global(.profile-stat-card) {
-    min-height: 116px;
-    padding: 13px 12px;
-  }
-
-  .profile :global(.profile-stat-card > strong) {
-    font-size: 21px;
-  }
-
-  .profile :global(.profile-stat-card > span) {
-    font-size: 12px;
-  }
-
-  .profile :global(.profile-stat-card > small),
-  .profile :global(.metric-samples summary) {
-    font-size: 12px;
-  }
+/* 单行筛选：按钮固定在右侧，条件向左展开，窄屏横向滚动。 */
+.profile :global(.ranking-toolbar) { display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; gap: 12px; height: 36px; min-width: 0; margin: 0 0 16px; }
+.profile :global(.ranking-game-filter) { display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-start; flex-wrap: nowrap; gap: 14px; min-width: 0; height: 36px; margin: 0; padding: 0; border: 0; background: transparent; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.profile :global(.ranking-game-filter::-webkit-scrollbar) { display: none; }
+.profile :global(.ranking-game-filter[hidden]) { display: none; }
+.profile :global(.ranking-filter-shortcuts), .profile :global(.ranking-minimum-options), .profile :global(.ranking-custom-minimum), .profile :global(.ranking-custom-minimum label) { display: flex; flex: 0 0 auto; align-items: center; flex-direction: row; flex-wrap: nowrap; gap: 6px; height: 36px; white-space: nowrap; }
+.profile :global(.ranking-filter-shortcuts) { gap: 10px; }
+.profile :global(.ranking-filter-shortcuts > span), .profile :global(.ranking-custom-minimum label) { color: var(--muted); font-size: 12px; }
+.profile :global(.ranking-game-filter button) { flex: 0 0 auto; height: 36px; min-height: 36px; padding: 6px 8px; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; white-space: nowrap; }
+.profile :global(.ranking-minimum-options button[aria-pressed="true"]) { color: var(--mint); border-color: var(--mint); background: #18342b; }
+.profile :global(.ranking-custom-minimum input) { width: 56px; height: 36px; padding: 6px; border: 1px solid var(--line-strong); background: var(--ink-soft); color: var(--text); font: 13px var(--mono); }
+.profile :global(.ranking-custom-minimum > button) { color: var(--mint); }
+.profile :global(.ranking-filter-toggle) { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: 8px; height: 36px; min-height: 36px; padding: 6px 10px; border: 1px solid var(--line-strong); color: var(--text); background: transparent; font-size: 13px; cursor: pointer; white-space: nowrap; }
+.profile :global(.ranking-filter-toggle[data-active="true"]) { border-color: #7ce1bf66; color: var(--mint); }
+@media (max-width: 600px) {
+  .profile :global(.ranking-toolbar) { gap: 8px; }
+  .profile :global(.ranking-game-filter) { gap: 10px; }
+  .profile :global(.ranking-filter-shortcuts > span) { display: none; }
 }

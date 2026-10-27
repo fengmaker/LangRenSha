@@ -7,7 +7,7 @@ const links = [
   { href: "/", label: "首页" },
   { href: "/games", label: "对局" },
   { href: "/players", label: "选手" },
-  { href: "/leaderboard?season=S22&phase=regular", label: "积分榜" },
+  { href: "/leaderboard", label: "积分榜" },
   { href: "/stats", label: "数据说明" },
 ];
 

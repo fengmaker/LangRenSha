@@ -30,9 +30,18 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        4,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -77,7 +86,7 @@
       ],
       "tied_candidates": [],
       "winner": 6,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-2",
@@ -85,9 +94,14 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        4,
+        9,
+        11
+      ],
       "votes": [
         {
           "voter": 1,
@@ -115,7 +129,7 @@
         11
       ],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",
@@ -123,12 +137,15 @@
       "kind": "exile",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         1,
         11
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        4,
+        9
+      ],
       "votes": [
         {
           "voter": 4,
@@ -141,9 +158,12 @@
           "state": "cast"
         }
       ],
-      "tied_candidates": [],
+      "tied_candidates": [
+        1,
+        11
+      ],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [
@@ -165,22 +185,22 @@
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
+      "sheriff": "deferred",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "recorded"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "recorded"
     }
   ]

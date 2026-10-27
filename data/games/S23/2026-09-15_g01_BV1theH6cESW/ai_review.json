@@ -1,0 +1,1720 @@
+{
+  "bvid": "BV1theH6cESW",
+  "reviewer": "ai",
+  "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引26正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。；日夜复核追加3项原文支持的更正；追加4轮按个人胜利阵营与警徽半票的绑票核算",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "郭小炜",
+        "2": "二妖",
+        "3": "李斯",
+        "4": "周二珂",
+        "5": "耿许儿",
+        "6": "KS",
+        "7": "JY",
+        "8": "荣耀",
+        "9": "鲸鱼",
+        "10": "果冻",
+        "11": "焦阳",
+        "12": "BOBBY"
+      },
+      "reasoning": "姓名按截图侧边姓名标牌逐座读取。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1theH6cESW/BV1theH6cESW_06387.309.png",
+          "frame_time_ms": 6387309,
+          "quote": "画面角色侧栏：1混血儿、2平民、3女巫、4狼人、5平民、6预言家、7平民、8狼人、9狼人、10猎人、11狼人、12白神。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "混血儿",
+        "2": "平民",
+        "3": "女巫",
+        "4": "狼人",
+        "5": "平民",
+        "6": "预言家",
+        "7": "平民",
+        "8": "狼人",
+        "9": "狼人",
+        "10": "猎人",
+        "11": "狼人",
+        "12": "白神"
+      },
+      "after": {
+        "1": {
+          "role": "混血儿",
+          "faction": null
+        },
+        "2": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "3": {
+          "role": "女巫",
+          "faction": "good"
+        },
+        "4": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "5": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "6": {
+          "role": "预言家",
+          "faction": "good"
+        },
+        "7": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "8": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "9": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "10": {
+          "role": "猎人",
+          "faction": "good"
+        },
+        "11": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "12": {
+          "role": "白神",
+          "faction": "good"
+        }
+      },
+      "reasoning": "#23 画面身份侧栏标“未知”，该局依连续结算角色串按 role-term→following-seat 顺序核对；其他局按截图实际身份标签。混血儿学习目标与阵营分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1theH6cESW/BV1theH6cESW_06387.309.png",
+          "frame_time_ms": 6387309,
+          "quote": "画面角色侧栏：1混血儿、2平民、3女巫、4狼人、5平民、6预言家、7平民、8狼人、9狼人、10猎人、11狼人、12白神。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6941900,
+          "end_ms": 6944260,
+          "quote": "一号榜样是9号狼人"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": "werewolf",
+      "after": "werewolf",
+      "reasoning": "复盘收尾给出阵营胜负。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6987550,
+          "end_ms": 6989559,
+          "quote": "狼人阵营屠民获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting_review",
+      "before": "baseline.voting.json",
+      "after": "voting.reviewed.json",
+      "reasoning": "逐轮核对出票提示及后续投票字幕。补入复盘明确的#23警徽票结果、#24 PK 获徽者；#25有声字幕完整覆盖在场投票者，标为complete。其余partial/null保留。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4188010,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1877960,
+          "end_ms": 1879440,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4188010,
+          "end_ms": 4189530,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4206210,
+          "end_ms": 4207990,
+          "quote": "12号投给11号"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-1].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          7,
+          8,
+          9,
+          10
+        ],
+        "status": "complete"
+      },
+      "reasoning": "法官称警下玩家投票，首轮原文逐一报1、2、7、8、9、10号六张票；因此把这六座记录为本轮原警下票权。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1857240,
+          "end_ms": 1888330,
+          "quote": "过了请上诉玩家发言结束退水自爆环节54321有警上玩家4号六号请警下玩家戴盔做好投票准备请从4号六号当中选出本局游戏警长321请出票一号投给4号2号投给6号7号投给6号8号投给6号9号投给4号10号投给4号投票结束"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-2].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "status": "complete"
+      },
+      "reasoning": "PK候选4、6号剔除，第二轮逐票覆盖其余十座。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2166000,
+          "end_ms": 2190610,
+          "quote": "请从4号六号当中选出本局游戏警长321请出票一号投给4号2号投给6号3号投给6号5号投给6号7号投给6号8号投给6号9号投给4号10号投给4号11号投给4号12号投给6号投票结束"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night.seer_check[6->1].result",
+      "before": "混血儿",
+      "after": "好人",
+      "reasoning": "局末复盘明确播报预言家验混血儿为好人身份；底牌仍由 seats.role 保留为混血儿，不把验人反馈改写成物理身份。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6964449,
+          "end_ms": 6967650,
+          "quote": "预言家验证一号玩家混血儿为好人身份"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-4].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          10,
+          12
+        ],
+        "default_abstentions": [
+          4,
+          7
+        ],
+        "status": "complete"
+      },
+      "reasoning": "第二天投票前已知离场为1?待核：本轮已唯一可知的存活名册中有4、7号，唱票只报其余七人；按确认票权的默认弃票规则将4、7记弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4209590,
+          "quote": "321请出票\n一号投给6号\n2号投给11号\n3号投给11号\n4号投给6号\n5号投给11号\n6号投给11号\n7号投给11号\n8号投给11号\n9号投给6号\n10号投给6号\n11号投给6号\n12号投给11号\n投票结束"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-5].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          10
+        ],
+        "default_abstentions": [
+          4,
+          7
+        ],
+        "status": "complete"
+      },
+      "reasoning": "PK对象8、12号不参与本轮投票；其余存活座位为七人，原文仅报1、2、3、5、10号投向，4、7号按规则记默认弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5580590,
+          "end_ms": 5595880,
+          "quote": "321请出票\n一号投给2号\n2号投给8号\n3号投给8号\n5号投给12号\n8号投给12号\n10号投给12号\n12号投给8号\n投票结束"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-6].eligible_voters/status",
+      "before": null,
+      "after": {
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10
+        ],
+        "default_abstentions": [
+          4,
+          5
+        ],
+        "status": "complete"
+      },
+      "reasoning": "第三天放逐票时存活座位为1、2、3、4、5、8、10；字幕只报2、3、8、10投向，1号原文弃票，4、5按规则记默认弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6862050,
+          "end_ms": 6877760,
+          "quote": "321请出票\n一号弃票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          6
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6959350,
+          "end_ms": 6963729,
+          "quote": "入夜狼人击杀6号预言家女巫毒杀9号狼人"
+        }
+      ]
+    },
+    {
+      "field": "rounds[3].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          7
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6972990,
+          "end_ms": 6975330,
+          "quote": "入夜狼人击杀7号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[4].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          5
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6978570,
+          "end_ms": 6980290,
+          "quote": "入夜狼人击杀5号平民"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-3].faction_bind_result",
+      "before": "未记录",
+      "after": {
+        "wolf_votes": 5,
+        "good_votes": 7,
+        "unknown_faction_votes": 0,
+        "sheriff_owner": 6,
+        "wolf_sheriff_half": 0.0,
+        "good_sheriff_half": 0.5,
+        "bind": false,
+        "robust_no_bind": true,
+        "actual_exile": 11,
+        "game_winner": "werewolf"
+      },
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4188010,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1877960,
+          "end_ms": 1879440,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4188010,
+          "end_ms": 4189530,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4206210,
+          "end_ms": 4207990,
+          "quote": "12号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6987550,
+          "end_ms": 6989559,
+          "quote": "狼人阵营屠民获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-4].faction_bind_result",
+      "before": "未记录",
+      "after": {
+        "wolf_votes": 2,
+        "good_votes": 5,
+        "unknown_faction_votes": 0,
+        "sheriff_owner": 1,
+        "wolf_sheriff_half": 0.5,
+        "good_sheriff_half": 0.0,
+        "bind": false,
+        "robust_no_bind": true,
+        "actual_exile": null,
+        "game_winner": "werewolf"
+      },
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4188010,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1877960,
+          "end_ms": 1879440,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4188010,
+          "end_ms": 4189530,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4206210,
+          "end_ms": 4207990,
+          "quote": "12号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4209590,
+          "quote": "321请出票\n一号投给6号\n2号投给11号\n3号投给11号\n4号投给6号\n5号投给11号\n6号投给11号\n7号投给11号\n8号投给11号\n9号投给6号\n10号投给6号\n11号投给6号\n12号投给11号\n投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6987550,
+          "end_ms": 6989559,
+          "quote": "狼人阵营屠民获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-5].faction_bind_result",
+      "before": "未记录",
+      "after": {
+        "wolf_votes": 0,
+        "good_votes": 3,
+        "unknown_faction_votes": 0,
+        "sheriff_owner": 1,
+        "wolf_sheriff_half": 0.5,
+        "good_sheriff_half": 0.0,
+        "bind": false,
+        "robust_no_bind": true,
+        "actual_exile": 12,
+        "game_winner": "werewolf"
+      },
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4188010,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1877960,
+          "end_ms": 1879440,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4188010,
+          "end_ms": 4189530,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4206210,
+          "end_ms": 4207990,
+          "quote": "12号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5580590,
+          "end_ms": 5595880,
+          "quote": "321请出票\n一号投给2号\n2号投给8号\n3号投给8号\n5号投给12号\n8号投给12号\n10号投给12号\n12号投给8号\n投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6987550,
+          "end_ms": 6989559,
+          "quote": "狼人阵营屠民获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-6].faction_bind_result",
+      "before": "未记录",
+      "after": {
+        "wolf_votes": 1,
+        "good_votes": 3,
+        "unknown_faction_votes": 0,
+        "sheriff_owner": 1,
+        "wolf_sheriff_half": 0.5,
+        "good_sheriff_half": 0.0,
+        "bind": false,
+        "robust_no_bind": true,
+        "actual_exile": 2,
+        "game_winner": "werewolf"
+      },
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4184820,
+          "end_ms": 4188010,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1877960,
+          "end_ms": 1879440,
+          "quote": "一号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4188010,
+          "end_ms": 4189530,
+          "quote": "一号投给6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4206210,
+          "end_ms": 4207990,
+          "quote": "12号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6862050,
+          "end_ms": 6877760,
+          "quote": "321请出票\n一号弃票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6987550,
+          "end_ms": 6989559,
+          "quote": "狼人阵营屠民获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [],
+  "bluffs": [
+    {
+      "seat": 4,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "4号物理底牌为狼人；在4号被点名发言后的本人话轮中称“我验的9号是张金水牌”，属于预言家自称。首日警徽给6号，放逐结果为11号狼人，因此不满足拿徽或首日放逐好人的成功条件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1456760,
+          "end_ms": 1457510,
+          "quote": "过了4号家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1464600,
+          "end_ms": 1467000,
+          "quote": "我验的9号是张金水牌"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T18:46:41Z",
+  "resolved_followups": [
+    {
+      "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+      "item": "裁判1155820..1170920已明确上警3/4/5/6/11/12、警下1/2/7/8/9/10，需同步登记；补4号狼人公开自称及悍跳结果。",
+      "resolved": "已核4号发言交接和查验自称；首日警徽为6号、首日放逐11号狼人，故4号悍跳尝试未成功。原有警上/警下名单仍按已有记录保留。",
+      "remaining_items": [],
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1456760,
+          "end_ms": 1457510,
+          "quote": "过了4号家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1464600,
+          "end_ms": 1467000,
+          "quote": "我验的9号是张金水牌"
+        }
+      ]
+    }
+  ],
+  "phase_findings": [
+    {
+      "id": "phase-26-night-1",
+      "round": 1,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6946300,
+          "end_ms": 6952840,
+          "quote": "狼人击杀12号白神女巫开药解救\n形成平安夜冤家\n验证11号玩家为狼人身份上警环节"
+        }
+      ],
+      "phase_label": "第1天白天",
+      "previous_question": "第1轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-26-night-2",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "N2夜死6号预言家和9号狼人，双死",
+      "reasoning": "复盘完整说出狼刀6、毒杀9及6/9双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6957700,
+          "end_ms": 6964449,
+          "quote": "被公投出局\n入夜狼人击杀6号预言家女巫毒杀9号狼人\n六九双死"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "第2轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-26-night-3",
+      "round": 3,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[3].day.night_deaths",
+      "title": "第3轮夜间死亡结算",
+      "conclusion": "死者座位：7",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6970970,
+          "end_ms": 6978570,
+          "quote": "第二天白天4号悍跳狼人自爆\n入夜狼人击杀7号平民\n白天12号白神被翻牌出局"
+        }
+      ],
+      "phase_label": "第3天白天",
+      "previous_question": "第3轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "phase-26-night-4",
+      "round": 4,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[4].day.night_deaths",
+      "title": "第4轮夜间死亡结算",
+      "conclusion": "死者座位：5",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6975330,
+          "end_ms": 6982250,
+          "quote": "白天12号白神被翻牌出局\n入夜狼人击杀5号平民\n白天2号平民被抗推"
+        }
+      ],
+      "phase_label": "第4天白天",
+      "previous_question": "第4轮夜间死亡结算",
+      "daily_audited": true
+    },
+    {
+      "id": "bind-BV1theH6cESW-ballot-3",
+      "round": 1,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-3].faction_bind_result",
+      "title": "D1放逐轮绑票核算",
+      "conclusion": "未达绑票：狼方5+警徽半票0.0 < 好人7+警徽半票0.5。本轮实际放逐=11；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 4184820,
+          "end_ms": 4216860,
+          "quote": "321请出票\n一号投给6号\n2号投给11号\n3号投给11号\n4号投给6号\n5号投给11号\n6号投给11号\n7号投给11号\n8号投给11号\n9号投给6号\n10号投给6号\n11号投给6号\n12号投给11号\n投票结束\n11号玩家7.5票出局"
+        }
+      ],
+      "phase_label": "第1天白天",
+      "previous_question": "D1放逐轮绑票核算",
+      "daily_audited": true
+    },
+    {
+      "id": "bind-BV1theH6cESW-ballot-4",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-4].faction_bind_result",
+      "title": "D2放逐轮绑票核算",
+      "conclusion": "未达绑票：狼方2+警徽半票0.5 < 好人5+警徽半票0.0。D3初轮8/12各三票，未放逐并进入PK；本局最终宣布胜方=werewolf。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 5583350,
+          "end_ms": 5595880,
+          "quote": "一号投给2号\n2号投给8号\n3号投给8号\n5号投给12号\n8号投给12号\n10号投给12号\n12号投给8号\n投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 5599300,
+          "end_ms": 5603180,
+          "quote": "8号12号各三票平票pk8号"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "D2放逐轮绑票核算",
+      "daily_audited": true
+    },
+    {
+      "id": "bind-BV1theH6cESW-ballot-5",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-5].faction_bind_result",
+      "title": "D2放逐轮绑票核算",
+      "conclusion": "未达绑票：狼方0+警徽半票0.5 < 好人3+警徽半票0.0。本轮实际放逐=12；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 5819100,
+          "end_ms": 5842240,
+          "quote": "除8号12号\n请从8号12号当中选出\n本轮被放逐出局的玩家\n321请出票\n一号弃票\n2号弃票\n3号投给8号\n5号投给12号\n10号投给12号\n12号玩家两票出局\n翻牌为白神"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "D2放逐轮绑票核算",
+      "daily_audited": true
+    },
+    {
+      "id": "bind-BV1theH6cESW-ballot-6",
+      "round": 3,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-6].faction_bind_result",
+      "title": "D3放逐轮绑票核算",
+      "conclusion": "未达绑票：狼方1+警徽半票0.5 < 好人3+警徽半票0.0。本轮实际放逐=2；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6862050,
+          "end_ms": 6877760,
+          "quote": "321请出票\n一号弃票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+        }
+      ],
+      "phase_label": "第3天白天",
+      "previous_question": "D3放逐轮绑票核算",
+      "daily_audited": true
+    },
+    {
+      "id": "daily-correction-1-night-witch_save-1",
+      "status": "confirmed",
+      "conclusion": "狼刀12号后女巫开药救起，形成平安夜。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6946300,
+          "end_ms": 6948540,
+          "quote": "狼人击杀12号白神女巫开药解救"
+        }
+      ],
+      "round": 1,
+      "phase": "night",
+      "field": "rounds[1].night.witch_save",
+      "title": "狼刀12号后女巫开药救起，形成平安夜。",
+      "phase_label": "开局夜晚"
+    },
+    {
+      "id": "daily-correction-2-day-self_destruct-2",
+      "status": "confirmed",
+      "conclusion": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6970970,
+          "end_ms": 6972990,
+          "quote": "第二天白天4号悍跳狼人自爆"
+        }
+      ],
+      "round": 2,
+      "phase": "day",
+      "field": "rounds[2].day.self_destruct",
+      "title": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。",
+      "phase_label": "第2天白天"
+    },
+    {
+      "id": "daily-ballot-evidence-4-3",
+      "round": 4,
+      "phase": "day",
+      "field": "voting.ballots",
+      "title": "D4逐票放逐2号",
+      "status": "confirmed",
+      "conclusion": "D4投票结束后2号玩家三票出局。",
+      "reasoning": "原始全文逐票字幕给出投票人、投向及票数；已将candidate轮次日号修正后整体放入voting_replacement。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+          "start_ms": 6866160,
+          "end_ms": 6877760,
+          "quote": "2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+        }
+      ],
+      "phase_label": "第4天白天"
+    }
+  ],
+  "structural_normalizations": [
+    {
+      "field": "seats[1].learning",
+      "before": [
+        9,
+        "狼人"
+      ],
+      "after": [
+        null,
+        null
+      ],
+      "basis": "学习字段仅属于机械狼；混血榜样保留在mixed_blood_model事件及页面映射。"
+    }
+  ],
+  "supplemental_events": [],
+  "daily_audit": {
+    "bvid": "BV1theH6cESW",
+    "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 6931090,
+      "end_ms": 6989559,
+      "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+    },
+    "checks": [
+      "N1狼刀12、女巫救12，平安；D1放逐11。",
+      "N2狼刀6、毒9，复盘记6/9双死；D2 4狼自爆。N3狼刀7，D3白神翻牌出局；N4狼刀5，D4放逐2；混血儿1随狼阵营获胜。"
+    ],
+    "event_patches": [
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "witch_save",
+        "changes": {
+          "action": "save",
+          "actor": 3,
+          "targets": [
+            12
+          ],
+          "result": "狼刀12号后女巫开药救起，形成平安夜。"
+        }
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "slot": "self_destruct",
+        "changes": {
+          "action": "self_destruct",
+          "actor": 4,
+          "targets": [],
+          "result": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。"
+        }
+      }
+    ],
+    "finding_resolutions": [
+      {
+        "id": "phase-26-night-1",
+        "status": "confirmed",
+        "conclusion": "无人死亡",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6946300,
+            "end_ms": 6952840,
+            "quote": "狼人击杀12号白神女巫开药解救\n形成平安夜冤家\n验证11号玩家为狼人身份上警环节"
+          }
+        ]
+      },
+      {
+        "id": "phase-26-night-2",
+        "status": "confirmed",
+        "conclusion": "N2夜死6号预言家和9号狼人，双死",
+        "reasoning": "复盘完整说出狼刀6、毒杀9及6/9双死。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6957700,
+            "end_ms": 6964449,
+            "quote": "被公投出局\n入夜狼人击杀6号预言家女巫毒杀9号狼人\n六九双死"
+          }
+        ]
+      },
+      {
+        "id": "phase-26-night-3",
+        "status": "confirmed",
+        "conclusion": "死者座位：7",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6970970,
+            "end_ms": 6978570,
+            "quote": "第二天白天4号悍跳狼人自爆\n入夜狼人击杀7号平民\n白天12号白神被翻牌出局"
+          }
+        ]
+      },
+      {
+        "id": "phase-26-night-4",
+        "status": "confirmed",
+        "conclusion": "死者座位：5",
+        "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6975330,
+            "end_ms": 6982250,
+            "quote": "白天12号白神被翻牌出局\n入夜狼人击杀5号平民\n白天2号平民被抗推"
+          }
+        ]
+      },
+      {
+        "id": "bind-BV1theH6cESW-ballot-3",
+        "status": "confirmed",
+        "conclusion": "未达绑票：狼方5+警徽半票0.0 < 好人7+警徽半票0.5。本轮实际放逐=11；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+        "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 4184820,
+            "end_ms": 4216860,
+            "quote": "321请出票\n一号投给6号\n2号投给11号\n3号投给11号\n4号投给6号\n5号投给11号\n6号投给11号\n7号投给11号\n8号投给11号\n9号投给6号\n10号投给6号\n11号投给6号\n12号投给11号\n投票结束\n11号玩家7.5票出局"
+          }
+        ]
+      },
+      {
+        "id": "bind-BV1theH6cESW-ballot-4",
+        "status": "confirmed",
+        "conclusion": "未达绑票：狼方2+警徽半票0.5 < 好人5+警徽半票0.0。D3初轮8/12各三票，未放逐并进入PK；本局最终宣布胜方=werewolf。",
+        "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 5583350,
+            "end_ms": 5595880,
+            "quote": "一号投给2号\n2号投给8号\n3号投给8号\n5号投给12号\n8号投给12号\n10号投给12号\n12号投给8号\n投票结束"
+          },
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 5599300,
+            "end_ms": 5603180,
+            "quote": "8号12号各三票平票pk8号"
+          }
+        ]
+      },
+      {
+        "id": "bind-BV1theH6cESW-ballot-5",
+        "status": "confirmed",
+        "conclusion": "未达绑票：狼方0+警徽半票0.5 < 好人3+警徽半票0.0。本轮实际放逐=12；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+        "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 5819100,
+            "end_ms": 5842240,
+            "quote": "除8号12号\n请从8号12号当中选出\n本轮被放逐出局的玩家\n321请出票\n一号弃票\n2号弃票\n3号投给8号\n5号投给12号\n10号投给12号\n12号玩家两票出局\n翻牌为白神"
+          }
+        ]
+      },
+      {
+        "id": "bind-BV1theH6cESW-ballot-6",
+        "status": "confirmed",
+        "conclusion": "未达绑票：狼方1+警徽半票0.5 < 好人3+警徽半票0.0。本轮实际放逐=2；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+        "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6862050,
+            "end_ms": 6877760,
+            "quote": "321请出票\n一号弃票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+          }
+        ]
+      },
+      {
+        "id": "coverage-1-night-witch_save",
+        "status": "confirmed",
+        "conclusion": "首夜女巫救起12号，平安夜",
+        "reasoning": "复盘直接描述狼刀12号后女巫救起。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6936140,
+            "end_ms": 6937140,
+            "quote": "12号狼人"
+          }
+        ]
+      },
+      {
+        "id": "coverage-1-day-registrations",
+        "status": "confirmed",
+        "conclusion": "首日初始上警：3/4/5/6/11/12号；警下：1/2/7/8/9/10号。",
+        "reasoning": "法官直接公告六名上警与六名警下玩家，记录原始报名；5号后续退水不改变初始名单。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 1155820,
+            "end_ms": 1171940,
+            "quote": "上警玩家请亮红灯\n本周七上场玩家3号四号五号六号\n11号\n12号\n共有六名玩家在警下\n一号2号七号\n8号\n9号和10号"
+          }
+        ]
+      },
+      {
+        "id": "coverage-4-day-ballot.missing",
+        "status": "confirmed",
+        "conclusion": "D4在场五人逐票：1号弃票，2投8，3/8/10投2；2号得三票出局。",
+        "reasoning": "原始唱票显示D4存活投票席1/2/3/8/10的完整票向；日号按D3放逐12、N4夜死5后修正。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6862050,
+            "end_ms": 6877760,
+            "quote": "321请出票\n一号弃票\n2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [
+      {
+        "id": "daily-correction-1-night-witch_save-1",
+        "status": "confirmed",
+        "conclusion": "狼刀12号后女巫开药救起，形成平安夜。",
+        "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6946300,
+            "end_ms": 6948540,
+            "quote": "狼人击杀12号白神女巫开药解救"
+          }
+        ],
+        "round": 1,
+        "phase": "night",
+        "field": "rounds[1].night.witch_save",
+        "title": "狼刀12号后女巫开药救起，形成平安夜。"
+      },
+      {
+        "id": "daily-correction-2-day-self_destruct-2",
+        "status": "confirmed",
+        "conclusion": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。",
+        "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6970970,
+            "end_ms": 6972990,
+            "quote": "第二天白天4号悍跳狼人自爆"
+          }
+        ],
+        "round": 2,
+        "phase": "day",
+        "field": "rounds[2].day.self_destruct",
+        "title": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。"
+      },
+      {
+        "id": "daily-ballot-evidence-4-3",
+        "round": 4,
+        "phase": "day",
+        "field": "voting.ballots",
+        "title": "D4逐票放逐2号",
+        "status": "confirmed",
+        "conclusion": "D4投票结束后2号玩家三票出局。",
+        "reasoning": "原始全文逐票字幕给出投票人、投向及票数；已将candidate轮次日号修正后整体放入voting_replacement。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+            "start_ms": 6866160,
+            "end_ms": 6877760,
+            "quote": "2号投给8号\n3号投给2号\n8号投给2号\n10号投给2号\n投票结束\n2号玩家三票出局"
+          }
+        ]
+      }
+    ],
+    "human_questions": [],
+    "voting_replacement": {
+      "schema_version": 1,
+      "game_slug": "bili-BV1theH6cESW-p01-g01",
+      "registrations": [
+        {
+          "id": "registration-1",
+          "day": 1,
+          "on_police": [
+            3,
+            4,
+            5,
+            6,
+            11,
+            12
+          ],
+          "off_police": [
+            1,
+            2,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ],
+      "ballots": [
+        {
+          "id": "ballot-1",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": [
+            4,
+            6
+          ],
+          "eligible_voters": [
+            1,
+            2,
+            7,
+            8,
+            9,
+            10
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 7,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 4,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [
+            4,
+            6
+          ],
+          "winner": null,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-2",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 2,
+          "stage": "pk",
+          "status": "complete",
+          "candidates": [
+            4,
+            6
+          ],
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 7,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 6,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 6,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-3",
+          "day": 1,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": null,
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 4,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 7,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 11,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 6,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 11,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 11,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-4",
+          "day": 3,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": null,
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            5,
+            8,
+            10,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 2,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 8,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [
+            8,
+            12
+          ],
+          "winner": null,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-5",
+          "day": 3,
+          "kind": "exile",
+          "number": 2,
+          "stage": "pk",
+          "status": "complete",
+          "candidates": [
+            8,
+            12
+          ],
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            5,
+            10
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 2,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 3,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 12,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 12,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-6",
+          "day": 4,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": null,
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            8,
+            10
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 2,
+              "target": 8,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 2,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 2,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 2,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 2,
+          "unrecorded_voters": []
+        }
+      ],
+      "interruptions": [
+        {
+          "id": "interruption-1",
+          "day": 2,
+          "actor": 4,
+          "reason": "self_destruct",
+          "ends_day": true
+        }
+      ],
+      "days": [
+        {
+          "day": 1,
+          "sheriff": "recorded",
+          "exile": "recorded"
+        },
+        {
+          "day": 2,
+          "sheriff": "not_applicable",
+          "exile": "interrupted_self_destruct"
+        },
+        {
+          "day": 3,
+          "sheriff": "unknown",
+          "exile": "recorded"
+        },
+        {
+          "day": 4,
+          "sheriff": "unknown",
+          "exile": "recorded"
+        }
+      ]
+    }
+  },
+  "daily_audit_changes": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "before": {
+        "slot": "witch_save",
+        "action": "unknown",
+        "actor": 3,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "witch_save",
+        "action": "save",
+        "actor": 3,
+        "targets": [
+          12
+        ],
+        "result": "狼刀12号后女巫开药救起，形成平安夜。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "self_destruct",
+      "before": {
+        "slot": "self_destruct",
+        "action": "unknown",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "self_destruct",
+        "action": "self_destruct",
+        "actor": 4,
+        "targets": [],
+        "result": "D2复盘明确4号悍跳狼人自爆，结束当日并入夜。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    }
+  ],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 11,
+    "inferred": 0,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

@@ -5,18 +5,211 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "07d4b7b3f1896e1127a809342327468aebdc1b44bede910f32245595fe598fdd",
+  "facts_sha256": "621086892f23cec89904b54894a591405ca34bc1d6e047948fc70ffb7a2b5000",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 1,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1mE3z6XEB1-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "5号被放逐。"
+    },
+    {
       "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "3号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          7,
+          12
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          4,
+          6,
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取9条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 2,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
+      "living_count": 9,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
+      "vote_count": 9,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "5号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第01局_预女猎白混__BV1mE3z6XEB1_P01_CID40385053623.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3761140,
+          "end_ms": 3830190,
+          "quote": "但是毕竟你是投给我警票的\n我就先不管了\n我就把这边不站边\n我的先验掉\n我眼中反正是投5号赌6号\n3号二号顺验\n就是如果投错了\n带着好人被拍到\n那我下次再努力一下好吧\n3号二号实验\n我是投5号\n你女巫你自己看毒\n我是建议读6号好吧\n4号玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票\n5号各位玩家请做好投票准备\n321请出票\n一号投给5号\n2号投给5号\n3号投给一号\n4号投给5号\n5号投给一号\n6号投给一号\n7号投给5号\n8号投给5号\n9号投给一号\n10号投给5号\n11号投给5号\n12号投给一号\n投票结束\n5号玩家7.5票出局\n请发表遗言\n呃我想了一下\n因为我的视角一直找不到一张狼人牌\n那我可能听完最后一的归票跟7号那个因为我听听不了七的发言吗\n那我觉得找到了可能是4号\n因为我觉得9号的底牌是好人牌"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "exiled",
+      "exile_note": "3号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第10周_正赛第09期/2026-07-28/2026-07-28_S22_第10周_正赛第09期_第01局_预女猎白混__BV1mE3z6XEB1_P01_CID40385053623.平台AI字幕_ai-zh_01.原始.json",
@@ -27,25 +220,6 @@
       ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1mE3z6XEB1-ballot-3-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1mE3z6XEB1-ballot-1-kind-review",
@@ -72,6 +246,6 @@
       "ballot_start_ms": 1595420
     }
   ],
-  "voting_sha256": "7dde8ffa354b6d9b6a1482fc41f34c10bd111019e3c5686057f56bb886c7480c",
+  "voting_sha256": "904d6f0b3be1ba502dd68863dedc3b2003291347e3092965fe4d32dbbd38430a",
   "source_sha256": "a572d6c9fe6bb52461bcba6fa106d14aa539b5459bc8c23844d265a491161f27"
 }

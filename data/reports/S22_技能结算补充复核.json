@@ -1,0 +1,372 @@
+{
+  "generated_at": "2026-10-25T04:08:16+08:00",
+  "rule_source": {
+    "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+    "sha256": "9d11637e37aba6973b0ed8bdf1d3e0cd7fcd13ced34b5f51a1a7a0ba87926530"
+  },
+  "audio_review": "data/extractions/S22/skill_settlement_review_20261025/audio/results.json",
+  "updated_games": 4,
+  "items": [
+    {
+      "bvid": "BV117EA6AEcV",
+      "date": "2026-06-04",
+      "game_number": 2,
+      "reason": "连续两夜梦6号狼王令6号出局，狼刀10号，盗宝毒师毒4号猎人；复盘明确当夜三位倒牌。更正毒口误提为7号及死亡仅记10号的漏项。",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "night",
+          "slot": "treasure_card_skill",
+          "fields": {
+            "targets": [
+              4
+            ],
+            "result": "盗宝大师2号切换毒师，毒杀4号猎人；原复盘和独立音频重转写支持。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              4,
+              6,
+              10
+            ],
+            "result": "4号中毒、6号连续两夜被梦游、10号狼刀，共三人出局。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 6,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "before_sha256": "c430567a628948334489a4cb6611b9c02e2461e37dc7b1605dcb59c2ad69c89d",
+      "after_sha256": "0e2158ac4a1e25f9ff8768c2f580beb1095c3ff3c5eab5a1715d238696eab382",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV117EA6AEcV_c430567a628948334489a4cb6611b9c02e2461e37dc7b1605dcb59c2ad69c89d.json",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-04/2026-06-04_S22_第02周_正赛第01期_第02局_盗宝大师__BV117EA6AEcV_P01_CID38860686855.本地全文转写_funasr.json",
+          "start_ms": 5275190,
+          "end_ms": 5291005,
+          "quote": "入夜社会人再次梦游六号狼王狼人击杀十号通灵师盗宝大师七号为毒尸身份毒杀，\n四号猎人当一为。\n三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份，\n并在出局后将警徽移交至八号射。"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        },
+        {
+          "path": "data/extractions/S22/skill_settlement_review_20261025/audio/results.json",
+          "start_ms": 5274000,
+          "end_ms": 5293000,
+          "quote": "公投出局入夜摄报人再次梦游六号狼王狼人击杀十号通灵师盗宝大师切换为毒师身份毒杀四号猎人当夜为三位玩家的多导通灵师查验了二号玩家盗宝大师为毒师身份并在出局后将警徽移交至",
+          "note": "独立原音频机器转写，不作为人工听核。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1jaE26kELR",
+      "date": "2026-06-09",
+      "game_number": 2,
+      "reason": "狼刀11号摄梦人，11号当夜梦7号狼王，连带7号出局；盗宝毒9号猎人，故完整死亡为7/9/11，原档案漏7号。",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 1,
+          "phase": "night",
+          "slot": "dreamer_action",
+          "fields": {
+            "result": "首夜摄梦人11号梦游12号蒙面人；12号不是狼王。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "night_deaths",
+          "fields": {
+            "action": "die",
+            "targets": [
+              7,
+              9,
+              11
+            ],
+            "result": "狼刀11号摄梦人连带7号狼王，盗宝毒师毒9号猎人，共三人出局。"
+          }
+        },
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 7,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "before_sha256": "4e2b19154e2c62a5851e4e2b5fa07b2202b89a045f01f95dd321c653498d5173",
+      "after_sha256": "e021c847df336a47dffc4ee2feedfd385497700c2c837c3abf8c86de70d24e8a",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV1jaE26kELR_4e2b19154e2c62a5851e4e2b5fa07b2202b89a045f01f95dd321c653498d5173.json",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-09/2026-06-09_S22_第03周_正赛第02期_第02局_盗宝大师__BV1jaE26kELR_P01_CID38991629380.平台AI字幕_ai-zh_01_1c3db025e0.原始.json",
+          "start_ms": 4569960,
+          "end_ms": 4583109,
+          "quote": "10号平民被抗推出局\n入夜射门人梦游7号狼王\n狼人击杀11号射梦人\n71双子盗宝大师选择了毒师身份\n毒杀9号猎人九七十134\n当夜通灵师证3号那位狼人身份\n第二天白天狼人阵营互认拍刀游戏结束"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        },
+        {
+          "path": "data/extractions/S22/skill_settlement_review_20261025/audio/results.json",
+          "start_ms": 4569000,
+          "end_ms": 4584000,
+          "quote": "强推出局入夜摄梦人梦游七号狼王狼人击杀十一号摄梦人七十一双子盗宝大师选择了毒师身份毒杀九号猎人九七十一三四当夜通灵师验证三号玩家为狼人身份第二天白天狼人",
+          "note": "独立原音频机器转写，不作为人工听核。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1CGVC6cE8T",
+      "date": "2026-06-02",
+      "game_number": 2,
+      "reason": "7号狼王因连续梦游出局，按用户补充规则无法开枪；把原先仅从无额外死者推出的主动空过，精确改为技能不可用。",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 3,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 7,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "before_sha256": "2aca3bec45ec2251b1523aed5e1fb3416290fe3050b5577a8a7e4b7c293d6c0d",
+      "after_sha256": "378aa611152a06712ef17ef53253e8db5c7e5c3dbe1f5b539c3611f34c53cbf9",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV1CGVC6cE8T_2aca3bec45ec2251b1523aed5e1fb3416290fe3050b5577a8a7e4b7c293d6c0d.json",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第02周_正赛第01期/2026-06-02/2026-06-02_S22_第02周_正赛第01期_第02局_盗宝大师__BV1CGVC6cE8T_P01_CID38808650816.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 7441700,
+          "end_ms": 7455170,
+          "quote": "第二天白天\n2号狼人自爆入夜摄梦人梦游7号狼王\n7号连续两夜被梦王出局\n狼人击杀\n10号通灵师\n通灵师验证9号玩家为狼人身份\n10号出局\n将警徽移交至8号平民\n第三天白天"
+        },
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        }
+      ]
+    },
+    {
+      "bvid": "BV1h33z6tEqx",
+      "date": "2026-07-28",
+      "game_number": 2,
+      "reason": "6号狼王在第二夜被4号摄梦人连续两夜梦游出局，按用户确认规则不能开枪。死亡名单已有6号，仅补正开枪状态。",
+      "changes": [
+        {
+          "kind": "event",
+          "number": 2,
+          "phase": "day",
+          "slot": "wolf_king_shot",
+          "fields": {
+            "action": "unavailable",
+            "actor": 6,
+            "targets": [],
+            "result": "用户确认：连续梦死及摄梦人夜亡连带出局的猎人/狼王不能开枪；不是主动空过。"
+          }
+        }
+      ],
+      "before_sha256": "506dbb42e46a924d2ed62df23a235f9dc9d241370945788109477463b534bd75",
+      "after_sha256": "d35fefd5a8c552d913dfa909acb2c32f464c12944fcb7f2ade6dba814b2d16f6",
+      "before_snapshot": "data/archive/S22_dream_settlement/20261025/BV1h33z6tEqx_506dbb42e46a924d2ed62df23a235f9dc9d241370945788109477463b534bd75.json",
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt",
+          "start_ms": null,
+          "end_ms": null,
+          "quote": "2026-10-25 用户确认：摄梦人结算\n\n用户原话：\n摄梦人晚上梦游的人免疫狼刀，但如果自己死亡，被梦游的人也会出局，连续两天梦游同一名玩家，该玩家也会出局。\n\n后续边界问答：\n摄梦人的连带死亡是否只在夜间生效？\n答：仅夜间死亡会连带。\n\n被梦死或被摄梦人连带出局的猎人／狼王，是否都不能开枪？\n答：两种死因都不能开枪。\n\n执行口径：当夜梦游目标免疫狼刀；连续两夜选择同一目标，该目标出局；摄梦人当夜死亡带走当夜梦游目标，白天死亡不触发；上述两种梦游死因均禁止猎人／狼王开枪。免狼刀不抵消连梦或连带死亡。本确认不额外断言毒药或其他伤害的免疫范围。\n"
+        }
+      ]
+    }
+  ],
+  "dream_settlement_checks": [
+    {
+      "bvid": "BV1CGVC6cE8T",
+      "round": 3,
+      "actor": 11,
+      "target": 7,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV117EA6AEcV",
+      "round": 2,
+      "actor": 8,
+      "target": 6,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1jaE26kELR",
+      "round": 2,
+      "actor": 11,
+      "target": 7,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1747L6QETh",
+      "round": 3,
+      "actor": 1,
+      "target": 9,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV119TJ6pEtC",
+      "round": 2,
+      "actor": 1,
+      "target": 11,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1BjMh63ED9",
+      "round": 2,
+      "actor": 12,
+      "target": 9,
+      "repeated": true,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1PEN863EXG",
+      "round": 3,
+      "actor": 4,
+      "target": 8,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1PEN863EXG",
+      "round": 4,
+      "actor": 4,
+      "target": 1,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1Nsgy6cEiG",
+      "round": 2,
+      "actor": 3,
+      "target": 2,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1h33z6tEqx",
+      "round": 2,
+      "actor": 4,
+      "target": 6,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1h33z6tEqx",
+      "round": 3,
+      "actor": 4,
+      "target": 12,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1xm3J6wEbr",
+      "round": 3,
+      "actor": 1,
+      "target": 11,
+      "repeated": true,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1hFM26ME7o",
+      "round": 2,
+      "actor": 3,
+      "target": 10,
+      "repeated": false,
+      "night_death_link": true,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1yigN6JE5Y",
+      "round": 3,
+      "actor": 2,
+      "target": 7,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    },
+    {
+      "bvid": "BV1kG8A6dEye",
+      "round": 3,
+      "actor": 3,
+      "target": 9,
+      "repeated": true,
+      "night_death_link": false,
+      "target_in_night_deaths": true,
+      "masked_delay_exception": false
+    }
+  ],
+  "remaining_dream_death_conflicts": [],
+  "scope": "仅检查已记录梦游目标和已知夜间死亡之间的连梦/连带必然结果；不从未知目标或未知复合技能补造死亡。"
+}

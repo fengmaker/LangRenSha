@@ -5,18 +5,185 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "35a160153691c605e7c8a47e96e3d7620dba812bbb715e4de27c778f0344f7e0",
+  "facts_sha256": "76bda8d0443758e53a7d7d29cea31f1cfd122006502936565dd91fafdc12a581",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 2,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV1RGgx6xEun-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号被放逐。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "1号狼人自爆，未进行放逐投票。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取11条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          7,
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          11,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 2,
+      "phase": "endgame",
+      "after_day": 2,
+      "winner": "werewolf",
+      "eliminated_side": null
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-1",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "2号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第09周_正赛第08期/2026-07-23/2026-07-23_S22_第09周_正赛第08期_第01局_预女猎白混__BV1RGgx6xEun_P01_CID40233402661.平台AI字幕_ai-zh_01_5559c5e95d.原始.json",
@@ -27,45 +194,12 @@
       ]
     },
     {
-      "id": "vote-BV1RGgx6xEun-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-23/2026-07-23_S22_第09周_正赛第08期_第01局_预女猎白混__BV1RGgx6xEun_P01_CID40233402661.平台AI字幕_ai-zh_01_5559c5e95d.原始.json",
-          "start_ms": 5082259,
-          "end_ms": 5094230,
-          "quote": "7号十号双死预言家验证10号玩家为狼人身份\n在第二天的白天\n一号狼人选择自爆之后\n狼队拍刀\n4号平民8号混血儿拍刀成功",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
+      "outcome": "self_destruct",
+      "exile_note": "1号狼人自爆，未进行放逐投票。",
+      "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1RGgx6xEun-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1RGgx6xEun-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV1RGgx6xEun-registration",
@@ -121,6 +255,6 @@
       ]
     }
   ],
-  "voting_sha256": "167aa6b9778e87766e4e73b7f7daabe9ef6c20f66fc2fb769fddaebaca1d088f",
+  "voting_sha256": "cf762692ffd914975287f6ee0d2f3cb60f7f83fb223097796dbbc4cebec042f4",
   "source_sha256": "5559c5e95d13b2e7e1010c2cb851300d3201421f08d41955ebdebad80b8eb333"
 }

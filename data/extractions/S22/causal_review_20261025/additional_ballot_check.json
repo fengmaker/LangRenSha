@@ -1,0 +1,279 @@
+{
+  "items": [
+    {
+      "bvid": "BV1fX7C6qESY",
+      "source_sha256": "226b0c98f3df423f00002cd29f3c74604e965bb71a7291db663a5fc5ca8ab27d",
+      "question_id": "vote-BV1fX7C6qESY-day-4-exile_unrecorded",
+      "finding": {
+        "ballot_exists": true,
+        "day": 4,
+        "known_outcome": {
+          "exiled_seat": 5,
+          "result": "5号高票出局，随后游戏结束、好人获胜"
+        },
+        "individual_votes_recovered": true,
+        "votes": [
+          {
+            "voter": 5,
+            "target": 7,
+            "state": "cast",
+            "basis": "Nano原音频复核：“小仓投给Y哥”"
+          },
+          {
+            "voter": 7,
+            "target": 5,
+            "state": "cast",
+            "basis": "“其余所有玩家投票给小仓”；5/7/10/11/12为投票时存活席位"
+          },
+          {
+            "voter": 10,
+            "target": 5,
+            "state": "cast",
+            "basis": "同上"
+          },
+          {
+            "voter": 11,
+            "target": 5,
+            "state": "cast",
+            "basis": "同上"
+          },
+          {
+            "voter": 12,
+            "target": 5,
+            "state": "cast",
+            "basis": "同上"
+          }
+        ],
+        "reason": "Fun-ASR-Nano对原音频5,331,000–5,360,000ms复核清晰输出“小仓投给Y哥，其余所有玩家投票给小仓，小仓高票出局”。该局D4投票前存活名单[5,7,10,11,12]，第5号在唱票提示中直接称为“小仓”；依该局玩家席位/昵称映射Y哥为7号JY。于是全体5张票可展开为5→7、7/10/11/12→5；5号得4票、7号1票，与复盘“5号高票出局”相符，没有反例。",
+        "raw_asr_limit": "Nano稿为机器转写、未人工逐音节校听；仍有少量口语词误识，但关键姓名/汇总关系完整且与席位存活数、出局结果一致。"
+      },
+      "current_records": {
+        "early_json_status": "pending",
+        "proposals_early_resolved": false,
+        "proposals_early_needs_video": true,
+        "current_voting_day4_exile": "unknown",
+        "game_flow_living_before_vote": [
+          5,
+          7,
+          10,
+          11,
+          12
+        ],
+        "game_flow_living_after_day": [
+          7,
+          10,
+          11,
+          12
+        ],
+        "dossier_exile_result": {
+          "round": 4,
+          "action": "exile",
+          "targets": [
+            5
+          ]
+        },
+        "recommended_resolved_after_audio_check": true
+      },
+      "source_spans": [
+        {
+          "start_ms": 5342680,
+          "end_ms": 5348930,
+          "quote": "警长归票五号小仓各位玩家唱票就是先不要放手三二一，"
+        },
+        {
+          "start_ms": 5350130,
+          "end_ms": 5357610,
+          "quote": "小仓投给Y哥，其余所有玩家投票给小仓，小仓高票出局，游戏结束，好人阵营获胜。",
+          "note": "此引号来自本地Nano对该29秒原音频片段的复核转写；原机器稿未校听。"
+        },
+        {
+          "start_ms": 5476960,
+          "end_ms": 5484065,
+          "quote": "白神单死在第四天；白天场上最后一狼五号假面被公投出局；游戏结束；好人阵营获胜。",
+          "note": "复盘确认日序和出局者；逐人票由原音频复核及“其余所有玩家”汇总语展开。"
+        }
+      ],
+      "recommended_review_window": {
+        "start_ms": 5331000,
+        "end_ms": 5360000,
+        "duration_ms": 29000,
+        "reason": "本地Nano已在该完整投票窗口识别出“小仓投给Y哥，其余所有玩家投票给小仓”，可供主代理快速听核关键短句。",
+        "video_checked": false,
+        "audio_nano_transcribed": true,
+        "audio_nano_transcript": "小仓投给Y哥其余所有玩家投票给小仓小仓高票出局游戏结束好人阵营获胜"
+      },
+      "conclusion": "已用Nano在原音频29秒窗口复核出“小仓投给Y哥，其余所有玩家投票给小仓”；结合投票前5名存活座位展开为完整5票。proposals_early.json当前仍是resolved=false，本文件建议更新为完整票型并resolved=true。",
+      "patches": [
+        {
+          "type": "ballot",
+          "id": "ballot-day4-exile",
+          "action": "insert",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "eligible_voters": [
+              5,
+              7,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 5,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 5,
+                "state": "cast"
+              }
+            ],
+            "winner": 5,
+            "tied_candidates": []
+          },
+          "reason": "Nano原音频转写直接说“小仓投给Y哥，其余所有玩家投票给小仓”；结合投票时五名存活玩家，逐人展开。"
+        }
+      ]
+    },
+    {
+      "bvid": "BV17f8g6BEFQ",
+      "source_sha256": "b69800f14dfb949790925d3e5cc8939e7081ae241aa63f0cfcbc041a8ea76b71",
+      "question_id": "vote-BV17f8g6BEFQ-day-4-exile_unrecorded",
+      "current_records": {
+        "proposals_late_resolved": true,
+        "decision_needs_video": true,
+        "existing_ballot_patch": {
+          "type": "ballot",
+          "id": "ballot-day4-exile",
+          "action": "insert",
+          "fields": {
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "partial",
+            "eligible_voters": [
+              1,
+              4,
+              6,
+              7,
+              8,
+              9,
+              12
+            ],
+            "votes": null,
+            "winner": 12
+          },
+          "reason": "直接字幕确认投票环节及12号高票出局；不凭人数推造逐人投向。"
+        },
+        "current_day4_coverage": {
+          "day": 4,
+          "sheriff": "badge_lost",
+          "exile": "unknown"
+        },
+        "game_flow_living_before_vote": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "game_flow_living_after_day": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "dossier_day4_exile_result": {
+          "action": "exile",
+          "targets": [
+            12
+          ]
+        }
+      },
+      "finding": {
+        "ballot_exists": true,
+        "day": 4,
+        "winner": 12,
+        "individual_votes_recovered": false,
+        "eligible_voters_supported_by_game_flow": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "reason": "第4天夜死10号后，整局game_flow的投票前名单为[1,4,6,7,8,9,12]；日后名单少12号，dossier复盘也明确最后一狼12号被公投出局。因此能确定有一轮普通放逐及结果12出局。直接原平台字幕仅说“各位玩家请自行投票……321请出票，12号玩家高票出局”；本地Nano对相同30秒音频复核同样只转出这段口播，没有出现“某人投X，其余投12”或逐人目标句。不能把全部票补为12，也不能从7人存活、12高票出局反推逐人票。",
+        "ballot_full_restored": false,
+        "status_guidance": "若resolved表示“原先缺失的第4天放逐是否发生”则已解决；若表示完整逐人票型已恢复则不能标作已恢复。现有partial/votes=null与胜者12相容，但不代表完整票型。"
+      },
+      "source_spans": [
+        {
+          "start_ms": 2643190,
+          "end_ms": 2653390,
+          "quote": "请各位玩家带盔做好投票准备；本局游戏警徽流失；各位玩家请自行投票；唱票结束前不要放手；321请出票。"
+        },
+        {
+          "start_ms": 2657260,
+          "end_ms": 2661380,
+          "quote": "12号玩家高票出局；游戏结束；好人阵营获胜。"
+        },
+        {
+          "start_ms": 2756040,
+          "end_ms": 2767390,
+          "quote": "通灵师验证了8号玩家为平民身份；10号通灵师单死在第四天的白天；场上最后一狼12号机械平民被公投出局；游戏结束。",
+          "note": "复盘确认日期及结果，不提供逐人票。"
+        },
+        {
+          "start_ms": 2637000,
+          "end_ms": 2667000,
+          "quote": "Nano复听稿：女巫但我觉得你是狼哎真是女巫过了所有玩家发言结束请各位玩家戴盔做好投票准备本局游戏警徽流失各位玩家请自行投票唱票结束前不要放手三二一请出票十二号玩家高票出局游戏结束好人阵营获胜他他压了好几天都想赌你来着你其实。",
+          "note": "本地Fun-ASR-Nano机器复核，status=machine_generated_unverified；与平台字幕一致，未包含逐人目标。"
+        }
+      ],
+      "audio_review": {
+        "method": "local Fun-ASR-Nano short-clip transcription",
+        "start_ms": 2637000,
+        "end_ms": 2667000,
+        "duration_ms": 30000,
+        "transcript": "女巫但我觉得你是狼哎真是女巫过了所有玩家发言结束请各位玩家戴盔做好投票准备本局游戏警徽流失各位玩家请自行投票唱票结束前不要放手三二一请出票十二号玩家高票出局游戏结束好人阵营获胜他他压了好几天都想赌你来着你其实",
+        "machine_generated_unverified": true,
+        "human_listening_or_video_check": false
+      },
+      "recommended_review_window": {
+        "start_ms": 2637000,
+        "end_ms": 2667000,
+        "duration_ms": 30000,
+        "reason": "覆盖出投票准备、警徽流失、全员自行投票、倒数、开票到12号高票出局；现有ASR未给逐人票，若主代理想借视频画面确认这是最集中的原视频复核窗口。"
+      },
+      "conclusion": "不恢复逐人目标：原音频Nano与平台字幕都没有“某人投X，其余所有投12”的简写，只有号召自行投票及12号高票出局。可保留winner=12和已知eligible名单的partial ballot，但不得称为完整票型。",
+      "patches": []
+    }
+  ]
+}

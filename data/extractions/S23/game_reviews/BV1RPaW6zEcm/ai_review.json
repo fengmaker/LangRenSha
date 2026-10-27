@@ -1,0 +1,1073 @@
+{
+  "bvid": "BV1RPaW6zEcm",
+  "reviewer": "ai",
+  "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "核对身份牌和警徽/放逐票：12号混血儿以1号预言家为榜样。首夜狼刀9号白神被女巫救起；初始仅7号警下，警徽最终只在1/10间选择，7号弃票后流徽；10号狼首日自爆。N2狼刀1号、女巫毒杀4号，1/4双死；D2放逐9号白神后，狼人另行拍刀（2女巫、3平民、5猎人）并完成屠神胜。4号已夜死，不属于D2票权，原9条唱票保留。",
+  "decisions": [
+    {
+      "field": "seats[].name / seats[].role / seats[12].faction",
+      "before": "姓名未填，8/9/10/12身份基线需复核",
+      "after": {
+        "names": [
+          "Efeng_翼风",
+          "Qqqquan圈",
+          "北影掌门-李斯",
+          "在动物园散步的又又",
+          "果冻cute",
+          "Ksssssss陈彬",
+          "JY戴士",
+          "牛肉干干丶",
+          "荣耀Forry",
+          "苏打",
+          "徐言雨",
+          "林花花"
+        ],
+        "roles": [
+          "预言家",
+          "女巫",
+          "平民",
+          "平民",
+          "猎人",
+          "狼人",
+          "狼人",
+          "平民",
+          "白神",
+          "狼人",
+          "狼人",
+          "混血儿"
+        ],
+        "faction12": "good"
+      },
+      "reasoning": "截图逐座读取身份牌和姓名；混血儿12选择真实好人预言家1为榜样，因此个人胜利阵营跟随好人。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1RPaW6zEcm/BV1RPaW6zEcm_04085.010.png",
+          "frame_time_ms": 4085010,
+          "quote": "1翼风预言家；2圈圈女巫；3李斯平民；4又又平民；5果冻猎人；6KS狼人；7JY狼人；8牛肉干平民；9荣耀白神；10苏打狼人；11徐言雨狼人；12林花花混血儿；12号笔记“混1”",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4414900,
+          "end_ms": 4418530,
+          "quote": "人混首夜狼人击杀9号白神女巫开药解救行程"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[D1 sheriff]",
+      "before": "竞选候选与弃票核对不完整",
+      "after": "实际投票时选择1/10，由7号单一警下票手弃票；警徽流失。",
+      "reasoning": "从报名阶段语音及法官给票指令区分报名位与实际候选；不把候选提示中的11强行列入投票候选。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2085150,
+          "end_ms": 2090930,
+          "quote": "一号11号十号请警下玩家做好投票准备"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2091210,
+          "end_ms": 2093890,
+          "quote": "请从一号10号当中选出本局游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2093890,
+          "end_ms": 2099699,
+          "quote": "321请出票\n7号玩家弃票\n本局游戏警徽流失"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1..2] / voting.ballots[D2]",
+      "before": "自爆、夜死与D2默认弃票没有完整覆盖",
+      "after": "10号第一天自爆中断放逐；次夜狼杀1号且查11狼，D2票9号有4号默认弃票，9号8票出局。",
+      "reasoning": "完整复盘和逐票片段交叉核验；4号存活但无明确投向，按确认规则记默认弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4424960,
+          "end_ms": 4427980,
+          "quote": "第一天白天10号狼人自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4414900,
+          "end_ms": 4418530,
+          "quote": "人混首夜狼人击杀9号白神女巫开药解救行程"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4319139,
+          "end_ms": 4333620,
+          "quote": "2号投给9号\n3号投给9号\n5号投给9号\n6号投给9号\n7号投给9号\n8号投给9号\n9号投给11号\n11号投给9号\n12号投给9号\n投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4336040,
+          "end_ms": 4338200,
+          "quote": "9号玩家八票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4385720,
+          "end_ms": 4387780,
+          "quote": "狼阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "death",
+        "targets": [
+          1
+        ]
+      },
+      "after": {
+        "action": "deaths",
+        "targets": [
+          1,
+          4
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4427980,
+          "end_ms": 4429650,
+          "quote": "狼人击杀一号预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-2].faction_bind_result",
+      "before": "未记录",
+      "after": {
+        "wolf_votes": 3,
+        "good_votes": 6,
+        "unknown_faction_votes": 0,
+        "sheriff_owner": null,
+        "wolf_sheriff_half": 0.0,
+        "good_sheriff_half": 0.0,
+        "bind": false,
+        "robust_no_bind": true,
+        "actual_exile": 9,
+        "game_winner": "werewolf"
+      },
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2093890,
+          "end_ms": 2096659,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2990160,
+          "end_ms": 2996299,
+          "quote": "应该是11票11票出局了嗯如果你是预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2996299,
+          "end_ms": 2997920,
+          "quote": "肯定11票出局了"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2999420,
+          "end_ms": 3000920,
+          "quote": "估计也是一票出局吧"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4316430,
+          "end_ms": 4319139,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4319139,
+          "end_ms": 4320519,
+          "quote": "2号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4444030,
+          "end_ms": 4444970,
+          "quote": "游戏结束"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night.witch_poison",
+      "before": {
+        "action": "unknown",
+        "targets": []
+      },
+      "after": {
+        "action": "poison",
+        "targets": [
+          4
+        ]
+      },
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths.result",
+      "before": "1号预言家夜间出局",
+      "after": "N2狼刀1号预言家、女巫毒杀4号平民，1号与4号依次双死。",
+      "reasoning": "完整复盘明确狼人击杀1号、女巫毒杀4号，随后说明依次双死；保留既有targets=[1,4]并补全结果文字。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4427980,
+          "end_ms": 4429650,
+          "quote": "狼人击杀一号预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4431170,
+          "end_ms": 4431930,
+          "quote": "依次双死"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[ballot-2].eligible_voters_and_votes",
+      "before": {
+        "eligible_voters": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 2,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": null,
+            "state": "abstained"
+          }
+        ]
+      },
+      "after": {
+        "eligible_voters": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 2,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 9,
+            "state": "cast"
+          }
+        ]
+      },
+      "reasoning": "4号于N2被女巫毒杀，D2不属于存活投票者；去掉错误默认的4号弃票，保留9条原始唱票记录不变。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4431170,
+          "end_ms": 4431930,
+          "quote": "依次双死"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4316430,
+          "end_ms": 4319139,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4319139,
+          "end_ms": 4320519,
+          "quote": "2号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4320519,
+          "end_ms": 4321899,
+          "quote": "3号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4321899,
+          "end_ms": 4323259,
+          "quote": "5号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4323259,
+          "end_ms": 4324639,
+          "quote": "6号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4324639,
+          "end_ms": 4326059,
+          "quote": "7号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4326059,
+          "end_ms": 4327540,
+          "quote": "8号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4327540,
+          "end_ms": 4329000,
+          "quote": "9号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4329000,
+          "end_ms": 4330400,
+          "quote": "11号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4330400,
+          "end_ms": 4331980,
+          "quote": "12号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4331980,
+          "end_ms": 4333620,
+          "quote": "投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4336040,
+          "end_ms": 4338200,
+          "quote": "9号玩家八票出局"
+        }
+      ]
+    },
+    {
+      "field": "voting.registrations[registration-1].on_police_off_police",
+      "before": {
+        "on_police": [
+          1,
+          10,
+          11
+        ],
+        "off_police": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          12
+        ]
+      },
+      "after": {
+        "on_police": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "off_police": [
+          7
+        ]
+      },
+      "reasoning": "两段早期发言均明确7号是唯一警下玩家；首轮无人夜死，故初始登记按除7外其余11席上警、仅7号警下记录。最终票面仍只在1/10间选警长，7号弃票后流徽；不改原唱票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 1154889,
+          "end_ms": 1157609,
+          "quote": "七一个人在警下诶"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 1712630,
+          "end_ms": 1714250,
+          "quote": "那七就一个人在警下"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2085150,
+          "end_ms": 2090930,
+          "quote": "一号11号十号请警下玩家做好投票准备"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2091210,
+          "end_ms": 2093890,
+          "quote": "请从一号10号当中选出本局游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2096659,
+          "end_ms": 2098179,
+          "quote": "7号玩家弃票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2098179,
+          "end_ms": 2099699,
+          "quote": "本局游戏警徽流失"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.exile_result.result",
+      "before": "9号白神被翻牌出局，狼人屠神获胜",
+      "after": "9号白神被放逐翻牌；随后狼人独立选择拍刀，按2号女巫、3号平民、5号猎人的刀路完成屠神获胜。",
+      "reasoning": "原文先公布9号翻牌出局，之后单独宣布狼人决定拍刀、列出2/3/5刀路并报拍刀成功、屠神获胜；胜利应归于后续endgame结算。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4336040,
+          "end_ms": 4338200,
+          "quote": "9号玩家八票出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4338200,
+          "end_ms": 4341540,
+          "quote": "翻牌为白神请发表遗言"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4434680,
+          "end_ms": 4437280,
+          "quote": "第二天白天9号白神被翻牌出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4437280,
+          "end_ms": 4438799,
+          "quote": "然后狼人正义决定拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4438799,
+          "end_ms": 4439999,
+          "quote": "狼人可拍三刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4439999,
+          "end_ms": 4441719,
+          "quote": "给出的刀路是2号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4441719,
+          "end_ms": 4444030,
+          "quote": "3号平民和5号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4444030,
+          "end_ms": 4444970,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4444970,
+          "end_ms": 4446050,
+          "quote": "狼人阵营拍刀成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4446050,
+          "end_ms": 4447590,
+          "quote": "屠神获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "预言家",
+        "女巫",
+        "平民",
+        "平民",
+        "猎人",
+        "狼人",
+        "狼人",
+        "平民",
+        "白神",
+        "狼人",
+        "狼人",
+        "混血儿"
+      ],
+      "reasoning": "竖排身份牌与终局角色总结交叉核对。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1RPaW6zEcm/BV1RPaW6zEcm_04085.010.png",
+          "frame_time_ms": 4085010,
+          "quote": "1预言家；2女巫；3/4平民；5猎人；6/7狼人；8平民；9白神；10/11狼人；12混血儿",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "10号真实底牌狼人，黄字记验5金水与警徽流，确实跳预言家；实际徽流失且第一天自爆后未放逐好人。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1RPaW6zEcm/BV1RPaW6zEcm_04085.010.png",
+          "frame_time_ms": 4085010,
+          "quote": "10 狼人；验5金水；警徽流3-2",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2091210,
+          "end_ms": 2093889,
+          "quote": "请从一号10号当中选出本局游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4424960,
+          "end_ms": 4427980,
+          "quote": "第一天白天10号狼人自爆入夜"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-26T00:00:00Z",
+  "phase_findings": [
+    {
+      "id": "phase-47-night-1",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4418530,
+          "end_ms": 4421870,
+          "quote": "平安夜言家验证3号玩家为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "phase-47-night-2",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间1/4双死结算",
+      "conclusion": "死者座位：1、4（双死）",
+      "reasoning": "连续复盘依次明确狼队击杀1号预言家、女巫毒杀4号平民，并直接总结依次双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4427980,
+          "end_ms": 4429650,
+          "quote": "狼人击杀一号预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4431170,
+          "end_ms": 4431930,
+          "quote": "依次双死"
+        }
+      ]
+    },
+    {
+      "id": "bind-BV1RPaW6zEcm-ballot-2",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-2].faction_bind_result",
+      "title": "D2放逐轮绑票核算",
+      "conclusion": "未达绑票：狼方3+警徽半票0.0 < 好人6+警徽半票0.0。本轮实际放逐=9；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2093890,
+          "end_ms": 2096659,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2990160,
+          "end_ms": 2996299,
+          "quote": "应该是11票11票出局了嗯如果你是预言家"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2996299,
+          "end_ms": 2997920,
+          "quote": "肯定11票出局了"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2999420,
+          "end_ms": 3000920,
+          "quote": "估计也是一票出局吧"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4316430,
+          "end_ms": 4319139,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4319139,
+          "end_ms": 4320519,
+          "quote": "2号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4444030,
+          "end_ms": 4444970,
+          "quote": "游戏结束"
+        }
+      ]
+    },
+    {
+      "id": "target-BV1RPaW6zEcm-r2-witch_poison-4",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].night.witch_poison",
+      "title": "D1夜 witch_poison目标复核",
+      "conclusion": "行动目标座位：4",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        }
+      ]
+    },
+    {
+      "id": "phase-47-day-2-vote-eligibility",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "voting.ballots[ballot-2].eligible_voters",
+      "title": "D2放逐票排除N2毒死的4号",
+      "conclusion": "D2有票权者为存活的9席：2、3、5、6、7、8、9、11、12；4号已于N2被毒死，不记为弃票。9条原票保持不变，9号以8票出局。",
+      "reasoning": "夜间复盘明确4号被毒杀并与1号双死；D2唱票实际逐条给出其余9名在场者的投票，并报9号八票出局。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4429650,
+          "end_ms": 4431170,
+          "quote": "牛毒杀4号平民"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4431170,
+          "end_ms": 4431930,
+          "quote": "依次双死"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4319139,
+          "end_ms": 4320519,
+          "quote": "2号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4320519,
+          "end_ms": 4321899,
+          "quote": "3号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4321899,
+          "end_ms": 4323259,
+          "quote": "5号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4323259,
+          "end_ms": 4324639,
+          "quote": "6号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4324639,
+          "end_ms": 4326059,
+          "quote": "7号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4326059,
+          "end_ms": 4327540,
+          "quote": "8号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4327540,
+          "end_ms": 4329000,
+          "quote": "9号投给11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4329000,
+          "end_ms": 4330400,
+          "quote": "11号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4330400,
+          "end_ms": 4331980,
+          "quote": "12号投给9号"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4336040,
+          "end_ms": 4338200,
+          "quote": "9号玩家八票出局"
+        }
+      ]
+    },
+    {
+      "id": "phase-47-day-1-registration",
+      "round": 1,
+      "phase": "day",
+      "status": "inferred",
+      "field": "voting.registrations[registration-1].on_police_off_police",
+      "title": "D1初始上警/警下人数核对",
+      "conclusion": "首轮初始警下仅7号；按12人名单，初始上警为其余11席。最终警徽票在1/10之间进行，7号弃票后流徽。",
+      "reasoning": "不同玩家在首轮发言中重复说7号是唯一警下玩家；终局警选提示仅要求警下玩家投票，最终记录7号弃票与流徽。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 1154889,
+          "end_ms": 1157609,
+          "quote": "七一个人在警下诶"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 1712630,
+          "end_ms": 1714250,
+          "quote": "那七就一个人在警下"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2091210,
+          "end_ms": 2093890,
+          "quote": "请从一号10号当中选出本局游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2096659,
+          "end_ms": 2098179,
+          "quote": "7号玩家弃票"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 2098179,
+          "end_ms": 2099699,
+          "quote": "本局游戏警徽流失"
+        }
+      ]
+    },
+    {
+      "id": "phase-47-day-2-exile-vs-endgame",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.exile_result.result",
+      "title": "D2放逐与后续拍刀胜利分开",
+      "conclusion": "9号白神被放逐翻牌后，狼人另行决定拍刀，刀路为2号女巫、3号平民、5号猎人；拍刀结算成功后屠神获胜。",
+      "reasoning": "字幕将9号放逐结果与之后的拍刀决定、三刀目标和拍刀成功依次分开陈述；不把胜利提前记在放逐节点。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4434680,
+          "end_ms": 4437280,
+          "quote": "第二天白天9号白神被翻牌出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4437280,
+          "end_ms": 4438799,
+          "quote": "然后狼人正义决定拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4438799,
+          "end_ms": 4439999,
+          "quote": "狼人可拍三刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4439999,
+          "end_ms": 4441719,
+          "quote": "给出的刀路是2号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4441719,
+          "end_ms": 4444030,
+          "quote": "3号平民和5号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4444030,
+          "end_ms": 4444970,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4444970,
+          "end_ms": 4446050,
+          "quote": "狼人阵营拍刀成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+          "start_ms": 4446050,
+          "end_ms": 4447590,
+          "quote": "屠神获胜"
+        }
+      ]
+    }
+  ]
+}

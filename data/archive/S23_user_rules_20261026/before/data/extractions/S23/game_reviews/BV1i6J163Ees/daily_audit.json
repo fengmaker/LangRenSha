@@ -1,0 +1,126 @@
+{
+  "bvid": "BV1i6J163Ees",
+  "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3390360,
+    "end_ms": 3446340,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1狼刀11民被救、验1好人；D1 9舞者出局，警长3。N2狼刀7预言家、毒3狼，D2双死并移徽8；10自爆。N3狼杀1女巫；12自爆后假面8夜杀最后神4白神，N4终局狼胜，不进入D4。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3390360,
+          "end_ms": 3446340,
+          "quote": "嗯哼唱对\n给各位大众老师们做下本周期的复盘\n本局版行为假面舞会神阵营预言家7号女巫\n一号武者\n9号白神\n4号狼人阵营3号十号\n12号假面8号平民阵营2号五号六号11号\n首页狼队击杀11号平民女儿救起形成平安夜\n预言家验证一号玩家女巫为好人身份\n仅剩救尾环节\n3号悍跳狼人获得警徽\n在第一天白天\n9号武者被抗推出局\n入夜狼队击杀7号预言家牛毒杀3号狼人\n3号七号双死\n预言家验证了8号玩家假面为狼人身份\n3号狼人出局后将警徽移交至8号假面\n在第二天白天10号狼人醒的自爆入夜\n狼队击杀一号女巫\n一号牛丹死\n第三天白天12号狼人选择自爆后\n假面入夜选择开刀击杀场上最后一神\n4号白神游戏结束\n狼队阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "event_patches": [
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          4
+        ],
+        "result": "N4假面击杀4号白神终局；游戏结束未进入D4。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_vote",
+      "changes": {
+        "action": "not_held",
+        "actor": null,
+        "targets": [],
+        "result": "N4终局狼刀后游戏结束，未进行D4放逐。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "游戏在N4结束，不存在D4放逐结果。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b81-r4-terminal-night-death",
+      "status": "confirmed",
+      "conclusion": "8号假面击杀最后一神4号白神并获胜；N4结算后游戏结束，D4未开始。",
+      "reasoning": "复盘明确N4击杀对象和获胜条件，不能遗留空白D4放逐或夜死公布。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3438430,
+          "end_ms": 3442050,
+          "quote": "假面入夜选择开刀击杀场上最后一神"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3442050,
+          "end_ms": 3444010,
+          "quote": "4号白神游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3444010,
+          "end_ms": 3446340,
+          "quote": "狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N4假面8击杀最后一神4号白神并获胜，游戏在N4结束，没有D4夜死公告阶段。",
+      "reasoning": "最终复盘明确夜间假面击杀4号白神、游戏结束并播报狼胜；终局夜结算按4号死亡记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3438430,
+          "end_ms": 3444010,
+          "quote": "第三天白天12号狼人选择自爆后\n假面入夜选择开刀击杀场上最后一神\n4号白神游戏结束\n狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-exile_result",
+      "status": "confirmed",
+      "conclusion": "N4击杀最后一神后立即游戏结束，不存在D4放逐投票或结果。",
+      "reasoning": "最终复盘在终局击杀后直接播报狼胜，没有D4白天。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第02局_假面舞会__BV1i6J163Ees_P01_CID42771549001.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "44f29e3c2308230a2e2782dd01f5657c9e64a8c99af86e9c057d9e21b9a1e2fb",
+          "start_ms": 3438430,
+          "end_ms": 3444010,
+          "quote": "第三天白天12号狼人选择自爆后\n假面入夜选择开刀击杀场上最后一神\n4号白神游戏结束\n狼队阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

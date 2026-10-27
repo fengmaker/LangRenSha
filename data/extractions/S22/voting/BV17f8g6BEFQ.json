@@ -27,6 +27,16 @@
         "end_ms": 671840,
         "quote": "其余玩家均上镜"
       }
+    ],
+    "causal-ballot-day4-exile-d4": [
+      {
+        "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+        "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+        "start_ms": 2643190,
+        "end_ms": 2658980,
+        "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+        "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+      }
     ]
   },
   "day_anchors_ms": [
@@ -39,7 +49,8 @@
     2649890
   ],
   "issues": [],
-  "note": "全文机器转写提取，尚未人工回听。complete仅表示已知票权名单中无缺票；不代表人工确认。数字不自动纠错，不凭票数反推结果。",
+  "note": "已应用用户确认的延期竞选和默认弃票口径；规则推导与原文明确播报分别保留。票权名单仍未知时不补造投票人。",
+  "source_path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
   "review_changes": [
     {
       "id": "BV17f8g6BEFQ-registration",
@@ -89,10 +100,728 @@
       ]
     }
   ],
+  "resolved_issues": [],
+  "causal_review": {
+    "bvid": "BV17f8g6BEFQ",
+    "source_sha256": "b69800f14dfb949790925d3e5cc8939e7081ae241aa63f0cfcbc041a8ea76b71",
+    "decisions": [
+      {
+        "question_id": "vote-BV17f8g6BEFQ-day-4-exile_unrecorded",
+        "resolved": true,
+        "confidence": "high",
+        "conclusion": "第4天完整票型：1/4/6/7/8/9→12，12→6；12号6票出局。",
+        "reason": "用户查看后明确确认“其他人全部投给12号”，并补充“12投给了6号”。该轮存活1、4、6、7、8、9、12号，故六人投12、12投6，共七张明确投票；12号6票出局，与原文高票出局一致。本轮无默认弃票。",
+        "source_spans": [
+          {
+            "start_ms": 2756040,
+            "end_ms": 2767390,
+            "quote": "通灵师验证了8号玩家为平民身份\n10号通灵师单死在第四天的白天\n场上\n最后一狼12号机械平民被公投出局\n游戏结束"
+          },
+          {
+            "start_ms": 2643190,
+            "end_ms": 2658980,
+            "quote": "请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位玩家请自行投票\n唱票结束前不要放手\n321请出票\n12号玩家高票出局"
+          }
+        ],
+        "needs_video": false,
+        "media_evidence": [
+          {
+            "path": "https://www.bilibili.com/video/BV17f8g6BEFQ/",
+            "start_ms": 2649000,
+            "end_ms": 2649000,
+            "quote": "已看原视频44:05–44:17；全景可见举手，但未能可靠辨认全部七人的具体手势/投向。",
+            "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV17f8g6BEFQ_2649.png"
+          }
+        ],
+        "original_question": {
+          "id": "vote-BV17f8g6BEFQ-day-4-exile_unrecorded",
+          "code": "exile_unrecorded",
+          "day": 4,
+          "target": null,
+          "title": "本日放逐投票待补录",
+          "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+          "severity": "pending",
+          "evidence": [
+            {
+              "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 2756040,
+              "end_ms": 2767390,
+              "quote": "通灵师验证了8号玩家为平民身份\n10号通灵师单死在第四天的白天\n场上\n最后一狼12号机械平民被公投出局\n游戏结束",
+              "note": "提及本日的原文定位，非缺失投票的直接证据"
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 2756040,
+            "end_ms": 2767390,
+            "quote": "女巫技能继续空过\n通灵师验证了8号玩家为平民身份\n10号通灵师单死在第四天的白天\n场上\n最后一狼12号机械平民被公投出局\n游戏结束\n好人阵营获胜"
+          },
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+            "start_ms": 2643190,
+            "end_ms": 2658980,
+            "quote": "过了所有玩家翻结束\n请各位玩家带盔做好投票准备\n本局游戏警徽流失\n各位玩家请自行投票\n唱票结束前不要放手\n321请出票\n12号玩家高票出局\n游戏结束"
+          },
+          {
+            "path": "https://www.bilibili.com/video/BV17f8g6BEFQ/",
+            "start_ms": 2649000,
+            "end_ms": 2649000,
+            "quote": "已看原视频44:05–44:17；全景可见举手，但未能可靠辨认全部七人的具体手势/投向。",
+            "frame_path": "data/extractions/S22/causal_review_20261025/video_frames/BV17f8g6BEFQ_2649.png"
+          },
+          {
+            "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+            "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+            "start_ms": 2643190,
+            "end_ms": 2658980,
+            "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+            "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+          }
+        ],
+        "method": "user_confirmed",
+        "human_reviewed": true,
+        "user_confirmation": {
+          "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+          "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+        }
+      }
+    ],
+    "patches": [
+      {
+        "kind": "ballot_add",
+        "after": {
+          "id": "causal-ballot-day4-exile-d4",
+          "day": 4,
+          "kind": "exile",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": null,
+          "eligible_voters": [
+            1,
+            4,
+            6,
+            7,
+            8,
+            9,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 4,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 7,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 9,
+              "target": 12,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 6,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 12,
+          "unrecorded_voters": []
+        },
+        "reason": "用户查看后明确确认“其他人全部投给12号”，并补充“12投给了6号”。该轮存活1、4、6、7、8、9、12号，故六人投12、12投6，共七张明确投票；12号6票出局，与原文高票出局一致。本轮无默认弃票。",
+        "evidence": [
+          {
+            "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+            "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+            "start_ms": 2643190,
+            "end_ms": 2658980,
+            "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+            "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+          }
+        ]
+      }
+    ],
+    "day_outcomes": [
+      {
+        "day": 4,
+        "outcome": "exiled",
+        "exile_note": "用户已确认完整七票：1/4/6/7/8/9→12，12→6；12号6票出局。",
+        "evidence": [
+          {
+            "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+            "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+            "start_ms": 2643190,
+            "end_ms": 2658980,
+            "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+            "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+          }
+        ]
+      }
+    ],
+    "additional_evidence": [],
+    "user_confirmation": {
+      "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+      "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+    },
+    "human_confirmations": [
+      {
+        "target": "causal-ballot-day4-exile-d4",
+        "voters": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+        "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+      }
+    ]
+  },
+  "human_confirmations": [
+    {
+      "target": "causal-ballot-day4-exile-d4",
+      "voters": [
+        1,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+      "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0"
+    }
+  ],
+  "day_crosscheck_changes": [
+    {
+      "target": "interruption-1",
+      "field": "day",
+      "before": 2,
+      "after": 3,
+      "reason": "自爆座位与法官复盘的唯一自爆记录一致。"
+    }
+  ],
+  "day_crosscheck_source": {
+    "path": "data/games/S22/2026-08-18_g03_BV17f8g6BEFQ/复核记录.json",
+    "sha256": "dcc7f4f0924990eb6370b4f8e5027bdb6a0afdda39f4e66d3f992a212186efd5",
+    "recap_segments": [
+      {
+        "start_ms": 2669470,
+        "end_ms": 2677279,
+        "text": "咳咳我本来这个男的我还给四多了"
+      },
+      {
+        "start_ms": 2677279,
+        "end_ms": 2679959,
+        "text": "来给各位弹幕老师们做一下本节课复盘"
+      },
+      {
+        "start_ms": 2679959,
+        "end_ms": 2685760,
+        "text": "本剧版行为机械狼通灵师中门神阵营通灵师"
+      },
+      {
+        "start_ms": 2685760,
+        "end_ms": 2687000,
+        "text": "10号女巫"
+      },
+      {
+        "start_ms": 2687000,
+        "end_ms": 2688320,
+        "text": "9号猎人"
+      },
+      {
+        "start_ms": 2688320,
+        "end_ms": 2689480,
+        "text": "4号守卫"
+      },
+      {
+        "start_ms": 2689480,
+        "end_ms": 2692700,
+        "text": "6号狼人阵营3号五号"
+      },
+      {
+        "start_ms": 2692700,
+        "end_ms": 2694140,
+        "text": "11号机械狼12号"
+      },
+      {
+        "start_ms": 2694140,
+        "end_ms": 2697270,
+        "text": "本球游戏为机械平民平民阵营"
+      },
+      {
+        "start_ms": 2697270,
+        "end_ms": 2703360,
+        "text": "一号2号七号八号首页守卫守护12号机械狼"
+      },
+      {
+        "start_ms": 2703360,
+        "end_ms": 2706520,
+        "text": "狼队击杀10号通灵师女儿救起"
+      },
+      {
+        "start_ms": 2706520,
+        "end_ms": 2707950,
+        "text": "形成平安夜"
+      },
+      {
+        "start_ms": 2707950,
+        "end_ms": 2710190,
+        "text": "当夜机械狼模仿7号平民"
+      },
+      {
+        "start_ms": 2710190,
+        "end_ms": 2712150,
+        "text": "本局游戏为机械平民通灵师"
+      },
+      {
+        "start_ms": 2712150,
+        "end_ms": 2714540,
+        "text": "验证了5号玩家为狼人身份"
+      },
+      {
+        "start_ms": 2714540,
+        "end_ms": 2715800,
+        "text": "在警上竞选环节"
+      },
+      {
+        "start_ms": 2715800,
+        "end_ms": 2717440,
+        "text": "5号狼人选择自爆"
+      },
+      {
+        "start_ms": 2717440,
+        "end_ms": 2720370,
+        "text": "入夜守卫守护7号平民"
+      },
+      {
+        "start_ms": 2720370,
+        "end_ms": 2723250,
+        "text": "狼队击杀2号平民女巫技能"
+      },
+      {
+        "start_ms": 2723250,
+        "end_ms": 2727430,
+        "text": "通过通灵师验证了一号玩家为平民身份"
+      },
+      {
+        "start_ms": 2727430,
+        "end_ms": 2729100,
+        "text": "暂延期竞选环节"
+      },
+      {
+        "start_ms": 2729100,
+        "end_ms": 2730980,
+        "text": "3号狼人选择自爆"
+      },
+      {
+        "start_ms": 2730980,
+        "end_ms": 2733100,
+        "text": "本局游戏警徽流失"
+      },
+      {
+        "start_ms": 2733980,
+        "end_ms": 2735100,
+        "text": "入夜守卫守护"
+      },
+      {
+        "start_ms": 2735100,
+        "end_ms": 2736410,
+        "text": "10号通灵师"
+      },
+      {
+        "start_ms": 2736410,
+        "end_ms": 2738370,
+        "text": "狼队击杀10号通律师"
+      },
+      {
+        "start_ms": 2738370,
+        "end_ms": 2741450,
+        "text": "形成平安夜女巫技能继续空过通灵师验证"
+      },
+      {
+        "start_ms": 2741450,
+        "end_ms": 2743460,
+        "text": "7号玩家为平民身份"
+      },
+      {
+        "start_ms": 2743460,
+        "end_ms": 2744760,
+        "text": "在第三天的白天"
+      },
+      {
+        "start_ms": 2744760,
+        "end_ms": 2747560,
+        "text": "11号狼人选择自爆咳"
+      },
+      {
+        "start_ms": 2750620,
+        "end_ms": 2754520,
+        "text": "入夜守卫守护7号平民狼队击杀10号通灵师"
+      },
+      {
+        "start_ms": 2754520,
+        "end_ms": 2756040,
+        "text": "女巫技能继续空过"
+      },
+      {
+        "start_ms": 2756040,
+        "end_ms": 2759410,
+        "text": "通灵师验证了8号玩家为平民身份"
+      },
+      {
+        "start_ms": 2759410,
+        "end_ms": 2762710,
+        "text": "10号通灵师单死在第四天的白天"
+      },
+      {
+        "start_ms": 2762710,
+        "end_ms": 2763170,
+        "text": "场上"
+      },
+      {
+        "start_ms": 2763170,
+        "end_ms": 2766450,
+        "text": "最后一狼12号机械平民被公投出局"
+      },
+      {
+        "start_ms": 2766450,
+        "end_ms": 2767390,
+        "text": "游戏结束"
+      },
+      {
+        "start_ms": 2767390,
+        "end_ms": 2768609,
+        "text": "好人阵营获胜"
+      },
+      {
+        "start_ms": 2768609,
+        "end_ms": 2771089,
+        "text": "以上是我们今天三局版型的全部内容"
+      },
+      {
+        "start_ms": 2771089,
+        "end_ms": 2772889,
+        "text": "非常感谢各位弹幕老师的陪伴"
+      }
+    ]
+  },
+  "night_death_supplements": [],
+  "endgame_phases": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          2
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 4,
+        "night_deaths": [
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 4,
+      "phase": "day",
+      "after_day": 4,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "label": "第3天夜晚"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "label": "第4天白天"
+      }
+    ]
+  },
+  "rule_applications": [],
+  "eligibility_derivations": [
+    {
+      "target": "causal-ballot-day4-exile-d4",
+      "day": 4,
+      "living": [
+        1,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        1,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 5,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2710190,
+          "end_ms": 2723250,
+          "quote": "本局游戏为机械平民通灵师\n验证了5号玩家为狼人身份\n在警上竞选环节\n5号狼人选择自爆\n入夜守卫守护7号平民\n狼队击杀2号平民女巫技能"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2720370,
+          "end_ms": 2738370,
+          "quote": "狼队击杀2号平民女巫技能\n通过通灵师验证了一号玩家为平民身份\n暂延期竞选环节\n3号狼人选择自爆\n本局游戏警徽流失\n入夜守卫守护\n10号通灵师\n狼队击杀10号通律师"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 3,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第03局_机械狼通灵师__BV17f8g6BEFQ_P01_CID41036874370.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2720370,
+          "end_ms": 2738370,
+          "quote": "狼队击杀2号平民女巫技能\n通过通灵师验证了一号玩家为平民身份\n暂延期竞选环节\n3号狼人选择自爆\n本局游戏警徽流失\n入夜守卫守护\n10号通灵师\n狼队击杀10号通律师"
+        }
+      ]
+    }
+  ],
+  "rule_issues": [],
+  "voting_rule_source": {
+    "path": "config/S22_formal_rules.json",
+    "sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "type": "user_confirmation",
+    "confirmed_on": "2026-10-25",
+    "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+  },
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "5号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "3号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "11号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 4,
+      "outcome": "exiled",
+      "exile_note": "用户已确认完整七票：1/4/6/7/8/9→12，12→6；12号6票出局。",
+      "evidence": [
+        {
+          "path": "data/extractions/S22/用户确认_20261025_0818第三局第四天票型.txt",
+          "sha256": "dc8a2a0b7fb13fa94463d52c5c3dfcb5f18a4d1f112345a30c933165904d74f0",
+          "start_ms": 2643190,
+          "end_ms": 2658980,
+          "quote": "我复核了，其他人全部投给12号 8.18第三局第四天\n12投给了6号",
+          "note": "用户人工复核原话；时间仅定位所确认的原视频投票环节，不表示音频逐席唱票。"
+        }
+      ]
+    }
+  ],
   "bvid": "BV17f8g6BEFQ",
   "source_sha256": "b69800f14dfb949790925d3e5cc8939e7081ae241aa63f0cfcbc041a8ea76b71",
   "dossier_sha256": "acbdc3e5a96b551aa4b18f65381e00a152ca2994f7b7d2f91a2ccec6bdfedf77",
-  "generated_at": "2026-10-24T23:21:29+08:00",
+  "generated_at": "2026-10-25T04:08:41+08:00",
   "facts": {
     "schema_version": 1,
     "game_slug": "bili-BV17f8g6BEFQ-p01-g03",
@@ -118,11 +847,70 @@
         "id": "registration-review-BV17f8g6BEFQ-registration"
       }
     ],
-    "ballots": [],
+    "ballots": [
+      {
+        "id": "causal-ballot-day4-exile-d4",
+        "day": 4,
+        "kind": "exile",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": null,
+        "eligible_voters": [
+          1,
+          4,
+          6,
+          7,
+          8,
+          9,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 12,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 6,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 12,
+        "unrecorded_voters": []
+      }
+    ],
     "interruptions": [
       {
         "id": "interruption-1",
-        "day": 2,
+        "day": 3,
         "actor": 11,
         "reason": "self_destruct",
         "ends_day": true
@@ -131,23 +919,23 @@
     "days": [
       {
         "day": 1,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "deferred",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 2,
-        "sheriff": "unknown",
+        "sheriff": "badge_lost",
         "exile": "interrupted_self_destruct"
       },
       {
         "day": 3,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "badge_lost",
+        "exile": "interrupted_self_destruct"
       },
       {
         "day": 4,
-        "sheriff": "unknown",
-        "exile": "unknown"
+        "sheriff": "badge_lost",
+        "exile": "recorded"
       }
     ]
   }

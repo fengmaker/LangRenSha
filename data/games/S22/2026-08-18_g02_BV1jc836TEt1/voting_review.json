@@ -5,70 +5,390 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "bb8b0926d2bd06cb6fdf22cb83968792ad13f9e7e81e35a6b2f6081ceb6bfc53",
-  "question_count": 1,
-  "pending_count": 5,
-  "questions": [
+  "facts_sha256": "77e995e007f1efb2ea4033cb51176e2aebd75f59a773676656013fd8b379bf67",
+  "causal_decisions": [
     {
-      "id": "vote-BV1jc836TEt1-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取6条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1jc836TEt1-ballot-1-eligibility_unknown",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "首轮警长票权为警下1、3、6、8、9、12；六人全投，7号和10号各3票平票进入PK。",
+      "reason": "前一次名单报错后，法官明确要求重唱、灭灯，并最终报出除1、3、6、8、9、12外其余均上警。随后六条唱票覆盖这六名警下玩家，7/10各3票。",
+      "source_spans": [
+        {
+          "start_ms": 661180,
+          "end_ms": 672380,
+          "quote": "本球游戏处一号3号八号九号11号\n10号12号玩家\n外区玩家君上记哦"
+        },
+        {
+          "start_ms": 694170,
+          "end_ms": 707160,
+          "quote": "我们重新唱一遍啊\n把灯灯灭一下哦\n我给你灭吧\n好本\n本局游戏除一号3号六号八号\n9号12号玩家外\n其余玩家均上镜"
+        },
+        {
+          "start_ms": 1187550,
+          "end_ms": 1205190,
+          "quote": "请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1jc836TEt1-ballot-1-eligibility_unknown",
+        "code": "eligibility_unknown",
+        "day": 1,
+        "target": "ballot-1",
+        "title": "本轮票权名单待补充",
+        "reason": "已提取6条票，但完整票权名单未知；需补齐警下等票权依据，随后自动计算。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+            "start_ms": 1143510,
+            "end_ms": 1229040,
+            "quote": "要不然你不不好弄\n你看你这把你明明是有队友的\n你有一个鬼畜都有\n你非得自己来\n你自己来的后果你也能知道是什么样呃\n呃井下估计你只能吃到9号的一一票\n你最多吃到9号一票最多好吧\n没了那警徽就留一和12\n顺验啊\n验一验12嗯\n剩下的看投票吧好吧\n验了三金水\n我过了晋商翻\n结束退水自爆环节\n54321人龙井上玩家\n7号十号请警向玩家带盔\n在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk\n请7号玩家先发言\n天哪跟我预想的整整差了两票\n整整差了两票\n6号那我改个警徽流\n先验12再验六嗯\n8号是好人"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
-          "start_ms": 1143510,
-          "end_ms": 1229040,
-          "quote": "要不然你不不好弄\n你看你这把你明明是有队友的\n你有一个鬼畜都有\n你非得自己来\n你自己来的后果你也能知道是什么样呃\n呃井下估计你只能吃到9号的一一票\n你最多吃到9号一票最多好吧\n没了那警徽就留一和12\n顺验啊\n验一验12嗯\n剩下的看投票吧好吧\n验了三金水\n我过了晋商翻\n结束退水自爆环节\n54321人龙井上玩家\n7号十号请警向玩家带盔\n在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk\n请7号玩家先发言\n天哪跟我预想的整整差了两票\n整整差了两票\n6号那我改个警徽流\n先验12再验六嗯\n8号是好人"
+          "start_ms": 661180,
+          "end_ms": 672380,
+          "quote": "本球游戏处一号3号八号九号11号\n10号12号玩家\n外区玩家君上记哦"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "start_ms": 694170,
+          "end_ms": 707160,
+          "quote": "你没上紧\n我们重新唱一遍啊\n把灯灯灭一下哦\n我给你灭吧\n好本\n本局游戏除一号3号六号八号\n9号12号玩家外\n其余玩家均上镜\n根据随机点数六"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "start_ms": 1187550,
+          "end_ms": 1205190,
+          "quote": "在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     },
     {
-      "id": "vote-BV1jc836TEt1-ballot-2-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-2",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取10条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "question_id": "vote-BV1jc836TEt1-ballot-1-source_conflict-ef32d6fd",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "采用重唱后的最终名单：1、3、6、8、9、12警下；6号有投票权，11号上警。",
+      "reason": "初次报出的名单并非最终结果；主持人明确重唱并灭灯后，将6号纳入警下、将11号排除在警下名单外。实际六条初投与最终名单逐席相符。",
+      "source_spans": [
+        {
+          "start_ms": 661180,
+          "end_ms": 672380,
+          "quote": "本球游戏处一号3号八号九号11号\n10号12号玩家\n外区玩家君上记哦"
+        },
+        {
+          "start_ms": 694170,
+          "end_ms": 707160,
+          "quote": "我们重新唱一遍啊\n把灯灯灭一下哦\n我给你灭吧\n好本\n本局游戏除一号3号六号八号\n9号12号玩家外\n其余玩家均上镜"
+        },
+        {
+          "start_ms": 1187550,
+          "end_ms": 1205190,
+          "quote": "请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1jc836TEt1-ballot-1-source_conflict-ef32d6fd",
+        "code": "source_conflict-ef32d6fd",
+        "day": 1,
+        "target": "ballot-1",
+        "title": "播票原文存在冲突",
+        "reason": "1187550ms警徽票出现警下名单之外的6号，整轮票权待核\n规则核对：警徽票出现原警下名单之外的投票者，不能以本规则修正座号或名单。",
+        "severity": "question",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+            "start_ms": 1143510,
+            "end_ms": 1229040,
+            "quote": "要不然你不不好弄\n你看你这把你明明是有队友的\n你有一个鬼畜都有\n你非得自己来\n你自己来的后果你也能知道是什么样呃\n呃井下估计你只能吃到9号的一一票\n你最多吃到9号一票最多好吧\n没了那警徽就留一和12\n顺验啊\n验一验12嗯\n剩下的看投票吧好吧\n验了三金水\n我过了晋商翻\n结束退水自爆环节\n54321人龙井上玩家\n7号十号请警向玩家带盔\n在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk\n请7号玩家先发言\n天哪跟我预想的整整差了两票\n整整差了两票\n6号那我改个警徽流\n先验12再验六嗯\n8号是好人"
+          }
+        ]
+      },
       "evidence": [
         {
           "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
-          "start_ms": 1480270,
-          "end_ms": 1546649,
-          "quote": "除了3号\n我验一号\n8号好吧\n我先这么留着\n然后等我拿到警徽能不能改再说\n然后外搂的话\n等我我最后能发言\n我就能搂吗\n我能发言\n我也能改警徽流嘛\n对吧\n所以我就一号8号验出谁的话\n大家琢磨琢磨吧\n预言家过pk环节\n发言结束\n请除7号十号玩家外\n其余玩家带盔\n在7号十号玩家中选出本局游戏警长\n321请出票\n一号投给7号\n2号投给7号\n3号投给10号\n4号投给10号\n5号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n11号投给10号\n12号投给10号\n投票结束\n四票比六票\n群玩家请变蓝灯\n所以信息平安夜警长选择发言顺序\n9号玩家请发言\n投票我是觉得你看10号的发言\n他说哎呀我搏杀一下预言家吧\n首先10号要是炸弹狼"
+          "start_ms": 661180,
+          "end_ms": 672380,
+          "quote": "本球游戏处一号3号八号九号11号\n10号12号玩家\n外区玩家君上记哦"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "start_ms": 694170,
+          "end_ms": 707160,
+          "quote": "你没上紧\n我们重新唱一遍啊\n把灯灯灭一下哦\n我给你灭吧\n好本\n本局游戏除一号3号六号八号\n9号12号玩家外\n其余玩家均上镜\n根据随机点数六"
+        },
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "start_ms": 1187550,
+          "end_ms": 1205190,
+          "quote": "在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk"
         }
-      ]
+      ],
+      "method": "contextual_causal_review"
     },
     {
-      "id": "vote-BV1jc836TEt1-ballot-3-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "question_id": "vote-BV1jc836TEt1-day-2-exile_unrecorded",
+      "resolved": true,
+      "confidence": "high",
+      "conclusion": "第2天没有放逐；夜间死讯后狼队交牌结束。",
+      "reason": "复盘在夜间验人/死亡后的第2天白天明确狼队选择交牌，游戏结束，好人获胜。",
+      "source_spans": [
+        {
+          "start_ms": 4233700,
+          "end_ms": 4242170,
+          "quote": "夜间预言家验证了6号玩家平民为好人身份\n在第二天的白天\n狼队选择交牌\n游戏结束\n好人阵营获胜"
+        }
+      ],
+      "needs_video": false,
+      "original_question": {
+        "id": "vote-BV1jc836TEt1-day-2-exile_unrecorded",
+        "code": "exile_unrecorded",
+        "day": 2,
+        "target": null,
+        "title": "本日放逐投票待补录",
+        "reason": "未见该日白天狼人自爆记录，应有放逐投票环节；目前缺少可用票型，需结合复盘与出局记录确认漏票、日序或提前结束原因。",
+        "severity": "pending",
+        "evidence": [
+          {
+            "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+            "start_ms": 4233700,
+            "end_ms": 4242170,
+            "quote": "夜间预言家验证了6号玩家平民为好人身份\n在第二天的白天\n狼队选择交牌\n游戏结束\n好人阵营获胜",
+            "note": "提及本日的原文定位，非缺失投票的直接证据"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "start_ms": 4233700,
+          "end_ms": 4242170,
+          "quote": "2号五号双子\n夜间预言家验证了6号玩家平民为好人身份\n在第二天的白天\n狼队选择交牌\n游戏结束\n好人阵营获胜\n以上是我们今天第二局版型"
+        }
+      ],
+      "method": "contextual_causal_review"
+    }
+  ],
+  "question_count": 0,
+  "pending_count": 0,
+  "questions": [],
+  "days": [
+    {
       "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "1号被放逐。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "未见白天自爆记录，应有放逐投票环节；需交叉核对并补录票型或确认提前结束原因。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [
+    {
+      "rule": "unannounced_choice_is_abstention",
       "target": "ballot-3",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取11条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 1,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    },
+    {
+      "rule": "unannounced_choice_is_abstention",
+      "target": "ballot-4",
+      "day": 1,
+      "voters": [
+        12
+      ],
+      "reason": "依用户确认口径：已举行投票中，有票权且没有明确投向的玩家默认弃票。"
+    }
+  ],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          2,
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": null
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-3",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    },
+    {
+      "target": "ballot-4",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "1号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
           "start_ms": 3601870,
           "end_ms": 3680630,
           "quote": "没了\n我验6号奔着警徽给的\n然后呢\n我刚刚应该是魔术师对吧\n因为五是狼\n前置位肯定有个魔术师七归的\n你应该是魔术师30秒\n所以我投二验六\n然后魔术别动\n157\n女巫在157里随便读\n明天起来\n所有人跳身份过\n所有文加班结束\n请各位戴盔做好投票准备\n警长请归票\n警长归票2号\n各位玩家唱票结束前不要放手\n321请出票\n一号投给8号\n2号投给8号\n3号投给2号\n4号投给2号\n5号投给8号\n6号投给一号\n7号投给8号\n8号投给2号\n9号投给2号\n10号投给2号\n11号投给2号\n十\n2号投给2号\n投票结束\n当前票型\n2号玩家7.5票定序王子受方技能\n52号玩家翻牌为定序\n王子12号玩家请发言\n我都不想起来的\n但是3号非要让我起来一下\n那我起来一起来一下吧"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1jc836TEt1-ballot-4-eligibility_unknown",
-      "code": "eligibility_unknown",
-      "day": 1,
-      "target": "ballot-4",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取11条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
-      "evidence": [
+        },
         {
           "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
           "start_ms": 3724730,
@@ -78,67 +398,13 @@
       ]
     },
     {
-      "id": "vote-BV1jc836TEt1-ballot-1-source_conflict-ef32d6fd",
-      "code": "source_conflict-ef32d6fd",
-      "day": 1,
-      "target": "ballot-1",
-      "title": "播票原文存在冲突",
-      "reason": "1187550ms警徽票出现警下名单之外的6号，整轮票权待核",
-      "severity": "question",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
-          "start_ms": 1143510,
-          "end_ms": 1229040,
-          "quote": "要不然你不不好弄\n你看你这把你明明是有队友的\n你有一个鬼畜都有\n你非得自己来\n你自己来的后果你也能知道是什么样呃\n呃井下估计你只能吃到9号的一一票\n你最多吃到9号一票最多好吧\n没了那警徽就留一和12\n顺验啊\n验一验12嗯\n剩下的看投票吧好吧\n验了三金水\n我过了晋商翻\n结束退水自爆环节\n54321人龙井上玩家\n7号十号请警向玩家带盔\n在7号十号玩家中选出本就是警长321\n请出票\n一号投给7号\n3号投给7号\n6号投给10号\n8号投给7号\n9号投给10号\n12号投给10号\n投票结束\n三票比三票平票pk\n请7号玩家先发言\n天哪跟我预想的整整差了两票\n整整差了两票\n6号那我改个警徽流\n先验12再验六嗯\n8号是好人"
-        }
-      ]
-    },
-    {
-      "id": "vote-BV1jc836TEt1-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
       "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
-          "start_ms": 4233700,
-          "end_ms": 4242170,
-          "quote": "夜间预言家验证了6号玩家平民为好人身份\n在第二天的白天\n狼队选择交牌\n游戏结束\n好人阵营获胜",
-          "note": "提及本日的原文定位，非缺失投票的直接证据"
-        }
-      ]
+      "outcome": "missing",
+      "exile_note": "未见白天自爆记录，应有放逐投票环节；需交叉核对并补录票型或确认提前结束原因。",
+      "evidence": []
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 1,
-      "pending_count": 4,
-      "question_ids": [
-        "vote-BV1jc836TEt1-ballot-1-eligibility_unknown",
-        "vote-BV1jc836TEt1-ballot-2-eligibility_unknown",
-        "vote-BV1jc836TEt1-ballot-3-eligibility_unknown",
-        "vote-BV1jc836TEt1-ballot-4-eligibility_unknown",
-        "vote-BV1jc836TEt1-ballot-1-source_conflict-ef32d6fd"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV1jc836TEt1-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [],
-  "voting_sha256": "b07b285b69c8852241e6d4affe36ceffbc501b6021ef1392656c3f8f8016236b",
+  "voting_sha256": "90dd0c8ccbcb67410f4ef2fa8d57bbb4c7ce9283e7b3305546b0125ede00f54c",
   "source_sha256": "f75802a00499e919b56cfec4ee4b9f2a9b8aee7fb11e7c83103babef5ba64f41"
 }

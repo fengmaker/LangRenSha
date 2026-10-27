@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from website.api.bluffs import METHODOLOGY, physical_wolf, review_items, source_fingerprint
+from website.api.bluffs import METHODOLOGY, S23_VIDEO_METHODOLOGY, physical_wolf, review_items, source_fingerprint
 
 WORK = ROOT / "data" / "extractions" / "S22" / "bluff_review"
 PUBLIC = ROOT / "website" / "assets" / "bluffs" / "S22.json"
@@ -247,13 +247,15 @@ def feedback_fields(row: dict) -> str:
 <p data-feedback-row-status>尚未填写</p></form>'''
 
 
-def render_html(items: list[dict], summary: dict, inference_version: str = "S22-bluff-20261025-v3") -> str:
+def render_html(items: list[dict], summary: dict, inference_version: str = "S22-bluff-20261025-v3",
+                *, season: str = "S22", frame_paths: dict[str,str] | None = None) -> str:
     cards = []
     for row in sorted(items, key=lambda x: (not x["needs_review"], x["date"], x["game_id"], x["seat"])):
         label = ("悍跳归属待复核" if row["decision"] == "uncertain" else "推断不是悍跳" if row["decision"] == "no" else
                  "成功结果待复核" if row["success"] is None else "推断成功" if row["success"] else "推断未成功")
         if row.get("verification_status") == "user_confirmed":
             label = "用户确认不是悍跳" if row["decision"] == "no" else "用户确认悍跳 · " + ("成功结果待补" if row["success"] is None else "按规则成功" if row["success"] else "按规则未成功")
+        if row.get('assistant_pending'):label='待助手继续核查'
         evidence = []
         for entry in row["evidence"]:
             stamp = entry.get("start_ms", 0) // 1000
@@ -261,21 +263,50 @@ def render_html(items: list[dict], summary: dict, inference_version: str = "S22-
             evidence.append(f'<blockquote>{escape(entry.get("text", ""))}</blockquote>'
                             f'<p>{escape(entry.get("interpretation", ""))}</p>'
                             f'<a href="{escape(entry.get("url", ""))}" target="_blank" rel="noreferrer">原视频 {time}</a>')
+            image_path=(frame_paths or {}).get(entry.get("image_url"))
+            if image_path:
+                evidence.append(f'<figure><a href="{escape(image_path,quote=True)}" target="_blank">'
+                                f'<img src="{escape(image_path,quote=True)}" alt="原视频发言摘要截图 {time}" '
+                                'loading="lazy" style="max-width:100%;height:auto"></a>'
+                                f'<figcaption>原视频截图 {time}，点击查看原图；导播摘要与转写交叉核对。</figcaption></figure>')
         questions = "".join(f"<li>{escape(text)}</li>" for text in row["review_questions"])
         reasons = "".join(f"<p>{escape(reason['text'])}</p>" for reason in row["success_reasons"])
         search = escape(f"{row['date']} {row['name']} {row['bvid']} {row['seat']}号")
         phase = "第一天" if row.get("first_day_claim") is True else "第二天／延期竞选" if row.get("claim_day") == 2 else "见首日发言与前后推断"
-        cards.append(f'<article data-pending="{int(row["needs_review"])}" data-search="{search}">'
+        if row.get('claim_day')=='later' and type(row.get('actual_claim_day')) is int:
+            phase=f"第{row['actual_claim_day']}天（后续起跳）"
+        user_pending=row.get('requires_user_review',row['needs_review'])
+        assistant_pending=row.get('assistant_pending',False)
+        feedback=feedback_fields(row) if not assistant_pending else '<p>此项留待助手继续，不需要你填写。</p>'
+        cards.append(f'<article data-pending="{int(user_pending)}" data-assistant-pending="{int(assistant_pending)}" data-search="{search}">'
                      f'<h2>{escape(row["date"])} 第{row["game_number"]}局 · {row["seat"]}号 {escape(row["name"])} · {label}</h2>'
                      f'<p>底牌：{escape(row["physical_role"])}；自称：{escape(row["claimed_role"] or "待定")}；起跳阶段：{phase}</p>'
                      f'<p>{escape(row.get("decision_note") or "")}</p><ul class="questions">{questions}</ul>{reasons}{"".join(evidence)}'
-                     f'<p class="key">反馈编号：{row["review_id"]}</p>{feedback_fields(row)}</article>')
-    notes = "".join(f"<li>{escape(note)}</li>" for note in METHODOLOGY)
+                     f'<p class="key">反馈编号：{row["review_id"]}</p>{feedback}</article>')
+    notes = "".join(f"<li>{escape(note)}</li>" for note in METHODOLOGY + (S23_VIDEO_METHODOLOGY if season == 'S23' else []))
     summary_text = (f"已检查{summary['games_assessed']}/{summary['games_total']}局；暂识别{summary['decisions'].get('yes',0)}次悍跳；"
                     f"成功{summary['successful_bluffs']}次；{summary['pending']}项待复核；已应用{summary.get('user_confirmed_records',0)}条用户确认。用户复核与助手推断逐条标明。")
+    if season=='S23':
+        summary_text=(f"本轮已完成视频与转写复核{summary['games_assessed']}/{summary['games_total']}局；"
+                      f"本轮已核实{summary.get('audited_identified_bluffs',0)}次悍跳；"
+                      f"{summary['pending']}项需你判断；{summary.get('assistant_pending',0)}个狼位待助手继续。"
+                      + ("全部对局已完成复核，截图与原文时间戳逐项保留。" if summary['games_assessed']==summary['games_total']
+                         else "未完成场次的既有推断保留标记，不混入需要你亲自判断的清单。"))
     template = (ROOT / "scripts/templates/bluff_review_form.html").read_text(encoding="utf8")
+    template = template.replace("S22 悍跳", f"{season} 悍跳")
+    if season == 'S23':
+        template = template.replace('悍跳推断与填写复核','悍跳推断与复核')
+        template=template.replace('<button type="button" id="pending">只看待复核</button>',
+                                  '<button type="button" id="pending">只需你判断</button><button type="button" id="assistant-pending">待助手继续</button>')
+        script="""let mode='pending';
+const filter=()=>{const q=document.querySelector('#search').value.trim().toLowerCase();document.querySelectorAll('article').forEach(el=>{const match=mode==='all'||(mode==='pending'?el.dataset.pending==='1':el.dataset.assistantPending==='1');el.hidden=!match||!el.dataset.search.toLowerCase().includes(q);});};
+document.querySelector('#pending').onclick=()=>{mode='pending';filter();};
+document.querySelector('#assistant-pending').onclick=()=>{mode='assistant';filter();};
+document.querySelector('#all').onclick=()=>{mode='all';filter();};
+document.querySelector('#search').oninput=filter;filter();"""
+        template=re.sub(r"let pending=.*?document\.querySelector\('#search'\)\.oninput=filter;filter\(\);",lambda _:script,template,flags=re.S)
     runtime = (ROOT / "website/web/src/lib/bluff-feedback-runtime.js").read_text(encoding="utf8")
-    options = json.dumps({"season": "S22", "inference_version": inference_version}, ensure_ascii=False)
+    options = json.dumps({"season": season, "inference_version": inference_version}, ensure_ascii=False)
     for key, value in [("__SUMMARY__", summary_text), ("__NOTES__", notes), ("__CARDS__", "".join(cards)),
                        ("__RUNTIME__", runtime), ("__OPTIONS__", options)]:
         template = template.replace(key, value)

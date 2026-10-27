@@ -1,0 +1,367 @@
+{
+  "bvid": "BV1gpaT6WEMb",
+  "reviewer": "ai",
+  "source_sha256": "5d9d29c681a137e30d3230f93496205d5e6346a42ad56299cbdcf5094c542a6a",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "已对照身份牌/黄色自称、全局复盘和投票原文。1号阵营平民，2号女巫，5号通灵师，6号守卫，7号机械狼学习12号猎人后被放逐并枪杀5号；10号狼被女巫毒杀，4号狼第二天出局，12号猎人夜间被刀后带走最后一狼11号，好人获胜。第2天复投前的首轮只由PK播报确认平票座位4/6，未找到逐人唱票原文，故单独保留为缺票首轮。",
+  "decisions": [
+    {
+      "field": "seats[].name",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        "辣味蛋黄派",
+        "Qqqquan圈",
+        "北影掌门-李斯",
+        "荣耀Forry",
+        "耿许儿",
+        "Ksssssss陈彬",
+        "JY戴士",
+        "牛肉干干丶",
+        "小苍cany",
+        "陈明峻-",
+        "小鲸鱼Whale-",
+        "陈俊洁C"
+      ],
+      "reasoning": "按截图左右座位逐一读取可见昵称，并与本局 roster 对应为规范姓名。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gpaT6WEMb/BV1gpaT6WEMb_05893.680.png",
+          "frame_time_ms": 5893680,
+          "quote": "01 蛋黄派；02 圈圈；03 李斯；04 荣耀；05 耿许儿；06 KS；07 JY；08 牛肉干；09 小苍；10 陈明峻；11 鲸鱼；12 陈俊洁",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats[].role",
+      "before": [
+        "平民",
+        "女巫",
+        "平民",
+        "狼人",
+        "通灵师",
+        "守卫",
+        "机械狼",
+        "平民",
+        "平民",
+        "狼人",
+        "狼人",
+        "猎人"
+      ],
+      "after": [
+        "平民",
+        "女巫",
+        "平民",
+        "狼人",
+        "通灵师",
+        "守卫",
+        "机械狼",
+        "平民",
+        "平民",
+        "狼人",
+        "狼人",
+        "猎人"
+      ],
+      "reasoning": "复盘为角色在前、座位号在后的名单，逐项对照角色牌及终局开枪结算；机械狼原身份与学习猎人分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6285780,
+          "end_ms": 6286600,
+          "quote": "神之鹰通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6286600,
+          "end_ms": 6287280,
+          "quote": "5号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6287280,
+          "end_ms": 6287960,
+          "quote": "2号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6287960,
+          "end_ms": 6291690,
+          "quote": "12号守卫6号狼人阵营"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6291690,
+          "end_ms": 6292970,
+          "quote": "4号十号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6292970,
+          "end_ms": 6294410,
+          "quote": "11号机械狼7号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6294410,
+          "end_ms": 6296210,
+          "quote": "本游戏为机械猎人平民阵营"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6296210,
+          "end_ms": 6299150,
+          "quote": "一号3号八号九号首夜守卫"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].night / rounds[1].day",
+      "before": "N2 actions unknown; day event marked peaceful",
+      "after": "守卫空过；狼队击杀2号女巫且单死，女巫无法自救/毒药已用；警徽2传8。",
+      "reasoning": "复盘直接给出首夜毒杀10、次夜狼刀2和女巫单死；第二天警徽转交8。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6328230,
+          "end_ms": 6331559,
+          "quote": "荣夜首位技能空过狼队击杀2号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6331559,
+          "end_ms": 6333799,
+          "quote": "女巫技能空过2号女巫单死"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6333799,
+          "end_ms": 6336679,
+          "quote": "并在出局后将警徽移交至8号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day",
+      "before": "夜死、猎人技能及当天结束状态未知",
+      "after": "12号猎人被狼刀后开枪带走11号最后一狼，游戏结束，好人胜。",
+      "reasoning": "复盘明确N3刀12，12出局开枪带走11，终局好人胜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6343110,
+          "end_ms": 6348960,
+          "quote": "狼队击杀12号猎人\n12号猎人出局后开枪带走场上最后一狼\n11号游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6348960,
+          "end_ms": 6350879,
+          "quote": "狼队这呃好人阵营获胜"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6305309,
+          "end_ms": 6306949,
+          "quote": "10号狼人单死"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6306949,
+          "end_ms": 6309909,
+          "quote": "夜间机械狼模仿12号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6309909,
+          "end_ms": 6311229,
+          "quote": "本局游戏为机械猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6311229,
+          "end_ms": 6313470,
+          "quote": "通灵师查验了7号玩7号玩家"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6313470,
+          "end_ms": 6315000,
+          "quote": "机械狼为猎人身份"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[D2]",
+      "before": "只记录一轮首轮投票，缺平票PK分轮",
+      "after": "首轮平票占位与PK复投分开保存；复投票1/3/6/8/9/12投4，4/11投6，4出局。",
+      "reasoning": "完整阅读PK前发言和唱票段，末轮明确叫4/6 PK，逐票播报后4号六票出局；首轮逐人票型未见，维持部分未知。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6064940,
+          "end_ms": 6068110,
+          "quote": "4号六号四号六号pk"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6071910,
+          "end_ms": 6086950,
+          "quote": "321请出票\n一号投给4号\n3号投给4号\n4号投给6号\n6号投给4号\n8号投给4号\n9号投给4号\n11号\n投给6号\n12号投给4号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6089700,
+          "end_ms": 6091400,
+          "quote": "4号玩家六票出局"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "平民",
+        "女巫",
+        "平民",
+        "狼人",
+        "通灵师",
+        "守卫",
+        "机械狼",
+        "平民",
+        "平民",
+        "狼人",
+        "狼人",
+        "猎人"
+      ],
+      "reasoning": "按复盘跨cue顺序角色在前、号码在后解析；黄字自称/推测不覆盖底牌，7号机械狼的学习形态另存。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6285780,
+          "end_ms": 6286600,
+          "quote": "神之鹰通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6286600,
+          "end_ms": 6287280,
+          "quote": "5号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6287280,
+          "end_ms": 6287960,
+          "quote": "2号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6287960,
+          "end_ms": 6291690,
+          "quote": "12号守卫6号狼人阵营"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6291690,
+          "end_ms": 6292970,
+          "quote": "4号十号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6292970,
+          "end_ms": 6294410,
+          "quote": "11号机械狼7号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6294410,
+          "end_ms": 6296210,
+          "quote": "本游戏为机械猎人平民阵营"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6296210,
+          "end_ms": 6299150,
+          "quote": "一号3号八号九号首夜守卫"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "截图黄字保留10号验人和警徽流自称，绿底底牌标其为狼人；实际5号通灵师当选警长，故10未取得警徽。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gpaT6WEMb/BV1gpaT6WEMb_05893.680.png",
+          "frame_time_ms": 5893680,
+          "quote": "10 验1金水；警徽流3-12；绿底身份狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6316280,
+          "end_ms": 6318080,
+          "quote": "5号通灵师获得警徽"
+        }
+      ]
+    }
+  ],
+  "human_questions": [
+    {
+      "id": "d2_initial_exile_votes",
+      "field": "voting.ballots[D2 initial]",
+      "question": "第2天PK前的一轮逐人票型是否能从原始视频补回？当前转写未记录该轮唱票，但明确PK候选为4号和6号。",
+      "options": [
+        "仅保留首轮平票座位与未知逐人票",
+        "补录原始视频中的首轮票型"
+      ],
+      "reason": "PK复投原文完整；首轮平票确认来自PK口播，未发现初轮唱票片段，无法唯一重建逐人投向。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6064940,
+          "end_ms": 6068110,
+          "quote": "4号六号四号六号pk"
+        }
+      ]
+    }
+  ],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-26T00:00:00Z"
+}

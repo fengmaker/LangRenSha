@@ -5,18 +5,255 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "756aae21ff7367a75bb4e639b0febaa4b321a48a4e4f194cb0908fbcc2419a45",
+  "facts_sha256": "024808fb830c314289b719e771f7b45c8844b8e682ad712f67e63b14c1d495bd",
+  "causal_decisions": [],
   "question_count": 0,
-  "pending_count": 2,
-  "questions": [
+  "pending_count": 0,
+  "questions": [],
+  "days": [
     {
-      "id": "vote-BV13tEB6VE1J-ballot-1-eligibility_unknown",
-      "code": "eligibility_unknown",
+      "day": 1,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "6号狼人自爆，未进行放逐投票。"
+    },
+    {
+      "day": 2,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "7号狼人自爆，未进行放逐投票。"
+    },
+    {
       "day": 3,
+      "question_count": 0,
+      "pending_count": 0,
+      "question_ids": [],
+      "exile_note": "2号被放逐。"
+    }
+  ],
+  "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [
+    {
+      "day": 1,
+      "status": "deferred",
+      "actor": 6,
+      "reason": "首日白天狼人自爆，中断未完成的警长竞选；仅延至第二天继续。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第01局_预女猎白混__BV13tEB6VE1J_P01_CID39045497919.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3012440,
+          "end_ms": 3024599,
+          "quote": "形成平安夜预言家验证了3号玩家\n平民为好人身份\n警上竞选环节\n6号狼人选择自爆\n入夜狼队击杀11号预言家牛毒杀4号狼人\n4号11号双死"
+        },
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第01局_预女猎白混__BV13tEB6VE1J_P01_CID39045497919.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3023219,
+          "end_ms": 3039430,
+          "quote": "4号11号双死\n预言家验证2号玩家为狼人身份\n延期竞选环节\n7号狼人选择自爆本就绪\n警徽流失入夜狼人击杀10号平民\n10号平民单死在第三天白天场上\n最后一狼2号被公投出局\n游戏结束"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "status": "badge_lost",
+      "actor": 7,
+      "reason": "延期竞选当天再次狼人自爆，警徽流失，不再顺延。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第01局_预女猎白混__BV13tEB6VE1J_P01_CID39045497919.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3023219,
+          "end_ms": 3039430,
+          "quote": "4号11号双死\n预言家验证2号玩家为狼人身份\n延期竞选环节\n7号狼人选择自爆本就绪\n警徽流失入夜狼人击杀10号平民\n10号平民单死在第三天白天场上\n最后一狼2号被公投出局\n游戏结束"
+        }
+      ]
+    }
+  ],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [
+          4,
+          11
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          10,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          8,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          10
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          5,
+          8,
+          9,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          3,
+          5,
+          8,
+          9,
+          12
+        ]
+      }
+    ],
+    "terminal": {
+      "round": 3,
+      "phase": "day",
+      "after_day": 3,
+      "winner": "good",
+      "eliminated_side": "werewolf"
+    },
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
       "target": "ballot-1",
-      "title": "本轮票权与缺票范围待核",
-      "reason": "已提取7条票，但完整票权名单未知，暂不宣称票型完整。",
-      "severity": "pending",
+      "day": 3,
+      "living": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        9,
+        12
+      ],
+      "living_count": 7,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        9,
+        12
+      ],
+      "vote_count": 7,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "self_destruct",
+      "exile_note": "6号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "7号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "exiled",
+      "exile_note": "2号被放逐。",
       "evidence": [
         {
           "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第01局_预女猎白混__BV13tEB6VE1J_P01_CID39045497919.平台AI字幕_ai-zh_01.原始.json",
@@ -37,54 +274,8 @@
           "quote": "10号平民单死在第三天白天场上\n最后一狼2号被公投出局\n游戏结束"
         }
       ]
-    },
-    {
-      "id": "vote-BV13tEB6VE1J-day-2-exile_unrecorded",
-      "code": "exile_unrecorded",
-      "day": 2,
-      "target": null,
-      "title": "本日放逐投票或结束原因待核",
-      "reason": "目前没有可用的本日放逐票；需要确认是否有漏票、交牌、提前结束或日序误分。",
-      "severity": "pending",
-      "evidence": [
-        {
-          "path": "data/seasons/S22/第03周_正赛第02期/2026-06-11/2026-06-11_S22_第03周_正赛第02期_第01局_预女猎白混__BV13tEB6VE1J_P01_CID39045497919.平台AI字幕_ai-zh_01.原始.json",
-          "start_ms": 2923700,
-          "end_ms": 2947970,
-          "quote": "本局游戏仅会流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n一号投给2号\n2号投给9号\n3号投给2号\n5号投给2号\n8号投给2号\n9号投给5号\n12号投给2号\n投票结束\n2号玩家五票出局\n游戏结束\n好人阵营获胜",
-          "note": "本日开局定位，非缺失投票的直接证据"
-        }
-      ]
     }
   ],
-  "days": [
-    {
-      "day": 1,
-      "question_count": 0,
-      "pending_count": 0,
-      "question_ids": [],
-      "exile_note": null
-    },
-    {
-      "day": 2,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV13tEB6VE1J-day-2-exile_unrecorded"
-      ],
-      "exile_note": null
-    },
-    {
-      "day": 3,
-      "question_count": 0,
-      "pending_count": 1,
-      "question_ids": [
-        "vote-BV13tEB6VE1J-ballot-1-eligibility_unknown"
-      ],
-      "exile_note": null
-    }
-  ],
-  "video_checks": [],
   "accepted_changes": [
     {
       "id": "BV13tEB6VE1J-ballot-1-day-recap-review",
@@ -116,6 +307,6 @@
       ]
     }
   ],
-  "voting_sha256": "406a1cc72496a4fe079e675b41f4f391ab6f27417c8e55b886100bc9bda26ccf",
+  "voting_sha256": "6397a274cd7c3518d46cefa9a91a27d7e6fe00b66f0ccad319275d5eede61c96",
   "source_sha256": "cebcb2abe07bad33e6ded1607b33a68c5330889b226070a05c7b9e4ff08ebcf5"
 }

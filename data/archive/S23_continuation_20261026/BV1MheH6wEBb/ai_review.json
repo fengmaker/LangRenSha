@@ -1,0 +1,256 @@
+{
+  "bvid": "BV1MheH6wEBb",
+  "reviewer": "ai",
+  "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引27正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "郭小炜",
+        "2": "二妖",
+        "3": "李斯",
+        "4": "周二珂",
+        "5": "耿许儿",
+        "6": "KS",
+        "7": "JY",
+        "8": "荣耀",
+        "9": "鲸鱼",
+        "10": "果冻",
+        "11": "焦阳",
+        "12": "BOBBY"
+      },
+      "reasoning": "姓名按截图侧边姓名标牌逐座读取。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1MheH6wEBb/BV1MheH6wEBb_03794.680.png",
+          "frame_time_ms": 3794680,
+          "quote": "画面角色侧栏：1平民、2预言家、3平民、4白神、5狼人、6舞者、7狼人、8平民、9假面、10狼人、11女巫、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "平民",
+        "2": "预言家",
+        "3": "平民",
+        "4": "白痴",
+        "5": "狼人",
+        "6": "舞者",
+        "7": "狼人",
+        "8": "平民",
+        "9": "假面",
+        "10": "狼人",
+        "11": "女巫",
+        "12": "平民"
+      },
+      "after": {
+        "1": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "2": {
+          "role": "预言家",
+          "faction": "good"
+        },
+        "3": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "4": {
+          "role": "白神",
+          "faction": "good"
+        },
+        "5": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "6": {
+          "role": "舞者",
+          "faction": "good"
+        },
+        "7": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "8": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "9": {
+          "role": "假面",
+          "faction": "good"
+        },
+        "10": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "11": {
+          "role": "女巫",
+          "faction": "good"
+        },
+        "12": {
+          "role": "平民",
+          "faction": "good"
+        }
+      },
+      "reasoning": "#23 画面身份侧栏标“未知”，该局依连续结算角色串按 role-term→following-seat 顺序核对；其他局按截图实际身份标签。混血儿学习目标与阵营分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1MheH6wEBb/BV1MheH6wEBb_03794.680.png",
+          "frame_time_ms": 3794680,
+          "quote": "画面角色侧栏：1平民、2预言家、3平民、4白神、5狼人、6舞者、7狼人、8平民、9假面、10狼人、11女巫、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": "good",
+      "after": "good",
+      "reasoning": "复盘收尾给出阵营胜负。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3967500,
+          "end_ms": 3969149,
+          "quote": "好人正义获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting_review",
+      "before": "baseline.voting.json",
+      "after": "voting.reviewed.json",
+      "reasoning": "逐轮核对出票提示及后续投票字幕。补入复盘明确的#23警徽票结果、#24 PK 获徽者；#25有声字幕完整覆盖在场投票者，标为complete。其余partial/null保留。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1219200,
+          "end_ms": 1222490,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1222490,
+          "end_ms": 1224550,
+          "quote": "4号投票给2号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1232040,
+          "end_ms": 1233980,
+          "quote": "10号投票给5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1571249,
+          "end_ms": 1572929,
+          "quote": "一号投给5号"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        4
+      ],
+      "roles": [
+        "白神"
+      ],
+      "reasoning": "原baseline写白痴；截图竖排身份字样为白神。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1MheH6wEBb/BV1MheH6wEBb_03794.680.png",
+          "frame_time_ms": 3794680,
+          "quote": "画面角色侧栏：1平民、2预言家、3平民、4白神、5狼人、6舞者、7狼人、8平民、9假面、10狼人、11女巫、12平民。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 5,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "5号物理底牌为狼人；本人话轮内报告“我验的一号玩家是金水”，并给警徽流，构成预言家自称。首日警徽流失，且该日由7号自爆中断、没有首日放逐好人，故未成功。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 534840,
+          "end_ms": 536880,
+          "quote": "5号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 538460,
+          "end_ms": 550799,
+          "quote": "喂我警徽流验一个10号玩家然后验个9号玩家吧我验的一号玩家是金水我的验人呢就是从上一局的狼队里面去选验的啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1594860,
+          "end_ms": 1596400,
+          "quote": "本局游戏警徽流失"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:15:29Z",
+  "resolved_followups": [
+    {
+      "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+      "item": "补核5号543220/596480“我验的一号玩家是金水”的公开自称及悍跳结果。",
+      "resolved": "已核5号在本人首日话轮内公开报验人并给警徽流；首日无警徽且因自爆中断、没有放逐好人，悍跳未成功。",
+      "remaining_items": [],
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 534840,
+          "end_ms": 536880,
+          "quote": "5号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 538460,
+          "end_ms": 550799,
+          "quote": "喂我警徽流验一个10号玩家然后验个9号玩家吧我验的一号玩家是金水我的验人呢就是从上一局的狼队里面去选验的啊"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1594860,
+          "end_ms": 1596400,
+          "quote": "本局游戏警徽流失"
+        }
+      ]
+    }
+  ]
+}

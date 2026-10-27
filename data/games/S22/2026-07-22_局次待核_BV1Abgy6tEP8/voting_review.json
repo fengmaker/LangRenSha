@@ -5,7 +5,8 @@
   "checked_by": "Codex",
   "method": "已做逐轮结构、来源及转写证据检查；逐项更正和原视频核对另列",
   "human_reviewed": false,
-  "facts_sha256": "f5bada0edd3d11a1e8722b868dc8adcb8697fd425f7a271592b329445abc1421",
+  "facts_sha256": "d17c6010efd8d22782c2ecfbf61a6a051ee915ebee0472cddba1129ce3683c57",
+  "causal_decisions": [],
   "question_count": 0,
   "pending_count": 0,
   "questions": [],
@@ -15,25 +16,229 @@
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "9号被放逐。"
     },
     {
       "day": 2,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "4号狼人自爆，未进行放逐投票。"
     },
     {
       "day": 3,
       "question_count": 0,
       "pending_count": 0,
       "question_ids": [],
-      "exile_note": null
+      "exile_note": "10号狼人自爆，未进行放逐投票。"
     }
   ],
   "video_checks": [],
+  "rule_applications": [],
+  "election_flow": [],
+  "game_flow": {
+    "days": [
+      1,
+      2,
+      3
+    ],
+    "rounds": [
+      {
+        "day": 1,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 2,
+        "night_deaths": [],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "day": 3,
+        "night_deaths": [
+          5
+        ],
+        "night_basis": "recorded",
+        "living_before_vote": [
+          1,
+          2,
+          3,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "roster_gaps": [],
+        "living_after_day": [
+          1,
+          2,
+          3,
+          6,
+          7,
+          8,
+          11,
+          12
+        ]
+      }
+    ],
+    "terminal": null,
+    "deductions": [],
+    "issues": [],
+    "display_phases": [
+      {
+        "round": 1,
+        "phase": "night",
+        "label": "开局夜晚"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "label": "第1天白天"
+      },
+      {
+        "round": 2,
+        "phase": "night",
+        "label": "第1天夜晚"
+      },
+      {
+        "round": 2,
+        "phase": "day",
+        "label": "第2天白天"
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "label": "第2天夜晚"
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "label": "第3天白天"
+      }
+    ]
+  },
+  "eligibility_derivations": [
+    {
+      "target": "ballot-2",
+      "day": 1,
+      "living": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_count": 12,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vote_count": 12,
+      "basis": "night_deaths_and_previous_day_departures"
+    }
+  ],
+  "day_crosscheck_changes": [],
+  "day_outcomes": [
+    {
+      "day": 1,
+      "outcome": "exiled",
+      "exile_note": "9号被放逐。",
+      "evidence": [
+        {
+          "path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_局次待核_机械狼通灵师__BV1Abgy6tEP8_P01_CID40203125736.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3602630,
+          "end_ms": 3673559,
+          "quote": "然后关于11号玩家\n你我其实因为我拿通灵师\n我其实看你是大身份\n但是呢我又不能说你是身份牌\n我又不想给狼人指刀\n所以我只能说你不是特别特别好\n但是我也说了呀\n我说11号你呃你也有可能是上一把投错\n然后想在警下证明自己的好人\n我也没说你一定是狼\n是不是\n那我们就投9号好吧\n40顺验过了\n4号玩家发言结束\n各位玩家请戴盔做好投票准备\n警长请归票\n警长归票9号\n各位玩家请做好投票准备\n321请出票\n一号投给12号\n2号投给9号\n3号投给9号\n4号\n投给12号\n5号投给9号\n6号\n投给9号\n7号\n投给9号\n8号投给12号\n9号投给12号\n10号投给12号\n11号投给12号\n12号投给9号\n投票结束\n9号玩家6.5票出局\n请发表言\n哎呀你这李斯我跟你真好好说话没有用\n我知道怎么能让你回头\n我把下水道井盖子打开\n给你挖两坨\n呼到你的脸上"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "outcome": "self_destruct",
+      "exile_note": "4号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    },
+    {
+      "day": 3,
+      "outcome": "self_destruct",
+      "exile_note": "10号狼人自爆，未进行放逐投票。",
+      "evidence": []
+    }
+  ],
   "accepted_changes": [],
-  "voting_sha256": "1a6e5db350406fd4997160ba1cc72c2974712add723bed8eab8ee8f9fb39cab0",
+  "voting_sha256": "591623c34fcc16b4bd871268c5038de719942829c54e47dc2e7aac95f504f4b2",
   "source_sha256": "ea9289e2e3f11071890d584b8339ff3e44494050d683bd16c8f48c206a00d287"
 }
