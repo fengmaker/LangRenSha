@@ -1,0 +1,75 @@
+{
+  "bvid": "BV1V8af6zEtX",
+  "source_sha256": "352aac5c71312ec36bca5d7393491126dea833ab5ddcbe8c2cdf63ef645d64b2",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3834350,
+    "end_ms": 3884029,
+    "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+  },
+  "checks": [
+    {
+      "field": "complete_daily_recap",
+      "status": "confirmed",
+      "conclusion": "N1魔术师/诡术师技能结算，狼杀女巫4、女巫毒诡术师2，2/4双死；验10狼。D1狼11获警徽，定序王子翻牌后第二轮放逐魔术师3。之后狼队拍刀命中1/8/7并屠神胜，无后续轮次。",
+      "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第02局_诡术之境__BV1V8af6zEtX_P01_CID42346284643.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "352aac5c71312ec36bca5d7393491126dea833ab5ddcbe8c2cdf63ef645d64b2",
+          "start_ms": 3834350,
+          "end_ms": 3884029,
+          "quote": "第二局游戏鬼畜之境结束了\n给各位弹幕老师们复一下盘\n本局游戏预言家\n8号女巫\n4号定序王子\n一号魔术师\n3号鬼术师\n2号狼人\n9号十号11号平民\n5号六号七号12号\n首页\n鬼术师更换了6号平民和10号狼人同伴的放逐\n结果\n魔术师通过狼人击杀4号女巫\n女巫毒杀2号诡术师\n确实读的是诡术师啊\n二四双死\n当夜预言家验证10号玩家为狼人身份上警环节\n11号悍跳狼人获得警徽\n第一天白天\n7号平民高票定序\n王子翻牌之后\n3号魔术师被抗推出局\n然后狼人阵营决定拍刀\n狼人可拍三刀\n给出的刀路是一号定序\n王子8号预言家和7号平民拍刀成功\n游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "targets": [
+          2,
+          4
+        ],
+        "result": "N1狼杀女巫4、女巫毒诡术师2，2/4双死。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "coverage-1-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N1女巫4号被狼刀，女巫毒诡术师2号，2/4双死。",
+      "reasoning": "最终复盘明确两项夜间击杀并直接宣布二四双死；候选原夜死槽空缺，应补齐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第02局_诡术之境__BV1V8af6zEtX_P01_CID42346284643.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "352aac5c71312ec36bca5d7393491126dea833ab5ddcbe8c2cdf63ef645d64b2",
+          "start_ms": 3852170,
+          "end_ms": 3854780,
+          "quote": "魔术师通过狼人击杀4号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第02局_诡术之境__BV1V8af6zEtX_P01_CID42346284643.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "352aac5c71312ec36bca5d7393491126dea833ab5ddcbe8c2cdf63ef645d64b2",
+          "start_ms": 3854780,
+          "end_ms": 3856780,
+          "quote": "女巫毒杀2号诡术师"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第02局_诡术之境__BV1V8af6zEtX_P01_CID42346284643.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "352aac5c71312ec36bca5d7393491126dea833ab5ddcbe8c2cdf63ef645d64b2",
+          "start_ms": 3858480,
+          "end_ms": 3859520,
+          "quote": "二四双死"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

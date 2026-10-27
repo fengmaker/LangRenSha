@@ -1,0 +1,123 @@
+{
+  "report": "S23 日夜标注独立检查",
+  "date": "2026-10-26",
+  "scope": [
+    "scripts/s23_phase_review.py",
+    "scripts/build_s23_review.py",
+    "scripts/templates/s23_review.js",
+    "scripts/check_s23_phase_review.py",
+    "tests/test_s23_phase_review.py",
+    "current generated HTML and embedded candidates"
+  ],
+  "candidate_snapshot_id": "ff29bfe21c40c10bbbf2fcd768707acfdf28f6c2f9194151393fadc20bfda470",
+  "candidate_games": 75,
+  "findings": [
+    {
+      "severity": "high",
+      "confidence": "high",
+      "title": "No-ballot and incomplete-ballot days are reported as determinate effective faction vote counts",
+      "reproduction": {
+        "bvid": "BV1tneS6kEnQ",
+        "date": "2026-09-18",
+        "rounds": [
+          1,
+          2
+        ],
+        "candidate_fields": {
+          "voting.days[day=1].exile": "interrupted_self_destruct",
+          "voting.days[day=2].exile": "interrupted_self_destruct",
+          "voting.ballots[day=1,kind=exile]": "absent",
+          "voting.ballots[day=2,kind=exile]": "absent",
+          "dossier.rounds[1].day[slot=exile_result].action": "unknown",
+          "dossier.rounds[2].day[slot=exile_result].action": "unknown",
+          "vote_control.phases[round=1]": {
+            "werewolf_votes": 5,
+            "good_votes": 7,
+            "controls_vote": false
+          },
+          "vote_control.phases[round=2]": {
+            "werewolf_votes": 2,
+            "good_votes": 7,
+            "controls_vote": false
+          }
+        },
+        "phase_findings": "No vote_control finding is emitted for either day."
+      },
+      "code": [
+        {
+          "file": "scripts/s23_phase_review.py",
+          "lines": "37-52",
+          "detail": "vote_totals derives values from counts of living faction seats and adds the badge half-vote; it does not consume recorded ballot votes or abstentions."
+        },
+        {
+          "file": "scripts/s23_phase_review.py",
+          "lines": "237-263",
+          "detail": "The day loop calls vote_totals even when no initial exile ballot exists. It only adds a finding when controls_vote is null, so no-ballot days get a determinate result."
+        },
+        {
+          "file": "scripts/templates/s23_review.js",
+          "lines": "55-61",
+          "detail": "The UI labels these roster counts as votes and states whether the bind-vote condition is met."
+        }
+      ],
+      "recommendation": "For actual effective exile-vote counts, tally complete recorded initial ballot votes by each voter's victory faction, exclude abstentions, and add the sheriff half-vote only when the badge-holder cast a valid vote. If a ballot is absent or partial, leave actual counts and controls_vote unresolved (or clearly label a separate hypothetical living-voting-power calculation). A self-destruct-interrupted day with no ballot must not be presented as an actual vote tally."
+    }
+  ],
+  "verified": [
+    {
+      "check": "First-game correction and user-confirmed wolf-mixed arithmetic",
+      "bvid": "BV1KfYE6HEDv",
+      "result": "pass",
+      "details": "Generated candidate has first-day night_deaths die targets [2,5], hunter_state cannot_shoot for seat 5, and day-one vote_control 5.5 to 5 with controls_vote=true."
+    },
+    {
+      "check": "Per-person ballot table columns",
+      "result": "pass",
+      "details": "Current browser check sees 投票者 and 投向 only; no 票重 or 依据 column."
+    },
+    {
+      "check": "Phase anchors and active critical unknown coverage",
+      "result": "pass with boundary",
+      "details": "A Playwright injection places an unresolved first-night finding under the 开局夜晚 anchor. Across the current 75-game embedded candidate, active unknown critical events were phase-anchored; the four unanchored unknowns observed were in post-terminal placeholder phases. This is a candidate-data cross-check, not an exhaustive source-video review of every inferred unavailable state."
+    },
+    {
+      "check": "No later daytime rendered for terminal-night cases in current candidate",
+      "result": "pass",
+      "details": "The current snapshot contains no phase finding after a terminal night; the renderer only adds a day section when there is a displayed day phase or a day finding. No fabricated later daytime was observed."
+    },
+    {
+      "check": "Existing unit assertions",
+      "command": ".venv\\Scripts\\python.exe -m unittest discover -s tests -p test_s23_phase_review.py",
+      "result": "pass",
+      "details": "6 tests passed. Existing tests exercise vote_totals on constructed living rosters, but not absent/partial ballots or abstentions."
+    },
+    {
+      "check": "Existing browser verification",
+      "command": ".venv\\Scripts\\python.exe scripts/check_s23_phase_review.py",
+      "result": "pass",
+      "details": "Playwright returned passed=true with no failures."
+    }
+  ],
+  "coverage_boundaries": [
+    "Read-only audit of the current scripts, embedded candidate snapshot, and existing test/browser checks; no season-wide video rewatch was performed.",
+    "The user-confirmed rule text says effective exile-vote counts; current ballots inspected in mixed-blood games were complete when present, but several days had no ballot. The defect is that those absent-ballot days still receive roster-derived determinate vote totals.",
+    "No shared script, candidate, or configuration file was edited."
+  ],
+  "primary_resolution": {
+    "status": "resolved",
+    "resolved_at_utc": "2026-10-26T07:37:44.717747+00:00",
+    "snapshot_id": "40e2319838bb8325e6c89a6145c6b33d57694b0d0d3954be762f2b639960f85f",
+    "decision": "用户所述绑票比较可用票权，采用存活人数加警长半票的理论票力；不以玩家当轮弃票降低其阵营可用票权。该数值与实际投票分开显示，自爆中断日明确标注没有举行放逐票。",
+    "changes": [
+      "calculation_kind=potential_vote_power",
+      "actual_ballot_exists/exile_status displayed",
+      "missing whole exile ballots are phase-anchored pending findings",
+      "an exiled sheriff transferring or destroying the badge does not change the preceding vote"
+    ],
+    "validation": [
+      "S23_日夜页面场景验收.json",
+      "S23_逐局复核页面验收.json",
+      "tests/test_s23_phase_review.py (9 passed)"
+    ]
+  }
+}

@@ -1,0 +1,534 @@
+{
+  "bvid": "BV1i6J163Eqb",
+  "reviewer": "ai",
+  "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "底牌：1机械狼（学习6号的机械双刀狼形态）、2猎人、3/6/9狼人、4/8/11/12平民、5通灵师、7守卫、10女巫。N1守卫守10、狼队刀4、女巫救4，N1平安；5查4为平民，1学6机械双刀狼。D1 3号狼人警长竞选中自爆，竞选延期。N2守卫7自守、狼刀10、女巫毒1，1/10双死；5查6为狼人。D2延期竞选时9号狼人再次自爆，警徽流失。N3守卫7守5挡狼刀，5查8平民；D3最后一狼6号交牌，好人春天获胜。3号狼人发言称自己跳通灵师后自爆，未获徽且首日无放逐票，悍跳失败。",
+  "decisions": [
+    {
+      "field": "seats[1..12]",
+      "before": "baseline role candidates",
+      "after": "确认截图所示完整底牌；1号机械狼学习6号狼人获得机械双刀狼形态",
+      "reasoning": "逐座角色牌由截图直接确认；尾声复盘再次列出机械狼1、猎人2、通灵师5、守卫7、女巫10及各阵营。1号底牌仍是机械狼，6号底牌仍是普通狼人，学习结果单独记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163Eqb/BV1i6J163Eqb_02392.170.png",
+          "frame_time_ms": 2392170,
+          "quote": "1 机械狼；2 猎人；3 狼人；4 平民；5 通灵师；6 狼人；7 守卫；8 平民；9 狼人；10 女巫；11 平民；12 平民",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2512240,
+          "end_ms": 2523580,
+          "quote": "通灵师5号女巫\n10号猎人\n2号守卫7号狼人阵营\n3号六号\n9号机械狼一号\n本局游戏为机械双刀狼\n平民阵营\n4号八号11号\n12号守夜守卫"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0].night",
+      "before": "基线行动未含女巫救药和实际平安夜因果",
+      "after": "守卫7守10；狼刀4；女巫救4；1号机械狼学习6；5号通灵师查4反馈平民；平安夜",
+      "reasoning": "赛后复盘逐句说明守卫守10、狼队击杀4号平民、女巫救起形成平安夜；同段说明机械狼模仿6号成为机械双刀狼、通灵师查4为平民。学习当夜不解锁机械技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2523580,
+          "end_ms": 2536860,
+          "quote": "守护10号女巫狼队击杀4号平民女娲救起\n形成平安夜\n机械狼模仿6号狼人\n本局游戏为机械双刀狼\n通灵师查验了4号玩家为平民身份\n在警上竞选环节"
+        }
+      ]
+    },
+    {
+      "field": "voting.sheriff_days[1..2]",
+      "before": "两次自爆都记录在D1，警徽状态未知",
+      "after": "D1 3号自爆中断未完成竞选并延期；D2延期竞选中9号再次自爆，警徽流失；两天都无警徽票和放逐票",
+      "reasoning": "复盘明确D1警上竞选期间3号自爆，后在延期竞选环节9号自爆并播报警徽流失。第一次自爆仅延期次日；第二次使警徽流失。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2536860,
+          "end_ms": 2553840,
+          "quote": "3号狼人选择自爆\n入夜守卫守护7号自守狼队\n击杀10号女巫女巫毒杀一号机械狼\n一号10号双死通灵师\n当夜查验了6号玩家为狼人身份\n在言期竞选环节\n9号狼人选择自爆\n本局游戏警徽流失"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1597130,
+          "end_ms": 1606150,
+          "quote": "坐\n3号玩家选择自爆\n所以信息平安\n夜天黑请闭眼"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1828420,
+          "end_ms": 1830540,
+          "quote": "9号玩家选择自爆\n本游戏警徽流失"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].night",
+      "before": "女巫用药/验人和双死反馈未核实",
+      "after": "守卫7自守；狼刀10女巫；女巫毒1机械狼；5号通灵师查6号反馈狼人；1/10双死",
+      "reasoning": "尾声复盘明确入夜守卫守7、狼队击杀10号、女巫毒1号机械狼，1/10双死；随后明确通灵师查6号狼人。按底牌和操作对象分别记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2539130,
+          "end_ms": 2549520,
+          "quote": "入夜守卫守护7号自守狼队\n击杀10号女巫女巫毒杀一号机械狼\n一号10号双死通灵师\n当夜查验了6号玩家为狼人身份"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night",
+      "before": "N3结算未核实",
+      "after": "守卫7守5、狼刀5被挡，5查8反馈平民；N3平安夜",
+      "reasoning": "尾声复盘说明守卫守5、狼队击杀5后形成平安夜，通灵师验证8号为平民身份。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2552660,
+          "end_ms": 2563599,
+          "quote": "本局游戏警徽流失\n入夜守卫守护5号通灵师\n狼队击杀5号通灵师\n形成平安夜\n通灵师验证8号玩家为平民身份\n在第三天白天场上最后一狼"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.game_end",
+      "before": "胜方未知",
+      "after": "D3最后一狼6号交牌，好人阵营春天获胜",
+      "reasoning": "复盘明确第三天场上最后一狼6号选择交牌，随后宣布好人阵营春天获胜。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2566299,
+          "end_ms": 2568290,
+          "quote": "好人阵营春天获胜"
+        }
+      ]
+    },
+    {
+      "field": "dossier.rounds[1].day.mechanical_day_skill; rounds[2].day.exile_vote/exile_result",
+      "before": "技能资格和D3放逐结果unknown",
+      "after": "mechanical day skill unavailable; last wolf surrendered and no exile vote",
+      "reasoning": "mechanical wolf learned wolf, was killed N2; last living wolf 6 then surrendered.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2528570,
+          "end_ms": 2530390,
+          "quote": "机械狼模仿6号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2563599,
+          "end_ms": 2566299,
+          "quote": "6号选择交牌游戏结束"
+        }
+      ]
+    },
+    {
+      "field": "evidence_locator.rounds[2].day.game_end",
+      "before": {
+        "start_ms": 2561399,
+        "end_ms": 2568290
+      },
+      "after": {
+        "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+        "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+        "start_ms": 2566299,
+        "end_ms": 2568290,
+        "quote": "好人阵营春天获胜"
+      },
+      "reasoning": "Corrected the broad recap range to the single original cue so source_path, start/end and quote match exactly.",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2566299,
+          "end_ms": 2568290,
+          "quote": "好人阵营春天获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "机械狼",
+        "猎人",
+        "狼人",
+        "平民",
+        "通灵师",
+        "狼人",
+        "守卫",
+        "平民",
+        "狼人",
+        "女巫",
+        "平民",
+        "平民"
+      ],
+      "reasoning": "画面逐座角色牌可读，黄色文字是发言备忘，不替代底牌。1号学习6号的技能形态不改变任何一人的底牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163Eqb/BV1i6J163Eqb_02392.170.png",
+          "frame_time_ms": 2392170,
+          "quote": "1 机械狼；2 猎人；3 狼人；4 平民；5 通灵师；6 狼人；7 守卫；8 平民；9 狼人；10 女巫；11 平民；12 平民",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2512240,
+          "end_ms": 2523580,
+          "quote": "通灵师5号女巫\n10号猎人\n2号守卫7号狼人阵营\n3号六号\n9号机械狼一号\n本局游戏为机械双刀狼\n平民阵营\n4号八号11号\n12号守夜守卫"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 3,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "3号真实底牌为狼人；其在3号玩家发言权内说“我在那跳通灵师”，构成狼跳通灵师尝试。但随后D1警长竞选被其自爆中断、竞选延期，未取得警徽，首日没有放逐好人，按规则失败。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1520050,
+          "end_ms": 1601510,
+          "quote": "过了3号玩家请发言\n上一把那个发言的时候忘了一段\n你知道吗\n本来还有一段那个东西呢啊\n就是说每个人都有自己喜欢和不喜欢的梗\n比如说我啊\n我就不接受大家跟我聊\n那个什么自曝不自曝这个事情啊\n因为从数据上来源再强调一篇\n哥们儿的自爆率也就最多排在第十名左右啊\n你们可以去超话翻一下那个数据对吧\n翻过以后再回来\n然后如果下次诸位在桌子上再跟我聊\n这个\n我就按照我们那个带节奏\n或者那个恶意黑人这一条去举报你们了啊\n最近确实有点最近确实有点穷的好吧\n这个呃该举报谁要举报的\n然后这把呢我感觉跳不了了\n你知道吧\n然后我就跟我的狼队友对话一下\n这把是值得举手了对吧\n哈哈哈哈啊哈哈哈啊\n鉴于我们夜间一个身份都还没定着\n然后那个\n关键是这这也没按照说的来呀\n不是哥们刚刚忘记上警了\n法官提醒我上去的\n我在那跳通灵师\n他们有人信吗\n那对不对\n我没办法给你补位啊\n你这该跳要跳的呀\n我哎呦\n我去哎\n就这样吧好吧\n坐\n3号玩家选择自爆"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163Eqb/BV1i6J163Eqb_02392.170.png",
+          "frame_time_ms": 2392170,
+          "quote": "3号角色牌为狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2536860,
+          "end_ms": 2539130,
+          "quote": "3号狼人选择自爆"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T18:37:28Z",
+  "phase_findings": [
+    {
+      "id": "b82-d2-mechanical-day-skill-ineligible",
+      "round": 2,
+      "phase": "day",
+      "status": "inferred",
+      "field": "rounds[2].day.mechanical_day_skill",
+      "title": "机械狼学习狼人形态，无猎人白天技能",
+      "conclusion": "1号机械狼学习狼人形态；且N2已被毒出局，D2机械猎人技能不可用。",
+      "reasoning": "学习目标、形态和N2毒杀有原文；无Hunter形态，且行动者在D2前已死亡。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2528570,
+          "end_ms": 2530390,
+          "quote": "机械狼模仿6号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2563599,
+          "end_ms": 2566299,
+          "quote": "6号选择交牌游戏结束"
+        }
+      ],
+      "phase_label": "第2天白天",
+      "previous_question": "机械狼学习狼人形态，无猎人白天技能",
+      "daily_audited": true
+    },
+    {
+      "id": "b82-d3-surrender-no-exile",
+      "round": 3,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[3].day.exile_vote; rounds[3].day.exile_result",
+      "title": "最后一狼交牌，D3无放逐",
+      "conclusion": "6号最后一狼交牌结束游戏；D3未进行放逐。",
+      "reasoning": "游戏终局复盘确认交牌后好人获胜，故不得保留未知放逐结果。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2563599,
+          "end_ms": 2566299,
+          "quote": "6号选择交牌游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+          "start_ms": 2566299,
+          "end_ms": 2568290,
+          "quote": "好人阵营春天获胜"
+        }
+      ],
+      "phase_label": "第3天白天",
+      "previous_question": "最后一狼交牌，D3无放逐",
+      "daily_audited": true
+    }
+  ],
+  "structural_normalizations": [
+    {
+      "field": "rounds[1].day.sheriff_result",
+      "before": {
+        "slot": "sheriff_result",
+        "action": "postponed",
+        "actor": null,
+        "targets": [],
+        "result": "首日竞选被3号自爆中断，延期至次日",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "sheriff_result",
+        "action": "deferred",
+        "actor": null,
+        "targets": [],
+        "result": "首日竞选被3号自爆中断，延期至次日",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[2].day.sheriff_result",
+      "before": {
+        "slot": "sheriff_result",
+        "action": "badge_lost",
+        "actor": null,
+        "targets": [],
+        "result": "9号在延期竞选阶段自爆，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "sheriff_result",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "9号在延期竞选阶段自爆，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[2].day.badge",
+      "before": {
+        "slot": "badge",
+        "action": "lost",
+        "actor": null,
+        "targets": [],
+        "result": "延期竞选再次被自爆中断，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "badge",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "延期竞选再次被自爆中断，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "voting.days[1].sheriff",
+      "before": "interrupted_self_destruct_deferred",
+      "after": "deferred",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    },
+    {
+      "field": "voting.days[3].exile",
+      "before": "not_held",
+      "after": "unknown",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    }
+  ],
+  "supplemental_events": [
+    {
+      "round": 3,
+      "phase": "day",
+      "event": {
+        "slot": "game_end",
+        "action": "surrender",
+        "actor": 6,
+        "targets": [],
+        "result": "6号最后一狼交牌；好人阵营春天获胜",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "reason": "现有固定槽未覆盖的明确观察；保留供人工复核，未装作普通技能。"
+    }
+  ],
+  "daily_audit": {
+    "bvid": "BV1i6J163Eqb",
+    "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 2506220,
+      "end_ms": 2568290,
+      "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+    },
+    "checks": [
+      {
+        "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+        "conclusion": "N1守卫护10女巫、狼刀4民被救，机械狼1学双刀、验4民；D1 3狼自爆中断竞选和放逐。N2守卫自守，狼刀10女巫、毒1机械狼，D2双死；9狼自爆且流徽。N3守卫护5、挡狼刀，验8民；D3最后狼6交牌，无放逐，好人胜。",
+        "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+            "start_ms": 2506220,
+            "end_ms": 2568290,
+            "quote": "给各位弹幕老师们做一下本局局的复盘\n本局版行为机械狼通灵师哈\n神志颖通灵呃\n通灵师5号女巫\n10号猎人\n2号守卫7号狼人阵营\n3号六号\n9号机械狼一号\n本局游戏为机械双刀狼\n平民阵营\n4号八号11号\n12号守夜守卫\n守护10号女巫狼队击杀4号平民女娲救起\n形成平安夜\n机械狼模仿6号狼人\n本局游戏为机械双刀狼\n通灵师查验了4号玩家为平民身份\n在警上竞选环节\n3号狼人选择自爆\n入夜守卫守护7号自守狼队\n击杀10号女巫女巫毒杀一号机械狼\n一号10号双死通灵师\n当夜查验了6号玩家为狼人身份\n在言期竞选环节\n9号狼人选择自爆\n本局游戏警徽流失\n入夜守卫守护5号通灵师\n狼队击杀5号通灵师\n形成平安夜\n通灵师验证8号玩家为平民身份\n在第三天白天场上最后一狼\n6号选择交牌游戏结束\n好人阵营春天获胜\n各位弹幕老师们"
+          }
+        ]
+      }
+    ],
+    "event_patches": [],
+    "finding_resolutions": [
+      {
+        "id": "b82-d2-mechanical-day-skill-ineligible",
+        "status": "inferred",
+        "conclusion": "1号机械狼学习狼人形态；且N2已被毒出局，D2机械猎人技能不可用。",
+        "reasoning": "学习目标、形态和N2毒杀有原文；无Hunter形态，且行动者在D2前已死亡。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+            "start_ms": 2528570,
+            "end_ms": 2530390,
+            "quote": "机械狼模仿6号狼人"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+            "start_ms": 2563599,
+            "end_ms": 2566299,
+            "quote": "6号选择交牌游戏结束"
+          }
+        ]
+      },
+      {
+        "id": "b82-d3-surrender-no-exile",
+        "status": "confirmed",
+        "conclusion": "6号最后一狼交牌结束游戏；D3未进行放逐。",
+        "reasoning": "游戏终局复盘确认交牌后好人获胜，故不得保留未知放逐结果。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+            "start_ms": 2563599,
+            "end_ms": 2566299,
+            "quote": "6号选择交牌游戏结束"
+          },
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1i6J163Eqb_P01_CID42771679791.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "7b270fe16182c628074f2a7aa2c3beed5f08ff4d28c7136117b41ec35779d52b",
+            "start_ms": 2566299,
+            "end_ms": 2568290,
+            "quote": "好人阵营春天获胜"
+          }
+        ]
+      }
+    ],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械双刀狼，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "unavailable",
+      "basis": "机械双刀技能刀须学习后且接刀才解锁；本夜仍有普通狼人，尚未接刀。"
+    }
+  ],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 1,
+    "inferred": 1,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

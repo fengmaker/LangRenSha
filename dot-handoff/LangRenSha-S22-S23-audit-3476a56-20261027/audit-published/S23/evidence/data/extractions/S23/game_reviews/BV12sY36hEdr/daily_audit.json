@@ -1,0 +1,434 @@
+{
+  "bvid": "BV12sY36hEdr",
+  "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 3565130,
+    "end_ms": 3642010,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1狼刀12、女巫救12，平安；机械狼学机械双刀狼，预言家验9为机械双刀狼。",
+    "N2狼刀7、女巫毒9；D2 6号自爆；查验3号的反馈复盘报为好人。",
+    "N3狼刀8单死；最终放逐11号，胜利归好人。机械日技能未由终局后空白推成空过。"
+  ],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 8,
+        "targets": [
+          3
+        ],
+        "result": "好人"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-22-night-2",
+      "status": "confirmed",
+      "conclusion": "死者座位：7,9",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3607530,
+          "end_ms": 3616380,
+          "quote": "咳入夜守卫守护8号通灵师\n狼队击杀7号女巫牛\n毒杀9号机械狼"
+        }
+      ]
+    },
+    {
+      "id": "phase-22-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：8",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3622930,
+          "end_ms": 3632560,
+          "quote": "6号狼人选择自爆\n入夜守卫守护一号平民狼队击杀8号通灵师\n通灵师在夜间验证11号玩家为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "target-BV12sY36hEdr-r1-witch_save-3",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：12",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3577990,
+          "end_ms": 3589040,
+          "quote": "平民阵营一号2号十号12号首夜守卫守护\n12号平民狼队击杀12号平民女巫开药\n12号平民乃疮身乃川身亡"
+        }
+      ]
+    },
+    {
+      "id": "target-BV12sY36hEdr-r2-witch_poison-4",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：9",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3612140,
+          "end_ms": 3618620,
+          "quote": "狼队击杀7号女巫牛\n毒杀9号机械狼\n当夜为7号九号双死"
+        }
+      ]
+    },
+    {
+      "id": "phase-BV12sY36hEdr-night-1-cross",
+      "status": "inferred",
+      "conclusion": "首夜狼刀12号、女巫开药救援，故夜间无死者。",
+      "reasoning": "首夜狼刀12号、女巫开药救援，故夜间无死者。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3577990,
+          "end_ms": 3589040,
+          "quote": "平民阵营一号2号十号12号首夜守卫守护\n12号平民狼队击杀12号平民女巫开药\n12号平民乃疮身乃川身亡"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv12sy36hedr-r3-seer_check-target",
+      "status": "confirmed",
+      "conclusion": "N3预言家8号查验11号，反馈狼人。",
+      "reasoning": "最终复盘原句直接说明查验目标和反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3629440,
+          "end_ms": 3632560,
+          "quote": "通灵师在夜间验证11号玩家为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-night-seer_check.result",
+      "status": "confirmed",
+      "conclusion": "N2预言家8号查验3号，反馈好人。",
+      "reasoning": "最终复盘原句直接说明查验目标和反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3618670,
+          "end_ms": 3621830,
+          "quote": "通灵师查验了3号玩家为首位身份"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-day-exile_result",
+      "status": "inferred",
+      "conclusion": "D2 6号狼自爆结束白天，无D2放逐。",
+      "reasoning": "按复盘中自爆、交牌或游戏结束的明确顺序推断该日未进入普通放逐；不将未提技能记作空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3569390,
+          "end_ms": 3570260,
+          "quote": "8号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-day-mechanical_day_skill",
+      "status": "unresolved",
+      "conclusion": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "reasoning": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3569390,
+          "end_ms": 3570260,
+          "quote": "8号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-day-ballot.ballot-2",
+      "status": "confirmed",
+      "conclusion": "该轮为D3最终放逐；逐票字幕为11投3、其余玩家投11，胜者11。",
+      "reasoning": "按完整全文播报恢复日期和全体投票方向。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3549850,
+          "end_ms": 3554950,
+          "quote": "11号投给3号\n其余玩家投票给11号\n11号玩家高票出局"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-ballot.missing",
+      "status": "confirmed",
+      "conclusion": "D3放逐11号：11号投3号，其余6名存活玩家投11号，11号高票出局。",
+      "reasoning": "原始全文逐票字幕提供了该轮票型；日号按当局自爆/夜死顺序校正。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3549850,
+          "end_ms": 3554950,
+          "quote": "11号投给3号\n其余玩家投票给11号\n11号玩家高票出局"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-2-night-seer_check-1",
+      "status": "confirmed",
+      "conclusion": "好人",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3618670,
+          "end_ms": 3621830,
+          "quote": "通灵师查验了3号玩家为首位身份"
+        }
+      ],
+      "round": 2,
+      "phase": "night",
+      "field": "rounds[2].night.seer_check",
+      "title": "好人"
+    },
+    {
+      "id": "daily-seer-resolution-BV12sY36hEdr-coverage-2-night-seer_check.result",
+      "round": 2,
+      "phase": "night",
+      "field": "seer_check",
+      "title": "N2预言家8号查验3号，反馈好人。",
+      "status": "confirmed",
+      "conclusion": "N2预言家8号查验3号，反馈好人。",
+      "reasoning": "最终复盘原句直接说明查验目标和反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3618670,
+          "end_ms": 3621830,
+          "quote": "通灵师查验了3号玩家为首位身份"
+        }
+      ]
+    },
+    {
+      "id": "daily-seer-resolution-BV12sY36hEdr-s23-a-bv12sy36hedr-r3-seer_check-target",
+      "round": 3,
+      "phase": "night",
+      "field": "seer_check",
+      "title": "N3预言家8号查验11号，反馈狼人。",
+      "status": "confirmed",
+      "conclusion": "N3预言家8号查验11号，反馈狼人。",
+      "reasoning": "最终复盘原句直接说明查验目标和反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3629440,
+          "end_ms": 3632560,
+          "quote": "通灵师在夜间验证11号玩家为狼人身份"
+        }
+      ]
+    },
+    {
+      "id": "daily-ballot-evidence-3-4",
+      "round": 3,
+      "phase": "day",
+      "field": "voting.ballots",
+      "title": "D3逐票放逐11号",
+      "status": "confirmed",
+      "conclusion": "D3逐票：11号投给3号，其余玩家投票给11号，11号玩家高票出局。",
+      "reasoning": "原始全文逐票字幕给出投票人、投向及票数；已将candidate轮次日号修正后整体放入voting_replacement。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+          "start_ms": 3549850,
+          "end_ms": 3554950,
+          "quote": "11号投给3号\n其余玩家投票给11号\n11号玩家高票出局"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "voting_replacement": {
+    "schema_version": 1,
+    "game_slug": "bili-BV12sY36hEdr-p01-g04",
+    "registrations": [
+      {
+        "id": "registration-1",
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "off_police": [
+          9,
+          11,
+          12
+        ]
+      }
+    ],
+    "ballots": [
+      {
+        "id": "ballot-1",
+        "day": 1,
+        "kind": "sheriff",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": [
+          4,
+          5,
+          8,
+          10
+        ],
+        "eligible_voters": [
+          9,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 9,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 5,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 8,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 5,
+        "unrecorded_voters": []
+      },
+      {
+        "id": "ballot-2",
+        "day": 3,
+        "kind": "exile",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          10,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 2,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 10,
+            "target": 11,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 11,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 11,
+        "unrecorded_voters": []
+      }
+    ],
+    "interruptions": [
+      {
+        "id": "interruption-1",
+        "day": 1,
+        "actor": 5,
+        "reason": "self_destruct",
+        "ends_day": true
+      },
+      {
+        "id": "interruption-2",
+        "day": 2,
+        "actor": 6,
+        "reason": "self_destruct",
+        "ends_day": true
+      }
+    ],
+    "days": [
+      {
+        "day": 1,
+        "sheriff": "recorded",
+        "exile": "interrupted_self_destruct"
+      },
+      {
+        "day": 2,
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
+      },
+      {
+        "day": 3,
+        "sheriff": "unknown",
+        "exile": "recorded"
+      }
+    ]
+  }
+}

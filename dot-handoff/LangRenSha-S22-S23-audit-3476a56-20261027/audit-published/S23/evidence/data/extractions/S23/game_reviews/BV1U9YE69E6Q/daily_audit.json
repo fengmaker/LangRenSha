@@ -1,0 +1,251 @@
+{
+  "bvid": "BV1U9YE69E6Q",
+  "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5507009,
+    "end_ms": 5560230,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1守卫护9、狼刀12、女巫救12，公布平安；机械狼学习平民。",
+    "D1复盘确认4号狼人被放逐；N2狼刀5、毒9，N3狼刀7。逐票字幕另记D3 8号机械狼六票出局；两日分开记录。",
+    "D1的4号放逐与D3的8号放逐属于两日；candidate中D1=4保留，D3补8。"
+  ],
+  "event_patches": [
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "exile",
+        "actor": null,
+        "targets": [
+          8
+        ],
+        "result": "原文逐票字幕称8号六票出局；这是D3，D1复盘的4号狼人放逐另属前一日。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 6,
+        "targets": [
+          11
+        ],
+        "result": "女巫"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "pass",
+        "actor": 10,
+        "targets": [],
+        "result": "N3守卫空过；复盘转写“首位通过”按守卫技能动作理解。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-15-night-1",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5522990,
+          "end_ms": 5526469,
+          "quote": "开药解救行程\n平安夜当夜\n机械狼模仿了5号平民"
+        }
+      ]
+    },
+    {
+      "id": "phase-15-night-2",
+      "status": "confirmed",
+      "conclusion": "死者座位：5,9",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5533370,
+          "end_ms": 5541080,
+          "quote": "4号狼人被公投出局\n入夜守卫守护7号平民狼人击杀5号平民女巫\n毒杀9号悍跳狼人"
+        }
+      ]
+    },
+    {
+      "id": "phase-15-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：7",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5547090,
+          "end_ms": 5554150,
+          "quote": "2号狼人自爆入夜\n首位通过狼人击杀7号平民通灵身验证\n8号玩家机械平民为平民身份"
+        }
+      ]
+    },
+    {
+      "id": "phase-15-open-1-4",
+      "status": "confirmed",
+      "conclusion": "D1放逐4号狼人；D3逐票记录另为8号机械狼六票出局",
+      "reasoning": "完整源文将D1复盘4号出局与D3六票出局分列；D1候选保留4，D3补8。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5467680,
+          "end_ms": 5470780,
+          "quote": "8号玩家六票出局\n游戏结束"
+        }
+      ]
+    },
+    {
+      "id": "target-BV1U9YE69E6Q-r1-witch_save-5",
+      "status": "confirmed",
+      "conclusion": "行动目标座位：12",
+      "reasoning": "复盘原句直接说出该夜行动目标，按游戏日序回填未知目标。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5519870,
+          "end_ms": 5523790,
+          "quote": "守护9号狼人\n狼人击杀12号平民女巫\n开药解救行程"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1u9ye69e6q-r3-seer_check-target",
+      "status": "confirmed",
+      "conclusion": "第2天夜晚的预言家查验目标为8号，反馈为平民。",
+      "reasoning": "复盘在第2天放逐及2号狼人自爆后进入该夜，连续字幕先说明查验、再给出8号机械平民为平民身份；对应第3轮夜晚。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5547090,
+          "end_ms": 5555030,
+          "quote": "2号狼人自爆入夜\n首位通过狼人击杀7号平民通灵身验证\n8号玩家机械平民为平民身份\n第三第八天"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1u9ye69e6q-r2-seer_check-recap",
+      "status": "confirmed",
+      "conclusion": "第1天夜晚预言家查验3号，反馈为平民。",
+      "reasoning": "复盘在第1天夜晚双死结算后明确验证3号为平民身份。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5539320,
+          "end_ms": 5546410,
+          "quote": "毒杀9号悍跳狼人\n五九双死通灵身验证3号玩家为平民身份\n第二天白天9号出局"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1u9ye69e6q-r3-guard-unresolved",
+      "status": "inferred",
+      "conclusion": "N3守卫10号空过。",
+      "reasoning": "复盘在该轮转写为“首位通过”后直接报狼人击杀7号；结合守卫角色与该句技能提示，按空过记录并保留转写解释。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5548490,
+          "end_ms": 5551500,
+          "quote": "首位通过狼人击杀7号平民通灵身验证"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1u9ye69e6q-r1-seer_check-unresolved",
+      "status": "confirmed",
+      "conclusion": "N1通灵师6号查验11号，复盘报女巫身份。",
+      "reasoning": "最终复盘明说“11号玩家为女巫身份”。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5528269,
+          "end_ms": 5530190,
+          "quote": "11号玩家为女巫身份"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-3-day-exile_result-1",
+      "status": "confirmed",
+      "conclusion": "原文逐票字幕称8号六票出局；这是D3，D1复盘的4号狼人放逐另属前一日。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5551500,
+          "end_ms": 5554150,
+          "quote": "8号玩家机械平民为平民身份"
+        }
+      ],
+      "round": 3,
+      "phase": "day",
+      "field": "rounds[3].day.exile_result",
+      "title": "原文逐票字幕称8号六票出局；这是D3，D1复盘的4号狼人放逐另属前一日。"
+    },
+    {
+      "id": "daily-correction-1-night-seer_check-2",
+      "round": 1,
+      "phase": "night",
+      "field": "rounds[1].night.seer_check",
+      "title": "N1通灵师验11号女巫",
+      "status": "confirmed",
+      "conclusion": "N1通灵师6号查验11号，复盘报女巫身份。",
+      "reasoning": "最终复盘明说目标与反馈。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5528269,
+          "end_ms": 5530190,
+          "quote": "11号玩家为女巫身份"
+        }
+      ]
+    },
+    {
+      "id": "daily-correction-3-night-guard-3",
+      "round": 3,
+      "phase": "night",
+      "field": "rounds[3].night.guard",
+      "title": "N3守卫技能空过",
+      "status": "inferred",
+      "conclusion": "N3守卫10号空过；复盘转写“首位通过”按守卫技能动作理解。",
+      "reasoning": "根据最终复盘的轮次上下文及守卫角色推断；未将法官未提当作空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+          "start_ms": 5548490,
+          "end_ms": 5551500,
+          "quote": "首位通过狼人击杀7号平民通灵身验证"
+        }
+      ]
+    }
+  ],
+  "human_questions": []
+}

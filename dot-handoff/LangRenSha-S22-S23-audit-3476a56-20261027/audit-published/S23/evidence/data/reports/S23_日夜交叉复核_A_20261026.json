@@ -1,0 +1,853 @@
+{
+  "season": "S23",
+  "scope": {
+    "plan_indices": [
+      14,
+      49
+    ],
+    "focus": [
+      "night_deaths",
+      "day_order",
+      "self_destruct/exile",
+      "hunter/wolf_king/mechanical_hunter_shot",
+      "completed_votes",
+      "mixed_blood_tie_victory"
+    ],
+    "phase_mapping": "night round 1=opening night; night round r>1=night after day r-1; day round r=day r."
+  },
+  "games": [
+    {
+      "index": 14,
+      "bvid": "BV1sAYJ6UEoF",
+      "title": "20260908 正赛 Day-1 第二局-盗宝大师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+      "brief": "官方索引14正赛：已连续阅读复盘和投票原文，目视核对12座姓名与实际底牌。修正座位标签/胜方；投票文件保留转写不足的部分投票为未知。；日夜复核追加4项原文支持的更正",
+      "phase_findings": 10,
+      "unresolved": [
+        {
+          "id": "phase-BV1sAYJ6UEoF-open-1-night_deaths",
+          "round": 1,
+          "phase": "night",
+          "field": "rounds[1].day.night_deaths",
+          "question": "开局夜公布死者：字幕只标记“321天亮了”，没有说平安或死者名单。",
+          "reasoning": "复盘覆盖到该阶段，但没有唯一提供这一项关键结算；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 435155,
+              "end_ms": 439340,
+              "quote": "321天亮了"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1sayj6ueof-r1-wolf_attack-unresolved",
+          "round": 1,
+          "phase": "night",
+          "field": "rounds[1].night.wolf_attack.targets",
+          "question": "开局夜狼刀目标未记载：开局夜狼刀目标没有从复盘或天亮字幕中还原；现有资料不能唯一确定。",
+          "reasoning": "原文仅在该段标记“321天亮了”，没有狼刀目标或救药反馈。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+              "start_ms": 435155,
+              "end_ms": 439340,
+              "quote": "321天亮了"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1sayj6ueof-r1-seer_check-unresolved",
+          "round": 1,
+          "phase": "night",
+          "field": "rounds[1].night.seer_check.targets",
+          "question": "开局夜通灵师查验未记载：开局夜4号通灵师查验目标和反馈未被复盘字幕报出。",
+          "reasoning": "该夜相关字幕只标记天亮；没有通灵师行动或反馈，不能唯一推导目标。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+              "start_ms": 435155,
+              "end_ms": 439340,
+              "quote": "321天亮了"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1sayj6ueof-r3-seer_check-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.seer_check.targets",
+          "question": "第3轮夜晚通灵师查验未记载：第2天夜晚通灵师4号的查验目标和反馈未被复盘字幕报出。",
+          "reasoning": "复盘报出盗宝大师夜间击杀6号及6、9双死，但没有通灵师查验对象或反馈。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+              "start_ms": 3878850,
+              "end_ms": 3883990,
+              "quote": "盗宝大师选择平民身份击杀6号射梦人\n六九双死游戏结束"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认3项、推定3项，仍有4项具体未决。主要核实：第2轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 15,
+      "bvid": "BV1U9YE69E6Q",
+      "title": "20260908 正赛 Day-1 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+      "brief": "官方索引15正赛：已连续阅读复盘和投票原文，目视核对12座姓名与实际底牌。修正座位标签/胜方；投票文件保留转写不足的部分投票为未知。 补充复核悍跳上下文：按候选人原话、真实底牌与法官警徽结算综合判定。；日夜复核追加2项原文支持的更正",
+      "phase_findings": 9,
+      "unresolved": [
+        {
+          "id": "phase-15-open-1-4",
+          "round": 1,
+          "phase": "day",
+          "field": "rounds[1].day.exile_result.targets",
+          "question": "D1放逐对象：逐票字幕称8号六票出局，结算复盘却说4号狼人被公投；须核视频结果板。",
+          "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 5467680,
+              "end_ms": 5469800,
+              "quote": "8号玩家六票出局"
+            },
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 5533370,
+              "end_ms": 5535520,
+              "quote": "4号狼人被公投出局"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1u9ye69e6q-r3-guard-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.guard.targets",
+          "question": "第3轮夜晚守卫目标未记载：第2天夜晚守卫10号是否守护及目标未被复盘字幕说明。",
+          "reasoning": "2号狼人自爆后进入该夜，复盘记录狼队击杀7号并给出通灵师验证8号，但未记录守卫目标。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+              "start_ms": 5547090,
+              "end_ms": 5555030,
+              "quote": "2号狼人自爆入夜\n首位通过狼人击杀7号平民通灵身验证\n8号玩家机械平民为平民身份\n第三第八天"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1u9ye69e6q-r1-seer_check-unresolved",
+          "round": 1,
+          "phase": "night",
+          "field": "rounds[1].night.seer_check.targets",
+          "question": "开局夜通灵师查验未记载：开局夜通灵师6号的查验目标和反馈未被复盘字幕报出。",
+          "reasoning": "开局夜复盘记录守卫守9、狼队击杀12及女巫救起，但未说明通灵师查验。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1U9YE69E6Q_P01_CID41701281591.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "5896a8d79fd1e90bcdfa9454cb2ad9c77687c308c800218895e3cffff73a7ad5",
+              "start_ms": 5517860,
+              "end_ms": 5524550,
+              "quote": "12号守夜守卫\n守护9号狼人\n狼人击杀12号平民女巫\n开药解救行程\n平安夜当夜"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认6项、推定0项，仍有3项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 16,
+      "bvid": "BV1LdY46xEUu",
+      "title": "20260909 正赛 第一期 Day-2 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第01局_预女猎白混__BV1LdY46xEUu_P01_CID41736077790.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "bc2a40ffe6dc20839b0a779782cb49d5aa69531ad746dbde81f0ad114b7c2102",
+      "brief": "官方索引16正赛：已连续阅读复盘和投票原文，目视核对12座姓名与实际底牌。修正座位标签/胜方；投票文件保留转写不足的部分投票为未知。；日夜复核追加3项原文支持的更正；追加1轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 5,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 17,
+      "bvid": "BV1ddY46sEgn",
+      "title": "20260909 正赛 第一期 Day-2 第二局-诡术之境",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+      "brief": "官方索引17正赛：已连续阅读复盘和投票原文，目视核对12座姓名与实际底牌。修正座位标签/胜方；投票文件保留转写不足的部分投票为未知。 补充复核悍跳上下文：按候选人原话、真实底牌与法官警徽结算综合判定。；日夜复核追加3项原文支持的更正",
+      "phase_findings": 3,
+      "unresolved": [],
+      "phase_brief": "确认3项、推定0项，仍有0项具体未决。主要核实：第2轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 18,
+      "bvid": "BV1ddY46sEzY",
+      "title": "20260909 正赛 第一期 Day-2 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+      "brief": "D1警徽初投8/10平票，10退水后8自动当选；D1出5。N2刀7毒6，6/7双死，D2狼1自爆；N3刀10，D3七人投票出9，好人获胜。“1号…呃2号”为唱票更正，删除伪1号票。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 3,
+      "unresolved": [],
+      "phase_brief": "确认3项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 19,
+      "bvid": "BV14sY36hEp8",
+      "title": "20260910 正赛 第一期 Day-3 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+      "brief": "官方索引19正赛：读取连续复盘和报票上下文，目视核对12席姓名及实际身份；胜方依据复盘收尾核实。对转写缺失的票保留partial/null。；日夜复核追加1项原文支持的更正；追加1轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 3,
+      "unresolved": [],
+      "phase_brief": "确认3项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 20,
+      "bvid": "BV12sY36hEQh",
+      "title": "20260910 正赛 第一期 Day-3 第二局-假面舞会",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+      "brief": "官方索引20正赛：读取连续复盘和报票上下文，目视核对12席姓名及实际身份；胜方依据复盘收尾核实。对转写缺失的票保留partial/null。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 9,
+      "unresolved": [
+        {
+          "id": "phase-BV12sY36hEQh-open-2-night_deaths",
+          "round": 2,
+          "phase": "night",
+          "field": "rounds[2].day.night_deaths",
+          "question": "D2夜公布死者：D2自爆后进入舞池阶段，但可用复盘没有完整报出该夜死者。",
+          "reasoning": "复盘覆盖到该阶段，但没有唯一提供这一项关键结算；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4093830,
+              "end_ms": 4097600,
+              "quote": "本局游戏警徽流失入夜舞者的舞池"
+            },
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4109820,
+              "end_ms": 4112980,
+              "quote": "此时舞池内武者被五出局"
+            }
+          ]
+        },
+        {
+          "id": "phase-BV12sY36hEQh-open-3-night_deaths",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].day.night_deaths",
+          "question": "D3夜公布死者：舞池出局与女巫刀口字幕不足以唯一还原该夜公布名单。",
+          "reasoning": "复盘覆盖到该阶段，但没有唯一提供这一项关键结算；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4109820,
+              "end_ms": 4112980,
+              "quote": "此时舞池内武者被五出局"
+            },
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4117180,
+              "end_ms": 4119700,
+              "quote": "当夜女巫看到实际刀口为2号"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv12sy36heqh-r2-seer_check-unresolved",
+          "round": 2,
+          "phase": "night",
+          "field": "rounds[2].night.seer_check.targets",
+          "question": "第2轮夜晚预言家查验未记载：第1天夜晚预言家5号的查验目标和反馈未在复盘中说明。",
+          "reasoning": "该夜狼队击杀7号有记录，但没有预言家查验目标或结果，无法唯一推导。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第02局_假面舞会__BV12sY36hEQh_P01_CID41768323580.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "97ba9586b65ca5f9d5b01b42b8998eb634065197fd77ddd1c40976f14a754f0f",
+              "start_ms": 4076520,
+              "end_ms": 4079040,
+              "quote": "狼队击杀7号平民"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认6项、推定0项，仍有3项具体未决。主要核实：第1轮夜间死亡结算；第1轮wolf_attack目标。"
+    },
+    {
+      "index": 21,
+      "bvid": "BV14sY36hEPC",
+      "title": "20260910 正赛 第一期 Day-3 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV14sY36hEPC_P01_CID41768452185.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "3976ac56c91fc9e6ee068c7759c6f3863e064fa972e1fd4fa4bdbd66b231f5fa",
+      "brief": "官方索引21正赛：读取连续复盘和报票上下文，目视核对12席姓名及实际身份；胜方依据复盘收尾核实。对转写缺失的票保留partial/null。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 4,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 22,
+      "bvid": "BV12sY36hEdr",
+      "title": "20260910 正赛 第一期 Day-3 第四局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8",
+      "brief": "官方索引22正赛：读取连续复盘和报票上下文，目视核对12席姓名及实际身份；胜方依据复盘收尾核实。对转写缺失的票保留partial/null。 补充复核悍跳上下文：按候选人原话、真实底牌与法官警徽结算综合判定。；日夜复核追加2项原文支持的更正",
+      "phase_findings": 6,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定1项，仍有0项具体未决。主要核实：第2轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 23,
+      "bvid": "BV1S1YU6rE6R",
+      "title": "20260911 正赛 第一期 Day-4 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+      "brief": "N1狼刀目标9被救，最终平安夜；9号在D1放逐票中投10号，原票保留。既有死亡记录把狼刀目标误记为夜死，已据连续复盘更正。",
+      "phase_findings": 4,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定0项，仍有0项具体未决。N1狼刀目标9被救，最终平安夜；9号在D1放逐票中投10号，原票保留。既有死亡记录把狼刀目标误记为夜死，已据连续复盘更正。"
+    },
+    {
+      "index": 24,
+      "bvid": "BV1g1YU6kERd",
+      "title": "20260911 正赛 第一期 Day-4 第二局-青丘夜影",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+      "brief": "官方索引24正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 4,
+      "unresolved": [
+        {
+          "id": "phase-24-open-4-3",
+          "round": 4,
+          "phase": "day",
+          "field": "rounds[4].day.exile_result",
+          "question": "D4出局机制：字幕提到标记场上剩2、12，随后3号预言家及6号白泽出局，未明确是放逐或技能结算。",
+          "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4523200,
+              "end_ms": 4529110,
+              "quote": "嗯此时场上标记为2号平民以及12号女巫"
+            },
+            {
+              "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4567740,
+              "end_ms": 4571710,
+              "quote": "导致3号预言家以及6号白泽出局"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认3项、推定0项，仍有1项具体未决。主要核实：第2轮夜间死亡结算；第4轮夜间死亡结算。"
+    },
+    {
+      "index": 25,
+      "bvid": "BV1D1YU6rEhh",
+      "title": "20260911 正赛 第一期 Day-4 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1D1YU6rEhh_P01_CID41800173022.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "9014522fdb9a1113bc39a7cb27c698c9a1e8e851bca6698f7a272bdc6933c8cf",
+      "brief": "官方索引25正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。",
+      "phase_findings": 5,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 26,
+      "bvid": "BV1theH6cESW",
+      "title": "20260915 正赛 第二期 Day-1 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第01局_预女猎白混__BV1theH6cESW_P01_CID41923904172.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "594374ef8eea83d379d553acd4015dc66a71435328e79c857491febd2e1516ac",
+      "brief": "官方索引26正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。；日夜复核追加3项原文支持的更正；追加4轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 8,
+      "unresolved": [],
+      "phase_brief": "确认8项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 27,
+      "bvid": "BV1MheH6wEBb",
+      "title": "20260915 正赛 第二期 Day-1 第二局-假面舞会",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+      "brief": "官方索引27正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 4,
+      "unresolved": [
+        {
+          "id": "phase-27-open-2-2",
+          "round": 2,
+          "phase": "night",
+          "field": "rounds[2].day.night_deaths",
+          "question": "D2夜公布死者：相关字幕存在日期顺序冲突，未唯一定位D2夜公布死者。",
+          "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 3949859,
+              "end_ms": 3950739,
+              "quote": "第二天白天"
+            },
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 3961010,
+              "end_ms": 3962530,
+              "quote": "2号玩家共五出局"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1mheh6webb-r3-seer_check-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.seer_check.targets",
+          "question": "第3轮夜晚预言家查验未记载：第2天夜晚预言家2号的查验目标和反馈未在复盘中明确。",
+          "reasoning": "复盘在该段同时出现夜间行动与白天放逐的时间顺序冲突，不能唯一确定是否及查验何人。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+              "start_ms": 3950739,
+              "end_ms": 3952219,
+              "quote": "5号狼人自爆入夜"
+            },
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+              "start_ms": 3961010,
+              "end_ms": 3963850,
+              "quote": "2号玩家共五出局\n击杀了2号"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv1mheh6webb-r3-wolf_attack-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.wolf_attack.targets",
+          "question": "第3轮夜晚狼刀目标无法唯一定位：第2天夜晚狼刀目标在复盘的轮次顺序冲突中无法唯一定位。",
+          "reasoning": "复盘记录5号狼人自爆入夜；随后出现“2号玩家共五出局”“击杀了2号”，但无法判断这句是该夜狼刀还是其他行动的结果。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+              "start_ms": 3950739,
+              "end_ms": 3952219,
+              "quote": "5号狼人自爆入夜"
+            },
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
+              "start_ms": 3961010,
+              "end_ms": 3963850,
+              "quote": "2号玩家共五出局\n击杀了2号"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认1项、推定0项，仍有3项具体未决。主要核实：第1轮夜间死亡结算。"
+    },
+    {
+      "index": 28,
+      "bvid": "BV1theH6cE6x",
+      "title": "20260915 正赛 第二期 Day-1 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1theH6cE6x_P01_CID41924103758.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "fb7fb9fa311a1db4b20197fb97b7c5b1e6199fdfbb757848cb77f87da8024b09",
+      "brief": "N1平安，D1狼9自爆并延期警选。N2狼刀2被守、毒4造成唯一夜死；D2狼8自爆流徽。N3普通刀6被守，机械技能刀3造成夜死；末狼5交牌。",
+      "phase_findings": 9,
+      "unresolved": [],
+      "phase_brief": "确认8项、推定1项，仍有0项具体未决。N1平安，D1狼9自爆并延期警选。N2狼刀2被守、毒4造成唯一夜死；D2狼8自爆流徽。N3普通刀6被守，机械技能刀3造成夜死；末狼5交牌。"
+    },
+    {
+      "index": 29,
+      "bvid": "BV1CAeA6qErr",
+      "title": "20260916 正赛 第二期 Day-2 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第01局_预女猎白混__BV1CAeA6qErr_P01_CID41951953825.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "eacc62cdc5f25cb1caab9c542f427908e4ce694e7d85524da7a9825f96171431",
+      "brief": "官方索引29正赛：阅读连续复盘、核对逐日投票并目视查看 12 席姓名与实际身份。可直接确认的票数已补；仍未能从字幕还原的保留partial。；日夜复核追加3项原文支持的更正；追加2轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 9,
+      "unresolved": [],
+      "phase_brief": "确认9项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 30,
+      "bvid": "BV1yAeA6qE7X",
+      "title": "20260916 正赛 第二期 Day-2 第二局-诡术之境",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第02局_诡术之境__BV1yAeA6qE7X_P01_CID41952020283.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "5b8ff760f4cd13fd7ba969fc0ac4ec9212c374e0fbfa16a1dd113cb718bef6f2",
+      "brief": "官方索引30正赛：阅读连续复盘、核对逐日投票并目视查看 12 席姓名与实际身份。可直接确认的票数已补；仍未能从字幕还原的保留partial。；日夜复核追加3项原文支持的更正",
+      "phase_findings": 5,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 31,
+      "bvid": "BV1yAeA6qEMd",
+      "title": "20260916 正赛 第二期 Day-2 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1yAeA6qEMd_P01_CID41952151838.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "f3f263769988b4312ceb59e760b4bd5b6c853990104f7561fb3580a845823a85",
+      "brief": "N1 2/4双死；D1狼3自爆。N2狼刀1守卫，D2唯一夜死1；D2狼5自爆。N3夜死7、验11为猎人；D3放逐9后机械猎人11拍刀最后一神6。N3守卫目标仍未核清。",
+      "phase_findings": 11,
+      "unresolved": [
+        {
+          "id": "s23-a-bv1yaea6qemd-r3-guard-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.guard.targets",
+          "question": "第2天夜晚守卫1号是否行动及目标未在复盘中说明。",
+          "reasoning": "复盘记录5号狼人自爆后入夜并击杀7号通灵师，但没有守卫行动对象。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-16/2026-09-16_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1yAeA6qEMd_P01_CID41952151838.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "f3f263769988b4312ceb59e760b4bd5b6c853990104f7561fb3580a845823a85",
+              "start_ms": 5121870,
+              "end_ms": 5124910,
+              "quote": "5号狼人自爆入夜狼人击杀7号通灵师"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认8项、推定2项，仍有1项具体未决。N1 2/4双死；D1狼3自爆。N2狼刀1守卫，D2唯一夜死1；D2狼5自爆。N3夜死7、验11为猎人；D3放逐9后机械猎人11拍刀最后一神6。N3守卫目标仍未核清。"
+    },
+    {
+      "index": 32,
+      "bvid": "BV1nJer6gEkx",
+      "title": "20260917 正赛 第二期 Day-3 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+      "brief": "官方索引32正赛：阅读连续复盘、核对逐日投票并目视查看 12 席姓名与实际身份。可直接确认的票数已补；仍未能从字幕还原的保留partial。；日夜复核追加2项原文支持的更正；追加2轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 9,
+      "unresolved": [],
+      "phase_brief": "确认8项、推定1项，仍有0项具体未决。主要核实：第3轮夜间死亡结算；枪技资格核对。"
+    },
+    {
+      "index": 33,
+      "bvid": "BV1nJer63EDh",
+      "title": "20260917 正赛 第二期 Day-3 第二局-青丘夜影",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+      "brief": "官方索引33正赛青丘夜影：逐席核对底牌和姓名；补正预言家首验、九尾标记/白泽清除与第四天免毒及猎杀结算。三次自爆分别中断第1至第3天，没有凭空补投票。；日夜复核追加4项原文支持的更正",
+      "phase_findings": 4,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 34,
+      "bvid": "BV1nJer6gEBP",
+      "title": "20260917 正赛 第二期 Day-3 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1nJer6gEBP_P01_CID41979021532.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "61b2d19ec144df1577e7db8c11ad53c54148c408f0f9fb7cbff9b4d558dd1fea",
+      "brief": "官方索引34正赛机械狼通灵师：从截图核对真实角色与座位；将基线首轮警徽选举从放逐票中分离，补齐首日放逐12号。6号机械狼复制7号平民，最后交牌，好人获胜。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 5,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 35,
+      "bvid": "BV1tneS6kEnQ",
+      "title": "20260918 正赛 第二期 Day-4 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第01局_预女猎白混__BV1tneS6kEnQ_P01_CID42007989455.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "00c47a7d1c60a41f21695351aefcb00f64d0d81bc02bf8ce2c35ddd3439c87e2",
+      "brief": "官方索引35正赛预女猎白混血儿：混血儿11号以9号狼人为榜样并进入狼人阵营；核实第3天放逐8号、第4天放逐9号，两轮票数完整，最终好人获胜。；日夜复核追加3项原文支持的更正；追加2轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 5,
+      "unresolved": [],
+      "phase_brief": "确认5项、推定0项，仍有0项具体未决。主要核实：第2轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 36,
+      "bvid": "BV1tneS6rEx1",
+      "title": "20260918 正赛 第二期 Day-4 第二局-盗宝大师",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "5e657a9d989f585adf5b1c25753cb3cadf30251c391d78ad14a155d7cb549fdf",
+      "brief": "官方索引36正赛盗宝大师：逐席核对角色板并从片尾复盘确认盗宝大师1号为狼人阵营、5号通灵师得徽、7号狼王出局并带走2号摄梦人；首日夜死4/5后徽移交11，次日10出局后狼队夜杀最后神12获胜。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 7,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定3项，仍有0项具体未决。主要核实：第2轮夜间死亡结算；D1狼王枪口为2号。"
+    },
+    {
+      "index": 37,
+      "bvid": "BV1MneS6kEWz",
+      "title": "20260918 正赛 第二期 Day-4 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+      "brief": "官方索引37正赛机械狼通灵师：逐席核对身份并补正狼队获胜；完成警徽票和两天放逐票，登记11号复制9号获得机械双刀狼能力以及第四天2号自爆后的狼队拍刀。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 3,
+      "unresolved": [],
+      "phase_brief": "确认3项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 38,
+      "bvid": "BV1gBhn6dE5c",
+      "title": "20260922 正赛 第三期 Day-1 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "52fdc23075a5345be636f9cd9d7aea233e5e9dbc795a45c11ec886a1f71d6b5d",
+      "brief": "已核对第4天末局截图、玩家座位与身份牌、终局复盘和逐人票型。4号狼人为预言家悍跳并取得警徽，8号混血儿榜样为4号且个人胜利阵营随狼人；狼方最终屠神获胜。；日夜复核追加1项原文支持的更正；追加3轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 8,
+      "unresolved": [
+        {
+          "id": "phase-BV1gBhn6dE5c-open-4-hunter_shot",
+          "round": 4,
+          "phase": "day",
+          "field": "rounds[4].day.hunter_shot",
+          "question": "D4猎人开枪结算：复盘明确11号猎人被抗推出局，但没有说明其是否开枪或枪口。",
+          "reasoning": "复盘覆盖到该阶段，但没有唯一提供这一项关键结算；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第01局_预女猎白混__BV1gBhn6dE5c_P01_CID42117629079.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 6304850,
+              "end_ms": 6306850,
+              "quote": "11号猎人被抗推出局"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认7项、推定0项，仍有1项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 39,
+      "bvid": "BV18Bhn6dEJ6",
+      "title": "20260922 正赛 第三期 Day-1 第二局-诡术之境",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "9fa3aa9d45458c1207db81a09a90796b99370df5eb0a362061462b542a7f0ca5",
+      "brief": "已核对身份栏、选警PK票、首日两次放逐票、定序王子触发重投及终局复盘。8号为狼人且跳预言家未拿警徽；王子技能后的复投最终放逐8号，狼人次日交牌。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 2,
+      "unresolved": [],
+      "phase_brief": "确认2项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 40,
+      "bvid": "BV1gBhn6dEEJ",
+      "title": "20260922 正赛 第三期 Day-1 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "596f9cd26e26802e9508b6b9edfb7ebb38eec9c8b8c8afbf0a807d9442ecd81d",
+      "brief": "已核对身份栏、机械狼学习目标、首日警徽和放逐票、次日/第三日票型及终局复盘。4号与7号狼人均尝试跳通灵师，但未获警徽，首日出局的是狼人7号；第三夜1号猎人中毒双死，不能开枪。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 5,
+      "unresolved": [
+        {
+          "id": "s23-a-bv1gbhn6deej-r1-guard-unresolved",
+          "round": 1,
+          "phase": "night",
+          "field": "rounds[1].night.guard.targets",
+          "question": "开局夜守卫目标未记载：开局夜守卫目标只转写到“首夜守护”，没有具体座位。",
+          "reasoning": "复盘随后记录狼队击杀2号并女巫救起，但守卫目标本身未报，无法唯一确定。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "596f9cd26e26802e9508b6b9edfb7ebb38eec9c8b8c8afbf0a807d9442ecd81d",
+              "start_ms": 6958680,
+              "end_ms": 6964460,
+              "quote": "本九席位机械双刀狼人首夜守护\n9号平民狼人\n击杀2号机械狼女巫开药解救"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认3项、推定1项，仍有1项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 41,
+      "bvid": "BV1KaaT67Eca",
+      "title": "20260924 正赛 第三期 Day-2 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第01局_预女猎白混__BV1KaaT67Eca_P01_CID42171304005.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "6a916290b182e25eb6dee5ce5cb7f63c076e6f4ba8244b93c30e69ed46ffbc89",
+      "brief": "已核对身份栏、首日警长/放逐票、赛后复盘及末局结果。补正12号真实预言家身份；1号狼人曾以预言家身份拿到警徽。；日夜复核追加1项原文支持的更正；追加1轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 4,
+      "unresolved": [
+        {
+          "id": "phase-41-open-3-3",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].day.night_deaths",
+          "question": "D3夜公布死者：复盘只给出D3白天胜利，没有唯一说明此前一夜死者。",
+          "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第01局_预女猎白混__BV1KaaT67Eca_P01_CID42171304005.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 4844730,
+              "end_ms": 4845930,
+              "quote": "在第三天白天"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认2项、推定1项，仍有1项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 42,
+      "bvid": "BV1saaT6jEyK",
+      "title": "20260924 正赛 第三期 Day-2 第二局-青丘夜影",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第02局_青丘夜影__BV1saaT6jEyK_P01_CID42171630894.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
+      "brief": "青丘夜影的身份、票型和完整复盘已对照核实。仅登记画面及本局复盘直接给出的角色与技能：4号狼悍跳拿徽，首夜九尾标2，次夜白泽清3无事/九尾标7/守卫自守1形成平安，第三夜白泽清7/九尾标3并击杀1；9号技能失败后交牌，好人获胜。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 2,
+      "unresolved": [],
+      "phase_brief": "确认2项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 43,
+      "bvid": "BV1gpaT6WEMb",
+      "title": "20260924 正赛 第三期 Day-2 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "5d9d29c681a137e30d3230f93496205d5e6346a42ad56299cbdcf5094c542a6a",
+      "brief": "D1出7号机械猎人，7枪杀通灵师5，徽转2；N2刀2、守卫空过，徽转8。D2警长双归4/6后仅一次八人投票，4号六票出局。N3刀12，12猎人开枪带走末狼11，好人胜。；日夜复核追加4项原文支持的更正",
+      "phase_findings": 7,
+      "unresolved": [
+        {
+          "id": "phase-43-open-3-6",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].day.hunter_shot.targets",
+          "question": "D2夜12号猎人枪口目标：字幕确认猎人出局后击杀末狼，未给枪口座号。",
+          "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gpaT6WEMb_P01_CID42171698629.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 6344840,
+              "end_ms": 6347800,
+              "quote": "12号猎人出局后开枪带走场上最后一狼"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认5项、推定1项，仍有1项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 44,
+      "bvid": "BV1NBhU68EUy",
+      "title": "20260925 正赛 第三期 Day-3 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第01局_预女猎白混__BV1NBhU68EUy_P01_CID42198305671.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "539d3116df9bce3f3c4db1cf0d95146d86b4c35e7c018a1928b798c1ecb21635",
+      "brief": "3号好人混以10号预言家为榜样。首夜救10；8在D1自爆延期、11在D2再爆流徽。N2刀10；N3刀2、女巫毒4，2/4双死；D3公投末狼12，好人胜。初始警下4/5，其余十人上警。；日夜复核追加1项原文支持的更正；追加1轮按个人胜利阵营与警徽半票的绑票核算",
+      "phase_findings": 4,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 45,
+      "bvid": "BV1KBhU68EjA",
+      "title": "20260925 正赛 第三期 Day-3 第二局-假面舞会",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982",
+      "brief": "身份牌与复盘确认8号预言家获得警徽，首日7号狼出局；第二天6号狼被毒、8号预言家被刀，5号狼自爆；第三夜舞池和面具事件后9/12出局。第三天放逐首轮10/11平票、PK轮仍平票；狼队拍刀以10号白神为目标成功屠神胜。；日夜复核追加2项原文支持的更正",
+      "phase_findings": 3,
+      "unresolved": [],
+      "phase_brief": "确认3项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 46,
+      "bvid": "BV1NBhU68EyT",
+      "title": "20260925 正赛 第三期 Day-3 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "8a965f863c95ea3e36ea360df66d9a9b7a99d615e5a317b55f9687ea50977996",
+      "brief": "核对身份牌、枪口原文与投票：首夜同守同救使2号猎人死亡，猎人带走10号狼人。6号首日自爆，次日延迟竞选3号当选；7号被放逐，第三天8/9双死后1号机械狼出局，好人胜。；日夜复核追加1项原文支持的更正",
+      "phase_findings": 3,
+      "unresolved": [
+        {
+          "id": "phase-BV1NBhU68EyT-open-3-mechanical_day_skill",
+          "round": 3,
+          "phase": "day",
+          "field": "rounds[3].day.mechanical_day_skill",
+          "question": "D3机械猎人白天技能：复盘确认1号机械狼被公投出局，但未说明机械猎人技能是否发动及目标。",
+          "reasoning": "复盘覆盖到该阶段，但没有唯一提供这一项关键结算；不以baseline补值。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1NBhU68EyT_P01_CID42198633224.平台AI字幕_ai-zh_01.原始.json",
+              "start_ms": 3849190,
+              "end_ms": 3850730,
+              "quote": "一号机械狼被公投出局"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认2项、推定0项，仍有1项具体未决。主要核实：第1轮夜间死亡结算；第3轮夜间死亡结算。"
+    },
+    {
+      "index": 47,
+      "bvid": "BV1RPaW6zEcm",
+      "title": "20260929 正赛 第四期 Day-1 第一局-预女猎白混",
+      "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第01局_预女猎白混__BV1RPaW6zEcm_P01_CID42315419187.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "0dca0b955af30f276346e48fb3fb464e46a479a7bc164023c26fa3c72a1384cb",
+      "brief": "首夜狼刀9被女巫救起；首轮初始仅7号警下，警徽在1/10间选择后7弃票、流徽。D1狼10自爆。N2狼刀1、女巫毒4，1/4双死；D2仅9名存活者参与放逐票，4号不作为弃票。9号白神出局后，狼人独立拍刀2/3/5并完成屠神胜。",
+      "phase_findings": 7,
+      "unresolved": [],
+      "phase_brief": "确认6项、推定1项，仍有0项具体未决。N2 1/4双死；D2放逐排除死者4，9号放逐后由独立拍刀达成屠神胜。"
+    },
+    {
+      "index": 48,
+      "bvid": "BV1VPaW66EZz",
+      "title": "20260929 正赛 第四期 Day-1 第二局-青丘夜影",
+      "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+      "brief": "独立核实青丘夜影身份牌与逐日播报：1号白泽N2清10标、N3清6标后被刀并传承给4；九尾8依次在N1标9、首轮警徽票标5、N2标6、警徽PK票再次标5、N3标10、N4标2。N4猎杀成功使6出局，狼阵营屠神胜。；日夜复核追加4项原文支持的更正",
+      "phase_findings": 4,
+      "unresolved": [],
+      "phase_brief": "确认4项、推定0项，仍有0项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    },
+    {
+      "index": 49,
+      "bvid": "BV15PaW66EjW",
+      "title": "20260929 正赛 第四期 Day-1 第三局-机械狼通灵师",
+      "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV15PaW66EjW_P01_CID42315679001.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "e7e4aaca9bc8111ac2f851437904a3d30b2a6dab7441042595e3b2e3f72b73da",
+      "brief": "截图和结尾复盘确认：1号女巫与8号狼人首夜双死；6号狼人首日自爆使竞选延期，5号狼次日在延期竞选中再爆导致流徽。次夜机械女巫9毒死7号猎人并与狼刀11号守卫形成双死；3号平民被刀、2号平民被放逐后，狼队击杀最后神牌10号通灵师获胜。；日夜复核追加4项原文支持的更正",
+      "phase_findings": 8,
+      "unresolved": [
+        {
+          "id": "s23-a-bv15paw66ejw-r4-seer_check-unresolved",
+          "round": 4,
+          "phase": "night",
+          "field": "rounds[4].night.seer_check.targets",
+          "question": "第4轮夜晚通灵师查验未记载：第3天夜晚通灵师10号是否完成查验及其目标未被复盘字幕说明。",
+          "reasoning": "该夜狼人击杀10号通灵师后结束；现有字幕没有查验动作或目标，无法唯一判断。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV15PaW66EjW_P01_CID42315679001.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "e7e4aaca9bc8111ac2f851437904a3d30b2a6dab7441042595e3b2e3f72b73da",
+              "start_ms": 2660620,
+              "end_ms": 2667000,
+              "quote": "入夜狼人击杀最后一张神之牌\n10号通灵师游戏结束\n狼人阵营屠神获胜"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv15paw66ejw-r3-guard-unresolved",
+          "round": 3,
+          "phase": "night",
+          "field": "rounds[3].night.guard.targets",
+          "question": "第3轮夜晚守卫目标未记载：第2天夜晚守卫11号的守护对象未被复盘字幕报出。",
+          "reasoning": "复盘记录入夜后狼队击杀3号、通灵师验3号，但没有守卫对象。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV15PaW66EjW_P01_CID42315679001.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "e7e4aaca9bc8111ac2f851437904a3d30b2a6dab7441042595e3b2e3f72b73da",
+              "start_ms": 2652140,
+              "end_ms": 2657810,
+              "quote": "入夜狼人击杀3号平民通灵去验\n验证3号玩家为平民身份"
+            }
+          ]
+        },
+        {
+          "id": "s23-a-bv15paw66ejw-r4-guard-unresolved",
+          "round": 4,
+          "phase": "night",
+          "field": "rounds[4].night.guard.targets",
+          "question": "第4轮夜晚守卫目标未记载：第3天夜晚守卫11号的守护对象未被复盘字幕报出。",
+          "reasoning": "复盘记录狼队入夜击杀最后一神并结束游戏，没有守卫目标。",
+          "evidence": [
+            {
+              "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV15PaW66EjW_P01_CID42315679001.平台AI字幕_ai-zh_01.原始.json",
+              "source_sha256": "e7e4aaca9bc8111ac2f851437904a3d30b2a6dab7441042595e3b2e3f72b73da",
+              "start_ms": 2660620,
+              "end_ms": 2667000,
+              "quote": "入夜狼人击杀最后一张神之牌\n10号通灵师游戏结束\n狼人阵营屠神获胜"
+            }
+          ]
+        }
+      ],
+      "phase_brief": "确认4项、推定1项，仍有3项具体未决。主要核实：第1轮夜间死亡结算；第2轮夜间死亡结算。"
+    }
+  ]
+}

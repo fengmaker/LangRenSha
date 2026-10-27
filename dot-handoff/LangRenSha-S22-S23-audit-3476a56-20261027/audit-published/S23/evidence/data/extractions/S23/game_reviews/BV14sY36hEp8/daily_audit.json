@@ -1,0 +1,315 @@
+{
+  "bvid": "BV14sY36hEp8",
+  "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5242080,
+    "end_ms": 5301750,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1混血儿7选6狼，狼刀预言家3、女巫救3，平安；D1放逐混血儿7，警徽移交6。",
+    "N2狼刀2、女巫毒10，2/10双死；N2后8号狼自爆，同日自爆后拍刀屠民胜利。"
+  ],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": "第二天8号自爆后狼队直接拍刀，无普通放逐。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_vote",
+      "changes": {
+        "action": "not_held",
+        "targets": [],
+        "result": "第二天8号自爆中断白天，继以独立拍刀。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-19-night-1",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5264310,
+          "end_ms": 5272640,
+          "quote": "女巫要救起\n形成平安夜预言家验证了2号玩家\n平民因为好人身份在警上竞选环节"
+        }
+      ]
+    },
+    {
+      "id": "phase-19-night-2",
+      "status": "confirmed",
+      "conclusion": "死者座位：2,10",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5278880,
+          "end_ms": 5286610,
+          "quote": "并将警徽移交至6号狼人入夜\n狼队击杀2号平民女巫\n毒杀10号狼人"
+        }
+      ]
+    },
+    {
+      "id": "bind-BV14sY36hEp8-ballot-1",
+      "status": "confirmed",
+      "conclusion": "未达绑票：狼方5+警徽半票0.5 < 好人7+警徽半票0.0。本轮实际放逐=7；本局最终宣布胜方=werewolf。绑票条件只作单独记录，不取消已经发生的投票。",
+      "reasoning": "按用户确认的个人胜利阵营计票（包括狼混），并按该日徽归属计警长半票；绑票判定与实际放逐结果、本局最终获胜宣布分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 3979760,
+          "end_ms": 4007280,
+          "quote": "321请出票\n一号投给7号\n2号投给7号\n3号投给7号\n4号投给7号\n5号投给3号\n6号\n投给3号\n7号\n投给3号\n8号\n投给3号\n9号投给7号\n10号\n投给3号\n11号\n投给7号\n12号\n投给7号\n投票结束\n7号玩家七票出局"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-night-witch_save",
+      "status": "confirmed",
+      "conclusion": "首夜女巫救起3号，平安夜",
+      "reasoning": "复盘直接描述狼刀3号后女巫救起。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5245120,
+          "end_ms": 5245980,
+          "quote": "3号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-registrations",
+      "status": "confirmed",
+      "conclusion": "首日初始上警：1/2/3/5/7/9/10/11/12号；警下：4/6/8号。",
+      "reasoning": "法官直接报出除4、6、8号外其余玩家上警，故登记名单与原始报名公告一致。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 1048950,
+          "end_ms": 1055700,
+          "quote": "本局游戏除4号六号八号玩家外\n其余玩家均上请上警"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-ballot.ballot-sheriff-initial-review",
+      "status": "confirmed",
+      "conclusion": "警徽首轮候选为1/7/9/11/12号，警下4/6/8号均投7号，7号以三票当选。",
+      "reasoning": "原始唱票直接逐项报出三名警下玩家的票向及7号当选；本轮记录完整。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 1824340,
+          "end_ms": 1844379,
+          "quote": "请警下家带盔\n在一号7号\n9号11号12号玩家中选出本九戏警长\n321请出票\n4号六号八号均投票给7号七号玩家\n三票\n当选区玩家请变蓝灯"
+        }
+      ]
+    },
+    {
+      "id": "coverage-2-day-exile_result",
+      "status": "confirmed",
+      "title": "8号自爆后直接拍刀，无放逐",
+      "conclusion": "D2 8号狼人自爆，狼队随即拍刀4号、11号平民并屠民获胜，本日没有普通放逐。",
+      "reasoning": "最终复盘连续列出第二天、自爆、拍刀与游戏结束，没有另一个白天；拍刀是独立阶段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "start_ms": 5291580,
+          "end_ms": 5301750,
+          "quote": "在第二天的白天\n8号狼人选择自爆之后\n狼队拍刀\n4号平民\n11号平民拍刀成功\n游戏结束\n狼队阵营屠民获胜"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": [],
+  "voting_replacement": {
+    "schema_version": 1,
+    "game_slug": "bili-BV14sY36hEp8-p01-g01",
+    "registrations": [
+      {
+        "id": "registration-1",
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          9,
+          10,
+          11,
+          12
+        ],
+        "off_police": [
+          4,
+          6,
+          8
+        ]
+      }
+    ],
+    "ballots": [
+      {
+        "id": "ballot-sheriff-initial-review",
+        "day": 1,
+        "kind": "sheriff",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": [
+          1,
+          7,
+          9,
+          11,
+          12
+        ],
+        "eligible_voters": [
+          4,
+          6,
+          8
+        ],
+        "votes": [
+          {
+            "voter": 4,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 7,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 7,
+        "unrecorded_voters": []
+      },
+      {
+        "id": "ballot-1",
+        "day": 1,
+        "kind": "exile",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": null,
+        "eligible_voters": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 2,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 6,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 7,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 10,
+            "target": 3,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 7,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 7,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 7,
+        "unrecorded_voters": []
+      }
+    ],
+    "interruptions": [],
+    "days": [
+      {
+        "day": 1,
+        "sheriff": "unknown",
+        "exile": "recorded"
+      },
+      {
+        "day": 2,
+        "sheriff": "unknown",
+        "exile": "interrupted_self_destruct"
+      }
+    ]
+  }
+}

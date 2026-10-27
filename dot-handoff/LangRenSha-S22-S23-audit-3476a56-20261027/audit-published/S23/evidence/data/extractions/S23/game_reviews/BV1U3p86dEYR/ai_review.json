@@ -1,0 +1,491 @@
+{
+  "bvid": "BV1U3p86dEYR",
+  "reviewer": "ai",
+  "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "逐cue核对新板型魔幻对决复盘、投票及对应截图，保留当局明确的狼术师和魔术师交换动作。角色为2/8/12狼人、4狼术师、3猎人、5女巫、6魔术师、7预言家、1/9/10/11平民。首夜4换3/10，狼刀11被女巫5救起，预言家7按交换实际查验3；8号狼悍跳两票当选并推动7出局。次夜6换2/5，刀6、毒5的实际结算为2与6双死；次日12自爆拍5女巫和3猎人，狼队屠神获胜。",
+  "decisions": [
+    {
+      "field": "board/seats",
+      "before": "magic_duel board; roles unknown",
+      "after": "明确记魔幻对决和全部12座真实身份，4号狼术师为狼人阵营",
+      "reasoning": "画面角色栏逐座确认；结尾口播称魔幻对决，role-first 名单与图像一致。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5528019,
+          "end_ms": 5529940,
+          "quote": "本剧版新为魔方对决"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "狼术师",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "魔术师",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].night.magic_duel_wolf_sorcerer_swap/seer_check",
+      "before": "首夜动作缺失；验10结果不明",
+      "after": "狼术师4交换3猎人与10平民；预言家7选验10，实际查验3号为好人",
+      "reasoning": "保留选择目标和交换后的实际验人目标，不把实际身份写成底牌变更。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5541830,
+          "end_ms": 5544050,
+          "quote": "通过狼术师交换3号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5544050,
+          "end_ms": 5548360,
+          "quote": "10号平民的呃身份牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5551750,
+          "end_ms": 5556110,
+          "quote": "形成平安夜预言家查验10号玩家平民实际查验"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day=1]",
+      "before": "仅记录放逐票，无警徽票",
+      "after": "竞选人2/4/7/8；警下10和11均投8，8两票当选；放逐票仍按12人投票记录，7出局",
+      "reasoning": "原字幕点名候选、两名警下投票人及结果，D1放逐票逐人核对。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1799870,
+          "end_ms": 1805010,
+          "quote": "在2号四号七号八号玩家中选出本游戏警长"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1805010,
+          "end_ms": 1808190,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1808190,
+          "end_ms": 1812450,
+          "quote": "10号11号均投票给8号八号玩家两票"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4005000,
+          "end_ms": 4007819,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4007819,
+          "end_ms": 4009179,
+          "quote": "一号投给7号"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4022450,
+          "end_ms": 4024170,
+          "quote": "投票结束"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night/day",
+      "before": "只记录刀6、毒5、死2/6、自爆12，缺交换结算",
+      "after": "魔术师6交换2狼/5女巫，狼刀6、女巫选毒5实际毒死2；2/6双死；12自爆拍中5与3，狼队屠神胜",
+      "reasoning": "复盘将原目标与实际死亡明确分开，按魔幻对决本局口播记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5564620,
+          "end_ms": 5570520,
+          "quote": "入夜魔术师交换2号狼人及5号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5573900,
+          "end_ms": 5576360,
+          "quote": "当夜狼人击杀6号魔术师"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5576360,
+          "end_ms": 5578720,
+          "quote": "女巫毒杀5号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5578720,
+          "end_ms": 5580280,
+          "quote": "实际毒杀2号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5580280,
+          "end_ms": 5582250,
+          "quote": "当夜为2号六号双死"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5583790,
+          "end_ms": 5585190,
+          "quote": "12号狼人选择自爆后"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5586550,
+          "end_ms": 5590000,
+          "quote": "5号女巫及3号猎人拍到成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5590520,
+          "end_ms": 5592090,
+          "quote": "狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "field": "bluffs.seat8",
+      "before": "unknown",
+      "after": "8号狼悍跳预言家、拿警徽；真实预言家7首日出局，判成功",
+      "reasoning": "根据视频明确“悍跳狼人获得警徽”及7号预言家首日放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5560000,
+          "end_ms": 5561780,
+          "quote": "8号悍跳狼人获得警徽"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5562580,
+          "end_ms": 5564620,
+          "quote": "7号预言家被抗推出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.self_destruct.targets",
+      "before": [
+        5,
+        3
+      ],
+      "after": [],
+      "reasoning": "12号自爆与其后狼人拍刀是两个连续独立事件；将目标移至wolf_shot。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5583790,
+          "end_ms": 5585190,
+          "quote": "12号狼人选择自爆后"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5585190,
+          "end_ms": 5586550,
+          "quote": "狼队选择拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5586550,
+          "end_ms": 5590000,
+          "quote": "5号女巫及3号猎人拍到成功"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.wolf_shot.targets",
+      "before": [],
+      "after": [
+        5,
+        3
+      ],
+      "reasoning": "字幕明确狼队拍刀命中5号女巫、3号猎人。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5585190,
+          "end_ms": 5586550,
+          "quote": "狼队选择拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5586550,
+          "end_ms": 5590000,
+          "quote": "5号女巫及3号猎人拍到成功"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        9,
+        10,
+        11
+      ],
+      "roles": [
+        "平民"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "平民",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        2,
+        8,
+        12
+      ],
+      "roles": [
+        "狼人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "狼人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        3
+      ],
+      "roles": [
+        "猎人"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "猎人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        4
+      ],
+      "roles": [
+        "狼术师"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "狼术师",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        5
+      ],
+      "roles": [
+        "女巫"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "女巫",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        6
+      ],
+      "roles": [
+        "魔术师"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "魔术师",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        7
+      ],
+      "roles": [
+        "预言家"
+      ],
+      "reasoning": "逐座查看对应截图，座号旁角色栏标明该身份。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "预言家",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 8,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": true,
+      "reasoning": "8号实为狼人，截图上以预言家身份宣称查验；复盘明确称悍跳并获徽，真实预言家7首日被放逐。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1U3p86dEYR/BV1U3p86dEYR_05143.549.png",
+          "frame_time_ms": 5143549,
+          "quote": "预言家",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5560000,
+          "end_ms": 5561780,
+          "quote": "8号悍跳狼人获得警徽"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5562580,
+          "end_ms": 5564620,
+          "quote": "7号预言家被抗推出局"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:08:27Z",
+  "phase_findings": [
+    {
+      "id": "b72-d2-separate-selfdestruct-and-wolf-shot",
+      "round": 2,
+      "phase": "day",
+      "status": "confirmed",
+      "field": "rounds[2].day.self_destruct; rounds[2].day.wolf_shot",
+      "title": "自爆与拍刀分开记录",
+      "conclusion": "12号先自爆；其后狼人拍刀命中5号女巫和3号猎人并获胜。",
+      "reasoning": "原复盘连续分开叙述自爆、狼队选择拍刀、目标和游戏结束；当前自爆事件错误吞并两名拍刀目标，现拆成两个事件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5583790,
+          "end_ms": 5585190,
+          "quote": "12号狼人选择自爆后"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5585190,
+          "end_ms": 5586550,
+          "quote": "狼队选择拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5586550,
+          "end_ms": 5590000,
+          "quote": "5号女巫及3号猎人拍到成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5590000,
+          "end_ms": 5590520,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5590520,
+          "end_ms": 5592090,
+          "quote": "狼队阵营屠神获胜"
+        }
+      ]
+    },
+    {
+      "id": "b72-d2-terminal-hunter-response",
+      "round": 2,
+      "phase": "day",
+      "status": "unresolved",
+      "field": "rounds[2].day.hunter_shot[3]",
+      "title": "猎人被狼队拍刀击中后的响应",
+      "conclusion": "3号猎人被拍刀命中，游戏结束；字幕未说明是否有猎人枪或其资格。",
+      "reasoning": "当局结算没有描述拍刀后猎人响应顺序或资格，保留具体日结算疑问。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5585190,
+          "end_ms": 5586550,
+          "quote": "狼队选择拍刀"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5586550,
+          "end_ms": 5590000,
+          "quote": "5号女巫及3号猎人拍到成功"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5590000,
+          "end_ms": 5590520,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "start_ms": 5590520,
+          "end_ms": 5592090,
+          "quote": "狼队阵营屠神获胜"
+        }
+      ]
+    }
+  ]
+}

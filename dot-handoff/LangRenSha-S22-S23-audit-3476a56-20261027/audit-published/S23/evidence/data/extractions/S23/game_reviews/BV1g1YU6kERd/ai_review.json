@@ -1,0 +1,458 @@
+{
+  "bvid": "BV1g1YU6kERd",
+  "reviewer": "ai",
+  "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "官方索引24正赛：已阅读角色复盘和投票上下文，并逐座查看本局 1080p 截图。#24按青丘夜影当局动作与结算描述记录，不套用其他板型。；日夜复核追加1项原文支持的更正",
+  "decisions": [
+    {
+      "field": "seats.name",
+      "before": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "6": null,
+        "7": null,
+        "8": null,
+        "9": null,
+        "10": null,
+        "11": null,
+        "12": null
+      },
+      "after": {
+        "1": "园长",
+        "2": "圈圈",
+        "3": "徐言雨",
+        "4": "华仔仔",
+        "5": "耿许儿",
+        "6": "荣耀",
+        "7": "JY",
+        "8": "牛肉干",
+        "9": "鲸鱼",
+        "10": "又又",
+        "11": "葛小舞",
+        "12": "BOBBY"
+      },
+      "reasoning": "姓名按截图侧边姓名标牌逐座读取。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1g1YU6kERd/BV1g1YU6kERd_04411.719.png",
+          "frame_time_ms": 4411719,
+          "quote": "画面角色侧栏：1平民、2平民、3预言家、4九尾狐、5平民、6白泽、7狼人、8平民、9狼人、10狼人、11守卫、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "seats.role_faction",
+      "before": {
+        "1": "平民",
+        "2": "平民",
+        "3": "预言家",
+        "4": null,
+        "5": "平民",
+        "6": null,
+        "7": "狼人",
+        "8": "平民",
+        "9": "狼人",
+        "10": "狼人",
+        "11": "守卫",
+        "12": "女巫"
+      },
+      "after": {
+        "1": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "2": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "3": {
+          "role": "预言家",
+          "faction": "good"
+        },
+        "4": {
+          "role": "九尾狐",
+          "faction": "werewolf"
+        },
+        "5": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "6": {
+          "role": "白泽",
+          "faction": "good"
+        },
+        "7": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "8": {
+          "role": "平民",
+          "faction": "good"
+        },
+        "9": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "10": {
+          "role": "狼人",
+          "faction": "werewolf"
+        },
+        "11": {
+          "role": "守卫",
+          "faction": "good"
+        },
+        "12": {
+          "role": "女巫",
+          "faction": "good"
+        }
+      },
+      "reasoning": "#23 画面身份侧栏标“未知”，该局依连续结算角色串按 role-term→following-seat 顺序核对；其他局按截图实际身份标签。混血儿学习目标与阵营分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1g1YU6kERd/BV1g1YU6kERd_04411.719.png",
+          "frame_time_ms": 4411719,
+          "quote": "画面角色侧栏：1平民、2平民、3预言家、4九尾狐、5平民、6白泽、7狼人、8平民、9狼人、10狼人、11守卫、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "winner",
+      "before": null,
+      "after": "werewolf",
+      "reasoning": "复盘收尾给出阵营胜负。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4430540,
+          "end_ms": 4432220,
+          "quote": "狼队阵营屠城获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting_review",
+      "before": "baseline.voting.json",
+      "after": "voting.reviewed.json",
+      "reasoning": "逐轮核对出票提示及后续投票字幕。补入复盘明确的#23警徽票结果、#24 PK 获徽者；#25有声字幕完整覆盖在场投票者，标为complete。其余partial/null保留。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1272320,
+          "end_ms": 1278800,
+          "quote": "5号九号玩家中选出本游戏警长321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1278800,
+          "end_ms": 1280640,
+          "quote": "4号投给一号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1280640,
+          "end_ms": 1283680,
+          "quote": "6号投给3号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1283680,
+          "end_ms": 1285620,
+          "quote": "7号投给5号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1762440,
+          "end_ms": 1764100,
+          "quote": "2号投给3号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1771780,
+          "end_ms": 1773260,
+          "quote": "9号投给一号"
+        }
+      ]
+    },
+    {
+      "field": "rounds.4_and_board_rules",
+      "before": "round 4 empty; no Qingqiu-specific marks/hunt recorded",
+      "after": "day 4 final-night attack on 11, mark state and hunt resolution recorded in round 4",
+      "reasoning": "9、7、10在第一、第二、第三天先后自爆；后面仍发生一个夜间击杀11和猎杀技能，故应属第四天阶段。复盘虽误称第三天，保留本局能直接证实的标记/清除/免毒与结算条件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4465670,
+          "end_ms": 4467150,
+          "quote": "9号狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4484830,
+          "end_ms": 4485950,
+          "quote": "7号狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4503850,
+          "end_ms": 4505290,
+          "quote": "10号狼人选择自爆"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4532230,
+          "end_ms": 4536059,
+          "quote": "夜间的环节是九尾狐带刀击杀了11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4550740,
+          "end_ms": 4554200,
+          "quote": "标记人数加上九尾狐自身人数"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4554200,
+          "end_ms": 4556380,
+          "quote": "严格大于未被标记人数"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "die",
+        "targets": [
+          1,
+          5
+        ]
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          8
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4493750,
+          "end_ms": 4496950,
+          "quote": "夜间狼队击杀8号平民"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.night_deaths",
+      "before": "未建夜死槽",
+      "after": {
+        "action": "die",
+        "targets": [
+          1
+        ]
+      },
+      "reasoning": "复盘原句直接点出1号平民被毒杀。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4478850,
+          "end_ms": 4479810,
+          "quote": "毒杀一号平民"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "平民",
+        "平民",
+        "预言家",
+        "九尾狐",
+        "平民",
+        "白泽",
+        "狼人",
+        "平民",
+        "狼人",
+        "狼人",
+        "守卫",
+        "女巫"
+      ],
+      "reasoning": "青丘夜影逐席身份来自本局画面真实角色标签。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1g1YU6kERd/BV1g1YU6kERd_04411.719.png",
+          "frame_time_ms": 4411719,
+          "quote": "画面角色侧栏：1平民、2平民、3预言家、4九尾狐、5平民、6白泽、7狼人、8平民、9狼人、10狼人、11守卫、12女巫。",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 9,
+      "day": 1,
+      "claimed_role": null,
+      "attempted": false,
+      "success": null,
+      "reasoning": "9号物理底牌为狼人，但首日公开轮从“过了9号玩家请发言”到其本人说“没了我自爆了”结束，没有本人自称预言家或通灵师。复盘中把其标作悍跳狼自爆，仍不能代替其本人公开自称原话；因此不记为悍跳尝试。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2578139,
+          "end_ms": 2581780,
+          "quote": "过了9号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2700245,
+          "end_ms": 2701009,
+          "quote": "没了我自爆了"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2701009,
+          "end_ms": 2702469,
+          "quote": "9号玩家选择自爆"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T17:15:29Z",
+  "resolved_followups": [
+    {
+      "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+      "item": "复查9号自称归属，不能只由上警或自爆确定悍跳。",
+      "resolved": "已核对9号首日发言交接至自爆：没有可归属给9号的预言家/通灵师自称；自爆后讨论中的相似表述不计为其公开自称。",
+      "remaining_items": [],
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2578139,
+          "end_ms": 2581780,
+          "quote": "过了9号玩家请发言"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2700245,
+          "end_ms": 2701009,
+          "quote": "没了我自爆了"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2701009,
+          "end_ms": 2702469,
+          "quote": "9号玩家选择自爆"
+        }
+      ]
+    }
+  ],
+  "phase_findings": [
+    {
+      "id": "phase-24-night-2",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "死者座位：8",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4493750,
+          "end_ms": 4496950,
+          "quote": "夜间狼队击杀8号平民"
+        }
+      ]
+    },
+    {
+      "id": "phase-24-night-4",
+      "round": 4,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[4].day.night_deaths",
+      "title": "第4轮夜间死亡结算",
+      "conclusion": "死者座位：11",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4532230,
+          "end_ms": 4536059,
+          "quote": "夜间的环节是九尾狐带刀击杀了11号"
+        }
+      ]
+    },
+    {
+      "id": "phase-24-open-4-3",
+      "round": 4,
+      "phase": "day",
+      "status": "unresolved",
+      "field": "rounds[4].day.exile_result",
+      "title": "D4出局机制",
+      "conclusion": "字幕提到标记场上剩2、12，随后3号预言家及6号白泽出局，未明确是放逐或技能结算。",
+      "reasoning": "原字幕给出相关阶段上下文，但未唯一给出该字段；不以baseline补值。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4523200,
+          "end_ms": 4529110,
+          "quote": "嗯此时场上标记为2号平民以及12号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4567740,
+          "end_ms": 4571710,
+          "quote": "导致3号预言家以及6号白泽出局"
+        }
+      ]
+    },
+    {
+      "id": "phase-BV1g1YU6kERd-night-1-cross",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "开局夜夜死结算",
+      "conclusion": "首夜毒杀1号平民，夜死目标明确。",
+      "reasoning": "复盘原句直接点出1号平民被毒杀。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4478850,
+          "end_ms": 4479810,
+          "quote": "毒杀一号平民"
+        }
+      ]
+    }
+  ]
+}

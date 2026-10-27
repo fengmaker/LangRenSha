@@ -1,0 +1,83 @@
+{
+  "bvid": "BV1D2ak6XEMa",
+  "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5824750,
+    "end_ms": 5892285,
+    "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+  },
+  "checks": [
+    {
+      "field": "complete_daily_recap",
+      "status": "confirmed",
+      "conclusion": "N1守卫护5、狼刀机械狼9被女巫救起，平安；机械狼学猎人5，验4平民。D1狼6自爆。N2守卫自守、狼杀通灵师10、女巫毒守卫7，7/10双死并验7；D2狼2自爆。N3狼杀女巫8；D3机械猎人9被放逐后带走末狼1，好人胜；通灵师已于N2出局。",
+      "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5824750,
+          "end_ms": 5892285,
+          "quote": "好好下下来给各位代表老师们做一本本节角色。\n付盘本本版型。\n因为机械狼通律师，\n深圳影通律师，\n十号、女巫八号猎人五号首位七号狼人证言，\n一号二号六号。\n机械狼九号本局游戏为机械猎人阵营三号、四号、十一号十二号。\n首先说一首五号猎人狼队击杀九号机械狼牛要救起，\n形成平安夜机器来模仿。\n五号猎人本局游戏为机械猎人同意是查验了四号玩家为平民身份警上竞选环节。\n四号平民获得警徽。\n第一天白天六号，\n狼人选择自爆，\n入夜守卫守护七号自首狼队击杀。\n十号通灵师女巫毒杀，\n七号守卫道演为七号。\n十号双子同一师业界验证了七号玩家为首位身份。\n在第二天白天，\n二号狼人选择自爆，\n入夜，\n狼队击杀八号女巫八号牛单死。\n在此第三天的白天，\n九号机械猎人被公投出局，\n并开枪带走场上最后一张狼队友一号，\n游戏结束，\n好人阵营获胜。"
+        }
+      ]
+    }
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "b56-r1-night-peaceful",
+      "status": "confirmed",
+      "conclusion": "N1狼人击杀9号，女巫救起，D1为平安夜。",
+      "reasoning": "结尾复盘直接将狼刀、解救和形成平安夜连述。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5845310,
+          "end_ms": 5849650,
+          "quote": "首先说一首五号猎人狼队击杀九号机械狼牛要救起，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5849690,
+          "end_ms": 5852340,
+          "quote": "形成平安夜机器来模仿。"
+        }
+      ]
+    },
+    {
+      "id": "b56-r3-seer-dead",
+      "status": "inferred",
+      "conclusion": "10号通灵师在N2双死中出局，N3不再有通灵师查验。",
+      "reasoning": "复盘将10号通灵师与7号守卫列为N2双死；已出局角色的后续夜间技能槽按规则标为不可用。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5863720,
+          "end_ms": 5867050,
+          "quote": "入夜守卫守护七号自首狼队击杀。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5867070,
+          "end_ms": 5869130,
+          "quote": "十号通灵师女巫毒杀，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 5871090,
+          "end_ms": 5875565,
+          "quote": "十号双子同一师业界验证了七号玩家为首位身份。"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

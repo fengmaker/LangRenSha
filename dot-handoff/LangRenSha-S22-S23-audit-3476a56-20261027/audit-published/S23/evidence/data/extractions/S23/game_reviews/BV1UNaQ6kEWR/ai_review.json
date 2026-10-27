@@ -1,0 +1,316 @@
+{
+  "bvid": "BV1UNaQ6kEWR",
+  "reviewer": "ai",
+  "source_sha256": "b742a8c92601f8bb00e09c5fbc1b6b996d3abaeb318114114a8a50d2a67732f5",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "1号实际底牌是假面、狼人阵营。8预言家获徽（4/9/12三票，5投6）；D1狼6自爆。N2舞池1/2/9致2舞死、刀3毒5，2/3/5出局；D2狼10自爆。N3舞池4/8/12，8戴面具被舞出、刀7，7/8双死，徽转9。D3五人投票出最后一狼1号，好人胜。",
+  "decisions": [
+    {
+      "field": "seats.roles",
+      "before": [
+        "假面",
+        "平民",
+        "平民",
+        "舞者",
+        "狼人",
+        "狼人",
+        "平民",
+        null,
+        "平民",
+        "狼人",
+        "白痴",
+        null
+      ],
+      "after": [
+        "蒙面人",
+        "平民",
+        "平民",
+        "舞者",
+        "狼人",
+        "狼人",
+        "平民",
+        "预言家",
+        "平民",
+        "狼人",
+        "白神",
+        "女巫"
+      ],
+      "reasoning": "截图竖排角色底牌与全局复盘互证。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4383720,
+          "end_ms": 4479440,
+          "quote": "我这里嗯这个感票来给各位当老师们本局游戏戏复盘本剧版型为假面舞会神警预言家。\n八号女巫十二号舞者四号白神十一号狼人阵营，\n五号六号、十号假面一号平民阵营，\n二号、三号、七号、九号首夜狼队击杀十号狼人女巫要救起，\n形成平安夜预言家验证五号玩家为老人身份。\n嗯嗯，\n在警上竞选环节，\n八号预言家获得警徽。\n在第一天白天，\n六号狼人选择自爆入夜舞止的舞池，\n一号假面、二号平民九号平民假面验证了十一号玩家，\n白神不在舞池内，\n给予了九号平民一张面具。\n当夜，\n二号平民被捂出局，\n狼队夜间选择击杀三号平民牛犊，\n杀五号狼人。\n当夜为二号、三号、五号多岛预言家，\n验证了四号玩家舞者为好人身份。\n在第二天白天，\n十号狼人行的自曝入夜无止的舞池，\n四号舞者八号预言家，\n十二号女巫当夜舞者在舞池内舞持美一狼刀假面验证了八号玩家。\n预言家在舞池内给予了八号预言家一张面具，\n并击杀七号平民。\n当夜为七号八号生死预言家，\n验证了九号玩家平民为好人身份，\n并在出局后将警徽移交至九号平民。\n在第三天白天场上最后一狼一号假面被公托出局，\n游戏结束好人这一获胜。"
+        }
+      ]
+    },
+    {
+      "field": "D1.sheriff_vote",
+      "before": "registrations and sheriff ballot absent",
+      "after": "3/6/8竞选；4→6、5→6、9→8、12→8；8号当选3票；另1票的投票人仅能限定在1/2/7/10/11。",
+      "reasoning": "口播逐票给出四票且明确8号获3票，不能把未知一张投票归到某个已知座位，也不能把其余未知者预填为弃票。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 1279560,
+          "end_ms": 1311180,
+          "quote": "退水自爆环节，\n五四三二一人龙警上玩家三号六号八号请谨向玩家带亏在三号六号八号玩家中选出本局警长三二一请出票，\n四号投给八号五号投给六号，\n九号投给八号十二号投给八号投票结束，\n八号玩家三票当选，\n其余玩家请亮蓝灯。"
+        }
+      ]
+    },
+    {
+      "field": "D1-D3.events",
+      "before": "missing registrations and game events",
+      "after": "6号D1自爆；N2 2蒙面、3狼刀、5女巫毒死；10号D2自爆；N3 7/8出局，8传徽9；D3放逐1号。",
+      "reasoning": "结合复盘、逐日逐票口播及截图自称层与真底牌层。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4383720,
+          "end_ms": 4479440,
+          "quote": "我这里嗯这个感票来给各位当老师们本局游戏戏复盘本剧版型为假面舞会神警预言家。\n八号女巫十二号舞者四号白神十一号狼人阵营，\n五号六号、十号假面一号平民阵营，\n二号、三号、七号、九号首夜狼队击杀十号狼人女巫要救起，\n形成平安夜预言家验证五号玩家为老人身份。\n嗯嗯，\n在警上竞选环节，\n八号预言家获得警徽。\n在第一天白天，\n六号狼人选择自爆入夜舞止的舞池，\n一号假面、二号平民九号平民假面验证了十一号玩家，\n白神不在舞池内，\n给予了九号平民一张面具。\n当夜，\n二号平民被捂出局，\n狼队夜间选择击杀三号平民牛犊，\n杀五号狼人。\n当夜为二号、三号、五号多岛预言家，\n验证了四号玩家舞者为好人身份。\n在第二天白天，\n十号狼人行的自曝入夜无止的舞池，\n四号舞者八号预言家，\n十二号女巫当夜舞者在舞池内舞持美一狼刀假面验证了八号玩家。\n预言家在舞池内给予了八号预言家一张面具，\n并击杀七号平民。\n当夜为七号八号生死预言家，\n验证了九号玩家平民为好人身份，\n并在出局后将警徽移交至九号平民。\n在第三天白天场上最后一狼一号假面被公托出局，\n游戏结束好人这一获胜。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4340620,
+          "end_ms": 4364640,
+          "quote": "过了所有玩家发言结束，\n请各位玩家带亏，\n做好投票准备。\n警长请归票。\n警长归票一号。\n各位玩家唱票结束前，\n不要放手三二一请出票，\n一号投给四号，\n四号投给一号九号投给一号十一号投给一号十二号投给四号，\n投票结束，\n一号玩家三点五票出局。"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "continuation_crosscheck_20261026",
+      "before": "上一轮未决或矛盾候选（完整原稿已归档）",
+      "after": "警徽缺票问题源于把原句4→8误录成4→6；原转写和原视频侧栏4/9/12的红色票均是8，三票齐全。底牌1是假面狼人，非好人蒙面人；按连续复盘补齐两夜舞池与少数方死亡，胜方仍好人。",
+      "reasoning": "警徽缺票问题源于把原句4→8误录成4→6；原转写和原视频侧栏4/9/12的红色票均是8，三票齐全。底牌1是假面狼人，非好人蒙面人；按连续复盘补齐两夜舞池与少数方死亡，胜方仍好人。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "source_sha256": "b742a8c92601f8bb00e09c5fbc1b6b996d3abaeb318114114a8a50d2a67732f5",
+          "start_ms": 1279555,
+          "end_ms": 1311180,
+          "quote": "退水自爆环节，\n五四三二一人龙警上玩家三号六号八号请谨向玩家带亏在三号六号八号玩家中选出本局警长三二一请出票，\n四号投给八号五号投给六号，\n九号投给八号十二号投给八号投票结束，\n八号玩家三票当选，\n其余玩家请亮蓝灯。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "source_sha256": "b742a8c92601f8bb00e09c5fbc1b6b996d3abaeb318114114a8a50d2a67732f5",
+          "start_ms": 4394210,
+          "end_ms": 4479445,
+          "quote": "八号女巫十二号舞者四号白神十一号狼人阵营，\n五号六号、十号假面一号平民阵营，\n二号、三号、七号、九号首夜狼队击杀十号狼人女巫要救起，\n形成平安夜预言家验证五号玩家为老人身份。\n嗯嗯，\n在警上竞选环节，\n八号预言家获得警徽。\n在第一天白天，\n六号狼人选择自爆入夜舞止的舞池，\n一号假面、二号平民九号平民假面验证了十一号玩家，\n白神不在舞池内，\n给予了九号平民一张面具。\n当夜，\n二号平民被捂出局，\n狼队夜间选择击杀三号平民牛犊，\n杀五号狼人。\n当夜为二号、三号、五号多岛预言家，\n验证了四号玩家舞者为好人身份。\n在第二天白天，\n十号狼人行的自曝入夜无止的舞池，\n四号舞者八号预言家，\n十二号女巫当夜舞者在舞池内舞持美一狼刀假面验证了八号玩家。\n预言家在舞池内给予了八号预言家一张面具，\n并击杀七号平民。\n当夜为七号八号生死预言家，\n验证了九号玩家平民为好人身份，\n并在出局后将警徽移交至九号平民。\n在第三天白天场上最后一狼一号假面被公托出局，\n游戏结束好人这一获胜。"
+        },
+        {
+          "kind": "video_frame",
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "1号假面红框；4/9/12席红票均8，5席红票6；舞者两夜选择1-2-9及4-8-12"
+        }
+      ]
+    },
+    {
+      "field": "roster/commentators/referee",
+      "before": {
+        "roster": [
+          "小苍cany",
+          "牛肉干干丶",
+          "陈明峻-",
+          "Ksssssss陈彬",
+          "BobbyJ波比儿",
+          "大卫本人哦",
+          "Ted_Dragon",
+          "陈俊洁C",
+          "大彭彭_ff",
+          "亚亚NiaNia",
+          "天天的星_",
+          "辣味蛋黄派"
+        ],
+        "commentators": [
+          "赵鑫华_HZz",
+          "笑笑Mieie"
+        ],
+        "referee": "pointy豆儿啵"
+      },
+      "after": {
+        "roster": [
+          "小苍cany",
+          "大彭彭_ff",
+          "耿许儿",
+          "郭小炜Winnie",
+          "Ksssssss陈彬",
+          "荣耀Forry",
+          "宝玉妹妹_",
+          "北影掌门-李斯",
+          "在动物园散步的又又",
+          "Efeng_翼风",
+          "笑笑Mieie",
+          "大申屠007"
+        ],
+        "commentators": [
+          "辣味蛋黄派",
+          "李舒服lzzzy"
+        ],
+        "referee": "pointy豆儿啵"
+      },
+      "reasoning": "视频日期核实为10月2日后，须同时清掉错误10月1日排班。10月2日已确认微博阵容与画面12席姓名逐一相符；解说为蛋黄派、李舒服，法官豆儿啵。",
+      "evidence": [
+        {
+          "source_path": "data/weibo/2026-05-26_2026-10-20/比赛排班.csv",
+          "quote": "辣味蛋黄派、李舒服lzzzy"
+        },
+        {
+          "kind": "video_frame",
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "画面2026/10/2第二局，12席姓名与该日阵容相符。"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        9,
+        11,
+        12
+      ],
+      "roles": [
+        "蒙面人",
+        "平民",
+        "平民",
+        "舞者",
+        "平民",
+        "平民",
+        "白神",
+        "女巫"
+      ],
+      "reasoning": "截图和复盘角色名单。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4383720,
+          "end_ms": 4401830,
+          "quote": "我这里嗯这个感票来给各位当老师们本局游戏戏复盘本剧版型为假面舞会神警预言家。\n八号女巫十二号舞者四号白神十一号狼人阵营，\n五号六号、十号假面一号平民阵营，"
+        }
+      ]
+    },
+    {
+      "seats": [
+        5,
+        6,
+        10
+      ],
+      "roles": [
+        "狼人",
+        "狼人",
+        "狼人"
+      ],
+      "reasoning": "截图和复盘角色名单；6号的预言家字样为黄色自称。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4383720,
+          "end_ms": 4417200,
+          "quote": "我这里嗯这个感票来给各位当老师们本局游戏戏复盘本剧版型为假面舞会神警预言家。\n八号女巫十二号舞者四号白神十一号狼人阵营，\n五号六号、十号假面一号平民阵营，\n二号、三号、七号、九号首夜狼队击杀十号狼人女巫要救起，\n形成平安夜预言家验证五号玩家为老人身份。\n嗯嗯，\n在警上竞选环节，\n八号预言家获得警徽。\n在第一天白天，\n六号狼人选择自爆入夜舞止的舞池，"
+        }
+      ]
+    },
+    {
+      "seats": [
+        8
+      ],
+      "roles": [
+        "预言家"
+      ],
+      "reasoning": "8号预言家实际获徽并在终局转给9号。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4413480,
+          "end_ms": 4415940,
+          "quote": "在警上竞选环节，\n八号预言家获得警徽。\n在第一天白天，"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4469630,
+          "end_ms": 4472690,
+          "quote": "并在出局后将警徽移交至九号平民。"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 6,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "截图直接显示6号狼人报“验9查杀、警徽流12-10”；其自爆中断首日放逐，未取徽，也未以首日放逐好人获胜。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1UNaQ6kEWR/BV1UNaQ6kEWR_04107.325.png",
+          "frame_time_ms": 4107325,
+          "quote": "01蒙面人、02平民、03平民、04舞者、05狼人、06狼人、07平民、08预言家、09平民、10狼人、11白神、12女巫；06狼人自称“验9查杀、警徽流12-10”，8号预言家获得警徽。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json",
+          "start_ms": 4416900,
+          "end_ms": 4420170,
+          "quote": "六号狼人选择自爆入夜舞止的舞池，"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-26T00:00:00Z",
+  "continuation_review": {
+    "reviewer": "ai",
+    "reviewed_at_utc": "2026-10-25T19:19:09.362340+00:00",
+    "source_sha256": "b742a8c92601f8bb00e09c5fbc1b6b996d3abaeb318114114a8a50d2a67732f5",
+    "result": "警徽缺票问题源于把原句4→8误录成4→6；原转写和原视频侧栏4/9/12的红色票均是8，三票齐全。底牌1是假面狼人，非好人蒙面人；按连续复盘补齐两夜舞池与少数方死亡，胜方仍好人。",
+    "human_confirmed": false
+  },
+  "phase_findings": []
+}

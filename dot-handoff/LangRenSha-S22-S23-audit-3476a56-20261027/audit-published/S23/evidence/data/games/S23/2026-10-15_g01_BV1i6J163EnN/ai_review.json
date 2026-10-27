@@ -1,0 +1,758 @@
+{
+  "bvid": "BV1i6J163EnN",
+  "reviewer": "ai",
+  "source_sha256": "b4058e1c1c4022bd788cb85156613c6dbeef5725080089a9a98bd4047071e5bd",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "底牌为1、2、11、12号狼人；3、5、9号平民；4号猎人；6号混血儿；7号白神；8号女巫；10号预言家。6号选3号平民作榜样，个人胜利阵营为好人。首夜狼刀8、女巫毒6、10查11为狼人，6/8双死。全员上警导致警徽流失。D1首轮3/11各5票平票，PK复投11号5票出局；狼队拍刀失败，好人胜。12号狼人伪跳预言家报3号查杀，但未获徽且首日最终未放逐好人，悍跳失败。",
+  "decisions": [
+    {
+      "field": "seats[1..12]",
+      "before": "10号身份未知；6号混血儿胜利阵营及榜样未记录",
+      "after": "确认截图所示完整底牌；10号预言家；6号混血儿以3号平民为榜样且个人胜利阵营为好人",
+      "reasoning": "桌面身份牌逐座可读。复盘明确6号混血儿本局跟随好人阵营并选择3号平民为榜样；复盘另确认10号预言家验证11号为唯一狼人。混血儿底牌、所学榜样和个人胜利阵营分开记录。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "quote": "1 狼人；2 狼人；3 平民；4 猎人；5 平民；6 混血儿；7 白神；8 女巫；9 平民；10 预言家；11 狼人；12 狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2915820,
+          "end_ms": 2921040,
+          "quote": "6号本就游戏好人混\n首页混血儿选择3号平民为榜样"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2925850,
+          "end_ms": 2928710,
+          "quote": "预言家验证了11号玩家唯一狼人身份"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0].night",
+      "before": "验人行动者与反馈未知；死亡结果未记录",
+      "after": "6号选择3号平民作榜样；狼刀8号女巫；女巫毒6号混血儿；10号预言家查验11号反馈狼人；6/8双死",
+      "reasoning": "复盘明确混血儿榜样、好人阵营、狼刀8、女巫毒6及双死；同段后续明确预言家查验11号为唯一狼人。座位10预言家由画面角色牌确认。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2915820,
+          "end_ms": 2928710,
+          "quote": "6号本就游戏好人混\n首页混血儿选择3号平民为榜样\n形成好人混狼队击杀8号女巫\n女巫\n毒杀6号混血儿\n六八双死\n预言家验证了11号玩家唯一狼人身份"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "quote": "10 预言家；6 混血儿；8 女巫；11 狼人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "rounds[0].day.sheriff_and_badge",
+      "before": "警徽状态未知",
+      "after": "12人全员上警，无警下与警徽票，警徽流失",
+      "reasoning": "法官播报全员上警并随后播报警徽流失；没有警下名单或警徽投票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1299420,
+          "end_ms": 1301640,
+          "quote": "本局游戏全员上警\n警徽流失"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "quote": "本局游戏全员上警，警徽流失",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day1]",
+      "before": "单轮部分票型，平票后PK轮未记录",
+      "after": "首轮10名存活票权玩家投票，3/11各5票平票；PK轮8名非候选人投票，11号5票出局",
+      "reasoning": "逐人唱票与主持宣布结果明确分成首轮和PK复投。6号与8号首夜死亡，所以不在投票名单；PK候选3/11不参与第二轮。两轮各自完整保存。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2473880,
+          "end_ms": 2505130,
+          "quote": "321请出票\n一号投给3号\n2号投给3号\n3号投给11号\n4号投给3号\n5号投给11号\n7号投给11号\n9号投给11号\n10号投给11号\n11号投给3号\n12号投给3号\n投票结束\n五票比五票3号11号平票pk"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2641620,
+          "end_ms": 2661860,
+          "quote": "321请出票好\n一号投给3号\n2号投给3号\n4号投给11号\n5号投给11号\n7号投给11号\n9号投给11号\n10号投给11号\n12号投给3号\n投票结束\n11号玩家五票出局\n请发表遗言"
+        }
+      ]
+    },
+    {
+      "field": "winner_and_endgame",
+      "before": "good",
+      "after": "good；D1放逐11号狼人后狼队拍刀失败，好人获胜",
+      "reasoning": "赛后复盘明确11号狼人公投出局、狼队选择拍刀，10号预言家、9号平民、7号白神拍刀失败，法官宣布好人阵营获胜。拍刀是独立终局阶段，不增加常规夜晚。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2932730,
+          "end_ms": 2942880,
+          "quote": "11号狼人被公投出局后\n狼队选择拍刀\n10号预言家\n9号平民以及7号白神拍刀失败\n游戏结束\n好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "field": "seats.name",
+      "before": "OCR部分缺字",
+      "after": {
+        "1": "Hulk",
+        "2": "谢朵儿",
+        "3": "翼风",
+        "4": "华仔仔",
+        "5": "郭小炜",
+        "6": "小苍",
+        "7": "JY",
+        "8": "荣耀",
+        "9": "董鲸鱼",
+        "10": "陈明峻",
+        "11": "Ted",
+        "12": "Bobby"
+      },
+      "reasoning": "主审逐席目视读取本局1920x1080截图姓名栏，以已确认S23别名统一鲸鱼为董鲸鱼。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "kind": "video_frame",
+          "quote": "01 Hulk；02 谢朵儿；03 翼风；04 华仔仔；05 郭小炜；06 小苍；07 JY；08 荣耀；09 鲸鱼；10 陈明峻；11 Ted；12 BOBBY"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "狼人",
+        "狼人",
+        "平民",
+        "猎人",
+        "平民",
+        "混血儿",
+        "白神",
+        "女巫",
+        "平民",
+        "预言家",
+        "狼人",
+        "狼人"
+      ],
+      "reasoning": "逐座查看截图中的竖排实体角色牌；图中黄色查验文字是玩家发言主张，不能替代实体角色牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "quote": "1 狼人；2 狼人；3 平民；4 猎人；5 平民；6 混血儿；7 白神；8 女巫；9 平民；10 预言家；11 狼人；12 狼人",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "seats": [
+        6,
+        3
+      ],
+      "roles": [
+        "混血儿（榜样为3号平民；个人胜利阵营好人）",
+        "平民"
+      ],
+      "reasoning": "赛后复盘把6号的底牌、榜样选择与胜利阵营分开说清。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2915820,
+          "end_ms": 2921040,
+          "quote": "6号本就游戏好人混\n首页混血儿选择3号平民为榜样"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 12,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "12号为狼人，警上显示“验3查杀”，发言中说“我验了三是狼”，属于狼跳预言家。全员上警后警徽流失，12号未获徽；D1最终PK放逐11号狼人，未放逐好人，因此按本局计分口径悍跳失败。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1934640,
+          "end_ms": 1949010,
+          "quote": "过了12号玩家请发言\n嘶嘶\n我想想啊\n不太对吧\n嘶嘶不行\n还是得跳\n我验了\n三是狼"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+          "frame_time_ms": 2559480,
+          "quote": "12号狼人旁显示“验3查杀”",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T18:37:28Z",
+  "phase_findings": [],
+  "primary_review": {
+    "bvid": "BV1i6J163EnN",
+    "source_sha256": "b4058e1c1c4022bd788cb85156613c6dbeef5725080089a9a98bd4047071e5bd",
+    "seat_name_overrides": [
+      {
+        "seat": 1,
+        "name": "Hulk"
+      },
+      {
+        "seat": 2,
+        "name": "谢朵儿"
+      },
+      {
+        "seat": 3,
+        "name": "翼风"
+      },
+      {
+        "seat": 4,
+        "name": "华仔仔"
+      },
+      {
+        "seat": 5,
+        "name": "郭小炜"
+      },
+      {
+        "seat": 6,
+        "name": "小苍"
+      },
+      {
+        "seat": 7,
+        "name": "JY"
+      },
+      {
+        "seat": 8,
+        "name": "荣耀"
+      },
+      {
+        "seat": 9,
+        "name": "董鲸鱼"
+      },
+      {
+        "seat": 10,
+        "name": "陈明峻"
+      },
+      {
+        "seat": 11,
+        "name": "Ted"
+      },
+      {
+        "seat": 12,
+        "name": "Bobby"
+      }
+    ],
+    "decisions": [
+      {
+        "field": "seats.name",
+        "before": "OCR部分缺字",
+        "after": {
+          "1": "Hulk",
+          "2": "谢朵儿",
+          "3": "翼风",
+          "4": "华仔仔",
+          "5": "郭小炜",
+          "6": "小苍",
+          "7": "JY",
+          "8": "荣耀",
+          "9": "董鲸鱼",
+          "10": "陈明峻",
+          "11": "Ted",
+          "12": "Bobby"
+        },
+        "reasoning": "主审逐席目视读取本局1920x1080截图姓名栏，以已确认S23别名统一鲸鱼为董鲸鱼。",
+        "evidence": [
+          {
+            "source_path": "data/extractions/S23/speech_frames/BV1i6J163EnN/BV1i6J163EnN_02559.480.png",
+            "frame_time_ms": 2559480,
+            "kind": "video_frame",
+            "quote": "01 Hulk；02 谢朵儿；03 翼风；04 华仔仔；05 郭小炜；06 小苍；07 JY；08 荣耀；09 鲸鱼；10 陈明峻；11 Ted；12 BOBBY"
+          }
+        ]
+      }
+    ]
+  },
+  "structural_normalizations": [
+    {
+      "field": "voting",
+      "before": {
+        "schema_version": 1,
+        "game_slug": "bili-BV1i6J163EnN-p01-g01",
+        "registrations": [
+          {
+            "id": "registration-1",
+            "day": 1,
+            "on_police": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "off_police": []
+          }
+        ],
+        "ballots": [
+          {
+            "id": "ballot-1",
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": null,
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              7,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              3,
+              11
+            ],
+            "winner": null,
+            "unrecorded_voters": []
+          },
+          {
+            "id": "ballot-2",
+            "day": 1,
+            "kind": "exile",
+            "number": 2,
+            "stage": "pk",
+            "status": "complete",
+            "candidates": [
+              3,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              4,
+              5,
+              7,
+              9,
+              10,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 11,
+            "unrecorded_voters": []
+          }
+        ],
+        "interruptions": [],
+        "days": [
+          {
+            "day": 1,
+            "sheriff": "badge_lost",
+            "exile": "recorded"
+          }
+        ]
+      },
+      "after": null,
+      "basis": "投票使用同目录独立voting.candidate.json，移出对局固定字段；原AI档案保留。"
+    },
+    {
+      "field": "seats[6].learning",
+      "before": [
+        3,
+        "平民"
+      ],
+      "after": [
+        null,
+        null
+      ],
+      "basis": "学习字段仅属于机械狼；混血榜样保留在mixed_blood_model事件及页面映射。"
+    },
+    {
+      "field": "rounds[1].day.sheriff_result",
+      "before": {
+        "slot": "sheriff_result",
+        "action": "lost",
+        "actor": null,
+        "targets": [],
+        "result": "警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "sheriff_result",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[1].day.badge",
+      "before": {
+        "slot": "badge",
+        "action": "lost",
+        "actor": null,
+        "targets": [],
+        "result": "全员上警，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "badge",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "全员上警，警徽流失",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[1].day.exile_vote",
+      "before": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "首轮3号与11号各5票平票；PK复投11号5票出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "首轮3号与11号各5票平票；PK复投11号5票出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [
+          {
+            "round": 1,
+            "voter": 1,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 2,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 3,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 4,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 5,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 7,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 9,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 10,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 11,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 12,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 1,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 2,
+            "target": 3,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 4,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 5,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 7,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 9,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 10,
+            "target": 11,
+            "abstained": false
+          },
+          {
+            "round": 2,
+            "voter": 12,
+            "target": 3,
+            "abstained": false
+          }
+        ],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    }
+  ],
+  "supplemental_events": [],
+  "daily_audit": {
+    "bvid": "BV1i6J163EnN",
+    "source_sha256": "b4058e1c1c4022bd788cb85156613c6dbeef5725080089a9a98bd4047071e5bd",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 2900880,
+      "end_ms": 2942880,
+      "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+    },
+    "checks": [
+      {
+        "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+        "conclusion": "N1狼刀8女巫、毒6混血，D1双死；全员上警流徽，首轮3/11平票后PK放逐11狼。狼队拍10预言家/9民/7白神失败，好人胜。",
+        "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-15/2026-10-15_S23_第07周_正赛第06期_第01局_预女猎白混__BV1i6J163EnN_P01_CID42771483722.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "b4058e1c1c4022bd788cb85156613c6dbeef5725080089a9a98bd4047071e5bd",
+            "start_ms": 2900880,
+            "end_ms": 2942880,
+            "quote": "好给各位大宝师们做本局游戏的复盘\n本局版行为与女雷白混血儿神智营预家\n10号女巫\n8号猎人\n4号白神\n7号狼人阵营\n一号2号\n11号\n12号平民阵营\n3号五号\n9号混血儿\n6号本就游戏好人混\n首页混血儿选择3号平民为榜样\n形成好人混狼队击杀8号女巫\n女巫\n毒杀6号混血儿\n六八双死\n预言家验证了11号玩家唯一狼人身份\n在警长竞选环节\n由于全员上警\n本局游戏警徽流失在第一天白天\n11号狼人被公投出局后\n狼队选择拍刀\n10号预言家\n9号平民以及7号白神拍刀失败\n游戏结束\n好人阵营获胜\n各位当老师们"
+          }
+        ]
+      }
+    ],
+    "event_patches": [],
+    "finding_resolutions": [],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 0,
+    "inferred": 0,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

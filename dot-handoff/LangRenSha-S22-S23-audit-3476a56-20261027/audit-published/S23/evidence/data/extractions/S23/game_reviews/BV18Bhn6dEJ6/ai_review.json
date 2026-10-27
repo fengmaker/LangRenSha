@@ -1,0 +1,429 @@
+{
+  "bvid": "BV18Bhn6dEJ6",
+  "reviewer": "ai",
+  "source_sha256": "9fa3aa9d45458c1207db81a09a90796b99370df5eb0a362061462b542a7f0ca5",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "已核对身份栏、选警PK票、首日两次放逐票、定序王子触发重投及终局复盘。8号为狼人且跳预言家未拿警徽；王子技能后的复投最终放逐8号，狼人次日交牌。；日夜复核追加1项原文支持的更正",
+  "decisions": [
+    {
+      "field": "seats[].name",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        "郭小炜Winnie",
+        "亚亚NiaNia",
+        "徐言雨",
+        "大彭彭_ff",
+        "在动物园散步的又又",
+        "陈俊洁C",
+        "大申屠007",
+        "赵鑫华_HZz",
+        "Ted_Dragon",
+        "笑笑Mieie",
+        "宝玉妹妹_",
+        "BobbyJ波比儿"
+      ],
+      "reasoning": "逐座对照截图头像旁的牌名，再与本局 roster 中唯一对应人物核对；保留本局规范姓名。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV18Bhn6dEJ6/BV18Bhn6dEJ6_04655.389.png",
+          "frame_time_ms": 4655389,
+          "quote": "01 郭小炜；02 亚亚；03 徐言雨；04 彭彭；05 又又；06 陈俊洁；07 申屠；08 华仔仔；09 Ted；10 笑笑；11 宝玉妹妹；12 Bobby",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day1,sheriff,pk].winner",
+      "before": null,
+      "after": 10,
+      "reasoning": "PK前8、10各一票；PK轮候选8、10，10号获得更多有效票并当选。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2020200,
+          "end_ms": 2022710,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2022710,
+          "end_ms": 2024490,
+          "quote": "11号投票给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2024490,
+          "end_ms": 2026270,
+          "quote": "12号投票给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2391520,
+          "end_ms": 2392370,
+          "quote": "请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2392370,
+          "end_ms": 2393950,
+          "quote": "一号投给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2393950,
+          "end_ms": 2395490,
+          "quote": "2号投给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2395490,
+          "end_ms": 2397050,
+          "quote": "3号投给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2397050,
+          "end_ms": 2398610,
+          "quote": "4号投给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2400220,
+          "end_ms": 2400820,
+          "quote": "6号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2401880,
+          "end_ms": 2402899,
+          "quote": "7号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2402899,
+          "end_ms": 2404399,
+          "quote": "投给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2406299,
+          "end_ms": 2406979,
+          "quote": "11号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2406979,
+          "end_ms": 2408019,
+          "quote": "投给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2409699,
+          "end_ms": 2411299,
+          "quote": "投票结束"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day1,exile,second].stage",
+      "before": "unknown",
+      "after": "skill_revote",
+      "reasoning": "定序王子发动技能并重新发起投票；保留此前首轮票型，第二轮标为技能重投。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4592660,
+          "end_ms": 4594100,
+          "quote": "一号投给10号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4609830,
+          "end_ms": 4611690,
+          "quote": "12号投给8号"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4816150,
+          "end_ms": 4818490,
+          "quote": "即将重新发起投票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4819860,
+          "end_ms": 4821080,
+          "quote": "首先开始投票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4821080,
+          "end_ms": 4823710,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4847180,
+          "end_ms": 4848820,
+          "quote": "投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4852960,
+          "end_ms": 4856060,
+          "quote": "8号玩家7.5票出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1].day.sequential_prince_skill/second_exile_result",
+      "before": "unknown",
+      "after": {
+        "skill": "activated",
+        "extra_speech": 9,
+        "second_vote": "8号出局"
+      },
+      "reasoning": "逐字稿先播报重新发起投票，最后8号7.5票出局；身份栏确认发动者9号为定序王子。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4816150,
+          "end_ms": 4818490,
+          "quote": "即将重新发起投票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4819860,
+          "end_ms": 4821080,
+          "quote": "首先开始投票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4821080,
+          "end_ms": 4823710,
+          "quote": "321请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4847180,
+          "end_ms": 4848820,
+          "quote": "投票结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 4852960,
+          "end_ms": 4856060,
+          "quote": "8号玩家7.5票出局"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].night/day",
+      "before": "夜间行动不全、白天结果未知",
+      "after": {
+        "wolf_attack": [
+          1
+        ],
+        "witch_poison": [
+          6
+        ],
+        "seer_check": [
+          11,
+          "狼人"
+        ],
+        "deaths": [
+          1,
+          6
+        ],
+        "result": "狼人交牌"
+      },
+      "reasoning": "终局复盘明确狼人决定1号自刀、女巫毒杀6号狼人、双死、预言家验11号狼人，第二天狼队交牌。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5264660,
+          "end_ms": 5269570,
+          "quote": "结果狼人决定一号自刀女巫毒杀6号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5269570,
+          "end_ms": 5270310,
+          "quote": "一六双死"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5270310,
+          "end_ms": 5273440,
+          "quote": "当夜预言家验证11号玩家为狼人身份"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5274300,
+          "end_ms": 5275340,
+          "quote": "狼人阵营决定交牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5275340,
+          "end_ms": 5276040,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5276040,
+          "end_ms": 5277559,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "action": "die",
+        "targets": [
+          1,
+          6
+        ]
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          6
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5264660,
+          "end_ms": 5269570,
+          "quote": "结果狼人决定一号自刀女巫毒杀6号狼人"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "狼人",
+        "平民",
+        "魔术师",
+        "平民",
+        "女巫",
+        "狼人",
+        "平民",
+        "狼人",
+        "定序王子",
+        "预言家",
+        "诡术师",
+        "平民"
+      ],
+      "reasoning": "逐座核对可读画面的竖排身份牌；黄色数字注记作为自称/局势信息，不当作实际底牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV18Bhn6dEJ6/BV18Bhn6dEJ6_04655.389.png",
+          "frame_time_ms": 4655389,
+          "quote": "1 狼人；2 平民；3 魔术师；4 平民；5 女巫；6 狼人；7 平民；8 狼人；9 定序王子；10 预言家；11 诡术师；12 平民",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 8,
+      "day": 1,
+      "claimed_role": "预言家",
+      "attempted": true,
+      "success": false,
+      "reasoning": "8号底牌为狼人；其发言被记录为反向给10号发查杀/以验人身份对跳，但警徽归10号，第一天最终放逐8号狼人，未满足成功条件。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1267950,
+          "end_ms": 1269690,
+          "quote": "反手去给10号玩家发了个查杀"
+        },
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV18Bhn6dEJ6/BV18Bhn6dEJ6_04655.389.png",
+          "frame_time_ms": 4655389,
+          "quote": "08 狼人；10查杀",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T16:51:25Z",
+  "phase_findings": [
+    {
+      "id": "phase-39-night-1",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5243770,
+          "end_ms": 5244370,
+          "quote": "形成平安夜"
+        }
+      ]
+    },
+    {
+      "id": "phase-39-night-2",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "死者座位：6",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第02局_诡术之境__BV18Bhn6dEJ6_P01_CID42117759534.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 5264660,
+          "end_ms": 5269570,
+          "quote": "结果狼人决定一号自刀女巫毒杀6号狼人"
+        }
+      ]
+    }
+  ]
+}

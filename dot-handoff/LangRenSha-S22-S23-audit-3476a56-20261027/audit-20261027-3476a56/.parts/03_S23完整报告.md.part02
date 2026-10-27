@@ -1,0 +1,123 @@
+|
+| `rounds[4].night.guard` | `{"slot":"guard","action":"guard","actor":3,"targets":[1],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}` | `{"action":"unavailable","actor":3,"targets":[],"availability":"dead","result":"守卫3已于N3死亡，无N4行动资格。"}` |
+
+证据：
+- `data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json`，5963500–5978500 ms，SHA256 `8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f`。
+  > 12号平民被抗推出局 / 警徽移交至一号平民入夜守卫守护一号平民 / 狼队击杀3号守卫 / 3号守卫单四 / 第三天的白天 / 5号狼人选择自爆入夜 / 狼队击杀8号平民 / 8号平民三死 / 第四天白天 / 2号狼人选择自保后
+
+反证/替代解释检查：
+- N3guard有效，因为行动后才死亡；不能把N3也删。
+- 正式D3night_deaths=[3]，不是只靠字幕漏提推断。
+- 机械狼11学习9号狼人、为机械双刀狼，不是机械守卫借用slot；当前N4actor也是3。
+
+缺口：未回听原音；不把平台字幕绝对等同原话。；候选只保存供下一轮审批，不改正式数据。
+
+### S23-F06 · 2026-09-17 第2局 · BV1nJer63EDh
+**守7属于N2而非首夜**（P2；medium_high_text_asr_word_ambiguity；未修改）
+
+复盘首夜“首位技能通过”接刀3救3，D1狼10爆后“守位守护7号预言家”；当前首夜写守7，N2未知。
+
+| 字段 | 正式现值 | 候选值 |
+|---|---|---|
+| `rounds[1].night.guard` | `{"slot":"guard","action":"guard","actor":3,"targets":[7],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}` | `{"action":"pass","actor":3,"targets":[]}` |
+| `rounds[2].night.guard` | `{"slot":"guard","action":"unknown","actor":null,"targets":[],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}` | `{"action":"guard","actor":3,"targets":[7]}` |
+
+证据：
+- `data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json`，3742000–3775000 ms，SHA256 `2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f`。
+  > 11号平民阵营一号6号八号12号 / 首页首位即能通过九尾狐标记4号女巫 / 狼队击杀3号 / 首位女巫要救起 / 形成平安夜 / 当演预言家验证了2号玩家白泽为好人身份 / 警上竞选环节 / 10号狼人选择自爆入夜 / 首位守护7号预言家白泽 / 选择清除4号女巫的标记 / 成功清除掉 / 然后我们九尾狐选择标记了一号平民 / 当夜狼队击杀3号守卫女巫 / 技能空过预言家验证 / 12号玩家平民为好人身份
+
+反证/替代解释检查：
+- 开局夜与D1之后夜明确分开，3守卫N2被刀并不否定当晚先守7。
+- 首夜空过的字幕“通过”存在ASR消歧缺口，故该动作候选不冒充原音确认；N2守7定位较强。
+
+缺口：首夜pass字词需原音/夜间原操作消歧；当前正式守7归错夜仍有连续复盘支持。
+
+### S23-F07 · 2026-09-11 第2局 · BV1g1YU6kERd
+**白泽尝试清标无事发生，却记result=cleared**（P2；high_archived_text；未修改）
+
+法官明确“清除…无事发生”；当前cleared把操作目标等同于有效结果。
+
+| 字段 | 正式现值 | 候选值 |
+|---|---|---|
+| `rounds[3].night.whiteze_clear_mark.result` | `"cleared"` | `"no_effect（尝试清标目标保留；当时未成功移除标记）"` |
+| `rounds[4].night.whiteze_clear_mark.result` | `"cleared"` | `"no_effect（尝试清标目标保留；当时未成功移除标记）"` |
+
+证据：
+- `data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json`，4485000–4493000 ms，SHA256 `15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d`。
+  > 7号狼人选择自爆 / 入夜守卫守护 / 2号平民白泽清除2号身上的标记 / 无事发生 / 当夜九尾狐标记12号女巫
+- `data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json`，4505000–4516000 ms，SHA256 `15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d`。
+  > 10号狼人选择自爆 / 入夜守卫守护十 / 2号女巫白泽清除3号玩家的标记 / 无事发生 / 当夜九尾狐标记2号平民 / 此时场上有标记的玩家是2号平民
+
+反证/替代解释检查：
+- 不删除白泽真实尝试目标；行动和实际效果应分开。
+- 当夜后续九尾新标记不能反证此前清标已成功，需按行动顺序读。
+- 不依理论推导额外猎杀；保留现场唯一结算与终局。
+
+缺口：未回听原音；不把平台字幕绝对等同原话。；候选只保存供下一轮审批，不改正式数据。
+
+### S23-F08 · 2026-09-17 第2局 · BV1nJer63EDh
+**白泽尝试清标无事发生，却记result=cleared**（P2；high_archived_text；未修改）
+
+法官明确“清除…无事发生”；当前cleared把操作目标等同于有效结果。
+
+| 字段 | 正式现值 | 候选值 |
+|---|---|---|
+| `rounds[3].night.whiteze_clear_mark.result` | `"cleared"` | `"no_effect（尝试清标目标保留；当时未成功移除标记）"` |
+| `rounds[4].night.whiteze_clear_mark.result` | `"cleared"` | `"no_effect（尝试清标目标保留；当时未成功移除标记）"` |
+
+证据：
+- `data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json`，3780000–3788500 ms，SHA256 `2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f`。
+  > 本局游戏警徽流失入夜 / 白泽选择在夜间清除8号玩家平民的标记 / 无事发生 / 而当夜九尾狐选择标记8号平民
+- `data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json`，3801000–3809000 ms，SHA256 `2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f`。
+  > 5号狼人选择自爆入夜 / 白泽选择清除12号平民的标记 / 无事发生 / 而九尾狐在夜间选择标记12号平民
+- `data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json`，3820000–3843000 ms，SHA256 `2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f`。
+  > 所以当夜为6号平民单死 / 在第四天白天 / 九尾狐选择发动猎杀时刻技能 / 当夜呃 / 当日我们以身上有标记的玩家为一号平民 / 8号平民以及12号平民 / 加上我们九尾狐本身 / 11号玩家四张牌大于仅剩的两张牌 / 2号白泽以及4号女巫
+
+反证/替代解释检查：
+- 不删除白泽真实尝试目标；行动和实际效果应分开。
+- 当夜后续九尾新标记不能反证此前清标已成功，需按行动顺序读。
+- 不依理论推导额外猎杀；保留现场唯一结算与终局。
+
+缺口：未回听原音；不把平台字幕绝对等同原话。；候选只保存供下一轮审批，不改正式数据。
+
+### S23-F09 · 2026-09-10 第4局 · BV12sY36hEdr
+**首夜12已死亡却记平安，并在D3错误扩成一张投票**（P1；high_text_plus_targeted_saved_frame；未修改）
+
+首夜守12/刀12/救12，法官在首轮警长唱票后宣布12昨夜倒牌并请遗言。D3字幕只11投3，其余投11，正式用错误存活补集生成12→11。
+
+| 字段 | 正式现值 | 候选值 |
+|---|---|---|
+| `rounds[1].day.night_deaths` | `{"slot":"night_deaths","action":"peaceful","actor":null,"targets":[],"result":null,"start_seat":null,"direction":null,"votes":[],"random_point":null,"speech_scope":null,"availability":null,"effects":[]}` | `{"action":"die","targets":[12],"result":"首夜守救同目标，法官明确宣布12倒牌。"}` |
+| `voting.ballot-2.eligible_voters/votes` | `{"id":"ballot-2","day":3,"kind":"exile","number":1,"stage":"initial","status":"complete","candidates":null,"eligible_voters":[1,2,3,4,10,11,12],"votes":[{"voter":1,"target":11,"state":"cast"},{"voter":2,"target":11,"state":"cast"},{"voter":3,"target":11,"state":"cast"},{"voter":4,"target":11,"state":"cast"},{"voter":10,"target":11,"state":"cast"},{"voter":11,"target":3,"state":"cast"},{"voter":12,"target":11,"state":"cast"}],"tied_candidates":[],"winner":11,"unrecorded_voters":[]}` | `{"eligible_voters":[1,2,3,4,10,11],"votes_remove_only":[{"voter":12,"target":11,"state":"cast"}],"retain_other_observed_votes_and_winner":true}` |
+
+证据：
+- `data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json`，1436000–1473000 ms，SHA256 `83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8`。
+  > 4号五号八号十号请警下玩家带盔 / 在4号五号八号十号玩家中选出本局游戏警长 / 321请出票 / 9号投给5号 / 11号投给5号 / 12号投给8号 / 投票结束 / 5号玩家两票当选 / 其余玩家请变蓝灯 / 昨夜12号玩家倒牌 / 12号玩家请发表遗言
+- `data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json`，3537000–3557000 ms，SHA256 `83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8`。
+  > 我自己头洗过了 / 所有玩家发言结束 / 请各位玩家带盔做好投票准备 / 本局游戏警徽流失 / 各位请自行投票 / 唱票结束前不要放手 / 321请出票 / 11号投给3号 / 其余玩家投票给11号 / 11号玩家高票出局 / 游戏结束 / 好人阵营获胜
+- `data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第04局_机械狼通灵师__BV12sY36hEdr_P01_CID41768455738.平台AI字幕_ai-zh_01.原始.json`，3577000–3592000 ms，SHA256 `83319dacff9c40cb4cdacffdb3ae28a282a0c8d158c420a0a278829ee9875be8`。
+  > 本局游戏为机械双刀狼 / 平民阵营一号2号十号12号首夜守卫守护 / 12号平民狼队击杀12号平民女巫开药 / 12号平民乃疮身乃川身亡 / 机械狼模仿6号狼人 / 本局游戏为机械双刀狼
+
+反证/替代解释检查：
+- D1警下12→8发生在1454670，死亡1463640才宣布；保留其真实警徽票，不机械删除全部12投票。
+- 本轮目视D3原保存图12被死亡图标覆盖，存活1/2/3/4/10/11；图不能单独确定首夜时点。
+- 不是仅用守救同目标规则推论死亡，而是现场宣布+末复盘+后续图三条链。
+- mapping已确认公开和API没有隐藏修正，见../mapping/candidate-BV12sY36hEdr-propagation.json；属于源候选传播，不重复计作映射缺陷。
+
+缺口：未回听原音；不把平台字幕绝对等同原话。；候选只保存供下一轮审批，不改正式数据。
+
+### S23-F10 · 2026-09-25 第2局 · BV1KBhU68EjA
+**D3夜死汇总漏舞者12**（P2；high_archived_text；未修改）
+
+N3舞池少数方12被舞出局，再刀9女巫，法官复盘9/12双死；正式夜死result也写9/12，但targets只9。
+
+| 字段 | 正式现值 | 候选值 |
+|---|---|---|
+| `rounds[3].day.night_deaths.targets` | `[9]` | `[9,12]` |
+
+证据：
+- `data/seasons/S23/第04周_正赛第03期/2026-09-25/2026-09-25_S23_第04周_正赛第03期_第02局_假面舞会__BV1KBhU68EjA_P01_CID42198434388.平台AI字幕_ai-zh_01.原始.json`，5524000–5544000 ms，SHA256 `c9de0ff9e5a94bc4cd18c2a67a26056eb137d53ae7b1a7ae15ae1dcfa4645982`。
+  > 11号假面及12号武者当印五指在舞池内 / 五池免疫狼刀假面 / 选择验证 / 10号玩家白神在舞池内给予10号白神一张面具 / 此时五之内12号武者被五出局 / 当夜假面开刀击杀9号女巫 / 9号12号双死 / 在第三天白天两轮平票 / 平安日无人被放逐后 / 狼队选择拍刀
+
+反证/替代解释检查：
+- dance_resolution已记12死亡，故这

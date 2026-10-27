@@ -1,0 +1,547 @@
+{
+  "bvid": "BV1gBhn6dEEJ",
+  "reviewer": "ai",
+  "source_sha256": "596f9cd26e26802e9508b6b9edfb7ebb38eec9c8b8c8afbf0a807d9442ecd81d",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "已核对身份栏、机械狼学习目标、首日警徽和放逐票、次日/第三日票型及终局复盘。4号与7号狼人均尝试跳通灵师，但未获警徽，首日出局的是狼人7号；第三夜1号猎人中毒双死，不能开枪。；日夜复核追加1项原文支持的更正",
+  "decisions": [
+    {
+      "field": "seats[].name",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        "郭小炜Winnie",
+        "亚亚NiaNia",
+        "徐言雨",
+        "大彭彭_ff",
+        "在动物园散步的又又",
+        "陈俊洁C",
+        "大申屠007",
+        "赵鑫华_HZz",
+        "Ted_Dragon",
+        "笑笑Mieie",
+        "宝玉妹妹_",
+        "BobbyJ波比儿"
+      ],
+      "reasoning": "逐座对照截图头像旁的牌名，再与本局 roster 中唯一对应人物核对；保留本局规范姓名。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06231.920.png",
+          "frame_time_ms": 6231920,
+          "quote": "01 郭小炜；02 亚亚；03 徐言雨；04 彭彭；05 又又；06 陈俊洁；07 申屠；08 华仔仔；09 Ted；10 笑笑；11 宝玉妹妹；12 Bobby",
+          "kind": "video_frame"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day1,ballot1].kind/winner",
+      "before": {
+        "kind": "unknown",
+        "winner": null
+      },
+      "after": {
+        "kind": "sheriff",
+        "winner": 9
+      },
+      "reasoning": "首日仅12号警下；逐人播报12号投9号且9号当选警长。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 610720,
+          "end_ms": 612970,
+          "quote": "毒一天亮了"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 612970,
+          "end_ms": 614390,
+          "quote": "本游戏除12号玩家外"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1858020,
+          "end_ms": 1860540,
+          "quote": "321"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1860540,
+          "end_ms": 1861880,
+          "quote": "请出票"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1862910,
+          "end_ms": 1864850,
+          "quote": "12号玩家投票给9号"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[day2,exile,first].eligible_voters",
+      "before": null,
+      "after": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        11,
+        12
+      ],
+      "reasoning": "次夜9号死亡、首日已出局7号，第二天投票时其余10人有票权；本轮结束后2号出局，12号未明确投向，按确认口径记弃票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6970380,
+          "end_ms": 6972230,
+          "quote": "7号狼人被公投出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6980200,
+          "end_ms": 6981920,
+          "quote": "第二天白天9号出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3708820,
+          "end_ms": 3710740,
+          "quote": "7号高玩家请做好投票准备"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 3710740,
+          "end_ms": 3713560,
+          "quote": "321请出票"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[second day2 entry].day/stage",
+      "before": {
+        "day": 2,
+        "stage": "unknown"
+      },
+      "after": {
+        "day": 3,
+        "stage": "initial"
+      },
+      "reasoning": "该轮7名投票人是第三天前已淘汰/夜死后存活的完整名单，复盘将10号出局列在第三天；按实际日序改正机器归日。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6986860,
+          "end_ms": 6988820,
+          "quote": "入夜守卫守护3号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6988820,
+          "end_ms": 6990220,
+          "quote": "狼人击杀11号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6995220,
+          "end_ms": 6996040,
+          "quote": "第三天白天"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6996040,
+          "end_ms": 6997580,
+          "quote": "10号狼人被公投出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6997580,
+          "end_ms": 6999880,
+          "quote": "最后一张狼人4号选择交牌"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6999880,
+          "end_ms": 7000740,
+          "quote": "游戏结束"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 7000740,
+          "end_ms": 7001680,
+          "quote": "好人阵营获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[2-3].day.night_deaths",
+      "before": null,
+      "after": [
+        [
+          9
+        ],
+        [
+          11,
+          1
+        ]
+      ],
+      "reasoning": "终局复盘播报第二夜狼刀9号；第三夜狼刀11号女巫、女巫毒1号猎人，双死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6974430,
+          "end_ms": 6976590,
+          "quote": "狼人击杀9号平民女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6980200,
+          "end_ms": 6981920,
+          "quote": "第二天白天9号出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6988820,
+          "end_ms": 6990220,
+          "quote": "狼人击杀11号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6991660,
+          "end_ms": 6995220,
+          "quote": "11双死通灵师验证11号玩家为女巫身份"
+        }
+      ]
+    },
+    {
+      "field": "rounds[3].day.hunter_shot",
+      "before": {
+        "action": "unknown",
+        "actor": 1,
+        "targets": [],
+        "result": null
+      },
+      "after": {
+        "action": "unavailable",
+        "actor": 1,
+        "result": "1号猎人被女巫毒杀，不能开枪"
+      },
+      "reasoning": "复盘明确第三夜狼杀11号女巫、女巫毒杀1号猎人，11/1双死；1号实际中毒，因此无法发动猎人枪。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6986860,
+          "end_ms": 6988820,
+          "quote": "入夜守卫守护3号通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6988820,
+          "end_ms": 6990220,
+          "quote": "狼人击杀11号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        }
+      ]
+    },
+    {
+      "field": "rounds[3].day.night_deaths",
+      "before": {
+        "action": "double_death",
+        "targets": [
+          11,
+          1
+        ]
+      },
+      "after": {
+        "action": "deaths",
+        "targets": [
+          11,
+          1
+        ]
+      },
+      "reasoning": "原字幕逐日复盘明确了该夜死亡/平安结果；修正 reviewed dossier 的未知或不完整字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6988820,
+          "end_ms": 6990220,
+          "quote": "狼人击杀11号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "猎人",
+        "机械狼",
+        "通灵师",
+        "狼人",
+        "平民",
+        "平民",
+        "狼人",
+        "平民",
+        "平民",
+        "狼人",
+        "女巫",
+        "守卫"
+      ],
+      "reasoning": "逐座核对可读画面的竖排身份牌；黄色数字注记作为自称/局势信息，不当作实际底牌。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06231.920.png",
+          "frame_time_ms": 6231920,
+          "quote": "1 猎人；2 机械狼；3 通灵师；4 狼人；5 平民；6 平民；7 狼人；8 平民；9 平民；10 狼人；11 女巫；12 守卫",
+          "kind": "video_frame"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 4,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "4号底牌是狼人；画面记录其验人主张，复盘称4号给真正通灵师发金水并认定其为悍跳。警徽最终由9号获得，首日被放逐的是7号狼人，没有好人被首日最终放逐。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06231.920.png",
+          "frame_time_ms": 6231920,
+          "quote": "04 狼人；验6平民；验5平民",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2467700,
+          "end_ms": 2469810,
+          "quote": "所以我说6号应该没有这么次"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 2469810,
+          "end_ms": 2473130,
+          "quote": "就是4号悍跳直接发金水发到通灵师头上"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6965100,
+          "end_ms": 6968420,
+          "quote": "通灵师验证4号玩家为狼人身份上警环节"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6970380,
+          "end_ms": 6972230,
+          "quote": "7号狼人被公投出局"
+        }
+      ]
+    },
+    {
+      "seat": 7,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "7号底牌是狼人；相关发言显示7号给9号发通灵师查杀，讨论明确将其描述为试图搏杀通灵师的狼悍跳。首日被公投出局的是7号狼人，未获得警徽或首日推好人。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1gBhn6dEEJ/BV1gBhn6dEEJ_06231.920.png",
+          "frame_time_ms": 6231920,
+          "quote": "07 狼人",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1347160,
+          "end_ms": 1349820,
+          "quote": "7号为什么给九发查杀呀"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1350040,
+          "end_ms": 1352520,
+          "quote": "77号以为你是通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1352520,
+          "end_ms": 1354140,
+          "quote": "所以给你发一个查杀"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1354140,
+          "end_ms": 1356760,
+          "quote": "想搏杀通灵师"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6970380,
+          "end_ms": 6972230,
+          "quote": "7号狼人被公投出局"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "open_ai_followups": [],
+  "reviewed_at_utc": "2026-10-25T16:51:25Z",
+  "phase_findings": [
+    {
+      "id": "phase-40-night-1",
+      "round": 1,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[1].day.night_deaths",
+      "title": "第1轮夜间死亡结算",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6964460,
+          "end_ms": 6965100,
+          "quote": "形成平安夜"
+        }
+      ]
+    },
+    {
+      "id": "phase-40-night-2",
+      "round": 2,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[2].day.night_deaths",
+      "title": "第2轮夜间死亡结算",
+      "conclusion": "死者座位：9",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6974430,
+          "end_ms": 6976590,
+          "quote": "狼人击杀9号平民女巫"
+        }
+      ]
+    },
+    {
+      "id": "phase-40-night-3",
+      "round": 3,
+      "phase": "night",
+      "status": "confirmed",
+      "field": "rounds[3].day.night_deaths",
+      "title": "第3轮夜间死亡结算",
+      "conclusion": "死者座位：11,1",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6988820,
+          "end_ms": 6990220,
+          "quote": "狼人击杀11号女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        }
+      ]
+    },
+    {
+      "id": "phase-40-shot-3",
+      "round": 3,
+      "phase": "night",
+      "status": "inferred",
+      "field": "rounds[3].day.hunter_shot",
+      "title": "枪技资格核对",
+      "conclusion": "1号猎人被女巫毒杀，禁枪。",
+      "reasoning": "1号猎人被女巫毒杀，禁枪。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6990220,
+          "end_ms": 6991660,
+          "quote": "女巫毒杀一号猎人"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1gbhn6deej-r1-guard-unresolved",
+      "round": 1,
+      "phase": "night",
+      "status": "unresolved",
+      "field": "rounds[1].night.guard.targets",
+      "title": "开局夜守卫目标未记载",
+      "conclusion": "开局夜守卫目标只转写到“首夜守护”，没有具体座位。",
+      "reasoning": "复盘随后记录狼队击杀2号并女巫救起，但守卫目标本身未报，无法唯一确定。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-22/2026-09-22_S23_第04周_正赛第03期_第03局_机械狼通灵师__BV1gBhn6dEEJ_P01_CID42117826901.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "596f9cd26e26802e9508b6b9edfb7ebb38eec9c8b8c8afbf0a807d9442ecd81d",
+          "start_ms": 6958680,
+          "end_ms": 6964460,
+          "quote": "本九席位机械双刀狼人首夜守护\n9号平民狼人\n击杀2号机械狼女巫开药解救"
+        }
+      ]
+    }
+  ]
+}

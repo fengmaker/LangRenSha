@@ -1,0 +1,422 @@
+{
+  "bvid": "BV1V8af6zE5T",
+  "reviewer": "ai",
+  "source_sha256": "2f82dfe5b12286e131b7f4edb4c18fd292e266d6c1db9da3600ca3a4f25d00f7",
+  "coverage": {
+    "recap_read": true,
+    "voting_checked": true,
+    "bluff_checked": true,
+    "frame_checked": true
+  },
+  "summary": "截图与终局复盘确认10号底牌狼人、6号为真通灵师，9号机械狼学习1号女巫。首夜狼刀8号猎人被女巫救下；警长PK后5号平民得徽，10号狼首日被放逐。次夜守卫护5，狼刀6通灵师、女巫毒12狼；8号猎人次日被票出后带走9号机械狼。第三夜2号守卫守护11号平民，却被狼队偷刀出局；D3存活的1/3/4/5/7/11进行唯一一轮投票，1/7归票后7号以3票出局，好人胜。",
+  "decisions": [
+    {
+      "field": "seats[].name / seats[].role / seats[9].learning_target",
+      "before": "姓名未录入，身份和机械狼模仿对象待核",
+      "after": {
+        "names": [
+          "李鬼鬼Supr",
+          "Qqqquan圈",
+          "章亿阳狼人杀",
+          "陈俊洁C",
+          "赵鑫华_HZz",
+          "园长LA",
+          "JY戴士",
+          "Ted_Dragon",
+          "小苍cany",
+          "陈明峻-",
+          "冰辰不橙",
+          "BobbyJ波比儿"
+        ],
+        "roles": [
+          "女巫",
+          "守卫",
+          "平民",
+          "平民",
+          "平民",
+          "通灵师",
+          "狼人",
+          "猎人",
+          "机械狼",
+          "狼人",
+          "平民",
+          "狼人"
+        ],
+        "seat9_learned": "女巫"
+      },
+      "reasoning": "按截图侧栏真实身份逐席核对；结尾复盘明确机械狼模仿1号女巫。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE5T/BV1V8af6zE5T_06163.260.png",
+          "frame_time_ms": 6163260,
+          "quote": "画面身份栏：1女巫、2守卫、3/4/5平民、6通灵师、7狼人、8猎人、9机械狼、10狼人、11平民、12狼人；黄色注释含10号验6查杀/警徽流4-3、9号学1机械女巫、6号验2守卫/3平民。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    },
+    {
+      "field": "rounds[1..3].night/day",
+      "before": "夜间死亡和猎人枪口待校对",
+      "after": "N1刀8被救、6验2；D1 5得徽、10出局；N2守5、刀6、女巫毒12；D2 6/12双死，8出局枪杀9；N3守2保护11但狼刀2，D3 7出局。",
+      "reasoning": "结尾复盘明确第三夜守卫2守11、狼队偷刀2；依此更新存活名单并核对唯一D3初投。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    },
+    {
+      "field": "voting.ballots[D1 sheriff/exile; D2; D3]",
+      "before": "警徽、首日放逐、D2放逐与D3票型待核",
+      "after": "D1警徽PK由5当选，10号以9.5票出局；D2 8号以8.5票出局；N3 2号守卫被狼刀，D3存活的1/3/4/5/7/11唯一一轮逐票中3/11弃票、7出局。",
+      "reasoning": "依“321请出票”后的完整逐票记录，D3该轮按initial保存；警长归票中“1/7平票PK”不证明存在前序投票。2号夜间出局后无票权。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6331340,
+          "end_ms": 6361540,
+          "quote": "紧张请回票\n警长归票\n一号7号平票pk警长票变为一票\n各位玩家请做好投票准备\n321请出票\n一号投给7号\n3号弃票\n4号投给7号\n5号投给7号\n7号投给一号\n11号\n11号弃票\n7号玩家三票出局\n游戏结束\n好人正义获胜"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    }
+  ],
+  "role_evidence": [
+    {
+      "seats": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "roles": [
+        "女巫",
+        "守卫",
+        "平民",
+        "平民",
+        "平民",
+        "通灵师",
+        "狼人",
+        "猎人",
+        "机械狼",
+        "狼人",
+        "平民",
+        "狼人"
+      ],
+      "reasoning": "真实角色按截图身份栏逐座读取，以终局复盘校验行动与角色。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE5T/BV1V8af6zE5T_06163.260.png",
+          "frame_time_ms": 6163260,
+          "quote": "画面身份栏：1女巫、2守卫、3/4/5平民、6通灵师、7狼人、8猎人、9机械狼、10狼人、11平民、12狼人；黄色注释含10号验6查杀/警徽流4-3、9号学1机械女巫、6号验2守卫/3平民。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    }
+  ],
+  "bluffs": [
+    {
+      "seat": 10,
+      "day": 1,
+      "claimed_role": "通灵师",
+      "attempted": true,
+      "success": false,
+      "reasoning": "10号真实底牌狼人；画面黄色发言笔记标“验6查杀/警徽流4-3”，并被终局复盘称悍跳狼。警徽由5号真平民取得，10号首日作为狼人出局，所以其悍跳未成功。",
+      "evidence": [
+        {
+          "source_path": "data/extractions/S23/speech_frames/BV1V8af6zE5T/BV1V8af6zE5T_06163.260.png",
+          "frame_time_ms": 6163260,
+          "quote": "画面身份栏：1女巫、2守卫、3/4/5平民、6通灵师、7狼人、8猎人、9机械狼、10狼人、11平民、12狼人；黄色注释含10号验6查杀/警徽流4-3、9号学1机械女巫、6号验2守卫/3平民。",
+          "kind": "video_frame"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 1959080,
+          "end_ms": 1983639,
+          "quote": "5432166请上号玩家5号八号\n10号11号请请向玩家带盔做好投票准备\n请从五八十十一当中选出本局游戏警长\n321请出票\n7号投给5号\n12号投给10号\n5号十号各一票平票pk"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6411350,
+          "end_ms": 6414970,
+          "quote": "第一天白天\n10号悍跳狼人被公投出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+          "start_ms": 6384080,
+          "end_ms": 6443540,
+          "quote": "本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    }
+  ],
+  "human_questions": [],
+  "reviewed_at_utc": "2026-10-25T17:29:39Z",
+  "phase_findings": [],
+  "structural_normalizations": [
+    {
+      "field": "seats[9].learned_role",
+      "before": "女巫",
+      "after": "机械女巫",
+      "basis": "现有机械狼形态的规范名称，底牌和模仿目标不变。"
+    },
+    {
+      "field": "rounds[2].day.night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "death",
+        "actor": null,
+        "targets": [
+          6,
+          12
+        ],
+        "result": "6号通灵师与12号狼人双死",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          6,
+          12
+        ],
+        "result": "6号通灵师与12号狼人双死",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[3].day.night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "death",
+        "actor": null,
+        "targets": [
+          2
+        ],
+        "result": "2号守卫夜间出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "die",
+        "actor": null,
+        "targets": [
+          2
+        ],
+        "result": "2号守卫夜间出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "rounds[3].day.exile_vote",
+      "before": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [
+          1,
+          7
+        ],
+        "result": "D3唯一一轮投票，逐票为1/4/5投7、7投1、3/11弃票，7以3票出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "exile_vote",
+        "action": "vote",
+        "actor": null,
+        "targets": [],
+        "result": "D3唯一一轮投票，逐票为1/4/5投7、7投1、3/11弃票，7以3票出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [
+          {
+            "round": 1,
+            "voter": 1,
+            "target": 7,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 3,
+            "target": null,
+            "abstained": true
+          },
+          {
+            "round": 1,
+            "voter": 4,
+            "target": 7,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 5,
+            "target": 7,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 7,
+            "target": 1,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 11,
+            "target": null,
+            "abstained": true
+          }
+        ],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "动作同义词、固定字段或独立投票格式规范化；原AI记录不改写。"
+    },
+    {
+      "field": "voting.days[2].sheriff",
+      "before": "not_held",
+      "after": "not_applicable",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    },
+    {
+      "field": "voting.days[3].sheriff",
+      "before": "not_held",
+      "after": "not_applicable",
+      "basis": "仅规范每日覆盖枚举；具体未投原因与终局仍保留在原AI档案、事件及拍刀记录中。"
+    }
+  ],
+  "supplemental_events": [],
+  "daily_audit": {
+    "bvid": "BV1V8af6zE5T",
+    "source_sha256": "2f82dfe5b12286e131b7f4edb4c18fd292e266d6c1db9da3600ca3a4f25d00f7",
+    "reviewed_date": "2026-10-26",
+    "recap_window": {
+      "start_ms": 6384080,
+      "end_ms": 6443540,
+      "basis": "完整最终法官复盘：从本局版型/角色说明或复盘引入开始，至本局胜方公告结束；裁去前置闲谈及终局后主持广告。"
+    },
+    "checks": [
+      {
+        "field": "complete_daily_recap",
+        "status": "confirmed",
+        "conclusion": "N1狼队击杀8号猎人，女巫1号救起8号；机械狼9号模仿1号女巫，通灵师6号验2号守卫，形成平安夜。D1狼10号被放逐、平民5号获警徽。N2守卫2号护5号，狼杀通灵师6号；机械女巫9号空过、女巫1号毒12号狼人，6/12双死，通灵师验3号平民。D2猎人8号被放逐后带走机械女巫9号。N3守卫2号护11号、狼队偷刀守卫2号；D3末狼7号被放逐，好人胜。",
+        "reasoning": "实际读取entry.json指向的原始完整转写；按最终法官复盘逐夜、逐日核对。明确记录终局阶段边界，未把复盘未提写成空过。视频证据仅用于下列注明的截图，不把转写称为视频确认。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-30/2026-09-30_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV1V8af6zE5T_P01_CID42347137200.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2f82dfe5b12286e131b7f4edb4c18fd292e266d6c1db9da3600ca3a4f25d00f7",
+            "start_ms": 6384080,
+            "end_ms": 6443540,
+            "quote": "第三局游戏结束了非常精彩的一局啊\n本局游戏机械狼通灵师版型\n通灵师\n6号女巫\n一号猎人\n8号守卫\n2号机械狼\n9号狼人\n7号十号12号平民\n3号四号五号11号首页首位通过狼人击杀8号猎人女巫开药解救\n形成平安夜\n机械狼模仿一号女巫\n本就游戏为机械女巫通灵师验证\n2号玩家为首位身份上警环节\n5号平民获得警徽\n第一天白天\n10号悍跳狼人被公投出局\n入夜守卫守护5号平民狼人击杀6号通灵师\n机械女巫空过女巫毒杀12号狼人\n62双死通灵试验证\n3号玩家为平民身份\n第二天白天\n8号猎人被抗推出局\n发动技能带走\n9号机械女巫入夜守卫守护11号平民狼人偷刀\n2号守卫第三天白天最后一张狼人7号被公投出局\n游戏结束\n好人正义获胜"
+          }
+        ]
+      }
+    ],
+    "event_patches": [],
+    "finding_resolutions": [],
+    "extra_findings": [],
+    "human_questions": []
+  },
+  "daily_audit_changes": [],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械女巫，没有机械猎人的白天开枪技能。"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "action": "not_carrying",
+      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "mechanical_day_skill",
+      "action": "unavailable",
+      "basis": "本局机械狼学习形态为机械女巫，没有机械猎人的白天开枪技能。"
+    }
+  ],
+  "phase_review_counts": {
+    "unresolved": 0,
+    "confirmed": 0,
+    "inferred": 0,
+    "not_observed": 0
+  },
+  "historical_ai_followups": []
+}

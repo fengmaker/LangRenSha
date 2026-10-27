@@ -1,0 +1,82 @@
+{
+  "bvid": "BV1Rgpm6nERY",
+  "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5971340,
+    "end_ms": 6024139,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1狼刀1白神被女巫救起，验1好人；D1 4预言家出局、移徽1。N2狼刀10女巫、毒12狼，D2双死；7自爆中断D2放逐。N3狼刀2民，D3 5猎人出局并带走6混血狼；剩两狼拍1/8，狼胜。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 5971340,
+          "end_ms": 6024139,
+          "quote": "嗯一级版阿尼亚好\n第一局游戏结束了\n本局游戏与女猎白混血儿版型预言家4号女巫\n10号猎人\n5号白神\n一号狼人\n3号七号\n11号\n12号平民2号八号九号\n本游戏的混血有6号\n榜样是3号狼人\n本游戏为狼人混\n首夜狼人击杀一号白神女巫\n开药解救行程\n平安夜预言家验证一号玩家为好人身份\n上警环节\n4号预言家获得警徽\n第一天白天\n4号预言家被抗推出局\n警徽交至一号\n白神入夜狼人击杀10号女巫\n女巫毒杀12号狼人\n十十二双子\n第二天白天7号狼人自爆入夜\n狼人击杀2号平民\n白天5号猎人被抗推出局\n发动技能带走6号狼人混\n然后剩余两张狼人牌选择拍刀\n狼人可拍两刀\n给出的道路是一号和8号\n游戏结束\n狼人阵营屠神获胜"
+        }
+      ]
+    }
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "b77-r1-witch-save",
+      "status": "confirmed",
+      "conclusion": "狼人击杀1号白神，女巫救起，N1平安夜。",
+      "reasoning": "尾声复盘直接给出刀口和救药结果；当前档案改为可确认行动。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 5986530,
+          "end_ms": 5988490,
+          "quote": "首夜狼人击杀一号白神女巫"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 5988490,
+          "end_ms": 5989490,
+          "quote": "开药解救行程"
+        }
+      ]
+    },
+    {
+      "id": "b77-d2-exile-interrupted",
+      "status": "confirmed",
+      "conclusion": "D2 7号自爆入夜，未进行放逐；5号猎人被放逐是在D3，已发生 ballot 保留在D3 sidecar。",
+      "reasoning": "字幕先标第二天白天并宣告7号自爆，后续5号猎人投出对应第三日；未把D3 sidecar ballot挪作D2，也不丢弃已发生投票。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 6004760,
+          "end_ms": 6007060,
+          "quote": "第二天白天7号狼人自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 6008600,
+          "end_ms": 6011400,
+          "quote": "白天5号猎人被抗推出局"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第01局_预女猎白混__BV1Rgpm6nERY_P01_CID42744614105.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d8c35fb242283df2a0b422d26072726a0cda37a4dfdbc054340f669fd2439b37",
+          "start_ms": 6011400,
+          "end_ms": 6014490,
+          "quote": "发动技能带走6号狼人混"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

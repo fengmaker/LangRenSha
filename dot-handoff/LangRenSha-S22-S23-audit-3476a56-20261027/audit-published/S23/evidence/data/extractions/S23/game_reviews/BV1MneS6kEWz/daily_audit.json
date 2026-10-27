@@ -1,0 +1,324 @@
+{
+  "bvid": "BV1MneS6kEWz",
+  "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5918280,
+    "end_ms": 5986190,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "复盘角色顺序按“角色词+随后号码”连读：通灵师10、女巫7、猎人6、守卫3、机械狼11；普通狼人2/5/9。N1狼刀7、女巫毒9，7/9双死；D1 10号通灵师放逐。",
+    "N2守卫3号守3号挡狼刀，平安夜；D2 12号平民放逐。N3狼队刀3号守卫，3号单死；D3 5号狼人自爆。",
+    "N4狼队刀8号平民，8号单死；D4播报2号狼人“选择自保”后进入拍刀集合，终局播报1号平民、6号猎人拍刀成功，狼队获胜。"
+  ],
+  "event_patches": [
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "D3 5号狼人自爆后进入夜晚，无D3放逐。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          8
+        ],
+        "result": "N4狼队击杀8号平民单死。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": "D4拍刀/猎人开枪结算直接结束，没有放逐。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          3
+        ],
+        "result": "N3狼队击杀3号守卫，3号单死。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "mechanical_knife_status",
+      "changes": {
+        "action": "not_carrying",
+        "actor": 11,
+        "targets": [],
+        "result": "N4时普通狼人2号仍存活，11号尚未接刀；机械双刀技能未解锁。"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "changes": {
+        "action": "unavailable",
+        "actor": 11,
+        "targets": [],
+        "result": "N4普通狼人2号仍存活，机械双刀尚未解锁；不执行额外技能刀。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-37-night-1",
+      "status": "confirmed",
+      "conclusion": "死者座位：7,9",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5932780,
+          "end_ms": 5943000,
+          "quote": "一号4号八号12号首夜守卫守护5号狼人\n狼队击杀7号女巫女巫毒杀9号狼人\n当夜7号九号双死"
+        }
+      ]
+    },
+    {
+      "id": "phase-37-night-2",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5959200,
+          "end_ms": 5962520,
+          "quote": "狼队击杀3号守卫\n形成平安夜\n第二天白天"
+        }
+      ]
+    },
+    {
+      "id": "s23-a-bv1mnes6kewz-r4-guard-target",
+      "status": "confirmed",
+      "conclusion": "第3天白天后进入的夜晚，守卫守护1号平民。",
+      "reasoning": "复盘在12号被抗推后记录警徽移交、入夜并守护1号平民，后续另起新一夜；这一行动对应第4轮夜晚。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5962520,
+          "end_ms": 5969320,
+          "quote": "12号平民被抗推出局\n警徽移交至一号平民入夜守卫守护一号平民\n狼队击杀3号守卫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N3狼队击杀3号守卫，3号单死。",
+      "reasoning": "最终复盘明确N3守卫守护1号、狼队击杀3号，播报3号守卫单死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5964180,
+          "end_ms": 5970360,
+          "quote": "警徽移交至一号平民入夜守卫守护一号平民\n狼队击杀3号守卫\n3号守卫单四"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-exile_result",
+      "status": "inferred",
+      "conclusion": "D4拍刀/猎人开枪结算直接结束，无放逐。",
+      "reasoning": "按复盘中自爆、交牌或游戏结束的明确顺序推断该日未进入普通放逐；不将未提技能记作空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5922820,
+          "end_ms": 5923760,
+          "quote": "10号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-night-mechanical_knife_status",
+      "status": "inferred",
+      "conclusion": "N4机械狼11号未接双刀；普通狼2号仍存活，机械双刀需普通狼人出局后才解锁。",
+      "reasoning": "角色/死亡序列显示11号是机械狼、2号普通狼人到D4仍存活；该版型双刀条件未满足，按规则推断not_carrying。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5916400,
+          "end_ms": 5936440,
+          "quote": "给各位弹幕老师们做本90的复盘\n本局版型为机械狼通神圣营通灵师\n10号女巫\n7号猎人\n6号守卫3号蓝人阵营2号五号九号机械狼\n11号\n你作准本\n旧游戏位机械双刀狼平民阵营\n一号4号八号12号首夜守卫守护5号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5977630,
+          "end_ms": 5979430,
+          "quote": "2号狼人选择自保后"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-night-mechanical_action",
+      "status": "inferred",
+      "conclusion": "N4没有机械双刀技能刀：11号尚未接刀，普通狼人2号在D4仍存活。",
+      "reasoning": "普通狼2号存活至D4，机械双刀技能所需条件不满足；保留机械行动槽为unavailable，不将终局拍刀误作夜间技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5916400,
+          "end_ms": 5936440,
+          "quote": "给各位弹幕老师们做本90的复盘\n本局版型为机械狼通神圣营通灵师\n10号女巫\n7号猎人\n6号守卫3号蓝人阵营2号五号九号机械狼\n11号\n你作准本\n旧游戏位机械双刀狼平民阵营\n一号4号八号12号首夜守卫守护5号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5977630,
+          "end_ms": 5979430,
+          "quote": "2号狼人选择自保后"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N4狼队击杀8号平民，8号单死。",
+      "reasoning": "最终复盘连续明确N4狼队击杀8号及8号单死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5974010,
+          "end_ms": 5976650,
+          "quote": "狼队击杀8号平民\n8号平民三死"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-day-exile_result",
+      "status": "confirmed",
+      "conclusion": "D4 2号狼人自爆后进入终局拍刀阶段，没有常规放逐。",
+      "reasoning": "原文直接说D4 2号狼人自爆后进入拍刀阶段，随后即游戏结束；终局拍刀由独立endgame记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5976650,
+          "end_ms": 5984259,
+          "quote": "第四天白天\n2号狼人选择自保后\n狼队选择拍刀\n一号平民\n6号猎人拍刀成功\n游戏结束"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "daily-correction-3-day-exile_result-1",
+      "status": "confirmed",
+      "conclusion": "D3 5号狼人自爆后进入夜晚，无D3放逐。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5974010,
+          "end_ms": 5975610,
+          "quote": "狼队击杀8号平民"
+        }
+      ],
+      "round": 3,
+      "phase": "day",
+      "field": "rounds[3].day.exile_result",
+      "title": "D3 5号狼人自爆后进入夜晚，无D3放逐。"
+    },
+    {
+      "id": "daily-correction-4-day-night_deaths-4",
+      "status": "confirmed",
+      "conclusion": "N4狼队击杀8号平民单死。",
+      "reasoning": "按该局最终复盘原句核对候选字段；首夜禁刀另按用户确认规则记录。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5974010,
+          "end_ms": 5975610,
+          "quote": "狼队击杀8号平民"
+        }
+      ],
+      "round": 4,
+      "phase": "day",
+      "field": "rounds[4].day.night_deaths",
+      "title": "N4狼队击杀8号平民单死。"
+    },
+    {
+      "id": "daily-correction-3-day-night_deaths-confirmed",
+      "round": 3,
+      "phase": "day",
+      "field": "rounds[3].day.night_deaths",
+      "title": "N3狼队刀3号守卫，3号单死",
+      "status": "confirmed",
+      "conclusion": "N3狼队击杀3号守卫，3号单死。",
+      "reasoning": "复盘按连续日夜顺序说明守卫行动、狼队击杀和单死结果。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5964180,
+          "end_ms": 5970360,
+          "quote": "警徽移交至一号平民入夜守卫守护一号平民\n狼队击杀3号守卫\n3号守卫单四"
+        }
+      ]
+    },
+    {
+      "id": "daily-correction-4-night-mechanical_knife_status-corrected",
+      "round": 4,
+      "phase": "night",
+      "field": "rounds[4].night.mechanical_knife_status",
+      "title": "N4机械狼11号未接刀",
+      "status": "inferred",
+      "conclusion": "普通狼人2号仍存活，机械狼11号不满足接双刀条件。",
+      "reasoning": "角色复盘将“通灵师/女巫/猎人/守卫/机械狼”依次连到随后播报的座位号；D4播报“2号狼人选择自爆”，证明普通狼2仍在N4后存活。根据该版型只有普通狼人出局后才解锁双刀，N4推断11号未接刀。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5916400,
+          "end_ms": 5936440,
+          "quote": "给各位弹幕老师们做本90的复盘\n本局版型为机械狼通神圣营通灵师\n10号女巫\n7号猎人\n6号守卫3号蓝人阵营2号五号九号机械狼\n11号\n你作准本\n旧游戏位机械双刀狼平民阵营\n一号4号八号12号首夜守卫守护5号狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1MneS6kEWz_P01_CID42008250426.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "8286af50c9021c5d695050c7e59f24f809f14eafd1425a5f966979bdf6ea102f",
+          "start_ms": 5977630,
+          "end_ms": 5979430,
+          "quote": "2号狼人选择自保后"
+        }
+      ]
+    }
+  ],
+  "human_questions": []
+}

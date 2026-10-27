@@ -1,0 +1,12 @@
+resentation.py \
+  --repo actions-acceptance \
+  --out audit-published/mapping/presentation/presentation-audit.json \
+  --render-input /tmp/presentation-render-input.json
+
+# 从实际源码TSX离线转译并React SSR；依赖目录只读，可换成任意已安装当前锁定依赖的node_modules。
+node audit-published/mapping/presentation/check_render.cjs \
+  actions-acceptance langrensha-cloud/website/web/node_modules \
+  /tmp/presentation-render-input.json audit-published/mapping/presentation/render-audit.json
+```
+
+运行结果：223局扫描；问题行数：流徽3、重投标签14轮、DQ后推断1、终局后白天12（含下项S22九局）、S23末神1、S22夜终局枪口9、傀儡猎人1；31局真实组件SSR成功。`presentation-audit.json`含每局适用范围、源字段及实际投影；`render-audit.json`含真实组件生成的相关文字和白天区块。报告不把一次脚本成功或既有CI测试通过当作原媒体事实确认，也不重开已定案姓名/照片/未知字段。

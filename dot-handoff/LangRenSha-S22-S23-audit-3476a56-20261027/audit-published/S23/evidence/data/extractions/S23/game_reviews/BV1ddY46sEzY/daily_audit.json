@@ -1,0 +1,79 @@
+{
+  "bvid": "BV1ddY46sEzY",
+  "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 5355940,
+    "end_ms": 5406520,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1守卫护1、狼刀机械狼9、女巫救9，平安；机械狼学平民，D1放逐5狼。",
+    "N2狼刀7、女巫毒6，6/7双死；N3狼刀10、D3放逐9机械狼，复盘以好人胜利结束。"
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "phase-18-night-1",
+      "status": "confirmed",
+      "conclusion": "无人死亡",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+          "start_ms": 5371780,
+          "end_ms": 5378290,
+          "quote": "本就是为机械平民女巫开药解救9号玩家\n形成平安夜\n同一时验证2号玩家为首位身份"
+        }
+      ]
+    },
+    {
+      "id": "phase-18-night-2",
+      "status": "confirmed",
+      "conclusion": "死者座位：7,6",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+          "start_ms": 5383280,
+          "end_ms": 5388400,
+          "quote": "入夜守卫守护2号自首\n狼人击杀7号平民女巫\n毒杀6号狼人"
+        }
+      ]
+    },
+    {
+      "id": "phase-18-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：10",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+          "start_ms": 5393020,
+          "end_ms": 5400230,
+          "quote": "一号狼人自爆入野守卫守护8号通灵师\n狼人击杀10号平民\n通灵师验证12号玩家为平民身份"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-mechanical_day_skill",
+      "status": "inferred",
+      "conclusion": "机械狼学平民，本局终局前无对应机械白天技能结算",
+      "reasoning": "角色学习与终局时序不支持另造机械白天技能。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV1ddY46sEzY_P01_CID41736277511.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "d1fcd635ed2bd0a018e221fa4fab01b645fba28c55e8e9d1ca4199c687bc80be",
+          "start_ms": 5357060,
+          "end_ms": 5358500,
+          "quote": "本游戏通灵师8号女巫"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

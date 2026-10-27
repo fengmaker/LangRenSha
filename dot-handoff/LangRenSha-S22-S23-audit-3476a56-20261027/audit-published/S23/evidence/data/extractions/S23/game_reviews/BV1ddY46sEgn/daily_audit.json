@@ -1,0 +1,123 @@
+{
+  "bvid": "BV1ddY46sEgn",
+  "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 6643159,
+    "end_ms": 6716700,
+    "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
+  },
+  "checks": [
+    "N1狼刀2、女巫救2，平安；N2狼刀11并毒4，公布4/11双死；D2放逐3。",
+    "N3狼刀6，警徽转7，D3放逐10；N4狼刀7、警徽转5；D4放逐最后一狼1。"
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 12,
+        "targets": [
+          2
+        ],
+        "result": "首夜狼刀2号后女巫开药救起，公布平安夜。"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "phase-17-night-2",
+      "status": "confirmed",
+      "conclusion": "死者座位：4,11",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6681350,
+          "end_ms": 6686680,
+          "quote": "对放逐结果女巫毒杀了4号鬼术师\n狼人击杀11号魔术师"
+        }
+      ]
+    },
+    {
+      "id": "phase-17-night-3",
+      "status": "confirmed",
+      "conclusion": "死者座位：6",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6690890,
+          "end_ms": 6697050,
+          "quote": "3号平民被抗推出局\n入夜狼人击杀6号预言家\n预言家验证7号玩家为好人身份"
+        }
+      ]
+    },
+    {
+      "id": "phase-17-night-4",
+      "status": "confirmed",
+      "conclusion": "死者座位：7",
+      "reasoning": "与原字幕末段逐日复盘交叉核对，按夜间公布/结算结果回填夜死字段。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6704309,
+          "end_ms": 6709269,
+          "quote": "10号狼人被公投出局\n入夜狼人击杀7号平民\n7号出局"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-night-witch_save",
+      "status": "confirmed",
+      "conclusion": "首夜女巫救起2号，平安夜",
+      "reasoning": "复盘直接描述狼刀2号、女巫开药救起。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6644599,
+          "end_ms": 6645199,
+          "quote": "6号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-witch_save",
+      "status": "unresolved",
+      "conclusion": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "reasoning": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6644599,
+          "end_ms": 6645199,
+          "quote": "6号女巫"
+        }
+      ]
+    },
+    {
+      "id": "coverage-4-night-witch_save",
+      "status": "unresolved",
+      "conclusion": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "reasoning": "当前候选未明确此项；须结合相邻日夜、法官播报与视频继续核实。不能将未知当作空过或无事发生。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第02局_诡术之境__BV1ddY46sEgn_P01_CID41736144564.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "c70dd48b860dd0542bb4f10844a7412c240ba4279d81c5d9a2fb28a8e7791a35",
+          "start_ms": 6644599,
+          "end_ms": 6645199,
+          "quote": "6号女巫"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}

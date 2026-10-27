@@ -1,0 +1,201 @@
+{
+  "bvid": "BV1zmpB6PEcF",
+  "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 6048030,
+    "end_ms": 6109140,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1盗宝8选平民身份、通灵师验8；首夜狼刀规则禁止，完整原始字幕明确播报昨夜平安夜。D1 1狼出局。N2盗宝选摄梦人梦游9，狼刀2毒师、毒师毒5狼，D2双死；11狼王自爆后未发动狼王枪。N3复盘报平安夜，8号DQ为额外现场播报，非普通夜死；D3仍实际投票放逐8，好人胜。普通狼刀目标未在复盘中报出，保留unknown。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6048030,
+          "end_ms": 6109140,
+          "quote": "好第二局游戏结束了\n本局游戏\n盗宝大师版型通灵师\n3号猎人\n9号毒师\n2号蒙面人\n6号狼王\n11号狼人\n一号5号\n本局游戏的盗宝大师8号隶属狼人阵营\n可以选择的底牌是平民和兽梦人\n平民4号七号十号12号\n首页盗宝大师选择平民身份\n通灵师验证8号玩家\n盗宝大师为平民身份上警环节\n10号平民获得警徽\n第一天白天\n一号狼人被公投出局\n入夜盗宝大师选择射梦人身份\n梦游9号猎人\n狼人击杀2号毒师\n毒师毒杀5号狼人\n二五双死\n当夜通灵师再次验证8号玩家\n盗宝大师为摄梦人身份\n第二天白天\n11号狼王自爆入夜\n盗宝大师在毒师业睁眼被DQ出局\n通灵师验证了4号玩家为平民身份\n第三天白天最后一张狼人\n8号盗宝大师被公投出局\n游戏结束\n好人正义获胜"
+        }
+      ]
+    },
+    "用户确认10/13夜间8号最后一狼DQ，狼刀判失效导致平安夜；不把失效刀当作未知或主动空刀，后续现场播报仍原样保留。"
+  ],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "forbidden",
+        "actor": null,
+        "targets": [],
+        "result": "盗宝大师首夜规则禁刀；用户确认首夜无狼刀。"
+      }
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "wolf_king_shot",
+      "changes": {
+        "action": "pass",
+        "actor": 11,
+        "targets": [],
+        "result": "11号自爆后现场流程直接转入天黑，未发动狼王枪；不据此判断其资格。"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": "最终复盘窗口未逐列N1夜死；完整原始字幕在D1警长环节后明确播报“昨夜平安夜”，确认首夜无死亡。"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "unavailable",
+        "actor": 8,
+        "targets": [],
+        "result": "用户确认：8号最后一狼当夜被DQ出局，狼刀被判定失效，未产生狼刀死亡，形成平安夜。",
+        "invalidated": true,
+        "confirmation_status": "user_confirmed"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": "狼刀因最后一狼8号当夜DQ而失效；平安夜指无狼刀死亡，DQ单列。",
+        "confirmation_status": "user_confirmed"
+      }
+    }
+  ],
+  "finding_resolutions": [
+    {
+      "id": "b75-d2-wolf-king-shot-after-selfdestruct",
+      "status": "confirmed",
+      "conclusion": "11号狼王自爆后现场直接转入天黑，没有开枪流程；确认本次未发动狼王枪，不推断其资格。",
+      "reasoning": "原文流程为11号发言后自爆、随后天黑闭眼，无开枪流程；与终局复盘衔接一致。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6094200,
+          "end_ms": 6096410,
+          "quote": "11号狼王自爆入夜"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6102660,
+          "end_ms": 6104260,
+          "quote": "第三天白天最后一张狼人"
+        },
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6104260,
+          "end_ms": 6106560,
+          "quote": "8号盗宝大师被公投出局"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-night-wolf_attack",
+      "status": "confirmed",
+      "conclusion": "首夜按盗宝大师规则禁刀，应记forbidden。",
+      "reasoning": "最终复盘说首夜盗宝大师选平民；结合用户确认的禁刀口径。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 6065860,
+          "end_ms": 6068680,
+          "quote": "平民4号七号十号12号\n首页盗宝大师选择平民身份\n通灵师验证8号玩家"
+        }
+      ]
+    },
+    {
+      "id": "coverage-1-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N1无夜间死亡。",
+      "reasoning": "完整原始转写在D1警长流程后、白天发言开始前明确播报“昨夜平安夜”；首夜盗宝大师选平民且狼队规则禁刀，与此结算一致。未以candidate自动补出的eligible_voters列表作为证据。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 2733140,
+          "end_ms": 2753580,
+          "quote": "请从一三十十一十二当中选出本局游戏警长321请出票5号投给10号6号投给10号其他玩家请亮蓝灯昨夜平安夜请紧张组织发言顺序"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-day-night_deaths",
+      "status": "confirmed",
+      "conclusion": "N3播报平安夜；8号DQ属于额外离场播报，不计普通夜死；D3仍实际投票放逐8号。",
+      "reasoning": "完整原文明确“昨夜平安夜/昨夜8号玩家被DQ出局/8号请离场”，终局复盘继续记D3投8，故DQ不替代夜死结算或放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-13/2026-10-13_S23_第07周_正赛第06期_第02局_盗宝大师__BV1zmpB6PEcF_P01_CID42717088844.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5b3c746259a350545b38410e4d01cc46d494b8c2b5aa483570b5cc3d1dc09c01",
+          "start_ms": 5716480,
+          "end_ms": 5722870,
+          "quote": "忘了昨夜平安夜\n昨夜8号玩家被DQ出局\n8号玩家请离场\n请警长组织发言顺序"
+        }
+      ]
+    },
+    {
+      "id": "coverage-3-night-wolf_attack",
+      "status": "confirmed",
+      "title": "8号DQ导致狼刀判失效",
+      "conclusion": "8号作为最后一狼当夜被DQ出局，因此狼刀被判失效、形成平安夜；不再追问一个未生效的刀口目标。",
+      "reasoning": "8号作为最后一狼当夜被DQ出局，因此狼刀被判失效、形成平安夜；不再追问一个未生效的刀口目标。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "1013因为8号最后一狼晚上被DQ出局，所以狼刀被判定失效 导致平安夜"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    }
+  ],
+  "extra_findings": [
+    {
+      "id": "user-20261026-b75-dq-invalidates-knife",
+      "round": 3,
+      "phase": "night",
+      "field": "wolf_attack",
+      "title": "DQ导致狼刀失效",
+      "status": "confirmed",
+      "conclusion": "8号是最后一狼；其当夜DQ使狼刀判失效，平安夜与DQ分别记录。",
+      "reasoning": "8号是最后一狼；其当夜DQ使狼刀判失效，平安夜与DQ分别记录。",
+      "evidence": [
+        {
+          "kind": "user_confirmation",
+          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+          "quote": "1013因为8号最后一狼晚上被DQ出局，所以狼刀被判定失效 导致平安夜"
+        }
+      ],
+      "confirmation_status": "user_confirmed"
+    }
+  ],
+  "human_questions": []
+}

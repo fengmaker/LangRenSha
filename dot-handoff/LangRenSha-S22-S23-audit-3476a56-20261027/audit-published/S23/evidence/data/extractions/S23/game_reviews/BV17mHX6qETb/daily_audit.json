@@ -1,0 +1,46 @@
+{
+  "bvid": "BV17mHX6qETb",
+  "source_sha256": "64fea958af36bd4246578abdf4743ac2a4855aa3b4e31e051d7e9d2d741cacc2",
+  "reviewed_date": "2026-10-26",
+  "recap_window": {
+    "start_ms": 4121709,
+    "end_ms": 4164200,
+    "basis": "逐局最终法官角色与行动复盘原文；从角色/复盘引入句起，截止胜负宣布，排除前段赛评及复盘后的主持广告。"
+  },
+  "checks": [
+    {
+      "scope": "逐日夜次、夜死公布、白天投票/中断及胜负",
+      "conclusion": "N1狼刀8猎人、女巫救起，混血12选11平民，预言家验2狼；D1平安夜，警长10，3狼自爆，好人胜。",
+      "candidate_comparison": "已按最终法官复盘窗口逐句核对候选日夜序列；仅将明确复盘事实或可由规则与出局顺序推出的事件回填。未提及的技能仍为unknown；事件修正见event_patches。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第01局_预女猎白混__BV17mHX6qETb_P01_CID42572582365.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "64fea958af36bd4246578abdf4743ac2a4855aa3b4e31e051d7e9d2d741cacc2",
+          "start_ms": 4121709,
+          "end_ms": 4164200,
+          "quote": "我靠来给各位当毛师傅做本期游戏的复盘\n本局版行为玉女猎白混血儿\n谁是预言家\n10号女巫\n5号猎人\n8号白神\n6号狼人阵营\n一号2号\n3号四号平民阵营\n7号九号\n11号混血儿12号\n本游戏好人混首页混圈\n选择11号平民为榜样\n形成好人混狼队击杀8号猎人女王救起\n形成平安夜预言家验证2号玩家为狼人身份\n警上竞选环节\n10号预言家湖的警徽在第一天白天\n3号狼人自爆后\n在夜间与队友痛心疾首\n表示交牌游戏结束\n好人阵营春天获胜\n各位道友们"
+        }
+      ]
+    }
+  ],
+  "event_patches": [],
+  "finding_resolutions": [
+    {
+      "id": "b67-r1-witch-save-poison",
+      "status": "inferred",
+      "conclusion": "5号女巫救起8号猎人；同一夜毒药不可用，D1平安夜。",
+      "reasoning": "转写明确8号被狼刀后女巫救起并形成平安夜；规则明确女巫每夜最多使用一瓶药。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-08/2026-10-08_S23_第06周_正赛第05期_第01局_预女猎白混__BV17mHX6qETb_P01_CID42572582365.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "64fea958af36bd4246578abdf4743ac2a4855aa3b4e31e051d7e9d2d741cacc2",
+          "start_ms": 4143080,
+          "end_ms": 4146640,
+          "quote": "形成好人混狼队击杀8号猎人女王救起"
+        }
+      ]
+    }
+  ],
+  "extra_findings": [],
+  "human_questions": []
+}
