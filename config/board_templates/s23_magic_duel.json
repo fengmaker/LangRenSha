@@ -1,0 +1,197 @@
+{
+  "code": "s23_magic_duel",
+  "name": "S23 魔幻对决",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "女巫": 1,
+    "猎人": 1,
+    "魔术师": 1,
+    "狼人": 3,
+    "狼术师": 1,
+    "平民": 4
+  },
+  "wake_order": [],
+  "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。",
+  "night_slots": [
+    {
+      "code": "magic_duel_wolf_sorcerer_swap",
+      "label": "狼术师交换",
+      "actor_role": "狼术师",
+      "actions": [
+        "unknown",
+        "swap"
+      ]
+    },
+    {
+      "code": "wolf_attack",
+      "label": "wolf attack",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "attack"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "witch save",
+      "actor_role": "女巫",
+      "actions": [
+        "unknown",
+        "save",
+        "none"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "seer check",
+      "actor_role": "预言家",
+      "actions": [
+        "unknown",
+        "check"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "witch poison",
+      "actor_role": "女巫",
+      "actions": [
+        "unknown",
+        "poison",
+        "pass"
+      ]
+    },
+    {
+      "code": "magic_duel_magician_swap",
+      "label": "魔术师交换",
+      "actor_role": "魔术师",
+      "actions": [
+        "unknown",
+        "swap"
+      ]
+    },
+    {
+      "code": "magician_exchange",
+      "label": "magician exchange",
+      "actor_role": "魔术师",
+      "actions": [
+        "unknown",
+        "pass",
+        "exchange"
+      ]
+    },
+    {
+      "code": "sorcerer_exchange",
+      "label": "狼术师交换",
+      "actor_role": "狼术师",
+      "actions": [
+        "unknown",
+        "exchange",
+        "pass"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "night deaths",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "die"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "exile_result",
+      "label": "exile result",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "exile"
+      ]
+    },
+    {
+      "code": "sheriff_candidates",
+      "label": "sheriff candidates",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "register"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "sheriff vote",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "vote"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "sheriff result",
+      "actor_role": "狼人",
+      "actions": [
+        "unknown",
+        "elected"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "night deaths",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "die",
+        "peaceful"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "self destruct",
+      "actor_role": "狼人",
+      "actions": [
+        "unknown",
+        "self_destruct"
+      ]
+    },
+    {
+      "code": "wolf_shot",
+      "label": "狼队终局拍刀",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "shoot"
+      ]
+    },
+    {
+      "code": "hunter_shot",
+      "label": "hunter shot",
+      "actor_role": "猎人",
+      "actions": [
+        "unknown",
+        "unavailable"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "exile vote",
+      "actor_role": null,
+      "actions": [
+        "unknown",
+        "not_held",
+        "vote"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "badge",
+      "actor_role": "预言家",
+      "actions": [
+        "unknown",
+        "transfer"
+      ]
+    }
+  ]
+}

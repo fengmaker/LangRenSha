@@ -110,6 +110,60 @@
     "unknown_policy": "证据不足时保留 unknown/pending；不按常见玩法补规则。"
   },
   "shared_rules": {
+    "voting": {
+      "status": "user_confirmed",
+      "sheriff_postponement": {
+        "trigger": "day_one_daytime_wolf_self_destruct_interrupting_unfinished_election",
+        "continue_on_day": 2,
+        "second_day_self_destruct_result": "badge_lost",
+        "maximum_postponements": 1,
+        "continued_election_voters": "original_off_police_players_with_voting_rights",
+        "continued_election_targets": "on_police_candidates",
+        "same_day_pk_is_separate_from_postponement": true
+      },
+      "unannounced_choice": {
+        "result": "abstained",
+        "applies_to": "eligible_player_in_an_established_ballot_without_an_explicit_recorded_target",
+        "keep_rule_derived_basis_separate_from_explicit_announcement": true,
+        "does_not_create_unobserved_ballots_or_unknown_voter_rosters": true
+      },
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-25",
+        "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+      },
+      "daytime_exile": {
+        "no_daytime_self_destruct_requires_ballot": true,
+        "missing_ballot_requires_recap_and_departure_crosscheck": true,
+        "normal_ballot_label": "第几天白天的放逐投票",
+        "two_tied_ballots_result": "peaceful_day_no_exile",
+        "wolf_rush_is_separate_phase": true
+      },
+      "survivor_derived_eligibility": {
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-25",
+        "source_path": "data/extractions/S22/用户确认_20261025_存活与终局.txt",
+        "basis": "每天公投、夜间死亡和技能出局按发生时点重放，推导存活名单与本轮票权；公投后触发的开枪不扣除本次投票资格。",
+        "arithmetic_deductions_do_not_require_manual_review": true,
+        "conflicting_or_missing_departure_evidence_remains_unresolved": true
+      }
+    },
+    "dreamer": {
+      "status": "user_confirmed",
+      "target_immune_to_wolf_attack_that_night": true,
+      "same_target_on_two_consecutive_nights": "target_dies_on_second_night",
+      "dreamer_death_trigger": "night_death_only",
+      "night_death_link_target": "current_night_dream_target",
+      "daytime_death_links_previous_target": false,
+      "hunter_or_wolf_king_shot_after_repeat_dream_death": false,
+      "hunter_or_wolf_king_shot_after_linked_dream_death": false,
+      "wolf_attack_immunity_does_not_cancel_dream_deaths": true,
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-25",
+        "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt"
+      }
+    },
     "ordinary_witch": {
       "status": "user_confirmed",
       "applies_when": "实际角色为普通女巫",
@@ -196,6 +250,9 @@
       "type": "屠边",
       "wolf_win_when": "神职边或平民边任一边清空",
       "good_win_when": "狼人身份牌全部出局",
+      "settle_immediately_after_elimination": true,
+      "terminal_night_has_no_following_daytime": true,
+      "same_night_both_conditions": "werewolf_wins_wolf_knife_first",
       "status": "user_confirmed",
       "source": {
         "type": "user_confirmation",
@@ -487,7 +544,7 @@
             "physical_identity": "盗宝大师",
             "count": 1,
             "elimination_side": "not_specified_by_official_card",
-            "victory_faction": "per_game_faction_from_unused_cards"
+            "victory_faction": "werewolf"
           }
         ],
         "dealt_seats": 12,
@@ -546,7 +603,7 @@
           "physical_identity": "盗宝大师",
           "count": 1,
           "elimination_side": "not_specified_by_official_card",
-          "victory_faction": "per_game_faction_from_unused_cards"
+          "victory_faction": "werewolf"
         }
       ],
       "wake_order": [],
@@ -566,15 +623,23 @@
         {
           "type": "user_confirmation",
           "confirmed_on": "2026-10-24"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-25",
+          "statement": "盗宝大师始终属于狼人阵营；除盗宝大师以外的初始狼队成员全部出局后，由盗宝大师接替普通狼刀。"
         }
       ],
       "board_rules": {
-        "alignment_from_unused_cards": "wolf if any unused card is a werewolf role; otherwise good",
+        "victory_faction": "always_werewolf",
         "alignment_changes_when_switching_skill": false,
         "choose_one_unused_card_each_night": true,
         "same_card_on_consecutive_nights_allowed": false,
         "first_night_wolf_attack": "forbidden",
-        "ordinary_wolf_knife_takeover": "wolf-aligned treasure master may take ordinary knife after all ordinary wolves depart",
+        "ordinary_wolf_knife_takeover": {
+          "actor_identity": "盗宝大师",
+          "after_all_identity_roles_departed": ["狼人", "狼王"]
+        },
         "poisoner": {
           "uses": 1,
           "poisoned_hunter_or_wolf_king_can_use_death_skill": false
@@ -872,7 +937,7 @@
   "pending_rules": [
     {
       "board_code": "treasure_master",
-      "rule": "盗宝大师本体在屠边判定中归神边还是民边；不从当夜所选技能牌擅自决定。",
+      "rule": "盗宝大师本体在屠边判定中归神边还是民边；个人胜利阵营始终为狼人，不从当夜所选技能牌或余牌决定。",
       "status": "pending",
       "infer": false
     },

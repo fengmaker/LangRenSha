@@ -2,7 +2,7 @@ from copy import deepcopy
 
 import pytest
 
-from scripts.import_bluff_feedback import validate_feedback
+from scripts.import_bluff_feedback import validate_feedback,source_games
 from scripts.recover_bluff_feedback_text import recover_feedback
 from website.api.bluffs import source_fingerprint
 from website.tests.test_bluffs import sample
@@ -26,6 +26,23 @@ def test_feedback_roundtrip_keeps_comments_separate_from_confirmation():
     assert next(iter(validate_feedback(value, [game]).values()))["decision"] == "comment"
     value["records"][0]["notes"] = "  "
     assert validate_feedback(value, [game]) == {}
+
+
+def test_s23_feedback_is_season_bound_and_preserves_unknown_fields():
+    value,game=feedback()
+    value['season']='S23'
+    value['records'][0].update(claim_day=None,claimed_role=None)
+    with pytest.raises(ValueError):validate_feedback(value,[game])
+    row=next(iter(validate_feedback(value,[game],'S23').values()))
+    assert row['claim_day'] is None and row['claimed_role'] is None
+    assert row['decision']=='yes'
+
+
+def test_s23_feedback_uses_the_same_terminal_boundary_as_the_published_game():
+    games=source_games('S23')
+    assert len(games)==75
+    terminal=next(g for g in games if g['bvid']=='BV17xpA6aE7N')
+    assert next(r for r in terminal['rounds'] if r['number']==4)['day']==[]
 
 
 @pytest.mark.parametrize("change", [

@@ -1,6 +1,7 @@
 """Formal entries distinguish a known contradiction from missing source facts."""
 import copy
 import json
+from collections import Counter
 from pathlib import Path
 import sys
 import unittest
@@ -163,11 +164,42 @@ class FormalEntryTests(unittest.TestCase):
 
     def test_strict_dynamic_treasure_uses_actual_twelve_cards(self):
         value = self.entry("treasure_master")
-        roles = ["通灵师", "毒师", "猎人", "摄梦人", "蒙面人", "平民", "平民", "平民", "狼王", "狼人", "狼人", "盗宝大师"]
+        roles = ["通灵师", "毒师", "猎人", "摄梦人", "蒙面人", "平民", "狼王", "狼人", "狼人", "狼人", "盗宝大师", "平民"]
         for p, role in zip(value["seats"], roles):
             p.update(role=role, faction="werewolf" if role in {"狼人", "狼王", "盗宝大师"} else "good", name=f"选手{p['seat']}")
         value.update(roster=[p["name"] for p in value["seats"]], commentators=["解说甲"], referee="法官甲")
+        remainder = Counter({"通灵师": 1, "毒师": 1, "猎人": 1, "摄梦人": 1, "蒙面人": 1,
+                             "平民": 5, "狼王": 1, "狼人": 3, "盗宝大师": 1}) - Counter(roles)
+        self.assertEqual(remainder["狼人"] + remainder["狼王"], 0)
         self.assertEqual(validate(value, check_files=False)["code"], "treasure_master")
+        value["seats"][10]["faction"] = "good"
+        self.assertIn("treasure_alignment", self.codes(value))
+
+    def test_treasure_master_takes_ordinary_knife_only_after_other_wolves_depart(self):
+        value = self.entry("treasure_master", rounds=2)
+        roles = ["盗宝大师", "狼人", "狼人", "狼人", "狼王", "通灵师", "毒师", "猎人", "摄梦人", "蒙面人", "平民", "平民"]
+        for p, role in zip(value["seats"], roles):
+            p.update(role=role, faction="werewolf" if role in {"狼人", "狼王", "盗宝大师"} else "good")
+        knife = self.event(value, "wolf_attack", 2)
+        knife.update(action="attack", actor=1, targets=[6])
+
+        pending = next(i for i in issues(value) if i["code"] == "treasure_knife_timing_unknown")
+        self.assertEqual(pending["severity"], "pending")
+        prior_outcomes = {
+            "night_deaths": "peaceful", "exile_result": "none", "self_destruct": "none",
+            "hunter_shot": "unavailable", "wolf_king_shot": "unavailable",
+            "masked_delayed_death": "not_triggered",
+        }
+        for slot, action in prior_outcomes.items():
+            self.event(value, slot, 1).update(action=action, targets=[])
+        self.assertIn("treasure_knife_timing", self.codes(value))
+
+        first_day = value["rounds"][0]["day"]
+        exile = next(e for e in first_day if e["slot"] == "exile_result")
+        exile.update(action="exile", targets=[2, 3, 4])
+        self.assertIn("treasure_knife_timing", self.codes(value), "仅狼人出局、狼王仍存活时不得接刀")
+        exile["targets"] = [2, 3, 4, 5]
+        self.assertNotIn("treasure_knife_timing", self.codes(value))
         self.event(value, "treasure_choice").update(action="choose", result="通灵师")
         self.assertIn("treasure_remaining_choice", self.codes(value))
 

@@ -3,378 +3,105 @@
   --stats-muted: #aab9b0;
 }
 
-.statsPage :global(.page-intro) {
-  margin-bottom: 24px;
-}
+.statsPage :global(.page-intro) { align-items: center; margin-bottom: 26px; }
+.statsPage :global(.page-intro) h1 { margin-bottom: 0; }
 
-.statsPage :global(.page-intro) :global(.intro-copy) {
-  max-width: 760px;
-  color: var(--stats-copy);
-  font-size: 16px;
-  line-height: 1.75;
-}
+.filterPanel { padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.filterHeading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.filterHeading h2 { margin: 0; font-size: 17px; font-weight: 550; }
+.scopeBadge { padding: 5px 10px; border: 1px solid rgba(124, 225, 191, .16); border-radius: 5px; color: var(--mint); background: rgba(124, 225, 191, .05); font-size: 13px; }
+.rangeForm { display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto; align-items: end; gap: 16px; }
+.rangeForm select { height: 46px; }
+.rangeForm :global(.button) { min-height: 46px; padding-inline: 24px; }
+.rangeDivider { display: grid; align-items: center; height: 46px; color: var(--faint); text-align: center; }
 
-.statsPage :global(.stats-filter) {
-  margin-bottom: 22px;
-}
+.summaryGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+.summaryCard { display: grid; gap: 16px; min-width: 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.summaryCard > span { color: var(--stats-muted); font-size: 15px; }
+.summaryCard > strong { font: 500 clamp(28px, 3vw, 38px)/1.2 var(--mono); letter-spacing: -.045em; }
+.summaryCard .unit { margin-left: 9px; color: var(--stats-muted); font: 14px var(--display); letter-spacing: 0; }
+.goodSummary { background: linear-gradient(120deg, rgba(124, 225, 191, .055), transparent 85%), var(--panel); }
+.wolfSummary { background: linear-gradient(120deg, rgba(230, 155, 155, .05), transparent 85%), var(--panel); }
+.goodSummary > strong { color: var(--mint); }
+.wolfSummary > strong { color: var(--rose); }
 
-.statsPage :global(.stats-season-form) {
-  padding: 16px 18px;
-}
+.section { padding-top: 38px; }
+.section > h2 { margin: 0 0 18px; font-size: 24px; font-weight: 550; }
+.tableWrap, .releaseWrap { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+.tableWrap { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.boardTable, .releaseTable { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.boardTable { min-width: 680px; }
+.boardTable th, .boardTable td { padding: 18px 22px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-size: 15px; }
+.boardTable thead th { padding-block: 15px; color: var(--stats-muted); background: rgba(255, 255, 255, .025); font-size: 14px; font-weight: 400; }
+.boardTable th:first-child { text-align: left; }
+.boardTable tbody th { font-weight: 500; }
+.boardTable td { color: var(--stats-copy); font-family: var(--mono); }
+.boardTable tbody tr:last-child > *, .releaseTable tbody tr:last-child > * { border-bottom: 0; }
+.boardTable tbody tr:hover { background: rgba(124, 225, 191, .025); }
+.boardTable .goodRate { color: var(--mint); }
+.boardTable .wolfRate { color: var(--rose); }
 
-.statsPage :global(.stats-topline) {
-  grid-template-columns: minmax(230px, 0.65fr) minmax(0, 1.35fr);
-  gap: 14px;
-}
+.roleGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.roleCard { display: flex; flex-direction: column; justify-content: space-between; gap: 22px; min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.roleCard h3 { margin: 0; color: var(--stats-copy); font-size: 15px; font-weight: 500; line-height: 1.5; overflow-wrap: anywhere; }
+.roleCard > strong { font: 500 27px/1.15 var(--mono); }
 
-.statsPage :global(.stats-total),
-.statsPage :global(.stats-callout) {
-  min-height: 104px;
-  padding: 20px 23px;
-}
+.detailsGroup { display: grid; gap: 12px; margin-top: 38px; }
+.details { min-width: 0; border: 1px solid var(--line); border-radius: 8px; background: rgba(16, 30, 30, .55); }
+.details > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; color: var(--stats-copy); font-size: 15px; list-style: none; cursor: pointer; }
+.details > summary::-webkit-details-marker { display: none; }
+.details > summary > span { color: var(--stats-muted); font-size: 18px; transition: transform .15s ease; }
+.details[open] > summary > span { transform: rotate(45deg); }
+.details > summary:hover { color: var(--mint); }
+.detailsContent { padding: 0 22px 22px; }
+.methodology { display: grid; gap: 12px; margin: 0; padding: 18px 0 0 20px; border-top: 1px solid var(--line); color: var(--stats-copy); font-size: 14px; line-height: 1.8; }
+.methodology li::marker { color: var(--faint); }
+.stateLegend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.7; }
+.stateLegend dt { margin-bottom: 5px; color: var(--text); font-weight: 500; }
+.stateLegend dd { margin: 0; color: var(--stats-muted); }
+.releaseWrap { margin: 0 22px 20px; }
+.releaseTable { min-width: 640px; color: var(--stats-copy); font-size: 14px; }
+.releaseTable th, .releaseTable td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+.releaseTable thead th { color: var(--stats-muted); font-weight: 400; }
+.releaseTable tbody th { font-weight: 500; }
+.activeRelease { color: var(--mint); }
+.tableWrap:focus-visible, .releaseWrap:focus-visible, .details > summary:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
 
-.statsPage :global(.stats-total) > span {
-  color: var(--stats-muted);
-  font-size: 15px;
-}
-
-.statsPage :global(.stats-total) { flex-direction: row; align-items: center; justify-content: space-between; gap: 18px; }
-.statsPage :global(.stats-total) > strong { display: flex; align-items: baseline; gap: 8px; margin: 0; }
-.statsPage :global(.stats-total) strong small { color: var(--stats-muted); font: 14px var(--display); letter-spacing: 0; }
-.playerLink { margin: 18px 0 0; color: var(--mint); font-size: 14px; }
-.playerLink a:hover { text-decoration: underline; }
-
-.statsPage :global(.stats-total) > strong {
-  margin-top: 5px;
-  font-size: 40px;
-}
-
-.statsPage :global(.stats-total) > small {
-  color: var(--stats-muted);
-  font-size: 14px;
-}
-
-.statsPage :global(.stats-callout) {
-  gap: 15px;
-}
-
-.statsPage :global(.stats-callout) p {
-  max-width: 680px;
-  color: var(--stats-copy);
-  font-size: 16px;
-  line-height: 1.7;
-}
-
-.statsPage :global(.stats-section) {
-  padding-top: 46px;
-}
-
-.statsPage :global(.section-heading) {
-  align-items: center;
-  margin-bottom: 17px;
-}
-
-.statsPage :global(.section-heading) h2 {
-  margin-top: 0;
-  font-size: 26px;
-}
-
-.statsPage :global(.section-subtitle) {
-  margin-top: 7px;
-  color: var(--stats-muted);
-  font-size: 15px;
-  line-height: 1.65;
-}
-
-.statsPage :global(.role-stat-grid) {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.statsPage :global(.role-stat-card) {
-  min-width: 0;
-  min-height: 118px;
-  padding: 15px 16px;
-}
-
-.statsPage :global(.role-stat-card) strong {
-  margin-top: 0;
-  font-size: 16px;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
-.statsPage :global(.role-stat-card) > b {
-  margin-top: auto;
-  font-size: 22px;
-}
-
-.statsPage :global(.table-wrap) {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-}
-
-.statsPage :global(.stats-table) {
-  min-width: 620px;
-}
-
-.statsPage :global(.stats-table) th {
-  height: 48px;
-  padding: 0 15px;
-  color: var(--stats-muted);
-  font-size: 14px;
-  letter-spacing: 0;
-}
-
-.statsPage :global(.stats-table) td {
-  padding: 14px 15px;
-  color: var(--stats-copy);
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
-}
-
-.statsPage :global(.stats-table) td strong {
-  font-size: 15px;
-}
-
-.statsPage :global(.stats-player-list) {
-  border-top-color: var(--line-strong);
-}
-
-.statsPage :global(.stats-player-row) {
-  min-height: 58px;
-  grid-template-columns: minmax(140px, 0.9fr) minmax(0, 1.5fr) 82px 24px;
-  gap: 16px;
-  padding: 8px 12px;
-}
-
-.statsPage :global(.stats-player-row) > strong {
-  min-width: 0;
-  color: #dbe4dc;
-  font-size: 16px;
-  overflow-wrap: anywhere;
-}
-
-.statsPage :global(.stats-player-roles) {
-  color: var(--stats-muted);
-  font-size: 14px;
-}
-
-.statsPage :global(.stats-player-row) > b {
-  font-size: 15px;
-}
-
-.statsPage :global(.stats-player-row) > b small {
-  font-size: 13px;
-}
-
-.statsPage :global(.methodology-section) {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 15px;
-  padding: 25px 28px;
-  margin-top: 48px;
-}
-
-.statsPage :global(.methodology-heading) {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.statsPage :global(.methodology-heading) h2 {
-  flex: none;
-  margin: 0;
-  font-size: 24px;
-}
-
-.statsPage :global(.methodology-heading) > p {
-  max-width: 620px;
-  color: var(--stats-muted);
-  font-size: 15px;
-  line-height: 1.65;
-  text-align: right;
-}
-
-.statsPage :global(.methodology-list) {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
-}
-
-.statsPage :global(.methodology-list) article {
-  padding: 11px 0;
-}
-
-.statsPage :global(.methodology-list) p {
-  color: var(--stats-copy);
-  font-size: 15px;
-  line-height: 1.75;
-}
-
-.statsPage :global(.state-legend) {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  padding-top: 16px;
-  margin-top: 1px;
-}
-
-.statsPage :global(.state-legend) > div {
-  align-items: flex-start;
-  gap: 11px;
-}
-
-.statsPage :global(.state-mark) {
-  width: 30px;
-  height: 30px;
-  font-size: 14px;
-}
-
-.statsPage :global(.state-legend) > div > span:last-child {
-  gap: 3px;
-}
-
-.statsPage :global(.state-legend) b {
-  font-size: 15px;
-}
-
-.statsPage :global(.state-legend) small {
-  color: var(--stats-muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.statsPage :global(.release-details) {
-  margin-top: 21px;
-}
-
-.statsPage :global(.release-details) > summary {
-  padding: 14px 0;
-  color: var(--stats-muted);
-  font-size: 15px;
-}
-
-.statsPage :global(.release-history) {
-  padding-top: 13px;
-}
-
-.statsPage :global(.release-history) .section-heading {
-  margin-bottom: 12px;
-}
-
-.statsPage :global(.release-table) {
-  overflow-x: auto;
-}
-
-.statsPage :global(.release-table-head),
-.statsPage :global(.release-table-row) {
-  min-width: 560px;
-  grid-template-columns: 1.3fr 1fr 0.7fr 0.8fr;
-  gap: 15px;
-  padding: 13px 14px;
-  font-size: 14px;
-}
-
-.statsPage :global(.release-table-head) {
-  color: var(--stats-muted);
-  font-size: 14px;
-}
-
-.statsPage :global(.release-table-row) {
-  color: var(--stats-copy);
-}
-
-.statsPage :global(.release-table-row) strong {
-  font-size: 14px;
-  min-width: 0;
-  overflow-wrap: anywhere;
+@media (max-width: 900px) {
+  .roleGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (max-width: 760px) {
-  .statsPage :global(.stats-topline) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
-  }
-
-  .statsPage :global(.stats-total),
-  .statsPage :global(.stats-callout) {
-    min-height: 0;
-  }
-
-  .statsPage :global(.role-stat-grid) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .statsPage :global(.methodology-section) {
-    padding: 21px;
-  }
-
-  .statsPage :global(.state-legend) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-  }
+  .filterPanel { padding: 20px; }
+  .rangeForm { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 16px 10px; }
+  .rangeForm :global(.button) { grid-column: 1 / -1; }
+  .summaryGrid { gap: 10px; }
+  .summaryCard { gap: 14px; padding: 18px 16px; }
+  .summaryCard > strong { font-size: 28px; }
+  .roleGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .roleCard { padding: 16px; }
+  .boardTable th, .boardTable td { padding: 16px; }
+  .stateLegend { grid-template-columns: minmax(0, 1fr); gap: 16px; }
 }
 
 @media (max-width: 520px) {
-  .statsPage :global(.section-heading) {
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .statsPage :global(.section-heading) h2 {
-    font-size: 23px;
-  }
-
-  .statsPage :global(.role-stat-grid) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .statsPage :global(.role-stat-card) {
-    min-height: 106px;
-    padding: 13px;
-  }
-
-  .statsPage :global(.stats-player-row) {
-    grid-template-columns: minmax(0, 1fr) auto 20px;
-    gap: 5px 10px;
-    padding: 10px 6px;
-  }
-
-  .statsPage :global(.stats-player-row) > strong {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .statsPage :global(.stats-player-roles) {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .statsPage :global(.stats-player-row) > b {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    white-space: nowrap;
-  }
-
-  .statsPage :global(.stats-player-row) > .row-arrow {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-  }
-
-  .statsPage :global(.methodology-heading) {
-    display: grid;
-    gap: 6px;
-  }
-
-  .statsPage :global(.methodology-heading) > p {
-    text-align: left;
-  }
-
-  .statsPage :global(.methodology-section) {
-    padding: 18px;
-    margin-top: 40px;
-  }
+  .statsPage :global(.page-intro) { gap: 16px; }
+  .statsPage :global(.intro-action) :global(.button) { padding-inline: 12px; }
+  .filterPanel { padding: 18px 16px; }
+  .summaryGrid { gap: 8px; }
+  .summaryCard { gap: 12px; padding: 16px 10px; border-radius: 8px; }
+  .summaryCard > span { font-size: 13px; }
+  .summaryCard > strong { font-size: clamp(21px, 5.8vw, 28px); }
+  .summaryCard .unit { margin-left: 4px; font-size: 12px; }
+  .section { padding-top: 30px; }
+  .section > h2 { margin-bottom: 16px; font-size: 22px; }
+  .boardTable { min-width: 620px; }
+  .boardTable th:first-child { position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--line); background: var(--panel); }
+  .roleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roleCard { gap: 20px; }
+  .roleCard > strong { font-size: 25px; }
+  .detailsGroup { margin-top: 30px; }
+  .details > summary { padding: 17px 16px; }
+  .detailsContent { padding: 0 16px 18px; }
+  .releaseWrap { margin-inline: 16px; }
 }

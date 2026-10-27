@@ -39,7 +39,7 @@ def probe_audio(path: Path, expected_duration: float) -> dict:
     try:
         import av
     except ImportError:
-        raise MediaValidationError("缺少媒体校验依赖 PyAV，请安装 requirements-core.txt；不需要安装转写模型") from None
+        raise MediaValidationError("缺少媒体校验依赖 PyAV，请安装 requirements/collection.txt；不需要安装转写模型") from None
     try:
         with av.open(str(path)) as container:
             tracks = [{"type": stream.type, "codec": stream.codec_context.name} for stream in container.streams]

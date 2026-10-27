@@ -9,8 +9,10 @@
 .env
 .env.*
 !.env.example
-data/reviews/
-data/backups/
+/data/reviews/*
+!/data/reviews/README.md
+/data/backups/*
+!/data/backups/README.md
 __pycache__/
 *.pyc
 *.part
@@ -53,6 +55,6 @@ Thumbs.db
 /data/raw/weibo/**/images/
 /data/weibo/**/人名复核/
 
-# Temporary investigation scratch files; reviewed plans and reports are retained.
-/special_report.py
-/special_report.txt
+# Temporary investigation files; durable evidence belongs in data/extractions.
+/tmp/*
+!/tmp/README.md

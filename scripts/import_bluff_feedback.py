@@ -16,7 +16,17 @@ TARGET = ROOT / "data/extractions/S22/bluff_review/user_confirmed.json"
 DECISIONS = {"yes", "no", "uncertain", "comment", "later", ""}
 
 
-def source_games() -> list[dict]:
+def source_games(season: str = "S22") -> list[dict]:
+    if season == "S23":
+        from website.api import publisher
+        entries,_,_=publisher.load_publication(ROOT,season)
+        games=[]
+        for entry in entries:
+            ids={s['name']:'feedback-identity' for s in entry['dossier']['seats']}
+            game=publisher._public_game(entry['dossier'],entry['voting'],entry['endgame'],entry['audit'],entry['board'],ids)
+            game['bvid']=entry['bvid']
+            games.append(game)
+        return games
     games = []
     for path in sorted((ROOT / "data/games/S22").glob("*/dossier.json")):
         game = json.loads(path.read_text(encoding="utf-8"))
@@ -27,11 +37,11 @@ def source_games() -> list[dict]:
     return games
 
 
-def validate_feedback(value: dict, games: list[dict]) -> dict[str, dict]:
+def validate_feedback(value: dict, games: list[dict], season: str = "S22") -> dict[str, dict]:
     if (not isinstance(value, dict) or value.get("kind") != "s22_bluff_feedback"
-            or value.get("schema_version") != 1 or value.get("season") != "S22"
+            or value.get("schema_version") != 1 or value.get("season") != season
             or not isinstance(value.get("records"), list)):
-        raise ValueError("不是 S22 悍跳复核反馈文件")
+        raise ValueError(f"不是 {season} 悍跳复核反馈文件")
     indexed = {game["id"]: game for game in games}
     records = {}
     for row in value["records"]:
@@ -74,13 +84,18 @@ def main() -> None:
     parser.add_argument("feedback", type=Path)
     parser.add_argument("--apply", action="store_true", help="保存已验证的反馈；默认只预检")
     args = parser.parse_args()
-    records = validate_feedback(json.loads(args.feedback.read_text(encoding="utf-8-sig")), source_games())
+    value=json.loads(args.feedback.read_text(encoding="utf-8-sig"))
+    season=value.get('season') if isinstance(value,dict) else None
+    if season not in {'S22','S23'}:raise ValueError('不支持的悍跳反馈赛季')
+    records = validate_feedback(value, source_games(season),season)
+    target=TARGET if season=='S22' else ROOT/'data/extractions/S23/bluff_review/user_confirmed.json'
     if args.apply:
-        previous = json.loads(TARGET.read_text(encoding="utf-8")) if TARGET.exists() else {"schema_version": 1, "season": "S22", "records": {}}
+        target.parent.mkdir(parents=True,exist_ok=True)
+        previous = json.loads(target.read_text(encoding="utf-8")) if target.exists() else {"schema_version": 1, "season": season, "records": {}}
         previous["records"].update(records)
-        temporary = TARGET.with_suffix(".tmp")
+        temporary = target.with_suffix(".tmp")
         temporary.write_text(json.dumps(previous, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        temporary.replace(TARGET)
+        temporary.replace(target)
     print(json.dumps({"valid_records": len(records), "applied": args.apply}, ensure_ascii=False))
 
 

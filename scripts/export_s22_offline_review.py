@@ -79,7 +79,8 @@ def build():
     if alignment_path.is_file():
         hashes[batch.relative(alignment_path)] = batch.digest(alignment_path)
     transcript_count = recap_count = decision_count = seats = 0
-    voting_games = voting_ballots = voting_choices = voting_pk = voting_registrations = 0
+    voting_games = voting_ballots = voting_choices = voting_pk = voting_registrations = voting_default_abstentions = 0
+    wolf_rush_phases = 0
     original_question_count = additional_finding_count = 0
     for bvid, entry in state['items'].items():
         folder = batch.ROOT / entry['output_dir']
@@ -124,6 +125,14 @@ def build():
                     summary=findings.get(bvid, {}).get('summary', '此前确认的保护样例。'),
                     source_path=entry['source_path'], source_sha256=source_hash,
                     recap_segments=recap, full_transcript=source_segments)
+        endgame_path = folder / 'endgame.json'
+        if endgame_path.is_file():
+            endgame = batch.read_json(endgame_path)
+            assert endgame['schema_version'] == 1 and endgame['game_slug'] == value['slug']
+            assert endgame['source_sha256'] == source_hash, '拍刀依据已变化，请先重新复核并生成 endgame.json'
+            hashes[batch.relative(endgame_path)] = batch.digest(endgame_path)
+            game['endgame'] = endgame
+            wolf_rush_phases += len(endgame['phases'])
         voting_file = folder / 'voting.json'
         if voting_file.is_file():
             from voting_records import validate as validate_voting
@@ -135,10 +144,21 @@ def build():
             assert voting_audit['source_sha256'] == source_hash
             assert voting_audit['dossier_sha256'] == dossier_hash
             assert voting_audit['facts'] == voting
+            voting_rule = voting_audit.get('voting_rule_source')
+            if voting_rule:
+                rule_file = batch.ROOT / voting_rule['path']
+                assert batch.digest(rule_file) == voting_rule['sha256'], '投票规则已变化，请先重新生成票型'
+                hashes[voting_rule['path']] = voting_rule['sha256']
             item['voting_sha256'] = batch.digest(voting_file)
             hashes[batch.relative(voting_file)] = item['voting_sha256']
             hashes[batch.relative(voting_audit_file)] = batch.digest(voting_audit_file)
-            game.update(voting=voting, voting_evidence=voting_audit['evidence'], voting_issues=voting_audit['issues'])
+            game.update(voting=voting, voting_evidence=voting_audit['evidence'], voting_issues=voting_audit['issues'],
+                        voting_rule_applications=voting_audit.get('rule_applications', []),
+                        voting_human_confirmations=voting_audit.get('human_confirmations', []),
+                        voting_election_flow=voting_audit.get('election_flow', []),
+                        game_flow=voting_audit.get('game_flow'),
+                        eligibility_derivations=voting_audit.get('eligibility_derivations', []),
+                        night_death_supplements=voting_audit.get('night_death_supplements', []))
             if bvid in voting_reviews:
                 reviewed = voting_reviews[bvid]
                 assert reviewed['voting_sha256'] == item['voting_sha256'], '票型已变化，请先运行 review_s22_voting.py'
@@ -148,16 +168,27 @@ def build():
                 hashes[batch.relative(review_path)] = batch.digest(review_path)
                 game['voting_review'] = reviewed
                 item.update(voting_question_count=reviewed['question_count'], voting_pending_count=reviewed['pending_count'],
-                            voting_days=reviewed['days'], voting_video_checked=bool(reviewed['video_checks']))
+                            causal_reviewed_count=len(reviewed.get('causal_decisions', [])),
+                            causal_resolved_count=sum(d['resolved'] for d in reviewed.get('causal_decisions', [])),
+                            voting_days=reviewed['days'],
+                            voting_video_checked=bool(reviewed['video_checks']) or any(
+                                d.get('media_evidence') for d in reviewed.get('causal_decisions', [])),
+                            voting_video_pending=any(not x.get('resolved') and not x.get('resolved_by_rule') and
+                                                     not x.get('resolved_by_causal') for x in reviewed['video_checks']) or any(
+                                not d['resolved'] and d.get('media_evidence') for d in reviewed.get('causal_decisions', [])))
                 frames.update(collect_frames(reviewed))
             voting_games += 1
             voting_ballots += len(voting['ballots'])
             voting_choices += sum(len(b['votes']) for b in voting['ballots'])
             voting_pk += sum(b['stage'] == 'pk' for b in voting['ballots'])
             voting_registrations += len(voting['registrations'])
+            voting_default_abstentions += sum(len(a['voters']) for a in voting_audit.get('rule_applications', []))
         if bvid in aligned:
             game['summary'] = '2026-10-24当前更正：' + aligned[bvid]['reason'] + '\n以下为较早的历史推理，涉及已更正字段时以当前档案和顶部规则对齐结论为准。\n' + game['summary']
         blobs[bvid] = base64.b64encode(gzip.compress(compact(game).encode('utf-8'), mtime=0)).decode('ascii')
+    causal_reviewed_count = sum(item.get('causal_reviewed_count', 0) for item in index)
+    causal_resolved_count = sum(item.get('causal_resolved_count', 0) for item in index)
+    causal_manual_count = causal_reviewed_count - causal_resolved_count
     image_data = {}
     for path in sorted(frames):
         file = (batch.ROOT / path).resolve()
@@ -175,6 +206,10 @@ def build():
                                voting_pk=voting_pk, voting_registrations=voting_registrations,
                                voting_questions=voting_review.get('question_count', 0),
                                voting_pending=voting_review.get('pending_count', 0),
+                               causal_reviewed=causal_reviewed_count, causal_resolved=causal_resolved_count,
+                               causal_manual=causal_manual_count,
+                               voting_default_abstentions=voting_default_abstentions,
+                               wolf_rush_phases=wolf_rush_phases,
                                transcript_segments=transcript_count, recap_segments=recap_count),
                    index=index, templates=templates, game_blobs=blobs, images=image_data,
                    voting_review_dates=voting_review['dates'],
@@ -204,8 +239,14 @@ def build():
 只需发送这一个 HTML 文件；无需安装服务、数据库或另带资料文件夹。
 内嵌{len(index)}局身份与逐轮事件、{decision_count}项AI推理、全部{len(index)}份全文转写和{len(image_data)}张姓名牌及投票证据截图。
 新增{voting_registrations}组上警/警下名单、{voting_ballots}轮投票、{voting_choices}条逐人票型，其中{voting_pk}轮为PK后复投。
+其中{voting_default_abstentions}条为按用户确认口径补记的默认弃票；页面及逐人CSV都与原文明确弃票分开标注。
 在“警下名单与逐日票型”中按天查看警徽票、放逐票及PK前后各轮；每轮可展开原文并定位全文。
-这些票型来自机器转写，尚未人工回听；未说明的票保持未知，只有明确播报才记弃票。资料仍有缺口，不代表148局全部票型已补齐。
+普通放逐票按游戏日展示，平票PK及技能重投另列；两轮均平票时明确记平安日、无人被放逐。
+已结合复盘与出局记录交叉核对日期；没有白天自爆却缺少票型的，保留待补录，不视为没有投票。
+另有{wolf_rush_phases}个独立“狼人拍刀”环节，列出明确目标、结算结果和原文；未明确的刀路、技能影响与击杀不补造。
+已对剩余{causal_reviewed_count}项逐项结合整局转写、存活与投票因果复核，必要时查看原视频、重转写关键原音频；解决{causal_resolved_count}项，仅{causal_manual_count}项仍须人工。每局可展开“逐项因果复核”查看结论、理由和原句。
+有票权玩家未明确报出投向时按确认口径默认弃票，与原文明确弃票分别标注。完全缺失的整轮票型不会整体补为弃票。AI复核与人工意见分别保存。
+延期警长竞选仅由首日自爆中断未完竞选触发，次日再自爆则警徽流失；否则仍由原警下玩家投给警上候选，同日PK另列。
 新增按比赛日期、游戏日及“有疑问 / 待复核”筛选；左侧可查看哪些日期、哪一局、哪一天仍有问题。
 当前逐局核对清单有{voting_review.get('question_count', 0)}项疑问、{voting_review.get('pending_count', 0)}项待补录/复核；包括证据不足及本日是否投票尚未确定的项目，不代表全部都是错票。
 每局“投票核对清单”列出原因、原文、按秒打开原视频和已保存的截图，可逐项填写人工意见。
@@ -231,6 +272,10 @@ HTML本身不会因填写意见而改写；分享或备份意见需要导出的J
                   voting_games=voting_games, voting_ballots=voting_ballots, voting_choices=voting_choices,
                   voting_pk=voting_pk, voting_registrations=voting_registrations,
                   voting_questions=voting_review.get('question_count', 0), voting_pending=voting_review.get('pending_count', 0),
+                  causal_reviewed=causal_reviewed_count, causal_resolved=causal_resolved_count,
+                  causal_manual=causal_manual_count,
+                  voting_default_abstentions=voting_default_abstentions,
+                  wolf_rush_phases=wolf_rush_phases,
                   original_frames=len(frames), full_transcripts=len(index),
                   transcript_segments=transcript_count, recap_segments=recap_count,
                   database_connection=False, runtime_network_requests=False,

@@ -75,36 +75,14 @@ class ReviewQueueTests(unittest.TestCase):
         (output / "transcript.阅读.txt").write_text("测试完整转写。\n", encoding="utf-8")
         return output
 
-    def test_repository_queue_is_exactly_25_rows_in_csv_order(self):
-        path = queue.DEFAULT_CSV
-        if not path.is_file():
-            self.skipTest("S22 preferred review CSV is not present")
-        _, rows = queue.read_csv(path)
-        chosen = queue.selected_rows(rows)
-        self.assertEqual(len(rows), 163)
-        self.assertEqual(len(chosen), 25)
-        self.assertEqual([row["BVID"] for row in chosen], [
-            "BV1hb7R6XEtD", "BV1vH7R6tEQp", "BV1dJ7R6fEUw", "BV12GEA6iEx5",
-            "BV117EA6AEcV", "BV1fX7C6qESY", "BV1nBj664EFS", "BV13Ajo6xEY8",
-            "BV119TJ6pEtC", "BV11uMG6PEkr", "BV1suMG6PEYP", "BV13ZMp63EEB",
-            "BV1BPNB6QE1V", "BV1oNKY6zE1Z", "BV1bWKY6tEri", "BV1RGgx6xEP9",
-            "BV19Ggx6xEqE", "BV1iMgq6ZE5t", "BV1iMgq6ZEWn", "BV1iDGK61EYt",
-            "BV179MB6FE36", "BV1CSuN62Eey", "BV12Mur6nEns", "BV1JNgj6gEta",
-            "BV1aXgW6nE6E",
-        ])
-        self.assertEqual(sum(row["质量筛查"] == "no_zh_subtitle" for row in chosen), 13)
-        self.assertEqual(sum(row["质量筛查"] == "needs_review" for row in chosen), 12)
-        self.assertEqual(sum(row["质量筛查"] == "no_short_caption_signal" for row in rows), 138)
-
     def test_selection_uses_quality_field_even_after_new_local_columns_exist(self):
-        rows = []
-        for index in range(163):
-            quality = ("no_zh_subtitle" if index < 13 else
-                       "needs_review" if index < 25 else "no_short_caption_signal")
-            rows.append({"BVID": f"BV{index}", "质量筛查": quality,
-                         "本地转写状态": "complete" if index >= 25 else "pending"})
+        qualities = ["needs_review", "no_short_caption_signal", "no_zh_subtitle",
+                     "needs_review", "accepted", "no_zh_subtitle", "no_short_caption_signal"]
+        rows = [{"BVID": f"BV{index}", "质量筛查": quality,
+                 "本地转写状态": "complete" if index == 2 else "pending"}
+                for index, quality in enumerate(qualities)]
         chosen = queue.selected_rows(rows)
-        self.assertEqual([row["BVID"] for row in chosen], [f"BV{i}" for i in range(25)])
+        self.assertEqual([row["BVID"] for row in chosen], ["BV0", "BV2", "BV3", "BV5"])
 
     def test_full_transcript_and_checkpoint_ranges_validate(self):
         self.write_valid_output()
@@ -195,7 +173,9 @@ class ReviewQueueTests(unittest.TestCase):
 
     def test_plan_is_offline_and_writes_only_plan_and_summary(self):
         rows = []
-        for index in range(25):
+        qualities = ["no_zh_subtitle", "needs_review", "no_short_caption_signal",
+                     "needs_review", "no_zh_subtitle", "accepted", "no_short_caption_signal"]
+        for index, quality in enumerate(qualities):
             bvid = f"BV{index:010d}"
             audio = self.root / f"data/seasons/S22/{bvid}.m4a"
             audio.parent.mkdir(parents=True, exist_ok=True)
@@ -206,7 +186,7 @@ class ReviewQueueTests(unittest.TestCase):
                                   "duration_seconds": 1,
                                   "audio": {"sha256": digest}})
             rows.append({"目录序号": str(index + 1), "BVID": bvid, "CID": str(index + 1),
-                         "质量筛查": "no_zh_subtitle" if index < 13 else "needs_review",
+                         "质量筛查": quality,
                          "音频文件": queue.relative(audio, self.root), "字幕待核事项": ""})
         csv_path = self.root / "data/seasons/S22/S22_中文优先复核目录.csv"
         csv_path.parent.mkdir(parents=True, exist_ok=True)
@@ -215,12 +195,14 @@ class ReviewQueueTests(unittest.TestCase):
             writer.writeheader()
             writer.writerows(rows)
         result = queue.do_plan(csv_path, self.root)
-        self.assertEqual(result["entry_count"], 25)
+        self.assertEqual(result["entry_count"], 4)
+        self.assertEqual(result["counts"], {"no_zh_subtitle": 2, "needs_review": 2})
         plan = queue.load_json(self.root / "data/reports/S22_全文补转写计划.json")
-        self.assertEqual([entry["bvid"] for entry in plan["entries"]], [row["BVID"] for row in rows])
+        self.assertEqual([entry["bvid"] for entry in plan["entries"]],
+                         [row["BVID"] for row in rows if row["质量筛查"] in queue.SELECTED_QUALITIES])
         summary = self.root / "data/seasons/S22/S22_全文补转写目录.csv"
         with summary.open(encoding="utf-8-sig", newline="") as stream:
-            self.assertEqual(len(list(csv.DictReader(stream))), 25)
+            self.assertEqual(len(list(csv.DictReader(stream))), 4)
 
 
 if __name__ == "__main__":

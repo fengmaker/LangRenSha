@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from fractions import Fraction
+
 from website.api.analytics import (
     build_leaderboard,
     compute_player_stats,
     compute_player_summaries,
     effective_faction,
+    _rank_values,
     scope_games,
 )
 
@@ -64,6 +67,38 @@ def test_unknown_faction_is_pending_not_a_loss_or_zero_point_result():
     assert stats["ledger"][0]["pending_count"] == 1
     assert stats["total_win_rate"]["rate"] is None
     assert stats["total_win_rate"]["game_ids"] == []
+    assert stats["total_win_rate"]["samples"] == []
+
+
+def test_result_metrics_record_positive_negative_and_excluded_games_separately():
+    games = [
+        game("good-win", winner="good", seats=[seat(1, "p", "村民", "good")], date="2026-06-01"),
+        game("good-loss", winner="werewolf", seats=[seat(1, "p", "村民", "good")], date="2026-06-02"),
+        game("wolf-win", winner="werewolf", seats=[seat(1, "p", "狼人", "werewolf")], date="2026-06-03"),
+        game("wolf-loss", winner="good", seats=[seat(1, "p", "狼人", "werewolf")], date="2026-06-04"),
+        game("unknown-faction", winner="good", seats=[seat(1, "p", "混血儿", None)], date="2026-06-05"),
+        game("unknown-result", winner=None, seats=[seat(1, "p", "村民", "good")], date="2026-06-06"),
+    ]
+
+    stats = compute_player_stats("p", games)
+
+    assert stats["total_win_rate"]["samples"] == [
+        {"game_id": "good-win", "positive": 1, "negative": 0},
+        {"game_id": "good-loss", "positive": 0, "negative": 1},
+        {"game_id": "wolf-win", "positive": 1, "negative": 0},
+        {"game_id": "wolf-loss", "positive": 0, "negative": 1},
+    ]
+    assert stats["total_win_rate"]["excluded"] == 2
+    assert stats["good_win_rate"]["samples"] == [
+        {"game_id": "good-win", "positive": 1, "negative": 0},
+        {"game_id": "good-loss", "positive": 0, "negative": 1},
+    ]
+    assert stats["good_win_rate"]["excluded"] == 2
+    assert stats["werewolf_win_rate"]["samples"] == [
+        {"game_id": "wolf-win", "positive": 1, "negative": 0},
+        {"game_id": "wolf-loss", "positive": 0, "negative": 1},
+    ]
+    assert stats["werewolf_win_rate"]["excluded"] == 1
 
 
 def test_player_ledger_is_season_cumulative_even_when_phase_is_requested():
@@ -112,7 +147,8 @@ def test_registration_counts_once_from_first_record_and_empty_metrics_are_null()
     ])]
     stats = compute_player_stats("p", games)
     assert stats["sheriff_registration_rate"] == {
-        "numerator": 1, "denominator": 1, "rate": 1, "excluded": 0, "game_ids": ["reg"]
+        "numerator": 1, "denominator": 1, "rate": 1, "excluded": 0, "game_ids": ["reg"],
+        "samples": [{"game_id": "reg", "positive": 1, "negative": 0}],
     }
 
     no_sample = compute_player_stats("absent", games)
@@ -265,6 +301,7 @@ def test_seer_follow_counts_abstention_as_failure_but_missing_vote_as_excluded()
     assert metric["excluded"] == 2
     assert metric["rate"] == 0.5
     assert metric["game_ids"] == ["follow"]
+    assert metric["samples"] == [{"game_id": "follow", "positive": 1, "negative": 1}]
 
     # The true seer has no ballot right in this round, so it is not applicable.
     no_seer_right = {"kind": "exile", "stage": "pk", "eligible_voters": [2, 3, 4], "votes": [vote(2, 1)]}
@@ -275,6 +312,7 @@ def test_seer_follow_counts_abstention_as_failure_but_missing_vote_as_excluded()
     only_excluded = compute_player_stats("p", [game("excluded", seats=seats, ballots=[ballots[3]])])
     assert only_excluded["seer_follow_rate"]["game_ids"] == []
     assert only_excluded["seer_follow_rate"]["excluded"] == 1
+    assert only_excluded["seer_follow_rate"]["samples"] == []
 
     unknown_rights = {"kind": "exile", "stage": "initial", "eligible_voters": None,
                       "votes": [vote(1, 4), vote(2, 4)]}
@@ -283,6 +321,56 @@ def test_seer_follow_counts_abstention_as_failure_but_missing_vote_as_excluded()
     assert no_right_evidence["seer_follow_rate"]["denominator"] == 0
     assert no_right_evidence["seer_follow_rate"]["excluded"] == 0
     assert no_right_evidence["seer_follow_rate"]["game_ids"] == []
+
+
+def test_vote_ranking_rows_separate_valid_games_from_round_sample_count():
+    seats = [seat(1, "seer", "预言家", "good"), seat(2, "p", "平民", "good"),
+             seat(3, "wolf", "狼人", "werewolf")]
+    valid_ballots = [
+        {"kind": "exile", "eligible_voters": [1, 2, 3], "votes": [vote(1, 3), vote(2, 3)]},
+        {"kind": "exile", "eligible_voters": [1, 2, 3],
+         "votes": [vote(1, 3), vote(2, None, "abstained")]},
+        {"kind": "sheriff", "candidates": [1, 3], "eligible_voters": [2, 3], "votes": [vote(2, 1)]},
+        {"kind": "sheriff", "candidates": [1, 3], "eligible_voters": [2, 3],
+         "votes": [vote(2, None, "abstained")]},
+    ]
+    excluded_ballots = [
+        # Missing reference vote makes this follow sample excluded.
+        {"kind": "exile", "eligible_voters": [1, 2, 3], "votes": [vote(2, 3)]},
+        # The omitted candidate list has no vote evidence for the seer.
+        {"kind": "sheriff", "candidates": None, "eligible_voters": [2, 3], "votes": [vote(2, 3)]},
+    ]
+    games = [
+        game("g1", seats=seats, ballots=valid_ballots, registrations=[
+            {"day": 1, "id": "first", "on_police": [2], "off_police": [1, 3]},
+            {"day": 2, "id": "later", "on_police": [], "off_police": [2]},
+        ], date="2026-06-01"),
+        game("g2", seats=seats, ballots=valid_ballots, registrations=[
+            {"day": 1, "id": "first", "on_police": [1, 3], "off_police": [2]},
+        ], date="2026-06-02"),
+        game("g3-excluded", seats=seats, ballots=excluded_ballots, registrations=[
+            {"day": 1, "id": "first", "on_police": [1], "off_police": [3]},
+        ], date="2026-06-03"),
+    ]
+
+    stats = compute_player_stats("p", games)
+
+    expected = {
+        "sheriff_registration_rate": (2, 2, 1),
+        "seer_follow_rate": (4, 2, 1),
+        "sheriff_seer_vote_rate": (4, 2, 1),
+    }
+    for key, (sample_count, effective_game_count, excluded) in expected.items():
+        row = next(row for row in stats["ranking_boards"][key] if row["id"] == "p")
+        assert row["sample_count"] == sample_count
+        assert row["effective_game_count"] == effective_game_count
+        assert row["appearances"] == 3
+        metric_key = key
+        assert stats[metric_key]["excluded"] == excluded
+        assert stats[metric_key]["game_ids"] == ["g1", "g2"]
+
+    assert [row["sample_count"] for row in stats["ranking_boards"]["points"] if row["id"] == "p"] == [3]
+    assert "effective_game_count" not in stats["ranking_boards"]["points"][0]
 
 
 def test_medium_only_game_is_reference_and_learned_medium_is_not_a_role():
@@ -355,6 +443,7 @@ def test_sheriff_rate_includes_pk_revote_and_requires_proven_seer_candidate():
     assert metric["excluded"] == 2  # unknown candidate pool and missing vote
     assert metric["rate"] == 2 / 3
     assert metric["game_ids"] == ["sheriff"]
+    assert metric["samples"] == [{"game_id": "sheriff", "positive": 2, "negative": 1}]
 
     no_eligibility_list = {
         "kind": "sheriff", "stage": "initial", "candidates": [1], "eligible_voters": None,
@@ -470,3 +559,207 @@ def test_scope_filters_season_and_phase():
              {**game("other", phase="regular"), "season": "S21"}]
     assert [item["id"] for item in scope_games(games, "S22", "all")] == ["r", "f"]
     assert [item["id"] for item in scope_games(games, "S22", "finals_week")] == ["f"]
+
+
+def test_player_stats_aggregate_seasons_with_weighted_rates_and_full_scope_attendance():
+    games = [
+        game("s22-player", winner="good", seats=[seat(1, "p", "平民", "good")], date="2026-06-01"),
+        game("s22-other", winner="good", seats=[seat(1, "other", "平民", "good")], date="2026-06-02"),
+        {**game("s23-loss-1", winner="werewolf", seats=[seat(1, "p", "平民", "good")],
+                date="2026-07-01"), "season": "S23"},
+        {**game("s23-loss-2", winner="werewolf", seats=[seat(1, "p", "平民", "good")],
+                date="2026-07-02"), "season": "S23"},
+        {**game("s23-other", winner="good", seats=[seat(1, "other", "平民", "good")],
+                date="2026-07-03"), "season": "S23"},
+    ]
+
+    stats = compute_player_stats("p", games, seasons=["S22", "S23"])
+
+    assert stats["appearances"] == 3
+    assert stats["scope_games"] == 5
+    assert stats["total_win_rate"]["numerator"] == 1
+    assert stats["total_win_rate"]["denominator"] == 3
+    assert stats["total_win_rate"]["rate"] == 1 / 3
+    assert stats["attendance"]["numerator"] == 3
+    assert stats["attendance"]["denominator"] == 5
+    assert [row["season"] for row in stats["ledger"]] == ["S22", "S23", "S23"]
+    assert stats["total_win_rate"]["samples"] == [
+        {"game_id": "s22-player", "positive": 1, "negative": 0},
+        {"game_id": "s23-loss-1", "positive": 0, "negative": 1},
+        {"game_id": "s23-loss-2", "positive": 0, "negative": 1},
+    ]
+
+
+def test_player_rankings_use_selected_scope_competition_ranks_and_role_cohorts():
+    games = [
+        game("s22-win", winner="good", seats=[
+            seat(1, "a", "平民", "good"), seat(2, "b", "平民", "good"),
+            seat(3, "c", "平民", "good"), seat(4, "pending", "混血儿", None),
+        ], date="2026-06-01"),
+        game("s22-loss", winner="werewolf", seats=[
+            seat(1, "a", "平民", "good"), seat(2, "b", "平民", "good"), seat(3, "c", "平民", "good"),
+        ], date="2026-06-02"),
+        {**game("s23-win", winner="good", seats=[
+            seat(1, "a", "平民", "good"), seat(2, "d", "平民", "good"),
+        ], date="2026-07-01"), "season": "S23"},
+        {**game("s23-loss", winner="werewolf", seats=[], date="2026-07-02"), "season": "S23"},
+        {**game("outside-range", winner="good", seats=[seat(1, "outsider", "平民", "good")],
+                date="2026-08-01"), "season": "S24"},
+    ]
+
+    stats = compute_player_stats("a", games, seasons=["S22", "S23"])
+    rankings = stats["rankings"]
+
+    assert rankings["points"] == {"rank": 1, "total": 4, "tied": True}
+    assert rankings["appearances"] == {"rank": 1, "total": 5, "tied": False}
+    assert rankings["attendance"] == {"rank": 1, "total": 5, "tied": False}
+    assert rankings["total_win_rate"] == {"rank": 2, "total": 4, "tied": False}
+    assert rankings["wins"] == {"rank": 1, "total": 4, "tied": False}
+    assert rankings["losses"] == {"rank": 2, "total": 4, "tied": True}
+    assert rankings["good_win_rate"] == {"rank": 2, "total": 4, "tied": False}
+    assert rankings["werewolf_win_rate"] is None
+    assert rankings["sheriff_registration_rate"] is None
+    assert rankings["seer_follow_rate"] is None
+    assert rankings["sheriff_seer_vote_rate"] is None
+    ranking_boards = stats["ranking_boards"]
+    assert set(ranking_boards) == set(rankings)
+    assert ranking_boards["points"] == [
+        {"id": "a", "name": "a", "rank": 1, "tied": True,
+         "value": 1.0, "sample_count": 3, "appearances": 3},
+        {"id": "d", "name": "d", "rank": 1, "tied": True,
+         "value": 1.0, "sample_count": 1, "appearances": 1},
+        {"id": "b", "name": "b", "rank": 3, "tied": True,
+         "value": 0.0, "sample_count": 2, "appearances": 2},
+        {"id": "c", "name": "c", "rank": 3, "tied": True,
+         "value": 0.0, "sample_count": 2, "appearances": 2},
+    ]
+    assert ranking_boards["attendance"][0] == {
+        "id": "a", "name": "a", "rank": 1, "tied": False,
+        "value": 0.75, "sample_count": 4, "appearances": 3,
+    }
+    assert ranking_boards["attendance"][-1] == {
+        "id": "pending", "name": "pending", "rank": 4, "tied": True,
+        "value": 0.25, "sample_count": 4, "appearances": 1,
+    }
+    a_total_win_rate = next(row for row in ranking_boards["total_win_rate"] if row["id"] == "a")
+    assert a_total_win_rate["value"] == 2 / 3
+    assert a_total_win_rate["sample_count"] == 3
+    assert a_total_win_rate["rank"] == 2
+    assert ranking_boards["wins"][0]["value"] == 2
+    assert ranking_boards["wins"][0]["sample_count"] == 3
+    assert ranking_boards["losses"][0]["id"] == "d"
+    assert [row["rank"] for row in ranking_boards["losses"]] == [1, 2, 2, 2]
+    assert ranking_boards["werewolf_win_rate"] == []
+    assert all(row["id"] != "outsider" for row in ranking_boards["appearances"])
+
+    role = stats["roles"][0]
+    assert role["role"] == "平民"
+    assert role["metric"] == {
+        "numerator": 2, "denominator": 3, "rate": 2 / 3, "excluded": 0,
+        "game_ids": ["s22-win", "s22-loss", "s23-win"],
+        "samples": [
+            {"game_id": "s22-win", "positive": 1, "negative": 0},
+            {"game_id": "s22-loss", "positive": 0, "negative": 1},
+            {"game_id": "s23-win", "positive": 1, "negative": 0},
+        ],
+    }
+    assert role["ranking"] == {"rank": 2, "total": 4, "tied": False}
+    assert role["ranking_board"] == [
+        {"id": "d", "name": "d", "rank": 1, "tied": False,
+         "value": 1.0, "sample_count": 1, "appearances": 1},
+        {"id": "a", "name": "a", "rank": 2, "tied": False,
+         "value": 2 / 3, "sample_count": 3, "appearances": 3},
+        {"id": "b", "name": "b", "rank": 3, "tied": True,
+         "value": 0.5, "sample_count": 2, "appearances": 2},
+        {"id": "c", "name": "c", "rank": 3, "tied": True,
+         "value": 0.5, "sample_count": 2, "appearances": 2},
+    ]
+
+    pending_stats = compute_player_stats("pending", games, seasons=["S22", "S23"])
+    assert pending_stats["rankings"]["points"] is None
+    assert pending_stats["rankings"]["wins"] is None
+    assert pending_stats["rankings"]["losses"] is None
+    assert pending_stats["rankings"]["appearances"] == {"rank": 4, "total": 5, "tied": True}
+    mixed_role = pending_stats["roles"][0]
+    assert mixed_role["metric"]["denominator"] == 0
+    assert mixed_role["metric"]["excluded"] == 1
+    assert mixed_role["metric"]["samples"] == []
+    assert mixed_role["ranking"] is None
+    assert mixed_role["ranking_board"] == []
+
+
+def test_rank_values_compare_exact_ratios_without_float_rounding_ties():
+    ranks = _rank_values({
+        "one-third": Fraction(1, 3),
+        "close-below": Fraction(3333333333333333, 10_000_000_000_000_000),
+        "equal-half-a": Fraction(1, 2),
+        "equal-half-b": Fraction(2, 4),
+    })
+
+    assert ranks["equal-half-a"] == {"rank": 1, "total": 4, "tied": True}
+    assert ranks["equal-half-b"] == {"rank": 1, "total": 4, "tied": True}
+    assert ranks["one-third"] == {"rank": 3, "total": 4, "tied": False}
+    assert ranks["close-below"] == {"rank": 4, "total": 4, "tied": False}
+
+
+def test_player_board_stats_group_by_code_then_name_and_rank_board_cohorts_across_seasons():
+    games = [
+        {**game("s22-board-win", winner="good", seats=[
+            seat(1, "p", "村民", "good"), seat(2, "q", "村民", "good"),
+            seat(3, "t", "村民", "good"),
+        ], date="2026-06-01"), "board": {"code": "classic", "name": "经典版型"}},
+        {**game("s22-board-loss", winner="werewolf", seats=[
+            seat(1, "p", "村民", "good"), seat(2, "q", "狼人", "werewolf"),
+            seat(3, "r", "预言家", "good"),
+        ], date="2026-06-02"), "board": {"code": "classic", "name": "经典版型"}},
+        {**game("s23-board-pending", winner="good", seats=[
+            seat(1, "p", "混血儿", None),
+        ], date="2026-07-01"), "season": "S23",
+         "board": {"code": "classic", "name": "S23经典版型"}},
+        {**game("s23-name-fallback", winner="good", seats=[
+            seat(1, "p", "村民", "good"), seat(2, "d", "狼人", "werewolf"),
+        ], date="2026-07-02"), "season": "S23", "board": {"name": "备用版型"}},
+        {**game("outside-range-board", winner="good", seats=[
+            seat(1, "p", "村民", "good"), seat(2, "outsider", "村民", "good"),
+        ], date="2026-08-01"), "season": "S24",
+         "board": {"code": "classic", "name": "经典版型"}},
+    ]
+
+    stats = compute_player_stats("p", games, seasons=["S22", "S23"])
+
+    assert len(stats["boards"]) == 2
+    classic, fallback = stats["boards"]
+    assert classic["code"] == "classic" and classic["name"] == "经典版型"
+    assert classic["appearances"] == 3
+    assert classic["wins"] == 1 and classic["losses"] == 1 and classic["pending_games"] == 1
+    assert classic["win_rate"] == 0.5
+    assert classic["metric"] == {
+        "numerator": 1, "denominator": 2, "rate": 0.5, "excluded": 1,
+        "game_ids": ["s22-board-win", "s22-board-loss"],
+        "samples": [
+            {"game_id": "s22-board-win", "positive": 1, "negative": 0},
+            {"game_id": "s22-board-loss", "positive": 0, "negative": 1},
+        ],
+    }
+    assert classic["ranking"] == {"rank": 3, "total": 4, "tied": False}
+    assert classic["ranking_board"] == [
+        {"id": "q", "name": "q", "rank": 1, "tied": True,
+         "value": 1.0, "sample_count": 2, "appearances": 2},
+        {"id": "t", "name": "t", "rank": 1, "tied": True,
+         "value": 1.0, "sample_count": 1, "appearances": 1},
+        {"id": "p", "name": "p", "rank": 3, "tied": False,
+         "value": 0.5, "sample_count": 2, "appearances": 3},
+        {"id": "r", "name": "r", "rank": 4, "tied": False,
+         "value": 0.0, "sample_count": 1, "appearances": 1},
+    ]
+    assert fallback["code"] is None and fallback["name"] == "备用版型"
+    assert fallback["appearances"] == 1 and fallback["wins"] == 1 and fallback["losses"] == 0
+    assert fallback["ranking_board"][0]["id"] == "p"
+    assert all(row["id"] != "outsider" for row in classic["ranking_board"])
+
+    village_role = next(row for row in stats["roles"] if row["role"] == "村民")
+    assert village_role["ranking"]["total"] == 3
+    assert [row["id"] for row in village_role["ranking_board"]] == ["q", "t", "p"]
+    summary = compute_player_summaries(games, season="S22")
+    assert all("boards" not in row["stats"] for row in summary)
+    assert all("ranking_boards" not in row for row in build_leaderboard(games, season="S22"))

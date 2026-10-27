@@ -1,7 +1,7 @@
-"""Batch full-audio FunASR for the S22 Chinese-subtitle review queue.
+"""Batch full-audio FunASR for the selected season's review queue.
 
-The queue is fixed by the ``质量筛查`` column in the preferred review CSV:
-13 ``no_zh_subtitle`` rows and 12 ``needs_review`` rows, kept in CSV order.
+The queue is selected from all rows marked ``no_zh_subtitle`` or ``needs_review``
+in the preferred review CSV, kept in CSV order.
 This wrapper validates FunASR's full transcript and raw chunk checkpoints before
 it records completion or copies the derived files beside the source audio.
 """
@@ -22,17 +22,20 @@ import sys
 import tempfile
 from typing import Any, Callable, Iterator
 
+from season_config import load_season, season_codes
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CSV = ROOT / "data/seasons/S22/S22_中文优先复核目录.csv"
-PLAN_PATH = ROOT / "data/reports/S22_全文补转写计划.json"
-STATE_PATH = ROOT / "data/reports/S22_全文补转写进度.json"
-SUMMARY_CSV = ROOT / "data/seasons/S22/S22_全文补转写目录.csv"
-LOG_DIR = ROOT / "data/reports/S22_全文补转写日志"
+DEFAULT_SEASON = season_codes(ROOT)[0]
+SEASON = DEFAULT_SEASON
+SEASON_CONFIG = load_season(SEASON, ROOT)
+DEFAULT_CSV = ROOT / f"data/seasons/{SEASON}/{SEASON}_中文优先复核目录.csv"
+PLAN_PATH = ROOT / f"data/reports/{SEASON}_全文补转写计划.json"
+STATE_PATH = ROOT / f"data/reports/{SEASON}_全文补转写进度.json"
+SUMMARY_CSV = ROOT / f"data/seasons/{SEASON}/{SEASON}_全文补转写目录.csv"
+LOG_DIR = ROOT / f"data/reports/{SEASON}_全文补转写日志"
 TRANSCRIBER = ROOT / "scripts/transcribe_funasr.py"
 QUALITY_FIELD = "质量筛查"
 SELECTED_QUALITIES = ("no_zh_subtitle", "needs_review")
-EXPECTED_COUNTS = {"no_zh_subtitle": 13, "needs_review": 12}
 INDEX_FIELDS = ("本地转写状态", "本地全文JSON", "本地全文SRT", "本地全文阅读版", "本地转写范围")
 OUTPUT_NAMES = {
     "json": "transcript.json",
@@ -48,6 +51,17 @@ DERIVED_SUFFIXES = {
 
 class QueueError(RuntimeError):
     """Raised when the review index or task artifacts cannot be trusted."""
+
+
+def configure_season(season: str) -> None:
+    global SEASON, SEASON_CONFIG, DEFAULT_CSV, PLAN_PATH, STATE_PATH, SUMMARY_CSV, LOG_DIR
+    SEASON_CONFIG = load_season(season, ROOT)
+    SEASON = season
+    DEFAULT_CSV = ROOT / f"data/seasons/{season}/{season}_中文优先复核目录.csv"
+    PLAN_PATH = plan_path_for(ROOT)
+    STATE_PATH = state_path_for(ROOT)
+    SUMMARY_CSV = summary_path_for(ROOT)
+    LOG_DIR = ROOT / f"data/reports/{season}_全文补转写日志"
 
 
 def utc_now() -> str:
@@ -93,15 +107,12 @@ def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
         return list(reader.fieldnames), list(reader)
 
 
-def selected_rows(rows: list[dict[str, str]], *, enforce_count: bool = True) -> list[dict[str, str]]:
+def selected_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     """Select only the two review statuses, without relying on column position."""
     chosen = [row for row in rows if row.get(QUALITY_FIELD) in SELECTED_QUALITIES]
-    if enforce_count:
-        counts = {quality: sum(row.get(QUALITY_FIELD) == quality for row in chosen)
-                  for quality in SELECTED_QUALITIES}
-        bvids = [row.get("BVID", "").strip() for row in chosen]
-        if counts != EXPECTED_COUNTS or len(chosen) != 25 or len(set(bvids)) != 25 or "" in bvids:
-            raise QueueError(f"Expected the fixed 25-row review queue; found {counts}")
+    bvids = [row.get("BVID", "").strip() for row in chosen]
+    if len(set(bvids)) != len(bvids) or "" in bvids:
+        raise QueueError("Review queue has missing or duplicate BVIDs")
     return chosen
 
 
@@ -121,7 +132,7 @@ def manifest_path_for(row: dict[str, str], root: Path) -> Path:
 
 def output_path_for(row: dict[str, str], root: Path) -> Path:
     bvid = row.get("BVID", "").strip()
-    return root / "data/transcripts/S22" / f"{bvid}_p01_funasr_full"
+    return root / f"data/transcripts/{SEASON}" / f"{bvid}_p01_funasr_full"
 
 
 def reason_for(row: dict[str, str]) -> str:
@@ -188,7 +199,9 @@ def make_plan(csv_path: Path, root: Path, *, created_at: str | None = None) -> d
         "created_at_utc": created_at or utc_now(),
         "source_csv": relative(csv_path, root),
         "selection": {"field": QUALITY_FIELD, "values": list(SELECTED_QUALITIES),
-                      "counts": EXPECTED_COUNTS.copy(), "row_order": "source_csv"},
+                      "counts": {quality: sum(row.get(QUALITY_FIELD) == quality for row in chosen)
+                                 for quality in SELECTED_QUALITIES}, "row_order": "source_csv"},
+        "season": SEASON,
         "entry_count": len(entries),
         "total_audio_duration_seconds": total_seconds,
         "total_audio_duration_hours": round(total_seconds / 3600, 3),
@@ -203,7 +216,7 @@ def plan_row_map(plan: dict[str, Any]) -> dict[str, dict[str, Any]]:
 @contextmanager
 def process_lock(root: Path) -> Iterator[None]:
     """Hold a nonblocking cross-platform process lock for the entire batch run."""
-    lock_path = root / "data/reports/.S22_全文补转写.lock"
+    lock_path = root / f"data/reports/.{SEASON}_全文补转写.lock"
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     handle = lock_path.open("a+b")
     try:
@@ -528,11 +541,11 @@ def status(plan_path: Path, csv_path: Path, root: Path) -> dict[str, Any]:
         plan = make_plan(csv_path, root)
     else:
         plan = load_json(plan_path)
-    existing = load_json(STATE_PATH if root == ROOT else root / STATE_PATH.relative_to(ROOT)) \
-        if (STATE_PATH if root == ROOT else root / STATE_PATH.relative_to(ROOT)).is_file() else None
+    current_state_path = state_path_for(root)
+    existing = load_json(current_state_path) if current_state_path.is_file() else None
     state = state_for(plan, existing)
     valid, issues = inspect_queue(plan, state, root)
-    summary_path = root / SUMMARY_CSV.relative_to(ROOT)
+    summary_path = summary_path_for(root)
     return {"entry_count": len(plan["entries"]),
             "complete": sum(item["status"] == "complete" for item in state["items"].values()),
             "needs_resume": len(issues), "issues": issues,
@@ -542,19 +555,19 @@ def status(plan_path: Path, csv_path: Path, root: Path) -> dict[str, Any]:
 
 
 def state_path_for(root: Path) -> Path:
-    return root / "data/reports/S22_全文补转写进度.json"
+    return root / f"data/reports/{SEASON}_全文补转写进度.json"
 
 
 def plan_path_for(root: Path) -> Path:
-    return root / "data/reports/S22_全文补转写计划.json"
+    return root / f"data/reports/{SEASON}_全文补转写计划.json"
 
 
 def summary_path_for(root: Path) -> Path:
-    return root / "data/seasons/S22/S22_全文补转写目录.csv"
+    return root / f"data/seasons/{SEASON}/{SEASON}_全文补转写目录.csv"
 
 
 def log_path_for(entry: dict[str, Any], root: Path) -> Path:
-    return root / "data/reports/S22_全文补转写日志" / f"{entry['bvid']}.log"
+    return root / f"data/reports/{SEASON}_全文补转写日志" / f"{entry['bvid']}.log"
 
 
 def run_one(entry: dict[str, Any], root: Path, state: dict[str, Any],
@@ -612,8 +625,9 @@ def run_one(entry: dict[str, Any], root: Path, state: dict[str, Any],
         return False, None
 
 
-def run_batch(csv_path: Path = DEFAULT_CSV, root: Path = ROOT,
+def run_batch(csv_path: Path | None = None, root: Path = ROOT,
               runner: Callable[..., Any] = subprocess.run) -> int:
+    csv_path = csv_path or DEFAULT_CSV
     with process_lock(root):
         plan = make_plan(csv_path, root)
         plan_file = plan_path_for(root)
@@ -661,10 +675,13 @@ def do_plan(csv_path: Path, root: Path) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("plan", "run", "status"))
-    parser.add_argument("--csv", type=Path, default=DEFAULT_CSV,
-                        help="preferred review index CSV (default: S22_中文优先复核目录.csv)")
+    parser.add_argument("--season", choices=season_codes(ROOT), default=DEFAULT_SEASON)
+    parser.add_argument("--csv", type=Path,
+                        help="preferred review index CSV (default: the selected season's review index)")
     args = parser.parse_args(argv)
-    csv_path = args.csv if args.csv.is_absolute() else ROOT / args.csv
+    configure_season(args.season)
+    selected_csv = args.csv or DEFAULT_CSV
+    csv_path = selected_csv if selected_csv.is_absolute() else ROOT / selected_csv
     try:
         if args.command == "plan":
             result = do_plan(csv_path, ROOT)

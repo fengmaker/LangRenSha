@@ -20,12 +20,13 @@ from psycopg.types.json import Jsonb
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
 PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
-PUBLICATION_FORMAT_VERSION = 2
+PUBLICATION_FORMAT_VERSION = 4
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
 EVENT_FIELDS = (
     "slot", "action", "actor", "targets", "result", "start_seat", "direction",
     "random_point", "speech_scope", "availability", "votes", "effects",
+    "invalidated", "blocked_by_game_end",
 )
 EFFECT_FIELDS = ("kind", "intended_target", "dead_seat", "shield_actor")
 VOTE_FIELDS = ("round", "voter", "target", "abstained")
@@ -49,6 +50,14 @@ ACTION_LABELS = {
     "forbidden": "该行动被禁止", "invalid_exchange": "交换无效", "trade": "选择交易",
     "betray": "选择背叛", "trade_betray": "分别选择交易和背叛", "betray_trade": "分别选择背叛和交易",
     "transform": "变换身份", "mask": "使用面具", "dance": "参与共舞", "win": "胜出",
+}
+S23_ACTION_LABELS = {
+    "verify": "查验身份", "give_mask": "给予面具", "minority_dies": "少数方出局",
+    "invalidated_by_dq": "最后一狼被DQ，狼刀失效", "mark": "标记", "hunt": "狩猎",
+    "choose": "选择", "wolf": "狼人阵营", "good": "好人阵营", "clear_mark": "清除标记",
+    "destroy": "销毁", "reveal": "翻牌", "speak": "发言", "clear": "清除",
+    "kill": "猎杀", "attempt": "尝试发动", "surrender": "交牌", "no_death": "无人出局",
+    "exchange": "交换", "dream": "摄梦", "swap": "交换",
 }
 
 
@@ -156,12 +165,20 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
                 if slot not in labels[phase]:
                     raise PublishError("事件槽位不在当前版型中")
                 output = _pick(event, EVENT_FIELDS)
+                if dossier.get("season") == "S23" and isinstance(output.get("result"), str):
+                    output["result"] = re.sub(
+                        r"逐人票型另见voting\.(?:reviewed|candidate)\.json",
+                        "逐人票型见本页投票记录", output["result"],
+                    )
                 output["votes"] = [_pick(vote, VOTE_FIELDS) for vote in event.get("votes", [])]
                 output["effects"] = [_pick(effect, EFFECT_FIELDS) for effect in event.get("effects", [])]
                 output["slot_label"] = labels[phase][slot]
                 period = f"第{number}夜" if phase == "night" else f"第{number}天白天"
                 action = event.get("action")
-                description = f"{period}，{labels[phase][slot]}：{ACTION_LABELS.get(action, '记录动作 ' + str(action))}"
+                action_label = ACTION_LABELS.get(action, '记录动作 ' + str(action))
+                if dossier.get("season") == "S23":
+                    action_label = S23_ACTION_LABELS.get(action, action_label)
+                description = f"{period}，{labels[phase][slot]}：{action_label}"
                 actor = event.get("actor")
                 if actor is not None:
                     description += f"；行动者 {actor} 号"
@@ -224,7 +241,8 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     details = {
         "id": dossier["slug"], "season": dossier["season"], "date": dossier["date"],
         "phase": dossier["phase"], "game_number": dossier.get("game_number"),
-        "board": {"code": dossier["board"], "name": board["name"]}, "winner": winner,
+        "board": {"code": dossier["board"], "name": board["name"].removeprefix("S23 ")
+                  if dossier["season"] == "S23" else board["name"]}, "winner": winner,
         "players": [{"id": s["person_id"], "name": s["name"], "seat": s["seat"],
                      "role": s["role"], "faction": s["faction"]} for s in seats],
         "ballot_count": len(public_voting["ballots"]), "round_count": len(dossier.get("rounds", [])),
@@ -245,6 +263,32 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         details["data_notes"].append("部分座位阵营待核，保留未知值。")
     if any(event["action"] == "unknown" for r in details["rounds"] for phase in ("night", "day") for event in r[phase]):
         details["data_notes"].append("部分行动仍为未知，保留来源状态。")
+    context = dossier.get("_publication_context", {})
+    for note in context.get("public_notes", []):
+        if not isinstance(note, str) or re.search(r"source_path|[A-Za-z]:[\\/]|data[\\/]", note):
+            raise PublishError("公开补充说明含有无效文字或本地路径")
+        details["data_notes"].append(note)
+    if dossier["season"] == "S23":
+        details["data_notes"].append("夜间槽位排列用于归档，不表示已确认各技能的精确发动顺序。")
+        if dossier["board"] == "masquerade":
+            details["data_notes"].append("假面验证、给予面具和舞者共舞从第一天白天结束后的夜晚开始，开局首夜不可发动。")
+        if any(event.get("invalidated") or event.get("action") == "invalidated_by_dq"
+               for r in details["rounds"] for event in r["night"]):
+            details["data_notes"].append("最后一狼8号在夜间被DQ出局，狼刀被判失效，因此为平安夜；DQ出局单独记录。")
+        if any(event.get("blocked_by_game_end") for r in details["rounds"]
+               for phase in ("night", "day") for event in r[phase]):
+            details["data_notes"].append("猎人作为最后一张神牌出局时对局立即结束，没有后续开枪环节。")
+    terminal = context.get("terminal_observation")
+    if terminal:
+        number, phase = terminal.get("round"), terminal.get("phase")
+        if type(number) is not int or phase not in {"night", "day"}:
+            raise PublishError("终局观察缺少有效日夜边界")
+        details["rounds"] = [r for r in details["rounds"] if r["number"] <= number]
+        if phase == "night":
+            details["rounds"][-1]["day"] = []
+        details["round_count"] = len(details["rounds"])
+        details["data_notes"].append(f"录像明确播报本局在第{number}夜结束，未进入下一白天。" if phase == "night"
+                                     else f"录像明确播报本局在第{number}天白天结束。")
     return details
 
 
@@ -280,20 +324,35 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         audit_digest = None
         if audit_path.is_file():
             audit, audit_digest = _read_json(audit_path)
-        board = rules["boards"].get(dossier.get("board"))
+        board_code = rules["formal"].get("board_code_map", {}).get(dossier.get("board"), dossier.get("board"))
+        board = rules["boards"].get(board_code)
         if not board:
             raise PublishError("正式对局使用了未知版型")
         file_hashes = {"dossier": dossier_digest, "voting": voting_digest, "endgame": endgame_digest}
         if audit_digest is not None:
             file_hashes["voting_audit"] = audit_digest
+        # Formal sidecars are part of the immutable source fingerprint. Only
+        # explicitly allowlisted public notes and a phase boundary cross into
+        # the public snapshot; source paths and audit text stay private.
+        context = {}
+        for name in ("supplemental", "vote_control", "formal_context"):
+            sidecar_path = folder / f"{name}.json"
+            if sidecar_path.is_file():
+                sidecar, sidecar_hash = _read_json(sidecar_path)
+                if sidecar.get("game_slug") != slug:
+                    raise PublishError("正式补充档案的对局关联不一致")
+                file_hashes[name] = sidecar_hash
+                if name == "formal_context":
+                    context = sidecar
+        dossier = {**dossier, "_publication_context": context}
         entries.append({
             "dossier": dossier, "voting": voting, "endgame": endgame, "audit": audit,
             "board": board, "folder": folder, "bvid": _bvid(dossier), "source_hashes": file_hashes,
         })
     if sample and not entries:
         raise PublishError("指定样例不在已确认正式范围内或不存在")
-    if not sample and season == "S22":
-        expected = rules["formal"].get("scope", {}).get("scored_total")
+    if not sample:
+        expected = rules["formal"].get("scope", {}).get("scored_total", scope.get("expected_games"))
         if type(expected) is int and len(entries) != expected:
             raise PublishError("正式范围数量与已确认统计口径不一致")
     hashes = []
@@ -301,6 +360,32 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         hashes.append({"game_id": item["dossier"]["slug"], "files": item["source_hashes"]})
     source_hash = digest_bytes(canonical_json(hashes))
     return entries, source_hash, rules_hash
+
+
+def publication_seasons(season: str | list[str] | tuple[str, ...]) -> list[str]:
+    seasons = [season] if isinstance(season, str) else list(season)
+    if not seasons or len(set(seasons)) != len(seasons) or any(
+        not isinstance(s, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,20}", s) for s in seasons
+    ):
+        raise PublishError("发布赛季必须非空、唯一且格式合法")
+    return sorted(seasons)
+
+
+def load_release(root: Path, season: str | list[str] | tuple[str, ...], sample: str | None = None
+                 ) -> tuple[list[dict], str, str]:
+    seasons = publication_seasons(season)
+    if len(seasons) == 1:
+        return load_publication(root, seasons[0], sample)
+    if sample:
+        raise PublishError("多赛季发布不能指定单局样例")
+    entries, sources, rules = [], {}, {}
+    for selected in seasons:
+        batch, source_hash, rules_hash = load_publication(root, selected)
+        entries.extend(batch)
+        sources[selected], rules[selected] = source_hash, rules_hash
+    if len({entry["dossier"]["slug"] for entry in entries}) != len(entries):
+        raise PublishError("多赛季发布含有重复对局 ID")
+    return entries, digest_bytes(canonical_json(sources)), digest_bytes(canonical_json(rules))
 
 
 def _connect(schema: str = "masters_web"):
@@ -366,10 +451,12 @@ def _release_id(season: str, source_hash: str, rules_hash: str) -> str:
             f"p{PUBLICATION_FORMAT_VERSION}-s{STATISTICS_VERSION}")
 
 
-def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str = "S22", sample: str | None = None,
+def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22", sample: str | None = None,
             *, activate: bool = True) -> dict:
-    entries, source_hash, rules_hash = load_publication(root, season, sample)
-    release_id = _release_id(season, source_hash, rules_hash)
+    seasons = publication_seasons(season)
+    season_label = "_".join(seasons)
+    entries, source_hash, rules_hash = load_release(root, seasons, sample)
+    release_id = _release_id(season_label, source_hash, rules_hash)
     conn = _connect("masters_web")
     try:
         with conn.transaction():
@@ -398,13 +485,13 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str = "S22", sample: str |
                         })
                         player["appearances"] += 1
                         player["roles"][seat["role"] or "身份未知"] += 1
-                manifest = {"season": season, "publication_format_version": PUBLICATION_FORMAT_VERSION,
+                manifest = {"season": season_label, "seasons": seasons, "publication_format_version": PUBLICATION_FORMAT_VERSION,
                             "statistics_version": STATISTICS_VERSION, "games": manifest_games,
-                            "rules": sorted((name, digest) for name, digest in _logical_rules(Path(root), season)[0].items())}
+                            "rules": {s: sorted(_logical_rules(Path(root), s)[0].items()) for s in seasons}}
                 conn.execute(
                     "INSERT INTO releases(id, season, game_count, source_hash, rules_hash, manifest) "
                     "VALUES(%s, %s, %s, %s, %s, %s)",
-                    (release_id, season, len(entries), source_hash, rules_hash, Jsonb(manifest)),
+                    (release_id, season_label, len(entries), source_hash, rules_hash, Jsonb(manifest)),
                 )
                 for player in player_rows.values():
                     roles = [{"role": role, "count": count} for role, count in sorted(player["roles"].items())]
@@ -440,7 +527,7 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str = "S22", sample: str |
                     "ON CONFLICT(singleton) DO UPDATE SET release_id=EXCLUDED.release_id",
                     (release_id,),
                 )
-        return {"id": release_id, "game_count": len(entries), "source_hash": source_hash,
+        return {"id": release_id, "seasons": seasons, "game_count": len(entries), "source_hash": source_hash,
                 "rules_hash": rules_hash, "activated": activate, "idempotent": bool(existing)}
     finally:
         conn.close()
@@ -463,8 +550,8 @@ def activate(release_id: str) -> dict:
         conn.close()
 
 
-def list_games(root: Path = DEFAULT_SOURCE_ROOT, season: str = "S22") -> list[dict]:
-    entries, _, _ = load_publication(root, season)
+def list_games(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22") -> list[dict]:
+    entries, _, _ = load_release(root, season)
     return [{"id": item["dossier"]["slug"], "date": item["dossier"]["date"],
              "game_number": item["dossier"].get("game_number"), "board": item["board"]["name"],
              "bvid": item["bvid"]} for item in entries]

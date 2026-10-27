@@ -177,7 +177,7 @@ class BatchGameRecordTests(unittest.TestCase):
         self.event(value, "wolf_attack").update(action="attack", actor=1, targets=[4])
         self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["code"], "treasure_master")
         value["seats"][0]["faction"] = "good"
-        with self.assertRaisesRegex(ReviewError, "狼刀行动者必须属于狼队"):
+        with self.assertRaisesRegex(ReviewError, "身份与阵营不一致"):
             validate(value, check_files=False, allow_incomplete=True)
 
     def test_number_swap_cannot_be_encoded_as_direct_poison_death(self):

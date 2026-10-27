@@ -1035,11 +1035,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .bluff-feedback-form { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line-strong); }
 .bluff-feedback-form h3 { margin: 0 0 14px; font-size: 16px; }
 .bluff-feedback-form label { display: grid; gap: 7px; color: var(--text); font-size: 14px; }
+.bluff-frame { margin: 18px 0; }
+.bluff-frame img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); }
+.bluff-frame figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; }
 .bluff-feedback-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
 .bluff-feedback-form select, .bluff-feedback-form textarea { width: 100%; min-width: 0; padding: 10px; border: 1px solid #47655b; border-radius: 0; background: #091614; color: var(--text); font: inherit; }
 .bluff-feedback-form textarea { min-height: 100px; resize: vertical; }
 .bluff-feedback-copy-fallback { margin-top: 12px; padding: 12px; border: 1px solid var(--line-strong); background: #091614; }
 .bluff-feedback-tools > .bluff-feedback-copy-fallback { display: block; }
+.bluff-feedback-tools > .bluff-feedback-copy-fallback[hidden] { display: none; }
 .bluff-feedback-copy-fallback p { margin: 0 0 8px; }
 .bluff-feedback-copy-fallback textarea { width: 100%; min-height: 260px; font: 12px/1.5 Consolas, monospace; white-space: pre; }
 .bluff-feedback-form [data-feedback-row-status] { color: var(--muted); font-size: 12px; }

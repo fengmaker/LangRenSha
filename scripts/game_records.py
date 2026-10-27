@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from contextlib import nullcontext
 import json
 from pathlib import Path
 
@@ -17,13 +18,16 @@ ALIASES = {
     "辉少": [],
 }
 
-WOLF_ROLES = frozenset({"狼人", "机械狼", "狼王", "黑狼王", "诡术师", "假面", "典狱长", "白狼王"})
+WOLF_ROLES = frozenset({"狼人", "机械狼", "狼王", "黑狼王", "诡术师", "假面", "典狱长", "白狼王", "九尾狐", "狼术师"})
 ROLE_FACTIONS = {
     **{role: "werewolf" for role in WOLF_ROLES},
+    "盗宝大师": "werewolf",
+    "九尾狐": "werewolf",
+    "狼术师": "werewolf",
     "鬼魂新娘": "third_party",
     **{role: "good" for role in {
         "预言家", "通灵师", "女巫", "猎人", "守卫", "骑士", "摄梦人", "平民",
-        "魔术师", "定序王子", "舞者", "白痴", "白神", "混血儿", "毒师", "蒙面人",
+        "魔术师", "定序王子", "舞者", "白痴", "白神", "混血儿", "毒师", "蒙面人", "白泽",
     }},
 }
 
@@ -255,7 +259,7 @@ def apply_derived_rules(value):
     return value
 
 
-def validate_batch(value, check_files=True, *, check_rules=True):
+def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_treasure_faction=False):
     """Validate a batch review record using only the facts already known."""
     forbidden = {"evidence", "evidence_ids", "review", "review_state", "verification_status", "schema_version", "transcription_runs", "speech_turns"}
     def walk(node):
@@ -300,7 +304,10 @@ def validate_batch(value, check_files=True, *, check_rules=True):
             known_role_counts[role] += 1
             expected_faction = None if role == "混血儿" else ROLE_FACTIONS.get(role)
             explicit_ghost_third_party = board["code"] == "ghost_bride" and faction == "third_party"
-            if expected_faction is not None and faction is not None and faction != expected_faction and not explicit_ghost_third_party:
+            legacy_treasure_good = (allow_legacy_treasure_faction and board["code"] == "treasure_master"
+                                    and role == "盗宝大师" and faction == "good")
+            if (expected_faction is not None and faction is not None and faction != expected_faction
+                    and not explicit_ghost_third_party and not legacy_treasure_good):
                 raise ReviewError("身份与阵营不一致")
         if faction is not None and faction not in {"good", "werewolf", "third_party"}:
             raise ReviewError("阵营不合法")
@@ -414,16 +421,36 @@ def validate_batch(value, check_files=True, *, check_rules=True):
         # This action selects a card role; its value belongs in result, never
         # in seat targets.
         ("treasure_choice", "choose"): 0,
+        # S23-only actions in season-namespaced templates.
+        ("nine_tail_mark", "mark"): 1,
+        ("nine_tail_vote_mark", "mark"): 1,
+        ("nine_tail_kill", "kill"): 1,
+        ("nine_tail_skill", "attempt"): 2,
+        ("whiteze_clear", "clear"): 1,
+        ("whiteze_clear_mark", "clear"): 1,
+        ("whiteze_clear_mark", "clear_mark"): 1,
+        ("magic_duel_magician_swap", "swap"): 2,
+        ("magic_duel_wolf_sorcerer_swap", "swap"): 2,
+        ("sorcerer_exchange", "exchange"): 2,
+        ("wolf_shot", "shoot"): 2,
     }
     minimum_target_counts = {
         ("sheriff_candidates", "register"): 1,
         ("night_deaths", "die"): 1,
+        ("nine_tail_hunt", "hunt"): 1,
     }
     for round_ in value["rounds"]:
         for phase in ["night", "day"]:
             slots = board[phase+"_slots"]
             events = round_[phase]
-            if [e.get("slot") for e in events] != [s["code"] for s in slots]:
+            event_codes = [e.get("slot") for e in events]
+            slot_codes = [s["code"] for s in slots]
+            ended_inside_phase = (
+                value.get("season") == "S23" and board.get("code") == "s23_qingqiu_night" and
+                phase == "day" and bool(events) and event_codes[-1] == "game_end" and
+                events[-1].get("action") != "unknown" and event_codes == slot_codes[:len(event_codes)]
+            )
+            if event_codes != slot_codes and not ended_inside_phase:
                 raise ReviewError("每轮事件槽位和排列必须与版型模板完全相同")
             for event, slot in zip(events, slots):
                 if set(event) != {"slot", "action", "actor", "targets", "result", "start_seat", "direction", "votes", "random_point", "speech_scope", "availability", "effects"}:
@@ -439,7 +466,7 @@ def validate_batch(value, check_files=True, *, check_rules=True):
                     if actor_role is not None:
                         if expected_role and expected_role != "狼队" and expected_role != actor_role and not (slot["code"] == "self_destruct" and actor_role in WOLF_ROLES):
                             raise ReviewError("行动者身份与版型槽位不符")
-                        treasure_wolf = (value["board"] == "treasure_master" and actor_role == "盗宝大师"
+                        treasure_wolf = (value["board"] in {"treasure_master", "s23_treasure_master"} and actor_role == "盗宝大师"
                                          and by_seat[actor].get("faction") == "werewolf")
                         if expected_role == "狼队" and actor_role not in WOLF_ROLES and not treasure_wolf:
                             raise ReviewError("狼刀行动者必须属于狼队")
@@ -467,10 +494,14 @@ def validate_batch(value, check_files=True, *, check_rules=True):
                 elif event["random_point"] is not None or event["speech_scope"] is not None:
                     raise ReviewError("随机点数和发言范围只属于发言顺序槽位")
 
-                if event["availability"] is not None and (
-                        event["slot"] not in {"mechanical_action", "mechanical_day_skill"} or
-                        event["availability"] not in {"learning", "locked", "available", "wrong_phase", "no_skill", "dead", "poisoned", "wolves_alive", "unknown"}):
-                    raise ReviewError("只有机械狼技能槽位保存合法的发动条件")
+                if event["availability"] is not None:
+                    allowed_availability = {"learning", "locked", "available", "wrong_phase", "no_skill", "dead", "poisoned", "wolves_alive", "unknown"}
+                    s23_availability = {"spent", "no_living_wolves", "unavailable"}
+                    s23_record = value.get("season") == "S23" and board.get("code", "").startswith("s23_")
+                    allowed = allowed_availability | (s23_availability if s23_record else set())
+                    scoped_slot = event["slot"] in {"mechanical_action", "mechanical_day_skill"}
+                    if event["availability"] not in allowed or (not scoped_slot and not s23_record):
+                        raise ReviewError("事件发动条件不属于该赛季与槽位的正式编码")
                 if not isinstance(event["effects"], list):
                     raise ReviewError("技能结算格式不合法")
                 for effect in event["effects"]:
@@ -495,10 +526,15 @@ def validate_batch(value, check_files=True, *, check_rules=True):
                     raise ReviewError("违规换位须保留行动者，并明确记录重复选人的判离裁定")
                 if target_key in fixed_target_counts:
                     expected_count = fixed_target_counts[target_key]
+                    if (value.get("season") == "S23" and board.get("code", "").startswith("s23_")
+                            and target_key == ("badge", "hold")):
+                        # S23 marks the holder in actor and uses an empty target;
+                        # keep the S22 transfer/hold contract untouched.
+                        expected_count = 0
                     if len(targets) != expected_count:
                         if expected_count == 0:
                             raise ReviewError("该动作不应填写座位目标")
-                        raise ReviewError(f"该槽位动作必须有且仅有{expected_count}个目标座位")
+                        raise ReviewError(f"{event['slot']}/{event['action']}必须有且仅有{expected_count}个目标座位；当前{len(targets)}个")
                 elif target_key in minimum_target_counts:
                     if len(targets) < minimum_target_counts[target_key]:
                         raise ReviewError("该槽位动作缺少操作目标")
@@ -774,6 +810,7 @@ def describe(value, round_number, phase, event):
         for effect in event["effects"]:
             if effect["kind"]=="shield_bypassed":
                 text+="，无视"+person(effect["shield_actor"])+"的盾"
+    elif action=="invalidated_by_dq": text = actor+"因DQ离场，狼刀判失效"
     elif action=="save": text = actor+"解救"+target
     elif action=="poison":
         effects=event["effects"]
@@ -829,13 +866,14 @@ def ensure_person(conn, name):
     return person["id"]
 
 
-def import_game(value, *, allow_incomplete=False):
+def import_game(value, *, allow_incomplete=False, conn=None):
     from game_scope import exclusion_reason
     excluded = exclusion_reason(value)
     if excluded:
         raise ReviewError("该局已移出对局范围，禁止重新入库：" + excluded)
     board = validate(value, allow_incomplete=allow_incomplete)
-    with connect() as conn:
+    transaction = connect() if conn is None else nullcontext(conn)
+    with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-"+value["slug"],))
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("board-template-"+board["code"],))
         conn.execute("""INSERT INTO board_templates(code,name,seat_count,role_counts,wake_order) VALUES(%s,%s,%s,%s,%s)
@@ -879,7 +917,7 @@ def import_game(value, *, allow_incomplete=False):
             VALUES(%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(game_id) DO UPDATE SET board_code=EXCLUDED.board_code,
             event_date=EXCLUDED.event_date,phase=EXCLUDED.phase,episode=EXCLUDED.episode,day_in_episode=EXCLUDED.day_in_episode,
             game_number=EXCLUDED.game_number,winning_faction=EXCLUDED.winning_faction""",
-            (game_id,value["board"],value["date"],value["phase"],value["episode"],value["day_in_episode"],value["game_number"],value["winner"]))
+            (game_id,value["board"],value["date"],value["phase"],value.get("episode"),value.get("day_in_episode"),value.get("game_number"),value.get("winner")))
         names = value["roster"] + value["commentators"] + [seat["name"] for seat in value["seats"] if seat["name"] is not None] + [value["referee"],"豆儿啵","辉少"]
         identities={name:ensure_person(conn,name) for name in dict.fromkeys(name for name in names if name is not None)}
         for duty,names in [("commentator",value["commentators"]),("referee",[value["referee"]] if value["referee"] is not None else [])]:
@@ -904,9 +942,10 @@ def import_game(value, *, allow_incomplete=False):
                         conn.execute("INSERT INTO game_event_targets(event_id,game_id,position,seat_number) VALUES(%s,%s,%s,%s)", (row["id"],game_id,position,target))
                     for vote in event["votes"]:
                         conn.execute("INSERT INTO game_event_votes(event_id,game_id,ballot_round,voter_seat,target_seat,abstained) VALUES(%s,%s,%s,%s,%s,%s)", (row["id"],game_id,vote["round"],vote["voter"],vote["target"],vote["abstained"]))
+        event_count = sum(len(round_[phase]) for round_ in value["rounds"] for phase in ("night", "day"))
         return {"game_id":str(game_id),"slug":value["slug"],"people":len(identities),"seats":len(value["seats"]),
                 "rounds":len(value["rounds"]),"night_slots":len(board["night_slots"]),"day_slots":len(board["day_slots"]),
-                "event_records":len(value["rounds"])*(len(board["night_slots"])+len(board["day_slots"])),"source_files":len(value["files"])}
+                "event_records":event_count,"source_files":len(value["files"])}
 
 
 def main():

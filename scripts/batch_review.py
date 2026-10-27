@@ -384,13 +384,25 @@ def render_game(out_dir: Path, value: dict, review: dict) -> None:
     md_rounds = []
     game_event_rows = []
     rounds = [item for item in _as_list(value.get("rounds")) if isinstance(item, dict)]
-    for round_value in rounds:
+    from game_flow import replay
+    flow = replay(value)
+    voting_audit_path = ROOT / "data/extractions/S22/voting" / (str(bvid) + ".json")
+    if voting_audit_path.is_file():
+        import hashlib
+        audit = json.loads(voting_audit_path.read_text(encoding="utf-8"))
+        dossier_path = out_dir / "dossier.json"
+        if dossier_path.is_file() and audit.get("dossier_sha256") == hashlib.sha256(dossier_path.read_bytes()).hexdigest():
+            flow = audit.get("game_flow") or flow
+    for stage in flow["display_phases"]:
+        round_value = next(r for r in rounds if r["number"] == stage["round"])
         number = round_value.get("number", _UNKNOWN)
-        round_title = f"第{_string(number)}轮"
+        round_title = stage["label"]
         md_rounds.extend([f"## {round_title}", ""])
         phase_sections = []
-        for phase, phase_name in (("night", "夜间"), ("day", "白天")):
+        for phase, phase_name in ((stage["phase"], stage["label"]),):
             slot_list = [item for item in _as_list(board.get(f"{phase}_slots")) if isinstance(item, dict)]
+            if stage.get("event_slots"):
+                slot_list = [item for item in slot_list if item.get("code") in stage["event_slots"]]
             if not slot_list:
                 seen = set()
                 slot_list = []
@@ -404,6 +416,8 @@ def render_game(out_dir: Path, value: dict, review: dict) -> None:
             unknown_rows = []
             md_rounds.extend([f"### {phase_name}", "", "| 固定槽位 | 事件 |", "|---|---|"])
             for slot, event, is_unmapped in _ordered_events(round_value, phase, slot_list):
+                if stage.get("event_slots") and slot.get("code") not in stage["event_slots"]:
+                    continue
                 slot_code = _string(slot.get("code"))
                 label = _string(slot.get("label", slot_code))
                 if event is None:

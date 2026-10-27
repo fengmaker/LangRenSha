@@ -106,6 +106,16 @@ def _validate_review(games: list[dict], payload: dict, season: str,
         source = game.get("source") or {}
         if reviewed_game.get("bvid") != source.get("bvid"):
             raise BluffReviewError(f"对局 {game_id} 的视频编号与发布快照不一致")
+        result_review=reviewed_game.get('result_review')
+        if result_review is not None:
+            if (season!='S23' or not isinstance(result_review,dict)
+                    or result_review.get('badge')!='lost' or not result_review.get('note')
+                    or not isinstance(result_review.get('evidence'),list) or not result_review['evidence']
+                    or any(not isinstance(e,dict) or not e.get('text') for e in result_review['evidence'])
+                    or reviewed_game.get('coverage')!='first_day_video_and_transcript'):
+                raise BluffReviewError('补充警徽结果缺少已完成复核的定位证据')
+            if any(bluffs._badge_result(game,s['seat'])[0] is True for s in game.get('seats',[])):
+                raise BluffReviewError('补充流徽结果与正式竞选当选结果冲突')
 
         assessments = reviewed_game.get("assessments")
         if not isinstance(assessments, list):
@@ -150,6 +160,9 @@ def _validate_review(games: list[dict], payload: dict, season: str,
                                or claim_day == "later")
             if not valid_claim_day:
                 raise BluffReviewError(f"对局 {game_id} {seat_number} 号起跳天数无效")
+            actual_day=assessment.get('actual_claim_day')
+            if actual_day is not None and (claim_day!='later' or type(actual_day) is not int or actual_day<3):
+                raise BluffReviewError(f"对局 {game_id} {seat_number} 号后日起跳天数无效")
             if verification == "user_uncertain" and decision != "uncertain":
                 raise BluffReviewError(f"对局 {game_id} {seat_number} 号用户复核状态与结论不匹配")
             evidence = assessment.get("evidence", [])
@@ -223,9 +236,13 @@ def _active_release(conn, season: str, *, lock: bool) -> dict:
     ).fetchone()
     if not row:
         raise BluffReviewError("网站数据库尚无活动游戏发布批次")
-    if row["season"] != season:
+    count = conn.execute(
+        "SELECT count(*) AS count FROM games WHERE release_id = %s AND season = %s",
+        (row["id"], season),
+    ).fetchone()["count"]
+    if not count:
         raise BluffReviewError("活动游戏发布批次与悍跳复核赛季不一致")
-    return row
+    return {**row, "release_game_count": row["game_count"], "game_count": count}
 
 
 def _published_games(conn, release: dict, season: str) -> list[dict]:

@@ -168,11 +168,13 @@ def merge_review(original, annotation):
                 seat["faction"] = batch.faction_for(incoming)
             changes.append({"field": f"seats[{number}].{key}", "before": None, "after": incoming})
         if proposed.get("faction") is not None and proposed["faction"] != seat.get("faction"):
-            dynamic = seat.get("role") in {"混血儿", "盗宝大师"} or board["code"] == "ghost_bride"
+            dynamic = seat.get("role") == "混血儿" or board["code"] == "ghost_bride"
             if seat.get("faction") is None or dynamic:
                 old = seat.get("faction")
                 seat["faction"] = proposed["faction"]
                 changes.append({"field": f"seats[{number}].faction", "before": old, "after": seat["faction"]})
+            elif seat.get("role") == "盗宝大师":
+                questions.append(question(f"seats[{number}].faction", "盗宝大师始终属于狼人阵营，未采用冲突候选", candidate=proposed["faction"]))
     for round_ in value["rounds"]:
         for phase in ("night", "day"):
             specs = {slot["code"]: slot for slot in board[phase + "_slots"]}

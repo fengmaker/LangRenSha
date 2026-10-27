@@ -2,48 +2,77 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ApiError, getPlayer } from "@/lib/api";
-import type { Metric, PlayerLedgerEntry, SearchParams } from "@/lib/types";
+import type { Metric, MetricRanking, PlayerLedgerEntry, RankingEntry, SearchParams } from "@/lib/types";
 import { formatDate, formatNumber, phaseLabel, factionLabel } from "@/lib/format";
 import { DataProblem } from "@/components/data-state";
 import styles from "./player-detail.module.css";
+import { SeasonRangeFilter } from "./season-range-filter";
+import { MetricSamples, type SampleLabels } from "./metric-samples";
+import { MetricRank, type RankingContext } from "./metric-rank";
 
-const PHASES = ["all", "regular", "finals_week"] as const;
 type PlayerPageProps = { params: Promise<{ id: string }>; searchParams: Promise<SearchParams> };
 function first(value: string | string[] | undefined): string { return Array.isArray(value) ? (value[0] ?? "") : (value ?? ""); }
-function allowedPhase(value: string): (typeof PHASES)[number] { return PHASES.includes(value as (typeof PHASES)[number]) ? value as (typeof PHASES)[number] : "all"; }
+function range(query: SearchParams) {
+  const start = first(query.season_start) || first(query.season) || "S22";
+  const end = first(query.season_end) || (first(query.season) && !first(query.season_start) ? start : "latest");
+  return { start, end };
+}
 function controlFlow(error: unknown): boolean {
   return typeof error === "object" && error !== null && "digest" in error && typeof error.digest === "string" && (error.digest.startsWith("NEXT_REDIRECT") || error.digest.startsWith("NEXT_NOT_FOUND"));
 }
 function rateText(rate: number | null | undefined): string { return typeof rate === "number" && Number.isFinite(rate) ? `${(rate * 100).toFixed(1)}%` : "—"; }
-function MetricSamples({ metric, games }: { metric: Metric; games: PlayerLedgerEntry[] }) {
-  const byId = new Map(games.map((game) => [game.game_id, game]));
-  return <details className="metric-samples"><summary>查看样本与口径</summary><div>
-    <p>{metric.denominator ? `${formatNumber(metric.numerator)} / ${formatNumber(metric.denominator)} 个有效样本` : "暂无有效样本"}{metric.excluded ? ` · 排除 ${formatNumber(metric.excluded)}` : ""}</p>
-    {metric.game_ids.length ? <ul>{metric.game_ids.map((id) => {
-      const game = byId.get(id);
-      const label = game ? [formatDate(game.date), game.game_number ? `第 ${game.game_number} 局` : null, game.board_name || "版型待核"].filter(Boolean).join(" · ") : id;
-      return <li key={id}><Link href={`/games/${encodeURIComponent(id)}`}>{label}</Link></li>;
-    })}</ul> : null}
-  </div></details>;
+function MetricCard({ label, value, note, metric, games, sampleLabels, ranking, rankLabel, provisional, rankingBoard, rankContext }: { label: string; value: string; note?: string; metric?: Metric; games?: PlayerLedgerEntry[]; sampleLabels?: SampleLabels; ranking?: MetricRanking | null; rankLabel?: string; provisional?: boolean; rankingBoard?: RankingEntry[]; rankContext: RankingContext }) {
+  const sampleIds = new Set((metric?.samples ?? []).map((sample) => sample.game_id));
+  const hasSamples = metric && sampleLabels;
+  return (
+    <article className="profile-stat-card">
+      {/* 四区位置、字号和行高统一由 player-detail.module.css 控制。 */}
+      <div className="metric-copy">
+        <span>{label}</span>
+        <strong>{value}</strong>
+        {note ? <small>{note}</small> : null}
+      </div>
+      <div className="metric-actions">
+        <div className="profile-metric-ranks">
+          <MetricRank
+            ranking={ranking}
+            label={rankLabel}
+            provisional={provisional}
+            entries={rankingBoard}
+            metricLabel={rankLabel ?? label}
+            format={label.includes("率") ? "percent" : label === "赛季积分" ? "points" : "count"}
+            sampleUnit={sampleLabels?.unit}
+            context={rankContext}
+          />
+        </div>
+        {hasSamples ? (
+          <MetricSamples
+            label={label}
+            metric={metric}
+            games={(games ?? []).filter((game) => sampleIds.has(game.game_id))}
+            labels={sampleLabels}
+          />
+        ) : null}
+      </div>
+    </article>
+  );
 }
-function MetricCard({ label, value, metric, games, note }: { label: string; value: string; metric?: Metric; games: PlayerLedgerEntry[]; note?: string }) {
-  return <article className="profile-stat-card"><span>{label}</span><strong>{value}</strong>{note ? <small>{note}</small> : null}{metric ? <MetricSamples metric={metric} games={games} /> : null}</article>;
-}
-function LedgerTable({ ledger }: { ledger: PlayerLedgerEntry[] }) {
-  if (!ledger.length) return <div className="empty-state"><span className="empty-number">—</span><p>当前筛选没有可展示的积分明细。</p></div>;
-  return <div className="data-table-scroll"><table className="ledger-table"><thead><tr><th scope="col">对局</th><th scope="col">阶段 / 版型</th><th scope="col">身份</th><th scope="col">结果</th><th scope="col">本局积分</th><th scope="col">整季累计</th></tr></thead><tbody>{ledger.map((entry, index) => <tr key={`${entry.game_id}-${index}`}>
-    <td><Link href={`/games/${encodeURIComponent(entry.game_id)}`}>{formatDate(entry.date)} · {entry.game_number ? `第 ${entry.game_number} 局` : entry.game_id}</Link></td>
+function LedgerTable({ ledger, singleSeason }: { ledger: PlayerLedgerEntry[]; singleSeason: boolean }) {
+  if (!ledger.length) return <div className="empty-state"><span className="empty-number">—</span><p>当前时间范围内暂无对局记录。</p></div>;
+  return <div className="data-table-scroll"><table className="ledger-table"><thead><tr><th scope="col">对局</th><th scope="col">阶段 / 版型</th><th scope="col">身份</th><th scope="col">结果</th>{singleSeason ? <th scope="col">赛季累计积分</th> : null}</tr></thead><tbody>{ledger.map((entry, index) => <tr key={`${entry.game_id}-${index}`}>
+    <td><Link href={`/games/${encodeURIComponent(entry.game_id)}`}>{entry.season ? `${entry.season} · ` : ""}{formatDate(entry.date)} · {entry.game_number ? `第 ${entry.game_number} 局` : entry.game_id}</Link></td>
     <td>{phaseLabel(entry.phase)}<small>{entry.board_name || "版型待核"}</small></td><td>{entry.role || "身份待核"}<small>{factionLabel(entry.faction)}{entry.faction_inferred ? " · 随榜样" : ""}</small></td>
     <td>{entry.result === "win" ? <span className="ledger-win">胜</span> : entry.result === "loss" ? <span className="ledger-loss">负</span> : <span className="ledger-pending">待结算</span>}</td>
-    <td className={entry.points === null ? "ledger-pending" : entry.points > 0 ? "ledger-win" : "ledger-loss"}>{entry.points === null ? "待结算" : `${entry.points > 0 ? "+" : ""}${entry.points.toFixed(1)}`}</td><td>{entry.cumulative_points.toFixed(1)}{entry.pending_count ? <small>另有 {entry.pending_count} 场待结算</small> : null}</td>
+    {singleSeason ? <td>{entry.cumulative_points.toFixed(1)}{entry.pending_count ? <small>另有 {entry.pending_count} 场待结算</small> : null}</td> : null}
   </tr>)}</tbody></table></div>;
 }
 
 export async function generateMetadata({ params, searchParams }: PlayerPageProps): Promise<Metadata> {
   const { id } = await params; const query = await searchParams;
   try {
-    const player = await getPlayer(id, first(query.season) || "S22", allowedPhase(first(query.phase)));
-    return { title: `${player.name} · 选手档案`, description: `${player.name} 的赛季照片、胜率、竞选指标与积分明细。` };
+    const { start, end } = range(query);
+    const player = await getPlayer(id, start, "all", end);
+    return { title: `${player.name} · 选手档案`, description: `${player.name} 的照片、胜率、竞选指标与对局记录。` };
   } catch (error) {
     if (controlFlow(error)) throw error;
     if (error instanceof ApiError && error.kind === "not-found") return { title: "选手未找到" };
@@ -53,46 +82,81 @@ export async function generateMetadata({ params, searchParams }: PlayerPageProps
 
 export default async function PlayerDetailPage({ params, searchParams }: PlayerPageProps) {
   const { id } = await params; const query = await searchParams;
-  const season = first(query.season) || "S22"; const phase = "all";
+  const { start, end } = range(query); const phase = "all";
   try {
-    const player = await getPlayer(id, season, phase);
+    const player = await getPlayer(id, start, phase, end);
+    const season = player.scope?.season_start ?? start;
+    const endSeason = player.scope?.season_end ?? season;
+    const singleSeason = season === endSeason;
+    const rangeLabel = end === "latest" ? `${season} 至今` : singleSeason ? season : `${season} — ${endSeason}`;
     const stats = player.stats;
-    const ledger = stats?.ledger ?? [];
-    const roles = stats?.roles ?? [];
-    const availableSeasons = [...new Set([season, ...(player.available_seasons ?? [])])];
+    const rankings = stats?.rankings;
+    const ledger = [...(stats?.ledger ?? [])].sort((a, b) => b.date.localeCompare(a.date) || (b.game_number ?? -1) - (a.game_number ?? -1) || b.game_id.localeCompare(a.game_id));
+    const roles = [...(stats?.roles ?? [])].sort((a, b) => b.appearances - a.appearances || a.role.localeCompare(b.role, "zh-CN"));
+    const boards = [...(stats?.boards ?? [])]
+      .map((board) => ({ ...board, code: board.code ?? "", name: board.name || board.code || "版型待核" }))
+      .sort((a, b) => b.appearances - a.appearances || a.name.localeCompare(b.name, "zh-CN"));
+    const availableSeasons = [...new Set([season, ...(player.available_seasons ?? [])])].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
     const baseHref = `/players/${encodeURIComponent(id)}`;
+    const rankContext = { playerId: id, start: season, end: end === "latest" ? "latest" : endSeason, scopeLabel: rangeLabel };
     return <div className={`page-wrap player-profile ${styles.profile}`}>
       <div className="breadcrumb"><Link href={`/players?season=${encodeURIComponent(season)}&phase=${phase}`}>选手索引</Link><span>/</span><span>{player.name}</span></div>
       <section className="player-profile-hero">
         <div className="profile-photo-frame">{player.photo ? <img src={player.photo.url} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <div className="profile-photo-empty"><span>{season} 赛季</span><b>{player.name}</b></div>}</div>
-        <div className="profile-hero-copy"><h1>{player.name}</h1><p>{season} 赛季档案；个人指标按整季累计，包含决赛周。</p><div className="profile-hero-meta"><span><b>{formatNumber(stats?.appearances ?? player.appearances)}</b> 场出场</span><span><b>{formatNumber(stats?.scope_games ?? player.games.length)}</b> 场整季对局</span></div>{player.photo?.source_date ? <small className="photo-credit">照片来源：{player.photo.source_url ? <a href={player.photo.source_url} target="_blank" rel="noreferrer">微博 · {formatDate(player.photo.source_date)}</a> : formatDate(player.photo.source_date)}</small> : null}</div>
+        <div className="profile-hero-copy"><h1>{player.name}</h1><p className="profile-range-label">{rangeLabel}</p><SeasonRangeFilter action={baseHref} seasons={availableSeasons} start={season} end={end === "latest" ? "latest" : endSeason} /></div>
       </section>
-      <section className="profile-filter filter-panel"><form method="get" action={baseHref} className="profile-filter-form"><label className="filter-field"><span>赛季</span><select name="season" defaultValue={season}>{availableSeasons.map((value) => <option key={value} value={value}>{value}</option>)}</select></label><button className="button button-primary" type="submit">切换赛季 <span>→</span></button><Link className="inline-link" href={`/leaderboard?season=${encodeURIComponent(season)}&phase=finals_week`}>决赛周冠军榜 →</Link></form></section>
 
       {stats ? <>
         <section className="profile-stat-grid">
-          <MetricCard label="整季积分" value={stats.points_complete ? formatNumber(stats.points) : `小计 ${formatNumber(stats.points)}`} note={!stats.points_complete && stats.pending_games > 0 ? `${formatNumber(stats.pending_games)} 场待结算；当前值不是最终积分` : undefined} games={ledger} />
-          <MetricCard label="整季出场率" value={rateText(stats.attendance.rate)} metric={stats.attendance} games={ledger} />
-          <MetricCard label="总胜率" value={rateText(stats.total_win_rate.rate)} metric={stats.total_win_rate} games={ledger} />
-          <MetricCard label="总胜场 / 负场" value={`${formatNumber(stats.wins)} / ${formatNumber(stats.losses)}`} note={stats.pending_games > 0 ? `${formatNumber(stats.pending_games)} 场结果待结算` : undefined} games={ledger} />
-          <MetricCard label="狼人胜率" value={rateText(stats.werewolf_win_rate.rate)} metric={stats.werewolf_win_rate} games={ledger} />
-          <MetricCard label="好人胜率" value={rateText(stats.good_win_rate.rate)} metric={stats.good_win_rate} games={ledger} />
-          <MetricCard label="上警率" value={rateText(stats.sheriff_registration_rate.rate)} metric={stats.sheriff_registration_rate} games={ledger} />
-          <MetricCard label="站边率" value={rateText(stats.seer_follow_rate.rate)} metric={stats.seer_follow_rate} games={ledger} />
-          <MetricCard label="警徽票投对预言家率" value={rateText(stats.sheriff_seer_vote_rate.rate)} metric={stats.sheriff_seer_vote_rate} games={ledger} />
+          {singleSeason ? <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.points} ranking={rankings?.points} provisional={!stats.points_complete} label="赛季积分" value={stats.points_complete ? formatNumber(stats.points) : `小计 ${formatNumber(stats.points)}`} note={!stats.points_complete && stats.pending_games > 0 ? `${formatNumber(stats.pending_games)} 场待结算；当前值不是最终积分` : undefined} /> : <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.appearances} ranking={rankings?.appearances} label="出场次数" value={formatNumber(stats.appearances)} />}
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.attendance} ranking={rankings?.attendance} label="出场率" value={rateText(stats.attendance.rate)} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.total_win_rate} ranking={rankings?.total_win_rate} label="总胜率" value={rateText(stats.total_win_rate.rate)} metric={stats.total_win_rate} games={ledger} sampleLabels={{ positive: "获胜", negative: "失利", unit: "场", description: "正面样本为胜局，负面样本为负局。" }} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.wins} ranking={rankings?.wins} rankLabel="胜场" label="总胜场 / 负场" value={`${formatNumber(stats.wins)} / ${formatNumber(stats.losses)}`} metric={stats.total_win_rate} games={ledger} sampleLabels={{ positive: "获胜", negative: "失利", unit: "场", description: "正面样本为胜局，负面样本为负局。" }} note={stats.pending_games > 0 ? `${formatNumber(stats.pending_games)} 场结果待结算` : undefined} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.werewolf_win_rate} ranking={rankings?.werewolf_win_rate} label="狼人胜率" value={rateText(stats.werewolf_win_rate.rate)} metric={stats.werewolf_win_rate} games={ledger} sampleLabels={{ positive: "获胜", negative: "失利", unit: "场", description: "正面样本为胜局，负面样本为负局。" }} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.good_win_rate} ranking={rankings?.good_win_rate} label="好人胜率" value={rateText(stats.good_win_rate.rate)} metric={stats.good_win_rate} games={ledger} sampleLabels={{ positive: "获胜", negative: "失利", unit: "场", description: "正面样本为胜局，负面样本为负局。" }} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.sheriff_registration_rate} ranking={rankings?.sheriff_registration_rate} label="上警率" value={rateText(stats.sheriff_registration_rate.rate)} metric={stats.sheriff_registration_rate} games={ledger} sampleLabels={{ positive: "上警", negative: "未上警", unit: "场", description: "正面样本为首次报名上警的对局，负面样本为未上警的对局。" }} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.seer_follow_rate} ranking={rankings?.seer_follow_rate} label="站边率" value={rateText(stats.seer_follow_rate.rate)} metric={stats.seer_follow_rate} games={ledger} sampleLabels={{ positive: "站边正确", negative: "站边错误", unit: "次", description: "按放逐投票轮次比较与真实预言家 / 通灵师的投向。同一局可能同时有站对与站错的轮次，会分别显示在两类样本中。" }} />
+          <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.sheriff_seer_vote_rate} ranking={rankings?.sheriff_seer_vote_rate} label="警徽票投对预言家率" value={rateText(stats.sheriff_seer_vote_rate.rate)} metric={stats.sheriff_seer_vote_rate} games={ledger} sampleLabels={{ positive: "投对", negative: "未投对", unit: "次", description: "按警徽投票轮次统计，正面样本为投给真实预言家 / 通灵师的记录，负面样本为未投对的记录；包含 PK 复投。" }} />
         </section>
         <section className="profile-two-col profile-performance">
-          <div className="profile-block"><div className="section-heading compact"><div><h2>身份胜率分布</h2><p className="section-subtitle">按已知胜负计算。</p></div></div>
-            {roles.length ? <div className="role-bars">{roles.map((role) => <div className="role-rate-row" key={role.role}><div className="role-rate-title"><strong>{role.role}</strong><span>{rateText(role.win_rate)}</span></div><div className="bar-track"><span style={{ width: `${Math.max(0, Math.min(100, (role.win_rate ?? 0) * 100))}%` }} /></div><small>{role.wins} 胜 / {role.losses} 负{role.pending_games > 0 ? ` · ${role.pending_games} 场待结算` : ""} · {formatNumber(role.appearances)} 场</small></div>)}</div> : <p className="lane-empty">身份胜率记录尚未整理。</p>}
+          <div className="profile-block"><div className="section-heading compact"><div><h2>身份胜率分布</h2></div></div>
+            {roles.length ? <div className="role-bars">{roles.map((role) => <div className="role-rate-row" key={role.role}><div className="role-rate-title"><strong>{role.role}</strong><span>{rateText(role.win_rate)}</span></div><div className="role-card-footer"><MetricRank ranking={role.ranking} entries={role.ranking_board} metricLabel={`${role.role}身份胜率`} format="percent" context={rankContext} title={role.ranking ? `当前筛选范围内，与同为${role.role}且有有效胜负的 ${role.ranking.total} 位选手比较` : undefined} />{role.metric ? <MetricSamples label={`${role.role}身份胜率`} metric={role.metric} games={ledger.filter((game) => (game.role || "身份未知") === role.role)} labels={{ positive: "获胜", negative: "失利", unit: "场", description: `仅展示当前筛选范围内，以${role.role}身份出场的对局。正面样本为胜局，负面样本为负局。` }} /> : null}</div></div>)}</div> : <p className="lane-empty">身份胜率记录尚未整理。</p>}
           </div>
-          <div className="profile-block"><div className="section-heading compact"><div><h2>版型记录</h2></div></div>
-            {player.boards.length ? <div className="board-chip-list">{player.boards.map((board) => <div className="board-chip" key={board.code}><span>{board.name}</span><b>{formatNumber(board.count)}</b></div>)}</div> : <p className="lane-empty">版型记录尚未整理。</p>}
+          <div className="profile-block">
+            <div className="section-heading compact"><div><h2>版型胜率分布</h2></div></div>
+            {boards.length ? (
+              <div className="role-bars board-rate-grid">
+                {boards.map((board) => {
+                  const boardGameIds = new Set(board.metric.game_ids);
+                  return (
+                    <div className="role-rate-row board-rate-row" key={board.code || board.name} data-board-code={board.code}>
+                      <div className="role-rate-title"><strong>{board.name}</strong><span>{rateText(board.win_rate)}</span></div>
+                      <div className="role-card-footer">
+                        <MetricRank
+                          ranking={board.ranking}
+                          entries={board.ranking_board}
+                          metricLabel={`${board.name}版型胜率`}
+                          format="percent"
+                          context={rankContext}
+                          title={board.ranking ? `当前筛选范围内，与同样参加${board.name}且有有效胜负的 ${board.ranking.total} 位选手比较` : undefined}
+                        />
+                        <MetricSamples
+                          label={`${board.name}版型胜率`}
+                          metric={board.metric}
+                          games={ledger.filter((game) => boardGameIds.has(game.game_id))}
+                          labels={{ positive: "获胜", negative: "失利", unit: "场", description: `仅展示当前筛选范围内，参加${board.name}版型的对局。正面样本为胜局，负面样本为负局。` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : <p className="lane-empty">版型胜率记录尚未整理。</p>}
           </div>
         </section>
-        <section className="profile-games"><div className="section-heading"><div><h2>每局积分明细</h2><p className="section-subtitle">整季累计（含决赛周）：狼人胜 +1.5，好人胜 +1，负局 -1；待结算暂不计分。</p></div><span className="section-index">{ledger.length} 场</span></div><LedgerTable ledger={ledger} /></section>
+        <section className="profile-games"><div className="section-heading"><div><h2>对局记录</h2></div><span className="section-index">{ledger.length} 场</span></div><LedgerTable ledger={ledger} singleSeason={singleSeason} /></section>
       </> : <section className="profile-stat-grid profile-stat-fallback"><article><span>出场</span><strong>{formatNumber(player.appearances)}</strong><small>统计摘要暂未提供</small></article><article><span>身份种类</span><strong>{formatNumber(player.roles.length)}</strong><small>原始档案数量</small></article></section>}
-      {stats ? <details className="methodology-details"><summary>查看指标口径{stats.notes.length ? "与待核说明" : ""}</summary><div className="metric-definition-note">百分率按有效样本计算，分母为 0 时显示“—”；出场率按整季对局计算，胜率按已知胜负计算。未知记录不会当作失败或 0%。上警率按每局首次报名计一次。站边率统计好人阵营中预言家 / 通灵师以外的选手，与真实预言家 / 通灵师同轮有票权且后者明确投票时，投向同一目标的比例，包含放逐 PK / 技能复投。警徽票正确率统计真实预言家 / 通灵师为合法候选时的好人选票，包含 PK 复投。混血儿按榜样阵营计算。</div>{stats.notes.length ? <ul>{stats.notes.map((note, index) => <li key={index}>{note}</li>)}</ul> : null}</details> : null}
-      <details className="release-details"><summary>查看此页的数据版本</summary><div className="release-detail-content"><span>发布版本 <code>{player.release_id}</code></span><span>范围 <b>{player.scope?.season ?? season} · {phaseLabel(player.scope?.phase ?? phase)}</b></span></div></details>
+      <details className="release-details"><summary>查看此页的数据版本</summary><div className="release-detail-content"><span>发布版本 <code>{player.release_id}</code></span><span>范围 <b>{rangeLabel}</b></span></div></details>
     </div>;
   } catch (error) {
     if (controlFlow(error)) throw error;

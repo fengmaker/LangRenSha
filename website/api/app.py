@@ -25,14 +25,16 @@ from website.api.analytics import (
     scope_games,
 )
 from website.api.photos import photo_for, photo_path
-from website.api.bluffs import METHODOLOGY as BLUFF_METHODOLOGY, aggregate_bluffs, review_items
+from website.api.bluff_frames import frame_path as bluff_frame_path
+from website.api.bluffs import METHODOLOGY as BLUFF_METHODOLOGY, S23_VIDEO_METHODOLOGY, aggregate_bluffs, review_items
 from website.api.bluff_store import read_review
 from website.api.game_presentation import build_game_presentation
+from scripts.season_config import load_season, season_codes
 
 
 app = FastAPI(title="Masters archive API", version="1.0.0", debug=False)
-ANALYTICS_VERSION = 6
-SEASON_CATALOG = json.loads(Path(__file__).with_name("catalog.json").read_text(encoding="utf-8"))
+ANALYTICS_VERSION = 8
+SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
 
 
 class Count(BaseModel):
@@ -148,6 +150,8 @@ class Stats(BaseModel):
     boards: list[BoardStats]
     players: list[PlayerSummary]
     methodology: list[str]
+    scope: dict[str, Any]
+    available_seasons: list[str]
 
 
 class ReleaseSummary(BaseModel):
@@ -284,6 +288,68 @@ def _available_seasons(conn, release_id: str) -> list[str]:
     return [row["season"] for row in rows]
 
 
+def _player_season_range(available: list[str], season: str, season_start: str | None,
+                         season_end: str | None) -> tuple[str, str, list[str]]:
+    """Resolve and validate the player's inclusive season range."""
+    latest = available[-1] if available else None
+    start_value = season_start or season
+    end_value = season_end or ("latest" if season_start is not None else season)
+    start = latest if start_value == "latest" else start_value
+    end = latest if end_value == "latest" else end_value
+
+    if start is None or start not in available:
+        raise HTTPException(status_code=422, detail=f"Unknown season_start: {start_value}")
+    if end is None or end not in available:
+        raise HTTPException(status_code=422, detail=f"Unknown season_end: {end_value}")
+
+    start_index = available.index(start)
+    end_index = available.index(end)
+    if start_index > end_index:
+        raise HTTPException(status_code=422, detail="season_start must not be later than season_end")
+    return start, end, available[start_index:end_index + 1]
+
+
+def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[str, Any]]]],
+                                release_id: str, conn) -> tuple[dict[str, dict[str, Any]], str | None]:
+    """Combine season-local bluff results, always pairing games with their own review."""
+    combined: dict[str, dict[str, Any]] = {}
+    inference_versions: list[tuple[str, str | None]] = []
+    for season, snapshots in snapshots_by_season:
+        payload = read_review(conn, release_id, season)
+        inference_versions.append((season, payload.get("inference_version")))
+        season_stats = aggregate_bluffs(snapshots, payload)
+        for player_id, season_row in season_stats.items():
+            row = combined.setdefault(player_id, {
+                "bluff_count": 0, "bluff_count_complete": True, "bluff_pending_games": 0,
+                "bluff_review_count": 0, "bluff_success_rate": {
+                    "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": []},
+            })
+            row["bluff_count"] += season_row["bluff_count"]
+            row["bluff_count_complete"] = row["bluff_count_complete"] and season_row["bluff_count_complete"]
+            row["bluff_pending_games"] += season_row["bluff_pending_games"]
+            row["bluff_review_count"] += season_row["bluff_review_count"]
+            metric = row["bluff_success_rate"]
+            season_metric = season_row["bluff_success_rate"]
+            for key in ("numerator", "denominator", "excluded"):
+                metric[key] += season_metric[key]
+            metric["game_ids"].extend(season_metric["game_ids"])
+
+    for row in combined.values():
+        metric = row["bluff_success_rate"]
+        metric["game_ids"] = list(dict.fromkeys(metric["game_ids"]))
+        metric["rate"] = metric["numerator"] / metric["denominator"] if metric["denominator"] else None
+
+    versions = [version for _, version in inference_versions]
+    if not any(versions):
+        inference_version = None
+    elif len(inference_versions) == 1:
+        inference_version = versions[0]
+    else:
+        inference_version = ", ".join(f"{season}: {version or 'unpublished'}"
+                                       for season, version in inference_versions)
+    return combined, inference_version
+
+
 @app.get("/health")
 def health():
     try:
@@ -360,6 +426,17 @@ def player_photo(season: str, filename: str):
     })
 
 
+@app.get("/api/v1/bluff-frames/{season}/{filename}")
+def bluff_frame(season: str, filename: str):
+    path=bluff_frame_path(season,filename)
+    if path is None:
+        raise HTTPException(status_code=404,detail="Frame not found")
+    return FileResponse(path,media_type="image/png",headers={
+        "Cache-Control":"public, max-age=31536000, immutable",
+        "X-Content-Type-Options":"nosniff", "ETag":f'"{path.stem}"',
+    })
+
+
 @app.get("/api/v1/players", response_model=PagePlayers)
 def players(q: str | None = Query(default=None, max_length=120),
             season: str = Query(default="S22", max_length=32),
@@ -384,6 +461,8 @@ def players(q: str | None = Query(default=None, max_length=120),
 @app.get("/api/v1/players/{player_id}", response_model=PlayerDetail)
 def player_detail(player_id: str,
                   season: str = Query(default="S22", max_length=32),
+                  season_start: str | None = Query(default=None, max_length=32),
+                  season_end: str | None = Query(default=None, max_length=32),
                   phase: Literal["all", "regular", "finals_week"] = "all",
                   conn=Depends(connection_dependency)):
     release = _release(conn)
@@ -393,7 +472,15 @@ def player_detail(player_id: str,
     ).fetchone()
     if not player:
         raise HTTPException(status_code=404, detail="Player not found")
-    snapshots = _scope_snapshots(conn, release["id"], season)
+    available_seasons = _available_seasons(conn, release["id"])
+    resolved_start, resolved_end, selected_seasons = _player_season_range(
+        available_seasons, season, season_start, season_end,
+    )
+    snapshots_by_season = [
+        (selected_season, _scope_snapshots(conn, release["id"], selected_season))
+        for selected_season in selected_seasons
+    ]
+    snapshots = [snapshot for _, season_snapshots in snapshots_by_season for snapshot in season_snapshots]
     player_games = [snapshot for snapshot in snapshots
                     if any(seat.get("person_id") == player_id for seat in snapshot.get("seats", []))]
     player_games.sort(key=lambda snapshot: (
@@ -408,17 +495,22 @@ def player_detail(player_id: str,
     )
     boards = [{"code": code, "name": name, "count": count}
               for (code, name), count in sorted(board_counts.items(), key=lambda row: (-row[1], row[0][1]))]
-    stats = compute_player_stats(player_id, snapshots, season=season, name=player["name"])
-    bluff_payload = read_review(conn, release["id"], season)
-    stats.update(aggregate_bluffs(snapshots, bluff_payload).get(player_id, {}))
+    stats = compute_player_stats(player_id, snapshots, season=resolved_start, seasons=selected_seasons,
+                                 name=player["name"])
+    bluff_stats, bluff_inference_version = _combine_player_bluff_stats(
+        snapshots_by_season, release["id"], conn,
+    )
+    stats.update(bluff_stats.get(player_id, {}))
     roles = [{"role": role["role"], "count": role["appearances"]} for role in stats["roles"]]
     return {**player, "appearances": stats["appearances"], "roles": roles,
-            "photo": photo_for(player["name"], season),
+            "photo": photo_for(player["name"], resolved_end),
             "boards": boards, "games": [_summary(snapshot) for snapshot in player_games],
             "release_id": release["id"], "stats": stats,
-            "bluff_data_source": "database", "bluff_inference_version": bluff_payload.get("inference_version"),
-            "scope": {"season": season, "phase": "all", "games": len(snapshots)},
-            "available_seasons": _available_seasons(conn, release["id"])}
+            "bluff_data_source": "database", "bluff_inference_version": bluff_inference_version,
+            "scope": {"season": resolved_end, "season_start": resolved_start,
+                      "season_end": resolved_end, "seasons": selected_seasons,
+                      "phase": "all", "games": len(snapshots)},
+            "available_seasons": available_seasons}
 
 
 @app.get("/api/v1/leaderboard")
@@ -450,7 +542,7 @@ def leaderboard(season: str = Query(default="S22", max_length=32),
 
 @app.get("/api/v1/bluff-review")
 def bluff_review(season: str = Query(default="S22", max_length=20),
-                 status: Literal["all", "pending"] = "pending",
+                 status: Literal["all", "pending", "assistant_pending"] = "pending",
                  player: str = Query(default="", max_length=100),
                  conn=Depends(connection_dependency)):
     release = _release(conn)
@@ -466,31 +558,63 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
         "summary": {"games": len(snapshots), "wolf_appearances": len(rows),
                     "identified_bluffs": len(identified),
                     "successes": sum(row["success"] is True for row in identified),
-                    "pending": sum(row["needs_review"] for row in rows)},
-        "items": [row for row in rows if row["needs_review"]] if status == "pending" else rows,
-        "notes": BLUFF_METHODOLOGY,
+                    "pending": sum(row["requires_user_review"] for row in rows),
+                    "assistant_pending":sum(row['assistant_pending'] for row in rows),
+                    "reviewed_games":payload.get('summary',{}).get('independently_rechecked_games')},
+        "items": ([row for row in rows if row["requires_user_review"]] if status == "pending" else
+                  [row for row in rows if row['assistant_pending']] if status=='assistant_pending' else rows),
+        "notes": BLUFF_METHODOLOGY + (S23_VIDEO_METHODOLOGY if season == "S23" else []),
         "inference_version": payload.get("inference_version"),
         "bluff_data_source": "database",
     }
 
 
 @app.get("/api/v1/stats", response_model=Stats)
-def stats(season: str = Query(default="S22", max_length=32), conn=Depends(connection_dependency)):
+def stats(season: str | None = Query(default=None, max_length=32),
+          season_start: str | None = Query(default=None, max_length=32),
+          season_end: str | None = Query(default=None, max_length=32),
+          conn=Depends(connection_dependency)):
     release = _release(conn)
-    rows = conn.execute(
-        "SELECT id,board_code,board_name,winner,snapshot FROM games WHERE release_id=%s AND season=%s "
-        "ORDER BY event_date,id", (release["id"], season)
-    ).fetchall()
+    available_seasons = _available_seasons(conn, release["id"])
+
+    # Preserve the old single-season query, including its empty-result behavior
+    # for a season that is not present in the active release.
+    if season is not None and season_start is None and season_end is None:
+        resolved_start = resolved_end = season
+        selected_seasons = [season] if season in available_seasons else []
+    elif season_start is None and season_end is None:
+        # The data page defaults to the first published season through latest.
+        if available_seasons:
+            resolved_start, resolved_end, selected_seasons = _player_season_range(
+                available_seasons, "S22", "S22", "latest",
+            )
+        else:
+            resolved_start = resolved_end = "S22"
+            selected_seasons = []
+    else:
+        resolved_start, resolved_end, selected_seasons = _player_season_range(
+            available_seasons, season or "S22", season_start, season_end,
+        )
+
+    rows = [snapshot for selected_season in selected_seasons
+            for snapshot in _scope_snapshots(conn, release["id"], selected_season)]
     if not rows:
         return {"release_id": release["id"], "game_count": 0, "roles": [], "boards": [],
-                "players": [], "methodology": ["没有符合赛季筛选条件的正式对局。"]}
+                "players": [], "methodology": ["没有符合赛季筛选条件的正式对局。"],
+                "scope": {"season": resolved_end, "season_start": resolved_start,
+                          "season_end": resolved_end, "seasons": selected_seasons,
+                          "phase": "all", "games": 0},
+                "available_seasons": available_seasons}
     role_counts: Counter[str] = Counter()
     board_counts: dict[str, dict] = {}
     player_data: dict[str, dict] = {}
-    for row in rows:
-        winner = row["winner"]
-        board = board_counts.setdefault(row["board_code"], {
-            "code": row["board_code"], "name": row["board_name"], "games": 0,
+    for snapshot in rows:
+        winner = snapshot.get("winner")
+        board_info = snapshot.get("board") or {}
+        board_code = board_info.get("code") or snapshot.get("board_code") or ""
+        board_name = board_info.get("name") or snapshot.get("board_name") or board_code
+        board = board_counts.setdefault(board_code, {
+            "code": board_code, "name": board_name, "games": 0,
             "good_wins": 0, "werewolf_wins": 0, "unknown": 0,
         })
         board["games"] += 1
@@ -500,11 +624,13 @@ def stats(season: str = Query(default="S22", max_length=32), conn=Depends(connec
             board["werewolf_wins"] += 1
         else:
             board["unknown"] += 1
-        for seat in row["snapshot"]["seats"]:
-            role = seat["role"] or "身份未知"
+        for seat in snapshot.get("seats", []):
+            role = seat.get("role") or "身份未知"
             role_counts[role] += 1
-            player = player_data.setdefault(seat["person_id"], {
-                "id": seat["person_id"], "name": seat["name"], "appearances": 0, "roles": Counter(),
+            person_id = seat.get("person_id") or ""
+            player = player_data.setdefault(person_id, {
+                "id": person_id, "name": seat.get("name") or "未知选手", "appearances": 0,
+                "roles": Counter(),
             })
             player["appearances"] += 1
             player["roles"][role] += 1
@@ -526,6 +652,10 @@ def stats(season: str = Query(default="S22", max_length=32), conn=Depends(connec
             "胜负按整局好人或狼人阵营记录汇总；未记录胜方与平局计入 unknown。",
             "投票记录为空表示档案没有票型，不能据此推断为零票。",
         ],
+        "scope": {"season": resolved_end, "season_start": resolved_start,
+                  "season_end": resolved_end, "seasons": selected_seasons,
+                  "phase": "all", "games": len(rows)},
+        "available_seasons": available_seasons,
     }
 
 

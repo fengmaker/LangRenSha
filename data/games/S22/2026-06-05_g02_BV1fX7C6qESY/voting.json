@@ -1,7 +1,28 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV1fX7C6qESY-p01-g02",
-  "registrations": [],
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10
+      ],
+      "off_police": [
+        1,
+        8,
+        11,
+        12
+      ]
+    }
+  ],
   "ballots": [
     {
       "id": "ballot-1",
@@ -9,9 +30,14 @@
       "kind": "sheriff",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        8,
+        11,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -36,7 +62,53 @@
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
+    },
+    {
+      "id": "causal-ballot-day4-exile-d4",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        5,
+        7,
+        10,
+        11,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 5,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 5,
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [
@@ -49,7 +121,7 @@
     },
     {
       "id": "interruption-2",
-      "day": 2,
+      "day": 3,
       "actor": 4,
       "reason": "self_destruct",
       "ends_day": false
@@ -59,22 +131,22 @@
     {
       "day": 1,
       "sheriff": "recorded",
-      "exile": "unknown"
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "recorded"
     }
   ]
 }

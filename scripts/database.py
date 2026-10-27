@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+from decimal import Decimal
 import hashlib
 import json
 import os
@@ -108,17 +109,89 @@ def artifact(conn, source_id, path: Path, kind: str, metadata: dict | None = Non
 
 def import_transcript(conn, source_id, path: Path):
     value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ReviewError("转写文件根节点必须是 JSON 对象")
+    config = value.get("config", {})
+    if config is None:
+        config = {}
+    if not isinstance(config, dict):
+        raise ReviewError("转写配置必须是 JSON 对象")
+    source = value.get("source", {})
+    if source is None:
+        source = {}
+    if not isinstance(source, dict):
+        raise ReviewError("转写来源必须是 JSON 对象")
+
+    segments = value.get("segments")
+    if not isinstance(segments, list):
+        raise ReviewError("转写 segments 必须是数组")
+
+    # Validate and normalize every segment before registering an artifact or
+    # inserting a transcription run, so malformed input cannot leave partial
+    # rows behind. Older transcript files use seconds; FunASR exports ms.
+    normalized_segments = []
+    max_seconds = Decimal("999999999.999")  # transcript_segments uses numeric(12,3)
+    for index, segment in enumerate(segments):
+        if not isinstance(segment, dict):
+            raise ReviewError(f"转写片段 {index} 必须是 JSON 对象")
+        if "start_ms" in segment or "end_ms" in segment:
+            start_key, end_key, divisor = "start_ms", "end_ms", Decimal(1000)
+        else:
+            start_key, end_key, divisor = "start", "end", Decimal(1)
+        if start_key not in segment or end_key not in segment:
+            raise ReviewError(f"转写片段 {index} 缺少成对的开始或结束时间")
+
+        times = []
+        for key in (start_key, end_key):
+            raw = segment[key]
+            if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+                raise ReviewError(f"转写片段 {index} 的时间必须是有限数值")
+            numeric_time = Decimal(str(raw))
+            if not numeric_time.is_finite():
+                raise ReviewError(f"转写片段 {index} 的时间必须是有限数值")
+            times.append(numeric_time / divisor)
+        start_seconds, end_seconds = times
+        if start_seconds < 0 or end_seconds < 0:
+            raise ReviewError(f"转写片段 {index} 的时间不能为负数")
+        if end_seconds < start_seconds:
+            raise ReviewError(f"转写片段 {index} 的结束时间不能早于开始时间")
+        if start_seconds > max_seconds or end_seconds > max_seconds:
+            raise ReviewError(f"转写片段 {index} 的时间超出数据库数值范围")
+        text = segment.get("text")
+        if not isinstance(text, str) or not text.strip():
+            raise ReviewError(f"转写片段 {index} 的文字必须是非空字符串")
+        metadata = {key: segment[key] for key in (
+            "avg_logprob", "no_speech_prob", "speaker", "chunk_index", "status",
+            "alignment", "speaker_attribution", "speaker_ambiguous",
+        ) if key in segment}
+        normalized_segments.append((start_seconds, end_seconds, text, metadata))
+
+    models = config.get("models")
+    configured_model = (models.get("asr") if isinstance(models, dict) else
+                        ", ".join(str(item) for item in models) if isinstance(models, list) else models)
+    model = value.get("model") or config.get("model") or configured_model or "unknown"
+    language = value.get("language") or config.get("language")
+    audio_sha256 = (value.get("audio_sha256") or source.get("audio_sha256")
+                    or config.get("audio_sha256"))
+    parameters = {key: value[key] for key in (
+        "clips", "device", "compute_type", "beam_size", "initial_prompt",
+    ) if key in value}
+    if config:
+        parameters["config"] = config
+    if audio_sha256 is not None:
+        parameters["audio_sha256"] = audio_sha256
+
     artifact_id = artifact(conn, source_id, path, "asr")
     run = conn.execute("""INSERT INTO transcription_runs(source_id,artifact_id,engine,model,language,parameters)
         VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT(artifact_id) DO NOTHING RETURNING id""",
-        (source_id, artifact_id, value.get("engine", "unknown"), value.get("model", "unknown"),
-         value.get("language"), Jsonb({k: value.get(k) for k in ["clips","device","compute_type","beam_size","initial_prompt","audio_sha256"]}))).fetchone()
+        (source_id, artifact_id, value.get("engine", "unknown"), str(model),
+         language, Jsonb(parameters))).fetchone()
     if run is None:
         return conn.execute("SELECT id FROM transcription_runs WHERE artifact_id=%s", (artifact_id,)).fetchone()["id"]
-    for index, segment in enumerate(value.get("segments", [])):
+    for index, (start_seconds, end_seconds, text, metadata) in enumerate(normalized_segments):
         conn.execute("""INSERT INTO transcript_segments(run_id,segment_index,start_seconds,end_seconds,text,metadata)
-            VALUES(%s,%s,%s,%s,%s,%s)""", (run["id"], index, segment["start"], segment["end"], segment["text"],
-            Jsonb({k: segment.get(k) for k in ["avg_logprob","no_speech_prob"]})))
+            VALUES(%s,%s,%s,%s,%s,%s)""", (run["id"], index, start_seconds, end_seconds, text,
+            Jsonb(metadata)))
     return run["id"]
 
 

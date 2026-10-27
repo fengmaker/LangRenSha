@@ -23,11 +23,70 @@
       "id": "registration-review-BV17f8g6BEFQ-registration"
     }
   ],
-  "ballots": [],
+  "ballots": [
+    {
+      "id": "causal-ballot-day4-exile-d4",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        4,
+        6,
+        7,
+        8,
+        9,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 6,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 12,
+      "unrecorded_voters": []
+    }
+  ],
   "interruptions": [
     {
       "id": "interruption-1",
-      "day": 2,
+      "day": 3,
       "actor": 11,
       "reason": "self_destruct",
       "ends_day": true
@@ -36,23 +95,23 @@
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,
-      "sheriff": "unknown",
+      "sheriff": "badge_lost",
       "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "badge_lost",
+      "exile": "recorded"
     }
   ]
 }

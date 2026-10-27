@@ -1,4 +1,4 @@
-"""Resumable official S22 audio/subtitle acquisition and readable season archive."""
+"""Resumable official season audio/subtitle acquisition and readable archive."""
 
 from __future__ import annotations
 
@@ -24,11 +24,27 @@ import database
 from export_collection_index import export
 from media_ingest import MediaValidationError, OFFICIAL_BILIBILI_MID, validate_media
 from season_naming import export_source, naming, validate_cues
+from season_config import load_season, season_codes
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAN = ROOT/"data/indexes/S22_采集计划.json"
-STATE = ROOT/"data/reports/S22_采集进度.json"
-COLLECTION_ID = 8209896
+DEFAULT_SEASON = season_codes(ROOT)[0]
+SEASON = DEFAULT_SEASON
+SEASON_CONFIG = load_season(SEASON, ROOT)
+PLAN = ROOT/f"data/indexes/{SEASON}_采集计划.json"
+STATE = ROOT/f"data/reports/{SEASON}_采集进度.json"
+COLLECTION_ID = SEASON_CONFIG["collection_id"]
+SEED_BVID = SEASON_CONFIG["seed_bvid"]
+
+
+def configure_season(season: str) -> None:
+    """Keep each season's frozen plan, progress and archive separate."""
+    global SEASON, SEASON_CONFIG, COLLECTION_ID, SEED_BVID, PLAN, STATE
+    SEASON_CONFIG = load_season(season, ROOT)
+    COLLECTION_ID = SEASON_CONFIG["collection_id"]
+    SEED_BVID = SEASON_CONFIG["seed_bvid"]
+    SEASON = season
+    PLAN = ROOT / f"data/indexes/{season}_采集计划.json"
+    STATE = ROOT / f"data/reports/{season}_采集进度.json"
 
 
 class Throttle:
@@ -64,14 +80,14 @@ class BatchCollector(Collector):
 
 def build_plan(auth: str,cookies: Path | None) -> dict:
     collector=Collector(auth,cookies,quiet=True)
-    raw=collector.api("/x/web-interface/view",{"bvid":"BV1tj8p6REqy"})
+    raw=collector.api("/x/web-interface/view",{"bvid":SEED_BVID})
     view=raw["data"]
     collection=view.get("ugc_season") or {}
     if str(view["owner"]["mid"]) != OFFICIAL_BILIBILI_MID or collection.get("id") != COLLECTION_ID or str(collection.get("mid")) != OFFICIAL_BILIBILI_MID:
-        raise ValueError("不是目标官方 S22 合集")
-    raw_path=ROOT/"data/raw/bilibili/S22_collection.view.raw.json"
+        raise ValueError(f"不是目标官方 {SEASON} 合集")
+    raw_path=ROOT/f"data/raw/bilibili/{SEASON}_collection.view.raw.json"
     save_json(raw_path,raw)
-    csv_path=ROOT/"data/indexes/S22_官方合集_候选索引.csv"
+    csv_path=ROOT/f"data/indexes/{SEASON}_官方合集_候选索引.csv"
     export(raw_path,csv_path)
     rows=list(csv.DictReader(csv_path.open(encoding="utf-8-sig",newline="")))
     if len(rows) != collection.get("ep_count"):
@@ -85,9 +101,9 @@ def build_plan(auth: str,cookies: Path | None) -> dict:
     for index,row in enumerate(rows,start=1):
         entry={"index":index,"bvid":row["bvid"],"cid":int(row["cid"]),"page":int(row["page"] or 1),
                "title":row["title"],"duration_seconds":int(row["duration_seconds"] or 0)}
-        entry["labels"]=naming(entry["title"],entry["bvid"],entry["cid"],entry["page"],anchor)
+        entry["labels"]=naming(entry["title"],entry["bvid"],entry["cid"],entry["page"],anchor,SEASON)
         entries.append(entry)
-    value={"schema_version":1,"season":"S22","collection_id":COLLECTION_ID,"collection_title":collection["title"],
+    value={"schema_version":1,"season":SEASON,"collection_id":COLLECTION_ID,"collection_title":collection["title"],
            "owner_mid":OFFICIAL_BILIBILI_MID,"created_at_utc":datetime.now(timezone.utc).isoformat(),
            "collection_source":raw_path.relative_to(ROOT).as_posix(),"anchor":anchor,
            "declared_count":collection["ep_count"],"entry_count":len(entries),"entries":entries,
@@ -106,10 +122,10 @@ def record_success(entry: dict,manifest_path: Path,anchor: str,cached: bool) -> 
     manifest=checked["manifest"]
     if manifest["cid"] != entry["cid"]:
         raise ValueError("当前 CID 与冻结的合集清单不符")
-    labels=naming(manifest["title"],entry["bvid"],entry["cid"],entry["page"],anchor)
+    labels=naming(manifest["title"],entry["bvid"],entry["cid"],entry["page"],anchor,SEASON)
     result=export_source(manifest_path,labels)
     if not cached:
-        manifest["collection_context"]={"season":"S22","collection_id":COLLECTION_ID,"labels":labels,"exports":result}
+        manifest["collection_context"]={"season":SEASON,"collection_id":COLLECTION_ID,"labels":labels,"exports":result}
         save_json(manifest_path,manifest)
         registered=database.import_media(manifest_path,entry["bvid"],entry["page"])
         source_id=registered["source_id"]
@@ -159,7 +175,7 @@ def collect_one(entry,previous,anchor,auth,cookies,throttle,stop,refresh_subtitl
 
 
 def write_inventory(plan,state):
-    target=ROOT/"data/seasons/S22"
+    target=ROOT/f"data/seasons/{SEASON}"
     target.mkdir(parents=True,exist_ok=True)
     rows=[]
     for entry in plan["entries"]:
@@ -175,11 +191,11 @@ def write_inventory(plan,state):
                      "字幕状态":result.get("subtitle_status"),"字幕原件":" | ".join(track["raw"] for track in tracks),
                      "SRT":" | ".join(track["srt"] for track in tracks),"阅读版":" | ".join(track["readable"] for track in tracks),
                      "待核事项":" | ".join(labels["warnings"]),"错误":result.get("reason","")})
-    temporary=target/"S22_音频与字幕总目录.csv.tmp"
+    temporary=target/f"{SEASON}_音频与字幕总目录.csv.tmp"
     with temporary.open("w",encoding="utf-8-sig",newline="") as stream:
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]))
         writer.writeheader();writer.writerows(rows)
-    temporary.replace(target/"S22_音频与字幕总目录.csv")
+    temporary.replace(target/f"{SEASON}_音频与字幕总目录.csv")
     counts=Counter(row["状态"] for row in rows)
     state["summary"]={"planned":len(rows),"status_counts":dict(counts),
                       "audio_ready":sum(row["状态"] in {"complete","audio_only"} for row in rows),
@@ -188,15 +204,17 @@ def write_inventory(plan,state):
                       "subtitle_segments":sum(row["字幕段数"] or 0 for row in rows)}
     state["updated_at_utc"]=datetime.now(timezone.utc).isoformat()
     save_json(STATE,state)
-    save_json(target/"S22_音频与字幕总目录.json",{"plan_metadata":{k:v for k,v in plan.items() if k!="entries"},"summary":state["summary"],"entries":rows})
+    save_json(target/f"{SEASON}_音频与字幕总目录.json",{"plan_metadata":{k:v for k,v in plan.items() if k!="entries"},"summary":state["summary"],"entries":rows})
 
 
 def run(plan,auth,cookies,workers,refresh_subtitles=False):
+    if plan.get("season") != SEASON or plan.get("collection_id") != COLLECTION_ID:
+        raise ValueError("冻结计划与目标赛季不一致")
     # Fail early on invalid auth/DB instead of discovering it after hundreds of downloads.
     Collector(auth,cookies,quiet=True)
     with database.connect() as conn:
         conn.execute("SELECT 1 FROM sources LIMIT 1")
-    state=json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {"season":"S22","items":{}}
+    state=json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {"season":SEASON,"items":{}}
     if state.get("collection_id",COLLECTION_ID)!=plan["collection_id"]:
         raise ValueError("旧进度不是同一个合集")
     state["collection_id"]=plan["collection_id"]
@@ -204,7 +222,7 @@ def run(plan,auth,cookies,workers,refresh_subtitles=False):
                           "processed":0,"planned":len(plan['entries']),"state":"running"}
     stop=threading.Event();throttle=Throttle(1.25)
     write_inventory(plan,state)
-    print(f"S22 待核对/采集 {len(plan['entries'])} 条；线程 {workers}；API 全局间隔 1.25 秒",flush=True)
+    print(f"{SEASON} 待核对/采集 {len(plan['entries'])} 条；线程 {workers}；API 全局间隔 1.25 秒",flush=True)
     with ThreadPoolExecutor(max_workers=workers) as executor:
         futures={executor.submit(collect_one,entry,state["items"].get(source_key(entry)),plan["anchor"],auth,cookies,throttle,stop,refresh_subtitles):entry for entry in plan["entries"]}
         for future in as_completed(futures):
@@ -228,11 +246,13 @@ def run(plan,auth,cookies,workers,refresh_subtitles=False):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action",choices=["plan","run","status"])
+    parser.add_argument("--season",choices=season_codes(ROOT),default=DEFAULT_SEASON)
     parser.add_argument("--auth",choices=["none","cookies"],default="none")
     parser.add_argument("--cookies-file",type=Path)
     parser.add_argument("--workers",type=int,choices=[1,2,3],default=2)
     parser.add_argument("--refresh-subtitles",action="store_true",help="统一刷新已完成条目的字幕，仍复用已有音轨")
     args=parser.parse_args()
+    configure_season(args.season)
     if args.action=="plan":
         value=build_plan(args.auth,args.cookies_file)
         print(json.dumps({"plan":str(PLAN.relative_to(ROOT)),"entries":value["entry_count"],"hours":value["total_duration_seconds"]/3600},ensure_ascii=False,indent=2))

@@ -70,6 +70,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
         <strong>{item.label}</strong><b>{formatNumber(item.count)} <span>局</span></b>
       </Link>)}</div>
       <div className="season-leaderboard-links"><span>赛季积分与冠军</span><Link href={`/leaderboard?season=${encodeURIComponent(id)}&phase=all`}>整季积分榜 <b>→</b></Link><Link href={`/leaderboard?season=${encodeURIComponent(id)}&phase=finals_week`}>决赛周冠军榜 <b>→</b></Link></div>
+      {id === "S23" ? <p><Link className="button button-outline" href="/seasons/S23/bluff-review">S23 悍跳推断与复核 <span>→</span></Link></p> : null}
     </section>
 
     <section className="season-board-section">

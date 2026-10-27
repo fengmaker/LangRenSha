@@ -1,0 +1,57 @@
+{
+  "season": "S23",
+  "schema_version": 1,
+  "status": "authorized_batch_formal_import; field-level confirmation remains source-specific",
+  "source_review_rules": "config/S23_review_rules.json",
+  "source_review_rules_sha256": null,
+  "scope_config": "config/S23_game_scope.json",
+  "scope_code": "S23_regular_75",
+  "scope": {
+    "scored_total": 75,
+    "excluded_showmatches": 12
+  },
+  "authoritative_snapshot_id": "21f324d421887c334d3b52c34b573970738391aff2fdb25d65274d05f6c81db6",
+  "board_code_map": {
+    "mechanical_wolf_seer": "s23_mechanical_wolf_seer",
+    "mixed_blood": "s23_mixed_blood",
+    "guile_realm": "s23_guile_realm",
+    "masquerade": "s23_masquerade",
+    "treasure_master": "s23_treasure_master",
+    "qingqiu_night": "s23_qingqiu_night",
+    "magic_duel": "s23_magic_duel"
+  },
+  "template_dir": "config/board_templates",
+  "unconfirmed_wake_order": "S23 night slot positions are archival ordering only; wake order remains unknown unless explicitly confirmed per game.",
+  "role_profiles": {
+    "qingqiu_night": {"预言家": 1, "女巫": 1, "守卫": 1, "白泽": 1, "狼人": 3, "九尾狐": 1, "平民": 4},
+    "magic_duel": {"预言家": 1, "女巫": 1, "猎人": 1, "魔术师": 1, "狼人": 3, "狼术师": 1, "平民": 4},
+    "masquerade_role_group": {"one_of": ["白神", "白痴"], "count": 1}
+  },
+  "confirmed_rule_handling": {
+    "masquerade_first_night_skills": "unavailable; preserve any observed pass/unknown and add no inferred action",
+    "last_god_hunter_terminal": "game_end_before_hunter_shot; do not create a post-terminal shot event",
+    "treasure_dq_wolf_attack": {
+      "game_slug": "bili-BV1zmpB6PEcF-p01-g02",
+      "action": "invalidated_by_dq",
+      "keep_supplemental_dq_observation": true,
+      "night_death_note": "DQ is a separate departure; do not count it as a wolf-knife death"
+    }
+  },
+  "separate_review_context": {
+    "eulogy_bluff_statistic": {
+      "bvid": "BV1U3p86dEJY",
+      "classification": "eulogy_identity_claim_candidate",
+      "regular_bluff_count": "not_in_confirmed_count_pending_user_decision",
+      "status": "pending_user_confirmation",
+      "user_confirmation_claimed": false,
+      "policy_note": "维护处理：用户尚未确认该行为是否归入常规悍跳；发布时暂不计入已确认次数，单列并保持uncertain。此说明不构成用户确认。"
+    },
+    "confirmed_six_seat_bluff": "Preserve daily_audit.bluff_overrides as a separate statistic review, not as a game event."
+  },
+  "unknown_policy": "unknown remains unknown; omitted slots within an existing round are represented as unknown; no rounds are added after game termination.",
+  "storage_compatibility": {
+    "canonical_board_stays_in_formal_dossier": true,
+    "database_board_code_uses_board_code_map": true,
+    "effects_not_supported_by_core_table_are_saved_in_game_formal_annotations": true
+  }
+}

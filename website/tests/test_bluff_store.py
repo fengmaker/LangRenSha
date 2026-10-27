@@ -175,6 +175,8 @@ class FakeConnection:
         self.executed.append((text, params))
         if text.startswith("SELECT r.id, r.season, r.game_count"):
             return FakeCursor({"id": "release-1", "season": "TST", "game_count": 1})
+        if text.startswith("SELECT count(*) AS count FROM games"):
+            return FakeCursor({"count": 1})
         if text.startswith("SELECT id, snapshot FROM games"):
             return FakeCursor(rows=[{"id": self.game["id"], "snapshot": self.game}])
         if text.startswith("SELECT publication_id FROM active_bluff_reviews"):

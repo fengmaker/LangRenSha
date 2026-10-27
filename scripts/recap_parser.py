@@ -578,6 +578,10 @@ def _events_in_span(
     if explicit_deaths:
         add("day", _event("night_deaths", "die", targets=sorted(explicit_deaths)), death_offset)
 
+    peaceful_day = re.search(r"平安日", span)
+    if peaceful_day:
+        add("day", _event("exile_result", "none", result="平安日，无人被放逐"), peaceful_day.start())
+
     return [(event_phase, value) for _offset, event_phase, value in sorted(found, key=lambda item: item[0])]
 
 

@@ -117,10 +117,18 @@
       "day": 3,
       "kind": "exile",
       "number": 1,
-      "stage": "unknown",
-      "status": "partial",
+      "stage": "initial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        3,
+        4,
+        7,
+        9,
+        10,
+        12
+      ],
       "votes": [
         {
           "voter": 1,
@@ -160,7 +168,7 @@
       ],
       "tied_candidates": [],
       "winner": 3,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -172,12 +180,12 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]

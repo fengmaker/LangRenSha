@@ -74,9 +74,21 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
       "votes": [
         {
           "voter": 1,
@@ -136,7 +148,71 @@
       ],
       "tied_candidates": [],
       "winner": 7,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
+    },
+    {
+      "id": "causal-ballot-4-d3",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        10,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 3,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 8,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 8,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 5,
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",
@@ -144,9 +220,16 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        3,
+        6,
+        8,
+        10,
+        11
+      ],
       "votes": [
         {
           "voter": 2,
@@ -157,6 +240,11 @@
           "voter": 3,
           "target": 11,
           "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": null,
+          "state": "abstained"
         },
         {
           "voter": 8,
@@ -176,7 +264,7 @@
       ],
       "tied_candidates": [],
       "winner": 11,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -188,17 +276,17 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "recorded"
     },
     {
       "day": 4,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]

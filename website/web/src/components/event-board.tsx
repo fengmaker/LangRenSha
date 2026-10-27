@@ -11,6 +11,11 @@ function slotLabel(event: GameEvent): string {
     sheriff_candidates: "竞选报名", sheriff_vote: "警长投票", sheriff_result: "警长结果", night_deaths: "天亮情况",
     hunter_shot: "猎人开枪", badge: "警徽处理", speech_order: "发言顺序", exile_vote: "放逐投票",
     exile_result: "放逐结果", self_destruct: "狼人自爆", white_god_reveal: "白神翻牌", mixed_blood_victory: "混血儿胜利条件",
+    dancer_dance: "舞者共舞", dance_resolution: "共舞结算", magician_exchange: "魔术师交换",
+    magic_duel_magician_swap: "魔术师交换", magic_duel_wolf_sorcerer_swap: "狼术师交换", sorcerer_exchange: "狼术师交换",
+    nine_tail_mark: "九尾狐标记", nine_tail_hunt: "九尾狐猎杀时刻", nine_tail_kill: "九尾狐猎杀结果",
+    nine_tail_skill: "九尾狐技能结算", nine_tail_vote_mark: "九尾狐投票标记", whiteze_clear: "白泽技能结算",
+    whiteze_clear_mark: "白泽清除标记",
   };
   return event.slot ? labels[event.slot] ?? (/[\u4e00-\u9fff]/.test(event.slot) ? event.slot : "其他事件") : "对局事件";
 }
@@ -26,6 +31,10 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   const actor = event.actor != null ? seatText(event.actor, seats) : "";
   const targets = (event.targets ?? []).map((number) => seatText(number, seats)).join("、");
   const resolved = (event.resolved_targets ?? []).map((number) => seatText(number, seats)).join("、");
+  if (event.blocked_by_game_end) return `对局已结束，${actor || slotLabel(event)}未进入发动阶段。`;
+  if (event.invalidated) return `${actor || slotLabel(event)}的本次行动判定失效。`;
+  if (event.action === "unavailable") return `${actor || slotLabel(event)}本轮无法发动。`;
+  if (event.action === "forbidden") return `${slotLabel(event)}本轮受规则限制，未发动。`;
   if (event.action === "unknown" || !event.action) return `${slotLabel(event)}的具体情况仍待核实。`;
   if (event.slot === "mixed_blood_model" && event.action === "choose") return `${actor || "混血儿"}选择${targets || "榜样待核"}作为榜样。`;
   if (event.slot === "mixed_blood_alignment" && ["wolf", "werewolf", "good"].includes(event.action)) return `${actor || "混血儿"}本局跟随${event.action === "good" ? "好人" : "狼人"}阵营。`;

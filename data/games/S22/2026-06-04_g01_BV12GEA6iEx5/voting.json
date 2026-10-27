@@ -1,7 +1,28 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV12GEA6iEx5-p01-g01",
-  "registrations": [],
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12
+      ],
+      "off_police": [
+        3,
+        11
+      ]
+    }
+  ],
   "ballots": [
     {
       "id": "ballot-1",
@@ -9,12 +30,15 @@
       "kind": "sheriff",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         7,
         12
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        3,
+        11
+      ],
       "votes": [
         {
           "voter": 3,
@@ -32,7 +56,7 @@
         12
       ],
       "winner": null,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-2",
@@ -40,12 +64,23 @@
       "kind": "sheriff",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         7,
         12
       ],
-      "eligible_voters": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
       "votes": [
         {
           "voter": 1,
@@ -78,6 +113,11 @@
           "state": "cast"
         },
         {
+          "voter": 8,
+          "target": null,
+          "state": "abstained"
+        },
+        {
           "voter": 9,
           "target": 7,
           "state": "cast"
@@ -94,8 +134,8 @@
         }
       ],
       "tied_candidates": [],
-      "winner": null,
-      "unrecorded_voters": null
+      "winner": 7,
+      "unrecorded_voters": []
     },
     {
       "id": "ballot-3",

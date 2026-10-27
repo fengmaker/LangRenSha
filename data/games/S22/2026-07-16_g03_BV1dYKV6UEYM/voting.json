@@ -25,10 +25,54 @@
   ],
   "ballots": [
     {
-      "id": "ballot-1",
+      "id": "causal-ballot-review-day-1-sheriff-initial-d1",
       "day": 1,
       "kind": "sheriff",
       "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        3,
+        4,
+        6,
+        8,
+        12
+      ],
+      "eligible_voters": [
+        5,
+        7,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 5,
+          "target": 3,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 12,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [
+        3,
+        8,
+        12
+      ],
+      "winner": null,
+      "unrecorded_voters": []
+    },
+    {
+      "id": "ballot-1",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 2,
       "stage": "pk",
       "status": "complete",
       "candidates": [
@@ -192,9 +236,16 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
-      "eligible_voters": null,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        10
+      ],
       "votes": [
         {
           "voter": 2,
@@ -229,7 +280,7 @@
       ],
       "tied_candidates": [],
       "winner": 7,
-      "unrecorded_voters": null
+      "unrecorded_voters": []
     }
   ],
   "interruptions": [],
@@ -241,12 +292,12 @@
     },
     {
       "day": 2,
-      "sheriff": "unknown",
-      "exile": "unknown"
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 3,
-      "sheriff": "unknown",
+      "sheriff": "not_applicable",
       "exile": "recorded"
     }
   ]
