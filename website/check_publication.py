@@ -281,7 +281,8 @@ def check_baseline(receipt_path: Path, seasons: list[str], details: dict[str, di
     }
 
 
-def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: dict[str, dict]) -> dict:
+def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: dict[str, dict],
+                  channel: str = "chrome", screenshots: Path | None = None) -> dict:
     from playwright.sync_api import sync_playwright
     routes = {"/": None}
     for season in seasons:
@@ -304,8 +305,11 @@ def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: di
         span = urlencode({"season_start": seasons[0], "season_end": seasons[-1]})
         routes[f"/stats?{span}"] = (seasons[0], seasons[-1])
     pages, errors = [], []
+    photo_pages = {season: 0 for season in seasons}
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(channel="chrome", headless=True)
+        browser = playwright.chromium.launch(**({} if channel == "chromium" else {"channel": channel}), headless=True)
+        if screenshots:
+            screenshots.mkdir(parents=True, exist_ok=True)
         try:
             page = browser.new_page()
             page.on("pageerror", lambda error: errors.append(str(error)))
@@ -319,17 +323,51 @@ def browser_check(seasons: list[str], details: dict[str, dict], leaderboards: di
                         raise RuntimeError(f"Page shows an unavailable state: {path}")
                     if page.evaluate("document.documentElement.scrollWidth > window.innerWidth"):
                         raise RuntimeError(f"Horizontal overflow at width {width}: {path}")
+                    for season in seasons:
+                        if path == f"/leaderboard?season={season}" and season in leaderboards:
+                            board = leaderboards[season]
+                            text = page.locator("main").inner_text()
+                            if (season not in page.locator("h1").inner_text()
+                                    or not board["items"] or board["items"][0]["name"] not in text
+                                    or f'{board["game_count"]} 局' not in text):
+                                raise RuntimeError(f"Leaderboard does not render real {season} data")
+                    # Force lazy images to load, then check decoded pixels, not just HTTP status.
+                    images = page.locator("main img")
+                    for index in range(images.count()):
+                        img = images.nth(index)
+                        img.scroll_into_view_if_needed(timeout=10000)
+                        img.evaluate("img => img.loading = 'eager'")
+                        page.wait_for_function("img => img.complete && img.naturalWidth > 0",
+                                               arg=img.element_handle(), timeout=15000)
+                    for season in seasons:
+                        if path.startswith("/players?") and f"season={season}" in path:
+                            if images.count() == 0:
+                                raise RuntimeError(f"No player photos rendered for {season}")
+                            photo_pages[season] += 1
+                    page.evaluate("window.scrollTo(0, 0)")
+                    if screenshots:
+                        page.screenshot(path=str(screenshots / f"{width}-{len(pages):03d}.png"), full_page=False)
                     if span is not None:
                         start = page.locator('select[name="season_start"]').input_value()
                         end = page.locator('select[name="season_end"]').input_value()
                         if (start, end) != span:
                             raise RuntimeError(f"Stats range was not retained: {path}")
                     pages.append({"width": width, "path": path})
+        except Exception:
+            if screenshots:
+                try:
+                    page.screenshot(path=str(screenshots / "failure.png"), full_page=False)
+                except Exception:
+                    pass  # Preserve the original failure even if the browser crashed.
+            raise
         finally:
             browser.close()
     if errors:
         raise RuntimeError("Browser page error: " + "; ".join(errors[:8]))
-    return {"widths": [1440, 390], "page_count": len(pages), "pages": pages}
+    if any(count != 2 for count in photo_pages.values()):
+        raise RuntimeError("Both viewport sizes must render photos for every season")
+    return {"widths": [1440, 390], "page_count": len(pages), "pages": pages,
+            "photo_pages": photo_pages}
 
 
 def run(args: argparse.Namespace) -> dict:
@@ -363,7 +401,7 @@ def run(args: argparse.Namespace) -> dict:
         baseline = check_baseline(path, seasons, details)
     browser = {"skipped": True} if args.api_only else browser_check(
         api["overview_seasons"] and [row["id"] for row in api["overview_seasons"]] or [],
-        details, leaderboards,
+        details, leaderboards, channel=args.browser_channel, screenshots=args.screenshots,
     )
     return {
         "state": "passed", "checked_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -380,6 +418,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--baseline", type=Path, help="backup receipt for earlier release snapshots")
     parser.add_argument("--output", type=Path, default=ROOT / "website/artifacts/publication-acceptance.json")
     parser.add_argument("--api-only", action="store_true", help="skip browser checks")
+    parser.add_argument("--browser-channel", choices=("chrome", "chromium"), default="chrome")
+    parser.add_argument("--screenshots", type=Path, help="public rendered pages only; no traces or source dumps")
     args = parser.parse_args(argv)
     try:
         report = run(args)
