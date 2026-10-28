@@ -10,7 +10,7 @@ from pathlib import Path
 import batch_s22 as batch
 from database import ReviewError
 from formal_rule_checks import final_gaps, issues, registry
-from game_records import empty_event, import_game, template, validate, validate_batch
+from game_records import empty_event, import_game, primary_source_file, template, validate, validate_batch
 from game_scope import exclusion_reason
 
 REPORT = batch.ROOT / "data/reports/S22_正式规则校验.json"
@@ -84,8 +84,10 @@ def check(value, *, final=False, check_files=True):
                 add("unknown_commentators", "最终录入缺少解说", "pending")
             if len(value["roster"]) != board["seat_count"] or set(value["roster"]) != {p["name"] for p in value["seats"]}:
                 add("roster", "最终录入的排班与座位姓名必须齐全且一致", "pending")
-            if not any(f.get("role") == "audio" for f in value["files"]):
-                add("audio_source", "最终录入需要主音频源文件关联", "pending")
+            try:
+                primary_source_file(value["files"])
+            except ReviewError as exc:
+                add("primary_source", str(exc), "pending")
             if not problems:
                 try:
                     validate(value, check_files=check_files)
@@ -161,8 +163,6 @@ def main():
         value = batch.read_json(args.file)
         result = check(value, final=args.final)
         if args.command == "import" and result["valid"]:
-            if not any(f.get("role") == "audio" for f in value["files"]):
-                raise ReviewError("入库前必须补齐已登记的主音频来源关联")
             result["receipt"] = import_game(value, allow_incomplete=True)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if args.command in {"check", "import"} and not result["valid"]:

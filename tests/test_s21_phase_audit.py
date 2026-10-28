@@ -1,8 +1,10 @@
 """Regression cases from actual S21 subtitle and delayed-announcement errors."""
 from pathlib import Path
 import sys
+import json
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+import audit_s21_phases as phase_audit
 from audit_s21_phases import audit
 
 
@@ -36,3 +38,17 @@ def test_explicit_poisoned_explosion_is_not_counted_as_a_second_departure():
     rows[-1]['evidence'][0]['quote'] = '7号狼人自爆'
     warnings = audit({'events': rows, 'ballots': []})
     assert any(w['kind'] == 'day_departure_repeats_dead_player' for w in warnings)
+
+
+def test_invalid_spec_makes_the_audit_command_fail(tmp_path, monkeypatch):
+    phase = phase_audit.p
+    monkeypatch.setattr(phase, 'ROOT', tmp_path)
+    (tmp_path / phase.INDEX).parent.mkdir(parents=True)
+    (tmp_path / phase.INDEX).write_text(json.dumps({'entries': [{'bvid': 'BVinvalid'}]}), encoding='utf-8')
+    path = tmp_path / phase.SPEC_DIR / 'BVinvalid.json'
+    path.parent.mkdir(parents=True)
+    path.write_text('{}', encoding='utf-8')
+    monkeypatch.setattr(sys, 'argv', ['audit_s21_phases.py'])
+    assert phase_audit.main() == 1
+    report = json.loads((tmp_path / 'data/reports/S21_白天夜间结构与时序审计.json').read_text(encoding='utf-8'))
+    assert 'validation_error' in report['items'][0]

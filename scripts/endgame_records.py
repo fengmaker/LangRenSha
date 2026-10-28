@@ -9,6 +9,7 @@ does not imply knife order.
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import hashlib
 import json
 from pathlib import Path
@@ -290,10 +291,11 @@ def validate(sidecar: dict[str, Any]) -> None:
             raise ReviewError("拍刀目标座位须合法且不重复")
 
 
-def import_endgame(sidecar: dict[str, Any]) -> dict[str, int]:
+def import_endgame(sidecar: dict[str, Any], *, conn=None) -> dict[str, int]:
     """Replace one game's terminal phases atomically, keeping unknowns as NULL."""
     validate(sidecar)
-    with connect() as conn:
+    transaction = connect() if conn is None else nullcontext(conn)
+    with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-" + sidecar["game_slug"],))
         game = conn.execute("SELECT id FROM games WHERE slug=%s", (sidecar["game_slug"],)).fetchone()
         if game is None:

@@ -27,3 +27,29 @@ def make_media(folder: Path, cid: int = 123456) -> Path:
     path = folder/'manifest.json'
     path.write_text(json.dumps(manifest),encoding='utf-8')
     return path
+
+
+def make_subtitle_media(folder: Path, *, language: str = "ai-zh", platform: str = "bilibili") -> Path:
+    path = make_media(folder)
+    (folder / "audio.m4a").unlink()
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    manifest.pop("audio")
+    subtitle_file = "subtitle.01.raw.json"
+    (folder / subtitle_file).write_text(json.dumps({
+        "type": "AIsubtitle",
+        "body": [{"from": 0, "to": 1, "content": "合成中文测试字幕"}],
+    }, ensure_ascii=False), encoding="utf-8")
+    track = {
+        "id": 1,
+        "platform": platform,
+        "language": language,
+        "file": subtitle_file,
+        "provenance": "platform_visible_subtitle",
+    }
+    manifest["subtitles"] = {
+        "status": "visible_tracks",
+        "tracks": [track],
+        "requests": [{"id": 1, "language": language, "status": "downloaded", "file": subtitle_file}],
+    }
+    path.write_text(json.dumps(manifest, ensure_ascii=False), encoding="utf-8")
+    return path

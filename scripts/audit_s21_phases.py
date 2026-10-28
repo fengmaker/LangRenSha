@@ -66,12 +66,12 @@ def audit(value):
                 departed_voters = {v['voter'] for v in ballot['votes']} & dead
                 if departed_voters:
                     warnings.append({'kind':'exile_votes_by_previously_departed','ballot_id':ballot['ballot_id'],'seats':sorted(departed_voters)})
+        poisoned_targets = {s for n in night if n['action']=='poison' and n['state']=='performed' for s in n['targets']}
         for e in by_phase[number,'day']:
             departure = set(e['targets']) if e['action'] in {'exile','shoot','disqualify'} else ({e['actor']} if e['action']=='self_destruct' and e['actor'] else set())
             # S21 recaps explicitly report a poisoned wolf exploding before the
             # delayed death announcement. Retain that observed procedure without
             # counting a second death or restoring vote/skill eligibility.
-            poisoned_targets = {s for n in night if n['action']=='poison' and n['state']=='performed' for s in n['targets']}
             literal = ''.join(ev['quote'] for ev in e.get('evidence', []))
             explicit_poisoned_explosion = (e['action']=='self_destruct' and e['actor'] in new
                 and e['actor'] in poisoned_targets
@@ -103,17 +103,19 @@ def main():
                 print(f"{bvid} E{len(value['events'])} B{len(value['ballots'])} G{len(row['gaps'])} W{len(warnings)} | {summary}")
             elif warnings:
                 print(json.dumps({'bvid':bvid,'warnings':warnings},ensure_ascii=False))
-        except Exception as exc:
+        except (ValueError, OSError, KeyError, TypeError) as exc:
             rows.append({'bvid':bvid,'validation_error':str(exc)})
             print('ERROR',bvid,str(exc))
     p.save(Path('data/reports/S21_白天夜间结构与时序审计.json'),{'items':rows})
-    print(json.dumps({'media':len(rows),'events':sum(x.get('events',0) for x in rows),
+    summary = {'media':len(rows),'events':sum(x.get('events',0) for x in rows),
                       'ballots':sum(x.get('ballots',0) for x in rows),'gaps':sum(len(x.get('gaps',[])) for x in rows),
                       'warnings':sum(len(x.get('chronology_warnings',[])) for x in rows),
-                      'validation_errors':sum('validation_error' in x for x in rows)},ensure_ascii=False))
+               'validation_errors':sum('validation_error' in x for x in rows)}
+    print(json.dumps(summary,ensure_ascii=False))
+    return 1 if summary['validation_errors'] else 0
 
 
 if __name__=='__main__':
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
-    main()
+    raise SystemExit(main())

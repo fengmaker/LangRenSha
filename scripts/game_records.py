@@ -39,6 +39,14 @@ def data_file(relative):
     return path
 
 
+def primary_source_file(files):
+    for role in ("audio", "subtitle", "transcript"):
+        for file in files:
+            if file.get("role") == role:
+                return file
+    raise ReviewError("入库需要本局的音频、字幕或转写来源关联")
+
+
 def template(code):
     if not code.replace("_", "").isalnum():
         raise ReviewError("版型代码不合法")
@@ -872,6 +880,7 @@ def import_game(value, *, allow_incomplete=False, conn=None):
     if excluded:
         raise ReviewError("该局已移出对局范围，禁止重新入库：" + excluded)
     board = validate(value, allow_incomplete=allow_incomplete)
+    primary_file = primary_source_file(value["files"])
     transaction = connect() if conn is None else nullcontext(conn)
     with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-"+value["slug"],))
@@ -896,7 +905,7 @@ def import_game(value, *, allow_incomplete=False, conn=None):
             source = conn.execute("SELECT id FROM sources WHERE platform=%s AND external_key=%s", (file["platform"],file["external_key"])).fetchone()
             if not source: raise ReviewError("先登记源资料，再导入游戏内容")
             file_records.append((file,source["id"],artifact(conn,source["id"],data_file(file["path"]),file["kind"])))
-        source_id=next(s for f,s,_ in file_records if f["role"]=="audio")
+        source_id=next(s for f,s,_ in file_records if f["role"]==primary_file["role"])
         game=conn.execute("""INSERT INTO games(slug,season_id,primary_source_id) VALUES(%s,%s,%s)
             ON CONFLICT(slug) DO NOTHING RETURNING id""", (value["slug"],season["id"],source_id)).fetchone()
         if not game:

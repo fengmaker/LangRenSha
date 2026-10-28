@@ -234,6 +234,7 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
     human_path=root/'data/extractions/S23/bluff_review/user_confirmed.json'
     human=json.loads(human_path.read_text(encoding='utf-8')).get('records',{}) if human_path.is_file() else {}
     for entry, game in zip(entries, public_games, strict=True):
+        fingerprint = bluffs.source_fingerprint(game)
         review_path = entry["folder"] / "ai_review.json"
         try:
             review = json.loads(review_path.read_text(encoding="utf-8-sig"))
@@ -244,9 +245,6 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
 
         separate = _separate_identity_claims(review)
         separate_total += len(separate)
-        reviewed = _indexed_bluffs(review)
-        wolf_seats = [seat for seat in game.get("seats", []) if bluffs.physical_wolf(game, seat)]
-        assessments = [_assessment(seat, reviewed.get(seat["seat"]), separate) for seat in wolf_seats]
         independent=audits.get(game['id'])
         if independent:
             assessments=[]
@@ -271,6 +269,10 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
                     assessment['decision']='uncertain'
                     assessment['decision_note']+=' 首日常规发言与遗言身份自称分开记录；遗言是否计入常规悍跳仍待你决定。'
                     assessment['review_questions']=['遗言阶段才自称信息神，是否纳入常规悍跳统计？']
+        else:
+            reviewed = _indexed_bluffs(review)
+            wolf_seats = [seat for seat in game.get("seats", []) if bluffs.physical_wolf(game, seat)]
+            assessments = [_assessment(seat, reviewed.get(seat["seat"]), separate) for seat in wolf_seats]
         source = game.get("source") or {}
         for assessment in assessments:
             assessment['review_stage']='reviewed' if independent else 'assistant_pending'
@@ -282,7 +284,7 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
         for assessment in assessments:
             feedback=human.get(f"{source.get('bvid')}:{assessment['seat']}")
             if not feedback:continue
-            if feedback.get('source_fingerprint')!=bluffs.source_fingerprint(game):
+            if feedback.get('source_fingerprint')!=fingerprint:
                 raise BuildError('用户反馈对应的正式底牌或结果已变化，需要重新核对')
             action=feedback.get('decision')
             if action in {'yes','no','uncertain'}:
@@ -308,7 +310,7 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
         record = {
             "game_id": game["id"],
             "bvid": source.get("bvid"),
-            "source_fingerprint": bluffs.source_fingerprint(game),
+            "source_fingerprint": fingerprint,
             "coverage": "first_day_video_and_transcript" if independent else "recap_and_claims",
             "assessments": assessments,
         }

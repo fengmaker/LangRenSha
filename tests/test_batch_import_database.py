@@ -169,6 +169,38 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
                 AND e.slot_code='guard'""", (first["game_id"],)).fetchone()
         self.assertEqual(dict(event), {"actor_seat": None, "seat_number": 12})
 
+    def test_text_only_source_is_stable_when_same_video_audio_is_added(self):
+        for role in ("subtitle", "transcript"):
+            with self.subTest(role=role):
+                value = self.incomplete_record()
+                value["files"] = [copy.deepcopy(next(f for f in self.sample["files"] if f["role"] == role))]
+                first = import_game(copy.deepcopy(value), allow_incomplete=True)
+                again = import_game(copy.deepcopy(value), allow_incomplete=True)
+                self.assertEqual(first["game_id"], again["game_id"])
+                with database.connect(self.schema) as conn:
+                    files = conn.execute("SELECT file_role FROM game_files WHERE game_id=%s", (first["game_id"],)).fetchall()
+                    before = conn.execute("SELECT primary_source_id FROM games WHERE id=%s", (first["game_id"],)).fetchone()
+                self.assertEqual([row["file_role"] for row in files], [role])
+                value["files"].append(copy.deepcopy(self.audio))
+                with_audio = import_game(value, allow_incomplete=True)
+                self.assertEqual(first["game_id"], with_audio["game_id"])
+                with database.connect(self.schema) as conn:
+                    after = conn.execute("SELECT primary_source_id FROM games WHERE id=%s", (first["game_id"],)).fetchone()
+                self.assertEqual(before, after)
+
+    def test_other_video_cannot_replace_a_text_only_primary_source(self):
+        value = self.incomplete_record()
+        value["files"] = [copy.deepcopy(next(f for f in self.sample["files"] if f["role"] == "subtitle"))]
+        import_game(copy.deepcopy(value), allow_incomplete=True)
+        before = self.game_snapshot(value["slug"])
+        value["files"][0]["external_key"] = "synthetic-other-video-" + uuid.uuid4().hex
+        with database.connect(self.schema) as conn:
+            conn.execute("INSERT INTO sources(platform,external_key,title) VALUES('bilibili',%s,'synthetic only')",
+                         (value["files"][0]["external_key"],))
+        with self.assertRaisesRegex(ReviewError, "其他赛季或源文件"):
+            import_game(value, allow_incomplete=True)
+        self.assertEqual(self.game_snapshot(value["slug"]), before)
+
     def test_failure_after_delete_rolls_back_the_old_game_record(self):
         value = self.record()
         value["rounds"] = [copy.deepcopy(self.sample["rounds"][0])]

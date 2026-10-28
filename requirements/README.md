@@ -4,6 +4,11 @@ Run install commands from the repository root. These manifests target the
 current Python 3.12 application environment, except `funasr.txt`, which is a
 separate Python 3.9 environment.
 
+File-only Bilibili and Weibo collection needs only `requests`; see the
+[minimal collection workflow](../docs/02_采集与座位姓名身份核实.md#第一步采集原始资料).
+The broader `collection.txt` group also supports browser cookie export and
+explicit audio validation, so it retains Playwright, PyAV and the database driver.
+
 | Manifest | Purpose | Install command |
 | --- | --- | --- |
 | `base.txt` | Shared database driver used by collection and web | `python -m pip install -r requirements/base.txt` |

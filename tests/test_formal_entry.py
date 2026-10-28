@@ -45,6 +45,17 @@ class FormalEntryTests(unittest.TestCase):
         self.assertTrue(result["pending"])
         self.assertIsNone(value["seats"][0]["role"])
 
+    def test_final_source_requirement_accepts_subtitle_or_transcript_without_audio(self):
+        value = self.entry()
+        for role, kind in (("subtitle", "subtitle"), ("transcript", "asr")):
+            with self.subTest(role=role):
+                value["files"] = [{"role": role, "kind": kind, "path": "data/synthetic.json"}]
+                result = check(value, final=True, check_files=False)
+                self.assertNotIn("primary_source", {issue["code"] for issue in result["pending"]})
+        value["files"] = []
+        result = check(value, final=True, check_files=False)
+        self.assertIn("primary_source", {issue["code"] for issue in result["pending"]})
+
     def test_mixed_wolf_allegiance_does_not_grant_knife_or_change_seer_result(self):
         value = self.entry()
         value["seats"][0].update(role="混血儿", faction="werewolf")

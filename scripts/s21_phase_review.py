@@ -64,13 +64,13 @@ def game(bvid):
     return entry, transcript, identity, tp, ip
 
 
-def evidence(transcript, indices, tp):
+def evidence(transcript, indices, tp, selected_sha):
     if not indices or any(type(i) is not int or i < 0 or i >= len(transcript['segments']) for i in indices):
         raise ValueError('Evidence must contain valid literal source segment indices')
     indices = sorted(set(indices))
     segments = transcript['segments']
     return {
-        'kind': 'literal_transcript', 'source_path': tp.as_posix(), 'source_sha256': sha(tp),
+        'kind': 'literal_transcript', 'source_path': tp.as_posix(), 'source_sha256': selected_sha,
         'original_source_path': transcript['source_path'], 'original_source_sha256': transcript['source_sha256'],
         'source_segment_indices': indices, 'start_ms': segments[indices[0]]['start_ms'],
         'end_ms': segments[indices[-1]]['end_ms'],
@@ -89,6 +89,7 @@ def seat(value, nullable=False):
 def build(spec):
     bvid = spec['bvid']
     entry, transcript, identity, tp, ip = game(bvid)
+    selected_sha = sha(tp)
     roles = {s['seat']: s['role'] for s in identity['seats']}
     if set(spec).intersection({'bluffs', 'claims', 'bluff_attempts'}):
         raise ValueError('Bluff/claim review is outside this stage')
@@ -117,7 +118,7 @@ def build(spec):
             raise ValueError('Unknown action state')
         if status == 'unique_deduction' and not options.get('note'):
             raise ValueError('Unique deductions require their reasoning')
-        if state in {'pass', 'unknown', 'forbidden', 'not_applicable'} and targets:
+        if state in {'pass', 'unknown', 'forbidden', 'not_applicable'} and (targets or options.get('actual_targets')):
             raise ValueError('Unperformed action must not invent a successful target')
         event = {
             'event_id': f'{bvid}-event-{number:03d}', 'phase': phase, 'round': round_number,
@@ -125,7 +126,7 @@ def build(spec):
             'targets': targets, 'actual_targets': options.get('actual_targets'),
             'state': state, 'status': status, 'result': options.get('result'),
             'details': options.get('details', {}), 'note': options.get('note'),
-            'evidence': [evidence(transcript, indices, tp)],
+            'evidence': [evidence(transcript, indices, tp, selected_sha)],
         }
         events.append(event)
     ballots = []
@@ -141,7 +142,7 @@ def build(spec):
             if state not in {'cast', 'abstained', 'default_abstention'} or (state == 'cast') != (target is not None):
                 raise ValueError('Invalid ballot choice state')
             votes.append({'voter': voter, 'target': target, 'state': state,
-                          'evidence': [evidence(transcript, indices, tp)]})
+                          'evidence': [evidence(transcript, indices, tp, selected_sha)]})
         voters = [v['voter'] for v in votes]
         if len(voters) != len(set(voters)):
             raise ValueError(f'{bvid}: one voter has conflicting or duplicate choices in a round')
@@ -160,8 +161,8 @@ def build(spec):
             'eligible_voters': eligible, 'candidate_seats': original.get('candidate_seats'),
             'votes': votes, 'outcome': original.get('outcome', {}),
             'completeness': 'complete_for_proven_eligible_set' if original.get('complete') else 'reviewed_explicit_choices_only',
-            'evidence': [evidence(transcript, original['source'], tp)],
-            'eligibility_evidence': [evidence(transcript, original['eligibility_source'], tp)] if original.get('eligibility_source') else [],
+            'evidence': [evidence(transcript, original['source'], tp, selected_sha)],
+            'eligibility_evidence': [evidence(transcript, original['eligibility_source'], tp, selected_sha)] if original.get('eligibility_source') else [],
             'note': original.get('note'),
         })
     spans = spec.get('recap_spans', []) + spec.get('live_spans', [])
@@ -169,15 +170,15 @@ def build(spec):
         raise ValueError(f'{bvid}: continuous recap and actual daytime evidence must both be reviewed')
     for lo, hi in spans:
         if lo > hi: raise ValueError('Reversed inspected span')
-        evidence(transcript, list(range(lo, hi + 1)), tp)
-    gaps = [{**gap, 'evidence': [evidence(transcript, gap['sources'], tp)]}
+        evidence(transcript, list(range(lo, hi + 1)), tp, selected_sha)
+    gaps = [{**gap, 'evidence': [evidence(transcript, gap['sources'], tp, selected_sha)]}
             for gap in spec.get('gaps', [])]
     return {
         'schema_version': 1, 'season': 'S21', 'bvid': bvid, 'cid': entry['cid'], 'page': entry['page'],
         'field_scope': SCOPE, 'excluded_scope': ['bluffs', 'public_role_claims'],
         'review_status': 'assistant_reviewed_with_explicit_limits',
         'reviewer': spec.get('reviewer', 'codex_primary'),
-        'source': {'selected_path': tp.as_posix(), 'selected_sha256': sha(tp),
+        'source': {'selected_path': tp.as_posix(), 'selected_sha256': selected_sha,
                    'original_path': transcript['source_path'], 'original_sha256': transcript['source_sha256']},
         'identity_source': {'path': ip.as_posix(), 'sha256': sha(ip)},
         'round_convention': 'night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day',
