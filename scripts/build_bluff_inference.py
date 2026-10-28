@@ -142,6 +142,7 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
     public_games = []
     for key, record in merged.items():
         game, game_dir = sources[key]
+        fingerprint = source_fingerprint(game)
         bvid = game["source"]["bvid"]
         by_seat = {row["seat"]: row for row in game["seats"]}
         seen = set()
@@ -183,7 +184,7 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
                     clean["evidence"].append({field: hint[field] for field in
                         ("kind", "start_ms", "end_ms", "text", "interpretation")})
             human_row = human.get(f"{bvid}:{seat}")
-            if human_row and human_row.get("source_fingerprint") == source_fingerprint(game):
+            if human_row and human_row.get("source_fingerprint") == fingerprint:
                 action = human_row.get("decision")
                 if action in {"yes", "no", "uncertain"}:
                     clean["decision"] = action
@@ -210,7 +211,7 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
         if not expected.issubset(seen):
             raise ValueError(f"missing wolf seats: {key}/{sorted(expected-seen)}")
         public_games.append({"game_id": key, "bvid": bvid,
-                             "source_fingerprint": source_fingerprint(game),
+                             "source_fingerprint": fingerprint,
                              "coverage": record.get("coverage"), "assessments": assessments})
 
     payload = {"schema_version": 1, "season": "S22", "inference_version": "S22-bluff-20261025-v3",

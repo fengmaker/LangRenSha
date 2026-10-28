@@ -13,7 +13,7 @@ import json
 import re
 import sys
 import time
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, urlunsplit
@@ -27,6 +27,7 @@ MOBILE_ROOT = "https://m.weibo.cn"
 MAX_PAGES_HARD_LIMIT = 50
 MAX_IMAGE_BYTES = 12 * 1024 * 1024
 MAX_IMAGES_PER_POST = 36
+_BEIJING = timezone(timedelta(hours=8))
 
 
 class CollectionError(RuntimeError):
@@ -71,11 +72,13 @@ def post_date(value: object) -> date | None:
     raw = value.strip()
     for fmt in ("%a %b %d %H:%M:%S %z %Y", "%Y-%m-%d %H:%M:%S%z", "%Y-%m-%d %H:%M:%S"):
         try:
-            return datetime.strptime(raw, fmt).date()
+            parsed = datetime.strptime(raw, fmt)
+            return parsed.astimezone(_BEIJING).date() if parsed.utcoffset() is not None else parsed.date()
         except ValueError:
             pass
     try:
-        return datetime.fromisoformat(raw.replace("Z", "+00:00")).date()
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        return parsed.astimezone(_BEIJING).date() if parsed.utcoffset() is not None else parsed.date()
     except ValueError:
         return None
 
@@ -244,15 +247,10 @@ def _failure_from_response(response: requests.Response, body: str) -> Collection
 def configure_auth(session: requests.Session, auth_mode: str, cookies_file: str | None) -> None:
     if auth_mode == "none" and cookies_file:
         raise CollectionError("指定 --cookies-file 时必须同时使用 --auth cookies", reason="invalid_auth_args")
-    try:
-        from auth_support import configure_session  # Imported only when that module is available.
-    except ImportError:
-        if auth_mode == "none":
-            return
-        raise CollectionError("cookies 模式需要项目提供的 auth_support.configure_session", reason="auth_support_missing") from None
+    from auth_support import AuthConfigurationError, configure_session
     try:
         configure_session(session, auth_mode=auth_mode, cookies_file=cookies_file, platform="weibo")
-    except Exception as exc:
+    except AuthConfigurationError as exc:
         # Authentication helper exceptions may contain a path or credential; expose only the type.
         raise CollectionError(f"认证配置失败（{type(exc).__name__}）", reason="auth_configuration_failed") from None
 
@@ -602,9 +600,11 @@ def expand_manifest(manifest_path: Path, collector: WeiboCollector) -> dict:
             post["text"] = plain_text(text)
             post["full_text_file"] = relative
             post["full_text_status"] = "expanded"
-            keywords = manifest.get("request", {}).get("keywords", [])
-            post["matched_keywords"] = keyword_matches(post["text"], keywords)
-            post["keyword_candidate"] = bool(post["matched_keywords"]) if keywords else True
+            request = manifest.get("request", {})
+            if "keywords" in request:
+                keywords = request["keywords"]
+                post["matched_keywords"] = keyword_matches(post["text"], keywords)
+                post["keyword_candidate"] = bool(post["matched_keywords"]) if keywords else True
             stats["expanded_posts"] += 1
         except CollectionError as error:
             stats.update(status="partial", termination_reason=error.reason)

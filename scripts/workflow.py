@@ -28,7 +28,8 @@ def command(script: str, *args: str, asr: bool = False) -> list[str]:
 
 def stage_commands(stage: str, season: str, *, root: Path = ROOT,
                    auth: str = "none", cookies: str = ".secrets/bilibili.cookies.txt",
-                   bvid: str | None = None, photos: bool = False) -> list[list[str]]:
+                   bvid: str | None = None, photos: bool = False,
+                   full_season: bool = False) -> list[list[str]]:
     config = load_season(season, root)
     if stage == "collect":
         auth_args = ["--auth", auth]
@@ -38,13 +39,15 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
         if not (root / f"data/indexes/{season}_采集计划.json").is_file():
             jobs.append(command("scripts/collect_season.py", "plan", "--season", season, *auth_args))
         jobs.append(command("scripts/collect_season.py", "run", "--season", season, *auth_args))
-        if config.get("subtitle_reconcile_entry"):
-            jobs.append(command(config["subtitle_reconcile_entry"]))
-        return jobs + [command("scripts/audit_season.py", "--season", season)]
+        return jobs
     if stage == "transcribe":
-        return [command("scripts/transcribe_review_queue.py", "run", "--season", season, asr=True),
-                command("scripts/register_season_transcripts.py", "--season", season)]
+        return [command("scripts/transcribe_review_queue.py", "run", "--season", season, asr=True)]
     if stage == "review":
+        if not full_season:
+            raise ValueError("局部复核按docs/02第六步给AI指定BV、字段及证据片段，直接只读核对；"
+                             "此review流水线会生成整季报告，确需整季结构检查时加--full-season")
+        if bvid:
+            raise ValueError("--full-season会检查整季，不能用--bvid限制范围；局部复核按第六步执行")
         if config.get("review_profile") == "s22_text_review":
             return [command("scripts/audit_s22_batch.py"), command("scripts/formal_entry.py", "audit")]
         if config.get("review_profile") == "s23_game_review":
@@ -58,9 +61,12 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
     if stage == "import":
         jobs = [command("scripts/backup_database.py")]
         if config.get("import_profile") == "s23_formal_import":
-            return jobs + [command("scripts/import_s23_formal.py", flag) for flag in
-                           ("--prepare", "--check", "--check-db")] + [
-                               command("scripts/import_s23_formal.py", "--import-db", "--verify-idempotency")]
+            return jobs + [command("scripts/import_s23_formal.py", "--prepare"),
+                           command("scripts/import_s23_formal.py", "--import-db", "--verify-idempotency")]
+        if config.get("import_profile") == "s21_formal_import":
+            selected = ["--bvid", bvid] if bvid else []
+            return jobs + [command(config["import_entry"], "--prepare", *selected),
+                           command(config["import_entry"], "--import-db", *selected)]
         if config.get("import_profile") == "s22_formal_entry":
             if not bvid:
                 raise ValueError("S22修订导入请指定--bvid；新建草稿使用formal_entry.py init/check/import")
@@ -132,9 +138,12 @@ def main() -> int:
     parser.add_argument("--stage", choices=STAGES)
     parser.add_argument("--auth", choices=("none", "cookies"))
     parser.add_argument("--cookies-file", default=".secrets/bilibili.cookies.txt")
-    parser.add_argument("--bvid", help="S22指定修订对局")
+    parser.add_argument("--bvid", help="S21指定入库媒体或S22指定修订对局")
     parser.add_argument("--photos", action="store_true", help="publish时重建现有照片清单，随后须重启API")
+    parser.add_argument("--full-season", action="store_true", help="显式运行review整季结构检查/生成，非AI逐项复核")
     args = parser.parse_args()
+    if args.full_season and args.stage != "review":
+        parser.error("--full-season只用于--stage review")
     if args.action == "status":
         print(json.dumps(status(args.season), ensure_ascii=False, indent=2))
         return 0
@@ -145,14 +154,15 @@ def main() -> int:
     plans = []
     for stage in stages:
         try:
-            jobs = stage_commands(stage, args.season, auth=auth, cookies=args.cookies_file, bvid=args.bvid, photos=args.photos)
+            jobs = stage_commands(stage, args.season, auth=auth, cookies=args.cookies_file,
+                                  bvid=args.bvid, photos=args.photos, full_season=args.full_season)
             plans.append({"stage": stage, "commands": jobs})
         except ValueError as error:
             if args.action == "run":
                 raise
             plans.append({"stage": stage, "manual": str(error), "commands": []})
     if args.action == "plan":
-        print("复核阶段执行已有判断的校验／生成；逐局看证据与填写结论仍按docs/16执行。")
+        print("局部事实复核按docs/02第六步执行；review --full-season仅运行整季结构检查/生成。")
         for plan in plans:
             print(f"\n[{plan['stage']}]")
             if "manual" in plan:
@@ -171,6 +181,7 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     sys.path.insert(0, str(ROOT))
     try:
         raise SystemExit(main())

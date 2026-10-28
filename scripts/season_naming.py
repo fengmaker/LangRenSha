@@ -10,7 +10,7 @@ from pathlib import Path
 import re
 import shutil
 
-from collect_bilibili_audio import is_chinese_subtitle
+from collect_bilibili_audio import is_chinese_subtitle, validate_cues
 
 ROOT = Path(__file__).resolve().parents[1]
 NUMBERS = {"一":1,"二":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9,"十":10,
@@ -108,18 +108,6 @@ def timestamp(value: float, srt: bool = False) -> str:
     minutes,total = divmod(total,60000)
     seconds,millis = divmod(total,1000)
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}{',' if srt else '.'}{millis:03d}"
-
-
-def validate_cues(document: dict) -> list[dict]:
-    cues = document.get("body")
-    if not isinstance(cues,list) or not cues:
-        raise ValueError("平台字幕缺少有效 body")
-    for item in cues:
-        if (not isinstance(item,dict) or not isinstance(item.get("content"),str) or
-            type(item.get("from")) not in {int,float} or type(item.get("to")) not in {int,float} or
-            not 0 <= item["from"] <= item["to"]):
-            raise ValueError("字幕段落缺少合法时间戳或文字")
-    return cues
 
 
 def export_source(manifest_path: Path, labels: dict) -> dict:

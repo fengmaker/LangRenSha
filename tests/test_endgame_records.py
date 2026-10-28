@@ -111,6 +111,18 @@ class EndgameDatabaseTests(unittest.TestCase):
                 self.assertEqual(conn.execute("SELECT id FROM game_ballots WHERE game_id=%s", (game["id"],)).fetchone()["id"], ballot["id"])
                 self.assertEqual(conn.execute("SELECT count(*) n FROM game_endgame_phases WHERE game_id=%s", (game["id"],)).fetchone()["n"], 0)
 
+    def test_supplied_connection_keeps_endgame_in_the_outer_transaction(self):
+        sidecar = {"schema_version": 1, "game_slug": "rush-" + uuid.uuid4().hex, "phases": [
+            {"kind": "wolf_rush", "day": 2, "actor": None, "declared_targets": [3], "result": "unknown"}]}
+        with patch.dict(os.environ, {"DATABASE_SCHEMA": self.schema}):
+            with self.assertRaisesRegex(RuntimeError, "later import failed"):
+                with database.connect() as conn:
+                    conn.execute("INSERT INTO games(slug) VALUES(%s)", (sidecar["game_slug"],))
+                    endgame_records.import_endgame(sidecar, conn=conn)
+                    raise RuntimeError("later import failed")
+            with database.connect() as conn:
+                self.assertEqual(conn.execute("SELECT count(*) n FROM games WHERE slug=%s", (sidecar["game_slug"],)).fetchone()["n"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

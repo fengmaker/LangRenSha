@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
+import csv
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -10,11 +12,87 @@ import sys
 
 from audit_season import coverage
 from collect_bilibili_audio import save_json
-from collect_season import PLAN, STATE, record_success, source_key, write_inventory
+from collect_season import COLLECTION_ID, PLAN, SEASON, STATE, source_key
 import database
-from season_naming import digest, preserve_copy, validate_cues
+from media_ingest import validate_media
+from season_naming import digest, export_source, naming, preserve_copy, validate_cues
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def record_success(entry: dict, manifest_path: Path, anchor: str) -> dict:
+    """Explicitly archive and register a reconciled historical subtitle capture."""
+    checked = validate_media(manifest_path, entry['bvid'], entry['page'])
+    manifest = checked['manifest']
+    if manifest['cid'] != entry['cid']:
+        raise ValueError('当前 CID 与冻结的合集清单不符')
+    labels = naming(manifest['title'], entry['bvid'], entry['cid'], entry['page'], anchor, SEASON)
+    exports = export_source(manifest_path, labels)
+    manifest['collection_context'] = {
+        'season': SEASON, 'collection_id': COLLECTION_ID,
+        'labels': labels, 'exports': exports,
+    }
+    save_json(manifest_path, manifest)
+    registered = database.import_media(manifest_path, entry['bvid'], entry['page'])
+    tracks = exports['subtitles']
+    return {
+        'status': 'complete' if tracks else 'audio_only',
+        'bvid': entry['bvid'], 'cid': entry['cid'],
+        'source_id': registered['source_id'],
+        'audio_bytes': manifest['audio']['bytes'],
+        'audio_sha256': manifest['audio']['sha256'],
+        'subtitle_status': (manifest.get('subtitles') or {}).get('status'),
+        'subtitle_tracks': len(tracks),
+        'subtitle_segments': sum(track['segment_count'] for track in tracks),
+        'labels': labels, 'exports': exports, 'cached': False,
+        'finished_at_utc': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def write_inventory(plan: dict, state: dict) -> None:
+    """Refresh the legacy archive inventory after explicit reconciliation."""
+    target = ROOT / f'data/seasons/{SEASON}'
+    target.mkdir(parents=True, exist_ok=True)
+    rows = []
+    for entry in plan['entries']:
+        result = state['items'].get(source_key(entry), {})
+        labels = result.get('labels') or entry['labels']
+        exports = result.get('exports') or {}
+        tracks = exports.get('subtitles') or []
+        rows.append({
+            '目录序号': entry['index'], '状态': result.get('status', 'pending'),
+            '标题日期候选': labels['event_date_candidate'], '归档周次': labels['week_number'],
+            '阶段候选': labels['phase_label'], '正赛期次候选': labels['issue_candidate'],
+            '局次候选': labels['game_number_candidate'], '配置候选': labels['board_candidate'],
+            '原始标题': entry['title'], 'BVID': entry['bvid'], 'CID': entry['cid'],
+            '分P': entry['page'], '音频文件': exports.get('audio'),
+            '音频字节数': result.get('audio_bytes'), '字幕段数': result.get('subtitle_segments'),
+            '字幕状态': result.get('subtitle_status'),
+            '字幕原件': ' | '.join(track['raw'] for track in tracks),
+            'SRT': ' | '.join(track['srt'] for track in tracks),
+            '阅读版': ' | '.join(track['readable'] for track in tracks),
+            '待核事项': ' | '.join(labels['warnings']), '错误': result.get('reason', ''),
+        })
+    temporary = target / f'{SEASON}_音频与字幕总目录.csv.tmp'
+    with temporary.open('w', encoding='utf-8-sig', newline='') as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(target / f'{SEASON}_音频与字幕总目录.csv')
+    counts = Counter(row['状态'] for row in rows)
+    state['summary'] = {
+        'planned': len(rows), 'status_counts': dict(counts),
+        'audio_ready': sum(row['状态'] in {'complete', 'audio_only'} for row in rows),
+        'with_subtitles': counts.get('complete', 0),
+        'audio_bytes': sum(row['音频字节数'] or 0 for row in rows),
+        'subtitle_segments': sum(row['字幕段数'] or 0 for row in rows),
+    }
+    state['updated_at_utc'] = datetime.now(timezone.utc).isoformat()
+    save_json(STATE, state)
+    save_json(target / f'{SEASON}_音频与字幕总目录.json', {
+        'plan_metadata': {key: value for key, value in plan.items() if key != 'entries'},
+        'summary': state['summary'], 'entries': rows,
+    })
 
 
 def choose_best(candidates: list[dict], duration: float) -> dict | None:
@@ -72,7 +150,7 @@ def reconcile() -> dict:
         subtitles['tracks'] = [track] + [t for t in tracks if not (t.get('language') == 'ai-zh' or str(t.get('language', '')).startswith('zh'))]
         manifest['subtitles'] = subtitles
         save_json(manifest_path, manifest)
-        state['items'][key] = record_success(entry, manifest_path, plan['anchor'], cached=False)
+        state['items'][key] = record_success(entry, manifest_path, plan['anchor'])
         changes.append({'bvid': entry['bvid'], 'cid': entry['cid'], 'sha256': best['sha256'],
                         'coverage': best['coverage'], 'latest_request_status': subtitles['latest_request_status']})
     report = {'reconciled_at_utc': datetime.now(timezone.utc).isoformat(), 'restored_sources': len(changes),

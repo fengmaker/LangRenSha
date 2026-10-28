@@ -106,6 +106,8 @@ class WeiboParsingTests(unittest.TestCase):
 
     def test_date_parser_handles_weibo_time_format(self):
         self.assertEqual(weibo.post_date("Thu Sep 25 15:33:00 +0800 2025"), date(2025, 9, 25))
+        self.assertEqual(weibo.post_date("2026-05-25T16:30:00Z"), date(2026, 5, 26))
+        self.assertEqual(weibo.post_date("2026-06-01T00:30:00+14:00"), date(2026, 5, 31))
         self.assertIsNone(weibo.post_date("刚刚"))
 
 
@@ -186,6 +188,21 @@ class WeiboLongTextTests(unittest.TestCase):
             collector.get_long_text.assert_not_called()
             self.assertEqual(second["long_text_expansion"]["cached_responses"], 1)
             self.assertEqual(second["posts"][0]["full_text_status"], "expanded")
+
+    def test_expansion_without_keyword_request_does_not_add_keyword_metadata(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = self.make_manifest(folder, ["12345678"])
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["request"].pop("keywords")
+            weibo.save_json(path, manifest)
+            collector = mock.Mock()
+            collector.get_long_text.return_value = {
+                "ok": 1, "data": {"longTextContent": "完整正文"}}
+
+            result = weibo.expand_manifest(path, collector)
+
+        self.assertNotIn("matched_keywords", result["posts"][0])
+        self.assertNotIn("keyword_candidate", result["posts"][0])
 
     def test_verification_failure_preserves_progress_and_stops_requests(self):
         with tempfile.TemporaryDirectory() as folder:

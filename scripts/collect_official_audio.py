@@ -1,4 +1,4 @@
-"""Stage 1: official audio acquisition, local validation and raw-source registration."""
+"""Stage 1: official media acquisition, local validation and raw-source registration."""
 
 from __future__ import annotations
 
@@ -30,8 +30,8 @@ def main() -> int:
     parser.add_argument("--max-mib",type=int,default=200)
     parser.add_argument("--max-bitrate",type=int,default=128000)
     modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--register-existing",action="store_true",help="离线校验并登记已有音轨，不请求 B 站")
-    modes.add_argument("--check-only",action="store_true",help="仅离线检查已有音轨，不访问网络或数据库")
+    modes.add_argument("--register-existing",action="store_true",help="离线校验并登记已有音轨或有效中文字幕，不请求 B 站")
+    modes.add_argument("--check-only",action="store_true",help="仅离线检查已有音轨或有效中文字幕，不访问网络或数据库")
     args = parser.parse_args()
     try:
         linked_page = int(parse_qs(urlsplit(args.video).query).get("p",["1"])[0])
@@ -59,6 +59,7 @@ def main() -> int:
     report_path = ROOT / "data/reports/acquisition" / f"{stamp}_{bvid}_p{args.page:02d}_{uuid.uuid4().hex[:8]}.json"
     report = {"stage":1,"mode":mode,"bvid":bvid,"page":args.page,"auth_mode":args.auth,
               "started_at_utc":datetime.now(timezone.utc).isoformat(),"status":"started", "raw_registered":False,
+              "audio_available":None,"subtitle_available":None,
               "transcription_started":False,"game_facts_changed":False}
     phase = "download" if mode == "download_and_register" else "validation"
     try:
@@ -68,9 +69,14 @@ def main() -> int:
         phase = "validation" if args.check_only else "validation_and_raw_registration"
         if args.check_only:
             report["validation"] = validate_media(manifest_path,bvid,args.page)["summary"]
+            report["audio_available"] = report["validation"]["audio_available"]
+            report["subtitle_available"] = report["validation"]["subtitle_available"]
             report["status"] = "validated_only"
         else:
             report["database"] = database.import_media(manifest_path,bvid,args.page)
+            report["validation"] = report["database"]["validation"]
+            report["audio_available"] = report["validation"]["audio_available"]
+            report["subtitle_available"] = report["validation"]["subtitle_available"]
             report["raw_registered"] = True
             report["status"] = "raw_registered"
     except (CollectionError,AuthConfigurationError,MediaValidationError,database.ReviewError) as error:

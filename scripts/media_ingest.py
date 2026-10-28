@@ -1,4 +1,4 @@
-"""Validate a downloaded official audio source without loading an ASR model."""
+"""Validate official raw media or downloaded Chinese subtitles."""
 
 from __future__ import annotations
 
@@ -7,6 +7,8 @@ import hashlib
 import json
 from pathlib import Path
 import re
+
+from collect_bilibili_audio import is_chinese_subtitle, validate_cues
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL_BILIBILI_MID = "19106800"
@@ -20,7 +22,7 @@ def read_json(path: Path) -> dict:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        raise MediaValidationError("原始清单或接口响应不存在，或不是有效 JSON") from None
+        raise MediaValidationError("原始清单、接口响应或字幕文件不存在，或不是有效 JSON") from None
     if not isinstance(value, dict):
         raise MediaValidationError("原始清单或接口响应必须是 JSON 对象")
     return value
@@ -60,6 +62,60 @@ def probe_audio(path: Path, expected_duration: float) -> dict:
             "full_stream_decoded": False}
 
 
+def validate_subtitles(folder: Path, subtitle_data: object, *, require_chinese: bool) -> tuple[list, str, bool]:
+    if subtitle_data is None:
+        subtitle_data = {}
+    if not isinstance(subtitle_data, dict):
+        raise MediaValidationError("字幕清单必须是 JSON 对象")
+    tracks = subtitle_data.get("tracks") or []
+    if not isinstance(tracks, list):
+        raise MediaValidationError("字幕轨清单必须是数组")
+    requests = subtitle_data.get("requests")
+    if requests is not None and not isinstance(requests, list):
+        raise MediaValidationError("字幕下载记录必须是数组")
+
+    checked = []
+    chinese_available = False
+    for track in tracks:
+        if not isinstance(track, dict):
+            raise MediaValidationError("字幕轨必须是 JSON 对象")
+        if track.get("platform") not in (None, "bilibili") or track.get("provenance") not in (
+            None, "platform_visible_subtitle"
+        ):
+            raise MediaValidationError("字幕轨来源与 Bilibili 官方视频不匹配")
+        path = child_file(folder, track.get("file"))
+        document = read_json(path)
+        try:
+            validate_cues(document)
+        except ValueError as error:
+            raise MediaValidationError(f"字幕文件缺少有效段落：{error}") from None
+
+        language = track.get("language")
+        is_chinese = is_chinese_subtitle(language)
+        if is_chinese and requests is not None:
+            downloaded = any(
+                isinstance(item, dict) and item.get("status") == "downloaded"
+                and item.get("file") == track.get("file")
+                and item.get("language") == language
+                and item.get("id") == track.get("id")
+                for item in requests
+            )
+            if not downloaded:
+                raise MediaValidationError("中文字幕轨与本次下载记录不匹配")
+        if is_chinese:
+            chinese_available = True
+        checked.append((path, track))
+
+    if require_chinese:
+        if not chinese_available:
+            raise MediaValidationError("没有可验证的中文字幕轨，不能按字幕来源入库")
+        if any(track.get("platform") != "bilibili" or
+               track.get("provenance") != "platform_visible_subtitle"
+               for _, track in checked if is_chinese_subtitle(track.get("language"))):
+            raise MediaValidationError("中文字幕轨缺少 Bilibili 平台来源标记")
+    return checked, str(subtitle_data.get("status", "unknown")), chinese_available
+
+
 def validate_media(manifest_path: Path, expected_bvid: str | None = None, expected_page: int | None = None) -> dict:
     manifest_path = manifest_path.resolve()
     if not manifest_path.is_relative_to((ROOT / "data").resolve()):
@@ -86,25 +142,34 @@ def validate_media(manifest_path: Path, expected_bvid: str | None = None, expect
     declared_duration = manifest.get("duration_seconds")
     if type(declared_duration) not in {int, float} or declared_duration <= 0 or page.get("duration") != declared_duration:
         raise MediaValidationError("清单与原始接口响应的时长不一致或无有效时长")
+    audio_available = "audio" in manifest
+    audio_path = None
     audio = manifest.get("audio")
-    if not isinstance(audio, dict) or audio.get("video_downloaded") is not False:
-        raise MediaValidationError("缺少已下载的独立音轨清单")
-    audio_path = child_file(folder, audio.get("file"))
-    if type(audio.get("bytes")) is not int or audio["bytes"] <= 0 or audio_path.stat().st_size != audio["bytes"]:
-        raise MediaValidationError("音频文件大小与原始清单不一致")
-    if not isinstance(audio.get("sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", audio["sha256"]):
-        raise MediaValidationError("清单缺少有效音频 SHA-256")
-    with audio_path.open("rb") as stream:
-        if hashlib.file_digest(stream,"sha256").hexdigest() != audio["sha256"]:
-            raise MediaValidationError("音频 SHA-256 与原始清单不一致")
-    probe = probe_audio(audio_path, declared_duration)
-    subtitles = []
-    for track in (manifest.get("subtitles") or {}).get("tracks") or []:
-        subtitles.append((child_file(folder,track.get("file")),track))
-    summary = {"status":"raw_media_ready", "checked_at_utc":datetime.now(timezone.utc).isoformat(),
+    probe = None
+    if audio_available:
+        if not isinstance(audio, dict) or audio.get("video_downloaded") is not False:
+            raise MediaValidationError("缺少已下载的独立音轨清单")
+        audio_path = child_file(folder, audio.get("file"))
+        if type(audio.get("bytes")) is not int or audio["bytes"] <= 0 or audio_path.stat().st_size != audio["bytes"]:
+            raise MediaValidationError("音频文件大小与原始清单不一致")
+        if not isinstance(audio.get("sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", audio["sha256"]):
+            raise MediaValidationError("清单缺少有效音频 SHA-256")
+        with audio_path.open("rb") as stream:
+            if hashlib.file_digest(stream, "sha256").hexdigest() != audio["sha256"]:
+                raise MediaValidationError("音频 SHA-256 与原始清单不一致")
+        probe = probe_audio(audio_path, declared_duration)
+
+    subtitles, subtitle_status, subtitle_available = validate_subtitles(
+        folder, manifest.get("subtitles"), require_chinese=not audio_available
+    )
+    summary = {"status":"raw_media_ready" if audio_available else "raw_subtitles_ready",
+               "checked_at_utc":datetime.now(timezone.utc).isoformat(),
                "bvid":bvid,"cid":manifest["cid"],"page":manifest["page"],"owner_mid":owner,
-               "official_owner_matches":True,"audio_bytes":audio["bytes"],"audio_sha256":audio["sha256"],
-               "probe":probe,"subtitle_status":(manifest.get("subtitles") or {}).get("status","unknown"),
+               "official_owner_matches":True,"audio_available":audio_available,
+               "audio_bytes":audio["bytes"] if audio_available else None,
+               "audio_sha256":audio["sha256"] if audio_available else None,
+               "probe":probe,"subtitle_status":subtitle_status,
+               "subtitle_available":subtitle_available,
                "game_facts_verified":False}
     return {"manifest":manifest,"manifest_path":manifest_path,"raw_path":raw_path,
             "audio_path":audio_path,"subtitles":subtitles,"summary":summary}

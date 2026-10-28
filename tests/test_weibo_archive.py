@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,14 +52,78 @@ class FakeCollector:
 
 
 class WeiboArchiveTests(unittest.TestCase):
+    def test_date_window_filters_on_beijing_day_including_both_boundaries(self):
+        starts_on_window = post("12345678", "05-26")
+        starts_on_window["created_at"] = "2026-05-25T16:30:00Z"
+        ends_after_window = post("12345679", "05-26")
+        ends_after_window["created_at"] = "2026-05-26T16:30:00Z"
+        with tempfile.TemporaryDirectory() as folder:
+            result = archive.collect_archive(
+                FakeCollector([page([starts_on_window, ends_after_window], "end", more=False)]),
+                Path(folder), "7525583841", archive.date(2026, 5, 26), archive.date(2026, 5, 26))
+        self.assertEqual([item["post_id"] for item in result["posts"]], ["12345678"])
+        self.assertEqual(result["counts"]["date_window_posts_seen"], 1)
+
+    def test_archive_drops_keyword_metadata_and_keeps_unfiltered_posts(self):
+        raw = post("12345678", "05-26", text="不包含旧采集关键词的公告")
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            result = archive.collect_archive(
+                FakeCollector([page([raw], "end", more=False)]), root, "7525583841",
+                archive.date(2026, 5, 26), archive.date(2026, 5, 26))
+            self.assertEqual([item["post_id"] for item in result["posts"]], ["12345678"])
+            self.assertNotIn("keywords", result["request"])
+            self.assertNotIn("keyword_candidates_saved", result["counts"])
+            self.assertNotIn("matched_keywords", result["posts"][0])
+            self.assertNotIn("keyword_candidate", result["posts"][0])
+
+            legacy = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+            legacy["request"]["keywords"] = []
+            legacy["counts"]["keyword_candidates_saved"] = 1
+            legacy["posts"][0].update(matched_keywords=[], keyword_candidate=True)
+            save_json(root / "manifest.json", legacy)
+            resumed = archive.collect_archive(
+                FakeCollector([]), root, "7525583841", archive.date(2026, 5, 26), archive.date(2026, 5, 26))
+        self.assertNotIn("keywords", resumed["request"])
+        self.assertNotIn("keyword_candidates_saved", resumed["counts"])
+        self.assertNotIn("matched_keywords", resumed["posts"][0])
+        self.assertNotIn("keyword_candidate", resumed["posts"][0])
+
+    def test_archive_cli_returns_failure_for_unparseable_dates_or_missing_images(self):
+        valid = post("12345678", "05-26")
+        unparseable = post("12345679", "05-26")
+        unparseable["created_at"] = "刚刚"
+        missing_image = post("12345680", "05-26")
+        missing_image.update(pic_num=1, pics=[{"large": {"url": "https://wx1.sinaimg.cn/large/a.jpg"}}])
+        cases = (("complete", [valid], 0),
+                 ("unparseable", [unparseable], 2),
+                 ("missing-image", [missing_image], 2))
+        with tempfile.TemporaryDirectory() as folder:
+            for name, posts, expected_code in cases:
+                with self.subTest(name=name):
+                    root = Path(folder) / name
+                    collector = FakeCollector([page(posts, "end", more=False)])
+                    argv = ["collect_weibo_archive.py", "--uid", "7525583841",
+                            "--since", "2026-05-26", "--until", "2026-05-26",
+                            "--archive-dir", str(root)]
+                    with mock.patch.object(archive, "configure_auth"), \
+                            mock.patch.object(archive, "WeiboCollector", return_value=collector), \
+                            mock.patch.object(archive.sys, "argv", argv), \
+                            mock.patch("builtins.print"):
+                        self.assertEqual(archive.main(), expected_code)
+
     def test_image_list_expansion_preserves_downloaded_prefix_and_saves_detail(self):
         raw = post("12345678", "09-22")
-        raw.update(pic_num=2, pics=[{"large": {"url": "https://wx1.sinaimg.cn/mw2000/a.jpg"}}])
+        picture_ids = [f"pic{index:02}" for index in range(1, 13)]
+        raw.update(pic_num=len(picture_ids), pics=[
+            {"large": {"url": f"https://wx1.sinaimg.cn/mw2000/{picture_id}.jpg"}}
+            for picture_id in picture_ids[:9]
+        ])
         normalized = normalize_post(raw)
         normalized["images"][0].update(status="downloaded", file="images/existing_a.jpg")
-        detail = {**raw, "pic_ids": ["a", "b"], "pic_infos": {
-            "a": {"original": {"url": "https://wx1.sinaimg.cn/large/a.jpg"}},
-            "b": {"original": {"url": "https://wx1.sinaimg.cn/large/b.jpg"}},
+        detail = {**raw, "pic_ids": picture_ids, "pic_infos": {
+            picture_id: {"original": {"url": f"https://wx1.sinaimg.cn/large/{picture_id}.jpg"}}
+            for picture_id in picture_ids
         }}
         class DetailCollector:
             calls = 0
@@ -69,13 +134,30 @@ class WeiboArchiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             archive.complete_image_list(raw, normalized, root, collector)
-            self.assertEqual(len(normalized["images"]), 2)
+            self.assertEqual(len(normalized["images"]), 12)
             self.assertEqual(normalized["images"][0]["file"], "images/existing_a.jpg")
             self.assertEqual(normalized["images"][0]["status"], "downloaded")
-            self.assertEqual(normalized["images"][1]["status"], "not_downloaded")
+            self.assertEqual(normalized["images"][8]["status"], "not_downloaded")
+            self.assertEqual(normalized["images"][9]["source_url"],
+                             "https://wx1.sinaimg.cn/large/pic10.jpg")
+            self.assertEqual(normalized["images"][11]["source_url"],
+                             "https://wx1.sinaimg.cn/large/pic12.jpg")
             self.assertTrue((root / normalized["detail_file"]).is_file())
             archive.complete_image_list(raw, normalized, root, collector)
             self.assertEqual(collector.calls, 1)
+
+    def test_rename_reports_missing_declared_source_instead_of_guessing_another_path(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            raw = post("12345678", "09-22")
+            names = archive.artifact_paths(raw)
+            save_json(root / names["raw_file"], raw)
+            path = root / "manifest.json"
+            save_json(path, {"source": archive.MOBILE_ROOT,
+                             "posts": [{"post_id": "12345678", "raw_file": "posts/missing.json"}]})
+            with self.assertRaises(archive.CollectionError) as error:
+                archive.rename_manifest(path)
+            self.assertEqual(error.exception.reason, "missing_raw_post")
 
     def test_rename_preserves_bytes_hashes_and_all_manifest_references(self):
         with tempfile.TemporaryDirectory() as folder:

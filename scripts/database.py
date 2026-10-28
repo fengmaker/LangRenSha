@@ -210,12 +210,18 @@ def import_media(manifest_path: Path, expected_bvid: str | None = None, expected
              f"https://www.bilibili.com/video/{manifest['bvid']}/?p={manifest['page']}",manifest.get("title"),
              str(manifest["owner"]["mid"]),manifest.get("published_timestamp"),Jsonb(metadata))).fetchone()["id"]
         artifact_ids = [artifact(conn,source_id,checked["manifest_path"],"manifest"),
-                        artifact(conn,source_id,checked["raw_path"],"metadata"),
-                        artifact(conn,source_id,checked["audio_path"],"audio",manifest["audio"])]
+                        artifact(conn,source_id,checked["raw_path"],"metadata")]
+        if checked["audio_path"] is not None:
+            artifact_ids.append(artifact(conn,source_id,checked["audio_path"],"audio",manifest["audio"]))
         for path,track in checked["subtitles"]:
             artifact_ids.append(artifact(conn,source_id,path,"subtitle",track))
+        audit_details = {"bvid":manifest["bvid"],
+                         "audio_available":checked["summary"]["audio_available"],
+                         "subtitle_available":checked["summary"]["subtitle_available"]}
+        if manifest.get("audio"):
+            audit_details["audio_sha256"] = manifest["audio"]["sha256"]
         conn.execute("INSERT INTO audit_events(action,actor,entity_id,details) VALUES('register_raw_media','collector',%s,%s)",
-                     (source_id,Jsonb({"bvid":manifest["bvid"],"audio_sha256":manifest["audio"]["sha256"]})))
+                     (source_id,Jsonb(audit_details)))
     return {"source_id":str(source_id),"artifact_ids":[str(key) for key in artifact_ids],
             "validation":checked["summary"],"transcription_started":False,"game_facts_changed":False}
 
@@ -227,7 +233,11 @@ def raw_status() -> dict:
             (SELECT count(*) FROM artifacts a WHERE a.source_id=s.id AND a.kind IN ('metadata','manifest','audio','subtitle','weibo_json','image')) AS raw_artifact_count
             FROM sources s WHERE s.platform IN ('bilibili','weibo') ORDER BY s.platform,s.external_key""").fetchall()
         return {"raw_source_count":len(sources),"validated_audio_source_count":sum(
-                (row["media_validation"] or {}).get("status") == "raw_media_ready" for row in sources),
+                bool((row["media_validation"] or {}).get(
+                    "audio_available", (row["media_validation"] or {}).get("status") == "raw_media_ready"))
+                for row in sources),
+                "validated_subtitle_source_count":sum(
+                    bool((row["media_validation"] or {}).get("subtitle_available")) for row in sources),
                 "sources":sources,"note":"仅显示原始来源；不代表比赛已解析或核验"}
 
 

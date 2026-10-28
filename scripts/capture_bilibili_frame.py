@@ -49,9 +49,12 @@ if __name__ == "__main__":
     parser.add_argument("cid", type=int)
     parser.add_argument("--times", required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--auth", choices=("none", "cookies"), default="none")
+    parser.add_argument("--cookies-file", type=Path)
     args = parser.parse_args()
     try:
-        capture(args.bvid, args.cid, [float(s) for s in args.times.split(",")], args.out.resolve())
+        capture(args.bvid, args.cid, [float(s) for s in args.times.split(",")], args.out.resolve(),
+                auth=args.auth, cookies_file=args.cookies_file)
     except Exception as exc:
         print("原视频画面抓取失败：" + type(exc).__name__, file=sys.stderr)
         raise SystemExit(1)

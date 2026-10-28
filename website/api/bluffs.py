@@ -177,7 +177,8 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
     for game in games:
         game_id = game.get("id", game.get("slug"))
         source = indexed.get(game_id)
-        valid = source is not None and source.get("source_fingerprint") == source_fingerprint(game)
+        fingerprint = source_fingerprint(game)
+        valid = source is not None and source.get("source_fingerprint") == fingerprint
         assessments = {row["seat"]: row for row in source.get("assessments", [])} if valid else {}
         for seat in game.get("seats", []):
             if not physical_wolf(game, seat):
@@ -224,7 +225,7 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
             assistant_pending=stage=='assistant_pending' or (needs_review and not user_review)
             output.append({
                 "review_id": f"{bvid}:{seat['seat']}",
-                "source_fingerprint": source_fingerprint(game),
+                "source_fingerprint": fingerprint,
                 "game_id": game_id, "date": str(game.get("date", "")),
                 "game_number": game.get("game_number"),
                 "bvid": bvid,

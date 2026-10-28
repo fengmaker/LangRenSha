@@ -93,5 +93,99 @@ class AcquisitionBoundaryTests(unittest.TestCase):
             get.assert_not_called()
 
 
+class SubtitlesFirstTests(unittest.TestCase):
+    def setUp(self):
+        self.instance = collector.Collector(quiet=True)
+        self.view = {'data': {'aid': 456, 'bvid': 'BV1tj8p6REqy', 'owner': {'mid': 19106800},
+                              'pages': [{'page': 1, 'cid': 123, 'duration': 60}], 'title': 'fixture'}}
+        self.player = {'data': {'aid': 456, 'cid': 123, 'need_login_subtitle': False,
+                                'subtitle': {'subtitles': []}}}
+        self.chinese = {'id': 1, 'lan': 'ai-zh',
+                        'subtitle_url': 'https://aisubtitle.hdslb.com/fixture.json'}
+        self.play = {'data': {'dash': {'audio': [{'id': 1, 'bandwidth': 64000,
+                                                'mimeType': 'audio/mp4',
+                                                'baseUrl': 'https://audio.bilibili.com/fixture.m4a'}]}}}
+
+    def collect(self, folder, **options):
+        return self.instance.collect('BV1tj8p6REqy', 1, Path(folder), True, 128000,
+                                     200 * 1024**2, expected_owner='19106800', **options)
+
+    def test_downloaded_chinese_subtitles_skip_playback_and_audio(self):
+        self.player['data']['subtitle']['subtitles'] = [self.chinese]
+        response = Mock(status_code=200)
+        response.json.return_value = {'body': [{'from': 0, 'to': 60, 'content': '中文字幕'}]}
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(self.instance, 'api', side_effect=[self.view, self.player]) as api, \
+                patch.object(self.instance.session, 'get', return_value=response), \
+                patch.object(self.instance, 'download') as download:
+            manifest = self.collect(folder, subtitles_first=True)
+            self.assertEqual(len(manifest['subtitles']['tracks']), 1)
+            self.assertNotIn('audio', manifest)
+            self.assertEqual(api.call_count, 2)
+            download.assert_not_called()
+
+    def test_successful_query_without_chinese_downloads_audio(self):
+        for tracks in ([], [{'id': 2, 'lan': 'ai-en'}]):
+            with self.subTest(tracks=tracks), tempfile.TemporaryDirectory() as folder:
+                self.player['data']['subtitle']['subtitles'] = tracks
+                with patch.object(self.instance, 'api', side_effect=[self.view, self.player, self.play]), \
+                        patch.object(self.instance, 'download', return_value={
+                            'file': 'audio.m4a', 'bytes': 12, 'sha256': 'fixture'}) as download:
+                    manifest = self.collect(folder, subtitles_first=True)
+                    self.assertEqual(manifest['audio']['file'], 'audio.m4a')
+                    download.assert_called_once()
+
+    def test_login_required_is_not_no_chinese_subtitles(self):
+        self.player['data']['need_login_subtitle'] = True
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(self.instance, 'api', side_effect=[self.view, self.player]), \
+                patch.object(self.instance, 'download') as download:
+            with self.assertRaisesRegex(collector.CollectionError, '登录'):
+                self.collect(folder, subtitles_first=True)
+            download.assert_not_called()
+
+    def test_wrong_video_metadata_stops_before_subtitle_or_audio_requests(self):
+        self.view['data']['bvid'] = 'BV1z6tG6rEfw'
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(self.instance, 'api', return_value=self.view) as api, \
+                patch.object(self.instance, 'download') as download:
+            with self.assertRaisesRegex(collector.CollectionError, 'BVID'):
+                self.collect(folder, subtitles_first=True)
+            self.assertEqual(api.call_count, 1)
+            download.assert_not_called()
+
+    def test_failed_subtitle_request_cannot_trigger_audio(self):
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(self.instance, 'api', side_effect=[self.view, collector.CollectionError('HTTP 429')]), \
+                patch.object(self.instance, 'download') as download:
+            with self.assertRaisesRegex(collector.CollectionError, '429'):
+                self.collect(folder, subtitles_first=True)
+            download.assert_not_called()
+
+    def test_visible_but_failed_or_empty_chinese_track_cannot_trigger_audio(self):
+        self.player['data']['subtitle']['subtitles'] = [self.chinese]
+        for status, body in ((403, {}), (200, {'body': []})):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as folder:
+                response = Mock(status_code=status)
+                response.json.return_value = body
+                with patch.object(self.instance, 'api', side_effect=[self.view, self.player]), \
+                        patch.object(self.instance.session, 'get', return_value=response), \
+                        patch.object(self.instance, 'download') as download:
+                    with self.assertRaises((collector.CollectionError, ValueError)):
+                        self.collect(folder, subtitles_first=True)
+                    download.assert_not_called()
+
+    def test_explicit_audio_acquisition_still_works_with_chinese_subtitles(self):
+        self.player['data']['subtitle']['subtitles'] = [self.chinese]
+        response = Mock(status_code=200)
+        response.json.return_value = {'body': [{'from': 0, 'to': 60, 'content': '中文字幕'}]}
+        with tempfile.TemporaryDirectory() as folder, \
+                patch.object(self.instance, 'api', side_effect=[self.view, self.player, self.play]), \
+                patch.object(self.instance.session, 'get', return_value=response), \
+                patch.object(self.instance, 'download', return_value={'file': 'audio.m4a', 'bytes': 12}) as download:
+            self.collect(folder)
+            download.assert_called_once()
+
+
 if __name__ == '__main__':
     unittest.main()

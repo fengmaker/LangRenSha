@@ -66,6 +66,34 @@ def test_pass_and_unknown_cannot_have_success_targets(fixture):
     with pytest.raises(ValueError,match='invent'):phase.build(spec)
 
 
+@pytest.mark.parametrize('state', ['pass', 'unknown', 'forbidden', 'not_applicable'])
+def test_unperformed_actions_cannot_have_actual_targets(fixture, state):
+    spec, _ = fixture
+    spec['events'][0][4] = []
+    spec['events'][0].append({'state': state, 'actual_targets': [2]})
+    with pytest.raises(ValueError, match='invent'):
+        phase.build(spec)
+
+
+def test_performed_actions_preserve_actual_targets(fixture):
+    spec, _ = fixture
+    spec['events'][0].append({'actual_targets': [2]})
+    assert phase.build(spec)['events'][0]['actual_targets'] == [2]
+
+
+def test_event_vote_and_gap_references_share_the_selected_source_hash(fixture):
+    spec, _ = fixture
+    spec['gaps'] = [{'field': 'unclear_result', 'reason': '待核', 'sources': [0]}]
+    result = phase.build(spec)
+    expected = phase.sha(result['source']['selected_path'])
+    ballot = result['ballots'][0]
+    references = [*result['events'][0]['evidence'], *ballot['evidence'],
+                  *ballot['votes'][0]['evidence'], *ballot['eligibility_evidence'],
+                  *result['coverage']['gaps'][0]['evidence']]
+    assert result['source']['selected_sha256'] == expected
+    assert all(reference['source_sha256'] == expected for reference in references)
+
+
 def test_unresolved_gap_also_keeps_verbatim_same_media_evidence(fixture):
     spec,_=fixture
     spec['gaps']=[{'phase':'night','round':1,'field':'unclear_result',

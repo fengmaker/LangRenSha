@@ -21,9 +21,11 @@
       "status": "media_transcribed",
       "collection_id": 7520632,
       "seed_bvid": "BV15EfUBrENW",
-      "scope_file": null,
-      "formal_rules_file": null,
-      "collection_note": "官方音频与可取得中文字幕已采集；8条缺字幕音轨已全文补转写与术语轻校对。尚未适配正式对局规则、推导与录入。"
+      "scope_file": "config/S21_game_scope.json",
+      "formal_rules_file": "config/S21_formal_rules.json",
+      "import_profile": "s21_formal_import",
+      "import_entry": "scripts/import_s21_formal.py",
+      "collection_note": "官方音频与可取得中文字幕已采集；8条缺字幕音轨已全文补转写与术语轻校对。正式导入复用已核身份、日夜及票型，未定字段继续保留未知。"
     },
     "S23": {
       "name": "昆仑归墟",

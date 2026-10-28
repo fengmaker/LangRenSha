@@ -16,7 +16,7 @@ import requests
 
 from collect_weibo import (
     CollectionError, MOBILE_ROOT, ROOT, WeiboCollector, configure_auth,
-    image_urls, new_manifest, normalize_post, plain_text, post_date, save_json,
+    new_manifest, normalize_post, plain_text, post_date, save_json,
     timeline_statuses,
 )
 from weibo_naming import artifact_paths
@@ -58,10 +58,7 @@ def rename_manifest(path: Path) -> dict:
     for post in manifest["posts"]:
         source = inside(root, post["raw_file"])
         if not source.is_file():
-            candidates = list((root / "posts").rglob(f"*__WB{post['post_id']}.帖子原始.json"))
-            if len(candidates) != 1:
-                raise CollectionError("原始帖子丢失，不能重命名", reason="missing_raw_post")
-            source = candidates[0]
+            raise CollectionError("原始帖子丢失，不能重命名", reason="missing_raw_post")
         raw = json.loads(source.read_text(encoding="utf-8"))
         names = artifact_paths(raw)
         move(post["raw_file"], names["raw_file"])
@@ -107,6 +104,8 @@ def seed_archive(seed_path: Path, root: Path, manifest: dict) -> None:
                 or not since <= (original.get("published_date") or "") <= until):
             continue
         post = deepcopy(original)
+        post.pop("matched_keywords", None)
+        post.pop("keyword_candidate", None)
         for key in ("raw_file", "full_text_file", "detail_file"):
             if post.get(key):
                 reuse_file(inside(seed_path.parent, post[key]), inside(root, post[key]))
@@ -125,7 +124,6 @@ def summarize(manifest: dict) -> None:
         "pages_fetched": len(manifest["pages"]),
         "target_posts_seen": sum(page["target_author_posts"] for page in manifest["pages"]),
         "date_window_posts_seen": sum(page["in_date_window"] for page in manifest["pages"]),
-        "keyword_candidates_saved": len(manifest["posts"]),
         "posts_saved": len(manifest["posts"]),
         "seed_posts_reused": manifest.get("seed_posts", 0),
         "new_posts_saved": len(manifest["posts"]) - manifest.get("seed_posts", 0),
@@ -191,13 +189,17 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
     root.mkdir(parents=True, exist_ok=True)
     path = root / "manifest.json"
     request = {"uid": uid, "since": since.isoformat(), "until": until.isoformat(),
-               "keywords": [], "max_pages": max_pages, "request_interval_seconds": collector.request_interval}
+               "max_pages": max_pages, "request_interval_seconds": collector.request_interval}
     if path.is_file():
         manifest = json.loads(path.read_text(encoding="utf-8"))
         for key in ("uid", "since", "until"):
             if manifest["request"][key] != request[key]:
                 raise CollectionError("归档目录对应另一日期窗口或账号", reason="archive_window_mismatch")
         manifest["request"].update(request)
+        manifest["request"].pop("keywords", None)
+        for post in manifest["posts"]:
+            post.pop("matched_keywords", None)
+            post.pop("keyword_candidate", None)
     else:
         manifest = new_manifest("author", request)
         manifest.update(auth_mode="cookies", naming_version=1, output_dir=str(root), seed_posts=0,
@@ -274,7 +276,7 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
                 names = artifact_paths(raw)
                 post.update(raw_file=names["raw_file"], image_base=names["image_base"],
                             filename_stem=names["stem"], published_at_utc8=names.get("published_at_utc8"),
-                            is_long_text=bool(raw.get("isLongText")), matched_keywords=[], keyword_candidate=True)
+                            is_long_text=bool(raw.get("isLongText")))
                 if post["is_long_text"]:
                     post.update(full_text_file=names["full_text_file"], full_text_status="pending")
                 detail = complete_image_list(raw, post, root, collector)
@@ -368,9 +370,16 @@ def main() -> int:
         collector = WeiboCollector(session=session, request_interval=args.request_interval)
         result = collect_archive(collector, root, args.uid, args.since, args.until,
                                  max_pages=args.max_pages, seed_path=args.seed_manifest)
-        print(json.dumps({"status": result["window_scan_status"], "reason": result["termination_reason"],
-                          "counts": result["counts"], "manifest": str(root / "manifest.json")}, ensure_ascii=False))
-        return 0 if result["window_scan_status"] == "completed" else 2
+        counts = result["counts"]
+        complete = (result["window_scan_status"] == "completed"
+                    and counts["unparseable_dates_skipped"] == 0
+                    and counts["images_not_downloaded"] == 0
+                    and counts["long_posts_expanded"] == counts["long_posts"])
+        print(json.dumps({"status": "completed" if complete else "partial",
+                          "window_scan_status": result["window_scan_status"],
+                          "reason": result["termination_reason"], "counts": counts,
+                          "manifest": str(root / "manifest.json")}, ensure_ascii=False))
+        return 0 if complete else 2
     except (CollectionError, OSError, ValueError, KeyError) as error:
         print(f"归档失败（{type(error).__name__}）", file=sys.stderr)
         return 2

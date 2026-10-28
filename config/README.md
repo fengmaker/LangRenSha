@@ -7,6 +7,7 @@
 | `seasons.json` | 唯一运行期赛季注册：名称、状态、官方合集、种子BV、规则／范围文件引用、复核／导入／悍跳适配；采集CLI与网站API共同读取 |
 | `S22_game_scope.json`、`S23_game_scope.json` | 该季正式范围、排除条件或固定候选快照；媒体归档范围与正式范围分开 |
 | `S22_formal_rules.json`、`S23_formal_rules.json` | 该季已采用的版型、字段、角色和结算口径；结构不同是实际适配差异 |
+| `S21_game_scope.json`、`S21_formal_rules.json` | S21媒体排除范围与已有当季规则证据；122是核实媒体数，未确认的计分总局数、规则及字段不补造；正式导入使用独立S21模板 |
 | `S23_review_rules.json` | 带来源、状态和作用域的现场案例／用户确认；不是所有赛季的通用规则 |
 | [board_templates](board_templates/README.md) | 固定事件槽、动作枚举、角色配置；S23同名规则变化用独立模板，不覆盖旧季 |
 | `game_rules.json` | 现有已确认的固定座位及机械狼等共有约定，使用前核对作用域 |

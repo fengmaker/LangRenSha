@@ -19,8 +19,8 @@
 | --- | --- |
 | [auth_support.py](auth_support.py) | Explicit, opt-in loading of platform-scoped Netscape cookies. |
 | [collect_bilibili_audio.py](collect_bilibili_audio.py) | Collect Bilibili metadata, visible subtitles, and an optional separate audio track. |
-| [collect_official_audio.py](collect_official_audio.py) | Stage 1: official audio acquisition, local validation and raw-source registration. |
-| [collect_season.py](collect_season.py) | Resumable official season audio/subtitle acquisition and readable archive. |
+| [collect_official_audio.py](collect_official_audio.py) | Explicit audio validation and raw-source registration, separate from file-only collection. |
+| [collect_season.py](collect_season.py) | Sequential local season collection: Chinese subtitles first, audio only when no Chinese track is accessible. |
 | [collect_weibo.py](collect_weibo.py) | Collect a bounded sample of publicly visible Weibo posts. |
 | [collect_weibo_archive.py](collect_weibo_archive.py) | Resume a dated Weibo archive, reusing existing posts and media. |
 | [export_collection_index.py](export_collection_index.py) | Export L0 candidates from a saved Bilibili view response; no network access. |
@@ -124,6 +124,7 @@
 | [export_reviewed_weibo_roster.py](export_reviewed_weibo_roster.py) | Deduplicate human-reviewed schedule photo names with traceable corrections. |
 | [export_s22_offline_review.py](export_s22_offline_review.py) | Build one portable HTML review file from disk; never connect to the database. |
 | [import_bluff_feedback.py](import_bluff_feedback.py) | Validate exported review feedback; --apply stores it separately from source facts. |
+| [import_s21_formal.py](import_s21_formal.py) | Build and atomically import formal S21 records from approved identity, phase and text evidence; audio is optional. |
 | [inspect_s23_speech.py](inspect_s23_speech.py) | Locate numbered speech handoffs for AI inspection; no speaker facts imported. |
 | [read_s22_frame_labels.py](read_s22_frame_labels.py) | Read S22 video-frame nameplates into seat-name-only review candidates. |
 | [read_s23_screen.py](read_s23_screen.py) | Local OCR support for S23 candidate reviews; never changes game records. |

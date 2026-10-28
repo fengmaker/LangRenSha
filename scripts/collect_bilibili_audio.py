@@ -62,11 +62,8 @@ def select_audio(play_info: dict, max_bitrate: int) -> dict:
 
 
 def sha256_file(path: Path) -> str:
-    result = hashlib.sha256()
     with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            result.update(block)
-    return result.hexdigest()
+        return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
 def subtitle_availability(player_data: dict, auth_mode: str = "none",
@@ -93,11 +90,21 @@ def is_chinese_subtitle(language: str | None) -> bool:
     return code in {"zh", "ai-zh"} or code.startswith(("zh-", "ai-zh-"))
 
 
+def validate_cues(document: dict) -> list[dict]:
+    cues = document.get("body")
+    if not isinstance(cues, list) or not cues:
+        raise ValueError("平台字幕缺少有效 body")
+    for item in cues:
+        if (not isinstance(item, dict) or not isinstance(item.get("content"), str) or
+                type(item.get("from")) not in {int, float} or type(item.get("to")) not in {int, float} or
+                not 0 <= item["from"] <= item["to"]):
+            raise ValueError("字幕段落缺少合法时间戳或文字")
+    return cues
+
+
 class Collector:
-    def __init__(self, auth_mode: str = "none", cookies_file: Path | None = None, quiet: bool = False,
-                 subtitle_languages: set[str] | None = None) -> None:
+    def __init__(self, auth_mode: str = "none", cookies_file: Path | None = None, quiet: bool = False) -> None:
         self.quiet = quiet
-        self.subtitle_languages = subtitle_languages
         self.session = requests.Session()
         self.authentication = configure_session(
             self.session, auth_mode=auth_mode, cookies_file=cookies_file, platform="bilibili"
@@ -153,7 +160,8 @@ class Collector:
         return {"file": target.name, "bytes": size, "sha256": sha256_file(target)}
 
     def collect(self, bvid: str, page_number: int, out: Path, audio: bool,
-                max_bitrate: int, max_bytes: int, expected_owner: str | None = None) -> dict:
+                max_bitrate: int, max_bytes: int, expected_owner: str | None = None,
+                *, subtitles_first: bool = False) -> dict:
         folder = out / bvid / f"p{page_number:02d}"
         folder.mkdir(parents=True, exist_ok=True)
         manifest_path = folder / "manifest.json"
@@ -164,6 +172,8 @@ class Collector:
         owner_mid = str((view.get("owner") or {}).get("mid", ""))
         if expected_owner is not None and owner_mid != str(expected_owner):
             raise CollectionError("投稿者 UID 与指定官方账号不一致，未下载音轨")
+        if view["bvid"] != bvid:
+            raise CollectionError("元数据的 BVID 与请求的视频不一致")
         page = next((p for p in view.get("pages", []) if p.get("page") == page_number), None)
         if page is None:
             raise CollectionError(f"没有第 {page_number} 个分 P")
@@ -207,8 +217,7 @@ class Collector:
             for index, track in enumerate(tracks, start=1):
                 request_record = {"id":track.get("id"),"language":track.get("lan"),"status":"not_attempted"}
                 manifest["subtitles"]["requests"].append(request_record)
-                if (not is_chinese_subtitle(track.get("lan")) or
-                        self.subtitle_languages is not None and track.get("lan") not in self.subtitle_languages):
+                if not is_chinese_subtitle(track.get("lan")):
                     request_record["status"] = "not_selected_language"
                     continue
                 url = track.get("subtitle_url")
@@ -228,7 +237,9 @@ class Collector:
                     request_record.update(status="http_error",http_status=response.status_code)
                     continue
                 filename = f"subtitle.{index:02d}.raw.json"
-                save_json(folder / filename, response.json())
+                document = response.json()
+                validate_cues(document)
+                save_json(folder / filename, document)
                 request_record.update(status="downloaded",http_status=200,file=filename)
                 manifest["subtitles"]["tracks"].append({"id": track.get("id"),
                                                        "platform": "bilibili",
@@ -242,7 +253,19 @@ class Collector:
                                                        "provenance": "platform_visible_subtitle"})
         except (CollectionError, requests.RequestException, ValueError):
             manifest["subtitles"] = {"status": "unavailable_in_this_request"}
+            save_json(manifest_path, manifest)
+            if subtitles_first:
+                raise
         save_json(manifest_path, manifest)
+        if subtitles_first:
+            subtitles = manifest["subtitles"]
+            if any(is_chinese_subtitle(item["language"]) and item["status"] != "downloaded"
+                   for item in subtitles["requests"]):
+                raise CollectionError("中文轨存在但未成功下载；停止，不按无字幕下载音频")
+            if subtitles["tracks"]:
+                audio = False
+            elif subtitles["need_login_subtitle"] is True:
+                raise CollectionError("字幕需要有效登录；停止，不按无字幕下载音频")
         if audio:
             cached = manifest.get("audio") or {}
             cached_path = folder / "audio.m4a"
@@ -279,7 +302,10 @@ def main() -> int:
     parser.add_argument("videos", nargs="+", help="BVID 或视频 URL")
     parser.add_argument("--page", type=int, default=1)
     parser.add_argument("--out", type=Path, default=Path("data/raw/bilibili"))
-    parser.add_argument("--audio", action="store_true", help="显式下载独立音轨；默认仅索引和可见字幕")
+    media = parser.add_mutually_exclusive_group()
+    media.add_argument("--audio", action="store_true", help="显式下载独立音轨；默认仅索引和可见字幕")
+    media.add_argument("--subtitles-first", action="store_true",
+                       help="先取中文字幕；查询成功且没有可访问中文轨时才下载独立音频")
     parser.add_argument("--auth", choices=("none", "cookies"), default="none",
                         help="认证模式；默认 none，不读取任何 Cookie")
     parser.add_argument("--cookies-file", type=Path,
@@ -297,8 +323,9 @@ def main() -> int:
     failed = False
     for value in args.videos:
         try:
-            collector.collect(parse_bvid(value), args.page, args.out.resolve(), args.audio,
-                              args.max_bitrate, args.max_mib * 1024 * 1024, args.expected_owner)
+            collector.collect(parse_bvid(value), args.page, args.out.resolve(), args.audio or args.subtitles_first,
+                              args.max_bitrate, args.max_mib * 1024 * 1024, args.expected_owner,
+                              subtitles_first=args.subtitles_first)
         except (CollectionError, requests.RequestException, ValueError, OSError) as error:
             # Network exception strings can contain signed URLs. Print only type.
             message = str(error) if isinstance(error, CollectionError) else type(error).__name__
