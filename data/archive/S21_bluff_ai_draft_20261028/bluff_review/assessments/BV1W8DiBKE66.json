@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "bvid": "BV1W8DiBKE66",
+  "cid": 37319608238,
+  "page": 1,
+  "identity_reviewed_sha256": "8e565627560fbab0aed218e2529e68f878ab079687de801b9753c0885ebd16f3",
+  "phase_reviewed_sha256": "39774e4314a02f199baec8e2fb4f2c8f40994a3927e1dc6e5c51b1ac96f60dd5",
+  "transcript_selected_sha256": "884e540eb2c63a85345f4f1699ceba99113617dc79165462130918dfa59c8bdb",
+  "original_source_path": "data/seasons/S21/第07周_正赛第06期/2026-04-07/2026-04-07_S21_第07周_正赛第06期_第02局_诡术之境__BV1W8DiBKE66_P01_CID37319608238.平台AI字幕_ai-zh_01.原始.json",
+  "original_source_sha256": "004ede9f542971b474d56db89dd71b829b05efe15bc27606e35cefd107a9324e",
+  "assessments": [
+    {
+      "seat": 1,
+      "name": "囚徒",
+      "physical_role": "诡术师",
+      "decision": "uncertain",
+      "claimed_role": null,
+      "claim_day": null,
+      "decision_note": "1号诡术师在selected transcript中没有定位到本人完整发言轮次，不能根据他人对1号的讨论判为no。",
+      "evidence": [],
+      "reviewed_ranges": [
+        {
+          "start_ms": 0,
+          "end_ms": 2360640,
+          "phase": "selected转写全局核对；按能定位到的本人轮次与自爆/终局边界复核",
+          "complete": false
+        }
+      ],
+      "explicit_gaps": [
+        "缺少可归属1号的完整live发言轮次"
+      ]
+    },
+    {
+      "seat": 3,
+      "name": "狼行",
+      "physical_role": "狼人",
+      "decision": "uncertain",
+      "claimed_role": null,
+      "claim_day": null,
+      "decision_note": "3号狼人本人完整发言轮次未在selected transcript中定位；可见其选择自爆，但自爆事件本身不能证明此前没有悍跳。",
+      "evidence": [
+        {
+          "segment_indices": [
+            1051
+          ],
+          "start_ms": 2270460,
+          "end_ms": 2272380,
+          "quote": "3号狼人自爆成功"
+        }
+      ],
+      "reviewed_ranges": [
+        {
+          "start_ms": 0,
+          "end_ms": 2360640,
+          "phase": "selected转写全局核对；按能定位到的本人轮次与自爆/终局边界复核",
+          "complete": false
+        }
+      ],
+      "explicit_gaps": [
+        "未找到3号自爆前的可归属本人完整发言轮次"
+      ]
+    },
+    {
+      "seat": 7,
+      "name": "董鲸鱼",
+      "physical_role": "狼人",
+      "decision": "yes",
+      "claimed_role": "预言家",
+      "claim_day": 1,
+      "decision_note": "7号在首日本人轮次直接自称预言家。",
+      "evidence": [
+        {
+          "segment_indices": [
+            403
+          ],
+          "start_ms": 891540,
+          "end_ms": 892140,
+          "quote": "我是预言家"
+        }
+      ],
+      "reviewed_ranges": [
+        {
+          "start_ms": 0,
+          "end_ms": 2360640,
+          "phase": "selected转写全局核对；按能定位到的本人轮次与自爆/终局边界复核",
+          "complete": true
+        }
+      ],
+      "explicit_gaps": []
+    },
+    {
+      "seat": 8,
+      "name": "牛肉干",
+      "physical_role": "狼人",
+      "decision": "no",
+      "claimed_role": null,
+      "claim_day": null,
+      "decision_note": "8号本人首日可定位轮次从其发言提示至9号发言提示完整核过，围绕身份分析及投票，没有自称预言家或通灵师。",
+      "evidence": [
+        {
+          "segment_indices": [
+            413,
+            414
+          ],
+          "start_ms": 905870,
+          "end_ms": 915129,
+          "quote": "我过了8号的请发言\n谢谢花生的头饰确实不是预言家"
+        }
+      ],
+      "reviewed_ranges": [
+        {
+          "start_ms": 0,
+          "end_ms": 2360640,
+          "phase": "selected转写全局核对；按能定位到的本人轮次与自爆/终局边界复核",
+          "complete": true
+        }
+      ],
+      "explicit_gaps": []
+    }
+  ]
+}

@@ -33,7 +33,7 @@ from scripts.season_config import load_season, season_codes
 
 
 app = FastAPI(title="Masters archive API", version="1.0.0", debug=False)
-ANALYTICS_VERSION = 8
+ANALYTICS_VERSION = 9
 SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
 
 
@@ -538,7 +538,9 @@ def leaderboard(season: str = Query(default="S22", max_length=32),
         "pending_games": sum(item["pending_games"] for item in items),
         "scoring": {"werewolf_win": 1.5, "good_win": 1, "loss": -1},
         "items": items,
-        "notes": analytics_notes(season_snapshots, season=season, phase=phase) + BLUFF_METHODOLOGY,
+        "notes": analytics_notes(season_snapshots, season=season, phase=phase) + BLUFF_METHODOLOGY
+        + (["本季已采用用户人工复核；明确选中的混血儿与人工成功结果按该批记录优先。"]
+           if bluff_payload.get('manual_review') else []),
     }
 
 
@@ -554,18 +556,28 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
     if player:
         rows = [row for row in rows if row["player_id"] == player]
     identified = [row for row in rows if row["decision"] == "yes"]
+    manual = bool(payload.get('manual_review'))
+    notes = ([
+        '本批悍跳归属与成功结果采用用户逐局人工复核；未选中的座位按该局明确名单处理。',
+        '用户明确选中的混血儿按对应记录纳入，不扩展其他赛季的默认统计范围。',
+        '人工成功结果优先于自动规则计算；暂定结果保留原备注和待核标记。',
+        '成功率为成功数除以成功与失败数之和，结果待定不进入分母。',
+    ] if manual else BLUFF_METHODOLOGY + (S23_VIDEO_METHODOLOGY if season == 'S23' else []))
     return {
         "release_id": release["id"], "analytics_version": ANALYTICS_VERSION,
         "season": season, "status": status, "player": player,
-        "summary": {"games": len(snapshots), "wolf_appearances": len(rows),
+        "manual_review": manual,
+        "summary": {"games": len(snapshots), "wolf_appearances": sum(not row['manual_included'] for row in rows),
+                    "manual_included_appearances": sum(row['manual_included'] for row in rows),
                     "identified_bluffs": len(identified),
                     "successes": sum(row["success"] is True for row in identified),
                     "pending": sum(row["requires_user_review"] for row in rows),
                     "assistant_pending":sum(row['assistant_pending'] for row in rows),
-                    "reviewed_games":payload.get('summary',{}).get('independently_rechecked_games')},
+                    "reviewed_games":payload.get('summary',{}).get('manual_reviewed_games',
+                        payload.get('summary',{}).get('independently_rechecked_games'))},
         "items": ([row for row in rows if row["requires_user_review"]] if status == "pending" else
                   [row for row in rows if row['assistant_pending']] if status=='assistant_pending' else rows),
-        "notes": BLUFF_METHODOLOGY + (S23_VIDEO_METHODOLOGY if season == "S23" else []),
+        "notes": notes,
         "inference_version": payload.get("inference_version"),
         "bluff_data_source": "database",
     }

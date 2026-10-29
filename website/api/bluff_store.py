@@ -95,6 +95,7 @@ def _validate_review(games: list[dict], payload: dict, season: str,
         raise BluffReviewError("悍跳复核必须精确覆盖活动发布批次的全部对局")
 
     wolf_count = 0
+    reviewed_count = 0
     yes_count = 0
     uncertain_count = 0
     user_confirmed_count = 0
@@ -128,14 +129,27 @@ def _validate_review(games: list[dict], payload: dict, season: str,
             if seat in by_seat:
                 raise BluffReviewError(f"对局 {game_id} 的狼人座位判断重复")
             by_seat[seat] = assessment
+            if 'manual_success' in assessment:
+                value = assessment['manual_success']
+                if ((value is not None and type(value) is not bool)
+                        or assessment.get('verification_status') != 'user_confirmed'
+                        or assessment.get('decision') != 'yes'):
+                    raise BluffReviewError('人工成功结果必须是用户已确认悍跳的布尔值或待定空值')
+            if 'manual_included' in assessment:
+                if (type(assessment['manual_included']) is not bool
+                        or (assessment['manual_included'] and (
+                            assessment.get('verification_status') != 'user_confirmed'
+                            or assessment.get('decision') != 'yes'))):
+                    raise BluffReviewError('人工纳入的座位必须有用户明确确认的悍跳结论')
 
         wolf_seats = {
             seat["seat"]: seat for seat in game.get("seats", [])
-            if bluffs.physical_wolf(game, seat)
+            if bluffs.included_in_review(game, seat, by_seat.get(seat['seat']))
         }
         if set(by_seat) != set(wolf_seats):
             raise BluffReviewError(f"对局 {game_id} 的狼人座位判断不完整或包含非狼人")
-        wolf_count += len(wolf_seats)
+        reviewed_count += len(wolf_seats)
+        wolf_count += sum(bluffs.physical_wolf(game, seat) for seat in wolf_seats.values())
         for seat_number, seat in wolf_seats.items():
             assessment = by_seat[seat_number]
             if assessment.get("name") != seat.get("name"):
@@ -179,17 +193,18 @@ def _validate_review(games: list[dict], payload: dict, season: str,
         stats = bluffs.aggregate_bluffs(games, payload)
     except (KeyError, TypeError, ValueError, AttributeError) as exc:
         raise BluffReviewError("悍跳复核无法依据当前发布快照计算") from exc
-    if len(items) != wolf_count:
+    if len(items) != reviewed_count:
         raise BluffReviewError("悍跳明细数量与发布批次狼人座位数不一致")
 
-    seat_by_key = {
-        (game["id"], seat["seat"]): seat
-        for game in games for seat in game.get("seats", []) if bluffs.physical_wolf(game, seat)
-    }
     payload_assessment_by_key = {
         (game_id, assessment["seat"]): assessment
         for game_id, reviewed_game in payload_by_id.items()
         for assessment in reviewed_game["assessments"]
+    }
+    seat_by_key = {
+        (game["id"], seat["seat"]): seat
+        for game in games for seat in game.get("seats", [])
+        if bluffs.included_in_review(game, seat, payload_assessment_by_key.get((game['id'], seat['seat'])))
     }
     for item in items:
         key = (item["game_id"], item["seat"])
@@ -204,7 +219,8 @@ def _validate_review(games: list[dict], payload: dict, season: str,
         if item["player_id"] != seat.get("person_id"):
             raise BluffReviewError(f"对局 {key[0]} {key[1]} 号人物 ID 与发布快照不一致")
         if (assessment["decision"] == "yes" and assessment.get("claimed_role") is None
-                and assessment.get("verification_status") == "user_confirmed"):
+                and assessment.get("verification_status") == "user_confirmed"
+                and 'manual_success' not in assessment):
             item["needs_review"] = True
             question = "用户已确认悍跳，所跳身份尚待补充"
             if question not in item["review_questions"]:
@@ -225,6 +241,8 @@ def _validate_review(games: list[dict], payload: dict, season: str,
         "pending_count": sum(item["needs_review"] for item in items),
         "user_confirmed_count": user_confirmed_count,
     }
+    if reviewed_count != wolf_count:
+        summary['manual_included_count'] = reviewed_count - wolf_count
     return items, summary
 
 

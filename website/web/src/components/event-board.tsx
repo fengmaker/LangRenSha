@@ -5,7 +5,7 @@ import { BallotPanel } from "@/components/ballot-panel";
 
 function slotLabel(event: GameEvent): string {
   if (event.terminal && event.slot === "exile_result") return "终局说明";
-  if (event.slot_label) return event.slot_label;
+  if (event.slot_label && /[\u4e00-\u9fff]/.test(event.slot_label)) return event.slot_label;
   const labels: Record<string, string> = {
     mixed_blood_model: "混血儿榜样", wolf_attack: "狼队行动", witch_save: "女巫解药", witch_poison: "女巫毒药",
     seer_check: "预言家查验", hunter_state: "猎人状态", mixed_blood_alignment: "混血儿阵营",
@@ -70,7 +70,8 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   if (event.slot === "witch_poison" && event.action === "pass") return `${actor || "女巫"}压毒，本夜未使用毒药。`;
   if (event.action === "pass") return `${actor || slotLabel(event)}本轮未发动。`;
   if (event.action === "none" && event.slot === "exile_result") return event.result === "double_tie" ? "首轮与 PK 轮均平票，本日无人被放逐。" : "本日无人被放逐。";
-  const description = event.description?.replace(/^第\s*\d+\s*(?:夜|天白天)[，,\s]*/, "");
+  const description = event.description?.replace(/^第\s*\d+\s*(?:夜|天白天)[，,\s]*/, "")
+    .replace(/^[a-z][a-z _-]*[：:]\s*/i, `${slotLabel(event)}：`);
   if (description) return description;
   return [actor, actionLabel(event.action), targets ? `目标：${targets}` : ""].filter(Boolean).join("，") + "。";
 }
@@ -137,7 +138,8 @@ export function EventBoard({ rounds, voting = {}, seats = [], terminal = null }:
   rounds: GameRound[]; voting?: VotingData; seats?: Seat[];
   terminal?: { round: number; phase: "night" | "day"; events: GameEvent[] } | null;
 }) {
-  const numbers = [...new Set([...rounds.map((round) => round.number), ...(voting.days ?? []).map((row) => row.day), ...(voting.ballots ?? []).map((row) => row.day), ...(voting.registrations ?? []).map((row) => row.day)])].sort((a, b) => a - b);
+  const numbers = [...new Set([...rounds.map((round) => round.number), ...(voting.days ?? []).map((row) => row.day), ...(voting.ballots ?? []).map((row) => row.day), ...(voting.registrations ?? []).map((row) => row.day)])]
+    .filter((number) => !terminal || number <= terminal.round).sort((a, b) => a - b);
   if (!numbers.length && !terminal?.events.length) return <p className="timeline-empty">当前还没有可整理的日夜行动记录。</p>;
   return <div className="game-timeline">{numbers.map((number) => {
     const round = rounds.find((item) => item.number === number);
@@ -148,7 +150,7 @@ export function EventBoard({ rounds, voting = {}, seats = [], terminal = null }:
         <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☾</span><div><p>夜间行动</p><h3>第 {number} 夜{number === 1 ? " · 首夜" : ""}</h3></div></header>
         <EventList events={night} seats={seats} />
       </section> : null}
-      {day.length || hasVoting(dayVoting) ? <section className="timeline-phase timeline-day" data-phase="day" data-day={number}>
+      {(!terminal || number < terminal.round || terminal.phase === "day") && (day.length || hasVoting(dayVoting)) ? <section className="timeline-phase timeline-day" data-phase="day" data-day={number}>
         <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☼</span><div><p>白天复盘</p><h3>第 {number} 天</h3></div></header>
         <DayRecap events={day} voting={dayVoting} seats={seats} />
       </section> : null}

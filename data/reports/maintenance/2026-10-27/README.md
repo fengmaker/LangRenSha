@@ -17,4 +17,4 @@
 | [baseline.json](baseline.json) | 清理前正式文件保护哈希和原工作区状态，不是后续执行入口 |
 
 整库备份回执位于`data/backups/reorganization-20261027/receipt.json`，网站实际验收报告位于`website/artifacts/publication-acceptance.json`。
-日常从[全流程手册](../../../../docs/15_赛季数据全流程操作手册.md)开始，不需要读取本目录。
+日常从[全流程手册](../../../../docs/01_赛季数据全流程.md)开始，不需要读取本目录。

@@ -98,23 +98,25 @@ class GameScopeTests(unittest.TestCase):
     def test_offline_rules_embed_both_documents_with_hashes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            docs = root / "docs"
-            docs.mkdir()
+            docs = root / "docs/archive/S22"
+            docs.mkdir(parents=True)
             contents = {
-                "10_版型规则与夜间顺序.md": "旧规则正文",
-                "12_S22正式版型规则与录入流程.md": "正式版规则正文",
+                "版型规则与夜间顺序.md": "旧规则正文",
+                "正式版型规则与录入流程.md": "正式版规则正文",
             }
             for name, content in contents.items():
                 (docs / name).write_text(content, encoding="utf-8")
             rules, hashes = embedded_rule_documents(root)
-            self.assertIn(contents["10_版型规则与夜间顺序.md"], rules)
-            self.assertIn(contents["12_S22正式版型规则与录入流程.md"], rules)
+            self.assertIn(contents["版型规则与夜间顺序.md"], rules)
+            self.assertIn(contents["正式版型规则与录入流程.md"], rules)
+            self.assertIn("历史证据资料，规则更新以S22正式规则册为准。", rules)
+            self.assertIn("S22正式录入口径。", rules)
             self.assertEqual(set(hashes), {
-                "docs/10_版型规则与夜间顺序.md",
-                "docs/12_S22正式版型规则与录入流程.md",
+                "docs/archive/S22/版型规则与夜间顺序.md",
+                "docs/archive/S22/正式版型规则与录入流程.md",
             })
-            self.assertEqual(hashes["docs/10_版型规则与夜间顺序.md"],
-                             hashlib.sha256(contents["10_版型规则与夜间顺序.md"].encode()).hexdigest())
+            self.assertEqual(hashes["docs/archive/S22/版型规则与夜间顺序.md"],
+                             hashlib.sha256(contents["版型规则与夜间顺序.md"].encode()).hexdigest())
 
     def test_offline_decision_counts_follow_active_decisions(self):
         decisions, original, additional = attach_original_questions(

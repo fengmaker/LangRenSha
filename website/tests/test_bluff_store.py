@@ -120,6 +120,39 @@ def test_yes_requires_a_supported_claimed_role_except_for_confirmed_missing_meta
     assert summary["pending_count"] == 1
 
 
+def test_manual_results_accept_selected_mixed_blood_and_do_not_require_unasked_metadata():
+    game = sample_game()
+    game['seats'].append({'seat': 7, 'person_id': 'mixed', 'name': '混甲', 'role': '混血儿', 'faction': 'werewolf'})
+    payload = sample_payload(game)
+    first = payload['games'][0]['assessments'][0]
+    first.update(verification_status='user_confirmed', manual_success=False, claimed_role=None, claim_day=None)
+    payload['games'][0]['assessments'].append({
+        'seat': 7, 'name': '混甲', 'physical_role': '混血儿', 'decision': 'yes',
+        'verification_status': 'user_confirmed', 'manual_included': True, 'manual_success': True,
+        'claimed_role': None, 'claim_day': None, 'evidence': [],
+    })
+    items, summary = bluff_store._validate_review([game], payload, 'TST', 1)
+    assert [(i['seat'], i['success']) for i in items] == [(1, False), (4, None), (7, True)]
+    assert not any(i['needs_review'] for i in items)
+    assert summary['yes_count'] == 2 and summary['success_count'] == 1
+
+
+@pytest.mark.parametrize('mutation', ['non_boolean', 'unconfirmed', 'no_decision', 'unconfirmed_inclusion'])
+def test_manual_overrides_require_valid_values_and_explicit_user_confirmation(mutation):
+    game = sample_game()
+    payload = sample_payload(game)
+    row = payload['games'][0]['assessments'][0]
+    row.update(verification_status='user_confirmed', manual_success=True)
+    if mutation == 'non_boolean': row['manual_success'] = 1
+    elif mutation == 'unconfirmed': row['verification_status'] = 'assistant_inferred'
+    elif mutation == 'no_decision': row['decision'] = 'no'
+    else:
+        row.pop('manual_success')
+        row.update(verification_status='assistant_inferred', manual_included=True)
+    with pytest.raises(bluff_store.BluffReviewError):
+        bluff_store._validate_review([game], payload, 'TST', 1)
+
+
 @pytest.mark.parametrize("status,decision", [
     ("user_uncertain", "uncertain"),
     ("user_comment", "no"),

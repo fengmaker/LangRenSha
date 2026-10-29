@@ -1,6 +1,6 @@
 # 数据目录：按职责找资料
 
-从[工作流手册](../docs/15_赛季数据全流程操作手册.md)或`python scripts/workflow.py status --season S23`进入。只读取当前阶段需要的区块。
+从[工作流手册](../docs/01_赛季数据全流程.md)或`python scripts/workflow.py status --season S23`进入。只读取当前阶段需要的区块。
 
 | 目录 | 存什么／日常用途 |
 | --- | --- |
@@ -22,7 +22,7 @@
 
 ## 文件层次
 
-原始JSON按原字节保存；`.srt`与`.阅读.txt`是同一字幕的派生格式，不是独立证据。`dossier.candidate.json`与正式`dossier.json`分别保留；原文、推断、用户确认的区别不因入库而消失。详情见[字段规范](../docs/16_字段证据与交叉复核规范.md)。
+原始JSON按原字节保存；`.srt`与`.阅读.txt`是同一字幕的派生格式，不是独立证据。`dossier.candidate.json`与正式`dossier.json`分别保留；原文、推断、用户确认的区别不因入库而消失。详情见[字段规范](../docs/02_字段证据与交叉复核规范.md)。
 
 `data/seasons/`与`data/raw/`的音频常为硬链接，逻辑目录大小相加会重复计数。不要编辑媒体、随意重排已登记路径或改JSON换行来“美化”，这会破坏来源SHA和回执。
 

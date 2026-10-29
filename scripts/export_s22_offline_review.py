@@ -15,7 +15,7 @@ from game_records import template
 OUTPUT = batch.ROOT / 'data/exports/S22_最终复核_离线分享版.html'
 MANIFEST = batch.ROOT / 'data/reports/S22_离线分享版验收.json'
 FORMAT = 's22-offline-review-v1'
-RULE_DOCS = ('docs/12_S22正式版型规则与录入流程.md', 'docs/10_版型规则与夜间顺序.md')
+RULE_DOCS = ('docs/archive/S22/正式版型规则与录入流程.md', 'docs/archive/S22/版型规则与夜间顺序.md')
 
 
 def compact(value):
@@ -48,7 +48,8 @@ def embedded_rule_documents(root=batch.ROOT):
         path = root / relative_path
         content = path.read_text(encoding='utf-8')
         hashes[relative_path] = hashlib.sha256(path.read_bytes()).hexdigest()
-        label = '历史证据资料，规则更新以第12号规则册为准。\n\n' if path.name.startswith('10_') else '当前正式录入口径。\n\n'
+        label = ('历史证据资料，规则更新以S22正式规则册为准。\n\n'
+                 if path.name == '版型规则与夜间顺序.md' else 'S22正式录入口径。\n\n')
         parts.append(f'# {path.stem}\n\n{label}{content.rstrip()}')
     return '\n\n---\n\n'.join(parts) + '\n', hashes
 

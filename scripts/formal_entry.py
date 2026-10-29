@@ -115,7 +115,7 @@ def audit():
         items.append(result)
     report = {"generated_at": batch.now(), "rule_file": "config/S22_formal_rules.json",
               "rule_sha256": batch.digest(batch.ROOT / "config/S22_formal_rules.json"),
-              "rulebook": "docs/12_S22正式版型规则与录入流程.md",
+              "rulebook": "docs/archive/S22/正式版型规则与录入流程.md",
               "mode": "known_facts_only", "games": len(items),
               "games_with_contradictions": sum(bool(i["errors"]) for i in items),
               "error_count": sum(len(i["errors"]) for i in items),
