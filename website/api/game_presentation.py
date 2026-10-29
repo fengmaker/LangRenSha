@@ -12,7 +12,7 @@ from typing import Any
 
 
 _EMPTY_ACTIONS = {None, "unknown"}
-PRESENTATION_VERSION = 3
+PRESENTATION_VERSION = 5
 _KEEP_UNKNOWN_SLOTS = {
     # Unknown actions that can change survival, information, or skill access.
     "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
@@ -22,6 +22,41 @@ _KEEP_UNKNOWN_SLOTS = {
     "mechanical_day_skill", "puppet_hunter_eligibility",
 }
 _DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile", "disqualify"}
+
+
+def terminal_from_events(game: dict) -> dict | None:
+    """Read an explicit unplayed-day boundary from existing event notes."""
+    boundaries: set[int] = set()
+    patterns = (
+        r"D\s*(\d+)\s*未开始(?!放逐|投票)",
+        r"未进入\s*D\s*(\d+)(?!\s*(?:放逐|投票))",
+        r"不再有\s*D\s*(\d+)\s*白天",
+    )
+    for round_ in game.get('rounds', []):
+        for phase in ('night', 'day'):
+            for event in round_.get(phase, []):
+                result = event.get('result')
+                if isinstance(result, str):
+                    for pattern in patterns:
+                        boundaries.update(int(match.group(1)) for match in re.finditer(pattern, result))
+    if len(boundaries) > 1:
+        raise ValueError('正式事件记录互相指向不同终局白天，需核对终局边界')
+    return {'round': next(iter(boundaries)), 'phase': 'night'} if boundaries else None
+
+
+def terminal_day_events(events: list[dict]) -> list[dict]:
+    """Keep terminal outcomes recorded beside the unplayed day's slots."""
+    return [
+        event for event in events
+        if (event.get('slot') == 'night_deaths'
+            and (event.get('action') not in {None, 'unknown'} or event.get('targets') or event.get('result')))
+        or (event.get('slot') in {'hunter_shot', 'wolf_king_shot'}
+            and (event.get('action') not in {None, 'unknown'} or event.get('blocked_by_game_end') is True))
+        or (event.get('slot') == 'exile_result'
+            and event.get('action') in {'none', 'unknown', 'not_held'} and not event.get('targets')
+            and isinstance(event.get('result'), str)
+            and re.search(r'游戏结束|终局|未进入\s*D\d+|D\d+未开始|交牌', event['result']))
+    ]
 
 
 def _as_int(value: Any) -> int | None:
@@ -58,16 +93,34 @@ def _actor_for_tracking(event: dict, slot_roles: dict[str, list[int]]) -> int | 
     if actor is not None:
         return actor
     slot = event.get("slot")
-    if slot == "witch_poison":
-        matches = slot_roles.get("女巫", []) + slot_roles.get("毒师", [])
-        return matches[0] if len(matches) == 1 else None
-    role = {
-        "witch_save": "女巫", "witch_poison": "女巫",
-        "mixed_blood_model": "混血儿", "mixed_blood_alignment": "混血儿",
-        "hunter_state": "猎人", "hunter_shot": "猎人",
-        "mechanical_action": "机械狼",
-    }.get(slot)
-    matches = slot_roles.get(role, []) if role else []
+    # Empty template events often omit actor. Resolve only a unique physical
+    # role owner so the existing departure/resource filters still apply.
+    roles = {
+        "seer_check": ("预言家", "通灵师"), "guard": ("守卫",),
+        "witch_save": ("女巫",), "witch_poison": ("女巫", "毒师"),
+        "mixed_blood_model": ("混血儿",), "mixed_blood_alignment": ("混血儿",),
+        "mixed_blood_victory": ("混血儿",),
+        "hunter_state": ("猎人",), "hunter_shot": ("猎人",), "puppet_hunter_eligibility": ("猎人",),
+        "mechanical_action": ("机械狼",), "mechanical_knife_status": ("机械狼",),
+        "mechanical_day_skill": ("机械狼",),
+        "wolf_king_state": ("狼王", "黑狼王"), "wolf_king_shot": ("狼王", "黑狼王"),
+        "magician_exchange": ("魔术师",), "magic_duel_magician_swap": ("魔术师",),
+        "sorcerer_exchange": ("狼术师",), "magic_duel_wolf_sorcerer_swap": ("狼术师",),
+        "guile_exchange": ("诡术师",), "dreamer_action": ("摄梦人",),
+        "masquerade_mask": ("假面",), "masquerade_verify": ("假面",), "dancer_dance": ("舞者",),
+        "white_god_reveal": ("白神",), "idiot_reveal": ("白痴",), "knight_duel": ("骑士",),
+        "whiteze_clear": ("白泽",), "whiteze_clear_mark": ("白泽",),
+        "nine_tail_mark": ("九尾狐",), "nine_tail_hunt": ("九尾狐",), "nine_tail_kill": ("九尾狐",),
+        "nine_tail_skill": ("九尾狐",), "nine_tail_vote_mark": ("九尾狐",),
+        "warden_trade_targets": ("典狱长",), "warden_wolf_join": ("典狱长",),
+        "treasure_choice": ("盗宝大师",), "treasure_remainder": ("盗宝大师",),
+        "treasure_alignment": ("盗宝大师",), "treasure_card_skill": ("盗宝大师",),
+        "treasure_extra_attack": ("盗宝大师",), "treasure_masked_evasion": ("盗宝大师",),
+        "masked_wound": ("蒙面人",), "masked_delayed_death": ("蒙面人",),
+        "ghost_bride_select_groom": ("鬼魂新娘",),
+        "extra_speech": ("定序王子",), "sequential_prince_skill": ("定序王子",),
+    }.get(slot, ())
+    matches = [seat for role in roles for seat in slot_roles.get(role, [])]
     return matches[0] if len(matches) == 1 else None
 
 
@@ -639,6 +692,13 @@ def _should_omit(
 ) -> bool:
     slot = event.get("slot")
     actor = _actor_for_tracking(event, role_seats)
+    if not any(event.get(key) for key in ('targets', 'votes', 'effects')) and not event.get('blocked_by_game_end'):
+        if slot == 'self_destruct' and event.get('action') == 'none':
+            return True
+        if (slot == 'hunter_shot' and event.get('action') == 'unavailable'
+                and isinstance(event.get('result'), str)
+                and re.search(r'未出局|未死亡', event['result'])):
+            return True
     if (event.get("action") in {"unavailable", "not_applicable", "pass", "none"}
             and not any(event.get(key) for key in ("targets", "votes", "effects"))):
         if actor is not None and actor in eliminated_before_round:
@@ -873,10 +933,17 @@ def build_game_presentation(game: dict) -> dict:
 
     Each returned event is a copy of its source GameEvent and retains its
     original fields.  Inferred hunter states and voting outcomes gain
-    ``inferred`` and ``inference_note``.  Phase boundaries are untouched.
+    ``inferred`` and ``inference_note``. Explicit terminal boundaries exclude
+    unplayed phases, including snapshots published before boundary recognition.
     """
     source_rounds = game.get("rounds")
     source_rounds = source_rounds if isinstance(source_rounds, list) else []
+    terminal_observation = game.get('terminal_observation') or terminal_from_events(game)
+    terminal = None
+    if (isinstance(terminal_observation, dict)
+            and type(terminal_observation.get('round')) is int
+            and terminal_observation.get('phase') in {'night', 'day'}):
+        terminal = {**terminal_observation, 'events': deepcopy(game.get('terminal_events') or [])}
     role_seats = _role_seats(game)
     poison_use_nights = _witch_poison_use_nights(game, role_seats)
     seats = _seat_rows(game)
@@ -900,6 +967,9 @@ def build_game_presentation(game: dict) -> dict:
             omitted += 1
             continue
         number = source_round.get("number")
+        if terminal and type(number) is int and number > terminal['round']:
+            omitted += sum(len(source_round.get(phase) or []) for phase in ('night', 'day'))
+            continue
         source_night = source_round.get("night")
         source_day = source_round.get("day")
         source_night = source_night if isinstance(source_night, list) else []
@@ -910,6 +980,20 @@ def build_game_presentation(game: dict) -> dict:
         # database-backed event dictionaries passed by the API.
         night = [deepcopy(event) for event in source_night if isinstance(event, dict)]
         day = [deepcopy(event) for event in source_day if isinstance(event, dict)]
+        if terminal and number == terminal['round'] and terminal['phase'] == 'night':
+            outcomes = terminal_day_events(day)
+            terminal['events'].extend(outcomes)
+            omitted += len(day) - len(outcomes)
+            day = []
+            night_outcomes = [event for event in night
+                              if event.get('slot') == 'night_deaths' and not _is_empty_unknown(event)]
+            terminal['events'].extend(night_outcomes)
+            night = [event for event in night if event not in night_outcomes]
+        if any(event.get('slot') == 'night_deaths' and not _is_empty_unknown(event) for event in night + day):
+            for events in (night, day):
+                blanks = [event for event in events if event.get('slot') == 'night_deaths' and _is_empty_unknown(event)]
+                omitted += len(blanks)
+                events[:] = [event for event in events if event not in blanks]
         for event in night:
             if (event.get("slot") == "witch_poison"
                     and _actor_for_tracking(event, role_seats) in role_seats.get("毒师", [])):
@@ -1059,18 +1143,7 @@ def build_game_presentation(game: dict) -> dict:
         for event in (round_.get(phase) if isinstance(round_, dict) else []) or []
         if not isinstance(event, dict)
     )
-    terminal_observation = game.get("terminal_observation")
-    terminal = None
-    if (isinstance(terminal_observation, dict)
-            and type(terminal_observation.get("round")) is int
-            and terminal_observation.get("phase") in {"night", "day"}):
-        terminal_events = game.get("terminal_events")
-        terminal = {
-            "round": terminal_observation["round"],
-            "phase": terminal_observation["phase"],
-            "events": [{**deepcopy(event), "terminal": True}
-                       for event in terminal_events if isinstance(event, dict)]
-            if isinstance(terminal_events, list) else [],
-        }
+    if terminal:
+        terminal['events'] = [{**event, 'terminal': True} for event in terminal['events']]
     return {"version": PRESENTATION_VERSION, "rounds": output_rounds,
             "omitted_events": omitted, "terminal": terminal}

@@ -34,6 +34,13 @@ def physical_wolf(game: dict, seat: dict) -> bool:
                 and effective_faction(game, seat) == "werewolf")
 
 
+def included_in_review(game: dict, seat: dict, assessment: dict | None) -> bool:
+    return physical_wolf(game, seat) or bool(
+        assessment and assessment.get('manual_included') is True
+        and assessment.get('verification_status') == 'user_confirmed'
+        and assessment.get('decision') == 'yes')
+
+
 def source_fingerprint(game: dict) -> str:
     """Bind inference to identity, vote and result facts, ignoring presentation."""
     voting = game.get("voting") or {}
@@ -181,9 +188,9 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
         valid = source is not None and source.get("source_fingerprint") == fingerprint
         assessments = {row["seat"]: row for row in source.get("assessments", [])} if valid else {}
         for seat in game.get("seats", []):
-            if not physical_wolf(game, seat):
-                continue
             record = assessments.get(seat["seat"])
+            if not included_in_review(game, seat, record):
+                continue
             questions = list(record.get("review_questions", [])) if record else []
             decision = record.get("decision", "uncertain") if record else "uncertain"
             if not valid:
@@ -200,9 +207,17 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
             actual_day=record.get("actual_claim_day") if record else None
             if success_day=='later' and type(actual_day) is int and actual_day>2:
                 success_day=actual_day
-            success = evaluate_success(game, seat["seat"], success_day,
-                                       result_review=source.get('result_review') if valid else None) if decision == "yes" else {
-                "value": None, "reasons": [], "questions": []}
+            manual_success = bool(record and record.get('verification_status') == 'user_confirmed'
+                                  and 'manual_success' in record and decision == 'yes')
+            if manual_success:
+                value = record['manual_success']
+                label = '成功' if value is True else '失败' if value is False else '待定'
+                success = {'value': value, 'reasons': [{'kind': 'user_review', 'text': f'用户人工复核：{label}。'}],
+                           'questions': ['用户将成功结果保留为待定'] if value is None else []}
+            else:
+                success = evaluate_success(game, seat["seat"], success_day,
+                                           result_review=source.get('result_review') if valid else None) if decision == "yes" else {
+                    "value": None, "reasons": [], "questions": []}
             questions.extend(success["questions"])
             if decision == "uncertain" and not questions:
                 questions.append("发言归属或是否正式跳信息神待复核")
@@ -239,6 +254,8 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
                 "verification_status": record.get("verification_status", "assistant_inferred") if record else "assistant_inferred",
                 "evidence": evidence,
                 "success": success["value"], "success_reasons": success["reasons"],
+                "success_source": 'user' if manual_success else 'rules',
+                "manual_included": not physical_wolf(game, seat),
                 "review_questions": list(dict.fromkeys(questions)),
                 "needs_review": needs_review,
                 "requires_user_review":user_review,"assistant_pending":assistant_pending,"review_stage":stage,

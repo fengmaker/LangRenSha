@@ -1,4 +1,5 @@
 from copy import deepcopy
+import pytest
 
 from website.api.bluffs import aggregate_bluffs, evaluate_success, review_items, source_fingerprint
 
@@ -106,6 +107,34 @@ def test_mixed_blood_and_real_information_roles_are_not_wolf_card_bluffs():
     stats = aggregate_bluffs([game], review(game))
     assert stats["wolf"]["bluff_count"] == 0
     assert stats["seer"]["bluff_count"] == 0
+
+
+@pytest.mark.parametrize('value', [True, False, None])
+def test_manual_success_overrides_rules_including_explicit_unknown(value):
+    game = sample(exile=2)
+    payload = review(game)
+    payload['games'][0]['assessments'][0].update(
+        verification_status='user_confirmed', manual_success=value, claim_day=None)
+    item = review_items([game], payload)[0]
+    assert item['success'] is value
+    assert item['success_source'] == 'user'
+    assert item['success_reasons'][0]['kind'] == 'user_review'
+    metric = aggregate_bluffs([game], payload)['wolf']['bluff_success_rate']
+    assert metric['denominator'] == (value is not None)
+    assert metric['numerator'] == (value is True)
+
+
+def test_only_explicitly_included_user_reviewed_mixed_blood_is_counted():
+    game = sample()
+    game['seats'][0]['role'] = '混血儿'
+    payload = review(game)
+    row = payload['games'][0]['assessments'][0]
+    row.update(physical_role='混血儿', verification_status='user_confirmed',
+               manual_included=True, manual_success=True)
+    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 1
+    assert review_items([game], payload)[0]['manual_included'] is True
+    row['verification_status'] = 'assistant_inferred'
+    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 0
 
 
 def test_unknown_badge_after_deferral_is_not_proven_absent_by_later_not_applicable():

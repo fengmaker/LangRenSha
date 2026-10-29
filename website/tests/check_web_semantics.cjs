@@ -79,4 +79,30 @@ assert.match(terminal, /data-phase="terminal"/);
 assert.match(terminal, /本夜终局出局：4号乙（猎人）/);
 assert.doesNotMatch(terminal, /天亮，昨夜出局/);
 
-console.log('5 actual component SSR assertions passed');
+const localized = render({ rounds: [{ number: 1, night: [
+  { slot: 'wolf_attack', slot_label: 'wolf attack', action: 'attack', targets: [10] },
+  { slot: 'night_deaths', slot_label: 'night deaths', action: 'unknown' },
+  { slot: 'witch_poison', slot_label: '毒师毒药', action: 'pass' },
+], day: [
+  { slot: 'sheriff_candidates', slot_label: 'sheriff candidates', action: 'register',
+    description: '第1天白天，sheriff candidates：登记上警' },
+  { slot: 'exile_vote', slot_label: 'exile vote', action: 'vote', description: '第1天白天，exile vote：投票' },
+] }] });
+assert.doesNotMatch(localized, />wolf attack<|>night deaths<|night deaths的具体情况/);
+assert.match(localized, /狼队行动/);
+assert.match(localized, /天亮情况的具体情况仍待核实/);
+assert.match(localized, /毒师毒药/);
+assert.doesNotMatch(localized, /sheriff candidates：|exile vote：/);
+assert.match(localized, /竞选报名：登记上警/);
+assert.match(localized, /放逐投票：投票/);
+
+const endedNight = render({
+  rounds: [{ number: 4, night: [], day: [{ slot: 'exile_result', action: 'unknown' }] },
+    { number: 5, night: [{ slot: 'wolf_attack', action: 'unknown' }], day: [] }],
+  voting: { days: [{ day: 4, exile: 'unknown' }] },
+  terminal: { round: 4, phase: 'night', events: [{ slot: 'night_deaths', action: 'die', targets: [4], terminal: true }] },
+});
+assert.doesNotMatch(endedNight, /data-phase="day" data-day="4"|data-day="5"/);
+assert.match(endedNight, /本夜终局出局：4号乙（猎人）/);
+
+console.log('7 actual component SSR scenarios passed');

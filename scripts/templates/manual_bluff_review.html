@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>__REVIEW_SEASON__ 悍跳人工复核</title>
+<style>
+:root{--ink:#183847;--muted:#637985;--line:#d9e3e8;--blue:#176b86;--blue-dark:#124e63;--pale:#f3f7f8;--gold:#fff6df;--gold-line:#e7cf91;--green:#2f7658;--red:#9b4c3e}
+*{box-sizing:border-box}body{margin:0;background:#f2f6f8;color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid #b9cbd3;border-radius:7px;background:#fff;color:var(--ink);padding:8px 12px}button:hover{border-color:var(--blue);color:var(--blue-dark)}button:disabled{cursor:not-allowed;opacity:.5}a{color:var(--blue-dark)}header{padding:18px clamp(14px,3vw,30px);background:#17485b;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}h1{font-size:23px;line-height:1.3;margin:0}header p{margin:5px 0 0;color:#d4e8ef;font-size:13px}.top-actions,.date-actions,.button-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.primary:hover{background:var(--blue-dark);color:#fff}.import-label{display:inline-flex;align-items:center;cursor:pointer;border:1px solid #b9cbd3;border-radius:7px;background:#fff;color:var(--ink);padding:8px 12px}.import-label:hover{border-color:var(--blue);color:var(--blue-dark)}.datebar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 6px #1838470b}.datebar select{min-width:145px;font-weight:650}.status{margin:0 auto;padding:8px 16px;min-height:37px;color:var(--muted);font-size:13px}main{max-width:1180px;margin:0 auto;padding:6px 16px 40px}.game-card{background:#fff;border:1px solid var(--line);border-radius:11px;margin:12px 0 18px;padding:clamp(13px,2.5vw,22px);box-shadow:0 2px 8px #18384708;overflow-wrap:anywhere}.game-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}.game-head h2{font-size:19px;line-height:1.4;margin:0}.game-meta{font-size:13px;color:var(--muted);margin-top:4px}.status-pill{border-radius:20px;padding:3px 10px;background:#edf2f4;color:var(--muted);font-size:12px;white-space:nowrap}.status-pill.done{background:#e8f4ed;color:var(--green)}.section-title{font-size:15px;margin:17px 0 8px}.seats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.seat{border:1px solid var(--line);border-radius:7px;padding:8px 10px;min-width:0;background:#fff}.seat strong{display:block;font-size:14px}.seat span{display:block;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.media-grid.single{grid-template-columns:minmax(0,1fr)}.media-item{min-width:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--pale)}.media-item a{display:block;text-decoration:none}.media-item img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#e9eff2}.media-caption{padding:6px 8px;font-size:12px;color:var(--muted)}.media-caption strong{color:var(--ink);font-weight:600}.source-links{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.source-links a{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:6px 10px;text-decoration:none;font-size:13px;background:#fff}.source-links a:hover{border-color:var(--blue)}.source-details{font-size:12px;color:var(--muted);margin-top:5px}.source-details code{overflow-wrap:anywhere;white-space:pre-wrap}.source-details div{margin-top:5px}details.reference{border:1px solid var(--line);border-radius:7px;background:#fbfcfd;padding:9px 11px;margin:12px 0}details summary{cursor:pointer;font-weight:650}pre.reference-text{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:#344e59;margin:10px 0 0;max-height:520px;overflow:auto}.review-box{border-top:1px solid var(--line);margin-top:17px;padding-top:12px}.checks{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 12px}.check{display:flex;gap:8px;align-items:center;font-weight:650}.check input{width:18px;height:18px;accent-color:var(--blue)}.conflict-hint{min-height:20px;color:#8b571a;font-size:13px;margin:0 0 8px}.candidate-list{display:grid;gap:10px}.candidate-row{border:1px solid var(--line);border-radius:8px;padding:10px;background:#fbfcfd;display:grid;grid-template-columns:minmax(150px,1fr) minmax(125px,.8fr) minmax(180px,1.4fr) auto;gap:9px;align-items:end}.field{min-width:0}.field label,.note-label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.field select,.field input,.note-label textarea,.game-note{width:100%;min-width:0;border:1px solid #c1d0d6;border-radius:6px;background:#fff;padding:8px;color:var(--ink)}.field select:focus,.note-label textarea:focus,.game-note:focus,select:focus{outline:2px solid #91bdcd;outline-offset:1px}.field select{min-height:40px}.candidate-row textarea{min-height:40px;height:40px;resize:vertical}.remove-row{color:var(--red);padding:7px 10px}.empty-row{color:var(--muted);font-size:13px;padding:8px 0}.game-note-wrap{margin-top:12px}.game-note{min-height:64px;resize:vertical}.add-row{margin-top:10px}.copy-panel{max-width:1180px;margin:0 auto 14px;padding:0 16px}.copy-box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px}.copy-box textarea{width:100%;min-height:180px;resize:vertical;border:1px solid #c1d0d6;border-radius:6px;padding:8px;font:12px/1.5 ui-monospace,Consolas,monospace}.notice{color:#715320;background:var(--gold);border:1px solid var(--gold-line);border-radius:7px;padding:9px 12px;margin:6px 0 14px;font-size:13px}.no-games{padding:28px;background:#fff;border:1px solid var(--line);border-radius:9px;text-align:center;color:var(--muted)}[hidden]{display:none!important}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.field textarea{width:100%;min-width:0;border:1px solid #c1d0d6;border-radius:6px;background:#fff;padding:8px;color:var(--ink)}
+@media(max-width:760px){.seats{grid-template-columns:repeat(2,minmax(0,1fr))}.candidate-row{grid-template-columns:1fr 1fr}.candidate-row .note-field{grid-column:1/-1}.candidate-row .remove-wrap{grid-column:1/-1;text-align:right}.media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){body{font-size:14px}.datebar{gap:6px;padding:8px}.datebar button{padding:7px 9px}.datebar select{min-width:120px;max-width:44vw}.seats{grid-template-columns:1fr 1fr;gap:6px}.seat{padding:7px}.media-grid{grid-template-columns:1fr}.candidate-row{grid-template-columns:1fr}.candidate-row .note-field,.candidate-row .remove-wrap{grid-column:auto}.game-card{padding:12px;margin:10px 0}.top-actions button,.import-label{font-size:13px;padding:7px 9px}header{padding:15px}.status{padding:7px 12px}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>__REVIEW_SEASON__ 悍跳人工复核</h1><p data-summary>逐局填写你确认的结果；空白不会自动视为“无人悍跳”。</p></div>
+  <div class="top-actions">
+    <button type="button" class="primary" data-action="export" data-export>导出复核 JSON</button>
+    <label class="import-label">导入复核 JSON<input type="file" accept=".json,application/json" data-action="import" data-import hidden></label>
+    <button type="button" data-action="show-json" data-copy-open>显示／复制 JSON</button>
+  </div>
+</header>
+<nav class="datebar" aria-label="按日期浏览">
+  <button type="button" id="prev-date" data-action="previous-date" data-prev aria-label="前一天">前一天</button>
+  <label for="date-select" class="visually-hidden">选择日期</label>
+  <select id="date-select" data-action="select-date" data-date></select>
+  <button type="button" id="next-date" data-action="next-date" data-next aria-label="后一天">后一天</button>
+</nav>
+<p class="status" role="status" aria-live="polite" data-status>正在加载复核页…</p>
+<div class="copy-panel" data-copy-panel hidden>
+  <div class="copy-box"><p>这是当前全部复核内容。若浏览器没有开始下载，可复制下面的 JSON。</p>
+    <textarea aria-label="完整复核 JSON" data-copy-text readonly spellcheck="false"></textarea>
+    <div class="button-row"><button type="button" data-action="copy-json" data-copy>复制 JSON</button><button type="button" data-action="close-json" data-copy-close>收起</button></div>
+  </div>
+</div>
+<main id="games" aria-live="polite"></main>
+
+<script>
+(() => {
+  'use strict';
+  const DATA = __REVIEW_DATA__;
+  const FORMAT = 'masters-manual-bluff-review-v1';
+  const SEASON = DATA.season;
+  const statusEl = document.querySelector('[data-status]');
+  const gameList = document.querySelector('#games');
+  const dateSelect = document.querySelector('[data-date]');
+  const copyPanel = document.querySelector('[data-copy-panel]');
+  const copyText = document.querySelector('[data-copy-text]');
+  let currentDate = '';
+  let drafts = new Map();
+  let saveTimer = 0;
+  let storageUnavailable = false;
+
+  function say(message) {
+    statusEl.textContent = message;
+  }
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function safeHref(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    if (/^(https?:|file:)/i.test(raw)) return raw;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(raw)) return '';
+    return raw;
+  }
+  function gameById(id) {
+    return DATA.games.find(game => game.review_id === id);
+  }
+  function seatsFor(game) {
+    const supplied = Array.isArray(game.seats) ? game.seats : [];
+    const bySeat = new Map();
+    for (const seat of supplied) {
+      if (Number.isInteger(seat.seat) && seat.seat >= 1 && seat.seat <= 12 && !bySeat.has(seat.seat)) bySeat.set(seat.seat, seat);
+    }
+    return Array.from({length:12}, (_, i) => bySeat.get(i + 1) || {seat:i + 1, name:'資料待補', role:'資料待補'});
+  }
+  function emptyReview(game) {
+    return {id:game.review_id, reviewed:false, no_bluff:false, rows:[{seat:null,success:'',note:''}], note:''};
+  }
+  function validateSource() {
+    if (!DATA || DATA.format !== FORMAT || DATA.season !== SEASON || !Array.isArray(DATA.games) || !Array.isArray(DATA.dates) || typeof DATA.source_fingerprint !== 'string' || !DATA.source_fingerprint) return '复核资料格式不正确或尚未载入。';
+    const ids = new Set();
+    for (const game of DATA.games) {
+      if (!game || typeof game.review_id !== 'string' || !game.review_id || ids.has(game.review_id)) return '复核资料中有缺失或重复的对局编号。';
+      ids.add(game.review_id);
+      if (!Array.isArray(game.seats) || game.seats.length !== 12) return `对局 ${game.review_id} 的座位资料不是完整12席。`;
+      const seatIds = game.seats.map(seat => seat && seat.seat);
+      if (seatIds.some(seat => !Number.isInteger(seat) || seat < 1 || seat > 12) || new Set(seatIds).size !== 12) return `对局 ${game.review_id} 的座位编号无效。`;
+    }
+    const dates = new Set(DATA.dates);
+    if (DATA.games.some(game => !dates.has(game.date))) return '对局日期不在日期导航资料中。';
+    return '';
+  }
+  function normalizeReview(game, raw) {
+    return {id:game.review_id,reviewed:raw.reviewed,no_bluff:raw.no_bluff,rows:raw.rows.map(row => ({seat:row.seat == null ? null : row.seat,success:row.success,note:row.note})),note:raw.note || ''};
+  }
+  function validateImport(payload) {
+    const errors = [];
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return {error:'文件内容不是复核 JSON 对象。'};
+    if (payload.format !== FORMAT) errors.push('格式版本不匹配。');
+    if (payload.season !== SEASON || payload.season !== DATA.season) errors.push('赛季不匹配。');
+    if (payload.source_fingerprint !== DATA.source_fingerprint) errors.push('资料指纹不匹配，请使用同一版复核资料。');
+    if (!Array.isArray(payload.games) || payload.games.length !== DATA.games.length) errors.push('文件中的对局数量与当前复核页不一致。');
+    if (errors.length) return {error:errors.join('')};
+    const incoming = new Map();
+    for (const item of payload.games) {
+      if (!item || typeof item !== 'object' || Array.isArray(item)) { errors.push('有一条对局记录格式不正确。'); continue; }
+      const source = gameById(item.review_id);
+      if (!source) { errors.push(`找不到对局编号 ${String(item.review_id || '')}。`); continue; }
+      if (incoming.has(item.review_id)) { errors.push(`对局编号 ${item.review_id} 重复。`); continue; }
+      for (const key of ['bvid','cid','page','date','title']) {
+        if (item[key] !== source[key]) errors.push(`对局 ${item.review_id} 的${key}与当前资料不一致。`);
+      }
+      if (!Array.isArray(item.seats) || item.seats.length !== 12) errors.push(`对局 ${item.review_id} 没有完整12席资料。`);
+      else {
+        const importedSeats=item.seats.map(person=>person && person.seat);
+        if(importedSeats.some(seat=>!Number.isInteger(seat)||seat<1||seat>12)||new Set(importedSeats).size!==12) errors.push(`对局 ${item.review_id} 的导入座位编号无效。`);
+        for(const person of source.seats){
+          const copy=item.seats.find(candidate=>candidate && candidate.seat===person.seat);
+          if(!copy || copy.name!==person.name || copy.role!==person.role) errors.push(`对局 ${item.review_id} 的${person.seat}号座位资料与当前版本不一致。`);
+        }
+      }
+      const review = Array.isArray(item.reviews) ? item.reviews.find(row => row && row.id === item.review_id) : null;
+      if (!review || !Array.isArray(item.reviews) || item.reviews.length !== 1) { errors.push(`对局 ${item.review_id} 的复核记录编号无效。`); continue; }
+      if (typeof review.reviewed !== 'boolean' || typeof review.no_bluff !== 'boolean' || !Array.isArray(review.rows) || (review.note != null && typeof review.note !== 'string')) { errors.push(`对局 ${item.review_id} 的复核内容格式不正确。`); continue; }
+      const usedSeats = new Set();
+      const rows = [];
+      for (const row of review.rows) {
+        if (!row || typeof row !== 'object' || Array.isArray(row)) { errors.push(`对局 ${item.review_id} 有无效的悍跳人记录。`); continue; }
+        const seat = row.seat == null ? null : row.seat;
+        if (seat !== null && (!Number.isInteger(seat) || seat < 1 || seat > 12 || !source.seats.some(person => person.seat === seat))) { errors.push(`对局 ${item.review_id} 有无效座位编号。`); continue; }
+        if (seat !== null && usedSeats.has(seat)) { errors.push(`对局 ${item.review_id} 的${seat}号被重复填写。`); continue; }
+        if (seat !== null) usedSeats.add(seat);
+        if (!['','yes','no','unknown'].includes(row.success) || typeof row.note !== 'string') { errors.push(`对局 ${item.review_id} 的成功状态或备注格式不正确。`); continue; }
+        rows.push({seat,success:row.success,note:row.note});
+      }
+      if (review.no_bluff && rows.some(row => row.seat !== null)) errors.push(`对局 ${item.review_id} 同时勾选“无人悍跳”并填写了悍跳人。`);
+      if(!rows.length) rows.push({seat:null,success:'',note:''});
+      incoming.set(item.review_id, {id:item.review_id,reviewed:review.reviewed,no_bluff:review.no_bluff,rows,note:review.note || ''});
+    }
+    if (incoming.size !== DATA.games.length) errors.push('文件未包含全部对局，未导入任何内容。');
+    if (errors.length) return {error:errors.join('\n')};
+    return {reviews:incoming};
+  }
+  function storageKey() {
+    return `manual-bluff-review:${SEASON}:${DATA.source_fingerprint}`;
+  }
+  function scheduleSave() {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveDraft, 250);
+  }
+  function saveDraft() {
+    saveTimer = 0;
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(exportObject()));
+      storageUnavailable = false;
+      say('草稿已自动保存到此浏览器。');
+    } catch (error) {
+      storageUnavailable = true;
+      say('浏览器未能保存草稿；当前页面中的填写仍保留，建议导出或复制 JSON。');
+    }
+  }
+  function loadDraft() {
+    try {
+      const saved = localStorage.getItem(storageKey());
+      if (!saved) { say('填写会自动保存在此浏览器；空白不代表“无人悍跳”。'); return; }
+      const parsed = JSON.parse(saved);
+      const result = validateImport(parsed);
+      if (result.error) { say('旧草稿与当前复核资料不一致，未载入。请导出旧草稿备份后再继续。'); return; }
+      drafts = result.reviews;
+      say('已恢复此浏览器里的草稿。');
+    } catch (error) {
+      storageUnavailable = true;
+      say('无法读取浏览器草稿；当前填写从空白开始，请注意导出备份。');
+    }
+  }
+  function exportObject() {
+    return {format:FORMAT,season:DATA.season,source_fingerprint:DATA.source_fingerprint,dates:[...DATA.dates],games:DATA.games.map(game => {
+      const metadata=JSON.parse(JSON.stringify(game));
+      if(Array.isArray(metadata.images)) metadata.images=metadata.images.map(image=>({path:image.path||null,href:image.href||null,sha256:image.sha256||null,time_ms:image.time_ms==null?null:image.time_ms,label:image.label||null}));
+      metadata.identity_sha256=game.identity_sha256 || game.identity_reviewed_sha256 || (game.source_metadata && (game.source_metadata.identity_sha256 || game.source_metadata.identity_reviewed_sha256)) || null;
+      metadata.transcript_sha256=game.transcript_sha256 || (game.source_metadata && game.source_metadata.transcript_sha256) || null;
+      metadata.source_paths=game.source_paths || (game.source_metadata && game.source_metadata.source_paths) || null;
+      metadata.evidence_note=game.evidence_note || '';
+      return {...metadata,seats:seatsFor(game),reviews:[{
+        id:game.review_id,reviewed:reviewFor(game).reviewed,no_bluff:reviewFor(game).no_bluff,
+        rows:reviewFor(game).rows.filter(row => row.seat !== null || row.success !== '' || row.note.trim() !== '').map(row => ({seat:row.seat,success:row.success,note:row.note})),
+        note:reviewFor(game).note
+      }]};
+    })};
+  }
+  function reviewFor(game) {
+    if (!drafts.has(game.review_id)) drafts.set(game.review_id, emptyReview(game));
+    return drafts.get(game.review_id);
+  }
+  function jsonString() {
+    return JSON.stringify(exportObject(), null, 2);
+  }
+  function formatStatus(game) {
+    const review=reviewFor(game);
+    if (review.reviewed) return ['已复核','done'];
+    if (review.no_bluff || review.rows.some(row => row.seat !== null || row.success !== '' || row.note.trim())) return ['已填写',''];
+    return ['未填写',''];
+  }
+  function renderSeats(game) {
+    return seatsFor(game).map(person => `<div class="seat"><strong>${escapeHtml(person.seat)}号　${escapeHtml(person.name || '资料待补')}</strong><span>底牌：${escapeHtml(person.role || '资料待补')}</span></div>`).join('');
+  }
+  function renderImages(game) {
+    const images=Array.isArray(game.images)?game.images:[];
+    if (!images.length) return '<p class="empty-row">暂无截图资料。</p>';
+    return `<div class="media-grid ${images.length===1?'single':''}">${images.map((image,index)=>{
+      const href=safeHref(image.href || image.path);
+      if(!href) return `<div class="media-item"><div class="media-caption">截图 ${index+1} 无法打开</div></div>`;
+      const label=image.label || `截图 ${index+1}`;
+      const details=(image.sha256||image.path||image.time_ms!=null)?`<details class="source-details"><summary>来源信息</summary>${image.time_ms!=null?`<div>画面时点：<code>${escapeHtml(image.time_ms)} ms</code></div>`:''}${image.sha256?`<div>SHA-256：<code>${escapeHtml(image.sha256)}</code></div>`:''}${image.path?`<div>路径：<code>${escapeHtml(image.path)}</code></div>`:''}</details>`:'';
+      return `<div class="media-item"><a href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="打开原尺寸${escapeHtml(label)}"><img src="${escapeHtml(href)}" alt="${escapeHtml(label)}" loading="lazy"></a><div class="media-caption"><strong>${escapeHtml(label)}</strong>${details}</div></div>`;
+    }).join('')}</div>`;
+  }
+  function renderSourceDetails(game) {
+    const entries=[];
+    for(const key of ['identity_sha256','transcript_sha256']) if(game[key]) entries.push([key,game[key]]);
+    const paths=game.source_paths;
+    if(Array.isArray(paths)) paths.forEach((value,index)=>entries.push([`来源 ${index+1}`,value]));
+    else if(paths && typeof paths==='object') Object.entries(paths).forEach(([key,value])=>entries.push([key,value]));
+    if(!entries.length) return '';
+    return `<details class="source-details"><summary>资料来源信息</summary>${entries.map(([key,value])=>`<div>${escapeHtml(key)}：<code>${escapeHtml(value)}</code></div>`).join('')}</details>`;
+  }
+  function renderLinks(game) {
+    const links=game.links || {};
+    const defs=[['video','打开原视频'],['transcript','打开转写'],['identity','打开身份资料']];
+    const items=defs.map(([key,label])=>{
+      const href=safeHref(links[key]);
+      return href?`<a href="${escapeHtml(href)}" target="_blank" rel="noopener">${label}</a>`:'';
+    }).filter(Boolean);
+    return items.length?`<div class="source-links">${items.join('')}</div>`:'<p class="empty-row">原视频、转写或身份资料入口待补。</p>';
+  }
+  function renderRows(game, review) {
+    if (!review.rows.length) return '<p class="empty-row" data-no-rows>尚未填写悍跳人。点“添加一条”开始记录；也可明确勾选“本局无人悍跳”。</p>';
+    const seats=seatsFor(game);
+    return review.rows.map((row,index)=>`<div class="candidate-row" data-row="${index}">
+      <div class="field"><label for="person-${escapeHtml(game.review_id)}-${index}">悍跳人</label><select id="person-${escapeHtml(game.review_id)}-${index}" data-field="seat" data-seat><option value="">请选择座位</option>${seats.map(person=>`<option value="${person.seat}" ${row.seat===person.seat?'selected':''}>${person.seat}号 ${escapeHtml(person.name)}（${escapeHtml(person.role)}）</option>`).join('')}</select></div>
+      <div class="field"><label for="success-${escapeHtml(game.review_id)}-${index}">是否成功</label><select id="success-${escapeHtml(game.review_id)}-${index}" data-field="success" data-success><option value="" ${row.success===''?'selected':''}>未填写</option><option value="yes" ${row.success==='yes'?'selected':''}>成功</option><option value="no" ${row.success==='no'?'selected':''}>失败</option><option value="unknown" ${row.success==='unknown'?'selected':''}>待定</option></select></div>
+      <div class="field note-field"><label for="note-${escapeHtml(game.review_id)}-${index}">备注</label><textarea id="note-${escapeHtml(game.review_id)}-${index}" data-field="candidate-note" data-row-note>${escapeHtml(row.note)}</textarea></div>
+      <div class="remove-wrap"><button type="button" class="remove-row" data-action="remove" data-remove="${index}">删除这条</button></div>
+    </div>`).join('');
+  }
+  function renderGame(game) {
+    const review=reviewFor(game);
+    const [label,pillClass]=formatStatus(game);
+    return `<article class="game-card" data-review-id="${escapeHtml(game.review_id)}" data-game="${escapeHtml(game.review_id)}">
+      <div class="game-head"><div><h2>${escapeHtml(game.title || '标题待补')}</h2><div class="game-meta">${escapeHtml(game.date)}　·　${escapeHtml(game.bvid)}　·　第 ${escapeHtml(game.page)} 页</div></div><span class="status-pill ${pillClass}">${label}</span></div>
+      ${game.evidence_note?`<div class="notice"><strong>资料说明：</strong>${escapeHtml(game.evidence_note)}</div>`:''}
+      <h3 class="section-title">12人座位与底牌</h3><div class="seats">${renderSeats(game)}</div>
+      <h3 class="section-title">截图</h3>${renderImages(game)}
+      ${renderLinks(game)}
+      ${renderSourceDetails(game)}
+      <details class="reference"><summary>查看复盘原文</summary><pre class="reference-text">${escapeHtml(game.reference_text || '暂无复盘原文。')}</pre></details>
+      <section class="review-box" aria-label="人工复核表单">
+        <h3 class="section-title">我的复核</h3>
+        <div class="checks"><label class="check"><input type="checkbox" data-field="no-bluff" data-no-bluff ${review.no_bluff?'checked':''}>本局无人悍跳</label><label class="check"><input type="checkbox" data-field="reviewed" data-reviewed ${review.reviewed?'checked':''}>本局已复核</label></div>
+        <p class="conflict-hint" data-hint aria-live="polite"></p>
+        <div class="candidate-list" data-rows>${renderRows(game,review)}</div>
+        <button class="add-row" type="button" data-action="add" data-add>添加一条</button>
+        <div class="game-note-wrap"><label class="note-label" for="game-note-${escapeHtml(game.review_id)}">本局备注（可选）</label><textarea class="game-note" id="game-note-${escapeHtml(game.review_id)}" data-field="game-note" data-game-note>${escapeHtml(review.note)}</textarea></div>
+      </section>
+    </article>`;
+  }
+  function renderDate() {
+    const daily=DATA.games.filter(game=>game.date===currentDate);
+    gameList.innerHTML=daily.length?daily.map(renderGame).join(''):'<div class="no-games">这一天没有对局资料。</div>';
+    document.querySelector('[data-prev]').disabled=DATA.dates.indexOf(currentDate)<=0;
+    document.querySelector('[data-next]').disabled=DATA.dates.indexOf(currentDate)>=DATA.dates.length-1;
+    bindCards(daily);
+  }
+  function bindCards(gamesForDate) {
+    for (const game of gamesForDate) {
+      const card=gameList.querySelector(`[data-game="${CSS.escape(game.review_id)}"]`);
+      const review=reviewFor(game);
+      const hint=card.querySelector('[data-hint]');
+      const rowContainer=card.querySelector('[data-rows]');
+      const noBluff=card.querySelector('[data-no-bluff]');
+      const reviewed=card.querySelector('[data-reviewed]');
+      function refreshRows() {
+        rowContainer.innerHTML=renderRows(game,review);
+        bindRows();
+      }
+      function updateCardState() {
+        const [label,pillClass]=formatStatus(game);
+        const pill=card.querySelector('.status-pill');pill.textContent=label;pill.className=`status-pill ${pillClass}`;
+      }
+      function bindRows() {
+        rowContainer.querySelectorAll('[data-seat]').forEach((select,index)=>select.addEventListener('change',()=>{
+          const seat=select.value===''?null:Number(select.value);
+          if(seat!==null && review.rows.some((row,i)=>i!==index && row.seat===seat)){
+            select.value=review.rows[index].seat==null?'':String(review.rows[index].seat);
+            hint.textContent=`${seat}号已在本局另一条记录中填写；同一席不能重复。`;
+            return;
+          }
+          if(seat!==null && review.no_bluff){select.value='';hint.textContent='本局已标记为无人悍跳。请先取消该勾选，再填写悍跳人。';return;}
+          review.rows[index].seat=seat;hint.textContent='';updateCardState();scheduleSave();
+        }));
+        rowContainer.querySelectorAll('[data-success]').forEach((select,index)=>select.addEventListener('change',()=>{review.rows[index].success=select.value;updateCardState();scheduleSave();}));
+        rowContainer.querySelectorAll('[data-row-note]').forEach((area,index)=>area.addEventListener('input',()=>{review.rows[index].note=area.value;updateCardState();scheduleSave();}));
+        rowContainer.querySelectorAll('[data-remove]').forEach(button=>button.addEventListener('click',()=>{review.rows.splice(Number(button.dataset.remove),1);if(!review.rows.length)review.rows.push({seat:null,success:'',note:''});hint.textContent='';refreshRows();updateCardState();scheduleSave();}));
+      }
+      noBluff.addEventListener('change',()=>{
+        if(noBluff.checked && review.rows.some(row=>row.seat!==null || row.success!=='' || row.note.trim()!=='')){
+          noBluff.checked=false;
+          hint.textContent='本局已有填写内容，未勾选“无人悍跳”，也没有删除任何内容。请先检查并手动清空或删除相应记录。';
+          return;
+        }
+        review.no_bluff=noBluff.checked;hint.textContent='';updateCardState();scheduleSave();
+      });
+      reviewed.addEventListener('change',()=>{review.reviewed=reviewed.checked;updateCardState();scheduleSave();});
+      card.querySelector('[data-add]').addEventListener('click',()=>{
+        if(review.no_bluff){hint.textContent='本局已标记为无人悍跳；请先取消该勾选，再添加候选。';return;}
+        if(review.rows.length>=12){hint.textContent='每局最多添加12条记录。';return;}
+        review.rows.push({seat:null,success:'',note:''});hint.textContent='';refreshRows();updateCardState();scheduleSave();
+      });
+      card.querySelector('[data-game-note]').addEventListener('input',event=>{review.note=event.target.value;updateCardState();scheduleSave();});
+      bindRows();
+    }
+  }
+  function openCopyPanel() {
+    copyText.value=jsonString();copyPanel.hidden=false;copyText.focus();copyText.select();
+    say('已显示当前 JSON；可复制备用。');
+  }
+  function downloadJson() {
+    const text=jsonString();
+    try {
+      const blob=new Blob([text],{type:'application/json;charset=utf-8'});
+      const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${SEASON}_manual_bluff_review_${DATA.source_fingerprint.slice(0,12)}.json`;link.style.display='none';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+      say('已导出复核 JSON；也可使用“显示／复制 JSON”备份。');
+    } catch(error) { openCopyPanel();say('浏览器无法下载文件，已展开 JSON 供复制。'); }
+  }
+  async function copyJson() {
+    copyText.value=jsonString();copyPanel.hidden=false;copyText.focus();copyText.select();
+    try { await navigator.clipboard.writeText(copyText.value);say('JSON 已复制。'); }
+    catch(error) { try { const ok=document.execCommand('copy');say(ok?'JSON 已复制。':'请手动复制下方 JSON。'); } catch(_) { say('请手动复制下方 JSON。'); } }
+  }
+  async function importJson(file) {
+    if(!file)return;
+    try {
+      const payload=JSON.parse(await file.text());
+      const result=validateImport(payload);
+      if(result.error){say(`导入未完成：${result.error}`);return;}
+      drafts=result.reviews;
+      renderDate();
+      scheduleSave();
+      say('复核内容已完整导入。');
+    } catch(error) { say('导入未完成：文件不是有效 JSON。当前复核内容没有更改。'); }
+  }
+  function init() {
+    const sourceError=validateSource();
+    if(sourceError){say(sourceError);gameList.innerHTML=`<div class="no-games">${escapeHtml(sourceError)}</div>`;return;}
+    for(const game of DATA.games)drafts.set(game.review_id,emptyReview(game));
+    const dates=[...new Set(DATA.dates)].sort();
+    DATA.dates=dates;
+    document.querySelector('[data-summary]').textContent=`${dates.length}个日期 / ${DATA.games.length}条记录。逐局填写你确认的结果；空白不会自动视为“无人悍跳”。`;
+    dateSelect.innerHTML=dates.map(date=>`<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`).join('');
+    currentDate=dates[0]||'';
+    if(!currentDate){say('没有可浏览的对局日期。');return;}
+    dateSelect.value=currentDate;
+    loadDraft();
+    renderDate();
+    document.querySelector('[data-prev]').addEventListener('click',()=>{const i=DATA.dates.indexOf(currentDate);if(i>0){currentDate=DATA.dates[i-1];dateSelect.value=currentDate;renderDate();}});
+    document.querySelector('[data-next]').addEventListener('click',()=>{const i=DATA.dates.indexOf(currentDate);if(i<DATA.dates.length-1){currentDate=DATA.dates[i+1];dateSelect.value=currentDate;renderDate();}});
+    dateSelect.addEventListener('change',()=>{currentDate=dateSelect.value;renderDate();});
+    document.querySelector('[data-export]').addEventListener('click',downloadJson);
+    document.querySelector('[data-copy-open]').addEventListener('click',openCopyPanel);
+    document.querySelector('[data-copy]').addEventListener('click',copyJson);
+    document.querySelector('[data-copy-close]').addEventListener('click',()=>{copyPanel.hidden=true;});
+    document.querySelector('[data-import]').addEventListener('change',event=>{importJson(event.target.files[0]);event.target.value='';});
+    window.addEventListener('beforeunload',()=>{if(saveTimer)saveDraft();});
+  }
+  init();
+})();
+</script>
+</body>
+</html>

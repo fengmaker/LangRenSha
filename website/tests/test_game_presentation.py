@@ -4,6 +4,8 @@ from copy import deepcopy
 import json
 from pathlib import Path
 
+import pytest
+
 from website.api.game_presentation import build_game_presentation
 
 
@@ -40,6 +42,48 @@ def game(seats, rounds, *, board="mixed_blood", voting=None):
 def get_event(presentation, number, phase, slot):
     round_ = next(row for row in presentation["rounds"] if row["number"] == number)
     return next((row for row in round_[phase] if row["slot"] == slot), None)
+
+
+def test_real_s23_untriggered_hunter_and_no_self_destruct_slots_are_hidden():
+    folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEur'))
+    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    before = deepcopy(source)
+    presentation = build_game_presentation(source)
+    for number in (1, 2):
+        assert get_event(presentation, number, 'day', 'hunter_shot') is None
+        assert get_event(presentation, number, 'day', 'self_destruct')['action'] == 'self_destruct'
+    assert get_event(presentation, 3, 'day', 'hunter_shot')['action'] == 'shoot'
+    assert get_event(presentation, 3, 'day', 'exile_result')['action'] == 'exile'
+    assert get_event(presentation, 3, 'day', 'self_destruct') is None
+    assert source == before
+
+
+def test_unavailable_hunter_explanations_and_actual_outcomes_remain_visible():
+    for result, flags in [
+        ('猎人中毒，不能开枪', {}),
+        ('最后一神出局，对局结束', {'blocked_by_game_end': True}),
+        (None, {}),
+    ]:
+        shot = event('hunter_shot', 'unavailable', actor=6, result=result)
+        shot.update(flags)
+        source = game([(6, '猎人', None)], [{'number': 1, 'night': [], 'day': [shot]}])
+        assert get_event(build_game_presentation(source), 1, 'day', 'hunter_shot') is not None
+
+
+def test_real_s23_explicit_terminal_hides_d4_and_keeps_the_final_double_death():
+    folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEid'))
+    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    before = deepcopy(source)
+    presentation = build_game_presentation(source)
+    assert get_event(presentation, 1, 'night', 'night_deaths') is None
+    assert get_event(presentation, 1, 'day', 'night_deaths')['action'] == 'peaceful'
+    assert presentation['rounds'][-1]['day'] == []
+    terminal = presentation['terminal']
+    assert (terminal['round'], terminal['phase']) == (4, 'night')
+    assert [(e['slot'], e['targets']) for e in terminal['events']] == [('night_deaths', [3, 7])]
+    assert terminal['events'][0]['terminal'] is True
+    assert get_event(presentation, 4, 'night', 'night_deaths') is None
+    assert source == before
 
 
 def test_exchange_settlement_resolves_the_seer_feedback_and_actual_knife():
@@ -348,6 +392,59 @@ def test_dead_roles_are_removed_from_later_nights_without_losing_facts():
     assert get_event(presentation, 2, "night", "white_god_reveal") is None
     assert get_event(presentation, 2, "night", "wolf_attack")["targets"] == [8]
     assert get_event(presentation, 2, "night", "hunter_state") is None
+
+
+def test_real_s23_seer_slots_end_after_the_confirmed_d2_death():
+    folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEid'))
+    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    before = deepcopy(source)
+    presentation = build_game_presentation(source)
+    assert get_event(presentation, 2, 'night', 'seer_check')['actor'] == 6
+    assert get_event(presentation, 2, 'day', 'night_deaths')['targets'] == [6]
+    for number in (3, 4):
+        assert get_event(presentation, number, 'night', 'seer_check') is None
+    assert source == before
+
+
+@pytest.mark.parametrize('slot,role', [
+    ('seer_check', '预言家'), ('seer_check', '通灵师'), ('guard', '守卫'),
+    ('witch_save', '女巫'), ('witch_poison', '毒师'), ('hunter_state', '猎人'),
+    ('mechanical_knife_status', '机械狼'), ('mechanical_action', '机械狼'),
+    ('magician_exchange', '魔术师'), ('sorcerer_exchange', '狼术师'),
+    ('magic_duel_magician_swap', '魔术师'), ('magic_duel_wolf_sorcerer_swap', '狼术师'),
+    ('masquerade_verify', '假面'), ('dancer_dance', '舞者'), ('dreamer_action', '摄梦人'),
+    ('nine_tail_mark', '九尾狐'), ('whiteze_clear_mark', '白泽'),
+])
+def test_role_owned_slots_without_an_actor_do_not_return_after_departure(slot, role):
+    source = game([(6, role, None)], [
+        {'number': 1, 'night': [], 'day': [event('night_deaths', 'die', targets=[6])]},
+        {'number': 2, 'night': [event(slot), event(slot, 'unavailable'), event(slot, 'pass')], 'day': []},
+    ])
+    before = deepcopy(source)
+    assert build_game_presentation(source)['rounds'][1]['night'] == []
+    assert source == before
+
+
+def test_anonymous_slot_owner_must_be_unique_and_death_triggered_skills_remain():
+    source = game([(6, '猎人', None), (7, '狼王', None)], [
+        {'number': 1, 'night': [], 'day': [
+            event('night_deaths', 'die', targets=[6, 7]),
+            event('hunter_shot', 'shoot', actor=6, targets=[3]),
+            event('wolf_king_shot', 'shoot', actor=7, targets=[4]),
+        ]},
+        {'number': 2, 'night': [event('hunter_state'), event('wolf_king_state')], 'day': [event('wolf_king_shot')]},
+    ])
+    presentation = build_game_presentation(source)
+    assert get_event(presentation, 1, 'day', 'hunter_shot')['targets'] == [3]
+    assert get_event(presentation, 1, 'day', 'wolf_king_shot')['targets'] == [4]
+    assert presentation['rounds'][1]['night'] == []
+    assert presentation['rounds'][1]['day'] == []
+
+    ambiguous = game([(6, '预言家', None), (7, '通灵师', None)], [
+        {'number': 1, 'night': [], 'day': [event('night_deaths', 'die', targets=[6])]},
+        {'number': 2, 'night': [event('seer_check')], 'day': []},
+    ])
+    assert get_event(build_game_presentation(ambiguous), 2, 'night', 'seer_check') is not None
 
 
 def test_hunter_who_shot_does_not_return_for_a_later_night_slot():

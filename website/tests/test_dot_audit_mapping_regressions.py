@@ -203,6 +203,15 @@ def test_day_specific_absence_of_exile_is_not_a_terminal_boundary():
     assert publisher._terminal_from_dossier(dossier) is None
 
 
+def test_s23_no_d4_day_wording_uses_the_explicit_terminal_boundary():
+    _, public = published_game('S23', 'BV17QJh6qEid')
+    assert public['terminal_observation'] == {'round': 4, 'phase': 'night'}
+    assert public['rounds'][-1]['day'] == []
+    assert all(row['day'] < 4 for row in public['voting']['days'])
+    final_night = public['rounds'][-1]['night']
+    assert next(e for e in final_night if e['slot'] == 'night_deaths')['targets'] == [3, 7]
+
+
 def test_publication_format_changes_when_public_projection_contract_changes():
     assert publisher.PUBLICATION_FORMAT_VERSION >= 5
 

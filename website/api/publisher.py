@@ -16,11 +16,12 @@ from psycopg import sql
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
+from website.api.game_presentation import terminal_from_events, terminal_day_events
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
 PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
-PUBLICATION_FORMAT_VERSION = 6
+PUBLICATION_FORMAT_VERSION = 7
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
 EVENT_FIELDS = (
@@ -203,23 +204,10 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
 
 
 def _terminal_from_dossier(dossier: dict) -> dict | None:
-    """Recognize only explicit statements that a corresponding day never began."""
-    boundaries: set[int] = set()
-    for round_ in dossier.get("rounds", []):
-        for phase in ("night", "day"):
-            for event in round_.get(phase, []):
-                result = event.get("result")
-                if not isinstance(result, str):
-                    continue
-                for match in re.finditer(r"D\s*(\d+)\s*未开始(?!放逐|投票)", result):
-                    boundaries.add(int(match.group(1)))
-                for match in re.finditer(r"未进入\s*D\s*(\d+)(?!\s*(?:放逐|投票))", result):
-                    boundaries.add(int(match.group(1)))
-    if len(boundaries) > 1:
-        raise PublishError("正式事件记录互相指向不同终局白天，需核对终局边界")
-    if not boundaries:
-        return None
-    return {"round": next(iter(boundaries)), "phase": "night"}
+    try:
+        return terminal_from_events(dossier)
+    except ValueError as exc:
+        raise PublishError(str(exc)) from exc
 
 
 def _public_supplemental_events(supplemental: dict) -> list[dict]:
@@ -369,20 +357,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
             terminal_round = next((row for row in public_rounds if row["number"] == number), None)
             if terminal_round is None:
                 raise PublishError("终局轮次不在正式档案范围内")
-            terminal_events = [
-                event for event in terminal_round["day"]
-                if (event.get("slot") == "night_deaths"
-                    and (event.get("action") not in {None, "unknown"}
-                         or event.get("targets") or event.get("result")))
-                or (event.get("slot") in {"hunter_shot", "wolf_king_shot"}
-                    and (event.get("action") not in {None, "unknown"}
-                         or event.get("blocked_by_game_end") is True))
-                or (event.get("slot") == "exile_result"
-                    and event.get("action") in {"none", "unknown", "not_held"}
-                    and not event.get("targets")
-                    and isinstance(event.get("result"), str)
-                    and re.search(r"游戏结束|终局|未进入\s*D\d+|D\d+未开始|交牌", event["result"]))
-            ]
+            terminal_events = terminal_day_events(terminal_round['day'])
             terminal_round["day"] = []
         public_voting = _clip_voting(public_voting, number, phase)
 
