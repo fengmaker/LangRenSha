@@ -21,13 +21,12 @@ WEIBO_ROOT = ROOT / "data" / "weibo" / "2026-05-26_2026-10-20"
 MAPPING_CSV = WEIBO_ROOT / "参赛名单" / "人名去重_照片映射.csv"
 SOURCE_INDEX_JSON = WEIBO_ROOT / "人名复核" / "照片人名_来源索引.json"
 REVIEW_CSV = WEIBO_ROOT / "人名复核" / "S22-S23_照片人名_人工复核.csv"
-S23_PROGRESS_JSON = ROOT / "data" / "reports" / "S23_逐局复核进度.json"
 S23_SCHEDULE_CSV = WEIBO_ROOT / "比赛排班.csv"
 S21_SOURCE_INDEX_JSON = ROOT / "data/weibo/2026-02-24_2026-05-26/S21_姓名照片来源索引.json"
 
 OUTPUT_JSON = ROOT / "website" / "api" / "player_photos.json"
 OUTPUT_ASSETS = ROOT / "website" / "assets" / "player-photos"
-OUTPUT_REPORT = ROOT / "data" / "reports" / "S23_网站照片准备验收.json"
+OUTPUT_REPORT = ROOT / "data/reports/S23/S23_网站照片准备验收.json"
 S21_OUTPUT_REPORT = ROOT / "data/reports/S21/S21_网站照片准备验收.json"
 
 APPROVED_STATUSES = {"确认无误", "已修正"}
@@ -78,27 +77,19 @@ def official_s22_names() -> set[str]:
     return names
 
 
-def s23_candidate_names() -> tuple[set[str], list[str]]:
-    """Use canonical names in the 75 reviewed candidate dossiers, not the Weibo roster."""
-    progress = read_json(S23_PROGRESS_JSON)
-    dossier_paths = progress.get("candidate_dossiers")
-    if progress.get("planned") != 75 or not isinstance(dossier_paths, list) or len(dossier_paths) != 75:
-        raise ValueError("S23 photo targets require the 75 candidate dossiers in the review progress file")
-
+def s23_formal_names() -> tuple[set[str], list[str]]:
+    """Include every currently archived game, including approved incremental games."""
+    dossier_paths = sorted((ROOT / "data/games/S23").glob("*/dossier.json"))
+    if not dossier_paths:
+        raise ValueError("S23 photo targets require formal game dossiers")
     names: set[str] = set()
     normalized_paths: list[str] = []
-    for relative_path in dossier_paths:
-        if not isinstance(relative_path, str):
-            raise ValueError("S23 candidate dossier paths must be strings")
-        dossier_path = (ROOT / relative_path).resolve()
-        if not dossier_path.is_relative_to((ROOT / "data" / "games" / "S23").resolve()):
-            raise ValueError(f"S23 candidate dossier path is outside data/games/S23: {relative_path}")
-        if not dossier_path.is_file():
-            raise FileNotFoundError(dossier_path)
+    for dossier_path in dossier_paths:
+        relative_path = dossier_path.relative_to(ROOT).as_posix()
         dossier = read_json(dossier_path)
         seats = dossier.get("seats")
         if not isinstance(seats, list) or not seats:
-            raise ValueError(f"S23 candidate dossier has no seats: {relative_path}")
+            raise ValueError(f"S23 formal dossier has no seats: {relative_path}")
         missing_seats = [
             seat for seat in seats
             if not isinstance(seat, dict)
@@ -106,11 +97,60 @@ def s23_candidate_names() -> tuple[set[str], list[str]]:
             or not seat["name"].strip()
         ]
         if missing_seats:
-            raise ValueError(f"S23 candidate dossier has unnamed seats: {relative_path}")
+            raise ValueError(f"S23 formal dossier has unnamed seats: {relative_path}")
         names.update(seat["name"].strip() for seat in seats)
         normalized_paths.append(relative_path.replace("\\", "/"))
 
     return names, normalized_paths
+
+
+def s23_incremental_photo_choices() -> tuple[dict[str, dict[str, Any]], list[Path]]:
+    """Bind explicitly read nameplates to the collector's original post and image."""
+    choices: dict[str, dict[str, Any]] = {}
+    indexes = sorted((ROOT / "data/weibo").glob("*/S23_增量照片名牌核对.json"))
+    raw_root = (ROOT / "data/raw/weibo").resolve()
+    for index_path in indexes:
+        index = read_json(index_path)
+        if (index.get("season") != "S23"
+                or index.get("verification_method") != "assistant_nameplate_read"):
+            raise ValueError(f"Invalid incremental photo nameplate index: {index_path}")
+        manifest_path = (ROOT / index["source_manifest"]).resolve()
+        if not manifest_path.is_relative_to(raw_root):
+            raise ValueError("Incremental photo manifest must be inside data/raw/weibo")
+        archive = read_json(manifest_path)
+        if str(archive["request"]["uid"]) != "7525583841":
+            raise ValueError("Incremental photos must come from the official Weibo account")
+        posts = {str(post["post_id"]): post for post in archive["posts"]}
+        for row in index["photos"]:
+            name, label = row["name"].strip(), row["nameplate_text"].strip()
+            if not name or not label or (name.casefold() != label.casefold() and not row.get("alias_evidence")):
+                raise ValueError(f"Incremental photo needs a readable nameplate and name evidence: {name}")
+            post = posts[str(row["post_id"])]
+            if (str(post.get("author_uid")) != "7525583841"
+                    or ("第23季" not in post.get("text", "") and "S23" not in post.get("text", ""))):
+                raise ValueError(f"Incremental photo is not an official S23 post: {name}")
+            number = row["image_index"]
+            if type(number) is not int or not 1 <= number <= len(post["images"]):
+                raise ValueError(f"Incremental photo image index is invalid: {name}")
+            image = post["images"][number - 1]
+            source = (ROOT / row["source_image"]).resolve()
+            archived_source = (manifest_path.parent / image["file"].replace("\\", "/")).resolve()
+            if (not source.is_relative_to(raw_root) or source != archived_source
+                    or image.get("status") != "downloaded"
+                    or image.get("sha256") != row["sha256"]
+                    or sha256_file(source) != row["sha256"]
+                    or row["source_url"] != post["post_url"]):
+                raise ValueError(f"Incremental photo original post, path or hash mismatch: {name}")
+            date.fromisoformat(row["source_date"])
+            choice = {"photo_id": f"WB{row['post_id']}_{number:02d}",
+                      "sha256": row["sha256"], "source_path": source,
+                      "occurrence": {"phase": "正赛", "event_date": row["source_date"],
+                                     "source_url": row["source_url"]},
+                      "nameplate_text": label, "source_index": index_path.relative_to(ROOT).as_posix()}
+            prior = choices.get(name)
+            if prior is None or occurrence_key(choice["occurrence"]) < occurrence_key(prior["occurrence"]):
+                choices[name] = choice
+    return choices, indexes
 
 
 def alias_is_supported(
@@ -334,7 +374,8 @@ def build() -> dict[str, Any]:
     reviews_by_id = {row["照片编号"]: row for row in review_rows}
     pictures_by_sha = {picture["image_sha256"]: picture for picture in source_index.get("pictures", [])}
 
-    s23_names, candidate_dossiers = s23_candidate_names()
+    s23_names, formal_dossiers = s23_formal_names()
+    incremental_choices, incremental_indexes = s23_incremental_photo_choices()
     preserved_s22 = existing_s22_players()
     old_manifest = read_json(OUTPUT_JSON) if OUTPUT_JSON.is_file() else {"players": {}, "missing": []}
     prior_players = old_manifest.get("players", {})
@@ -390,13 +431,15 @@ def build() -> dict[str, Any]:
             else:
                 if not manifest_record_is_reviewed(
                     "S23", name, current_record, mappings_by_name, reviews_by_id,
-                    pictures_by_sha, OUTPUT_ASSETS,
+                    pictures_by_sha, OUTPUT_ASSETS, incremental_choices=incremental_choices,
                 ):
                     raise ValueError(f"Existing S23 photo record is not backed by its reviewed source: {name}")
                 direct_count += 1
             continue
 
         choice, reason = choose_for_player("S23", name, mappings_by_name, reviews_by_id, pictures_by_sha)
+        if choice is None:
+            choice = incremental_choices.get(name)
         mapping_kind = "exact_name"
         alias = None
         if choice is None and not mappings_by_name.get(("S23", name)):
@@ -436,6 +479,7 @@ def build() -> dict[str, Any]:
         item for item in old_manifest.get("missing", [])
         if item.get("season") != "S23" and (s21_report is None or item.get("season") != "S21")
     ]
+    players = {**{season: players[season] for season in prior_players if season in players}, **players}
     result = {
         "schema_version": 1,
         "players": players,
@@ -458,9 +502,9 @@ def build() -> dict[str, Any]:
                 "schema_version": 1,
                 "generated_at_utc": datetime.now(timezone.utc).isoformat(),
                 "season": "S23",
-                "target_source": "data/reports/S23/S23_逐局复核进度.json candidate_dossiers canonical seat names",
-                "candidate_dossier_count": len(candidate_dossiers),
-                "candidate_dossiers": candidate_dossiers,
+                "target_source": "data/games/S23/*/dossier.json canonical seat names",
+                "formal_dossier_count": len(formal_dossiers),
+                "formal_dossiers": formal_dossiers,
                 "target_player_count": len(s23_names),
                 "target_player_names": sorted(s23_names),
                 "directly_matched_count": direct_count,
@@ -476,11 +520,19 @@ def build() -> dict[str, Any]:
                     season: len(records) for season, records in players.items()
                 },
                 "inputs": [
-                    str(S23_PROGRESS_JSON.relative_to(ROOT)).replace("\\", "/"),
                     str(MAPPING_CSV.relative_to(ROOT)).replace("\\", "/"),
                     str(REVIEW_CSV.relative_to(ROOT)).replace("\\", "/"),
                     str(SOURCE_INDEX_JSON.relative_to(ROOT)).replace("\\", "/"),
                     str(S23_SCHEDULE_CSV.relative_to(ROOT)).replace("\\", "/"),
+                    *(path.relative_to(ROOT).as_posix() for path in incremental_indexes),
+                ],
+                "incremental_nameplate_sources": [
+                    {"name": name, "photo_id": choice["photo_id"], "sha256": choice["sha256"],
+                     "source_image": choice["source_path"].relative_to(ROOT).as_posix(),
+                     "source_url": choice["occurrence"]["source_url"],
+                     "source_date": choice["occurrence"]["event_date"],
+                     "nameplate_text": choice["nameplate_text"], "source_index": choice["source_index"]}
+                    for name, choice in sorted(incremental_choices.items()) if name in s23_names
                 ],
             },
             ensure_ascii=False,
@@ -541,8 +593,13 @@ def manifest_record_is_reviewed(
     reviews_by_id: dict[str, dict[str, str]],
     pictures_by_sha: dict[str, dict[str, Any]],
     assets_root: Path,
+    *, incremental_choices: dict[str, dict[str, Any]] | None = None,
 ) -> bool:
     """Validate a retained manifest entry without changing its selected image."""
+    incremental = (incremental_choices or {}).get(name) if season == "S23" else None
+    if incremental is not None and record == record_for_choice(season, incremental):
+        asset_path = assets_root / record["asset"]
+        return asset_path.is_file() and sha256_file(asset_path) == incremental["sha256"]
     photo_id = record.get("photo_id", "")
     image_sha = record.get("sha256", "")
     if record.get("season") != season or record.get("asset") != f"{season}/{image_sha}.jpg":

@@ -54,7 +54,13 @@ def _expected_game_count(season: str) -> int | None:
         raise BluffReviewError("赛季正式范围配置无法读取") from exc
     settings = registry["seasons"].get(season, {}).get("formal_import", {})
     count = (settings.get("scope") or {}).get("scored_total")
-    return count if type(count) is int and count >= 0 else None
+    if type(count) is int and count >= 0:
+        from scripts.incremental_scope import approved_incremental_count
+        try:
+            return count + approved_incremental_count(publisher.PACKAGE_ROOT, season)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            raise BluffReviewError(f"新增对局人工确认范围无效：{error}") from error
+    return None
 
 
 def _validate_review(games: list[dict], payload: dict, season: str,

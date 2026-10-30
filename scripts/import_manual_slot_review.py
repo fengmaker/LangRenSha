@@ -11,8 +11,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
-PAGE = Path("data/reports/shared/日夜待核槽位人工复核_20261030.html")
-INPUT = Path("日夜槽位复核结果_20261030.json")
+PAGE = Path("data/manual_review/日夜待核槽位人工复核_20261030.html")
+INPUT = Path("data/manual_review/feedback/日夜槽位复核结果_20261030.json")
 REVIEW_DIR = Path("data/extractions/S21/game_reviews")
 ARCHIVE_DIR = Path("data/extractions/shared/manual_slot_reviews")
 FORMAT = "masters-pending-slot-review-v1"

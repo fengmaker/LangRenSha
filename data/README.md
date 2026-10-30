@@ -11,6 +11,7 @@
 | [extractions](extractions/README.md) | 按季提取的身份／票型／日夜候选、画面、推断、用户意见和证据定位 |
 | [games](games/README.md) | 按季的正式dossier/voting/endgame及必要补充、候选与导入回执；网站发布输入 |
 | [reports](reports/README.md) | 阶段进度、验收、交付和本次维护记录；直接记录做到哪一步 |
+| [manual_review](manual_review/README.md) | 人工复核统一入口，保存待核页面、清单和用户导出反馈 |
 | [exports](exports/README.md) | 当前可浏览／分享的离线复核页、目录CSV和交付包；从保留源数据生成 |
 | [archive](archive/README.md) | 数据库内容寻址快照、被引用的旧版本和更正前资料；按哈希追溯，不当普通缓存 |
 | [weibo](weibo/README.md) | 官方帖子阅读目录、排班、人名／照片映射与确认记录 |
@@ -18,7 +19,7 @@
 | [diagnostics](diagnostics/README.md) | 限制、缺源、字幕可见性的诊断原件；不是赛事事实 |
 | [candidates](candidates/README.md)、[reviews](reviews/README.md) | 早期已登记候选／反馈；历史只读，不用于当前正式入口 |
 
-当前资料：[S22媒体](seasons/S22/README.md)、[S23媒体](seasons/S23/README.md)；正式范围148+75=223局。媒体条目163+87包含范围外内容，不能混用计数。
+当前资料：[S22媒体](seasons/S22/README.md)、[S23媒体](seasons/S23/README.md)；S22/S23正式范围148+84=232局。媒体原件包含范围外内容，不能直接用媒体条目数代替正式局数。
 
 ## 文件层次
 

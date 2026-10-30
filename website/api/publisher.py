@@ -706,6 +706,12 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         raise PublishError("指定样例不在已确认正式范围内或不存在")
     if not sample:
         expected = rules["formal"].get("scope", {}).get("scored_total", scope.get("expected_games"))
+        if type(expected) is int:
+            from scripts.incremental_scope import approved_incremental_count
+            try:
+                expected += approved_incremental_count(root, season)
+            except (OSError, ValueError, KeyError, TypeError) as error:
+                raise PublishError(f"新增对局人工确认范围无效：{error}") from error
         if type(expected) is int and len(entries) != expected:
             raise PublishError("正式范围数量与已确认统计口径不一致")
     hashes = []

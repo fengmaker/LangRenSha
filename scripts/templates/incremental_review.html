@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>__SEASON__ 逐局 AI 候选复核</title>
+  <style>
+    :root { color-scheme: light; --ink:#20302d; --muted:#61716c; --line:#dce5df; --paper:#fff; --canvas:#f2f6f2; --accent:#176b55; --soft:#e8f2ed; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font:15px/1.62 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; }
+    a { color:#155d83; overflow-wrap:anywhere; }
+    button, input, textarea { font:inherit; }
+    .shell { max-width:1440px; margin:0 auto; padding:28px 24px 64px; }
+    .intro { background:linear-gradient(135deg,#e1f1e9,#f8fbf7 70%); border:1px solid #d5e6dc; border-radius:18px; padding:24px 26px; }
+    h1 { margin:0 0 8px; font-size:clamp(24px,4vw,36px); line-height:1.22; letter-spacing:.01em; }
+    h2 { margin:0; font-size:22px; line-height:1.35; }
+    h3 { margin:0 0 12px; font-size:18px; }
+    h4 { margin:0; font-size:17px; }
+    h5 { margin:14px 0 8px; font-size:15px; }
+    h6 { margin:10px 0 4px; }
+    p { margin:8px 0; }
+    .intro p { max-width:1000px; }
+    .toolbar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:18px; }
+    .toolbar button, .file-button { border:1px solid var(--accent); border-radius:9px; background:var(--accent); color:white; padding:9px 14px; font-weight:650; cursor:pointer; }
+    .toolbar button:hover, .file-button:hover { filter:brightness(.94); }
+    .file-button { display:inline-flex; align-items:center; }
+    .file-button input { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+    #status { min-height:1.6em; color:#365b4c; font-weight:600; }
+    .notice { border-left:4px solid #b37b23; padding:8px 12px; background:#fff8e8; border-radius:4px; }
+    .game-list { display:grid; gap:22px; margin-top:22px; }
+    .game-card { min-width:0; overflow:hidden; background:var(--paper); border:1px solid var(--line); border-radius:16px; box-shadow:0 3px 14px #20302d0b; }
+    .game-head { padding:22px 24px 16px; background:#fbfdfb; border-bottom:1px solid var(--line); }
+    .game-card > section { padding:20px 24px; border-bottom:1px solid #e9efeb; }
+    .game-card > section:last-child { border-bottom:0; }
+    .eyebrow { margin:0 0 5px; color:var(--accent); font-size:13px; font-weight:700; }
+    .ident, .muted { color:var(--muted); font-size:13px; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:8px; color:#4e5f59; font-size:13px; }
+    .links { display:flex; flex-wrap:wrap; gap:12px; }
+    .table-wrap { width:100%; overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { padding:9px 11px; text-align:left; vertical-align:top; border-bottom:1px solid #e7ede9; }
+    th { background:#f1f6f2; color:#42564d; font-size:12px; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .events { min-width:700px; }
+    .events td:nth-child(1) { min-width:160px; }
+    .events td:nth-child(5) { min-width:180px; }
+    .kv-list { margin:0; }
+    .kv { display:grid; grid-template-columns:minmax(105px, 160px) minmax(0,1fr); gap:8px; padding:3px 0; }
+    .kv dt { color:var(--muted); }
+    .kv dd { margin:0; overflow-wrap:anywhere; white-space:pre-wrap; }
+    .phase { margin-top:15px; }
+    .phase h5 { margin-top:0; }
+    .round { padding:16px 0; border-bottom:1px dashed var(--line); }
+    .round:last-child { border-bottom:0; }
+    .ballot { padding:13px 0 17px; border-bottom:1px dashed var(--line); }
+    .ballot:last-child { border-bottom:0; }
+    .evidence-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:12px; }
+    .evidence { min-width:0; padding:14px; border:1px solid var(--line); border-radius:10px; background:#fcfdfc; }
+    blockquote { margin:10px 0; padding:10px 12px; border-left:3px solid #91b9a5; background:#f1f7f3; white-space:pre-wrap; }
+    .evidence img { display:block; max-width:100%; max-height:540px; height:auto; margin-top:10px; border:1px solid var(--line); border-radius:7px; }
+    .other { margin:7px 0; }
+    .other summary { cursor:pointer; color:#315e4b; }
+    .review-controls { background:#f9fcfa; }
+    .reviewed { display:flex; align-items:center; gap:10px; font-weight:700; cursor:pointer; }
+    .reviewed input { width:20px; height:20px; accent-color:var(--accent); }
+    .note-label { display:block; margin-top:14px; font-weight:650; }
+    textarea { display:block; width:100%; min-height:104px; resize:vertical; margin-top:6px; padding:10px 12px; border:1px solid #aebdb4; border-radius:9px; background:white; color:var(--ink); }
+    textarea:focus, button:focus-visible, a:focus-visible, input:focus-visible { outline:3px solid #75b7a1; outline-offset:2px; }
+    @media (max-width:600px) {
+      .shell { padding:12px 10px 40px; }
+      .intro { padding:18px 16px; border-radius:13px; }
+      .game-card { border-radius:12px; }
+      .game-head, .game-card > section { padding:16px 14px; }
+      .kv { grid-template-columns:minmax(90px, 34%) minmax(0,1fr); gap:6px; }
+      .toolbar { gap:8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="intro">
+      <h1>__SEASON__ 逐局 AI 候选复核</h1>
+      <p>页面展示每局的 AI 座位、物理身份、日夜行动、投票与证据。所有候选信息均为只读；不自动推断悍跳。需要修正的内容（包括悍跳相关意见）请写在本局备注。</p>
+      <p class="notice">只有勾选“已复核此局”才会计入后续流程；备注留空且勾选，表示接受当前候选。未勾选的游戏不计入后续流程。草稿自动保存在本机浏览器，并按每局身份及候选/来源版本分别保存。</p>
+      <div class="toolbar">
+        <button type="button" id="export">导出 JSON</button>
+        <label class="file-button" for="import-file">导入 JSON<input id="import-file" type="file" accept="application/json,.json"></label>
+        <span id="status" role="status" aria-live="polite">草稿已按局加载。</span>
+      </div>
+    </header>
+    <div class="game-list">__GAME_CARDS__</div>
+  </main>
+  <script id="review-data" type="application/json">__REVIEW_DATA__</script>
+  <script>
+  (() => {
+    "use strict";
+    const data = JSON.parse(document.getElementById("review-data").textContent);
+    const format = "masters-incremental-review-v1";
+    const cards = new Map(Array.from(document.querySelectorAll("[data-review-id]"), card => [card.dataset.reviewId, card]));
+    const status = document.getElementById("status");
+    const keyFor = game => `masters-incremental-review-v1:${encodeURIComponent(data.season)}:${encodeURIComponent(game.review_id)}:${game.candidate_sha256}:${game.source_sha256}`;
+    const readCard = card => ({ note: card.querySelector("[data-note]").value, reviewed: card.querySelector("[data-reviewed]").checked });
+    const writeCard = (card, value) => {
+      card.querySelector("[data-note]").value = value.note;
+      card.querySelector("[data-reviewed]").checked = value.reviewed;
+    };
+    const saveCard = card => {
+      const game = data.games.find(item => item.review_id === card.dataset.reviewId);
+      try {
+        localStorage.setItem(keyFor(game), JSON.stringify(readCard(card)));
+        status.textContent = "草稿已保存到本机。";
+      } catch (_) {
+        status.textContent = "浏览器无法保存本机草稿，请先导出 JSON 备份。";
+      }
+    };
+    for (const game of data.games) {
+      const card = cards.get(game.review_id);
+      try {
+        const saved = JSON.parse(localStorage.getItem(keyFor(game)) || "null");
+        if (saved && typeof saved.note === "string" && typeof saved.reviewed === "boolean") writeCard(card, saved);
+      } catch (_) {
+        status.textContent = "部分本机草稿无法读取；可从 JSON 导入。";
+      }
+      card.querySelector("[data-note]").addEventListener("input", () => saveCard(card));
+      card.querySelector("[data-reviewed]").addEventListener("change", () => saveCard(card));
+    }
+    document.getElementById("export").addEventListener("click", () => {
+      const payload = { format, season: data.season, games: data.games.map(game => ({ ...game, ...readCard(cards.get(game.review_id)) })) };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${String(data.season).replace(/[^A-Za-z0-9_-]/g, "_")}_逐局复核.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      status.textContent = "已导出当前页面中的游戏复核记录。";
+    });
+    document.getElementById("import-file").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      let payload;
+      try { payload = JSON.parse(await file.text()); }
+      catch (_) { status.textContent = "导入未完成：文件不是有效 JSON。"; event.target.value = ""; return; }
+      const errors = [];
+      const ownKeys = (value, expected) => value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).sort().join("|") === expected.slice().sort().join("|");
+      if (!ownKeys(payload, ["format", "season", "games"])) errors.push("顶层字段不符合导出格式");
+      if (payload && payload.format !== format) errors.push("格式版本不匹配");
+      if (payload && payload.season !== data.season) errors.push("赛季不匹配");
+      if (payload && !Array.isArray(payload.games)) errors.push("games 必须是数组");
+      const current = new Map(data.games.map(game => [game.review_id, game]));
+      const seen = new Set();
+      const accepted = [];
+      const gameKeys = ["review_id", "bvid", "cid", "page", "candidate_sha256", "source_sha256", "reviewed", "note"];
+      if (payload && Array.isArray(payload.games)) payload.games.forEach((item, index) => {
+        const where = `第 ${index + 1} 条`;
+        if (!ownKeys(item, gameKeys)) { errors.push(`${where}字段不符合导出格式`); return; }
+        if (typeof item.review_id !== "string" || !current.has(item.review_id)) { errors.push(`${where}包含未知游戏`); return; }
+        if (seen.has(item.review_id)) { errors.push(`${where}重复`); return; }
+        seen.add(item.review_id);
+        const expected = current.get(item.review_id);
+        if (item.bvid !== expected.bvid || item.cid !== expected.cid || item.page !== expected.page) errors.push(`${where}游戏身份不匹配`);
+        if (item.candidate_sha256 !== expected.candidate_sha256 || item.source_sha256 !== expected.source_sha256) errors.push(`${where}候选或来源版本已变化`);
+        if (typeof item.reviewed !== "boolean" || typeof item.note !== "string") errors.push(`${where}复核状态或备注类型错误`);
+        accepted.push({ item, expected });
+      });
+      if (errors.length) {
+        status.textContent = `导入未完成：${errors.join("；")}。没有更改任何本机复核记录。`;
+        event.target.value = "";
+        return;
+      }
+      let previous = [];
+      try {
+        previous = accepted.map(({ expected }) => ({ key: keyFor(expected), value: localStorage.getItem(keyFor(expected)) }));
+        accepted.forEach(({ item, expected }) => localStorage.setItem(keyFor(expected), JSON.stringify({ note: item.note, reviewed: item.reviewed })));
+      } catch (_) {
+        previous.forEach(({ key, value }) => { try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch (_) {} });
+        status.textContent = "导入未完成：浏览器无法保存全部本机草稿，没有更新页面字段。";
+        event.target.value = "";
+        return;
+      }
+      accepted.forEach(({ item, expected }) => writeCard(cards.get(expected.review_id), { note: item.note, reviewed: item.reviewed }));
+      status.textContent = `已导入 ${accepted.length} 局；未列出的游戏保持原样。`;
+      event.target.value = "";
+    });
+  })();
+  </script>
+</body>
+</html>

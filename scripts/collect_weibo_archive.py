@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 import requests
 
 from collect_weibo import (
-    CollectionError, MOBILE_ROOT, ROOT, WeiboCollector, configure_auth,
+    CollectionError, MOBILE_ROOT, ROOT, WeiboCollector, DesktopWeiboCollector, configure_auth,
     new_manifest, normalize_post, plain_text, post_date, save_json,
     timeline_statuses,
 )
@@ -190,11 +190,21 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
     path = root / "manifest.json"
     request = {"uid": uid, "since": since.isoformat(), "until": until.isoformat(),
                "max_pages": max_pages, "request_interval_seconds": collector.request_interval}
+    backend = getattr(collector, "list_backend", "mobile")
+    request["list_backend"] = backend
     if path.is_file():
         manifest = json.loads(path.read_text(encoding="utf-8"))
         for key in ("uid", "since", "until"):
             if manifest["request"][key] != request[key]:
                 raise CollectionError("归档目录对应另一日期窗口或账号", reason="archive_window_mismatch")
+        prior_backend = manifest["request"].get("list_backend", "mobile")
+        if (prior_backend != backend and manifest.get("pages")
+                and manifest.get("window_scan_status") != "completed"):
+            raise CollectionError("旧窗口游标与网页采集不兼容；请使用新目录并指定原清单复用帖子",
+                                  "partial", "archive_backend_mismatch")
+        if prior_backend != backend and manifest.get("pages"):
+            # Repairing old files does not change which endpoint produced the saved pages.
+            request["list_backend"] = prior_backend
         manifest["request"].update(request)
         manifest["request"].pop("keywords", None)
         for post in manifest["posts"]:
@@ -208,7 +218,7 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
         if seed_path:
             seed_archive(seed_path.resolve(), root, manifest)
     manifest["coverage_note"] = (
-        "顺序读取官方账号可见时间线；连续3个完整页面的可解析帖子均早于起始日期后停止，"
+        "顺序读取官方账号可见帖子列表；连续3个完整页面的可解析帖子均早于起始日期后停止，"
         "以免置顶旧帖触发提前结束。分页原件与日期范围均保存。删除、不可见或接口缺页仍可能遗漏；"
         "窗口扫描完成不代表恢复了已删除内容或账号全部历史。"
     )
@@ -367,7 +377,7 @@ def main() -> int:
         root = args.archive_dir or ROOT / "data/raw/weibo" / f"{args.since}_{args.until}_京城大师赛_UID{args.uid}"
         session = requests.Session()
         configure_auth(session, "cookies", args.cookies_file)
-        collector = WeiboCollector(session=session, request_interval=args.request_interval)
+        collector = DesktopWeiboCollector(session=session, request_interval=args.request_interval)
         result = collect_archive(collector, root, args.uid, args.since, args.until,
                                  max_pages=args.max_pages, seed_path=args.seed_manifest)
         counts = result["counts"]
