@@ -197,6 +197,7 @@ def test_unknown_states_and_default_abstentions_keep_distinct_meanings():
     unknown = next(event for event in events if event["action"] == "unknown")
     passed = next(event for event in events if event["action"] == "pass")
     assert "未知" in unknown["description"] and "不行动" in passed["description"]
+    assert unknown["description"].startswith("首夜，")
 
 
 def test_public_snapshot_excludes_source_paths_and_review_text():
@@ -245,6 +246,7 @@ def test_publication_consumes_precomputed_rules_without_rerunning(monkeypatch, t
                           "rule": "dreamer_target_immune_to_wolf_attack_that_night"}],
     }]
     assert doc["rules_state"]["issues"] == ["illegal_targets"]
+    assert "档案确认本局在第一天白天结束。" in doc["data_notes"]
     assert "source_path" not in json.dumps(doc, ensure_ascii=False)
     assert "private detail" not in json.dumps(doc, ensure_ascii=False)
     assert set(doc["bluff_source_binding"]) == {"derived_fingerprint", "source_fingerprint"}

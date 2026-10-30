@@ -1,32 +1,33 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV1saaT6jEyK-p01-g02",
-  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:52ec60d62132b7881a798dce0e15073515d437d9041bf0587a937f072f5f8955:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
   "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
   "candidate_path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json",
-  "candidate_sha256": "86c56c4632afd86f0417e456c0ffff99cec1dd02220890010e2892d80dd9b2fd",
+  "candidate_sha256": "f9b4882a69ea10cccf9b826343543bc8ece6e52a7c9658d3015019adec875a15",
   "canonical_board": "qingqiu_night",
   "storage_board": "s23_qingqiu_night",
   "formal_files": {
-    "dossier.json": "90ce330210787b02dd7e5d13783866cc3aaad501f2e17686e06ccfe183af9bd3",
-    "voting.json": "8e97d8a872151a872e99d815a4f569b694cdd67dba1e3139d7391ed8db25c76b",
+    "dossier.json": "0028c4a17ee462b95fdc769ac7ec288003c971162cb3e9ced510227ffdef7cd8",
+    "voting.json": "bca8bc74e522fcc8d8f4aadf0c899c0eb0b8c6d1ff7d01c928c504931559b919",
     "endgame.json": "42177dc6f05bd8dba3806e50eaf658c541822cfc8e53dfc5deabe2118c6d9c45",
     "supplemental.json": "3c6352b23509380663533b33da3b502c01754c6f6c8f5d85ed9bbe82026e38e9",
     "vote_control.json": "32c9f062c88c4bb18c8f0146156f5262ae9f1c6cb30fb3b5eee224e9022e8a1a",
-    "formal_context.json": "512edfa2a2a4e56f3283a6049a145d9e1bf0a98381c0d46a96719fb2efc414df"
+    "formal_context.json": "aad5e4875f2ab4be23e35c80d11db01f06eb4b4414934e9ee803e62d38f664eb",
+    "rule_derivations.json": "24edc87b45989d5b04d525624c3f1d7000e299d5f39de5dddaa879a6678ac009"
   },
   "source_files": {
     "candidate": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json",
-      "sha256": "86c56c4632afd86f0417e456c0ffff99cec1dd02220890010e2892d80dd9b2fd"
+      "sha256": "f9b4882a69ea10cccf9b826343543bc8ece6e52a7c9658d3015019adec875a15"
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/ai_review.json",
-      "sha256": "1fcb5a3f056796ff4b86ec482934e1130428e0ad36c3ce71161f1e80a952c76a"
+      "sha256": "dd72ef12d538d366699433e95017a91af0a756ff4f1ecc284dd08f900cb01a6c"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1saaT6jEyK/daily_audit.json",
-      "sha256": "a7d011bab08229127d359a0d9aa98697314b187800d80514709126932738a55b"
+      "sha256": "bf51d65984e45209b81cf6784caaf46786c789a4bcd0c327bf0303b1b8c8c7af"
     },
     "voting": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/voting.candidate.json",
@@ -43,6 +44,10 @@
     "vote_control": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/vote_control.candidate.json",
       "sha256": "6ddbe4326427805637f7ca0a4da9379794065c8658d3dcf186019ebe6e9b637f"
+    },
+    "manual_slot_review": {
+      "path": "data/extractions/S23/game_reviews/BV1saaT6jEyK/slot.reviewed.json",
+      "sha256": "8382fb89b309d45fd218c25a92f85474c0253ac4613bef63655e31468b2ff6ef"
     },
     "source:audio:data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a": {
       "path": "data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a",
@@ -75,6 +80,54 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a",
       "sha256": "ba7128e3214258bf43d62910d61d710957268efd137c84fe85f42552c1cc2677"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "f95db934cc54304ae2298c2ccaab43f99f4a927c6d7fee578d2bc6eb7231afd4"
+    },
+    "board_template:s23_qingqiu_night": {
+      "path": "config/board_templates/qingqiu_night.json",
+      "sha256": "059c71d435a29e92a65fbdb35ba4359c58f5951d7f556b7183e46b1a43265625"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "10494942ba406f1ed317f4181dd831397bacff9573035c829421201f9ee0fc0f"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "0614624f41a61a29a9dd01e92600f8e36755e48819d52e06c54eb2248b2c6e1e"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "e83cc21dea1c8087964d77d1ecc642b547448d6a2394edcbfa7df977ad8292d0"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9"
     }
   },
   "normalization": {
@@ -204,12 +257,6 @@
       {
         "round": 3,
         "phase": "night",
-        "slot": "wolf_attack",
-        "action": "unknown"
-      },
-      {
-        "round": 3,
-        "phase": "night",
         "slot": "witch_poison",
         "action": "unknown"
       },
@@ -267,7 +314,9 @@
     "source_event_extensions": [],
     "explicit_transformations": [],
     "unknown_count_before": 0,
-    "unknown_count_after": 28,
+    "unknown_count_after": 27,
+    "unknown_count_after_normalization": 27,
+    "unknown_count_after_derivation": 25,
     "round_numbers_before": [
       1,
       2,

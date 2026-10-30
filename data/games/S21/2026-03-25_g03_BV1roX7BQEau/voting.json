@@ -30,7 +30,7 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
       "eligible_voters": [
         1,
@@ -38,7 +38,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -46,9 +45,7 @@
       ],
       "tied_candidates": [],
       "winner": null,
-      "unrecorded_voters": [
-        6
-      ],
+      "unrecorded_voters": [],
       "votes": [
         {
           "voter": 1,
@@ -103,7 +100,7 @@
       "kind": "exile",
       "number": 2,
       "stage": "pk",
-      "status": "partial",
+      "status": "complete",
       "candidates": [
         2,
         9
@@ -113,16 +110,13 @@
         3,
         4,
         5,
-        6,
         7,
         10,
         11
       ],
       "tied_candidates": [],
       "winner": 2,
-      "unrecorded_voters": [
-        6
-      ],
+      "unrecorded_voters": [],
       "votes": [
         {
           "voter": 1,
@@ -167,22 +161,19 @@
       "kind": "exile",
       "number": 1,
       "stage": "initial",
-      "status": "partial",
+      "status": "complete",
       "candidates": null,
       "eligible_voters": [
         1,
         3,
         4,
         5,
-        6,
         7,
         11
       ],
       "tied_candidates": [],
       "winner": 7,
-      "unrecorded_voters": [
-        6
-      ],
+      "unrecorded_voters": [],
       "votes": [
         {
           "voter": 1,
@@ -224,13 +215,20 @@
       "actor": 12,
       "reason": "self_destruct",
       "ends_day": true
+    },
+    {
+      "id": "BV1roX7BQEau-event-029",
+      "day": 1,
+      "actor": 6,
+      "reason": "self_destruct",
+      "ends_day": true
     }
   ],
   "days": [
     {
       "day": 1,
-      "sheriff": "unknown",
-      "exile": "none"
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
     },
     {
       "day": 2,

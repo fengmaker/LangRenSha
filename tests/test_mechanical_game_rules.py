@@ -98,7 +98,7 @@ class MechanicalGameRulesTests(unittest.TestCase):
         self.assertIn(10,prior_departures(self.value,3))
         self.assertNotIn(7,prior_departures(self.value,3))
         self.assertEqual(describe(self.value,2,"night",self.event(2,"night","witch_poison")),
-            "第二夜10号女巫对7号猎人用毒，毒药被8号机械守卫的盾反弹，10号女巫死亡")
+            "第一天夜晚10号女巫对7号猎人用毒，毒药被8号机械守卫的盾反弹，10号女巫死亡")
         validate(self.value,check_files=False)
 
     def test_reflection_cannot_be_recorded_as_original_target_death(self):

@@ -3,14 +3,14 @@
   "version": 1,
   "game_slug": "bili-BV1FacCz5E9e-p01-cid36654615724",
   "input_hashes": {
-    "dossier": "baa98e50bb281ddba47ef0ad07ee5b8b7116998e0ae0c11ffcfb47bf227e4652",
+    "dossier": "67e1f8b08c3fcc2a88ec8ced839d191f0cf35bfcb2ee8da0f3a1f3a4c242e72c",
     "voting": "fa063250e59091f1136b466173fe8741df39bc70b5c1fea92ec388354b71a3a3",
-    "supplemental": "9db8206b9d58befd736acc99d79e576bc635ce939ecb3000f80b066859b694a1",
+    "supplemental": "63782d774e4900a634cf3587cbabfd84e2e5c3e39100fc2a842f0f3f65936b36",
     "endgame": "c9debec92c2a1dd19db0496a3f169540f1d9bc2f679f2df846b0aaee006925ca",
     "speech_evidence": "ae081d220a65c28fc239969ca2cb1caebc8da70d1450fbe6a3ec221514ed9d78"
   },
   "rule_sources": {
-    "config/game_rules.json": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237",
+    "config/game_rules.json": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
     "config/seasons.json": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
     "config/board_templates/all_in.json": "92a2f0bbf3ad6d5f432ee1e67a152edf647afd63b5e626af674f62a4bce35f69",
     "config/board_templates/black_wolf_king_knight.json": "6af92bc57d68525080724bf37c8a5a9f9e9e03d50140806b67b68e728dc92016",
@@ -22,15 +22,15 @@
     "config/board_templates/mechanical_wolf_seer.json": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85",
     "config/board_templates/mixed_blood.json": "20535eb52ccd0cca0b366954f862f8d931e873805163864fca0a363e7fec6ad2",
     "config/board_templates/neighbor_puppet.json": "93b0065923e394eeec4963e2164da6068168716cbe6269a2c3c40eb8a07fb697",
-    "config/board_templates/qingqiu_night.json": "9d70a0929c98f450717ceb93c81ada556fac8c44d3e91349efd78023cf8282cc",
+    "config/board_templates/qingqiu_night.json": "059c71d435a29e92a65fbdb35ba4359c58f5951d7f556b7183e46b1a43265625",
     "config/board_templates/seer_witch_hunter_white.json": "0d1dc941b1e8440d3b04b57b45000db5ad25cd3c4dcec7c1d4131579b6bca6a0",
     "config/board_templates/treasure_master.json": "d7cdc835a5ad65820e112f0742acc99ddecbc335531ffe88a1f32ba247a9880a",
     "config/board_templates/wolf_king_guard.json": "f5b5e442b88bbbe598d7915b41e58faaf82241ad094b85fdd4220a6207750717",
     "config/board_templates/wolf_king_knight.json": "cdf25153ffc08f9163d29fa71a99ee0a5076154f6d32d638445864c8fc20116f",
-    "scripts/game_derivations.py": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32",
-    "scripts/role_constraints.py": "2a8ed51f271eb65b51686960a6d8a7c2124a782a19cb695483fc667e9eda5e96",
+    "scripts/game_derivations.py": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69",
+    "scripts/role_constraints.py": "0540ba0ea7239a2e71e199ce527c59be62ff77ef5d8819f2433469dbb6773837",
     "scripts/board_outcomes.py": "cbf8483c43674bf62da8cc39ef335860367a5c5126dd53a263613f57a288b43d",
-    "scripts/game_inference.py": "d849be0f823c5b7e54b67058b2f7b24b278c604da43179a0eab21e969f4f1f47",
+    "scripts/game_inference.py": "fac93595199370edc8e115463deee75b93f236abe0e79788c9c55407cc2e6977",
     "scripts/sheriff_speech_evidence.py": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a",
     "scripts/voting_records.py": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f",
     "scripts/board_config.py": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f",
@@ -620,8 +620,8 @@
       "phase": "night",
       "slot": "seer_check",
       "actor": 9,
-      "status": "available",
-      "reason": "seer_check_available",
+      "status": "unavailable",
+      "reason": "game_ended_before_action",
       "legal_targets": [
         3,
         5,
@@ -630,7 +630,7 @@
         11,
         12
       ],
-      "review_required": true
+      "review_required": false
     },
     {
       "round": 3,
@@ -775,21 +775,6 @@
       "actor": null,
       "reason": "no_applicable_rule",
       "legal_targets": null
-    },
-    {
-      "round": 3,
-      "phase": "night",
-      "slot": "seer_check",
-      "actor": 9,
-      "reason": "seer_check_available",
-      "legal_targets": [
-        3,
-        5,
-        6,
-        9,
-        11,
-        12
-      ]
     },
     {
       "round": 3,
@@ -1368,7 +1353,7 @@
   "issues": [],
   "gaps": [],
   "output_hashes": {
-    "dossier": "b8a029f2f7c8d8c65744986526e97ecf156959dc4c279b769c79b141767986eb",
+    "dossier": "d81f7faaf9e5a03bc06a7a1a27ef7fc9f3a9c5be62cf7b0906cc8cc4152b966a",
     "voting": "a193257e5f8e5de52d6e81a55555425558728efe8a8d79ad73eefd6628e540d4"
   },
   "sheriff_speech_evidence": {

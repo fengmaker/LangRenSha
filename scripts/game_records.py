@@ -9,6 +9,11 @@ from pathlib import Path
 
 from psycopg.types.json import Jsonb
 
+try:
+    from .game_time import chinese, phase_label
+except ImportError:
+    from game_time import chinese, phase_label
+
 from database import ROOT, ReviewError, artifact, connect
 try:
     from .board_config import load_template
@@ -790,15 +795,11 @@ def validate_complete_board(value, board):
     return board
 
 
-def chinese(number):
-    return {1:"一",2:"二",3:"三",4:"四",5:"五",6:"六",7:"七",8:"八",9:"九",10:"十"}.get(number,str(number))
-
-
 def describe(value, round_number, phase, event):
     seats = {p["seat"]:p for p in value["seats"]}
     def person(seat):
         return f"{seat}号{seats[seat]['role']}" if seat is not None else ""
-    prefix = "第"+chinese(round_number)+( "夜" if phase=="night" else "天白天")
+    prefix = phase_label(round_number, phase)
     actor = person(event["actor"])
     if event["slot"] in {"mechanical_action","mechanical_day_skill"} and event["action"]!="learn" and event["actor"] is not None:
         actor=f"{event['actor']}号{seats[event['actor']]['learned_role'] or '机械狼'}"

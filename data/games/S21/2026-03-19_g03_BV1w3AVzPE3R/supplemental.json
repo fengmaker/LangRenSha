@@ -35,7 +35,7 @@
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 17,
+    "mapped_events": 18,
     "reviewed_phase_events": 21,
     "unmapped_events": 5,
     "placeholder_rounds": []
@@ -1980,5 +1980,152 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1w3AVzPE3R",
+    "game_slug": "bili-BV1w3AVzPE3R-p01-cid36821929578",
+    "source_path": "日夜槽位复核结果_20261030 (1).json",
+    "source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+    "source_game": {
+      "bvid": "BV1w3AVzPE3R",
+      "id": "bili-BV1w3AVzPE3R-p01-cid36821929578",
+      "season": "S21",
+      "date": "2026-03-19",
+      "game_number": 3,
+      "dossier_sha256": "2bfb62b379bb6c1902ca82cb9d9d0d9667b386e05426fcf4a9f379b2cf29f48d",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "夏夏",
+          "role": "平民"
+        },
+        {
+          "seat": 2,
+          "name": "彭彭",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "猎人"
+        },
+        {
+          "seat": 4,
+          "name": "翼风",
+          "role": "守卫"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "狼人"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "狼人"
+        },
+        {
+          "seat": 7,
+          "name": "囚徒",
+          "role": "通灵师"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "女巫"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "狼人"
+        },
+        {
+          "seat": 10,
+          "name": "陈俊洁",
+          "role": "平民"
+        },
+        {
+          "seat": 11,
+          "name": "申屠",
+          "role": "机械狼"
+        },
+        {
+          "seat": 12,
+          "name": "Bobby",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-099",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "未使用，狼刀已经刀掉最后一神，所以游戏结束了",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-099",
+        "round": 3,
+        "phase": "night",
+        "slot": "mechanical_action",
+        "classification": "game_ended_before_action",
+        "note": "未使用，狼刀已经刀掉最后一神，所以游戏结束了",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "unavailable",
+          "actor": 11,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-099",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "未使用，狼刀已经刀掉最后一神，所以游戏结束了",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f"
 }

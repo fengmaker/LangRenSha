@@ -36,7 +36,7 @@
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 25,
+    "mapped_events": 27,
     "reviewed_phase_events": 29,
     "unmapped_events": 4,
     "placeholder_rounds": []
@@ -1598,5 +1598,230 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1oGwAzZEXf",
+    "game_slug": "bili-BV1oGwAzZEXf-p01-cid36631151161",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7",
+    "source_fingerprint": "457ca5376ed915baf61166e0d42971986794532bcd87bdbed6214ff54889a1fb",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7.json",
+    "source_game": {
+      "bvid": "BV1oGwAzZEXf",
+      "id": "bili-BV1oGwAzZEXf-p01-cid36631151161",
+      "season": "S21",
+      "date": "2026-03-11",
+      "game_number": 3,
+      "dossier_sha256": "391f361ecfca79b6b169c82492fd8583dd51c44ae74117b41ce4b864bff3c048",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "囚徒",
+          "role": "通灵师"
+        },
+        {
+          "seat": 2,
+          "name": "圈圈",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "王正刚",
+          "role": "女巫"
+        },
+        {
+          "seat": 4,
+          "name": "翼风",
+          "role": "平民"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "守卫"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "狼人"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "狼人"
+        },
+        {
+          "seat": 8,
+          "name": "荣耀",
+          "role": "平民"
+        },
+        {
+          "seat": 9,
+          "name": "陈俊洁",
+          "role": "机械狼"
+        },
+        {
+          "seat": 10,
+          "name": "小张",
+          "role": "狼人"
+        },
+        {
+          "seat": 11,
+          "name": "Ted",
+          "role": "猎人"
+        },
+        {
+          "seat": 12,
+          "name": "李舒服",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-092",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  9
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "DN-093",
+          "round": 4,
+          "phase": "night",
+          "phase_label": "第三天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  10
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-092",
+        "round": 3,
+        "phase": "night",
+        "slot": "mechanical_action",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "guard",
+          "actor": 9,
+          "targets": [
+            9
+          ],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-092",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  9
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "DN-093",
+        "round": 4,
+        "phase": "night",
+        "slot": "mechanical_action",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "guard",
+          "actor": 9,
+          "targets": [
+            10
+          ],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-093",
+          "round": 4,
+          "phase": "night",
+          "phase_label": "第三天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  10
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7"
 }

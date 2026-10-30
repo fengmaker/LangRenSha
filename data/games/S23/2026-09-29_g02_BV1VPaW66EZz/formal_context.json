@@ -11,15 +11,15 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-09-29_g02_BV1VPaW66EZz/dossier.candidate.json",
-      "sha256": "9a45efed669bc4163f8b2d8444ba4cdd4c883d97acb4c6a1ed514b90128043f3"
+      "sha256": "7c858bf5a034ba50301dbd8ed6b54827fdc8de47b070ccb6e4b31530a8347e15"
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-29_g02_BV1VPaW66EZz/ai_review.json",
-      "sha256": "0d5a1e8d91757bf6f6c03d2384585f7538299698c9dd74b565a241c17ecd3513"
+      "sha256": "16e4de0ddd44994ee082d2fc4edbe03f6c8c05103d20ea3e6bebdc4f3f8e9834"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1VPaW66EZz/daily_audit.json",
-      "sha256": "42a4c0ce77c15cbacafcfc4f567a57f856caffc7cfdff817a9f9d280f3b8a49e"
+      "sha256": "d0e30ab0693a71feb97b4fbdfcbaf5d0862cd986b766b1fbb29b522f67544cfa"
     },
     "voting": {
       "path": "data/games/S23/2026-09-29_g02_BV1VPaW66EZz/voting.candidate.json",
@@ -68,6 +68,50 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1VPaW66EZz/p01/audio.m4a",
       "sha256": "65231a1744f2bf1333c5bc791c56d155c639c6c063da30595673a6345ac0ec08"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "f95db934cc54304ae2298c2ccaab43f99f4a927c6d7fee578d2bc6eb7231afd4"
+    },
+    "board_template:s23_qingqiu_night": {
+      "path": "config/board_templates/qingqiu_night.json",
+      "sha256": "059c71d435a29e92a65fbdb35ba4359c58f5951d7f556b7183e46b1a43265625"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "e08b5ba51ecdcf06a3fa3ad2f511699c87ffa9a547061522a940ca6d3771cc78"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "e83cc21dea1c8087964d77d1ecc642b547448d6a2394edcbfa7df977ad8292d0"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9"
     }
   },
   "normalization": {
@@ -286,12 +330,6 @@
       },
       {
         "round": 4,
-        "phase": "night",
-        "slot": "nine_tail_kill",
-        "action": "unknown"
-      },
-      {
-        "round": 4,
         "phase": "day",
         "slot": "self_destruct",
         "action": "unknown"
@@ -340,7 +378,9 @@
       }
     ],
     "unknown_count_before": 0,
-    "unknown_count_after": 42,
+    "unknown_count_after": 41,
+    "unknown_count_after_normalization": 41,
+    "unknown_count_after_derivation": 38,
     "round_numbers_before": [
       1,
       2,

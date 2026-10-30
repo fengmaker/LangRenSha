@@ -100,6 +100,209 @@ def test_night_death_preserves_that_nights_check_but_removes_future_checks():
     assert result["derivations"]["rounds"][0]["living_before_vote"] == [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 
+def _bv1faccz5e9e_terminal_night(*, recorded_check=False):
+    game = fixture("s21_mechanical_wolf_seer", rounds=3)
+    roles = ["守卫", "猎人", "平民", "机械狼", "平民", "狼人",
+             "女巫", "狼人", "通灵师", "狼人", "平民", "平民"]
+    for seat, role in zip(game["seats"], roles):
+        seat["role"] = role
+
+    get(game, 1, "night_deaths").update(action="die", targets=[7, 4])
+    get(game, 1, "self_destruct").update(action="self_destruct", actor=10)
+    get(game, 2, "wolf_attack").update(action="attack", targets=[2])
+    get(game, 2, "night_deaths").update(action="die", targets=[2])
+    get(game, 2, "hunter_shot").update(action="shoot", actor=2, targets=[1])
+    get(game, 2, "self_destruct").update(action="self_destruct", actor=8)
+    get(game, 3, "wolf_attack").update(action="attack", targets=[9])
+    get(game, 3, "night_deaths").update(action="die", targets=[9])
+    if recorded_check:
+        get(game, 3, "seer_check").update(action="check", actor=9, targets=[12], result="平民")
+    game["terminal_observation"] = {"round": 3, "phase": "night", "basis": "explicit_game_end"}
+    return game
+
+
+def test_last_god_wolf_kill_closes_later_medium_check_review_slot():
+    result = derive_game(
+        _bv1faccz5e9e_terminal_night(),
+        terminal_observation={"round": 3, "phase": "night", "basis": "explicit_game_end"},
+    )
+
+    check = get(result["dossier"], 3, "seer_check")
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (3, "night", "seer_check"))
+    assert check["action"] == "unavailable"
+    assert state["status"] == "unavailable" and state["reason"] == "game_ended_before_action"
+    assert state["review_required"] is False
+
+
+def test_last_god_hunter_departure_closes_its_later_shot_slot():
+    game = fixture("s21_mechanical_wolf_seer", rounds=2)
+    roles = ["守卫", "猎人", "平民", "机械狼", "平民", "狼人",
+             "女巫", "狼人", "通灵师", "狼人", "平民", "平民"]
+    for seat, role in zip(game["seats"], roles):
+        seat["role"] = role
+    get(game, 1, "night_deaths").update(action="die", targets=[1, 7, 9])
+    get(game, 2, "exile_result").update(action="exile", targets=[2])
+    get(game, 2, "hunter_shot").update(actor=2)
+
+    result = derive_game(
+        game,
+        terminal_observation={"round": 2, "phase": "day", "basis": "last_god_departed"},
+    )
+
+    shot = get(result["dossier"], 2, "hunter_shot")
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (2, "day", "hunter_shot"))
+    assert shot["action"] == "unavailable"
+    assert state["status"] == "unavailable" and state["reason"] == "game_ended_before_action"
+    assert state["review_required"] is False
+
+
+def test_terminal_last_god_rule_does_not_skip_mechanical_action_without_confirmed_order():
+    game = _bv1faccz5e9e_terminal_night()
+    get(game, 1, "night_deaths").update(action="die", targets=[7])
+
+    result = derive_game(
+        game,
+        terminal_observation={"round": 3, "phase": "night", "basis": "explicit_game_end"},
+    )
+
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (3, "night", "mechanical_action"))
+    assert state["reason"] != "game_ended_before_action"
+    assert state["review_required"] is True
+
+
+def test_terminal_night_without_known_last_god_does_not_infer_the_later_check_was_skipped():
+    game = fixture("s21_mechanical_wolf_seer", rounds=3)
+    game["seats"][8]["role"] = "通灵师"
+    result = derive_game(
+        game,
+        terminal_observation={"round": 3, "phase": "night", "basis": "explicit_game_end"},
+    )
+
+    check = get(result["dossier"], 3, "seer_check")
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (3, "night", "seer_check"))
+    assert check["action"] == "unknown"
+    assert state["status"] == "available" and state["review_required"] is True
+
+
+def _wolf_king_derivation_game(rounds=2):
+    game = fixture("wolf_king_guard", rounds=rounds)
+    roles = ["预言家", "女巫", "猎人", "守卫", "平民", "平民",
+             "平民", "平民", "狼人", "狼人", "狼人", "狼王"]
+    wolves = {"狼人", "机械狼", "狼王", "黑狼王", "白狼王", "诡术师", "假面",
+              "典狱长", "狼术师", "九尾狐", "盗宝大师"}
+    for seat, role in zip(game["seats"], roles):
+        seat["role"] = role
+        seat["faction"] = "werewolf" if role in wolves else "good"
+    return game
+
+
+def test_live_ordinary_wolf_king_qualification_is_not_a_review_task_or_can_shoot_fact():
+    game = _wolf_king_derivation_game(rounds=1)
+    get(game, 1, "night_deaths").update(action="unknown", targets=[])
+
+    result = derive_game(game)
+
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (1, "night", "wolf_king_state"))
+    assert state["review_required"] is False
+    assert get(result["dossier"], 1, "wolf_king_state")["action"] == "unknown"
+    assert not any(task["slot"] == "wolf_king_state" for task in result["derivations"]["review_tasks"])
+
+
+def _last_wolf_exile_game(*, shot_action="unknown"):
+    game = _wolf_king_derivation_game(rounds=2)
+    game["winner"] = "good"
+    get(game, 1, "night_deaths").update(action="die", targets=[9, 10, 11])
+    get(game, 2, "night_deaths").update(action="peaceful", targets=[])
+    get(game, 2, "exile_result").update(action="exile", targets=[12])
+    get(game, 2, "wolf_king_shot").update(action=shot_action, actor=12,
+                                             targets=[1] if shot_action == "shoot" else [])
+    return game
+
+
+def test_last_wolf_king_exiled_at_confirmed_terminal_has_no_shot_opportunity():
+    game = _last_wolf_exile_game()
+
+    result = derive_game(
+        game,
+        terminal_observation={"round": 2, "phase": "day", "basis": "reviewed_game_end_and_preceding_phase"},
+    )
+
+    shot = get(result["dossier"], 2, "wolf_king_shot")
+    state = next(row for row in result["derivations"]["slot_states"]
+                 if (row["round"], row["phase"], row["slot"]) == (2, "day", "wolf_king_shot"))
+    assert shot["action"] == "unavailable"
+    assert state["status"] == "unavailable" and state["reason"] == "game_ended_before_action"
+    assert state["review_required"] is False
+
+
+def test_last_wolf_terminal_rule_preserves_recorded_shot_and_reports_conflict():
+    game = _last_wolf_exile_game(shot_action="shoot")
+
+    result = derive_game(
+        game,
+        terminal_observation={"round": 2, "phase": "day", "basis": "reviewed_game_end_and_preceding_phase"},
+    )
+
+    assert get(result["dossier"], 2, "wolf_king_shot")["action"] == "shoot"
+    assert any(issue["code"] == "action_unavailable" and issue["slot"] == "wolf_king_shot"
+               for issue in result["derivations"]["issues"])
+
+
+def test_unknown_night_kill_cause_does_not_mark_wolf_king_shot_unavailable():
+    game = _wolf_king_derivation_game(rounds=1)
+    get(game, 1, "night_deaths").update(action="die", targets=[12])
+    get(game, 1, "wolf_attack").update(action="unknown", targets=[])
+    get(game, 1, "wolf_king_state").update(actor=12)
+    get(game, 1, "wolf_king_shot").update(actor=12)
+
+    result = derive_game(game)
+
+    shot = next(row for row in result["derivations"]["slot_states"]
+                if (row["round"], row["phase"], row["slot"]) == (1, "day", "wolf_king_shot"))
+    assert get(result["dossier"], 1, "wolf_king_shot")["action"] == "unknown"
+    assert shot["status"] != "unavailable" or shot["reason"] != "death_trigger_absent"
+    assert shot["review_required"] is True
+
+
+def test_recorded_wolf_king_shot_remains_in_conflict_with_dream_death_block():
+    game = _wolf_king_derivation_game(rounds=2)
+    game["seats"][4]["role"] = "摄梦人"
+    game["seats"][4]["faction"] = "good"
+    get(game, 1, "night_deaths").update(action="peaceful", targets=[])
+    game["rounds"][0]["night"].append(
+        {"slot": "dreamer_action", "action": "dream", "actor": 5, "targets": [12]})
+    game["rounds"][1]["night"].append(
+        {"slot": "dreamer_action", "action": "dream", "actor": 5, "targets": [12]})
+    get(game, 2, "wolf_attack").update(action="attack", targets=[12])
+    get(game, 2, "night_deaths").update(action="die", targets=[5, 12])
+    get(game, 2, "wolf_king_shot").update(action="shoot", actor=12, targets=[4])
+
+    result = derive_game(game)
+
+    shot = get(result["dossier"], 2, "wolf_king_shot")
+    assert shot["action"] == "shoot" and shot["targets"] == [4]
+    assert any(issue["code"] == "action_unavailable" and issue["slot"] == "wolf_king_shot"
+               and issue["reason"] == "dream_death_blocks_shot"
+               for issue in result["derivations"]["issues"])
+
+
+def test_recorded_check_is_preserved_when_terminal_wake_order_conflicts():
+    result = derive_game(
+        _bv1faccz5e9e_terminal_night(recorded_check=True),
+        terminal_observation={"round": 3, "phase": "night", "basis": "explicit_game_end"},
+    )
+
+    check = get(result["dossier"], 3, "seer_check")
+    assert check["action"] == "check" and check["targets"] == [12]
+    assert any(issue["code"] == "action_unavailable" and issue["slot"] == "seer_check"
+               and issue["round"] == 3 for issue in result["derivations"]["issues"])
+
+
 def test_recorded_action_after_death_is_reported_not_silently_erased():
     game = fixture()
     get(game, 1, "night_deaths").update(action="die", targets=[3])

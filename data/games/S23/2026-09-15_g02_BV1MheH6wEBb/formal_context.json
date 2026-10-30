@@ -11,19 +11,19 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/dossier.candidate.json",
-      "sha256": "3816931c8959fa2a88b30379257725ac8868b83cbf662cbe194b3d4b741ab583"
+      "sha256": "752d1f42c112833e7adc27ed15a8ffb9f85a52fac44e72ed164333a5ca3e3e78"
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/ai_review.json",
-      "sha256": "3b17a69569890d1dd59b5c77aa141c3571e06d64f8add24f43dd334530f55be5"
+      "sha256": "d8cf7ad49e6f14cb05ed81ef63c432211862908ffa4f58b9f7b78867dedeeb27"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1MheH6wEBb/daily_audit.json",
-      "sha256": "4f609373fb8c959935923feaa7c5817077a09921bddf4336a400502b2304ed6a"
+      "sha256": "2b1abf844cf86048bb6acd2e814d2f696d4ecab39dfd75cb1c2b4cbe705e5ade"
     },
     "voting": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/voting.candidate.json",
-      "sha256": "c2b50edbcc0f40aa88fe68442c041c122f4bd84503009cc0da7d4e661498d917"
+      "sha256": "65d1ab545df394719f39c8bda1c23c2f5bb88dffa4f255021b36d604a736f8d4"
     },
     "endgame": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/endgame.candidate.json",
@@ -31,11 +31,15 @@
     },
     "supplemental": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/supplemental.candidate.json",
-      "sha256": "e23566a0da500e7716fc955eeb85fb144d46c0c211a77ad1b8883396345b1e30"
+      "sha256": "01a17030180187a2a49e71fb5084a7fee7b60191b28692e7218cf172efcf587d"
     },
     "vote_control": {
       "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/vote_control.candidate.json",
       "sha256": "c676d1a23fe363da8db363a4577f9543421a3923177aada40ab8f4481109bf3d"
+    },
+    "manual_slot_review": {
+      "path": "data/extractions/S23/game_reviews/BV1MheH6wEBb/slot.reviewed.json",
+      "sha256": "d0cc7002729eac469e5ce329b9b9f1314ae3cabc0c125d9c38d615274595690d"
     },
     "source:audio:data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.音频.m4a": {
       "path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.音频.m4a",
@@ -68,6 +72,54 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1MheH6wEBb/p01/audio.m4a",
       "sha256": "a4aa454c4d0bfdb8c9b66a9b7254723abf9b9a3af1e7d638ccfe4d3a1aabedf5"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "a884148b83a51cb353df5fb18235fb6ad3a245ddc288500a80a96cf5791dca31"
+    },
+    "board_template:s23_masquerade": {
+      "path": "config/board_templates/masquerade.json",
+      "sha256": "acd1a4a475a2e1aa848e58f31691b688596bd8f906ed3d2f8283ab1601fe8072"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "10494942ba406f1ed317f4181dd831397bacff9573035c829421201f9ee0fc0f"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "0614624f41a61a29a9dd01e92600f8e36755e48819d52e06c54eb2248b2c6e1e"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "e83cc21dea1c8087964d77d1ecc642b547448d6a2394edcbfa7df977ad8292d0"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9"
     }
   },
   "normalization": {
@@ -105,8 +157,10 @@
       }
     ],
     "explicit_transformations": [],
-    "unknown_count_before": 35,
-    "unknown_count_after": 35,
+    "unknown_count_before": 29,
+    "unknown_count_after": 29,
+    "unknown_count_after_normalization": 29,
+    "unknown_count_after_derivation": 20,
     "round_numbers_before": [
       1,
       2,
@@ -119,47 +173,8 @@
     ]
   },
   "terminal_observations": [],
-  "unpublished_terminal_checks": [
-    {
-      "bvid": "BV1MheH6wEBb",
-      "date": "2026-09-15",
-      "game_number": 2,
-      "id": "s23-a-bv1mheh6webb-r3-seer_check-unresolved",
-      "round": 3,
-      "phase": "night",
-      "status": "not_observed",
-      "field": "rounds[3].night.seer_check.targets",
-      "title": "终局查验未记录，仅保留说明",
-      "conclusion": "终局夜查验未记录；可能因前序技能或狼刀判定已使对局结束，未再进入后续查验环节。保留未知，不补造查验目标，不影响已确定的结算。",
-      "reasoning": "用户确认此类终局查验只需说明；“可能未进入环节”不是确定未查验，也不是主动空过。",
-      "evidence": [
-        {
-          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第02局_假面舞会__BV1MheH6wEBb_P01_CID41924036812.平台AI字幕_ai-zh_01.原始.json",
-          "source_sha256": "f5482952adb34e8ddbc840f6509a74518cdeb3cd3069f5fc5d7dbaaeef7dbc23",
-          "start_ms": 3950739,
-          "end_ms": 3967500,
-          "quote": "5号狼人自爆入夜\n五者共我的对象为2号预言家\n6号舞者和9号假面假面验证\n6号玩家暂五池给6号玩家扣了面具\n2号玩家共五出局\n击杀了2号\n第三天八天\n最后一张狼人\n9号选择交牌\n游戏结束",
-          "file_url": "../seasons/S23/%E7%AC%AC03%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC02%E6%9C%9F/2026-09-15/2026-09-15_S23_%E7%AC%AC03%E5%91%A8_%E6%AD%A3%E8%B5%9B%E7%AC%AC02%E6%9C%9F_%E7%AC%AC02%E5%B1%80_%E5%81%87%E9%9D%A2%E8%88%9E%E4%BC%9A__BV1MheH6wEBb_P01_CID41924036812.%E5%B9%B3%E5%8F%B0AI%E5%AD%97%E5%B9%95_ai-zh_01.%E5%8E%9F%E5%A7%8B.json"
-        },
-        {
-          "kind": "user_confirmation",
-          "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
-          "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
-          "quote": "终局查验可能因为前面的技能判定和狼刀判定导致游戏结束了就没有后面的查验环节了，不过不影响 说明就好了",
-          "file_url": "../extractions/S23/%E7%94%A8%E6%88%B7%E7%A1%AE%E8%AE%A4_20261026_%E5%81%87%E9%9D%A2%E5%A4%9C%E5%BA%8F%E4%B8%8E%E7%BB%88%E5%B1%80%E7%BB%93%E7%AE%97.txt"
-        }
-      ],
-      "phase_label": "第2天夜晚",
-      "previous_question": "第3轮夜晚预言家查验未记载",
-      "confirmation_status": "user_explanation",
-      "requires_user_check": false,
-      "daily_audited": true,
-      "public_text": "终局查验未记录；可能因前序技能或狼刀结算已结束对局。保留未知，不补目标，也不据此确定从未查验。"
-    }
-  ],
-  "public_notes": [
-    "终局查验未记录；可能因前序技能或狼刀结算已结束对局。保留未知，不补目标，也不据此确定从未查验。"
-  ],
+  "unpublished_terminal_checks": [],
+  "public_notes": [],
   "terminal_observation": null,
   "separate_review_context": {
     "daily_human_questions": [],
@@ -205,5 +220,159 @@
     ],
     "eulogy_statistic_policy": null
   },
-  "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。"
+  "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S23",
+    "bvid": "BV1MheH6wEBb",
+    "game_slug": "bili-BV1MheH6wEBb-p01-g02",
+    "source_path": "日夜槽位复核结果_20261030 (1).json",
+    "source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+    "source_game": {
+      "bvid": "BV1MheH6wEBb",
+      "id": "bili-BV1MheH6wEBb-p01-g02",
+      "season": "S23",
+      "date": "2026-09-15",
+      "game_number": 2,
+      "dossier_sha256": "6334e5096e2f9c2d1717d654c80850d1e29cfbc661378b9c5f38c88347ff52e3",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "郭小炜",
+          "role": "平民"
+        },
+        {
+          "seat": 2,
+          "name": "二妖",
+          "role": "预言家"
+        },
+        {
+          "seat": 3,
+          "name": "李斯",
+          "role": "平民"
+        },
+        {
+          "seat": 4,
+          "name": "周二珂",
+          "role": "白神"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "狼人"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "舞者"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "狼人"
+        },
+        {
+          "seat": 8,
+          "name": "荣耀",
+          "role": "平民"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "假面"
+        },
+        {
+          "seat": 10,
+          "name": "果冻",
+          "role": "狼人"
+        },
+        {
+          "seat": 11,
+          "name": "焦阳",
+          "role": "女巫"
+        },
+        {
+          "seat": 12,
+          "name": "Bobby",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-219",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "wolf_attack",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "attack",
+                "targets": [
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-219",
+        "round": 3,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "attack",
+          "actor": null,
+          "targets": [
+            2
+          ],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-219",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "wolf_attack",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "attack",
+                "targets": [
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

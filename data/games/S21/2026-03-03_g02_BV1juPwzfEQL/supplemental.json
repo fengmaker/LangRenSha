@@ -44,7 +44,7 @@
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 30,
+    "mapped_events": 31,
     "reviewed_phase_events": 35,
     "unmapped_events": 7,
     "placeholder_rounds": []
@@ -1434,5 +1434,162 @@
       }
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1juPwzfEQL",
+    "game_slug": "bili-BV1juPwzfEQL-p01-cid36431268966",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7",
+    "source_fingerprint": "457ca5376ed915baf61166e0d42971986794532bcd87bdbed6214ff54889a1fb",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7.json",
+    "source_game": {
+      "bvid": "BV1juPwzfEQL",
+      "id": "bili-BV1juPwzfEQL-p01-cid36431268966",
+      "season": "S21",
+      "date": "2026-03-03",
+      "game_number": 2,
+      "dossier_sha256": "a675e83186a7030d121f523b9bb2de11011dc675a3c44ff6e7c525b79ee9e79f",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "郭小炜",
+          "role": "平民"
+        },
+        {
+          "seat": 2,
+          "name": "圈圈",
+          "role": "狼人"
+        },
+        {
+          "seat": 3,
+          "name": "小张",
+          "role": "女巫"
+        },
+        {
+          "seat": 4,
+          "name": "海王慕",
+          "role": "狼人"
+        },
+        {
+          "seat": 5,
+          "name": "翼风",
+          "role": "白神"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "舞者"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "平民"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "狼人"
+        },
+        {
+          "seat": 9,
+          "name": "陈俊洁",
+          "role": "假面"
+        },
+        {
+          "seat": 10,
+          "name": "陈明峻",
+          "role": "平民"
+        },
+        {
+          "seat": 11,
+          "name": "Jamie",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "李舒服",
+          "role": "预言家"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-078",
+          "round": 4,
+          "phase": "night",
+          "phase_label": "第三天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  9
+                ],
+                "result": "狼人"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-078",
+        "round": 4,
+        "phase": "night",
+        "slot": "seer_check",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "check",
+          "actor": 12,
+          "targets": [
+            9
+          ],
+          "result": "werewolf"
+        },
+        "raw_review": {
+          "id": "DN-078",
+          "round": 4,
+          "phase": "night",
+          "phase_label": "第三天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  9
+                ],
+                "result": "狼人"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7"
 }

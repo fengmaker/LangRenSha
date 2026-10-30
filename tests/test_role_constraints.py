@@ -36,6 +36,24 @@ def test_family_normalizes_cross_season_aliases_without_merging_distinct_boards(
     assert family("s21_treasure_master") == "treasure_master"
 
 
+def test_nine_tail_knife_requires_prior_departures_of_all_ordinary_wolves():
+    source = game('qingqiu_night', [(2, '狼人'), (4, '狼人'), (6, '狼人'), (9, '九尾狐')], rounds=[
+        {'number': 2, 'night': [], 'day': [
+            {'slot': 'self_destruct', 'action': 'self_destruct', 'actor': 6, 'targets': []},
+        ]},
+    ])
+    assert check(source, 2, 'night', 'nine_tail_kill', actor=9,
+                 dead_before={2, 4})['reason'] == 'ordinary_wolves_alive'
+    assert check(source, 3, 'night', 'nine_tail_kill', actor=9,
+                 dead_before={2, 4, 6})['status'] == 'available'
+    assert check(source, 3, 'night', 'nine_tail_kill', actor=9,
+                 dead_before={2, 4, 6, 9})['reason'] == 'actor_departed'
+    assert check(source, 3, 'night', 'nine_tail_kill', actor=9,
+                 dead_before=None)['status'] == 'unknown'
+    assert check(source, 3, 'day', 'nine_tail_kill', actor=9,
+                 dead_before={2, 4, 6})['status'] == 'unavailable'
+
+
 def test_failed_poison_does_not_disable_the_wolf_kings_shot():
     source = game("s21_neighbor_puppet", [(6, "女巫"), (7, "狼王")], rounds=[{
         "number": 2,
@@ -329,6 +347,9 @@ def test_dreamer_night_death_links_current_target_and_blocks_hunter_or_wolf_king
                 "rule": "dreamer_night_death_links_current_night_dream_target"} in dream["consequences"]
         state = check(source, 2, "night", state_slot, actor=4)
         assert state["status"] == "unavailable" and state["reason"] == "dream_death_blocks_shot"
+        shot = check(source, 2, "day", "wolf_king_shot", actor=4)
+        if target_role == "狼王":
+            assert shot["status"] == "unavailable" and shot["reason"] == "dream_death_blocks_shot"
 
 
 def test_repeat_dream_death_blocks_shot_only_when_target_is_a_confirmed_night_death():
@@ -347,6 +368,38 @@ def test_repeat_dream_death_blocks_shot_only_when_target_is_a_confirmed_night_de
     source["rounds"][1]["day"][0] = {"slot": "night_deaths", "action": "peaceful", "targets": []}
     not_dead = check(source, 2, "night", "hunter_state", actor=3)
     assert not_dead["status"] == "available"
+
+
+def test_repeat_dream_death_blocks_ordinary_wolf_king_shot_at_day():
+    source = game("treasure_master", [(2, "毒师"), (5, "摄梦人"), (8, "狼王")], rounds=[
+        {"number": 1, "night": [
+            {"slot": "dreamer_action", "action": "dream", "actor": 5, "targets": [8]},
+        ], "day": [{"slot": "night_deaths", "action": "peaceful", "targets": []}]},
+        {"number": 2, "night": [
+            {"slot": "dreamer_action", "action": "dream", "actor": 5, "targets": [8]},
+            {"slot": "witch_poison", "action": "poison", "actor": 2, "targets": [5]},
+            {"slot": "wolf_attack", "action": "attack", "targets": [9]},
+        ], "day": [{"slot": "night_deaths", "action": "die", "targets": [5, 8, 9]}]},
+    ])
+
+    result = check(source, 2, "day", "wolf_king_shot", actor=8)
+
+    assert result["status"] == "unavailable"
+    assert result["reason"] == "dream_death_blocks_shot"
+
+
+def test_poison_death_blocks_ordinary_wolf_king_shot_at_day():
+    source = game("treasure_master", [(2, "毒师"), (8, "狼王")], rounds=[
+        {"number": 1, "night": [], "day": [{"slot": "night_deaths", "action": "peaceful", "targets": []}]},
+        {"number": 2, "night": [
+            {"slot": "witch_poison", "action": "poison", "actor": 2, "targets": [8]},
+        ], "day": [{"slot": "night_deaths", "action": "die", "targets": [8]}]},
+    ])
+
+    result = check(source, 2, "day", "wolf_king_shot", actor=8)
+
+    assert result["status"] == "unavailable"
+    assert result["reason"] == "wolf_king_poisoned"
 
 
 def test_treasure_dream_skill_allows_repeating_target_and_emits_dream_consequences():

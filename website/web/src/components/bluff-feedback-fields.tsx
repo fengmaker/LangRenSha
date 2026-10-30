@@ -1,4 +1,5 @@
 import type { BluffReview } from "@/lib/types";
+import { gamePhaseLabel } from "@/lib/format";
 
 export function BluffFeedbackFields({ item }: { item: BluffReview["items"][number] }) {
   const prefix = `feedback-${item.bvid}-${item.seat}`;
@@ -13,7 +14,7 @@ export function BluffFeedbackFields({ item }: { item: BluffReview["items"][numbe
         <option value="">尚未填写</option><option value="yes">确认是悍跳</option><option value="no">确认不是悍跳</option><option value="later">仅后续天数起跳，请再核查</option><option value="uncertain">仍无法确定</option><option value="comment">有其他意见</option>
       </select></label>
       <label htmlFor={`${prefix}-day`}>发生天数<select id={`${prefix}-day`} name="claim_day" defaultValue={item.claim_day == null ? "" : String(item.claim_day)}>
-        <option value="">尚未确定</option><option value="1">第一天</option><option value="2">第二天（含延期竞选）</option><option value="later">后续天数，请见意见</option>
+        <option value="">尚未确定</option><option value="1">{gamePhaseLabel(1, "day")}</option><option value="2">{gamePhaseLabel(2, "day")}（含延期竞选）</option><option value="later">后续天数，请见意见</option>
       </select></label>
       <label htmlFor={`${prefix}-role`}>所跳身份<select id={`${prefix}-role`} name="claimed_role" defaultValue={item.claimed_role ?? ""}>
         <option value="">待定／不适用</option><option value="预言家">预言家</option><option value="通灵师">通灵师</option>

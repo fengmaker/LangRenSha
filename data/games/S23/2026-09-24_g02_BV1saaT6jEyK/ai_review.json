@@ -719,7 +719,7 @@
           "quote": "女巫毒杀4号狼人"
         }
       ],
-      "phase_label": "第1天白天",
+      "phase_label": "第一天白天",
       "previous_question": "第1轮夜间死亡结算",
       "daily_audited": true
     },
@@ -741,7 +741,7 @@
           "quote": "平安夜夜间"
         }
       ],
-      "phase_label": "第2天白天",
+      "phase_label": "第二天白天",
       "previous_question": "第2轮夜间死亡结算",
       "daily_audited": true
     }
@@ -751,7 +751,7 @@
   "daily_audit": {
     "bvid": "BV1saaT6jEyK",
     "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
-    "reviewed_date": "2026-10-26",
+    "reviewed_date": "2026-10-30",
     "recap_window": {
       "start_ms": 3982540,
       "end_ms": 4079380,
@@ -772,7 +772,8 @@
             "quote": "有点难有点难哦\n好给各位弹幕老师们做一下本局的复盘\n本剧版行为清秋夜影神智英\n原价11号女巫5号守卫一号白泽\n10号狼人阵营4号六号八号九尾狐\n9号平民阵营2号三号七号\n12号首页守卫守护3号平民\n九尾狐标记2号平民\n当夜狼队击杀5号女巫\n女巫毒杀4号狼人\n4号五号双死\n预言家验证3号玩家平民为好人身份\n在警上竞选环节\n4号悍跳狼人获得警徽\n并在出局后将警徽移交至7号平民\n第一天白天\n6号狼人选择自爆入夜守卫守护一号自首\n白泽选择清除3号玩家身上的标记\n无事发生\n九尾狐标记7号平民\n当夜狼队击杀一号首位新生\n平安夜夜间\n预言家验证了9号玩家九尾狐为狼人身份\n在第二天白天\n8号狼人选择自爆入夜\n首位守护11号预言家白泽\n成功清除掉7号平民身上的标记\n当夜九尾狐标记3号平民\n并击杀一号守卫\n一号守卫单子\n夜间预言家查验7号玩家\n平民为好人身份\n在第三天白天\n9号玩家九尾狐选择发动技能\n此时的结算为2号玩家身上有标记\n且3号玩家身上有标记\n加上九尾狐\n9号玩家场上一共是三个人\n然后我们剩余没有标记的玩家一共是四个人\n所以没有严格大于九尾狐技能发动失败\n发动失败后\n九尾狐选择交牌\n游戏结束\n好人阵营获胜\n各位弹幕老师们"
           }
         ]
-      }
+      },
+      "N3普通狼人已全部出局，九尾狐接刀；既有刀口[1]归入九尾狐击杀，普通狼刀槽不可用。"
     ],
     "event_patches": [
       {
@@ -814,6 +815,30 @@
         "slot": "seer_check",
         "changes": {
           "result": "好人"
+        }
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "slot": "nine_tail_kill",
+        "changes": {
+          "action": "kill",
+          "actor": 9,
+          "targets": [
+            1
+          ],
+          "result": "1号守卫出局"
+        }
+      },
+      {
+        "round": 3,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "changes": {
+          "action": "unavailable",
+          "actor": null,
+          "targets": [],
+          "result": null
         }
       }
     ],
@@ -917,7 +942,33 @@
           }
         ]
       }
-    ]
+    ],
+    "nine_tail_takeover_confirmation_20261030": {
+      "rule": {
+        "kind": "user_confirmation",
+        "source_path": "data/extractions/shared/用户确认_20261030_白天顺序与九尾狐接刀.txt",
+        "source_sha256": "384d0e68242d52e5bd7497b5b64b1efbbc06541a61f3f27da7f2b06a0bda8269",
+        "quote": "只有小狼都出局后，判定九尾狐接刀；九尾狐击杀只在小狼全部出局后替代狼队击杀"
+      },
+      "round": 3,
+      "preserved_action_before_mapping": {
+        "slot": "nine_tail_kill",
+        "action": "kill",
+        "actor": 9,
+        "targets": [
+          1
+        ],
+        "result": "1号守卫出局",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "本夜开始前普通狼人已全部出局，依据用户确认规则归一化既有狼刀；目标与结果沿用原已核行动。"
+    }
   },
   "daily_audit_changes": [
     {
@@ -1012,6 +1063,42 @@
           7
         ],
         "result": "好人"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "nine_tail_kill",
+      "before": {
+        "slot": "nine_tail_kill",
+        "action": "kill",
+        "actor": 9,
+        "targets": [
+          1
+        ],
+        "result": "1号守卫出局"
+      },
+      "after": {
+        "slot": "nine_tail_kill",
+        "action": "kill",
+        "actor": 9,
+        "targets": [
+          1
+        ],
+        "result": "1号守卫出局"
+      }
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "before": null,
+      "after": {
+        "slot": "wolf_attack",
+        "actor": null,
+        "targets": [],
+        "action": "unavailable",
+        "result": null
       }
     }
   ],

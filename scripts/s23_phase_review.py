@@ -7,6 +7,11 @@ from __future__ import annotations
 from copy import deepcopy
 import re
 
+try:
+    from .game_time import phase_label
+except ImportError:
+    from game_time import phase_label
+
 WOLVES={'狼人','机械狼','狼王','黑狼王','假面','诡术师','典狱长','盗宝大师','九尾狐','狼术师'}
 NIGHT_CRITICAL={'guard','wolf_attack','witch_save','witch_poison','seer_check',
                 'mechanical_action','mechanical_knife_status','mixed_blood_model',
@@ -28,10 +33,6 @@ LABELS={'night_deaths':'夜间死亡结算','exile_result':'放逐结果','secon
         'treasure_choice':'盗宝选牌','treasure_card_skill':'盗宝所选技能','treasure_extra_attack':'盗宝接刀',
         'dreamer_action':'摄梦目标','magician_exchange':'魔术师交换','guile_exchange':'诡术师交换',
         'sorcerer_exchange':'狼术师交换'}
-
-
-def phase_label(number,phase):
-    return ('开局夜晚' if number==1 else f'第{number-1}天夜晚') if phase=='night' else f'第{number}天白天'
 
 
 def _unknown_value(value):
@@ -201,7 +202,7 @@ def enrich(game):
                             '此前普通狼人已全部出局，机械狼接普通狼刀。' if carrying else '本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。');continue
             if slot=='mechanical_action' and learn_night is not None:
                 if n<learn_night:
-                    infer_event(ev,'pass',f'全局仅能学习一次，已明确在第{learn_night}夜学习，因此此前尚未发动学习。');continue
+                    infer_event(ev,'pass',f'全局仅能学习一次，已明确在{phase_label(learn_night,"night")}学习，因此此前尚未发动学习。');continue
                 if n>learn_night and mechanical_form in {'机械平民','机械猎人'}:
                     infer_event(ev,'unavailable',f'已学习{mechanical_form}；该形态没有额外夜间技能，普通狼刀与白天开枪另列。');continue
                 if n>learn_night and mechanical_form=='机械双刀狼' and carrying is False:
@@ -210,7 +211,7 @@ def enrich(game):
                     if any(x<n for x in mech_poison_nights):
                         infer_event(ev,'unavailable','复制的唯一毒药已在前夜用尽。');continue
                     if len(mech_poison_nights)==1 and n<mech_poison_nights[0]:
-                        infer_event(ev,'pass',f'复制毒药只一瓶，已明确第{mech_poison_nights[0]}夜才用毒，本夜保留毒药。');continue
+                        infer_event(ev,'pass',f'复制毒药只一瓶，已明确{phase_label(mech_poison_nights[0],"night")}才用毒，本夜保留毒药。');continue
             if slot=='witch_save':
                 attack=_event(raw,'wolf_attack')
                 if attack and attack.get('action')=='attack' and actor in attack.get('targets',[]):

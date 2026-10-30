@@ -44,7 +44,7 @@
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 17,
+    "mapped_events": 18,
     "reviewed_phase_events": 19,
     "unmapped_events": 3,
     "placeholder_rounds": []
@@ -1629,5 +1629,152 @@
       }
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1Ey9wBzEEV",
+    "game_slug": "bili-BV1Ey9wBzEEV-p01-cid37182442389",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c.json",
+    "source_game": {
+      "bvid": "BV1Ey9wBzEEV",
+      "id": "bili-BV1Ey9wBzEEV-p01-cid37182442389",
+      "season": "S21",
+      "date": "2026-04-02",
+      "game_number": 2,
+      "dossier_sha256": "419f52141ff04096f46b1c855a5644e14c6c39f9b693ae0971e8ad41007e2ca3",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "刚好",
+          "role": "女巫"
+        },
+        {
+          "seat": 2,
+          "name": "徐言雨",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "猎人"
+        },
+        {
+          "seat": 4,
+          "name": "果冻",
+          "role": "狼王"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "预言家"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "狼人"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "守卫"
+        },
+        {
+          "seat": 8,
+          "name": "小苍",
+          "role": "平民"
+        },
+        {
+          "seat": 9,
+          "name": "荣耀",
+          "role": "平民"
+        },
+        {
+          "seat": 10,
+          "name": "翼风",
+          "role": "狼人"
+        },
+        {
+          "seat": 11,
+          "name": "焦阳",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "彭彭",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-110",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "7号这把是傀儡，技能失效",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "unavailable"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-110",
+        "round": 1,
+        "phase": "night",
+        "slot": "guard",
+        "classification": "puppet_skill_disabled",
+        "note": "7号这把是傀儡，技能失效",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "unavailable",
+          "actor": 7,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-110",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "7号这把是傀儡，技能失效",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "unavailable"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c"
 }

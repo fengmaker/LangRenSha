@@ -1,0 +1,112 @@
+{
+  "generated_at_utc": "2026-10-30T05:22:56.312817+00:00",
+  "season": "S23",
+  "scope_code": "S23_regular_75",
+  "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+  "status": "database import completed in one transaction; changed games read back and S22 fingerprint verified",
+  "database_write": true,
+  "selected_bvids": [
+    "BV1saaT6jEyK",
+    "BV1g1YU6kERd",
+    "BV1nJer63EDh",
+    "BV1VPaW66EZz"
+  ],
+  "full_batch": false,
+  "timings_seconds": {
+    "preparation": 0.834,
+    "database": 2.457
+  },
+  "formal_games_rewritten": 0,
+  "candidate_games": 4,
+  "board_counts": {
+    "qingqiu_night": 4
+  },
+  "unknown_events_before": 0,
+  "unknown_events_after": 152,
+  "unknown_events_after_derivation": 141,
+  "unknown_slots_added": 152,
+  "candidate_paths": [
+    "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json",
+    "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json",
+    "data/games/S23/2026-09-17_g02_BV1nJer63EDh/dossier.candidate.json",
+    "data/games/S23/2026-09-29_g02_BV1VPaW66EZz/dossier.candidate.json"
+  ],
+  "source_hashes": {
+    "scope": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
+    "formal_rules": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
+    "review_rules": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
+    "snapshot_report": "0ad05b1984984e056a2c4f7b9fd54cb6eeaac5198fd0c6fd564536048cd85bf0",
+    "daily_review_report": "cd53a7c19f5c6ef65e709c46af529e8ca1f327b33996e3f7ea76df2e6e9fa188",
+    "validation_report": "3a6c1a7521b6825b246dbc77c3ee655269fdd1964f9373cefa3d3e2a3dfdb64e",
+    "authorization": "8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+    "eulogy_statistic_policy": "8b031a7d36bd02fba8ec765d9000485c3a45b64ac3a861436f4b10228bd0e1fb"
+  },
+  "database": {
+    "database_checked": true,
+    "database_write": true,
+    "games": 4,
+    "games_unchanged": 0,
+    "database_write_passes": 1,
+    "verified_idempotent": false,
+    "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+    "s22_unchanged": true,
+    "s22_fingerprint": {
+      "season_exists": true,
+      "games": 148,
+      "details": 148,
+      "seats": 1776,
+      "rounds": 473,
+      "events": 9285,
+      "targets": 2446,
+      "event_votes": 0,
+      "effects": 1,
+      "ballots": 346,
+      "choices": 2507,
+      "voting_days": 436,
+      "sheriff_registrations": 1776,
+      "files": 595,
+      "formal_receipts": 0,
+      "formal_annotations": 0,
+      "formal_tables_present": {
+        "game_formal_import_receipts": true,
+        "game_formal_annotations": true
+      },
+      "content_sha256": "41250d4ff357c29011454670e625c9e1d7fcce4c9322afb576a76df0f41ef654",
+      "content_row_counts": {
+        "games": 148,
+        "details": 148,
+        "seats": 1776,
+        "staff": 396,
+        "rounds": 473,
+        "events": 9285,
+        "targets": 2446,
+        "event_votes": 0,
+        "effects": 1,
+        "ballots": 346,
+        "ballot_choices": 2507,
+        "voting_days": 436,
+        "sheriff_registrations": 1776,
+        "files": 595,
+        "formal_receipts": 0,
+        "formal_annotations": 0,
+        "legacy_templates": 247
+      }
+    },
+    "s23_before": null,
+    "s23_after": {
+      "bili-BV1saaT6jEyK-p01-g02": "c38906ab9ab080da4b82dadac0b098cd7c3fada2d8ed8614be4a5e626bff7217",
+      "bili-BV1g1YU6kERd-p01-g02": "dfc1824e127b047064fb1f4919543071f01ad76e297f7913f90ee5b3bce6fec9",
+      "bili-BV1nJer63EDh-p01-g02": "569c3a3f80d8f8b93876ecf642ce7727bf3375ccb7f7a031e82e6bfe7d5f7e3f",
+      "bili-BV1VPaW66EZz-p01-g02": "ebcfa34ec61ae70c3d7ed5a12f99057e79b7903fc478d234b4cd8ff4ffc30697"
+    },
+    "schema": "jcms"
+  },
+  "notes": [
+    "指定BVID必须属于当前复核范围；局部入口用当前有效对局校验对应候选，完整批次仍检查75局。",
+    "整体数据库/上线授权与逐字段确认分别记录；整体授权没有提升任一unknown字段的确认状态。",
+    "candidate源文件原样保留；准备输出可按规则旁证补全unknown，规范化后与推导后的数量分别统计，推导不新增候选没有的轮次。",
+    "DQ作为独立补充观察保存；无效狼刀保留invalidated_by_dq，不作为主动空刀。",
+    "10号遗言诈身份保存在独立统计复核上下文，不并入常规悍跳。"
+  ]
+}

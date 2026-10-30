@@ -13,15 +13,15 @@
     "identity_reviewed_path": "data/extractions/S21/game_reviews/BV1roX7BQEau/identity.reviewed.json",
     "identity_reviewed_sha256": "512accbb66ed975bebfad8715bea276b157143a11f5ae076215f2ac92cc20790",
     "phase_reviewed_path": "data/extractions/S21/game_reviews/BV1roX7BQEau/phase.reviewed.json",
-    "phase_reviewed_sha256": "958f473b34a7ab2d715a535de20cdd4ee45aa2f45edc419fed6cb8c23401793b",
+    "phase_reviewed_sha256": "c858b110845f4fecc60ca8b323f91241b56f9e33e8be23dfcba3c1e13e5f9777",
     "phase_spec_path": "data/extractions/S21/phase_specs/BV1roX7BQEau.json",
-    "phase_spec_sha256": "d049cda97bbc330a73387bc81886c7655f8a34f56bb9bb889fd2c7dae358899d",
+    "phase_spec_sha256": "5f13e0dce60f3d609b3345ba0228454532ecca71c105ec9c22ba89b2b501a296",
     "selected_transcript_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
     "selected_transcript_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
     "original_transcript_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
     "original_transcript_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
     "phase_approval": {
-      "spec_sha256": "d049cda97bbc330a73387bc81886c7655f8a34f56bb9bb889fd2c7dae358899d",
+      "spec_sha256": "5f13e0dce60f3d609b3345ba0228454532ecca71c105ec9c22ba89b2b501a296",
       "reviewer": "codex_primary",
       "status": "semantic_source_checked_with_declared_gaps",
       "checks": [
@@ -29,9 +29,12 @@
         "subtitle_line_pairing_corrected",
         "mechanical_form_and_original_role_distinguished",
         "live_vote_flow_source_inspected",
-        "false_pk_round_removed"
+        "false_pk_round_removed",
+        "user_confirmed_D1_seat6_self_destruct_source_checked",
+        "D1_sheriff_deferred_D2_badge_lost",
+        "later_seat6_electorate_removed_from_survival_chain"
       ],
-      "gaps_retained": 3,
+      "gaps_retained": 1,
       "deep_day_night_review": {
         "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
         "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
@@ -39,12 +42,17 @@
           "DN-015"
         ],
         "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      "manual_followup": {
+        "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+        "review_id": "DN-102",
+        "confirmation": "user_confirmed_self_destruct_and_following_seat6_ballots"
       }
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 26,
-    "reviewed_phase_events": 29,
+    "mapped_events": 31,
+    "reviewed_phase_events": 31,
     "unmapped_events": 3,
     "placeholder_rounds": []
   },
@@ -258,7 +266,7 @@
         "actual_targets": null,
         "state": "performed",
         "status": "text_explicit",
-        "result": "白天片段后直接播报天黑；所读连续片段未找到其间竞选结果。",
+        "result": "6号狼人自爆后，法官宣布平安夜并播报天黑；警长竞选延期。",
         "details": {},
         "note": null,
         "evidence": [
@@ -1051,6 +1059,86 @@
         "event_id": "BV1roX7BQEau-event-029",
         "phase": "day",
         "round": 1,
+        "action": "self_destruct",
+        "actor": 6,
+        "actor_physical_role": "狼人",
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "6号KS狼人自爆，结束第一天白天。",
+        "details": {
+          "ends_day": true
+        },
+        "note": "用户DN-102明确确认；局中连续转夜与KS自爆文字相互印证，证据时间不作为实际动作时刻。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
+            "source_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
+            "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
+            "source_segment_indices": [
+              761,
+              762,
+              763,
+              764,
+              766,
+              767,
+              768,
+              769,
+              1214,
+              1215
+            ],
+            "start_ms": 1596490,
+            "end_ms": 2515050,
+            "quote": "7号起跳之后发在6号\n像选择自爆\n作业平安夜\n天黑请闭眼\n啊这个是唯一手自爆了\n应该是觉得一一会投对了\n警徽是拿不到了\n所以要自爆\n因为郭小郭是狼KS自爆\nks自爆完其实可以一号自爆对吧",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV1roX7BQEau-event-030",
+        "phase": "day",
+        "round": 1,
+        "action": "sheriff_deferred",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "首日6号自爆中断警长竞选，延期至第二天；次日12号再自爆后警徽流失。",
+        "details": {},
+        "note": "首日尚未投出警徽即自爆转夜，次日复盘明确称延期警长竞选；本日不补警长投票或当选者。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
+            "source_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
+            "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
+            "source_segment_indices": [
+              764,
+              767,
+              768,
+              769,
+              2460,
+              2461,
+              2462,
+              2463
+            ],
+            "start_ms": 1605360,
+            "end_ms": 4923680,
+            "quote": "天黑请闭眼\n应该是觉得一一会投对了\n警徽是拿不到了\n所以要自爆\n第二天延期\n精神紧张环节\n12号狼人自爆\n本游戏警徽流失",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV1roX7BQEau-event-031",
+        "phase": "day",
+        "round": 1,
         "action": "no_exile",
         "actor": null,
         "actor_physical_role": null,
@@ -1060,7 +1148,7 @@
         "status": "unique_deduction",
         "result": "本日未举行放逐投票。",
         "details": {},
-        "note": "依据连续终局/转夜程序及本轮无放逐票型核对：首日仅宣布平安后直接天黑，未发生放逐投票。",
+        "note": "首日6号自爆中断白天并转夜，本日未举行放逐投票。",
         "evidence": [
           {
             "kind": "literal_transcript",
@@ -1742,13 +1830,19 @@
         {
           "phase": "day",
           "round": 1,
-          "field": "sheriff_election_and_first_day_interruption",
-          "reason": "已确认首次报名除1号外其余上警；连续局中窗口从末段发言直接进入天黑，未找到最终候选、警长票轮、退水名单或中断动作的法官播报。",
+          "field": "sheriff_final_candidates",
+          "reason": "6号自爆及警长竞选延期已确认；未见完整退水后候选名单，不补首日警长票轮或当选者。",
           "sources": [
             149,
             150,
-            763,
-            764
+            761,
+            762,
+            764,
+            767,
+            768,
+            769,
+            2460,
+            2461
           ],
           "evidence": [
             {
@@ -1760,74 +1854,18 @@
               "source_segment_indices": [
                 149,
                 150,
-                763,
-                764
+                761,
+                762,
+                764,
+                767,
+                768,
+                769,
+                2460,
+                2461
               ],
               "start_ms": 327830,
-              "end_ms": 1607040,
-              "quote": "本局游戏除一号玩家外\n其他玩家上警上警\n作业平安夜\n天黑请闭眼",
-              "time_kind": "evidence_location_not_actual_event_time"
-            }
-          ]
-        },
-        {
-          "phase": "day",
-          "round": 3,
-          "field": "initial_and_pk_eligibility",
-          "reason": "自由投票轮和PK轮逐票播报不构成完整票权名单；6号等未播报席位不得推为弃票。",
-          "sources": [
-            1741,
-            1743,
-            1753,
-            1912,
-            1922
-          ],
-          "evidence": [
-            {
-              "kind": "literal_transcript",
-              "source_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
-              "source_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
-              "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
-              "original_source_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
-              "source_segment_indices": [
-                1741,
-                1743,
-                1753,
-                1912,
-                1922
-              ],
-              "start_ms": 3536050,
-              "end_ms": 3901870,
-              "quote": "本局游戏警徽流失四玩家请自由投票\n一号投给2号\n2号九号各三票平票pk\n请从2号九号当中选出本轮放逐出局的玩家\n2号玩家自票出局",
-              "time_kind": "evidence_location_not_actual_event_time"
-            }
-          ]
-        },
-        {
-          "phase": "day",
-          "round": 4,
-          "field": "ballot_eligibility",
-          "reason": "7号出局轮只检索到6条逐票播报；不能确认是否完整。",
-          "sources": [
-            2417,
-            2419,
-            2426
-          ],
-          "evidence": [
-            {
-              "kind": "literal_transcript",
-              "source_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
-              "source_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
-              "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
-              "original_source_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
-              "source_segment_indices": [
-                2417,
-                2419,
-                2426
-              ],
-              "start_ms": 4834780,
-              "end_ms": 4854170,
-              "quote": "本局游戏警徽流失四玩家请自由投票\n一号投给7号\n7号玩家四票出去",
+              "end_ms": 4920800,
+              "quote": "本局游戏除一号玩家外\n其他玩家上警上警\n7号起跳之后发在6号\n像选择自爆\n天黑请闭眼\n应该是觉得一一会投对了\n警徽是拿不到了\n所以要自爆\n第二天延期\n精神紧张环节",
               "time_kind": "evidence_location_not_actual_event_time"
             }
           ]
@@ -1835,12 +1873,13 @@
       ],
       "notes": [
         "第一天首次上警名单和候选名单分开记录；未用候选补集代替警下名单。",
-        "机械通灵师作为学习形态保留，未改写机械狼底牌。"
+        "机械通灵师作为学习形态保留，未改写机械狼底牌。",
+        "2026-10-30按用户DN-102及后续明确要求补首日6号自爆、延期警长；据此排除后续6号票权，原逐票播报保持。"
       ],
       "status": "reviewed_with_explicit_gaps"
     },
     "primary_audit": {
-      "spec_sha256": "d049cda97bbc330a73387bc81886c7655f8a34f56bb9bb889fd2c7dae358899d",
+      "spec_sha256": "5f13e0dce60f3d609b3345ba0228454532ecca71c105ec9c22ba89b2b501a296",
       "reviewer": "codex_primary",
       "status": "semantic_source_checked_with_declared_gaps",
       "checks": [
@@ -1848,9 +1887,12 @@
         "subtitle_line_pairing_corrected",
         "mechanical_form_and_original_role_distinguished",
         "live_vote_flow_source_inspected",
-        "false_pk_round_removed"
+        "false_pk_round_removed",
+        "user_confirmed_D1_seat6_self_destruct_source_checked",
+        "D1_sheriff_deferred_D2_badge_lost",
+        "later_seat6_electorate_removed_from_survival_chain"
       ],
-      "gaps_retained": 3,
+      "gaps_retained": 1,
       "deep_day_night_review": {
         "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
         "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
@@ -1858,8 +1900,304 @@
           "DN-015"
         ],
         "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      "manual_followup": {
+        "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+        "review_id": "DN-102",
+        "confirmation": "user_confirmed_self_destruct_and_following_seat6_ballots"
       }
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1roX7BQEau",
+    "game_slug": "bili-BV1roX7BQEau-p01-cid36979672873",
+    "source_path": "日夜槽位复核结果_20261030 (1).json",
+    "source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+    "source_game": {
+      "bvid": "BV1roX7BQEau",
+      "id": "bili-BV1roX7BQEau-p01-cid36979672873",
+      "season": "S21",
+      "date": "2026-03-25",
+      "game_number": 3,
+      "dossier_sha256": "1176b119be3359f50f3578c5bd0f5d9df81cae2b379d7ecbc5385b32214c2ef4",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "郭小炜",
+          "role": "女巫"
+        },
+        {
+          "seat": 2,
+          "name": "盛宝",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "狼人"
+        },
+        {
+          "seat": 4,
+          "name": "二妖",
+          "role": "守卫"
+        },
+        {
+          "seat": 5,
+          "name": "翼风",
+          "role": "平民"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "狼人"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "猎人"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "通灵师"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "机械狼"
+        },
+        {
+          "seat": 10,
+          "name": "陈明峻",
+          "role": "平民"
+        },
+        {
+          "seat": 11,
+          "name": "陈俊洁",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "笑笑",
+          "role": "狼人"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-100",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "注意学习结果应该是机械通灵",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "learn",
+                "targets": [
+                  8
+                ],
+                "result": "通灵师"
+              }
+            }
+          ]
+        },
+        {
+          "id": "DN-101",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  4
+                ],
+                "result": "守卫"
+              }
+            }
+          ]
+        },
+        {
+          "id": "DN-102",
+          "round": 4,
+          "phase": "day",
+          "phase_label": "第四天白天",
+          "note": "机械通灵没有白天技能槽位阿，还有这天的☼\n白天复盘\n\n第一天白天\n警长竞选报名\n上警2号、3号、4号、5号、6号、7号、8号、9号、10号、11号、12号\n\n警下1号\n\n夜间出局\n天亮，昨夜平安夜。\n\n放逐结果jin\n本日无人被放逐。   第一天6号狼人自爆了阿，你这句的对局记录第一天的警徽结果都没有，狼人自爆也没有",
+          "slots": [
+            {
+              "slot": "mechanical_day_skill",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-100",
+        "round": 1,
+        "phase": "night",
+        "slot": "mechanical_action",
+        "classification": "confirmed",
+        "note": "注意学习结果应该是机械通灵",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "learn",
+          "actor": 9,
+          "targets": [
+            8
+          ],
+          "result": "机械通灵师"
+        },
+        "raw_review": {
+          "id": "DN-100",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "注意学习结果应该是机械通灵",
+          "slots": [
+            {
+              "slot": "mechanical_action",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "learn",
+                "targets": [
+                  8
+                ],
+                "result": "通灵师"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "DN-101",
+        "round": 1,
+        "phase": "night",
+        "slot": "seer_check",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "check",
+          "actor": 8,
+          "targets": [
+            4
+          ],
+          "result": "守卫"
+        },
+        "raw_review": {
+          "id": "DN-101",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  4
+                ],
+                "result": "守卫"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "DN-102",
+        "round": 4,
+        "phase": "day",
+        "slot": "mechanical_day_skill",
+        "classification": "mechanical_form_has_no_day_skill",
+        "note": "机械通灵没有白天技能槽位阿，还有这天的☼\n白天复盘\n\n第一天白天\n警长竞选报名\n上警2号、3号、4号、5号、6号、7号、8号、9号、10号、11号、12号\n\n警下1号\n\n夜间出局\n天亮，昨夜平安夜。\n\n放逐结果jin\n本日无人被放逐。   第一天6号狼人自爆了阿，你这句的对局记录第一天的警徽结果都没有，狼人自爆也没有",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "unavailable",
+          "actor": 9,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-102",
+          "round": 4,
+          "phase": "day",
+          "phase_label": "第四天白天",
+          "note": "机械通灵没有白天技能槽位阿，还有这天的☼\n白天复盘\n\n第一天白天\n警长竞选报名\n上警2号、3号、4号、5号、6号、7号、8号、9号、10号、11号、12号\n\n警下1号\n\n夜间出局\n天亮，昨夜平安夜。\n\n放逐结果jin\n本日无人被放逐。   第一天6号狼人自爆了阿，你这句的对局记录第一天的警徽结果都没有，狼人自爆也没有",
+          "slots": [
+            {
+              "slot": "mechanical_day_skill",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f"
 }

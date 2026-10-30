@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>日夜待核槽位 · 人工复核</title>
+<style>
+:root{color-scheme:light;--ink:#17343d;--muted:#62757d;--line:#dce5e8;--accent:#156e78}*{box-sizing:border-box}
+body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.5 system-ui,"Microsoft YaHei",sans-serif}button,select,input,textarea{font:inherit}
+button,a,select,input{touch-action:manipulation}button{cursor:pointer;background:white;border:1px solid #bdced3;border-radius:8px;padding:9px 13px;color:var(--ink)}button:hover{border-color:var(--accent)}button:disabled{opacity:.4;cursor:default}
+button.primary{color:white;background:var(--accent);border-color:var(--accent)}a{color:var(--accent);text-underline-offset:3px}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #70afbb;outline-offset:2px}
+header{background:#163e47;color:white;padding:22px max(20px,calc((100vw - 1060px)/2));display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}h1{font-size:23px;margin:0 0 5px}header p{margin:0;color:#d4e3e6;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:10px;z-index:3}nav select{max-width:52vw;min-width:215px}select,input[type=text]{padding:9px 10px;min-height:42px;border:1px solid #bdced3;border-radius:7px;background:white;color:var(--ink);max-width:100%}
+main,#json-panel,#status{max-width:1100px;margin:auto;padding:0 20px}#status{font-size:12px;color:var(--muted);padding-top:11px}main{padding-bottom:36px}.game{background:#fff;border:1px solid var(--line);border-radius:13px;margin:16px 0;padding:22px}.game-head{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}h2{font-size:19px;margin:0}.game-head small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.video{white-space:nowrap;font-size:14px}
+.seats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin:17px 0 21px}.seat{border-radius:7px;background:#f4f7f8;padding:8px 9px;min-width:0}.seat strong{font-weight:600;font-size:13px;display:block;overflow-wrap:anywhere}.seat span{color:var(--muted);font-size:12px;display:block;margin-top:2px}.slot-choice{border-top:1px solid var(--line);padding-top:17px}.slot-choice label{font-size:13px;font-weight:600;margin-right:10px}.slot-choice select{min-width:310px}.slot-form{background:#f8fafb;border:1px solid var(--line);padding:16px;border-radius:9px;margin-top:12px}.slot-title{font-size:13px;font-weight:600;margin-bottom:12px}.fields{display:flex;gap:13px;align-items:flex-start;flex-wrap:wrap}.field{min-width:145px;flex:1}.field>label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.field select,.field input{width:100%}.known{min-height:42px;display:flex;align-items:center;overflow-wrap:anywhere;font-size:14px}.targets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;width:100%}.targets label{display:flex;align-items:center;gap:6px;font-size:13px}.targets input{accent-color:var(--accent);width:17px;height:17px}.wide{flex-basis:100%}.hint{color:var(--muted);font-size:12px;margin:10px 0 0}.filled{color:#347159;font-size:12px;margin-left:8px}#json-panel{padding-top:15px}#json-panel textarea{width:100%;height:230px;border:1px solid var(--line);padding:12px;font:12px/1.5 Consolas,monospace}#json-panel p{font-size:13px;color:var(--muted)}[hidden]{display:none!important}
+@media(max-width:650px){header{padding:18px 14px}h1{font-size:20px}main,#status,#json-panel{padding-left:12px;padding-right:12px}.game{padding:15px;margin:12px 0}.seats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.slot-choice label{display:block;margin-bottom:6px}.slot-choice select{width:100%;min-width:0}.targets{grid-template-columns:repeat(4,1fr)}nav{gap:6px;padding:10px 8px}nav select{min-width:0;width:100%;max-width:54vw;font-size:14px}nav button{padding:8px;font-size:13px}.field{min-width:125px}.slot-form{padding:12px}}
+.review-note{margin-top:14px}.review-note label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}.review-note textarea{width:100%;min-height:82px;resize:vertical;padding:10px;border:1px solid #bdced3;border-radius:7px;color:var(--ink);background:white}
+</style></head><body>
+<header><div><h1>日夜待核槽位 · 人工复核</h1><p id="summary"></p></div><div class="actions"><button class="primary" id="export">导出复核结果</button><button id="show-json">显示 / 复制结果</button></div></header>
+<nav aria-label="按日期浏览"><button id="previous">前一天</button><select id="date" aria-label="选择日期"></select><button id="next">后一天</button></nav>
+<p id="status" role="status">填写会自动保存在此浏览器；未填写的槽位不会变成已确认。</p>
+<section id="json-panel" hidden><p>复制下面的结果发回即可。</p><textarea id="json-text" aria-label="复核结果 JSON" readonly></textarea></section>
+<main id="games"></main><datalist id="results"><option value="好人"><option value="狼人"><option value="平民"><option value="预言家"><option value="通灵师"><option value="女巫"><option value="守卫"><option value="猎人"><option value="机械双刀狼"><option value="机械守卫"><option value="机械女巫"><option value="机械猎人"></datalist>
+<script id="review-data" type="application/json">__DATA__</script>
+<script id="draft-migration" type="application/json">__DRAFT_MIGRATION__</script>
+<script>
+'use strict';
+const DATA=JSON.parse(document.getElementById('review-data').textContent);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dates=[...new Set(DATA.games.map(g=>g.date))];
+const key=DATA.format+':'+DATA.source_fingerprint;
+let state={date:dates[0],selected:{},answers:{}};
+try{
+ let saved=JSON.parse(localStorage.getItem(key)||'null');
+ const migration=JSON.parse(document.getElementById('draft-migration').textContent);
+ if(!saved&&migration){
+  const prior=JSON.parse(localStorage.getItem(DATA.format+':'+migration.source_fingerprint)||'null');
+  if(prior){const ids=new Set(migration.question_ids);saved={...prior,answers:Object.fromEntries(Object.entries(prior.answers||{}).filter(([id])=>ids.has(id))),notes:Object.fromEntries(Object.entries(prior.notes||{}).filter(([id])=>ids.has(id)))};localStorage.setItem(key,JSON.stringify(saved));}
+ }
+ if(saved)state=saved;
+}catch{}
+state.notes||={};
+if(!dates.includes(state.date))state.date=dates[0];
+const dateSelect=document.getElementById('date'),main=document.getElementById('games');
+dateSelect.innerHTML=dates.map(d=>{const games=DATA.games.filter(g=>g.date===d);return `<option value="${d}">${games[0].season} · ${d}（${games.length}局）</option>`;}).join('');
+function person(g,n){const s=g.seats.find(s=>s.seat===Number(n));return s?`${s.seat}号 ${s.name||'姓名待核'} · ${s.role||'身份待核'}`:'';}
+function options(g,value){return `<option value="">待选择</option>`+g.seats.map(s=>`<option value="${s.seat}" ${String(s.seat)===String(value)?'selected':''}>${esc(person(g,s.seat))}</option>`).join('');}
+function answer(q,s){return state.answers[q.id]?.[s.code]||{};}
+function value(q,s,f){const a=answer(q,s);return Object.hasOwn(a,f)?a[f]:s.before[f];}
+function targetCount(action){return action==='die'?12:action==='exchange'?2:['check','learn','attack','guard','save','poison','shoot','exile','reverse_check','skill_disabled'].includes(action)?1:0;}
+function currentQuestion(g){return g.questions.find(q=>q.id===state.selected[g.bvid])||g.questions[0];}
+function phaseLabel(number,phase){const digits='零一二三四五六七八九';const chinese=n=>n<10?digits[n]:n<20?'十'+(n%10?digits[n%10]:''):n<100?digits[Math.floor(n/10)]+'十'+(n%10?digits[n%10]:''):String(n);return phase==='night'&&number===1?'首夜':`第${chinese(phase==='night'?number-1:number)}天${phase==='night'?'夜晚':'白天'}`;}
+function questionLabel(q){return phaseLabel(q.round,q.phase)+' · '+q.slots.map(s=>s.label).join(' / ');}
+function hasAnswer(q){return Boolean(state.notes[q.id]?.trim())||Object.values(state.answers[q.id]||{}).some(a=>Object.keys(a).length);}
+function field(label,content,wide=false){return `<div class="field${wide?' wide':''}"><label>${label}</label>${content}</div>`;}
+function editor(g,q,s){
+ const a=value(q,s,'action')||'unknown',knownAction=s.before.action&&s.before.action!=='unknown';
+ const action=knownAction?`<div class="known">${esc(DATA.labels[a]||a)}（已知）</div>`:`<select data-field="action" aria-label="${esc(questionLabel(q)+' '+s.label+' 动作')}"><option value="">待选择</option>${s.actions.map(x=>`<option value="${x}" ${answer(q,s).action===x?'selected':''}>${esc(DATA.labels[x]||x)}</option>`).join('')}</select>`;
+ let fields=field('动作 / 状态',action);
+ const count=targetCount(a),targets=value(q,s,'targets')||[];
+ if(count){
+  if(s.before.targets?.length)fields+=field('已知目标',`<div class="known">${s.before.targets.map(n=>esc(person(g,n))).join('、')}</div>`);
+  else if(count===1)fields+=field('目标',`<select data-field="target" aria-label="${esc(questionLabel(q)+' '+s.label+' 目标')}">${options(g,targets[0])}</select>`);
+  else if(count===2)fields+=field('交换目标',`<select data-field="target1" aria-label="交换目标一">${options(g,targets[0])}</select><select data-field="target2" aria-label="交换目标二" style="margin-top:7px">${options(g,targets[1])}</select>`);
+  else fields+=field('出局座位（可多选）',`<div class="targets">${g.seats.map(seat=>`<label><input type="checkbox" data-field="targets" value="${seat.seat}" ${targets.includes(seat.seat)?'checked':''}>${seat.seat}号</label>`).join('')}</div>`,true);
+ }
+ if(['check','learn'].includes(a))fields+=field(a==='check'?'查验反馈':'学习结果 / 形态',s.before.result?`<div class="known">${esc(s.before.result)}（已知）</div>`:`<input type="text" list="results" data-field="result" aria-label="${esc(questionLabel(q)+' '+s.label+' 反馈') }" value="${esc(value(q,s,'result')||'')}" placeholder="可选择或填写，未知留空">`);
+ return `<section class="slot-form" data-slot="${s.code}">${q.slots.length>1?`<div class="slot-title">${esc(s.label)}</div>`:''}<div class="fields">${fields}</div></section>`;
+}
+function updateSummary(){const questions=DATA.games.flatMap(g=>g.questions),filled=questions.filter(hasAnswer).length;document.getElementById('summary').textContent=`${DATA.games.length}局 · ${questions.length}项待核 · 已填写 ${filled} 项`;}
+function save(){try{localStorage.setItem(key,JSON.stringify(state));document.getElementById('status').textContent='已自动保存；填写不全也可导出，空白继续保留待核。';}catch{document.getElementById('status').textContent='当前填写可直接导出保存。';}updateSummary();}
+function render(){
+ dateSelect.value=state.date;const index=dates.indexOf(state.date);document.getElementById('previous').disabled=index===0;document.getElementById('next').disabled=index===dates.length-1;
+ main.innerHTML=DATA.games.filter(g=>g.date===state.date).map(g=>{const q=currentQuestion(g);return `<article class="game" data-game="${g.bvid}"><div class="game-head"><div><h2>第${g.game_number}局 · ${esc(g.board)}</h2><small>${g.season} · ${g.date}</small></div><a class="video" href="${esc(q.video||g.video)}" target="_blank" rel="noopener noreferrer">当天视频${q.position?' · '+esc(q.position):''} ↗</a></div><div class="seats" aria-label="座位姓名与真实身份">${g.seats.map(s=>`<div class="seat"><strong>${s.seat}号 · ${esc(s.name||'姓名待核')}</strong><span>${esc(s.role||'身份待核')}</span></div>`).join('')}</div><div class="slot-choice"><label for="slot-${g.bvid}">待核槽位</label><select id="slot-${g.bvid}" data-question aria-label="第${g.game_number}局待核槽位">${g.questions.map(x=>`<option value="${x.id}" ${x.id===q.id?'selected':''}>${esc(questionLabel(x))}${hasAnswer(x)?' · 已填写':''}</option>`).join('')}</select></div><div data-editor>${q.slots.map(s=>editor(g,q,s)).join('')}</div><div class="review-note"><label for="note-${q.id}">备注</label><textarea id="note-${q.id}" data-note aria-label="${esc(questionLabel(q)+' 备注')}" placeholder="可填写视频位置、判断依据或需要补充的情况">${esc(state.notes[q.id]||'')}</textarea></div></article>`;}).join('');updateSummary();
+}
+main.addEventListener('input',event=>{if(!event.target.matches('[data-note]'))return;const card=event.target.closest('[data-game]'),g=DATA.games.find(g=>g.bvid===card.dataset.game),q=currentQuestion(g);state.notes[q.id]=event.target.value;save();});
+main.addEventListener('change',event=>{
+ const card=event.target.closest('[data-game]');if(!card)return;const g=DATA.games.find(g=>g.bvid===card.dataset.game);
+ if(event.target.matches('[data-question]')){state.selected[g.bvid]=event.target.value;save();render();return;}
+ const slotElement=event.target.closest('[data-slot]');if(!slotElement||!event.target.dataset.field)return;
+ const q=currentQuestion(g),s=q.slots.find(s=>s.code===slotElement.dataset.slot),f=event.target.dataset.field;
+ state.answers[q.id]||={};state.answers[q.id][s.code]||={};const a=state.answers[q.id][s.code];
+ if(f==='action'){if(event.target.value)a.action=event.target.value;else delete a.action;delete a.targets;delete a.result;}
+ else if(f==='target')a.targets=event.target.value?[Number(event.target.value)]:[];
+ else if(f==='target1'||f==='target2')a.targets=[...slotElement.querySelectorAll('[data-field=target1],[data-field=target2]')].map(e=>e.value?Number(e.value):null);
+ else if(f==='targets')a.targets=[...slotElement.querySelectorAll('[data-field=targets]:checked')].map(e=>Number(e.value));
+ else a[f]=event.target.value;
+ save();if(f==='action')render();
+});
+dateSelect.addEventListener('change',()=>{state.date=dateSelect.value;save();render();window.scrollTo(0,0);});
+for(const [id,offset] of [['previous',-1],['next',1]])document.getElementById(id).onclick=()=>{state.date=dates[dates.indexOf(state.date)+offset];save();render();window.scrollTo(0,0);};
+function output(){return {format:DATA.format,source_fingerprint:DATA.source_fingerprint,exported_at:new Date().toISOString(),games:DATA.games.filter(g=>g.questions.some(hasAnswer)).map(g=>({bvid:g.bvid,id:g.id,season:g.season,date:g.date,game_number:g.game_number,dossier_sha256:g.dossier_sha256,seats:g.seats,reviews:g.questions.filter(hasAnswer).map(q=>({id:q.id,round:q.round,phase:q.phase,phase_label:phaseLabel(q.round,q.phase),note:state.notes[q.id]||'',slots:q.slots.filter(s=>Object.keys(answer(q,s)).length).map(s=>({slot:s.code,before:s.before,changes:answer(q,s)}))}))}))};}
+document.getElementById('export').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(output(),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='日夜槽位复核结果_20261030.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+document.getElementById('show-json').onclick=()=>{const panel=document.getElementById('json-panel');panel.hidden=!panel.hidden;if(!panel.hidden){const t=document.getElementById('json-text');t.value=JSON.stringify(output(),null,2);t.focus();t.select();}};
+render();
+</script></body></html>

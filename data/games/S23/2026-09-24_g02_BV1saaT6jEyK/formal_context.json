@@ -11,15 +11,15 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json",
-      "sha256": "86c56c4632afd86f0417e456c0ffff99cec1dd02220890010e2892d80dd9b2fd"
+      "sha256": "f9b4882a69ea10cccf9b826343543bc8ece6e52a7c9658d3015019adec875a15"
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/ai_review.json",
-      "sha256": "1fcb5a3f056796ff4b86ec482934e1130428e0ad36c3ce71161f1e80a952c76a"
+      "sha256": "dd72ef12d538d366699433e95017a91af0a756ff4f1ecc284dd08f900cb01a6c"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1saaT6jEyK/daily_audit.json",
-      "sha256": "a7d011bab08229127d359a0d9aa98697314b187800d80514709126932738a55b"
+      "sha256": "bf51d65984e45209b81cf6784caaf46786c789a4bcd0c327bf0303b1b8c8c7af"
     },
     "voting": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/voting.candidate.json",
@@ -36,6 +36,10 @@
     "vote_control": {
       "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/vote_control.candidate.json",
       "sha256": "6ddbe4326427805637f7ca0a4da9379794065c8658d3dcf186019ebe6e9b637f"
+    },
+    "manual_slot_review": {
+      "path": "data/extractions/S23/game_reviews/BV1saaT6jEyK/slot.reviewed.json",
+      "sha256": "8382fb89b309d45fd218c25a92f85474c0253ac4613bef63655e31468b2ff6ef"
     },
     "source:audio:data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a": {
       "path": "data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a",
@@ -68,6 +72,54 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1saaT6jEyK/p01/audio.m4a",
       "sha256": "ba7128e3214258bf43d62910d61d710957268efd137c84fe85f42552c1cc2677"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "f95db934cc54304ae2298c2ccaab43f99f4a927c6d7fee578d2bc6eb7231afd4"
+    },
+    "board_template:s23_qingqiu_night": {
+      "path": "config/board_templates/qingqiu_night.json",
+      "sha256": "059c71d435a29e92a65fbdb35ba4359c58f5951d7f556b7183e46b1a43265625"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "10494942ba406f1ed317f4181dd831397bacff9573035c829421201f9ee0fc0f"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "0614624f41a61a29a9dd01e92600f8e36755e48819d52e06c54eb2248b2c6e1e"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "e83cc21dea1c8087964d77d1ecc642b547448d6a2394edcbfa7df977ad8292d0"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9"
     }
   },
   "normalization": {
@@ -197,12 +249,6 @@
       {
         "round": 3,
         "phase": "night",
-        "slot": "wolf_attack",
-        "action": "unknown"
-      },
-      {
-        "round": 3,
-        "phase": "night",
         "slot": "witch_poison",
         "action": "unknown"
       },
@@ -260,7 +306,9 @@
     "source_event_extensions": [],
     "explicit_transformations": [],
     "unknown_count_before": 0,
-    "unknown_count_after": 28,
+    "unknown_count_after": 27,
+    "unknown_count_after_normalization": 27,
+    "unknown_count_after_derivation": 25,
     "round_numbers_before": [
       1,
       2,
@@ -284,5 +332,159 @@
     "report_unpublished_source_items": [],
     "eulogy_statistic_policy": null
   },
-  "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。"
+  "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S23",
+    "bvid": "BV1saaT6jEyK",
+    "game_slug": "bili-BV1saaT6jEyK-p01-g02",
+    "source_path": "日夜槽位复核结果_20261030 (1).json",
+    "source_sha256": "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f.json",
+    "source_game": {
+      "bvid": "BV1saaT6jEyK",
+      "id": "bili-BV1saaT6jEyK-p01-g02",
+      "season": "S23",
+      "date": "2026-09-24",
+      "game_number": 2,
+      "dossier_sha256": "90ce330210787b02dd7e5d13783866cc3aaad501f2e17686e06ccfe183af9bd3",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "蛋黄派",
+          "role": "守卫"
+        },
+        {
+          "seat": 2,
+          "name": "圈圈",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "李斯",
+          "role": "平民"
+        },
+        {
+          "seat": 4,
+          "name": "荣耀",
+          "role": "狼人"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "女巫"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "狼人"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "平民"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "狼人"
+        },
+        {
+          "seat": 9,
+          "name": "小苍",
+          "role": "九尾狐"
+        },
+        {
+          "seat": 10,
+          "name": "陈明峻",
+          "role": "白泽"
+        },
+        {
+          "seat": 11,
+          "name": "董鲸鱼",
+          "role": "预言家"
+        },
+        {
+          "seat": 12,
+          "name": "陈俊洁",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-224",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "wolf_attack",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "attack",
+                "targets": [
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-224",
+        "round": 3,
+        "phase": "night",
+        "slot": "nine_tail_kill",
+        "classification": "confirmed_existing_nine_tail_takeover",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "kill",
+          "actor": 9,
+          "targets": [
+            1
+          ],
+          "result": "1号守卫出局"
+        },
+        "raw_review": {
+          "id": "DN-224",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "wolf_attack",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "attack",
+                "targets": [
+                  1
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

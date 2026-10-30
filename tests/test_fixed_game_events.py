@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from game_records import ReviewError, apply_derived_rules, describe, template, validate
+from game_records import ReviewError, apply_derived_rules, describe, phase_label, template, validate
 
 
 DOSSIER = ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json"
@@ -104,13 +104,13 @@ class FixedGameEventTests(unittest.TestCase):
         unknown.update(action="unknown", targets=[])
         self.assertEqual(unknown["action"], "unknown")
         unknown_text = describe(value, 1, "night", unknown)
-        self.assertEqual(unknown_text, "第一夜10号女巫解药未知")
+        self.assertEqual(unknown_text, "首夜10号女巫解药未知")
         self.assertNotIn("未使用", unknown_text)
 
         passed = copy.deepcopy(value["rounds"][1]["night"][0])
         passed.update(action="pass", targets=[])
         pass_text = describe(value, 2, "night", passed)
-        self.assertEqual(pass_text, "第二夜5号守卫未守护")
+        self.assertEqual(pass_text, "第一天夜晚5号守卫未守护")
         self.assertNotEqual(unknown_text, pass_text)
 
         abstained = value["rounds"][1]["day"][7]
@@ -122,12 +122,18 @@ class FixedGameEventTests(unittest.TestCase):
         self.assertEqual(describe(value, 2, "day", abstained), "第二天白天2号平民弃票")
         self.assertNotIn("未知", describe(value, 2, "day", abstained))
 
+    def test_phase_labels_use_day_relative_night_names(self):
+        self.assertEqual(phase_label(1, "night"), "首夜")
+        self.assertEqual(phase_label(2, "night"), "第一天夜晚")
+        self.assertEqual(phase_label(4, "night"), "第三天夜晚")
+        self.assertEqual(phase_label(4, "day"), "第四天白天")
+
     def test_descriptions_are_fixed_and_put_the_actual_role_after_each_seat_number(self):
         value = self.valid_sample()
         expected = (
-            (1, "night", 0, "第一夜5号守卫守护12号狼人"),
-            (1, "night", 1, "第一夜狼队击杀8号机械狼"),
-            (1, "night", 6, "第一夜8号机械狼模仿12号狼人"),
+            (1, "night", 0, "首夜5号守卫守护12号狼人"),
+            (1, "night", 1, "首夜狼队击杀8号机械狼"),
+            (1, "night", 6, "首夜8号机械狼模仿12号狼人"),
             (1, "day", 9, "第一天白天12号狼人自爆"),
             (3, "day", 4, "第三天白天7号猎人开枪带走8号机械狼"),
         )

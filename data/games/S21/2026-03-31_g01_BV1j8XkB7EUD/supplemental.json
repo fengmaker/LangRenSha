@@ -36,7 +36,7 @@
     }
   },
   "formal_slot_coverage": {
-    "mapped_events": 12,
+    "mapped_events": 13,
     "reviewed_phase_events": 17,
     "unmapped_events": 6,
     "placeholder_rounds": []
@@ -1524,5 +1524,162 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1j8XkB7EUD",
+    "game_slug": "bili-BV1j8XkB7EUD-p01-cid37131062176",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c",
+    "source_fingerprint": "420a18c022720fcfc5a6ccd786298ae62c88511278a94863f48edbb3a7c69e3d",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c.json",
+    "source_game": {
+      "bvid": "BV1j8XkB7EUD",
+      "id": "bili-BV1j8XkB7EUD-p01-cid37131062176",
+      "season": "S21",
+      "date": "2026-03-31",
+      "game_number": 1,
+      "dossier_sha256": "1e8a8a3f899e359eacea1653999cc5580ba9b8ca71859d8a9c6b96a6592e570b",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "郭小炜",
+          "role": "平民"
+        },
+        {
+          "seat": 2,
+          "name": "华仔仔",
+          "role": "狼人"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "狼人"
+        },
+        {
+          "seat": 4,
+          "name": "笑笑",
+          "role": "女巫"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "预言家"
+        },
+        {
+          "seat": 6,
+          "name": "彭彭",
+          "role": "平民"
+        },
+        {
+          "seat": 7,
+          "name": "诅咒",
+          "role": "猎人"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "狼人"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "混血儿"
+        },
+        {
+          "seat": 10,
+          "name": "徐言雨",
+          "role": "狼人"
+        },
+        {
+          "seat": 11,
+          "name": "Happy",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "园长",
+          "role": "白神"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-106",
+          "round": 2,
+          "phase": "night",
+          "phase_label": "第一天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  11
+                ],
+                "result": "好人"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-106",
+        "round": 2,
+        "phase": "night",
+        "slot": "seer_check",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "check",
+          "actor": 5,
+          "targets": [
+            11
+          ],
+          "result": "好人"
+        },
+        "raw_review": {
+          "id": "DN-106",
+          "round": 2,
+          "phase": "night",
+          "phase_label": "第一天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "check",
+                "targets": [
+                  11
+                ],
+                "result": "好人"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "ceab83e48b0d6ef12ce76577cae2119aee344af466f46dba91dfb3cc7beeeb9c"
 }

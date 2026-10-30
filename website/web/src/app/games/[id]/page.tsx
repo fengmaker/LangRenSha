@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ApiError, getGame } from "@/lib/api";
-import { formatDate, phaseLabel, winnerLabel } from "@/lib/format";
+import { formatDate, gamePhaseLabel, gameTimeText, phaseLabel, winnerLabel } from "@/lib/format";
 import { DataProblem } from "@/components/data-state";
 import { EventBoard } from "@/components/event-board";
 import { SeatGrid } from "@/components/seat-grid";
@@ -28,7 +28,7 @@ function safeHttpUrl(value: string | null | undefined): string | null {
 }
 
 function publicNote(value: string): string {
-  return value.replace(/(?:[A-Za-z]:\\|(?:\.\.?[\\/])|(?:data|outputs|transcripts|extractions)[\\/])[^\s，。；、]+/gi, "来源文件路径已隐藏");
+  return gameTimeText(value.replace(/(?:[A-Za-z]:\\|(?:\.\.?[\\/])|(?:data|outputs|transcripts|extractions)[\\/])[^\s，。；、]+/gi, "来源文件路径已隐藏"));
 }
 
 function endgameKindLabel(value: string | undefined): string {
@@ -81,7 +81,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
 
       {endgamePhases.length ? <section className="detail-section endgame-section" id="game-endgame">
         <div className="section-heading"><div><h2>拍刀与终局</h2></div><span className="section-index">03 / {sectionTotal}</span></div>
-        {endgamePhases.length ? <div className="endgame-list">{endgamePhases.map((phase, index) => <article className="endgame-card" key={index}><span className="endgame-mark">↗</span><div><h3>{endgameKindLabel(phase.kind ?? phase.phase)}{phase.day ? <span className="endgame-day">第 {phase.day} 天</span> : null}</h3><p>{phase.actor ? phase.actor + " 号行动" : "行动者未知"}{Array.isArray(phase.declared_targets) && phase.declared_targets.length ? " · 明确提及目标 " + phase.declared_targets.map(String).join("、") + " 号" : ""}{phase.result ? " · " + endgameResultLabel(phase.result) : ""}</p>{phase.note ? <small>{publicNote(phase.note)}</small> : null}</div></article>)}</div> : <div className="empty-state compact-empty"><span className="empty-number">—</span><p>当前发布版本没有独立的终局阶段记录。</p></div>}
+        {endgamePhases.length ? <div className="endgame-list">{endgamePhases.map((phase, index) => <article className="endgame-card" key={index}><span className="endgame-mark">↗</span><div><h3>{endgameKindLabel(phase.kind ?? phase.phase)}{phase.day ? <span className="endgame-day">{gamePhaseLabel(phase.day, "day")}</span> : null}</h3><p>{phase.actor ? phase.actor + " 号行动" : "行动者未知"}{Array.isArray(phase.declared_targets) && phase.declared_targets.length ? " · 明确提及目标 " + phase.declared_targets.map(String).join("、") + " 号" : ""}{phase.result ? " · " + endgameResultLabel(phase.result) : ""}</p>{phase.note ? <small>{publicNote(phase.note)}</small> : null}</div></article>)}</div> : <div className="empty-state compact-empty"><span className="empty-number">—</span><p>当前发布版本没有独立的终局阶段记录。</p></div>}
       </section> : null}
 
       <section className="game-finish" data-winner={game.winner ?? "unknown"} aria-label="游戏结束">

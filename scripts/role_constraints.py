@@ -7,6 +7,18 @@ history stay unknown instead of being filled from common-play assumptions.
 
 from __future__ import annotations
 
+from functools import lru_cache
+
+try:
+    from .rule_config import load_rules
+except ImportError:
+    from rule_config import load_rules
+
+
+@lru_cache(maxsize=1)
+def wolf_king_rules() -> dict:
+    return load_rules()["shared_rules"]["wolf_king"]
+
 
 _BOARD_ALIASES = {
     "s21_seer_witch_hunter_white_mixed": "mixed_blood",
@@ -413,6 +425,23 @@ def mechanical_knife_constraint(game: dict, number: int, phase: str, *, actor: i
         return _result("unavailable", "mechanical_knife_night_only")
     if number == 1:
         return _result("unavailable", "mechanical_knife_first_night")
+    if dead_before is not None and actor in dead_before:
+        return _result("unavailable", "actor_departed")
+    wolves = _ordinary_wolves_state(game, number, dead_before)
+    if wolves == "unknown":
+        return _result("unknown", "ordinary_wolf_departure_unknown")
+    if wolves == "wolves_alive":
+        return _result("unavailable", "ordinary_wolves_alive")
+    return _result("available", "ordinary_wolves_departed")
+
+
+def nine_tail_knife_constraint(game: dict, number: int, phase: str, *, actor: int | None, dead_before) -> dict:
+    """The Nine-tailed Fox takes the normal knife after the ordinary wolves leave."""
+    unknown_actor = _role_known(game, actor, "九尾狐", "nine_tail_actor_unknown")
+    if unknown_actor is not None:
+        return unknown_actor
+    if phase != "night":
+        return _result("unavailable", "nine_tail_knife_night_only")
     if dead_before is not None and actor in dead_before:
         return _result("unavailable", "actor_departed")
     wolves = _ordinary_wolves_state(game, number, dead_before)
@@ -1073,6 +1102,11 @@ def event_constraint(
     if slot == "wolf_attack":
         if phase != "night":
             return _result("unavailable", "wolf_attack_wrong_phase", legal_targets=None)
+        if board_family == "qingqiu_night":
+            foxes = [seat for seat, role in (_seat_roles(game) or {}).items() if role == "九尾狐"]
+            if len(foxes) == 1 and nine_tail_knife_constraint(
+                    game, number, phase, actor=foxes[0], dead_before=dead_before)["status"] == "available":
+                return _result("unavailable", "nine_tail_knife_replaces_wolf_attack", legal_targets=None)
         constraint = _treasure_attack_constraint(
             game, number, event, actor=actor, dead_before=dead_before,
         )
@@ -1083,6 +1117,9 @@ def event_constraint(
     if slot == "seer_check":
         return _seer_check_constraint(game, phase, event, actor=actor,
                                       dead_before=dead_before)
+
+    if board_family == "qingqiu_night" and slot == "nine_tail_kill":
+        return nine_tail_knife_constraint(game, number, phase, actor=actor, dead_before=dead_before)
 
     if board_family == "treasure_master":
         constraint = _treasure_choice_constraint(
@@ -1167,10 +1204,18 @@ def event_constraint(
             return unknown_actor
         if phase != expected_phase:
             return _result("unavailable", f"{role_name}_skill_wrong_phase")
-        if (slot.endswith("_state") and _dream_death_blocks_shot(game, number, actor)):
+        state_dream_block = slot.endswith("_state") and _dream_death_blocks_shot(game, number, actor)
+        wolf_king_shot_dream_block = (
+            is_wolf_king and _actor_role(game, actor) == "狼王" and slot == "wolf_king_shot"
+            and wolf_king_rules().get("dream_link_death_blocks_shot")
+            and wolf_king_rules().get("repeat_dream_death_blocks_shot")
+            and _dream_death_blocks_shot(game, number, actor)
+        )
+        if state_dream_block or wolf_king_shot_dream_block:
             return _result("unavailable", "dream_death_blocks_shot")
         poison_state = _hunter_poison_state(game, actor, number, learning)
-        if poison_state == "poisoned":
+        if (poison_state == "poisoned"
+                and (not is_wolf_king or wolf_king_rules().get("poison_death_blocks_shot"))):
             return _result("unavailable", f"{role_name}_poisoned")
         if poison_state == "unknown":
             return _result("unknown", f"{role_name}_poison_unknown")

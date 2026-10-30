@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from urllib.parse import quote
 
-from game_records import ROOT, apply_derived_rules, chinese, describe, empty_event, template, validate
+from game_records import ROOT, apply_derived_rules, describe, empty_event, phase_label, template, validate
 
 OUT=ROOT/"data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q"
 BASE=ROOT/"data/weibo/2026-05-26_2026-10-20"
@@ -135,7 +135,7 @@ def render(value):
     for round_ in value["rounds"]:
         number=round_["number"]
         for phase in ["night","day"]:
-            title="第"+chinese(number)+( "夜" if phase=="night" else "天白天")
+            title=phase_label(number,phase)
             rows=[]
             md.extend(["## "+title,"","| 固定槽位 | 事件 |","|---|---|"])
             for slot,event in zip(board[phase+"_slots"],round_[phase]):

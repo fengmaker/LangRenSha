@@ -6,6 +6,7 @@ import { PageIntro } from "@/components/page-intro";
 import type { BluffReview, SearchParams } from "@/lib/types";
 import { BluffFeedbackTools } from "@/components/bluff-feedback-tools";
 import { BluffFeedbackFields } from "@/components/bluff-feedback-fields";
+import { gamePhaseLabel } from "@/lib/format";
 
 export const metadata: Metadata = { title: "悍跳推断与复核" };
 function first(value: string | string[] | undefined) { return Array.isArray(value) ? value[0] ?? "" : value ?? ""; }
@@ -76,7 +77,7 @@ export default async function BluffReviewPage({ searchParams }: { searchParams: 
       <div className="bluff-review-entries">{rows.map((item) => <section className="bluff-review-entry" key={`${item.game_id}-${item.seat}`}>
         <header><div><h3>{item.seat}号 · {item.name} <span>{item.physical_role}{item.claimed_role ? ` → 自称${item.claimed_role}` : ""}</span></h3></div>
           <strong className={item.needs_review ? "bluff-status-pending" : "bluff-status-known"}>{statusLabel(item)}</strong></header>
-        {item.success_source !== "user" || item.claim_day != null ? <p>{item.first_day_claim === true ? "起跳阶段：第一天" : item.claim_day === 2 ? "起跳阶段：第二天／延期竞选" : item.claim_day === "later" && item.actual_claim_day ? `起跳阶段：第${item.actual_claim_day}天（后续起跳）` : "起跳阶段：见证据与前后推断"}</p> : null}
+        {item.success_source !== "user" || item.claim_day != null ? <p>{item.first_day_claim === true ? `起跳阶段：${gamePhaseLabel(1, "day")}` : item.claim_day === 2 ? `起跳阶段：${gamePhaseLabel(2, "day")}／延期竞选` : item.claim_day === "later" && item.actual_claim_day ? `起跳阶段：${gamePhaseLabel(item.actual_claim_day, "day")}（后续起跳）` : "起跳阶段：见证据与前后推断"}</p> : null}
         {item.claim_needs_review ? <section className="bluff-success-comparison" aria-label="悍跳归属结论前后对照">
           <h4>发言证据变化与复核影响</h4>
           <dl>

@@ -3,14 +3,14 @@
   "version": 1,
   "game_slug": "bili-BV1roX7BQEau-p01-cid36979672873",
   "input_hashes": {
-    "dossier": "4b7c6359291237c2814e7b552ead2982da8f0eed9408b329ec2bb5a5ffad0125",
-    "voting": "0a01d570dbf5ba82729c65863cc05e109c5235f0969523756b0691fb9c6e5ce2",
-    "supplemental": "e5ef478230699605fcc4695eeba06f454f108cafb981b60b60b582abd68dbbcd",
+    "dossier": "6bac271ffdd4acd36acb5a9a86301789904044f0fcc24188dcb46a9ebcbe94ef",
+    "voting": "849f9e26fe755110de3c7992c5ab7cb2f39fea4c96aca6945be5e1fd44137d80",
+    "supplemental": "ba4cf4fd0b756a110b7168078ed00af158b3fcc98a02cf060c0be51f92fbe423",
     "endgame": "71a84181855db6186f090f50aca2d1b6df57977ca54dccf30a4e1d8307b5f073",
     "speech_evidence": "ef379092774eb9e030b985f9bcf1669897455f14fc051ca34fe3a13b9ef1980f"
   },
   "rule_sources": {
-    "config/game_rules.json": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237",
+    "config/game_rules.json": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
     "config/seasons.json": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
     "config/board_templates/all_in.json": "92a2f0bbf3ad6d5f432ee1e67a152edf647afd63b5e626af674f62a4bce35f69",
     "config/board_templates/black_wolf_king_knight.json": "6af92bc57d68525080724bf37c8a5a9f9e9e03d50140806b67b68e728dc92016",
@@ -22,15 +22,15 @@
     "config/board_templates/mechanical_wolf_seer.json": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85",
     "config/board_templates/mixed_blood.json": "20535eb52ccd0cca0b366954f862f8d931e873805163864fca0a363e7fec6ad2",
     "config/board_templates/neighbor_puppet.json": "93b0065923e394eeec4963e2164da6068168716cbe6269a2c3c40eb8a07fb697",
-    "config/board_templates/qingqiu_night.json": "9d70a0929c98f450717ceb93c81ada556fac8c44d3e91349efd78023cf8282cc",
+    "config/board_templates/qingqiu_night.json": "059c71d435a29e92a65fbdb35ba4359c58f5951d7f556b7183e46b1a43265625",
     "config/board_templates/seer_witch_hunter_white.json": "0d1dc941b1e8440d3b04b57b45000db5ad25cd3c4dcec7c1d4131579b6bca6a0",
     "config/board_templates/treasure_master.json": "d7cdc835a5ad65820e112f0742acc99ddecbc335531ffe88a1f32ba247a9880a",
     "config/board_templates/wolf_king_guard.json": "f5b5e442b88bbbe598d7915b41e58faaf82241ad094b85fdd4220a6207750717",
     "config/board_templates/wolf_king_knight.json": "cdf25153ffc08f9163d29fa71a99ee0a5076154f6d32d638445864c8fc20116f",
-    "scripts/game_derivations.py": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32",
-    "scripts/role_constraints.py": "2a8ed51f271eb65b51686960a6d8a7c2124a782a19cb695483fc667e9eda5e96",
+    "scripts/game_derivations.py": "5c6ad443f760d4921a9dc22490e250b8af06e1a8d472fe45a987812130062f69",
+    "scripts/role_constraints.py": "0540ba0ea7239a2e71e199ce527c59be62ff77ef5d8819f2433469dbb6773837",
     "scripts/board_outcomes.py": "cbf8483c43674bf62da8cc39ef335860367a5c5126dd53a263613f57a288b43d",
-    "scripts/game_inference.py": "d849be0f823c5b7e54b67058b2f7b24b278c604da43179a0eab21e969f4f1f47",
+    "scripts/game_inference.py": "fac93595199370edc8e115463deee75b93f236abe0e79788c9c55407cc2e6977",
     "scripts/sheriff_speech_evidence.py": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a",
     "scripts/voting_records.py": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f",
     "scripts/board_config.py": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f",
@@ -68,7 +68,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -76,7 +75,9 @@
         11,
         12
       ],
-      "known_departed_after_day": [],
+      "known_departed_after_day": [
+        6
+      ],
       "disqualified": [],
       "badge_holder": null,
       "badge_known": false,
@@ -84,7 +85,9 @@
     },
     {
       "day": 2,
-      "dead_before_night": [],
+      "dead_before_night": [
+        6
+      ],
       "night_deaths": [],
       "night_deaths_complete": true,
       "living_before_vote": [
@@ -93,7 +96,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -107,7 +109,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -115,6 +116,7 @@
         11
       ],
       "known_departed_after_day": [
+        6,
         12
       ],
       "disqualified": [],
@@ -125,6 +127,7 @@
     {
       "day": 3,
       "dead_before_night": [
+        6,
         12
       ],
       "night_deaths": [
@@ -137,7 +140,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -148,7 +150,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -156,6 +157,7 @@
       ],
       "known_departed_after_day": [
         2,
+        6,
         8,
         12
       ],
@@ -168,6 +170,7 @@
       "day": 4,
       "dead_before_night": [
         2,
+        6,
         8,
         12
       ],
@@ -181,14 +184,19 @@
         3,
         4,
         5,
-        6,
         7,
         11
       ],
-      "living_after_day": null,
+      "living_after_day": [
+        1,
+        4,
+        5,
+        11
+      ],
       "known_departed_after_day": [
         2,
         3,
+        6,
         7,
         8,
         9,
@@ -253,11 +261,23 @@
       "phase": "night",
       "slot": "mechanical_action",
       "actor": 9,
-      "status": "unknown",
-      "reason": "mechanical_form_unknown",
-      "legal_targets": null,
-      "review_required": true,
-      "availability": "unknown"
+      "status": "available",
+      "reason": "mechanical_learning_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12
+      ],
+      "review_required": false,
+      "availability": "learning"
     },
     {
       "round": 1,
@@ -280,7 +300,7 @@
         11,
         12
       ],
-      "review_required": true
+      "review_required": false
     },
     {
       "round": 1,
@@ -342,7 +362,7 @@
       "status": "unknown",
       "reason": "no_applicable_rule",
       "legal_targets": null,
-      "review_required": true
+      "review_required": false
     },
     {
       "round": 1,
@@ -378,11 +398,11 @@
       "round": 1,
       "phase": "day",
       "slot": "self_destruct",
-      "actor": null,
+      "actor": 6,
       "status": "unknown",
       "reason": "no_applicable_rule",
       "legal_targets": null,
-      "review_required": true
+      "review_required": false
     },
     {
       "round": 1,
@@ -403,7 +423,7 @@
       "reason": "death_trigger_absent",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "wrong_phase"
     },
     {
       "round": 2,
@@ -417,7 +437,6 @@
         2,
         3,
         4,
-        6,
         7,
         8,
         9,
@@ -440,7 +459,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -455,11 +473,11 @@
       "phase": "night",
       "slot": "mechanical_action",
       "actor": 9,
-      "status": "unknown",
-      "reason": "mechanical_form_unknown",
+      "status": "available",
+      "reason": "mechanical_skill_available",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "available"
     },
     {
       "round": 2,
@@ -474,7 +492,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -497,7 +514,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -606,7 +622,7 @@
       "reason": "death_trigger_absent",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "wrong_phase"
     },
     {
       "round": 3,
@@ -621,7 +637,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -642,7 +657,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -656,11 +670,11 @@
       "phase": "night",
       "slot": "mechanical_action",
       "actor": 9,
-      "status": "unknown",
-      "reason": "mechanical_form_unknown",
+      "status": "available",
+      "reason": "mechanical_skill_available",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "available"
     },
     {
       "round": 3,
@@ -675,7 +689,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -697,7 +710,6 @@
         3,
         4,
         5,
-        6,
         7,
         8,
         9,
@@ -805,7 +817,7 @@
       "reason": "death_trigger_absent",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "wrong_phase"
     },
     {
       "round": 4,
@@ -819,7 +831,6 @@
         3,
         4,
         5,
-        6,
         9,
         10,
         11
@@ -838,7 +849,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -851,11 +861,11 @@
       "phase": "night",
       "slot": "mechanical_action",
       "actor": 9,
-      "status": "unknown",
-      "reason": "mechanical_form_unknown",
+      "status": "available",
+      "reason": "mechanical_skill_available",
       "legal_targets": null,
       "review_required": false,
-      "availability": "unknown"
+      "availability": "available"
     },
     {
       "round": 4,
@@ -869,7 +879,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -889,7 +898,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -992,43 +1000,14 @@
       "phase": "day",
       "slot": "mechanical_day_skill",
       "actor": 9,
-      "status": "unknown",
-      "reason": "mechanical_form_unknown",
+      "status": "unavailable",
+      "reason": "mechanical_skill_wrong_phase",
       "legal_targets": null,
-      "review_required": true,
-      "availability": "unknown"
+      "review_required": false,
+      "availability": "wrong_phase"
     }
   ],
   "review_tasks": [
-    {
-      "round": 1,
-      "phase": "night",
-      "slot": "mechanical_action",
-      "actor": 9,
-      "reason": "mechanical_form_unknown",
-      "legal_targets": null
-    },
-    {
-      "round": 1,
-      "phase": "night",
-      "slot": "seer_check",
-      "actor": 8,
-      "reason": "seer_check_available",
-      "legal_targets": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12
-      ]
-    },
     {
       "round": 1,
       "phase": "night",
@@ -1040,23 +1019,7 @@
     {
       "round": 1,
       "phase": "day",
-      "slot": "sheriff_result",
-      "actor": null,
-      "reason": "no_applicable_rule",
-      "legal_targets": null
-    },
-    {
-      "round": 1,
-      "phase": "day",
       "slot": "badge",
-      "actor": null,
-      "reason": "no_applicable_rule",
-      "legal_targets": null
-    },
-    {
-      "round": 1,
-      "phase": "day",
-      "slot": "self_destruct",
       "actor": null,
       "reason": "no_applicable_rule",
       "legal_targets": null
@@ -1100,67 +1063,9 @@
       "actor": null,
       "reason": "no_applicable_rule",
       "legal_targets": null
-    },
-    {
-      "round": 4,
-      "phase": "day",
-      "slot": "mechanical_day_skill",
-      "actor": 9,
-      "reason": "mechanical_form_unknown",
-      "legal_targets": null
     }
   ],
-  "vote_review_tasks": [
-    {
-      "round": 3,
-      "phase": "day",
-      "ballot_id": "BV1roX7BQEau-ballot-01",
-      "slot": "vote_choice",
-      "actor": 6,
-      "legal_targets": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        9,
-        10,
-        11
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    },
-    {
-      "round": 3,
-      "phase": "day",
-      "ballot_id": "BV1roX7BQEau-ballot-02",
-      "slot": "vote_choice",
-      "actor": 6,
-      "legal_targets": [
-        2,
-        9
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    },
-    {
-      "round": 4,
-      "phase": "day",
-      "ballot_id": "BV1roX7BQEau-ballot-03",
-      "slot": "vote_choice",
-      "actor": 6,
-      "legal_targets": [
-        1,
-        3,
-        4,
-        5,
-        6,
-        7,
-        11
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    }
-  ],
+  "vote_review_tasks": [],
   "changes": [
     {
       "path": [
@@ -1328,6 +1233,36 @@
       "rule": "physical_role_victory_faction",
       "dependencies": [
         "狼人"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        8,
+        "learning_target"
+      ],
+      "before": null,
+      "after": 8,
+      "rule": "observed_mechanical_learning",
+      "dependencies": [
+        1,
+        8
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        8,
+        "learned_role"
+      ],
+      "before": null,
+      "after": "机械通灵师",
+      "rule": "mechanical_form_from_target_identity",
+      "dependencies": [
+        8,
+        "通灵师"
       ]
     },
     {
@@ -1689,7 +1624,6 @@
         3,
         4,
         5,
-        6,
         7,
         9,
         10,
@@ -1710,10 +1644,22 @@
         "unrecorded_voters"
       ],
       "before": null,
-      "after": [
-        6
-      ],
+      "after": [],
       "rule": "electorate_minus_recorded_votes",
+      "dependencies": [
+        3
+      ]
+    },
+    {
+      "path": [
+        "voting",
+        "ballots",
+        0,
+        "status"
+      ],
+      "before": "partial",
+      "after": "complete",
+      "rule": "electorate_coverage",
       "dependencies": [
         3
       ]
@@ -1731,7 +1677,6 @@
         3,
         4,
         5,
-        6,
         7,
         10,
         11
@@ -1751,10 +1696,22 @@
         "unrecorded_voters"
       ],
       "before": null,
-      "after": [
-        6
-      ],
+      "after": [],
       "rule": "electorate_minus_recorded_votes",
+      "dependencies": [
+        3
+      ]
+    },
+    {
+      "path": [
+        "voting",
+        "ballots",
+        1,
+        "status"
+      ],
+      "before": "partial",
+      "after": "complete",
+      "rule": "electorate_coverage",
       "dependencies": [
         3
       ]
@@ -1772,7 +1729,6 @@
         3,
         4,
         5,
-        6,
         7,
         11
       ],
@@ -1791,10 +1747,22 @@
         "unrecorded_voters"
       ],
       "before": null,
-      "after": [
-        6
-      ],
+      "after": [],
       "rule": "electorate_minus_recorded_votes",
+      "dependencies": [
+        4
+      ]
+    },
+    {
+      "path": [
+        "voting",
+        "ballots",
+        2,
+        "status"
+      ],
+      "before": "partial",
+      "after": "complete",
+      "rule": "electorate_coverage",
       "dependencies": [
         4
       ]
@@ -1832,8 +1800,8 @@
   "issues": [],
   "gaps": [],
   "output_hashes": {
-    "dossier": "8b2d8a5fa1c113953f5787f27d605f8e891e8c51398adc18d3aac9a88a9f73f5",
-    "voting": "9bdaddb7513ebafcee614876ce802c91d19d66aa47d992f27fdf79dc9367d952"
+    "dossier": "1b4e062b9bef6d348e814a0a3be784d4354c1b7a04e680ede29bba3c89f6ed05",
+    "voting": "41bc291bfda40b0ce881dc0b4866e29659a30e66b69fd10deb7dca77d3ca0cfc"
   },
   "sheriff_speech_evidence": {
     "method": "judge_signup_list",

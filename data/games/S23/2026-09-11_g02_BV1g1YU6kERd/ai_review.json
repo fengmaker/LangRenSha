@@ -393,7 +393,7 @@
           "quote": "当夜九尾狐标记12号女巫\n夜间狼队击杀8号平民\n预言家验证6号玩家白泽为好人身份"
         }
       ],
-      "phase_label": "第2天白天",
+      "phase_label": "第二天白天",
       "previous_question": "第2轮夜间死亡结算",
       "daily_audited": true
     },
@@ -415,7 +415,7 @@
           "quote": "我们夜间啊\n夜间的环节是九尾狐带刀击杀了11号\n首位11号守卫单死"
         }
       ],
-      "phase_label": "第4天白天",
+      "phase_label": "第四天白天",
       "previous_question": "第4轮夜间死亡结算",
       "daily_audited": true
     },
@@ -437,7 +437,7 @@
           "quote": "嗯你如果清12的话就赢了嗯\n嗯此时场上标记为2号平民以及12号女巫\n带标记"
         }
       ],
-      "phase_label": "第4天白天",
+      "phase_label": "第四天白天",
       "previous_question": "D4出局机制",
       "daily_audited": true
     },
@@ -459,7 +459,7 @@
           "quote": "当夜狼队击杀5号平民女巫\n毒杀一号平民\n一号5号双死"
         }
       ],
-      "phase_label": "第1天白天",
+      "phase_label": "第一天白天",
       "previous_question": "开局夜夜死结算",
       "daily_audited": true
     },
@@ -481,7 +481,7 @@
       "phase": "day",
       "field": "rounds[3].day.night_deaths",
       "title": "N3狼队击杀8号平民，公布8单死。",
-      "phase_label": "第3天白天"
+      "phase_label": "第三天白天"
     },
     {
       "id": "daily-correction-3-night-seer_check-2",
@@ -501,7 +501,7 @@
       "phase": "night",
       "field": "rounds[3].night.seer_check",
       "title": "好人",
-      "phase_label": "第2天夜晚"
+      "phase_label": "第二天夜晚"
     },
     {
       "id": "daily-correction-4-day-night_deaths-3",
@@ -521,7 +521,7 @@
       "phase": "day",
       "field": "rounds[4].day.night_deaths",
       "title": "N4狼刀11号守卫单死；11号九尾狐对毒免疫。",
-      "phase_label": "第4天白天"
+      "phase_label": "第四天白天"
     },
     {
       "id": "daily-correction-4-day-nine_tail_hunt-4",
@@ -541,7 +541,7 @@
       "phase": "day",
       "field": "rounds[4].day.nine_tail_hunt",
       "title": "九尾狐猎杀时刻技能成功，导致3号预言家和6号白泽出局。",
-      "phase_label": "第4天白天"
+      "phase_label": "第四天白天"
     },
     {
       "id": "daily-seer-resolution-BV1g1YU6kERd-coverage-3-night-seer_check.result",
@@ -561,7 +561,7 @@
           "quote": "预言家验证6号玩家白泽为好人身份"
         }
       ],
-      "phase_label": "第2天夜晚"
+      "phase_label": "第二天夜晚"
     }
   ],
   "structural_normalizations": [],
@@ -569,7 +569,7 @@
   "daily_audit": {
     "bvid": "BV1g1YU6kERd",
     "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
-    "reviewed_date": "2026-10-26",
+    "reviewed_date": "2026-10-30",
     "recap_window": {
       "start_ms": 4440049,
       "end_ms": 4584240,
@@ -590,7 +590,8 @@
           "DN-214",
           "DN-217"
         ]
-      }
+      },
+      "N4普通狼人已全部出局，九尾狐接刀；既有刀口[11]归入九尾狐击杀，普通狼刀槽不可用。"
     ],
     "event_patches": [
       {
@@ -916,6 +917,30 @@
         "review_id": "DN-068",
         "reviewer": "codex_primary",
         "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "slot": "nine_tail_kill",
+        "changes": {
+          "action": "kill",
+          "actor": 4,
+          "targets": [
+            11
+          ],
+          "result": null
+        }
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "changes": {
+          "action": "unavailable",
+          "actor": null,
+          "targets": [],
+          "result": null
+        }
       }
     ],
     "finding_resolutions": [
@@ -1574,7 +1599,33 @@
           }
         ]
       }
-    ]
+    ],
+    "nine_tail_takeover_confirmation_20261030": {
+      "rule": {
+        "kind": "user_confirmation",
+        "source_path": "data/extractions/shared/用户确认_20261030_白天顺序与九尾狐接刀.txt",
+        "source_sha256": "384d0e68242d52e5bd7497b5b64b1efbbc06541a61f3f27da7f2b06a0bda8269",
+        "quote": "只有小狼都出局后，判定九尾狐接刀；九尾狐击杀只在小狼全部出局后替代狼队击杀"
+      },
+      "round": 4,
+      "preserved_action_before_mapping": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          11
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "basis": "本夜开始前普通狼人已全部出局，依据用户确认规则归一化既有狼刀；目标与结果沿用原已核行动。"
+    }
   },
   "daily_audit_changes": [
     {
@@ -1951,6 +2002,56 @@
         "targets": [],
         "action": "none",
         "result": null
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "nine_tail_kill",
+      "before": null,
+      "after": {
+        "slot": "nine_tail_kill",
+        "actor": 4,
+        "targets": [
+          11
+        ],
+        "action": "kill",
+        "result": null
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "before": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          11
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "wolf_attack",
+        "action": "unavailable",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
       }
     }
   ],

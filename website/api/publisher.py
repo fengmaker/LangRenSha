@@ -16,6 +16,7 @@ from psycopg import sql
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
+from scripts.game_time import display_time_text, phase_label
 from website.api.game_presentation import (
     build_game_presentation, terminal_from_events, terminal_day_events,
 )
@@ -194,7 +195,7 @@ def _rounds(dossier: dict, board: dict) -> list[dict]:
                 output["slot_label"] = (
                     "DQ出局" if slot == "disqualification" else labels[phase][slot]
                 )
-                period = f"第{number}夜" if phase == "night" else f"第{number}天白天"
+                period = phase_label(number, phase)
                 action = event.get("action")
                 action_label = ACTION_LABELS.get(action, '记录动作 ' + str(action))
                 if dossier.get("season") == "S23":
@@ -250,8 +251,32 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
             subject = f"{actor}号狼人" if type(actor) is int else "狼人"
             event["result"] = "交牌，对局结束。"
             event["description"] = f"{subject}选择交牌，对局结束。"
+            event["slot_label"] = "狼人交牌"
         public.append({"round": row["round"], "phase": phase, "event": event})
     return public
+
+
+def _display_inference_notes(presentation: dict) -> dict:
+    for round_ in presentation.get("rounds", []):
+        for phase in ("night", "day"):
+            for event in round_.get(phase, []):
+                if isinstance(event.get("inference_note"), str):
+                    event["inference_note"] = display_time_text(event["inference_note"])
+    terminal = presentation.get("terminal") or {}
+    for event in terminal.get("events", []):
+        if isinstance(event.get("inference_note"), str):
+            event["inference_note"] = display_time_text(event["inference_note"])
+    return presentation
+
+
+def _public_endgame(endgame: dict) -> dict:
+    phases = []
+    for item in endgame.get("phases", []):
+        public = _pick(item, ENDGAME_FIELDS)
+        if isinstance(public.get("note"), str):
+            public["note"] = display_time_text(public["note"])
+        phases.append(public)
+    return {"phases": phases}
 
 
 def _public_rules_state(report: dict) -> dict:
@@ -478,7 +503,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         "release_id": None,
         "commentators": list(dossier.get("commentators", [])), "referee": dossier.get("referee"),
         "seats": seats, "rounds": public_rounds, "voting": public_voting,
-        "endgame": {"phases": [_pick(item, ENDGAME_FIELDS) for item in endgame.get("phases", [])]},
+        "endgame": _public_endgame(endgame),
         "source": {"url": f"https://www.bilibili.com/video/{bvid}/", "bvid": bvid},
         "data_notes": [],
     }
@@ -514,7 +539,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     if dossier["season"] == "S23":
         details["data_notes"].append("夜间槽位排列用于归档，不表示已确认各技能的精确发动顺序。")
         if dossier["board"] == "masquerade":
-            details["data_notes"].append("假面验证、给予面具和舞者共舞从第一天白天结束后的夜晚开始，开局首夜不可发动。")
+            details["data_notes"].append("假面验证、给予面具和舞者共舞从第一天夜晚开始，首夜不可发动。")
         if any(event.get("invalidated") or event.get("action") == "invalidated_by_dq"
                for r in details["rounds"] for event in r["night"]):
             details["data_notes"].append("最后一狼8号在夜间被DQ出局，狼刀被判失效，因此为平安夜；DQ出局单独记录。")
@@ -525,10 +550,12 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     if terminal_observation is not None:
         number, phase = terminal_observation["round"], terminal_observation["phase"]
         if phase == "night":
-            details["data_notes"].append(f"档案确认本局在第{number}夜结束，未进入第{number}天白天。")
+            details["data_notes"].append(
+                f"档案确认本局在{phase_label(number, phase)}结束，未进入{phase_label(number, 'day')}。"
+            )
         else:
-            details["data_notes"].append(f"档案确认本局在第{number}天白天结束。")
-    details["presentation"] = build_game_presentation(details)
+            details["data_notes"].append(f"档案确认本局在{phase_label(number, phase)}结束。")
+    details["presentation"] = _display_inference_notes(build_game_presentation(details))
     if derivations is not None:
         from website.api.bluffs import source_fingerprint
 

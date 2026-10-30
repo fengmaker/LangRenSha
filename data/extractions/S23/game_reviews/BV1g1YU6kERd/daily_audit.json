@@ -1,7 +1,7 @@
 {
   "bvid": "BV1g1YU6kERd",
   "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
-  "reviewed_date": "2026-10-26",
+  "reviewed_date": "2026-10-30",
   "recap_window": {
     "start_ms": 4440049,
     "end_ms": 4584240,
@@ -22,7 +22,8 @@
         "DN-214",
         "DN-217"
       ]
-    }
+    },
+    "N4普通狼人已全部出局，九尾狐接刀；既有刀口[11]归入九尾狐击杀，普通狼刀槽不可用。"
   ],
   "event_patches": [
     {
@@ -348,6 +349,30 @@
       "review_id": "DN-068",
       "reviewer": "codex_primary",
       "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "nine_tail_kill",
+      "changes": {
+        "action": "kill",
+        "actor": 4,
+        "targets": [
+          11
+        ],
+        "result": null
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "unavailable",
+        "actor": null,
+        "targets": [],
+        "result": null
+      }
     }
   ],
   "finding_resolutions": [
@@ -1006,5 +1031,31 @@
         }
       ]
     }
-  ]
+  ],
+  "nine_tail_takeover_confirmation_20261030": {
+    "rule": {
+      "kind": "user_confirmation",
+      "source_path": "data/extractions/shared/用户确认_20261030_白天顺序与九尾狐接刀.txt",
+      "source_sha256": "384d0e68242d52e5bd7497b5b64b1efbbc06541a61f3f27da7f2b06a0bda8269",
+      "quote": "只有小狼都出局后，判定九尾狐接刀；九尾狐击杀只在小狼全部出局后替代狼队击杀"
+    },
+    "round": 4,
+    "preserved_action_before_mapping": {
+      "slot": "wolf_attack",
+      "action": "attack",
+      "actor": null,
+      "targets": [
+        11
+      ],
+      "result": null,
+      "start_seat": null,
+      "direction": null,
+      "votes": [],
+      "random_point": null,
+      "speech_scope": null,
+      "availability": null,
+      "effects": []
+    },
+    "basis": "本夜开始前普通狼人已全部出局，依据用户确认规则归一化既有狼刀；目标与结果沿用原已核行动。"
+  }
 }

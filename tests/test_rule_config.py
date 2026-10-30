@@ -21,13 +21,34 @@ def test_s22_shared_rules_and_board_semantics_survive_consolidation():
     previous = original("S22_formal_rules.json")
     previous["rotation"]["source"]["scope_policy"] = "config/seasons.json"
     current = load_formal_rules("S22")
-    assert current["shared_rules"] == previous["shared_rules"]
+    assert {key: value for key, value in current["shared_rules"].items()
+            if key not in {"wolf_king", "nine_tail"}} == previous["shared_rules"]
     assert current["field_definitions"] == previous["field_definitions"]
     assert current["rotation"] == previous["rotation"]
     assert set(current["boards"]) == set(previous["boards"])
     for code, board in previous["boards"].items():
         for field in ("board_rules", "role_composition", "role_pool", "scored_count", "wake_order"):
             assert current["boards"][code].get(field) == board.get(field)
+
+
+def test_wolf_king_rules_include_the_user_confirmed_departure_and_terminal_boundaries():
+    rule = load_rules()["shared_rules"]["wolf_king"]
+    assert rule["qualification_display_requires_current_departure"] is True
+    assert rule["ordinary_shot_triggers"] == ["exile", "wolf_attack_death"]
+    assert all(rule[key] is True for key in (
+        "poison_death_blocks_shot", "dream_link_death_blocks_shot",
+        "repeat_dream_death_blocks_shot", "last_wolf_exiled_game_end_prevents_shot",
+    ))
+    assert rule["status"] == "user_confirmed"
+    assert rule["source"]["confirmed_on"] == "2026-10-30"
+
+
+def test_nine_tail_takeover_rule_keeps_the_user_confirmed_gate():
+    rule = load_rules()['shared_rules']['nine_tail']
+    assert rule['knife_requires_all_ordinary_wolves_departed'] is True
+    assert rule['takeover_kill_replaces_wolf_attack_display'] is True
+    assert rule['status'] == 'user_confirmed'
+    assert rule['source']['confirmed_on'] == '2026-10-30'
 
 
 @pytest.mark.parametrize("season", ["S21", "S22", "S23"])

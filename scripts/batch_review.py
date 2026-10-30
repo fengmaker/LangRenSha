@@ -13,8 +13,10 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 try:
     from .board_config import load_template
+    from .game_time import phase_label
 except ImportError:
     from board_config import load_template
+    from game_time import phase_label
 
 _UNKNOWN = "未知"
 _STATE_LABELS = {
@@ -116,6 +118,12 @@ def _string(value: object, *, none: str = _UNKNOWN) -> str:
 
 def _escape(value: object, *, none: str = _UNKNOWN) -> str:
     return html.escape(_string(value, none=none), quote=True)
+
+
+def _display_phase_label(stage: dict) -> str:
+    night_settlement = stage.get("phase") == "day" and "night_deaths" in stage.get("event_slots", [])
+    label = phase_label(stage["round"], "night" if night_settlement else stage["phase"])
+    return label + " · 死亡技能结算" if night_settlement else label
 
 
 def _state_label(state: object) -> str:
@@ -399,10 +407,11 @@ def render_game(out_dir: Path, value: dict, review: dict) -> None:
     for stage in flow["display_phases"]:
         round_value = next(r for r in rounds if r["number"] == stage["round"])
         number = round_value.get("number", _UNKNOWN)
-        round_title = stage["label"]
+        phase_name = _display_phase_label(stage)
+        round_title = phase_name
         md_rounds.extend([f"## {round_title}", ""])
         phase_sections = []
-        for phase, phase_name in ((stage["phase"], stage["label"]),):
+        for phase, phase_name in ((stage["phase"], phase_name),):
             slot_list = [item for item in _as_list(board.get(f"{phase}_slots")) if isinstance(item, dict)]
             if stage.get("event_slots"):
                 slot_list = [item for item in slot_list if item.get("code") in stage["event_slots"]]

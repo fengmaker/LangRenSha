@@ -1,0 +1,52 @@
+{
+  "generated_at_utc": "2026-10-30T06:33:25.906601+00:00",
+  "season": "S23",
+  "scope_code": "S23_regular_75",
+  "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+  "status": "prepared; database not written",
+  "database_write": false,
+  "selected_bvids": [
+    "BV1g1YU6kERd",
+    "BV1MheH6wEBb",
+    "BV1saaT6jEyK"
+  ],
+  "full_batch": false,
+  "timings_seconds": {
+    "preparation": 0.929,
+    "database": 0.0
+  },
+  "formal_games_rewritten": 3,
+  "candidate_games": 3,
+  "board_counts": {
+    "qingqiu_night": 2,
+    "masquerade": 1
+  },
+  "unknown_events_before": 29,
+  "unknown_events_after": 99,
+  "unknown_events_after_derivation": 83,
+  "unknown_slots_added": 70,
+  "candidate_paths": [
+    "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json",
+    "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/dossier.candidate.json",
+    "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/dossier.candidate.json"
+  ],
+  "source_hashes": {
+    "scope": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
+    "formal_rules": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
+    "review_rules": "e644bab82275118a60494f3a40b424f22fa1c1d3758ec47053005d4e4692c5b9",
+    "snapshot_report": "0ad05b1984984e056a2c4f7b9fd54cb6eeaac5198fd0c6fd564536048cd85bf0",
+    "daily_review_report": "cd53a7c19f5c6ef65e709c46af529e8ca1f327b33996e3f7ea76df2e6e9fa188",
+    "validation_report": "3a6c1a7521b6825b246dbc77c3ee655269fdd1964f9373cefa3d3e2a3dfdb64e",
+    "authorization": "8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+    "eulogy_statistic_policy": "8b031a7d36bd02fba8ec765d9000485c3a45b64ac3a861436f4b10228bd0e1fb"
+  },
+  "database": null,
+  "notes": [
+    "指定BVID必须属于当前复核范围；局部入口用当前有效对局校验对应候选，完整批次仍检查75局。",
+    "整体数据库/上线授权与逐字段确认分别记录；整体授权没有提升任一unknown字段的确认状态。",
+    "candidate源文件原样保留；准备输出可按规则旁证补全unknown，规范化后与推导后的数量分别统计，推导不新增候选没有的轮次。",
+    "DQ作为独立补充观察保存；无效狼刀保留invalidated_by_dq，不作为主动空刀。",
+    "10号遗言诈身份保存在独立统计复核上下文，不并入常规悍跳。"
+  ]
+}
