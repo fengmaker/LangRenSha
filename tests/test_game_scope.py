@@ -19,10 +19,10 @@ class GameScopeTests(unittest.TestCase):
     def test_s21_direct_import_scope_excludes_only_its_own_media(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            path = root / "config/S21_game_scope.json"
+            path = root / "config/seasons.json"
             path.parent.mkdir()
-            path.write_text(json.dumps({"season": "S21", "excluded_phases": ["showmatch", "special"],
-                                        "excluded_bvids": ["BVexcluded"]}), encoding="utf-8")
+            path.write_text(json.dumps({"seasons": {"S21": {"scope": {
+                "excluded_phases": ["showmatch", "special"], "excluded_bvids": ["BVexcluded"]}}}}), encoding="utf-8")
             for entry in ({"season": "S21", "phase": "special"},
                           {"season": "S21", "slug": "s21-BVexcluded-p01"}):
                 self.assertTrue(game_scope.exclusion_reason(entry, root=root))
@@ -34,8 +34,8 @@ class GameScopeTests(unittest.TestCase):
             root = Path(tmp)
             path = root / game_scope.POLICY_REL
             path.parent.mkdir()
-            path.write_text(json.dumps({"season": "S22", "excluded_phases": ["showmatch"],
-                "excluded_dates": ["2026-07-03"], "excluded_bvids": ["BVexcluded"]}), encoding="utf-8")
+            path.write_text(json.dumps({"seasons": {"S22": {"scope": {"excluded_phases": ["showmatch"],
+                "excluded_dates": ["2026-07-03"], "excluded_bvids": ["BVexcluded"]}}}}), encoding="utf-8")
             for entry in [{"phase": "showmatch"}, {"date": "2026-07-03"}, {"bvid": "BVexcluded"},
                           {"slug": "bili-BVexcluded-p01-g01"}]:
                 self.assertTrue(game_scope.exclusion_reason(entry, root=root))
@@ -131,7 +131,8 @@ class GameScopeTests(unittest.TestCase):
             root = Path(tmp)
             policy = root / game_scope.POLICY_REL
             policy.parent.mkdir()
-            policy.write_text(json.dumps({"season": "S22", "excluded_bvids": ["BVexcluded"]}), encoding="utf-8")
+            policy.write_text(json.dumps({"seasons": {"S22": {"scope": {
+                "excluded_bvids": ["BVexcluded"]}}}}), encoding="utf-8")
             state_path = root / "state.json"
             state_path.write_text(json.dumps({"season": "S22", "items": {
                 "BVexcluded": {"phase": "regular"}, "BVkeep": {"phase": "regular"}}}), encoding="utf-8")

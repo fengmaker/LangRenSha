@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1un5z6AEKX-p01-cid38361697369",
+  "registrations": [
+    {
+      "id": "derived-judge-initial-registration",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "off_police": [
+        5
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "BV1un5z6AEKX-ballot-01",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        2,
+        4,
+        5,
+        7,
+        8,
+        11,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 11,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 2,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 11,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1un5z6AEKX-event-007",
+      "day": 1,
+      "actor": 1,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "BV1un5z6AEKX-event-014",
+      "day": 2,
+      "actor": 3,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    }
+  ]
+}

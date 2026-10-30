@@ -3,7 +3,8 @@ const ID_PATTERN = /^BV[0-9A-Za-z]{10}:(?:[1-9]|1[0-2])$/;
 const KIND = "s22_bluff_feedback";
 
 function filled(record) {
-  return Boolean(record && (record.decision || record.notes?.trim()));
+  return Boolean(record && (record.decision || record.notes?.trim()
+    || Object.prototype.hasOwnProperty.call(record, "manual_success")));
 }
 
 function readRecords(value, season) {
@@ -14,6 +15,12 @@ function readRecords(value, season) {
   for (const row of value.records) {
     if (!row || !ID_PATTERN.test(row.review_id) || !DECISIONS.has(row.decision) || typeof row.notes !== "string" || row.notes.length > 4000
         || !/^[a-f0-9]{64}$/.test(row.source_fingerprint || "") || ![null, "预言家", "通灵师"].includes(row.claimed_role)
+        || (row.claim_fingerprint != null && !/^[a-f0-9]{64}$/.test(row.claim_fingerprint))
+        || (row.success_fingerprint != null && !/^[a-f0-9]{64}$/.test(row.success_fingerprint))
+        || (Object.prototype.hasOwnProperty.call(row, "manual_success")
+          && (!Object.prototype.hasOwnProperty.call(row, "success_fingerprint")
+            || !/^[a-f0-9]{64}$/.test(row.success_fingerprint)
+            || (row.manual_success !== null && typeof row.manual_success !== "boolean")))
         || ![null, 1, 2, "later"].includes(row.claim_day)) {
       throw new Error("反馈文件中有不完整或不支持的记录，原草稿未改动。");
     }
@@ -81,14 +88,22 @@ export function mountBluffFeedback(root, options) {
       const role = form.elements.namedItem("claimed_role");
       const day = form.elements.namedItem("claim_day");
       const notes = form.elements.namedItem("notes");
+      const manualSuccess = form.elements.namedItem("manual_success");
       if (row) {
         decision.value = row.decision;
         role.value = row.claimed_role || "";
         day.value = row.claim_day == null ? "" : String(row.claim_day);
         if (notes.value !== row.notes) notes.value = row.notes;
+        if (manualSuccess) manualSuccess.value = Object.prototype.hasOwnProperty.call(row, "manual_success")
+          ? row.manual_success === true ? "yes" : row.manual_success === false ? "no" : "unknown"
+          : "";
       }
       form.dataset.feedbackFilled = filled(row) ? "true" : "false";
-      const stale = row && row.source_fingerprint !== form.dataset.fingerprint;
+      const stale = row && ((row.claim_fingerprint
+        ? row.claim_fingerprint !== form.dataset.fingerprint
+        : row.source_fingerprint !== form.dataset.sourceFingerprint)
+        || (Object.prototype.hasOwnProperty.call(row, "manual_success")
+          && row.success_fingerprint !== form.dataset.successFingerprint));
       const hint = form.querySelector("[data-feedback-row-status]");
       const incompleteYes = row?.decision === "yes"
         && (!row.claim_day || !["预言家", "通灵师"].includes(row.claimed_role));
@@ -112,18 +127,31 @@ export function mountBluffFeedback(root, options) {
     const dayValue = form.elements.namedItem("claim_day").value;
     const claimDay = dayValue === "1" || dayValue === "2" ? Number(dayValue) : dayValue || null;
     const previous = records[form.dataset.reviewId];
+    const manualSuccessField = form.elements.namedItem("manual_success");
+    const successChoice = manualSuccessField ? manualSuccessField.value : null;
+    const hasManualSuccess = Boolean(manualSuccessField && successChoice !== "");
+    const manualSuccess = successChoice === "yes" ? true : successChoice === "no" ? false
+      : successChoice === "unknown" ? null : previous?.manual_success;
     if (previous && previous.decision === decision && previous.notes === notes
-        && previous.claimed_role === role && previous.claim_day === claimDay) return;
-    if (!decision && !notes.trim()) delete records[form.dataset.reviewId];
-    else records[form.dataset.reviewId] = {
+        && previous.claimed_role === role && previous.claim_day === claimDay
+        && (Object.prototype.hasOwnProperty.call(previous, "manual_success") === hasManualSuccess)
+        && (!hasManualSuccess || previous.manual_success === manualSuccess)) return;
+    if (!decision && !notes.trim() && !hasManualSuccess) delete records[form.dataset.reviewId];
+    else {
+      const record = {
       review_id: form.dataset.reviewId, game_id: form.dataset.gameId,
       bvid: form.dataset.bvid, seat: Number(form.dataset.seat), name: form.dataset.name,
-      physical_role: form.dataset.physicalRole, source_fingerprint: form.dataset.fingerprint,
+        physical_role: form.dataset.physicalRole, source_fingerprint: form.dataset.sourceFingerprint,
+        claim_fingerprint: form.dataset.fingerprint,
+        success_fingerprint: form.dataset.successFingerprint || null,
       inference_version: options.inference_version || null, decision,
       claimed_role: role,
       claim_day: claimDay,
       notes, updated_at: new Date().toISOString(),
     };
+      if (hasManualSuccess) record.manual_success = manualSuccess;
+      records[form.dataset.reviewId] = record;
+    }
   }
 
   function captureAll() { forms.forEach(capture); }

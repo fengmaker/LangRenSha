@@ -4,7 +4,9 @@ export function BluffFeedbackFields({ item }: { item: BluffReview["items"][numbe
   const prefix = `feedback-${item.bvid}-${item.seat}`;
   return <form className="bluff-feedback-form" aria-label={`复核 ${item.name} ${item.review_id}`}
     data-review-id={item.review_id} data-game-id={item.game_id} data-bvid={item.bvid ?? ""}
-    data-seat={item.seat} data-name={item.name} data-physical-role={item.physical_role} data-fingerprint={item.source_fingerprint}>
+    data-seat={item.seat} data-name={item.name} data-physical-role={item.physical_role}
+    data-fingerprint={item.claim_fingerprint ?? item.source_fingerprint} data-source-fingerprint={item.source_fingerprint}
+    data-success-fingerprint={item.success_fingerprint ?? ""}>
     <h3>填写本条复核意见</h3>
     <div className="bluff-feedback-choices">
       <label htmlFor={`${prefix}-decision`}>复核结论<select id={`${prefix}-decision`} name="decision" defaultValue="">
@@ -17,6 +19,9 @@ export function BluffFeedbackFields({ item }: { item: BluffReview["items"][numbe
         <option value="">待定／不适用</option><option value="预言家">预言家</option><option value="通灵师">通灵师</option>
       </select></label>
     </div>
+    {item.decision === "yes" && !item.claim_needs_review ? <label htmlFor={`${prefix}-success`}>悍跳成功结论（可选）<select id={`${prefix}-success`} name="manual_success" defaultValue="">
+      <option value="">尚未复核</option><option value="yes">确认成功</option><option value="no">确认失败</option><option value="unknown">保留待定</option>
+    </select></label> : null}
     <label htmlFor={`${prefix}-notes`}>其他意见<textarea id={`${prefix}-notes`} name="notes" rows={3} maxLength={4000} placeholder="可填写正确座位、首日时间点、所跳身份或不同意见。" /></label>
     <p data-feedback-row-status>尚未填写</p>
   </form>;

@@ -7,8 +7,8 @@ from game_records import validate_batch
 from s22_inference_review import changed_value
 
 CONFIRMATION = "data/extractions/S22/用户确认_20261025.txt"
-ALIGNMENT = batch.ROOT / "data/reports/S22_正式规则对齐记录.json"
-REPORT = batch.ROOT / "data/reports/S22_日序与阵营更正.json"
+ALIGNMENT = batch.ROOT / "data/reports/S22/S22_正式规则对齐记录.json"
+REPORT = batch.ROOT / "data/reports/S22/S22_日序与阵营更正.json"
 
 
 def build():

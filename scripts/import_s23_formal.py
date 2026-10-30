@@ -1,8 +1,8 @@
 """Prepare, validate, and atomically import the current S23 formal snapshot.
 
-The source of game facts is candidate_dossiers in the current review snapshot.
-This command never reads a dossier.reviewed.json or writes the database unless
---import-db is supplied explicitly.
+Candidate files must match the current effective records assembled by the
+shared S23 loader. Only --import-db writes the database; --prepare materializes
+the selected formal JSON files after source and rule validation.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from time import perf_counter
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,18 +25,22 @@ if str(ROOT / "scripts") not in sys.path:
 from database import ReviewError, connect
 import game_records
 import voting_records
+from game_derivations import derive_game
+from rule_config import load_formal_rules, load_rules, load_scope
+from board_config import load_template, template_path as board_template_path
 
-SCOPE_PATH = ROOT / "config/S23_game_scope.json"
-RULES_PATH = ROOT / "config/S23_formal_rules.json"
-REVIEW_RULES_PATH = ROOT / "config/S23_review_rules.json"
-REPORT_PATH = ROOT / "data/reports/S23_逐局复核进度.json"
-DAILY_REPORT_PATH = ROOT / "data/reports/S23_逐日复核交付_20261026.json"
-AUDIT_REPORT_PATH = ROOT / "data/reports/S23_逐局复核校验.json"
+SCOPE_PATH = ROOT / "config/seasons.json"
+RULES_PATH = ROOT / "config/game_rules.json"
+REVIEW_RULES_PATH = RULES_PATH
+REPORT_PATH = ROOT / "data/reports/S23/S23_逐局复核进度.json"
+DAILY_REPORT_PATH = ROOT / "data/reports/S23/S23_逐日复核交付_20261026.json"
+AUDIT_REPORT_PATH = ROOT / "data/reports/S23/S23_逐局复核校验.json"
 AUTHORIZATION_PATH = ROOT / "data/extractions/S23/用户授权_20261026_正式入库与网站上线.txt"
 EULOGY_POLICY_PATH = ROOT / "data/extractions/S23/处理说明_20261026_10号遗言诈身份计数口径.txt"
 FORMAL_FILES = (
     "dossier.json", "voting.json", "endgame.json", "supplemental.json",
-    "vote_control.json", "formal_context.json", "formal_import_receipt.json",
+    "vote_control.json", "formal_context.json", "rule_derivations.json",
+    "formal_import_receipt.json",
 )
 EVENT_FIELDS = (
     "slot", "action", "actor", "targets", "result", "start_seat", "direction",
@@ -72,17 +77,21 @@ def rel(path: Path) -> str:
     return path.resolve().relative_to(ROOT).as_posix()
 
 
-def write_json(path: Path, value: Any) -> None:
+def write_json(path: Path, value: Any) -> bool:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+    encoded = payload.encode("utf-8")
+    if path.is_file() and path.read_bytes() == encoded:
+        return False
     temp = path.with_name(path.name + ".tmp")
-    temp.write_text(payload, encoding="utf-8", newline="\n")
+    temp.write_bytes(encoded)
     temp.replace(path)
+    return True
 
 
-def load_inputs() -> tuple[dict, dict, dict, dict, dict]:
-    scope = read_json(SCOPE_PATH)
-    rules = read_json(RULES_PATH)
+def load_inputs(bvids: list[str] | None = None) -> tuple[dict, dict, dict, dict, dict]:
+    scope = load_scope("S23", ROOT)
+    rules = load_formal_rules("S23", ROOT)
     progress = read_json(REPORT_PATH)
     daily = read_json(DAILY_REPORT_PATH)
     audit = read_json(AUDIT_REPORT_PATH)
@@ -93,11 +102,40 @@ def load_inputs() -> tuple[dict, dict, dict, dict, dict]:
         raise ReviewError("当前复核快照与S23正式入库配置不一致")
     if daily.get("snapshot_id") != snapshot_id:
         raise ReviewError("逐日复核交付与逐局复核进度不是同一快照")
-    if audit.get("season") != "S23" or audit.get("planned") != 75 or audit.get("errors"):
+    selected_bvids = set(bvids or [])
+    if audit.get("season") != "S23" or (not selected_bvids and audit.get("planned") != 75):
         raise ReviewError("S23逐局复核校验报告未通过")
-    if progress.get("planned") != 75 or len(progress.get("candidate_dossiers", [])) != 75:
+    audit_errors = audit.get("errors") or []
+    if selected_bvids:
+        def relevant_error(error):
+            text = json.dumps(error, ensure_ascii=False) if isinstance(error, dict) else str(error)
+            mentioned = set(re.findall(r"BV[0-9A-Za-z]+", text))
+            return not mentioned or bool(mentioned & selected_bvids)
+
+        audit_errors = [error for error in audit_errors if relevant_error(error)]
+    if audit_errors:
+        raise ReviewError("S23逐局复核校验报告未通过")
+    candidates = progress.get("candidate_dossiers", [])
+    if not selected_bvids and (progress.get("planned") != 75 or len(candidates) != 75):
         raise ReviewError("正式范围必须恰好包含复核报告当前快照的75个候选档案")
-    if progress.get("missing_ai_reviews"):
+    if selected_bvids:
+        candidates = [path for path in candidates if bvid_from_slug(Path(path).parent.name) in selected_bvids]
+        found_bvids = {bvid_from_slug(Path(path).parent.name) for path in candidates}
+        missing = selected_bvids - found_bvids
+        if missing:
+            raise ReviewError("BVID不在当前候选范围: " + ",".join(sorted(missing)))
+    missing_reviews = progress.get("missing_ai_reviews") or []
+    if selected_bvids:
+        selected_missing = []
+        for item in missing_reviews:
+            text = json.dumps(item, ensure_ascii=False) if isinstance(item, dict) else str(item)
+            mentioned = set(re.findall(r"BV[0-9A-Za-z]+", text))
+            if not mentioned:
+                raise ReviewError("缺AI复核的报告条目无法匹配BVID: " + text)
+            if mentioned & selected_bvids:
+                selected_missing.append(item)
+        missing_reviews = selected_missing
+    if missing_reviews:
         raise ReviewError("候选报告仍缺AI复核文件")
     if not AUTHORIZATION_PATH.is_file() or "OK，开始写入数据库，并上线到网站吧" not in AUTHORIZATION_PATH.read_text(encoding="utf-8"):
         raise ReviewError("缺少S23整体入库与上线授权记录")
@@ -107,6 +145,12 @@ def load_inputs() -> tuple[dict, dict, dict, dict, dict]:
     if set(mapping) != {"mechanical_wolf_seer", "mixed_blood", "guile_realm", "masquerade", "treasure_master", "qingqiu_night", "magic_duel"}:
         raise ReviewError("S23 board_code_map覆盖范围不完整")
     return scope, rules, progress, daily, audit
+
+
+def load_current_games(bvids: list[str] | None) -> list[dict]:
+    from s23_effective_game import load_effective_games
+
+    return load_effective_games(bvids, require_complete=True)["games"]
 
 
 def bvid_from_slug(slug: str) -> str:
@@ -269,21 +313,34 @@ def matching_context_rows(values: list[dict], bvid: str) -> list[dict]:
     return [copy.deepcopy(row) for row in values if row.get("bvid") == bvid]
 
 
+def verify_candidate_is_current(candidate_path: Path, effective_game: dict | None = None) -> dict:
+    from s23_effective_game import verify_current_candidate
+
+    try:
+        return verify_current_candidate(candidate_path, effective_game=effective_game)
+    except ValueError as exc:
+        raise ReviewError(str(exc)) from exc
+
+
 def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
-                 daily: dict, audit: dict) -> dict:
+                 daily: dict, audit: dict, *, effective_game: dict | None = None) -> dict:
     candidate_path = candidate_path.resolve()
     if not candidate_path.is_relative_to((ROOT / "data/games/S23").resolve()) or candidate_path.name != "dossier.candidate.json":
         raise ReviewError(f"候选路径不属于S23当前候选目录: {candidate_path}")
     source = read_json(candidate_path)
     if source.get("season") != "S23":
         raise ReviewError(f"非S23候选进入正式范围: {candidate_path}")
+    if effective_game is None:
+        effective_game = verify_candidate_is_current(candidate_path)
+    else:
+        verify_candidate_is_current(candidate_path, effective_game)
     slug = source["slug"]
     bvid = bvid_from_slug(slug)
     storage_code = rules["board_code_map"].get(source.get("board"))
     if not storage_code:
         raise ReviewError(f"缺少canonical board映射: {source.get('board')}")
-    template_path = ROOT / "config/board_templates" / f"{storage_code}.json"
-    template = read_json(template_path)
+    template_path = board_template_path(storage_code, ROOT)
+    template = load_template(storage_code, ROOT)
     if template.get("code") != storage_code:
         raise ReviewError(f"S23版型模板代码不一致: {template_path}")
 
@@ -301,8 +358,6 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         value, record = sidecar(path, slug)
         sidecars[key] = value
         sidecar_paths[key] = record
-    voting_records.validate(sidecars["voting"])
-
     daily_path = ROOT / "data/extractions/S23/game_reviews" / bvid / "daily_audit.json"
     daily_audit = read_json(daily_path)
     if daily_audit.get("bvid") != bvid:
@@ -373,6 +428,32 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         if sum(role_counts[x] for x in group["one_of"]) != group["count"]:
             raise ReviewError(f"假面舞会白神/白痴替代槽位数量不符: {slug}")
 
+    # Keep normalization counts tied to the source candidate, then record
+    # any additional unknowns resolved from cross-event derivation separately.
+    source_terminal_observation = daily_audit.get("terminal_observation")
+    terminal_observation = None
+    if isinstance(source_terminal_observation, dict):
+        if type(source_terminal_observation.get("round")) is not int or source_terminal_observation.get("phase") not in ("night", "day"):
+            raise ReviewError(f"逐日复核终局观察字段无效: {bvid}")
+        terminal_observation = {
+            "round": source_terminal_observation["round"],
+            "phase": source_terminal_observation["phase"],
+        }
+    unknown_count_after_normalization = all_unknown_after
+    from sheriff_speech_evidence import load_bound_sheriff_speeches
+    derivation = derive_game(normalized, sidecars["voting"],
+                             supplemental=sidecars["supplemental"], endgame=sidecars["endgame"],
+                             terminal_observation=terminal_observation,
+                             speech_evidence=load_bound_sheriff_speeches(sidecars["supplemental"], root=ROOT, voting=sidecars["voting"]))
+    normalized = derivation["dossier"]
+    if derivation["voting"] is not None:
+        sidecars["voting"] = derivation["voting"]
+    unknown_count_after_derivation = sum(
+        event.get("action") == "unknown"
+        for round_ in normalized["rounds"] for phase in ("night", "day") for event in round_[phase]
+    )
+    voting_records.validate(sidecars["voting"])
+
     db_dossier = copy.deepcopy(normalized)
     db_dossier["board"] = storage_code
     for round_ in db_dossier["rounds"]:
@@ -399,7 +480,45 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     source_hashes["media_manifest"] = {"path": media["manifest_path"], "sha256": media["manifest_sha256"]}
     source_hashes["audio_manifest"] = {"path": media["audio_path"], "sha256": media["audio_sha256"]}
 
-    review_rules = read_json(REVIEW_RULES_PATH)
+    # Keep receipt invalidation tied to the per-game inputs that can change its
+    # stored facts. A change to one board's rules should not force unrelated
+    # boards through the daily import path.
+    effective_rules = {
+        "board_code_map": {source["board"]: storage_code},
+        "role_profiles": ({source["board"]: rules["role_profiles"][source["board"]]}
+                           if source["board"] in rules.get("role_profiles", {}) else {}),
+    }
+    if source["board"] == "masquerade":
+        effective_rules["masquerade_role_group"] = rules["role_profiles"]["masquerade_role_group"]
+    if bvid == "BV1U3p86dEJY":
+        effective_rules["eulogy_bluff_statistic"] = rules["separate_review_context"]["eulogy_bluff_statistic"]
+    rules_bytes = json.dumps(effective_rules, ensure_ascii=False, sort_keys=True,
+                             separators=(",", ":")).encode("utf-8")
+    source_hashes["effective_formal_rules"] = {
+        "path": rel(RULES_PATH), "sha256": sha256_bytes(rules_bytes),
+    }
+    template_dep = board_template_path(storage_code, ROOT)
+    source_hashes[f"board_template:{storage_code}"] = {
+        "path": rel(template_dep), "sha256": sha256_file(template_dep),
+    }
+    for dependency in ("import_s23_formal.py", "game_records.py", "voting_records.py",
+                       "game_derivations.py", "sheriff_speech_evidence.py", "board_config.py",
+                       "rule_config.py", "season_config.py"):
+        dependency_path = ROOT / "scripts" / dependency
+        source_hashes[f"import_dependency:{dependency}"] = {
+            "path": rel(dependency_path), "sha256": sha256_file(dependency_path),
+        }
+    source_hashes["game_rules"] = {
+        "path": rel(ROOT / "config/game_rules.json"),
+        "sha256": sha256_file(ROOT / "config/game_rules.json"),
+    }
+    if storage_code == "s23_mechanical_wolf_seer":
+        shared_template_path = ROOT / "config/board_templates/mechanical_wolf_seer.json"
+        source_hashes["board_template:mechanical_wolf_seer"] = {
+            "path": rel(shared_template_path), "sha256": sha256_file(shared_template_path),
+        }
+
+    review_rules = load_rules(ROOT)["review_rules"]
     accepted_rules = {item["id"]: item for item in review_rules.get("rules", [])}
     terminal_observations = []
     for source_round in source["rounds"]:
@@ -417,6 +536,25 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
                         "rule_id": rule.get("id"), "rule_statement": rule.get("statement"),
                         "rule_evidence": copy.deepcopy(rule.get("evidence", [])),
                     })
+    confirmed_handling = rules.get("confirmed_rule_handling", {})
+    applied_handling = {}
+    if source["board"] == "masquerade" and "masquerade_first_night_skills" in confirmed_handling:
+        applied_handling["masquerade_first_night_skills"] = confirmed_handling["masquerade_first_night_skills"]
+    if slug == "bili-BV1zmpB6PEcF-p01-g02" and "treasure_dq_wolf_attack" in confirmed_handling:
+        applied_handling["treasure_dq_wolf_attack"] = confirmed_handling["treasure_dq_wolf_attack"]
+    if terminal_observations and "last_god_hunter_terminal" in confirmed_handling:
+        applied_handling["last_god_hunter_terminal"] = confirmed_handling["last_god_hunter_terminal"]
+    if applied_handling:
+        effective_rules["confirmed_rule_handling"] = applied_handling
+        rules_bytes = json.dumps(effective_rules, ensure_ascii=False, sort_keys=True,
+                                 separators=(",", ":")).encode("utf-8")
+        source_hashes["effective_formal_rules"] = {
+            "path": rel(RULES_PATH), "sha256": sha256_bytes(rules_bytes),
+        }
+    if terminal_observations:
+        source_hashes["terminal_review_rules"] = {
+            "path": rel(REVIEW_RULES_PATH), "sha256": sha256_file(REVIEW_RULES_PATH),
+        }
     unpublished_terminal_checks = [
         copy.deepcopy(row) for row in daily.get("unpublished_source_records", [])
         if row.get("bvid") == bvid and "seer_check" in str(row.get("field", ""))
@@ -427,19 +565,6 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     public_notes = [row["public_text"] for row in unpublished_terminal_checks]
     if bvid == "BV1U3p86dEJY":
         public_notes.append("10号在遗言阶段自称通灵师；作为遗言诈身份候选单列，暂不计入已确认的常规悍跳次数，具体统计口径仍待用户确认。")
-    # Publish only the boundary fields confirmed by daily_audit. Keep the full
-    # source explanation/evidence in the separate review context and bind the
-    # source file hash above; never infer a later phase from a game-end event.
-    source_terminal_observation = daily_audit.get("terminal_observation")
-    terminal_observation = None
-    if isinstance(source_terminal_observation, dict):
-        if type(source_terminal_observation.get("round")) is not int or source_terminal_observation.get("phase") not in ("night", "day"):
-            raise ReviewError(f"逐日复核终局观察字段无效: {bvid}")
-        terminal_observation = {
-            "round": source_terminal_observation["round"],
-            "phase": source_terminal_observation["phase"],
-        }
-
     formal_context = {
         "schema_version": 1,
         "game_slug": slug,
@@ -459,7 +584,9 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
             "source_event_extensions": source_extensions,
             "explicit_transformations": transforms,
             "unknown_count_before": all_unknown_before,
-            "unknown_count_after": all_unknown_after,
+            "unknown_count_after": unknown_count_after_normalization,
+            "unknown_count_after_normalization": unknown_count_after_normalization,
+            "unknown_count_after_derivation": unknown_count_after_derivation,
             "round_numbers_before": [r["number"] for r in source["rounds"]],
             "round_numbers_after": [r["number"] for r in normalized["rounds"]],
         },
@@ -479,8 +606,8 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         },
         "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。",
     }
-    if all_unknown_after < all_unknown_before:
-        raise ReviewError(f"未知项在正式转换中减少: {slug}")
+    if unknown_count_after_normalization < all_unknown_before:
+        raise ReviewError(f"规范化转换意外减少源未知项: {slug}")
     if formal_context["normalization"]["round_numbers_before"] != formal_context["normalization"]["round_numbers_after"]:
         raise ReviewError(f"导出时不得新增或删除实际对局轮次: {slug}")
 
@@ -490,21 +617,59 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         "storage_board": storage_code, "dossier": normalized, "db_dossier": db_dossier,
         "voting": sidecars["voting"], "endgame": sidecars["endgame"],
         "supplemental": sidecars["supplemental"], "vote_control": sidecars["vote_control"],
-        "formal_context": formal_context, "source_files": source_files,
+        "formal_context": formal_context, "rule_derivations": derivation["derivations"],
+        "source_files": source_files,
         "media": media, "source_hashes": source_hashes,
         "normalization": formal_context["normalization"],
     }
 
 
-def build_batch() -> dict:
-    scope, rules, progress, daily, audit = load_inputs()
-    games = [prepare_game(ROOT / rel_path, scope, rules, progress, daily, audit)
-             for rel_path in progress["candidate_dossiers"]]
+def build_batch(bvids: list[str] | None = None) -> dict:
+    selected_bvids = list(dict.fromkeys(bvids or []))
+    scope, rules, progress, daily, audit = load_inputs(selected_bvids or None)
+    candidates = progress["candidate_dossiers"]
+    approved_candidate_paths = {
+        bvid_from_slug(Path(path).parent.name): path for path in candidates
+    }
+    if selected_bvids:
+        selected = set(selected_bvids)
+        candidates = [rel_path for rel_path in candidates
+                      if bvid_from_slug(Path(rel_path).parent.name) in selected]
+        found_bvids = {bvid_from_slug(Path(rel_path).parent.name) for rel_path in candidates}
+        missing = set(selected_bvids) - found_bvids
+        if missing:
+            raise ReviewError("BVID不在当前候选范围: " + ",".join(sorted(missing)))
+    try:
+        current_games = load_current_games(selected_bvids or None)
+    except ValueError as exc:
+        raise ReviewError(str(exc)) from exc
+    current_by_bvid = {game["entry"]["bvid"]: game for game in current_games}
+    games = []
+    candidate_rows = (
+        [(approved_candidate_paths[bvid], bvid) for bvid in selected_bvids]
+        if selected_bvids else
+        [(rel_path, bvid_from_slug(Path(rel_path).parent.name)) for rel_path in candidates]
+    )
+    for rel_path, bvid in candidate_rows:
+        effective_game = current_by_bvid.get(bvid)
+        if effective_game is None:
+            raise ReviewError(f"当前有效候选中找不到BVID: {bvid}")
+        if selected_bvids:
+            fresh_candidate_path = ROOT / effective_game["entry"]["output_dir"] / "dossier.candidate.json"
+            if rel(fresh_candidate_path.parent) != Path(rel_path).parent.as_posix():
+                raise ReviewError(f"{bvid}日期或局次变化改变了候选目录；请先完整重建S23正式范围")
+            candidate_path = fresh_candidate_path
+        else:
+            candidate_path = ROOT / rel_path
+        games.append(prepare_game(candidate_path, scope, rules, progress, daily, audit,
+                                  effective_game=effective_game))
     slugs = [game["slug"] for game in games]
-    if len(slugs) != 75 or len(set(slugs)) != 75:
+    if not games or len(slugs) != len(set(slugs)):
+        raise ReviewError("候选slug必须唯一且至少包含一局")
+    if not selected_bvids and len(slugs) != 75:
         raise ReviewError("候选slug必须唯一且恰好75局")
     board_counts = Counter(game["canonical_board"] for game in games)
-    if set(board_counts) != set(rules["board_code_map"]):
+    if not selected_bvids and set(board_counts) != set(rules["board_code_map"]):
         raise ReviewError("正式候选版型集合与S23映射不一致")
     source_hashes = {
         "scope": sha256_file(SCOPE_PATH),
@@ -516,10 +681,11 @@ def build_batch() -> dict:
         "authorization": sha256_file(AUTHORIZATION_PATH),
         "eulogy_statistic_policy": sha256_file(EULOGY_POLICY_PATH),
     }
-    batch_key = f"{scope['scope_code']}:{progress['snapshot_id']}:{source_hashes['formal_rules']}:{source_hashes['authorization']}"
+    batch_key = f"{scope['scope_code']}:{progress['snapshot_id']}:{source_hashes['authorization']}"
     return {"scope": scope, "rules": rules, "progress": progress, "daily": daily,
             "audit": audit, "games": games, "board_counts": board_counts,
-            "source_hashes": source_hashes, "batch_key": batch_key}
+            "source_hashes": source_hashes, "batch_key": batch_key,
+            "selected_bvids": selected_bvids, "full_batch": not bool(selected_bvids)}
 
 
 def expected_formal_outputs(game: dict) -> dict[str, Any]:
@@ -530,20 +696,31 @@ def expected_formal_outputs(game: dict) -> dict[str, Any]:
         "supplemental.json": game["supplemental"],
         "vote_control.json": game["vote_control"],
         "formal_context.json": game["formal_context"],
+        "rule_derivations.json": game["rule_derivations"],
     }
 
 
-def materialize(batch: dict) -> dict:
+def prepared_formal_hashes(game: dict) -> dict[str, str]:
+    folder = ROOT / Path(game["candidate_path"]).parent
+    return {filename: sha256_file(folder / filename) for filename in FORMAL_FILES[:-1]}
+
+
+def materialize(batch: dict, *, report_path: Path | None = None) -> dict:
     aggregate = {"generated_at_utc": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
                  "snapshot_id": batch["progress"]["snapshot_id"], "batch_key": batch["batch_key"],
                  "scope_code": batch["scope"]["scope_code"], "candidate_game_count": len(batch["games"]),
+                 "selected_bvids": batch.get("selected_bvids", []), "full_batch": batch.get("full_batch", True),
                  "board_counts": dict(batch["board_counts"]), "games": []}
+    rewritten_games = set()
+    rewritten_files = 0
     for game in batch["games"]:
         folder = ROOT / Path(game["candidate_path"]).parent
         formal_hashes = {}
         for filename, payload in expected_formal_outputs(game).items():
             path = folder / filename
-            write_json(path, payload)
+            if write_json(path, payload):
+                rewritten_games.add(game["slug"])
+                rewritten_files += 1
             formal_hashes[filename] = sha256_file(path)
         receipt = {
             "schema_version": 1, "game_slug": game["slug"], "batch_key": batch["batch_key"],
@@ -554,7 +731,9 @@ def materialize(batch: dict) -> dict:
             "overall_batch_authorized": True,
             "field_confirmation": "not_claimed_by_batch_authorization",
         }
-        write_json(folder / "formal_import_receipt.json", receipt)
+        if write_json(folder / "formal_import_receipt.json", receipt):
+            rewritten_games.add(game["slug"])
+            rewritten_files += 1
         aggregate["games"].append({"slug": game["slug"], "path": rel(folder / "dossier.json"),
                                    "candidate_sha256": game["candidate_sha256"],
                                    "formal_file_hashes": formal_hashes,
@@ -562,10 +741,13 @@ def materialize(batch: dict) -> dict:
                                    "unknown_count_after": game["normalization"]["unknown_count_after"],
                                    "rounds": len(game["dossier"]["rounds"]),
                                    "source_audio_sha256": game["media"]["audio_sha256"]})
-    report_path = ROOT / "data/reports/S23_正式入库预检.json"
+    if report_path is None:
+        name = 'S23_正式入库预检.json' if batch.get('full_batch', True) else 'S23_局部正式入库预检.json'
+        report_path = ROOT / 'data/reports/S23' / name
     write_json(report_path, {**aggregate, "status": "prepared; database not written", "database_write": False,
                              "source_hashes": batch["source_hashes"]})
-    return {"report": rel(report_path), "games": len(batch["games"]), "batch_key": batch["batch_key"]}
+    return {"report": rel(report_path), "games": len(batch["games"]), "batch_key": batch["batch_key"],
+            "games_rewritten": len(rewritten_games), "formal_files_rewritten": rewritten_files}
 
 
 def verify_prepared_files(batch: dict) -> list[str]:
@@ -698,11 +880,153 @@ def db_season_fingerprint(conn, code: str) -> dict:
         FROM board_templates t LEFT JOIN board_event_slots s ON s.board_code=t.code
         WHERE left(t.code,4)<>'s23_' ORDER BY t.code,s.phase,s.position
     """).fetchall()]
+    if code == "S23":
+        natural_content["s23_templates"] = [dict(row) for row in conn.execute("""
+            SELECT t.code,t.name,t.seat_count,t.role_counts,t.wake_order,
+                   s.phase,s.code AS slot_code,s.position,s.label,s.actor_role,s.allowed_actions
+            FROM board_templates t LEFT JOIN board_event_slots s ON s.board_code=t.code
+            WHERE left(t.code,4)='s23_' ORDER BY t.code,s.phase,s.position
+        """).fetchall()]
     digest_bytes = json.dumps(natural_content, ensure_ascii=False, sort_keys=True,
                               separators=(",", ":"), default=str).encode("utf-8")
     result["content_sha256"] = sha256_bytes(digest_bytes)
     result["content_row_counts"] = {key: len(rows) for key, rows in natural_content.items()}
     return result
+
+
+def db_game_fingerprint(conn, slug: str) -> str | None:
+    """Fingerprint only one game's structured rows, annotations, and board template."""
+    game = conn.execute("SELECT id FROM games WHERE slug=%s", (slug,)).fetchone()
+    if game is None:
+        return None
+    queries = {
+        "games": """SELECT g.slug,s.platform AS source_platform,s.external_key AS source_key
+            FROM games g LEFT JOIN sources s ON s.id=g.primary_source_id WHERE g.slug=%s""",
+        "details": """SELECT g.slug,d.board_code,d.event_date,d.phase,d.episode,d.day_in_episode,
+            d.game_number,d.winning_faction FROM game_details d JOIN games g ON g.id=d.game_id WHERE g.slug=%s""",
+        "seats": """SELECT g.slug,s.seat_number,p.name AS person_name,s.role,s.faction,
+            s.learning_target_seat,s.learned_role FROM game_seats s JOIN games g ON g.id=s.game_id
+            LEFT JOIN people p ON p.id=s.person_id WHERE g.slug=%s ORDER BY s.seat_number""",
+        "staff": """SELECT g.slug,s.duty,s.position,p.name AS person_name FROM game_staff s
+            JOIN games g ON g.id=s.game_id JOIN people p ON p.id=s.person_id
+            WHERE g.slug=%s ORDER BY s.duty,s.position""",
+        "rounds": """SELECT g.slug,r.round_number FROM game_rounds r JOIN games g ON g.id=r.game_id
+            WHERE g.slug=%s ORDER BY r.round_number""",
+        "events": """SELECT g.slug,e.round_number,e.board_code,e.phase,e.slot_code,e.action,e.actor_seat,
+            e.result_code,e.start_seat,e.direction,e.random_point,e.speech_scope,e.availability
+            FROM game_event_records e JOIN games g ON g.id=e.game_id WHERE g.slug=%s
+            ORDER BY e.round_number,e.phase,e.slot_code""",
+        "targets": """SELECT g.slug,e.round_number,e.phase,e.slot_code,t.position,t.seat_number
+            FROM game_event_targets t JOIN game_event_records e ON e.id=t.event_id
+            JOIN games g ON g.id=e.game_id WHERE g.slug=%s ORDER BY e.round_number,e.phase,e.slot_code,t.position""",
+        "event_votes": """SELECT g.slug,e.round_number,e.phase,e.slot_code,v.ballot_round,
+            v.voter_seat,v.target_seat,v.abstained FROM game_event_votes v
+            JOIN game_event_records e ON e.id=v.event_id JOIN games g ON g.id=e.game_id
+            WHERE g.slug=%s ORDER BY e.round_number,e.phase,e.slot_code,v.ballot_round,v.voter_seat""",
+        "effects": """SELECT g.slug,e.round_number,e.phase,e.slot_code,f.position,f.kind,
+            f.intended_target,f.dead_seat,f.shield_actor FROM game_event_effects f
+            JOIN game_event_records e ON e.id=f.event_id JOIN games g ON g.id=e.game_id
+            WHERE g.slug=%s ORDER BY e.round_number,e.phase,e.slot_code,f.position""",
+        "ballots": """SELECT g.slug,b.ballot_key,b.day_number,b.kind,b.ballot_number,b.stage,b.status,
+            b.candidates,b.eligible_voters,b.tied_candidates,b.winner_seat FROM game_ballots b
+            JOIN games g ON g.id=b.game_id WHERE g.slug=%s ORDER BY b.ballot_key""",
+        "ballot_choices": """SELECT g.slug,b.ballot_key,c.voter_seat,c.target_seat,c.state
+            FROM game_ballot_choices c JOIN game_ballots b ON b.id=c.ballot_id
+            JOIN games g ON g.id=b.game_id WHERE g.slug=%s ORDER BY b.ballot_key,c.voter_seat""",
+        "voting_days": """SELECT g.slug,v.day_number,v.sheriff_status,v.exile_status
+            FROM game_voting_days v JOIN games g ON g.id=v.game_id
+            WHERE g.slug=%s ORDER BY v.day_number""",
+        "sheriff_registrations": """SELECT g.slug,r.registration_key,r.day_number,r.seat_number,r.registered
+            FROM game_sheriff_registrations r JOIN games g ON g.id=r.game_id
+            WHERE g.slug=%s ORDER BY r.registration_key,r.seat_number""",
+        "files": """SELECT g.slug,f.file_role,a.kind,a.sha256 FROM game_files f JOIN games g ON g.id=f.game_id
+            JOIN artifacts a ON a.id=f.artifact_id WHERE g.slug=%s ORDER BY f.file_role""",
+        "formal_annotations": """SELECT a.annotation_key,a.annotation_type,a.source_path,a.source_sha256,a.payload
+            FROM game_formal_annotations a WHERE a.game_id=%s ORDER BY a.annotation_key""",
+    }
+    natural_content = {
+        key: [dict(row) for row in conn.execute(query, (game["id"] if key == "formal_annotations" else slug,)).fetchall()]
+        for key, query in queries.items()
+    }
+    natural_content["board_template"] = [dict(row) for row in conn.execute("""
+        SELECT t.code,t.name,t.seat_count,t.role_counts,t.wake_order,
+               s.phase,s.code AS slot_code,s.position,s.label,s.actor_role,s.allowed_actions
+        FROM board_templates t LEFT JOIN board_event_slots s ON s.board_code=t.code
+        WHERE t.code=(SELECT d.board_code FROM game_details d WHERE d.game_id=%s)
+        ORDER BY t.code,s.phase,s.position
+    """, (game["id"],)).fetchall()]
+    payload = json.dumps(natural_content, ensure_ascii=False, sort_keys=True,
+                         separators=(",", ":"), default=str).encode("utf-8")
+    return sha256_bytes(payload)
+
+
+def database_receipt_matches(game: dict, receipt: dict | None,
+                             formal_hashes: dict[str, str], database_fingerprint: str | None) -> bool:
+    if receipt is None or not database_fingerprint:
+        return False
+    # A new review snapshot can be caused by another game. Keep this receipt
+    # current by comparing this game's real inputs and stored content instead
+    # of treating a season-wide snapshot key as a dependency of every game.
+    expected = {
+        "season_code": "S23",
+        "slug": game["slug"],
+        "canonical_board_code": game["canonical_board"],
+        "storage_board_code": game["storage_board"],
+        "candidate_path": game["candidate_path"],
+        "candidate_sha256": game["candidate_sha256"],
+        "source_files": game["source_hashes"],
+        "normalization": game["normalization"],
+        "overall_batch_authorized": True,
+        "field_confirmation": "not_claimed_by_batch_authorization",
+    }
+    if any(receipt.get(key) != value for key, value in expected.items()):
+        return False
+    stored_files = dict(receipt.get("formal_files") or {})
+    stored_fingerprint = stored_files.pop("__database_content_sha256", None)
+    return stored_files == formal_hashes and stored_fingerprint == database_fingerprint
+
+
+def run_import_passes(import_pass, fingerprint, *, verify_idempotency: bool) -> dict:
+    """Run the ordinary single pass or the explicit deep two-pass acceptance."""
+    import_pass()
+    if not verify_idempotency:
+        return {"database_write_passes": 1, "verified_idempotent": False}
+    after_first = fingerprint()
+    import_pass()
+    after_second = fingerprint()
+    if after_first != after_second:
+        raise ReviewError("S23第二次导入后内容指纹变化，幂等性检查失败；事务将回滚")
+    return {"database_write_passes": 2, "verified_idempotent": True,
+            "s23_after_first": after_first, "s23_after_second": after_second}
+
+
+def load_game_receipt(conn, slug: str) -> dict | None:
+    row = conn.execute("""SELECT s.code AS season_code,r.batch_key,r.slug,r.canonical_board_code,
+        r.storage_board_code,r.candidate_path,r.candidate_sha256,r.formal_files,r.source_files,r.normalization,
+        r.overall_batch_authorized,r.field_confirmation
+        FROM games g JOIN seasons s ON s.id=g.season_id
+        JOIN game_formal_import_receipts r ON r.game_id=g.id WHERE g.slug=%s""", (slug,)).fetchone()
+    return dict(row) if row is not None else None
+
+
+def sync_batch_templates(conn, games: list[dict]) -> None:
+    """Sync each distinct storage board and template version once per transaction."""
+    by_code: dict[str, tuple[str, str, dict]] = {}
+    for game in games:
+        board = game_records.template(game["db_dossier"]["board"])
+        template_versions = [game["source_hashes"].get(f"board_template:{board['code']}", {}).get("sha256")]
+        if board["code"] == "s23_mechanical_wolf_seer":
+            template_versions.append(
+                game["source_hashes"].get("board_template:mechanical_wolf_seer", {}).get("sha256")
+            )
+        version = sha256_bytes(json.dumps(template_versions, separators=(",", ":")).encode("utf-8"))
+        signature = json.dumps(board, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        old = by_code.get(board["code"])
+        if old and old[:2] != (version, signature):
+            raise ReviewError(f"同批次版型模板版本不一致: {board['code']}")
+        by_code[board["code"]] = (version, signature, board)
+    for code in sorted(by_code):
+        game_records.sync_board_template(conn, by_code[code][2])
 
 
 def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = False) -> dict:
@@ -729,15 +1053,17 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                          if g["media"]["audio_sha256"] not in by_key.get(g["media"]["external_key"], set())]
         if missing_audio:
             raise ReviewError(f"DB已登记audio artifact与manifest哈希不匹配或缺失: {len(set(missing_audio))}条")
-        s22_before = db_season_fingerprint(conn, "S22")
-        s23_before = db_season_fingerprint(conn, "S23")
         if not write:
+            s22_before = db_season_fingerprint(conn, "S22")
+            s23_before = db_season_fingerprint(conn, "S23")
             return {"database_checked": True, "database_write": False, "audio_sources": len(keys),
                     "audio_artifacts_matching_manifest": len(keys), "s22_fingerprint": s22_before,
                     "s23_before": s23_before, "schema": schema, "s23_season_registered": season is not None,
                     "formal_import_ready": not missing_formal, "missing_formal_tables": missing_formal}
         if missing_formal:
             raise ReviewError("正式库缺少S23迁移或所需表: " + ",".join(missing_formal))
+        if verify_idempotency and (not batch.get("full_batch") or len(batch["games"]) != 75):
+            raise ReviewError("--verify-idempotency只接受完整75局S23批次；局部导入按单遍写入并读回")
         if not season:
             season = conn.execute(
                 "INSERT INTO seasons(code,name,metadata) VALUES('S23','昆仑归墟',%s::jsonb) RETURNING id",
@@ -745,9 +1071,31 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
             ).fetchone()
         if verify_prepared_files(batch):
             raise ReviewError("正式JSON文件未准备或已与当前候选快照不一致；先运行--prepare")
-        if not verify_idempotency:
-            raise ReviewError("正式库写入需要--verify-idempotency；批次两次导入一致性会在同一事务内检查")
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("s23-formal-import-" + batch["progress"]["snapshot_id"],))
+        formal_hashes_by_slug = {game["slug"]: prepared_formal_hashes(game) for game in batch["games"]}
+        games_to_import = []
+        if verify_idempotency:
+            games_to_import = list(batch["games"])
+        else:
+            for game in batch["games"]:
+                receipt = load_game_receipt(conn, game["slug"])
+                database_fingerprint = db_game_fingerprint(conn, game["slug"]) if receipt else None
+                if not database_receipt_matches(game, receipt,
+                                                formal_hashes_by_slug[game["slug"]], database_fingerprint):
+                    games_to_import.append(game)
+        if not games_to_import:
+            return {"database_checked": True, "database_write": False, "games": 0,
+                    "games_unchanged": len(batch["games"]), "database_write_passes": 0,
+                    "verified_idempotent": False, "no_changes": True, "batch_key": batch["batch_key"],
+                    "schema": schema}
+
+        s22_before = db_season_fingerprint(conn, "S22")
+        s23_before = db_season_fingerprint(conn, "S23") if verify_idempotency else None
+        idempotency_note = (
+            "one outer transaction; deep acceptance imports the full 75-game scope twice and compares content fingerprints"
+            if verify_idempotency else
+            "one outer transaction; this invocation imports only changed games once and reads back affected game fingerprints"
+        )
         batch_payload = {
             "batch_key": batch["batch_key"], "season_id": season["id"],
             "scope_code": batch["scope"]["scope_code"], "snapshot_id": batch["progress"]["snapshot_id"],
@@ -756,8 +1104,9 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
             "authorization_path": rel(AUTHORIZATION_PATH), "authorization_sha256": batch["source_hashes"]["authorization"],
             "authorization_text": AUTHORIZATION_PATH.read_text(encoding="utf-8").strip(),
             "source_candidate_count": 75,
-            "idempotency_note": "one outer transaction; second pass replaces the same 75 slugs and upserts the same receipt/annotation keys",
+            "idempotency_note": idempotency_note,
         }
+        readback_fingerprints: dict[str, str] = {}
 
         def import_pass() -> None:
             conn.execute("""INSERT INTO game_formal_import_batches
@@ -767,12 +1116,18 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                 VALUES(%(batch_key)s,%(season_id)s,%(scope_code)s,%(snapshot_id)s,%(source_report_path)s,
                        %(source_report_sha256)s,%(rules_path)s,%(rules_sha256)s,%(authorization_path)s,
                        %(authorization_sha256)s,%(authorization_text)s,%(source_candidate_count)s,%(idempotency_note)s)
-                ON CONFLICT(batch_key) DO UPDATE SET source_report_sha256=EXCLUDED.source_report_sha256,
+                ON CONFLICT(batch_key) DO UPDATE SET source_report_path=EXCLUDED.source_report_path,
+                    source_report_sha256=EXCLUDED.source_report_sha256,
                     rules_sha256=EXCLUDED.rules_sha256,authorization_sha256=EXCLUDED.authorization_sha256,
-                    authorization_text=EXCLUDED.authorization_text,source_candidate_count=EXCLUDED.source_candidate_count""",
+                    authorization_text=EXCLUDED.authorization_text,source_candidate_count=EXCLUDED.source_candidate_count,
+                    idempotency_note=EXCLUDED.idempotency_note""",
                 batch_payload)
-            for game in batch["games"]:
-                game_records.import_game(game["db_dossier"], allow_incomplete=True, conn=conn)
+            for game in sorted(games_to_import, key=lambda item: item["slug"]):
+                conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-" + game["slug"],))
+            sync_batch_templates(conn, games_to_import)
+            for game in games_to_import:
+                game_records.import_game(game["db_dossier"], allow_incomplete=True, conn=conn,
+                                         derivations=game["rule_derivations"], sync_template=False)
                 voting_records.import_voting(game["voting"], conn=conn)
                 row = conn.execute("SELECT id FROM games WHERE slug=%s", (game["slug"],)).fetchone()
                 if row is None:
@@ -786,6 +1141,8 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                     ("terminal_observations", "terminal_observations", "formal_context.json",
                      {"observations": game["formal_context"]["terminal_observations"],
                       "unpublished_terminal_checks": game["formal_context"]["unpublished_terminal_checks"]}),
+                    ("shared-rule-derivations", "review_context", "rule_derivations.json",
+                     game["rule_derivations"]),
                 ]
                 conn.execute("DELETE FROM game_formal_annotations WHERE game_id=%s", (game_id,))
                 for key, kind, filename, payload in annotations:
@@ -793,6 +1150,8 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                     source_path = (ROOT / Path(game["candidate_path"]).parent / f"{key}.candidate.json")
                     if key == "review_context":
                         source_path = ROOT / "data/extractions/S23/game_reviews" / game["bvid"] / "daily_audit.json"
+                    elif key == "shared-rule-derivations":
+                        source_path = annotation_path
                     if not source_path.is_file():
                         source_path = annotation_path
                     conn.execute("""INSERT INTO game_formal_annotations
@@ -800,8 +1159,11 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                         VALUES(%s,%s,%s,%s,%s,%s)""",
                         (game_id, key, kind, rel(source_path), sha256_file(source_path),
                          __import__("psycopg.types.json", fromlist=["Jsonb"]).Jsonb(payload)))
-                folder = ROOT / Path(game["candidate_path"]).parent
-                formal_hashes = {filename: sha256_file(folder / filename) for filename in FORMAL_FILES[:-1]}
+                formal_hashes = dict(formal_hashes_by_slug[game["slug"]])
+                database_fingerprint = db_game_fingerprint(conn, game["slug"])
+                if not database_fingerprint:
+                    raise ReviewError(f"入库后无法计算对局内容指纹: {game['slug']}")
+                formal_hashes["__database_content_sha256"] = database_fingerprint
                 conn.execute("""INSERT INTO game_formal_import_receipts
                     (game_id,batch_key,slug,canonical_board_code,storage_board_code,candidate_path,candidate_sha256,
                      formal_files,source_files,normalization,overall_batch_authorized,field_confirmation)
@@ -817,39 +1179,53 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
                      __import__("psycopg.types.json", fromlist=["Jsonb"]).Jsonb(formal_hashes),
                      __import__("psycopg.types.json", fromlist=["Jsonb"]).Jsonb(game["source_hashes"]),
                      __import__("psycopg.types.json", fromlist=["Jsonb"]).Jsonb(game["normalization"])))
+                current_fingerprint = db_game_fingerprint(conn, game["slug"])
+                current_receipt = load_game_receipt(conn, game["slug"])
+                if current_fingerprint != database_fingerprint or not database_receipt_matches(
+                        game, current_receipt, formal_hashes_by_slug[game["slug"]], current_fingerprint):
+                    raise ReviewError(f"入库后对局内容或回执读回不匹配: {game['slug']}")
+                readback_fingerprints[game["slug"]] = current_fingerprint
 
-        import_pass()
-        after_first = db_season_fingerprint(conn, "S23")
-        import_pass()
-        after_second = db_season_fingerprint(conn, "S23")
+        pass_result = run_import_passes(
+            import_pass, lambda: db_season_fingerprint(conn, "S23"),
+            verify_idempotency=verify_idempotency,
+        )
+        s23_after = pass_result.get("s23_after_second") or readback_fingerprints
         s22_after = db_season_fingerprint(conn, "S22")
-        if after_first != after_second:
-            raise ReviewError("S23第二次导入后行数指纹变化，幂等性检查失败；事务将回滚")
         if s22_before != s22_after:
             raise ReviewError("导入过程改变了S22行数指纹；事务将回滚")
         # Returning normally commits the single outer transaction.
-        return {"database_checked": True, "database_write": True, "database_write_passes": 2,
-                "verified_idempotent": True, "games": len(batch["games"]), "batch_key": batch["batch_key"],
+        return {"database_checked": True, "database_write": True,
+                "games": len(games_to_import), "games_unchanged": len(batch["games"]) - len(games_to_import),
+                **pass_result, "batch_key": batch["batch_key"],
                 "s22_unchanged": True, "s22_fingerprint": s22_after,
-                "s23_before": s23_before, "s23_after": after_second, "schema": schema}
+                "s23_before": s23_before, "s23_after": s23_after, "schema": schema}
 
 
-def make_report(batch: dict, mode: str, database: dict | None = None) -> dict:
+def make_report(batch: dict, mode: str, database: dict | None = None, *,
+                preparation_seconds: float = 0.0, database_seconds: float = 0.0,
+                formal_games_rewritten: int = 0) -> dict:
     output = {
         "generated_at_utc": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
         "season": "S23", "scope_code": batch["scope"]["scope_code"],
         "snapshot_id": batch["progress"]["snapshot_id"], "batch_key": batch["batch_key"],
         "status": mode, "database_write": bool(database and database.get("database_write")),
+        "selected_bvids": batch.get("selected_bvids", []), "full_batch": batch.get("full_batch", True),
+        "timings_seconds": {"preparation": round(preparation_seconds, 3),
+                            "database": round(database_seconds, 3)},
+        "formal_games_rewritten": formal_games_rewritten,
         "candidate_games": len(batch["games"]), "board_counts": dict(batch["board_counts"]),
         "unknown_events_before": sum(g["normalization"]["unknown_count_before"] for g in batch["games"]),
         "unknown_events_after": sum(g["normalization"]["unknown_count_after"] for g in batch["games"]),
+        "unknown_events_after_derivation": sum(
+            g["normalization"]["unknown_count_after_derivation"] for g in batch["games"]),
         "unknown_slots_added": sum(len(g["normalization"]["filled_slots_as_unknown"]) for g in batch["games"]),
         "candidate_paths": [g["candidate_path"] for g in batch["games"]],
         "source_hashes": batch["source_hashes"], "database": database,
         "notes": [
-            "游戏事实全部由复核进度报告当前candidate_dossiers读取；不读取reviewed档案。",
+            "指定BVID必须属于当前复核范围；局部入口用当前有效对局校验对应候选，完整批次仍检查75局。",
             "整体数据库/上线授权与逐字段确认分别记录；整体授权没有提升任一unknown字段的确认状态。",
-            "补槽只增加unknown；不会把unknown改为pass/unavailable，也不会新增候选没有的轮次。",
+            "candidate源文件原样保留；准备输出可按规则旁证补全unknown，规范化后与推导后的数量分别统计，推导不新增候选没有的轮次。",
             "DQ作为独立补充观察保存；无效狼刀保留invalidated_by_dq，不作为主动空刀。",
             "10号遗言诈身份保存在独立统计复核上下文，不并入常规悍跳。",
         ],
@@ -860,12 +1236,13 @@ def make_report(batch: dict, mode: str, database: dict | None = None) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group()
-    modes.add_argument("--check", action="store_true", help="检查75局与源哈希；不写正式对局表")
-    modes.add_argument("--prepare", action="store_true", help="检查并生成正式JSON旁证；不写数据库")
+    modes.add_argument("--check", action="store_true", help="检查当前范围与源哈希；不写正式对局表")
+    modes.add_argument("--prepare", action="store_true", help="检查并生成当前范围的正式JSON旁证；不写数据库")
     modes.add_argument("--check-db", action="store_true", help="只读检查已登记媒体hash、迁移表和S22基线")
     modes.add_argument("--import-db", action="store_true", help="写入正式库；需要已备份数据库")
     parser.add_argument("--verify-idempotency", action="store_true", help="同一事务内导入两次并核对S23稳定及S22不变")
-    parser.add_argument("--report", type=Path, default=ROOT / "data/reports/S23_正式入库预检.json")
+    parser.add_argument("--bvid", action="append", help="只准备或导入该S23对局；可重复指定多个BVID")
+    parser.add_argument("--report", type=Path, help="默认按完整/局部范围分别保存预检报告")
     args = parser.parse_args()
     mode = "check" if not any((args.check, args.prepare, args.check_db, args.import_db)) else None
     if args.check: mode = "check"
@@ -874,18 +1251,31 @@ def main() -> int:
     if args.import_db: mode = "import_db"
     if args.verify_idempotency and not args.import_db:
         parser.error("--verify-idempotency 只能与--import-db一起使用")
+    if args.verify_idempotency and args.bvid:
+        parser.error("--verify-idempotency只用于完整75局批次；局部--bvid导入按单遍写入并读回")
+    if args.report is None:
+        name = 'S23_局部正式入库预检.json' if args.bvid else 'S23_正式入库预检.json'
+        args.report = ROOT / 'data/reports/S23' / name
     try:
-        batch = build_batch()
+        preparation_started = perf_counter()
+        batch = build_batch(bvids=args.bvid)
         if mode == "prepare":
-            result = materialize(batch)
-            report = make_report(batch, "prepared; database not written")
+            result = materialize(batch, report_path=args.report)
+            preparation_seconds = perf_counter() - preparation_started
+            report = make_report(batch, "prepared; database not written",
+                                 preparation_seconds=preparation_seconds,
+                                 formal_games_rewritten=result["games_rewritten"])
             write_json(args.report, report)
-            print(json.dumps({**result, "database_write": False, "status": "prepared"}, ensure_ascii=False, indent=2))
+            print(json.dumps({**result, "database_write": False, "status": "prepared",
+                              "preparation_seconds": round(preparation_seconds, 3),
+                              "database_seconds": 0.0}, ensure_ascii=False, indent=2))
             return 0
         if mode == "check":
             errors = verify_prepared_files(batch)
+            preparation_seconds = perf_counter() - preparation_started
             # In check-only mode the preflight report is still an explicit, reviewable artifact.
-            report = make_report(batch, "files_validated; database not written")
+            report = make_report(batch, "files_validated; database not written",
+                                 preparation_seconds=preparation_seconds)
             report["prepared_files_present"] = not errors
             report["prepared_file_errors"] = errors
             write_json(args.report, report)
@@ -895,14 +1285,28 @@ def main() -> int:
                               "unknown_events_after": report["unknown_events_after"],
                               "unknown_slots_added": report["unknown_slots_added"],
                               "prepared_files_present": not errors, "report": rel(args.report),
-                              "database_write": False}, ensure_ascii=False, indent=2))
+                              "database_write": False, "preparation_seconds": round(preparation_seconds, 3),
+                              "database_seconds": 0.0}, ensure_ascii=False, indent=2))
             return 0 if not errors else 2
+        preparation_seconds = perf_counter() - preparation_started
+        database_started = perf_counter()
         database = verify_database(batch, write=mode == "import_db", verify_idempotency=args.verify_idempotency)
-        status = "database imported twice in one transaction; idempotency and S22 fingerprints verified" if mode == "import_db" else "database read-only check passed"
-        report = make_report(batch, status, database)
+        database_seconds = perf_counter() - database_started
+        status = (
+            "database unchanged; selected-game receipts and content fingerprints are current"
+            if mode == "import_db" and database.get("no_changes") else
+            "database import completed twice in one transaction; full S23 idempotency and S22 fingerprints verified"
+            if mode == "import_db" and args.verify_idempotency else
+            "database import completed in one transaction; changed games read back and S22 fingerprint verified"
+            if mode == "import_db" else "database read-only check passed"
+        )
+        report = make_report(batch, status, database, preparation_seconds=preparation_seconds,
+                             database_seconds=database_seconds)
         write_json(args.report, report)
         print(json.dumps({"valid": True, "games": len(batch["games"]), "database": database,
-                          "report": rel(args.report)}, ensure_ascii=False, indent=2))
+                          "report": rel(args.report),
+                          "preparation_seconds": round(preparation_seconds, 3),
+                          "database_seconds": round(database_seconds, 3)}, ensure_ascii=False, indent=2))
         return 0
     except Exception as exc:
         print(json.dumps({"valid": False, "error": str(exc), "database_write": False}, ensure_ascii=False, indent=2), file=sys.stderr)

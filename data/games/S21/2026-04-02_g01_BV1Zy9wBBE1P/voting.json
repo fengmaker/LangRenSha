@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1Zy9wBBE1P-p01-cid37182374955",
+  "registrations": [],
+  "ballots": [
+    {
+      "id": "BV1Zy9wBBE1P-ballot-01",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 1,
+      "stage": "initial",
+      "status": "partial",
+      "candidates": [
+        4,
+        8,
+        9
+      ],
+      "eligible_voters": null,
+      "tied_candidates": [],
+      "winner": 9,
+      "unrecorded_voters": null,
+      "votes": [
+        {
+          "voter": 5,
+          "target": 9,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 9,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1Zy9wBBE1P-ballot-02",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "partial",
+      "candidates": [
+        7,
+        11
+      ],
+      "eligible_voters": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        11,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": null,
+      "unrecorded_voters": [
+        12
+      ],
+      "votes": [
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 11,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1Zy9wBBE1P-event-008",
+      "day": 1,
+      "actor": 8,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "BV1Zy9wBBE1P-event-015",
+      "day": 2,
+      "actor": 1,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "recorded",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "not_applicable",
+      "exile": "recorded"
+    }
+  ]
+}

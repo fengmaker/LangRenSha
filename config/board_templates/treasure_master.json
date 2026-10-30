@@ -305,5 +305,138 @@
     "狼王": 1,
     "狼人": 3,
     "盗宝大师": 1
+  },
+  "storage_variants": {
+    "s21_treasure_master": {
+      "code": "s21_treasure_master",
+      "name": "S21 盗宝大师（核实归档）",
+      "role_counts": null,
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "s21_treasure_action",
+          "seer_check",
+          "wolf_attack",
+          "witch_poison",
+          "dreamer_action"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge",
+          "self_destruct",
+          "hunter_shot",
+          "wolf_king_shot"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "s21_treasure_action": {
+            "code": "s21_treasure_action",
+            "label": "盗宝行动",
+            "actor_role": null,
+            "actions": [
+              "choose",
+              "unknown"
+            ]
+          },
+          "seer_check": {
+            "label": "预言家或通灵师查验",
+            "actor_role": null
+          },
+          "wolf_attack": {
+            "label": "狼队击杀",
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          },
+          "witch_poison": {
+            "label": "女巫毒药",
+            "actor_role": null
+          },
+          "dreamer_action": {
+            "label": "摄梦行动",
+            "actor_role": null,
+            "actions": [
+              "dream",
+              "pass",
+              "unknown"
+            ]
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          },
+          "self_destruct": {
+            "actor_role": null
+          },
+          "hunter_shot": {
+            "label": "猎人射击",
+            "actor_role": null
+          },
+          "wolf_king_shot": {
+            "label": "狼王射击",
+            "actor_role": null
+          }
+        }
+      },
+      "remove_fields": [
+        "dynamic_roles",
+        "role_pool"
+      ]
+    },
+    "s23_treasure_master": {
+      "code": "s23_treasure_master",
+      "name": "S23 盗宝大师",
+      "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。",
+      "slot_codes": {},
+      "slot_overrides": {
+        "night": {
+          "wolf_attack": {
+            "actions": [
+              "attack",
+              "forbidden",
+              "pass",
+              "unavailable",
+              "unknown",
+              "invalidated_by_dq"
+            ]
+          },
+          "treasure_card_skill": {
+            "actions": [
+              "attack",
+              "guard",
+              "poison",
+              "check",
+              "dream",
+              "shoot",
+              "delay_death",
+              "no_skill",
+              "pass",
+              "unavailable",
+              "unknown",
+              "disqualify"
+            ]
+          }
+        }
+      }
+    }
   }
 }

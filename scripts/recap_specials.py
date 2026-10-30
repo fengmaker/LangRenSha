@@ -15,8 +15,10 @@ from typing import Any
 
 if __package__:
     from .recap_parser import _NUM, _number, _stage_spans, _compact
+    from .board_config import load_template
 else:
     from recap_parser import _NUM, _number, _stage_spans, _compact
+    from board_config import load_template
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,9 +63,8 @@ _ROLE_ALIASES = {"鬼术师": "诡术师"}
 
 @lru_cache(maxsize=None)
 def _template(code: str) -> dict[str, Any] | None:
-    path = ROOT / "config" / "board_templates" / f"{code}.json"
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return load_template(code, ROOT)
     except (OSError, json.JSONDecodeError):
         return None
 

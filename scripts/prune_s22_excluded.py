@@ -12,7 +12,7 @@ from database import connect
 from game_scope import exclusion_reason, load_policy
 
 ROOT = batch.ROOT
-REPORT = ROOT / "data/reports/S22_非正赛移除记录.json"
+REPORT = ROOT / "data/reports/S22/S22_非正赛移除记录.json"
 
 
 def safe_move(source: Path, destination: Path, source_root: Path, archive_root: Path) -> bool:
@@ -79,7 +79,7 @@ def plan() -> dict:
     return {**{key: old[key] for key in ["backup", "database_before", "backup_history", "deleted_rows", "database_matches", "moved_paths",
                                          "pre_removal_snapshots"] if key in old},
             "season": "S22", "state": "planned", "created_at": old.get("created_at") or batch.now(),
-            "scope_policy": "config/S22_game_scope.json", "items": targets,
+            "scope_policy": "config/seasons.json", "items": targets,
             "removed_games": len(targets), "phase_counts": dict(Counter(e["phase"] for e in targets)),
             "remaining_games": len(entries) - len(targets),
             "archive_root": old.get("archive_root") or "data/archive/S22_excluded_games/" + batch.now().replace(":", "").replace("+", "_"),
@@ -107,9 +107,9 @@ def apply() -> dict:
             suffix += 1
         report["pre_removal_snapshots"] = list(report.get("pre_removal_snapshots", [])) + [batch.relative(snapshot)]
         snapshot.mkdir(parents=True, exist_ok=False)
-        for path in [batch.STATE_FILE, ROOT / "data/reports/S22_转写逐句复核进度.json",
-                     ROOT / "data/reports/S22_画面座位补全进度.json", ROOT / "data/reports/S22_画面截帧进度.json",
-                     ROOT / "data/reports/S22_对局批处理验收.json", ROOT / "data/reports/S22_画面座位验收.json"]:
+        for path in [batch.STATE_FILE, ROOT / "data/reports/S22/S22_转写逐句复核进度.json",
+                     ROOT / "data/reports/S22/S22_画面座位补全进度.json", ROOT / "data/reports/S22/S22_画面截帧进度.json",
+                     ROOT / "data/reports/S22/S22_对局批处理验收.json", ROOT / "data/reports/S22/S22_画面座位验收.json"]:
             target = snapshot / path.name
             if path.is_file():
                 target.parent.mkdir(parents=True, exist_ok=True)

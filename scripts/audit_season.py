@@ -49,7 +49,7 @@ def coverage(cues: list[dict],duration: float) -> dict:
 def audit(season: str = DEFAULT_SEASON) -> dict:
     season_config=load_season(season,ROOT)
     plan=json.loads((ROOT/f'data/indexes/{season}_采集计划.json').read_text(encoding='utf-8'))
-    progress=json.loads((ROOT/f'data/reports/{season}_采集进度.json').read_text(encoding='utf-8'))
+    progress=json.loads((ROOT/f'data/reports/{season}/{season}_采集进度.json').read_text(encoding='utf-8'))
     if plan.get('season') != season or plan.get('collection_id') != season_config['collection_id']:
         raise ValueError('冻结计划与验收赛季不一致')
     rows=[];problems=[];total_bytes=0;raw_tracks=0
@@ -139,8 +139,8 @@ def audit(season: str = DEFAULT_SEASON) -> dict:
             'scope_note':plan['coverage_note'],'quality_note':'时间覆盖和段数只是缺失筛查；无截短信号不等于内容正确或完整。未运行本地ASR或事实提取。',
             'game_facts_created':False,'full_videos_downloaded':False,'audio_export_mode':'hardlinks_no_second_media_copy'}
     progress['final_audit']=report
-    save_json(ROOT/f'data/reports/{season}_采集进度.json',progress)
-    save_json(ROOT/f'data/reports/{season}_采集验收.json',report)
+    save_json(ROOT/f'data/reports/{season}/{season}_采集进度.json',progress)
+    save_json(ROOT/f'data/reports/{season}/{season}_采集验收.json',report)
     save_json(target/f'{season}_中文优先复核目录.json',{'summary':report,'entries':rows})
     return report
 

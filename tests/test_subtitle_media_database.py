@@ -12,6 +12,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from board_config import template_path
 from psycopg import sql
 import database
 import game_records
@@ -57,7 +58,8 @@ class SubtitleMediaDatabaseTests(unittest.TestCase):
                                "path": subtitle.relative_to(root).as_posix()}]
             templates = root / "config/board_templates"
             templates.mkdir(parents=True)
-            shutil.copyfile(ROOT / f"config/board_templates/{value['board']}.json", templates / f"{value['board']}.json")
+            source_template = template_path(value["board"], ROOT)
+            shutil.copyfile(source_template, templates / source_template.name)
             shutil.copyfile(ROOT / "config/game_rules.json", root / "config/game_rules.json")
 
             with database.connect(self.schema) as conn:

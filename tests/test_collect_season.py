@@ -41,7 +41,7 @@ class CollectSeasonTests(unittest.TestCase):
         task_tmp.mkdir(exist_ok=True)
         self.temporary = TemporaryDirectory(dir=task_tmp)
         self.root = Path(self.temporary.name)
-        self.state_path = self.root / "data/reports/S22_采集进度.json"
+        self.state_path = self.root / "data/reports/S22/S22_采集进度.json"
         self.root_patch = patch.object(collect_season, "ROOT", self.root)
         self.state_patch = patch.object(collect_season, "STATE", self.state_path)
         self.collector_patch = patch.object(collect_season, "Collector", FakeCollector)

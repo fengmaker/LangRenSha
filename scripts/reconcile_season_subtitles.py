@@ -158,7 +158,7 @@ def reconcile() -> dict:
               'selection_note': '只比较同一来源已入库快照的时间覆盖；保留所有原件，不代表转写准确率已核验。'}
     state['subtitle_reconciliation'] = report
     write_inventory(plan, state)
-    save_json(ROOT/'data/reports/S22_字幕版本整理.json', report)
+    save_json(ROOT/'data/reports/S22/S22_字幕版本整理.json', report)
     return report
 
 

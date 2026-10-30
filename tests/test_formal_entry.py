@@ -8,6 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from board_config import load_template
 from formal_entry import check, make_entry
 from formal_rule_checks import issues, registry
 from game_records import ReviewError, validate
@@ -30,7 +31,7 @@ class FormalEntryTests(unittest.TestCase):
         self.assertEqual(sum(b["scored_count"] for b in rules["boards"].values()), 148)
         self.assertEqual(len(rules["boards"]), 7)
         for code, board in rules["boards"].items():
-            template = json.loads((ROOT/f"config/board_templates/{code}.json").read_text(encoding="utf-8"))
+            template = load_template(code, ROOT)
             if not template.get("dynamic_roles"):
                 self.assertEqual({r["physical_identity"]: r["count"] for r in board["role_composition"]}, template["role_counts"])
         with self.assertRaises(ReviewError):
@@ -218,7 +219,7 @@ class FormalEntryTests(unittest.TestCase):
         for code in ("mixed_blood", "guile_realm", "masquerade", "neighbor_puppet", "all_in"):
             with self.subTest(board=code):
                 value = self.entry(code)
-                board = json.loads((ROOT/f"config/board_templates/{code}.json").read_text(encoding="utf-8"))
+                board = load_template(code, ROOT)
                 wolves = {"狼人", "诡术师", "假面", "狼王", "典狱长"}
                 roles = [role for role, amount in board["role_counts"].items() for _ in range(amount)]
                 for p, role in zip(value["seats"], roles):

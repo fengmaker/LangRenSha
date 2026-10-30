@@ -22,7 +22,7 @@ def main():
             canonical=row['去重后姓名'].strip()
             for key in ['原图名字','复核行名字','去重后姓名']:
                 if row.get(key):aliases.setdefault(norm(row[key]),set()).add(canonical)
-    plan=json.loads((ROOT/'data/reports/S23_逐局复核计划.json').read_text(encoding='utf-8'))
+    plan=json.loads((ROOT/'data/reports/S23/S23_逐局复核计划.json').read_text(encoding='utf-8'))
     engine=RapidOCR()
     for entry in plan['entries']:
         if entry['phase']!='regular':continue

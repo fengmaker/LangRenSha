@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1KUPyzAETp-p01-cid36481141484",
+  "registrations": [
+    {
+      "id": "BV1KUPyzAETp-event-008",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ],
+      "off_police": [
+        8,
+        9
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "BV1KUPyzAETp-ballot-01",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        1,
+        4,
+        10,
+        11,
+        12
+      ],
+      "eligible_voters": [
+        8,
+        9
+      ],
+      "tied_candidates": [],
+      "winner": 4,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 8,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 4,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1KUPyzAETp-ballot-02",
+      "day": 2,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 7,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 3,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 7,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1KUPyzAETp-event-012",
+      "day": 1,
+      "actor": 1,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "recorded",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "not_applicable",
+      "exile": "recorded"
+    }
+  ]
+}

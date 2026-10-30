@@ -21,13 +21,13 @@ from s22_frame_seats import annotation_digest
 
 
 ROOT = batch.ROOT
-REPORT = ROOT / "data/reports/S22_画面座位验收.json"
+REPORT = ROOT / "data/reports/S22/S22_画面座位验收.json"
 DAY_DIR = ROOT / "data/extractions/S22/按日座位表"
 ANNOTATION_DIR = ROOT / "data/extractions/S22/day_frame_seats"
-PROGRESS_FILE = ROOT / "data/reports/S22_画面座位补全进度.json"
+PROGRESS_FILE = ROOT / "data/reports/S22/S22_画面座位补全进度.json"
 ARCHIVE_DIR = ROOT / "data/archive/S22_frame_seats"
-INFERENCE_REPORT = ROOT / "data/reports/S22_疑点推理复核.json"
-RULE_ALIGNMENT_REPORT = ROOT / "data/reports/S22_正式规则对齐记录.json"
+INFERENCE_REPORT = ROOT / "data/reports/S22/S22_疑点推理复核.json"
+RULE_ALIGNMENT_REPORT = ROOT / "data/reports/S22/S22_正式规则对齐记录.json"
 RULE_ALIGNMENT_ARCHIVE = ROOT / "data/archive/S22_formal_rule_alignment"
 REVIEW_BASE = "http://127.0.0.1:8766/#"
 

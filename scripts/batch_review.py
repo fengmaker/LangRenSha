@@ -11,6 +11,10 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
+try:
+    from .board_config import load_template
+except ImportError:
+    from board_config import load_template
 
 _UNKNOWN = "未知"
 _STATE_LABELS = {
@@ -135,9 +139,8 @@ def _template(board_code: object) -> dict:
     code = _string(board_code, none="")
     if not code or not re.fullmatch(r"[A-Za-z0-9_]+", code):
         return {"name": code or _UNKNOWN, "night_slots": [], "day_slots": []}
-    path = ROOT / "config" / "board_templates" / f"{code}.json"
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
+        value = load_template(code, ROOT)
     except (OSError, json.JSONDecodeError):
         return {"name": code, "night_slots": [], "day_slots": []}
     return value if isinstance(value, dict) else {"name": code, "night_slots": [], "day_slots": []}

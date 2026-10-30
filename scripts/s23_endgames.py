@@ -35,19 +35,19 @@ CASES = {
 }
 
 
-def endgame_for(entry, dossier):
-    path = ROOT / entry['source_path']
+def endgame_for(entry, dossier, *, rows=None, root=ROOT):
+    path = root / entry['source_path']
     if digest(path) != entry['source_sha256']:
         raise ValueError('拍刀复核来源已变化：' + entry['bvid'])
     phases = []
     spec = CASES.get(entry['index'])
     if spec:
-        binding=json.loads((ROOT/'data/extractions/S23/endgame_reviewed_sources.json').read_text(encoding='utf-8'))['items'][str(entry['index'])]
+        binding=json.loads((root/'data/extractions/S23/endgame_reviewed_sources.json').read_text(encoding='utf-8'))['items'][str(entry['index'])]
         if (binding['bvid']!=entry['bvid'] or binding['source_path']!=entry['source_path'] or
                 binding['source_sha256']!=entry['source_sha256']):
             raise ValueError('拍刀裁定与冻结来源不匹配：'+entry['bvid'])
         day, actor, targets, result, spans, note = spec
-        rows = segments(path)
+        rows = segments(path) if rows is None else rows
         proof = []
         for lo, hi in spans:
             selected = [r for r in rows if r['end_ms'] >= lo and r['start_ms'] <= hi]

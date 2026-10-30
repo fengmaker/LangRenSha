@@ -18,7 +18,7 @@ from s22_text_review import make_round
 from s22_review_server import save_item
 
 BASE = batch.ROOT / 'data/extractions/S22/疑点推理复核'
-REPORT = batch.ROOT / 'data/reports/S22_疑点推理复核.json'
+REPORT = batch.ROOT / 'data/reports/S22/S22_疑点推理复核.json'
 GROUPS = ('mechanical', 'mixed_neighbor', 'special', 'primary')
 
 
@@ -162,7 +162,7 @@ def active_scope_entries(entries, *, root=batch.ROOT):
 
 def later_rule_alignment_valid(bvid, old_hash, current_hash, cache):
     """Validate a later sourced correction without rewriting the historic review."""
-    path = batch.ROOT / 'data/reports/S22_正式规则对齐记录.json'
+    path = batch.ROOT / 'data/reports/S22/S22_正式规则对齐记录.json'
     if not path.is_file():
         return False
     report = batch.read_json(path)
@@ -290,7 +290,7 @@ def render_report(report):
             for d in decisions:
                 lines.extend(['- ' + note(d).replace('\n', '\n  '), ''])
     markdown = '\n'.join(lines)
-    (batch.ROOT / 'data/reports/S22_疑点推理复核.md').write_text(markdown, encoding='utf-8')
+    (batch.ROOT / 'data/reports/S22/S22_疑点推理复核.md').write_text(markdown, encoding='utf-8')
     rows = []
     for game in records:
         for d in game['decisions']:
@@ -302,7 +302,8 @@ def render_report(report):
         body.append('<details' + ('' if resolved else ' open') + '><summary>' + html.escape(('AI已核实' if resolved else '待review') + ' · ' + bvid + ' · ' + d['conclusion']) + '</summary>')
         body.append(f'<p><a href="http://127.0.0.1:8766/#{bvid}">打开本局审校</a></p><pre>{html.escape(note(d))}</pre></details>')
     page = '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>S22疑点推理核查</title><style>body{max-width:1100px;margin:30px auto;padding:0 20px;font:16px/1.7 system-ui;color:#203140;background:#f4f7f9}details{background:white;padding:14px;margin:12px 0;border-radius:8px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;font:inherit}a{color:#176e9d}</style>' + ''.join(body) + '</html>'
-    (batch.ROOT / 'data/reports/S22_疑点推理复核.html').write_text(page, encoding='utf-8')
+    (batch.ROOT / 'data/exports').mkdir(parents=True, exist_ok=True)
+    (batch.ROOT / 'data/exports/S22_疑点推理复核.html').write_text(page, encoding='utf-8')
 
 
 def apply():
@@ -319,7 +320,7 @@ def apply():
             state = batch.load_state()
             snapshot = batch.ROOT / 'data/backups' / ('S22疑点推理前_' + batch.now().replace(':', '').replace('+', '_') + '.zip')
             with zipfile.ZipFile(snapshot, 'w', zipfile.ZIP_DEFLATED) as archive:
-                for file in [batch.STATE_FILE, batch.ROOT / 'data/reports/S22_转写逐句复核进度.json']:
+                for file in [batch.STATE_FILE, batch.ROOT / 'data/reports/S22/S22_转写逐句复核进度.json']:
                     archive.write(file, batch.relative(file))
                 for entry in state['items'].values():
                     if entry['state'] == 'preserved':

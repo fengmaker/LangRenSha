@@ -14,5 +14,7 @@ def test_s22_bluff_fingerprints_match_the_published_terminal_projection():
     for item in entries:
         identities = {seat["name"]: seat["name"] for seat in item["dossier"]["seats"]}
         game = publisher._public_game(item["dossier"], item["voting"], item["endgame"],
-                                     item["audit"], item["board"], identities)
+                                     item["audit"], item["board"], identities,
+                                     source_voting=item.get("source_voting"),
+                                     derivations=item.get("derivations"))
         assert records[game["id"]]["source_fingerprint"] == bluffs.source_fingerprint(game), game["id"]

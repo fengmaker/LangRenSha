@@ -29,7 +29,8 @@ def command(script: str, *args: str, asr: bool = False) -> list[str]:
 def stage_commands(stage: str, season: str, *, root: Path = ROOT,
                    auth: str = "none", cookies: str = ".secrets/bilibili.cookies.txt",
                    bvid: str | None = None, photos: bool = False,
-                   full_season: bool = False) -> list[list[str]]:
+                   full_season: bool = False, checks: list[str] | None = None,
+                   fields: list[str] | None = None) -> list[list[str]]:
     config = load_season(season, root)
     if stage == "collect":
         auth_args = ["--auth", auth]
@@ -43,11 +44,19 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
     if stage == "transcribe":
         return [command("scripts/transcribe_review_queue.py", "run", "--season", season, asr=True)]
     if stage == "review":
+        if bvid and not full_season and config.get("review_profile") == "s23_game_review":
+            selected = ["--checks", *checks] if checks else []
+            for field in fields or []:
+                selected += ["--field", field]
+            return [command("scripts/check_s23_game.py", "--bvid", bvid, *selected,
+                            "--output", f"data/reports/S23/S23_局部复核_{bvid}.json")]
         if not full_season:
-            raise ValueError("局部复核按docs/02第六步给AI指定BV、字段及证据片段，直接只读核对；"
-                             "此review流水线会生成整季报告，确需整季结构检查时加--full-season")
+            raise ValueError("S23局部复核请指定--bvid，可加--checks和--field；其他季按docs/01第六步限定证据核对。"
+                             "确需整季结构检查时加--full-season")
         if bvid:
             raise ValueError("--full-season会检查整季，不能用--bvid限制范围；局部复核按第六步执行")
+        if checks or fields:
+            raise ValueError("--checks和--field仅用于S23 --bvid局部复核")
         if config.get("review_profile") == "s22_text_review":
             return [command("scripts/audit_s22_batch.py"), command("scripts/formal_entry.py", "audit")]
         if config.get("review_profile") == "s23_game_review":
@@ -61,6 +70,10 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
     if stage == "import":
         jobs = [command("scripts/backup_database.py")]
         if config.get("import_profile") == "s23_formal_import":
+            if bvid:
+                return jobs + [command("scripts/build_s23_review.py", "--bvid", bvid, "--require-complete"),
+                               command("scripts/import_s23_formal.py", "--prepare", "--bvid", bvid),
+                               command("scripts/import_s23_formal.py", "--import-db", "--bvid", bvid)]
             return jobs + [command("scripts/import_s23_formal.py", "--prepare"),
                            command("scripts/import_s23_formal.py", "--import-db", "--verify-idempotency")]
         if config.get("import_profile") == "s21_formal_import":
@@ -76,13 +89,23 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
         seasons = formal_seasons(root)
         if season not in seasons:
             raise ValueError(f"{season}还没有正式dossier.json，不能发布候选文件")
-        builders = [load_season(code, root)["bluff_entry"] for code in seasons]
-        jobs = [command(builder, "--check") for builder in builders]
+        # Published review inputs can contain user decisions. Reuse those files
+        # rather than replacing them with a fresh inference during publication.
+        reviews = []
+        jobs = [command("scripts/prepare_game_rules.py", "--season", *seasons, "--apply")]
+        for code in seasons:
+            asset = root / f"website/assets/bluffs/{code}.json"
+            builder = None if asset.is_file() else load_season(code, root).get("bluff_entry")
+            if asset.is_file() or builder:
+                reviews.append((code, builder))
+            if builder:
+                jobs.append(command(builder, "--check"))
         jobs += [[str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons, "--check"],
                  [str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons]]
-        for code, builder in zip(seasons, builders):
-            jobs += [command(builder),
-                     [str(PYTHON), "-m", "website.api.publish_bluffs", "--season", code, "--check"],
+        for code, builder in reviews:
+            if builder:
+                jobs.append(command(builder))
+            jobs += [[str(PYTHON), "-m", "website.api.publish_bluffs", "--season", code, "--check"],
                      [str(PYTHON), "-m", "website.api.publish_bluffs", "--season", code]]
         if photos:
             jobs.append(command("website/prepare_photos.py"))
@@ -91,6 +114,8 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
         seasons = formal_seasons(root)
         if season not in seasons:
             raise ValueError(f"{season}还没有正式档案；采集与转写验收分别使用对应阶段报告")
+        if bvid:
+            return [command("website/check_publication.py", "--seasons", season, "--bvid", bvid)]
         return [[str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons, "--check"],
                 command("website/check_publication.py")]
     raise ValueError(f"Unknown workflow stage: {stage}")
@@ -100,7 +125,7 @@ def status(season: str, root: Path = ROOT) -> dict:
     config = load_season(season, root)
     reports = {}
     for suffix in ("采集进度", "采集验收", "全文补转写进度", "转写入库验收", "发言截图进度", "逐局复核进度"):
-        path = root / f"data/reports/{season}_{suffix}.json"
+        path = root / f"data/reports/{season}/{season}_{suffix}.json"
         if path.is_file():
             value = json.loads(path.read_text(encoding="utf-8"))
             summary = value.get("summary")
@@ -138,12 +163,17 @@ def main() -> int:
     parser.add_argument("--stage", choices=STAGES)
     parser.add_argument("--auth", choices=("none", "cookies"))
     parser.add_argument("--cookies-file", default=".secrets/bilibili.cookies.txt")
-    parser.add_argument("--bvid", help="S21指定入库媒体或S22指定修订对局")
+    parser.add_argument("--bvid", help="指定单局复核、修订导入或网站局部验收")
+    parser.add_argument("--checks", nargs='+', choices=('structure', 'rules', 'evidence'),
+                        help="S23单局复核的检查类型")
+    parser.add_argument("--field", action='append', default=[], help="S23单局复核字段；可重复")
     parser.add_argument("--photos", action="store_true", help="publish时重建现有照片清单，随后须重启API")
     parser.add_argument("--full-season", action="store_true", help="显式运行review整季结构检查/生成，非AI逐项复核")
     args = parser.parse_args()
     if args.full_season and args.stage != "review":
         parser.error("--full-season只用于--stage review")
+    if (args.checks or args.field) and args.stage != 'review':
+        parser.error('--checks和--field只用于--stage review')
     if args.action == "status":
         print(json.dumps(status(args.season), ensure_ascii=False, indent=2))
         return 0
@@ -155,14 +185,15 @@ def main() -> int:
     for stage in stages:
         try:
             jobs = stage_commands(stage, args.season, auth=auth, cookies=args.cookies_file,
-                                  bvid=args.bvid, photos=args.photos, full_season=args.full_season)
+                                  bvid=args.bvid, photos=args.photos, full_season=args.full_season,
+                                  checks=args.checks, fields=args.field)
             plans.append({"stage": stage, "commands": jobs})
         except ValueError as error:
             if args.action == "run":
                 raise
             plans.append({"stage": stage, "manual": str(error), "commands": []})
     if args.action == "plan":
-        print("局部事实复核按docs/02第六步执行；review --full-season仅运行整季结构检查/生成。")
+        print("S23 review --bvid运行单局检查与差异输出；--full-season运行整季结构检查/生成。事实判断按docs/01第六步执行。")
         for plan in plans:
             print(f"\n[{plan['stage']}]")
             if "manual" in plan:

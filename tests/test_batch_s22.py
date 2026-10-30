@@ -13,6 +13,31 @@ import batch_s22 as batch
 
 
 class BatchS22Tests(unittest.TestCase):
+    def test_batch_runtime_files_share_the_season_report_directory(self):
+        self.assertEqual(batch.REPORT_DIR, ROOT / "data/reports/S22")
+        self.assertEqual(batch.STATE_FILE.name, "S22_对局批处理进度.json")
+        self.assertEqual(batch.JOURNAL_FILE.name, "S22_对局批处理日志.jsonl")
+        self.assertEqual(batch.LOCK_FILE.name, "S22_对局批处理.lock")
+
+    def test_derived_survival_and_existing_votes_share_one_import_transaction(self):
+        with patch("database.connect") as connect, patch("game_records.import_game", return_value={"slug": "g"}) as game_import, \
+                patch("voting_records.import_voting", return_value={"ballots": 1}) as vote_import:
+            conn = connect.return_value.__enter__.return_value
+            result = batch.import_prepared_records({"slug": "g"}, {"ballots": [1]}, {"version": 1})
+            self.assertEqual(result["voting"], {"ballots": 1})
+            self.assertIs(game_import.call_args.kwargs["conn"], conn)
+            self.assertIs(vote_import.call_args.kwargs["conn"], conn)
+            vote_import.side_effect = RuntimeError("vote import failed")
+            with self.assertRaisesRegex(RuntimeError, "vote import failed"):
+                batch.import_prepared_records({"slug": "g"}, {"ballots": [1]}, {"version": 1})
+            self.assertIs(connect.return_value.__exit__.call_args.args[0], RuntimeError)
+
+    def test_missing_vote_file_does_not_create_or_replace_vote_records(self):
+        with patch("database.connect"), patch("game_records.import_game", return_value={"slug": "g"}), \
+                patch("voting_records.import_voting") as vote_import:
+            batch.import_prepared_records({"slug": "g"}, None, {"version": 1})
+            vote_import.assert_not_called()
+
     def test_complete_asr_takes_priority_over_truncated_subtitle(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -31,6 +56,27 @@ class BatchS22Tests(unittest.TestCase):
             self.assertEqual(batch.load_segments(path), expected)
             path.write_text(json.dumps({"body": [{"from": 1.2, "to": 2.6, "content": "原文"}]}), encoding="utf-8")
             self.assertEqual(batch.load_segments(path), expected)
+
+    def test_derivation_reads_only_existing_sidecars_and_never_creates_voting(self):
+        from unittest.mock import patch
+        import game_derivations
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary)
+            dossier = {"slug": "fixture"}
+            with patch.object(game_derivations, "derive_game", return_value={
+                    "dossier": {"slug": "fixture", "derived": True},
+                    "voting": None, "derivations": {"version": 1}}) as derive:
+                result = batch.derive_formal_records(dossier, folder)
+            derive.assert_called_once_with(dossier, None, supplemental=None, endgame=None, speech_evidence=None)
+            self.assertEqual(result, ({"slug": "fixture", "derived": True}, None, {"version": 1}))
+            self.assertEqual(list(folder.iterdir()), [])
+
+            voting = {"schema_version": 1, "ballots": [], "days": []}
+            batch.atomic_json(folder / "voting.json", voting)
+            with patch.object(game_derivations, "derive_game", return_value={
+                    "dossier": dossier, "voting": voting, "derivations": {"version": 1}}) as derive:
+                batch.derive_formal_records(dossier, folder)
+            derive.assert_called_once_with(dossier, voting, supplemental=None, endgame=None, speech_evidence=None)
 
     def test_atomic_checkpoint_failure_preserves_previous_state(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -13,7 +13,7 @@ from formal_rule_checks import final_gaps, issues, registry
 from game_records import empty_event, import_game, primary_source_file, template, validate, validate_batch
 from game_scope import exclusion_reason
 
-REPORT = batch.ROOT / "data/reports/S22_正式规则校验.json"
+REPORT = batch.ROOT / "data/reports/S22/S22_正式规则校验.json"
 
 
 def make_entry(board_code, event_date, game_number, rounds=1):
@@ -113,8 +113,10 @@ def audit():
         value = batch.read_json(path)
         result["unknown_events"] = sum(e["action"] == "unknown" for r in value["rounds"] for phase in ("night", "day") for e in r[phase])
         items.append(result)
-    report = {"generated_at": batch.now(), "rule_file": "config/S22_formal_rules.json",
-              "rule_sha256": batch.digest(batch.ROOT / "config/S22_formal_rules.json"),
+    report = {"generated_at": batch.now(), "rule_file": "config/game_rules.json",
+              "rule_sha256": batch.digest(batch.ROOT / "config/game_rules.json"),
+              "season_config": "config/seasons.json",
+              "season_config_sha256": batch.digest(batch.ROOT / "config/seasons.json"),
               "rulebook": "docs/archive/S22/正式版型规则与录入流程.md",
               "mode": "known_facts_only", "games": len(items),
               "games_with_contradictions": sum(bool(i["errors"]) for i in items),

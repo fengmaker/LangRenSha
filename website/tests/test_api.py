@@ -21,6 +21,20 @@ def client():
         yield test_client
 
 
+@pytest.mark.parametrize("path,collection", [
+    ("/api/v1/games?page_size=100", "items"),
+    ("/api/v1/games?season=S21&page_size=100", "items"),
+    ("/api/v1/overview", "recent_games"),
+])
+def test_game_lists_order_newest_date_and_highest_game_number_first(client, path, collection):
+    response = client.get(path)
+    assert response.status_code == 200
+    items = response.json()[collection]
+    keys = [(item["date"], item["game_number"] if item["game_number"] is not None else -1)
+            for item in items]
+    assert keys == sorted(keys, reverse=True)
+
+
 def test_read_only_contract_filtering_pagination_and_details(client):
     health = client.get("/health")
     assert health.status_code == 200

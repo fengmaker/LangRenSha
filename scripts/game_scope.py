@@ -1,22 +1,22 @@
 """User-selected scope for structured game records; raw media stays independent."""
 from __future__ import annotations
 
-import json
 from pathlib import Path
 import re
 
+from rule_config import load_scope
+from season_config import season_codes
+
 ROOT = Path(__file__).resolve().parents[1]
-POLICY_REL = "config/S22_game_scope.json"
+POLICY_REL = "config/seasons.json"
 
 
 def load_policy(root: Path = ROOT, season: str = "S22") -> dict:
-    path = Path(root) / (POLICY_REL if season == "S22" else f"config/{season}_game_scope.json")
-    if not path.is_file():
+    if not (Path(root) / POLICY_REL).is_file():
         return {}
-    value = json.loads(path.read_text(encoding="utf-8-sig"))
-    if value.get("season") != season:
-        raise ValueError("对局范围配置的赛季无效")
-    return value
+    if season not in season_codes(Path(root)):
+        return {}
+    return load_scope(season, Path(root))
 
 
 def exclusion_reason(entry: dict, *, root: Path = ROOT) -> str | None:

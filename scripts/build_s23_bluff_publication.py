@@ -183,7 +183,9 @@ def _assessment(seat: dict[str, Any], row: dict[str, Any] | None,
         note = f"{note} {suffix}".strip()
     if separate:
         note = "遗言阶段的信息神自称保留为独立记录；常规悍跳统计口径未定，暂列待复核。"
-    return {
+    raw_evidence = row.get("evidence", []) if row else []
+    raw_evidence = raw_evidence if isinstance(raw_evidence, list) else []
+    assessment = {
         "seat": seat["seat"],
         "name": seat["name"],
         "physical_role": seat.get("role"),
@@ -197,13 +199,19 @@ def _assessment(seat: dict[str, Any], row: dict[str, Any] | None,
         "verification_status": verification,
         "review_questions": questions,
         "evidence": evidence,
+        "evidence_source_fingerprint": bluffs.evidence_source_fingerprint(raw_evidence),
     }
+    if not any(isinstance(item, dict) and re.fullmatch(
+            r"[a-f0-9]{64}", str(item.get("source_sha256", ""))) for item in raw_evidence):
+        assessment["evidence_source_binding"] = "whole_game"
+    return assessment
 
 
 def _public_game(entry: dict[str, Any], person_ids: dict[str, str]) -> dict[str, Any]:
     return publisher._public_game(
         entry["dossier"], entry["voting"], entry["endgame"], entry.get("audit"),
         entry["board"], person_ids,
+        source_voting=entry.get("source_voting"), derivations=entry.get("derivations"),
     )
 
 
@@ -255,6 +263,13 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
                 assessment['actual_claim_day']=source_assessment.get('actual_claim_day')
                 assessment['confidence']=source_assessment.get('confidence','high' if assessment['decision']!='uncertain' else 'low')
                 assessment['evidence']=_evidence(source_assessment.get('evidence',[]))
+                raw_evidence = source_assessment.get('evidence', [])
+                assessment['evidence_source_fingerprint'] = bluffs.evidence_source_fingerprint(
+                    raw_evidence if isinstance(raw_evidence, list) else [])
+                if not any(isinstance(row, dict) and re.fullmatch(
+                        r'[a-f0-9]{64}', str(row.get('source_sha256', '')))
+                        for row in (raw_evidence if isinstance(raw_evidence, list) else [])):
+                    assessment['evidence_source_binding'] = 'whole_game'
                 if assessment['verification_status']!='user_confirmed':
                     assessment['verification_status']='assistant_inferred'
                 if entry['bvid']=='BV1U3p86dEJY' and assessment['seat']==6:
@@ -284,7 +299,11 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
         for assessment in assessments:
             feedback=human.get(f"{source.get('bvid')}:{assessment['seat']}")
             if not feedback:continue
-            if feedback.get('source_fingerprint')!=fingerprint:
+            feedback_claim_fingerprint = feedback.get('claim_fingerprint')
+            if isinstance(feedback_claim_fingerprint, str):
+                if feedback_claim_fingerprint != bluffs.claim_fingerprint(game, assessment):
+                    raise BuildError('用户反馈对应的悍跳证据依据已变化，需要重新核对')
+            elif feedback.get('source_fingerprint')!=fingerprint:
                 raise BuildError('用户反馈对应的正式底牌或结果已变化，需要重新核对')
             action=feedback.get('decision')
             if action in {'yes','no','uncertain'}:
@@ -321,6 +340,12 @@ def build_payload(root: Path, *, allow_partial_audit: bool=False) -> tuple[dict[
             record['result_review']={'badge':result_review['badge'],
                                      'note':_public_text(result_review['note']),
                                      'evidence':_evidence(result_review['evidence'])}
+        for assessment in record['assessments']:
+            assessment['claim_fingerprint'] = bluffs.claim_fingerprint(game, assessment)
+            assessment['success_fingerprint'] = bluffs.success_fingerprint(
+                game, assessment['seat'], bluffs.assessment_success_day(assessment),
+                result_review=record.get('result_review'),
+            )
         payload_games.append(record)
 
     payload = {

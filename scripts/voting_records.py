@@ -62,6 +62,44 @@ def evidence(rows, source):
             "quote": "\n".join(r["text"] for r in rows)}
 
 
+def find_registration_candidates(segments):
+    """Reuse explicit judge signup lists before any speech-round inference."""
+    texts = [normalized(s["text"]) for s in segments]
+    candidates = []
+    for i, text in enumerate(texts):
+        window = "".join(texts[i:i+3])
+        if len(window) > 240:
+            continue
+        match = re.search(rf"(?:本(?:局|期)?游戏|本局|第[一二三四]局游戏)(?:除|除了)(?P<off>{GROUP})(?:在)?外[，,]*(?:其他|其余|区|曲|请大家)(?:玩?家)?(?:均|军|俊)?上警", window)
+        if match:
+            off = sorted(set(seats(match["off"])))
+            candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
+            continue
+        match = re.search(rf"(?:本游戏|本局)(?P<on>{GROUP})(?:上警|参与警长竞选)", window)
+        if match:
+            on = sorted(set(seats(match["on"])))
+            candidates.append((i, sorted(set(range(1, 13)) - set(on)), on, 3))
+            continue
+        match = re.search(rf"^(?P<off>{GROUP})(?:在)?警下[，,]*(?:其余|其他)(?:玩?家)?上警", window)
+        if match:
+            off = sorted(set(seats(match["off"])))
+            candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
+            continue
+        match = re.search(rf"共有[\d一二三四五六七八九十]+名玩家在警下(?P<off>{GROUP})", window)
+        if match:
+            off = sorted(set(seats(match["off"])))
+            # A declared count prevents a clipped list from becoming a false
+            # complete police registration.
+            count_text = re.search(r"共有([\d一二三四五六七八九十]+)名", match[0]).group(1)
+            if number(count_text) == len(off):
+                candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
+            continue
+        if re.search(r"本(?:局)?游戏全员上警", window):
+            candidates.append((i, [], list(range(1,13)), 3))
+
+    return candidates
+
+
 def extract(segments, dossier, source_path):
     texts = [normalized(s["text"]) for s in segments]
     proof, problems, registrations, ballots, interruptions = {}, [], [], [], []
@@ -76,37 +114,7 @@ def extract(segments, dossier, source_path):
 
     # The first complete registration is an independent day-one anchor when
     # the opening dawn command is missing from a subtitle track.
-    registration_candidates = []
-    for i, text in enumerate(texts):
-        window = "".join(texts[i:i+3])
-        if len(window) > 240:
-            continue
-        match = re.search(rf"(?:本(?:局|期)?游戏|本局|第[一二三四]局游戏)(?:除|除了)(?P<off>{GROUP})(?:在)?外[，,]*(?:其他|其余|区|曲|请大家)(?:玩?家)?(?:均|军|俊)?上警", window)
-        if match:
-            off = sorted(set(seats(match["off"])))
-            registration_candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
-            continue
-        match = re.search(rf"(?:本游戏|本局)(?P<on>{GROUP})(?:上警|参与警长竞选)", window)
-        if match:
-            on = sorted(set(seats(match["on"])))
-            registration_candidates.append((i, sorted(set(range(1, 13)) - set(on)), on, 3))
-            continue
-        match = re.search(rf"^(?P<off>{GROUP})(?:在)?警下[，,]*(?:其余|其他)(?:玩?家)?上警", window)
-        if match:
-            off = sorted(set(seats(match["off"])))
-            registration_candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
-            continue
-        match = re.search(rf"共有[\d一二三四五六七八九十]+名玩家在警下(?P<off>{GROUP})", window)
-        if match:
-            off = sorted(set(seats(match["off"])))
-            # A declared count prevents a clipped list from becoming a false
-            # complete police registration.
-            count_text = re.search(r"共有([\d一二三四五六七八九十]+)名", match[0]).group(1)
-            if number(count_text) == len(off):
-                registration_candidates.append((i, off, sorted(set(range(1, 13)) - set(off)), 3))
-            continue
-        if re.search(r"本(?:局)?游戏全员上警", window):
-            registration_candidates.append((i, [], list(range(1,13)), 3))
+    registration_candidates = find_registration_candidates(segments)
 
     opening = next((s["start_ms"] for i,s in enumerate(segments)
                     if re.search(r"(?:上警|上镜|上景)玩家.*(?:亮|红灯)|(?:其他|其余)玩家.*上警", "".join(texts[i:i+3]))), None)

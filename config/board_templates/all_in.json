@@ -238,5 +238,80 @@
         "unknown"
       ]
     }
-  ]
+  ],
+  "storage_variants": {
+    "s21_all_in": {
+      "code": "s21_all_in",
+      "name": "S21 孤注一掷（核实归档）",
+      "role_counts": null,
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "dreamer_action",
+          "wolf_attack",
+          "witch_poison",
+          "seer_check",
+          "witch_save"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge",
+          "self_destruct"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "dreamer_action": {
+            "label": "摄梦行动",
+            "actor_role": null,
+            "actions": [
+              "dream",
+              "pass",
+              "unknown"
+            ]
+          },
+          "wolf_attack": {
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          },
+          "witch_poison": {
+            "actor_role": null
+          },
+          "seer_check": {
+            "label": "预言家或通灵师查验",
+            "actor_role": null
+          },
+          "witch_save": {
+            "actor_role": null
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          },
+          "self_destruct": {
+            "actor_role": null
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,9 +1,1349 @@
 {
-  "fixed_seats": {"JY": 7},
-  "mechanical_unlock": {"night_round_offset": 1, "day_round_offset": 0},
-  "mechanical_guard_poison": {"original_target_poisoned": false, "poison_caster_dies": true},
+  "shared_derivation_policy": {
+    "status": "user_confirmed",
+    "confirmed_on": "2026-10-29",
+    "scope": "S21/S22/S23 basic roles and the same board family share rules; explicit revised variants override locally",
+    "source": "本轮用户确认：基础规则全部通用，同一个版型可以共用；推导必须前移到数据生成与导入阶段",
+    "first_night_witch_save": "requires_observed_use; common practice is not evidence"
+  },
+  "fixed_seats": {
+    "JY": 7
+  },
+  "mechanical_unlock": {
+    "night_round_offset": 1,
+    "day_round_offset": 0
+  },
+  "mechanical_guard_poison": {
+    "original_target_poisoned": false,
+    "poison_caster_dies": true
+  },
   "hunter_poison_sources": [
-    {"slot": "witch_poison"},
-    {"slot": "mechanical_action", "learned_role": "机械女巫"}
-  ]
+    {
+      "slot": "witch_poison"
+    },
+    {
+      "slot": "mechanical_action",
+      "learned_role": "机械女巫"
+    }
+  ],
+  "schema_version": 2,
+  "field_definitions": {
+    "physical_identity": "玩家实际持有的原始身份牌；不因榜样、傀儡、面具或技能模仿而改写。",
+    "elimination_side": "用于记录该局胜负条件所检查的淘汰边/类别；不等同个人胜利阵营。",
+    "victory_faction": "玩家个人胜利条件所跟随的阵营；可与淘汰边不同或依赖动态状态。",
+    "unknown_policy": "证据不足时保留 unknown/pending；不按常见玩法补规则。"
+  },
+  "shared_rules": {
+    "voting": {
+      "status": "user_confirmed",
+      "sheriff_postponement": {
+        "trigger": "day_one_daytime_wolf_self_destruct_interrupting_unfinished_election",
+        "continue_on_day": 2,
+        "second_day_self_destruct_result": "badge_lost",
+        "maximum_postponements": 1,
+        "continued_election_voters": "original_off_police_players_with_voting_rights",
+        "continued_election_targets": "on_police_candidates",
+        "same_day_pk_is_separate_from_postponement": true
+      },
+      "unannounced_choice": {
+        "result": "abstained",
+        "applies_to": "eligible_player_in_an_established_ballot_without_an_explicit_recorded_target",
+        "keep_rule_derived_basis_separate_from_explicit_announcement": true,
+        "does_not_create_unobserved_ballots_or_unknown_voter_rosters": true
+      },
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-25",
+        "statement": "延期警长竞选只由首日白天狼人自爆中断触发；次日再次自爆则警徽流失，否则仍由警下玩家投警上玩家；没有明确投向默认弃票。白天无狼人自爆则有放逐投票；两轮投票均平票则为平安日、无人放逐；拍刀单列环节，结合复盘和出局记录交叉复核。"
+      },
+      "daytime_exile": {
+        "no_daytime_self_destruct_requires_ballot": true,
+        "missing_ballot_requires_recap_and_departure_crosscheck": true,
+        "normal_ballot_label": "第几天白天的放逐投票",
+        "two_tied_ballots_result": "peaceful_day_no_exile",
+        "wolf_rush_is_separate_phase": true
+      },
+      "survivor_derived_eligibility": {
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-25",
+        "source_path": "data/extractions/S22/用户确认_20261025_存活与终局.txt",
+        "basis": "每天公投、夜间死亡和技能出局按发生时点重放，推导存活名单与本轮票权；公投后触发的开枪不扣除本次投票资格。",
+        "arithmetic_deductions_do_not_require_manual_review": true,
+        "conflicting_or_missing_departure_evidence_remains_unresolved": true
+      }
+    },
+    "dreamer": {
+      "status": "user_confirmed",
+      "target_immune_to_wolf_attack_that_night": true,
+      "same_target_on_two_consecutive_nights": "target_dies_on_second_night",
+      "dreamer_death_trigger": "night_death_only",
+      "night_death_link_target": "current_night_dream_target",
+      "daytime_death_links_previous_target": false,
+      "hunter_or_wolf_king_shot_after_repeat_dream_death": false,
+      "hunter_or_wolf_king_shot_after_linked_dream_death": false,
+      "wolf_attack_immunity_does_not_cancel_dream_deaths": true,
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-25",
+        "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt"
+      }
+    },
+    "ordinary_witch": {
+      "status": "user_confirmed",
+      "applies_when": "实际角色为普通女巫",
+      "antidote_count": 1,
+      "poison_count": 1,
+      "cannot_self_save": true,
+      "max_potions_per_night": 1,
+      "wolf_knife_information_after_antidote_spent": false,
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-24"
+      }
+    },
+    "ordinary_and_mechanical_guard": {
+      "status": "user_confirmed",
+      "ordinary_guard": {
+        "self_guard_allowed": true,
+        "same_target_on_consecutive_nights_allowed": false,
+        "shield_blocks_wolf_knife": true,
+        "shield_blocks_poison": false
+      },
+      "mechanical_guard": {
+        "self_guard_allowed": true,
+        "same_target_on_consecutive_nights_allowed": false
+      },
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-24"
+      }
+    },
+    "same_target_settlement": {
+      "ordinary_guard_and_antidote_on_same_wolf_knife_target": {
+        "result": "milk_death",
+        "status": "user_confirmed",
+        "source": {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      },
+      "mechanical_guard_and_antidote_on_same_target": {
+        "result": "temporary_milk_death",
+        "status": "provisional_user_confirmation",
+        "source": {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      }
+    },
+    "mechanical_wolf": {
+      "learning": {
+        "uses": 1,
+        "night": "any_night_once; postponement_allowed",
+        "new_night_skill_available": "following_night",
+        "hunter_form_eligible_on_day_after_learning": true,
+        "hunter_shot_requires_departure": true
+      },
+      "can_self_destruct": false,
+      "seer_feedback_before_learning": "双爪狼",
+      "seer_feedback_after_learning": "模仿对象的底牌身份，不是机械狼底牌或机械形态名",
+      "receives_ordinary_wolf_knife_when": "all ordinary wolves have departed",
+      "mechanical_witch": {
+        "poison_count": 1
+      },
+      "mechanical_guard": {
+        "source": {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_02.jpg"
+        },
+        "blocks_wolf_knife": true,
+        "blocks_poison": true,
+        "when_guarded_seat_is_witch_poison_target": "witch dies from reflection; original target does not die from that poison",
+        "poison_interaction": "see same_target_settlement for same-target antidote interaction"
+      },
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-24",
+        "also": {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_02.jpg"
+        }
+      }
+    },
+    "victory_condition": {
+      "type": "屠边",
+      "wolf_win_when": "神职边或平民边任一边清空",
+      "good_win_when": "狼人身份牌全部出局",
+      "settle_immediately_after_elimination": true,
+      "terminal_night_has_no_following_daytime": true,
+      "same_night_both_conditions": "werewolf_wins_wolf_knife_first",
+      "status": "user_confirmed",
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-24"
+      }
+    },
+    "winner_entry": "记录明确播报或正式结算的胜方；无法确认结算时保留 unknown。"
+  },
+  "boards": {
+    "mixed_blood": {
+      "name": "预女猎白混",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "预言家",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "猎人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "白神",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good",
+          "exile_rule": "reveal_identity_then_depart_immediately"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 3,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "混血儿",
+          "count": 1,
+          "elimination_side": "civilian",
+          "victory_faction": "follows_model",
+          "wolf_team_member": false,
+          "seer_feedback": "good",
+          "wolf_attack_targetable": true
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 4,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_04.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "mixed_blood": {
+          "physical_identity_unchanged": true,
+          "elimination_side": "civilian",
+          "victory_faction": "follows_selected_model",
+          "seer_feedback": "good",
+          "wolf_attack_can_kill": true,
+          "inherits_wolf_knife": false
+        },
+        "white_god_exile": "reveal identity, then leave immediately"
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_04.jpg",
+          "s21_revision_status": "unknown",
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "mechanical_wolf_seer": {
+      "name": "机械狼通灵师",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "通灵师",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "猎人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "守卫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 4,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 3,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "机械狼",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [
+        "守卫",
+        "狼人",
+        "女巫",
+        "猎人",
+        "机械狼",
+        "通灵师"
+      ],
+      "wake_order_status": "confirmed_role_order",
+      "slot_order_is_wake_order": true,
+      "complete_judge_script": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_02.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "learning_once": true,
+        "learning_postponement_allowed": true,
+        "new_night_skill_from_following_night": true,
+        "hunter_form_eligible_on_day_after_learning": true,
+        "hunter_shot_requires_departure": true,
+        "self_destruct": false,
+        "ordinary_wolf_knife_takeover": "after all ordinary wolves have departed",
+        "mechanical_witch_poison_count": 1,
+        "mechanical_guard": {
+          "self_guard_allowed": true,
+          "same_target_on_consecutive_nights_allowed": false,
+          "blocks_wolf_knife": true,
+          "blocks_poison": true,
+          "when_guarded_seat_is_witch_poison_target": "witch dies from reflection; original target does not die from that poison",
+          "poison_shield_interaction_source": {
+            "type": "official_cached_image",
+            "path": "data/raw/rules/weibo_5228857471013279/rule_02.jpg"
+          }
+        }
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_02.jpg",
+          "s21_revision_status": "unknown",
+          "title_variant": "机械狼通灵师修改 occurs once as a title/part metadata variant on BV1roX7BQEau; not a separate board type",
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "guile_realm": {
+      "name": "诡术之境",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "预言家",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "魔术师",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "定序王子",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 4,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 3,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "诡术师",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_07.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "guile_exchange": {
+          "target_can_be_selected_once_per_game": true,
+          "pass_allowed": true,
+          "consecutive_pass_allowed": false,
+          "daytime_effect": "pending_official_semantics"
+        },
+        "same_pair_with_magician": {
+          "both_skills_invalid": true,
+          "retain_both_original_pairs": true,
+          "use_consumption": "pending"
+        },
+        "sequential_prince": {
+          "after_exile_vote": true,
+          "extra_speech_before_revote": true,
+          "max_uses_per_game": 1,
+          "keep_both_ballots": true
+        }
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "S21-specific official image verified",
+          "source": {
+            "id": "S21-P0105",
+            "weibo_post_id": "5277841865572693",
+            "published_at_local": "2026-03-18 15:30:21 +0800",
+            "image_path": "data/raw/weibo/2026-02-24_2026-05-26_京城大师赛_UID7525583841/images/2026-03/2026-03-18_15-30-21_S21_第03期_阵容公告__WB5277841865572693_图13.jpg",
+            "sha256": "ef303b68692bf7a6b59e78f464297424bef8421ecc1615f1ef436fea927992d0",
+            "visual_inspection": "view_image"
+          },
+          "player_count": 12,
+          "factions": {
+            "神职阵营": [
+              "预言家",
+              "女巫",
+              "魔术师",
+              "定序王子"
+            ],
+            "平民阵营": [
+              "平民×4"
+            ],
+            "狼人阵营": [
+              "诡术师",
+              "狼人×3"
+            ]
+          },
+          "rules_from_s21_image": {
+            "魔术师与诡术师交互": "魔术师和诡术师交换的号码完全相同时，则两者均无效。",
+            "定序王子": "放逐投票后定序王子可以翻牌发动技能，重新组织投票。在重新投票前，定序王子可以进行一次额外发言，整局最多使用一次。",
+            "诡术师": "每晚可以交换两个玩家的号码，每个玩家只能交换一次，可以选择不发动技能，不能连续空换。被诡术师交换的玩家白天出局信息置换。"
+          },
+          "additional_same_season_caption_claims_unverified": {
+            "prince_activation": "S21 platform AI caption says this applies to exile voting, not sheriff election; after initial vote/tie result, Prince may act before PK speeches; cannot act after PK speech/re-vote.",
+            "prince_speech_duration": "A 2026-03-20 SRT says 3 minutes; the official image gives no duration.",
+            "trickster_night_order": "S21 SRT says Trickster acts before meeting the wolf teammates; no night sequence is printed in the official image.",
+            "magician_base_skill": "S21 captions broadly say the Magician changes night skill resolution, but full ability wording is not in S21-P0105."
+          },
+          "unknowns": [
+            "full night wake order",
+            "complete Magician base skill wording",
+            "win condition",
+            "whether Prince's extra speech has a fixed duration",
+            "audio verification of SRT-only tie/PK sequence"
+          ],
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "treasure_master": {
+      "name": "盗宝大师",
+      "seat_count": 12,
+      "setup_model": "dynamic_role_pool",
+      "role_composition": {
+        "mode": "dynamic",
+        "guaranteed_roles": [
+          {
+            "physical_identity": "盗宝大师",
+            "count": 1,
+            "elimination_side": "not_specified_by_official_card",
+            "victory_faction": "werewolf"
+          }
+        ],
+        "dealt_seats": 12,
+        "unused_cards": 3
+      },
+      "role_pool": [
+        {
+          "physical_identity": "通灵师",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "毒师",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "猎人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "摄梦人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "蒙面人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 5,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼王",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 3,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "盗宝大师",
+          "count": 1,
+          "elimination_side": "not_specified_by_official_card",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_01.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-25",
+          "statement": "盗宝大师始终属于狼人阵营；除盗宝大师以外的初始狼队成员全部出局后，由盗宝大师接替普通狼刀。"
+        }
+      ],
+      "board_rules": {
+        "victory_faction": "always_werewolf",
+        "alignment_changes_when_switching_skill": false,
+        "choose_one_unused_card_each_night": true,
+        "same_card_on_consecutive_nights_allowed": false,
+        "first_night_wolf_attack": "forbidden",
+        "ordinary_wolf_knife_takeover": {
+          "actor_identity": "盗宝大师",
+          "after_all_identity_roles_departed": [
+            "狼人",
+            "狼王"
+          ]
+        },
+        "poisoner": {
+          "uses": 1,
+          "poisoned_hunter_or_wolf_king_can_use_death_skill": false
+        },
+        "masked_person": {
+          "night_hit_by_wolf_knife_poison_or_dream": "delayed_death_after_own_next_day_speech"
+        },
+        "masked_wolf_exile_exception": {
+          "requires_last_wolf": true,
+          "requires_treasure_master_to_choose_masked_person": true,
+          "avoids_current_exile": true,
+          "extra_night_attack": true
+        }
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_01.jpg",
+          "s21_revision_status": "unknown",
+          "printed_faction_rows_sum": 14,
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "masquerade": {
+      "name": "假面舞会",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "预言家",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "舞者",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "白痴",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 4,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 3,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "假面",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_03.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "dance": {
+          "available_from_night": 2,
+          "players_per_dance": 3,
+          "player_can_dance_once_per_game": true,
+          "same_faction": "no_extra_death",
+          "mixed_factions": "minority_side_departs"
+        },
+        "dancer_in_dance": {
+          "all_three_immune_to_wolf_knife": true
+        },
+        "poison_immunity": [
+          "舞者",
+          "假面"
+        ],
+        "mask": {
+          "changes_dance_faction_for_current_night_only": true,
+          "changes_physical_identity": false
+        },
+        "masquerade_actions": {
+          "verify_and_mask_have_separate_target_histories": true,
+          "same_target_on_consecutive_nights_allowed": false
+        },
+        "first_night_mask_actions": "pending_judge_prompt"
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_03.jpg",
+          "s21_revision_status": "unknown",
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "neighbor_puppet": {
+      "name": "唯邻是从",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "预言家",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "猎人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "守卫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 5,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼王",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 2,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_06.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "puppet_is_overlay_not_role": true,
+        "base_identity_unchanged": true,
+        "selection": "on_first_night_once, wolves select one seat adjacent to any wolf",
+        "seat_1_and_12_are_adjacent": true,
+        "reselect_policy": "not_allowed",
+        "effects": {
+          "预言家": "reverse_check_feedback",
+          "女巫": "skill_disabled",
+          "猎人": "skill_disabled",
+          "守卫": "skill_disabled"
+        },
+        "puppet_hunter_eligibility": "record separately; not determined by poison status alone"
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_06.jpg",
+          "s21_revision_status": "unknown",
+          "role_count_conflict": "Printed faction rows sum to 13; S21 AI captions also list 13. Do not normalize to 12.",
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "all_in": {
+      "name": "孤注一掷",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {
+          "physical_identity": "预言家",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "女巫",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "猎人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "摄梦人",
+          "count": 1,
+          "elimination_side": "god",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "平民",
+          "count": 4,
+          "elimination_side": "civilian",
+          "victory_faction": "good"
+        },
+        {
+          "physical_identity": "狼人",
+          "count": 3,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        },
+        {
+          "physical_identity": "典狱长",
+          "count": 1,
+          "elimination_side": "werewolf",
+          "victory_faction": "werewolf"
+        }
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "sources": [
+        {
+          "type": "official_cached_image",
+          "path": "data/raw/rules/weibo_5228857471013279/rule_05.jpg"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-24"
+        }
+      ],
+      "board_rules": {
+        "trade": {
+          "available_from_night": 2,
+          "players_per_trade": 2,
+          "player_can_trade_once_per_game": true,
+          "participants_know_partner": true,
+          "participants_do_not_know_partner_identity": true
+        },
+        "decisions": [
+          "trade",
+          "betray",
+          "trade_betray",
+          "betray_trade"
+        ],
+        "resolution": {
+          "trade_trade": "both immune to night damage",
+          "trade_betray": "participant choosing trade departs",
+          "betray_betray": "each becomes the other's skill target; participants do not know target was changed",
+          "warden_in_pair": "same choice makes warden depart; different choice makes the other participant depart"
+        },
+        "warden_wolf_join_timing": "pending_first_night_prompt",
+        "decision_encoding": {
+          "slot": "trade_decisions",
+          "actions": {
+            "trade": "both trade",
+            "betray": "both betray",
+            "trade_betray": "first target trades, second target betrays",
+            "betray_trade": "first target betrays, second target trades"
+          },
+          "target_order": "exactly matches warden_trade_targets.targets"
+        }
+      },
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_05.jpg",
+          "s21_revision_status": "unknown",
+          "source-unverified": "unknown"
+        }
+      ]
+    },
+    "wolf_king_guard": {
+      "name": "狼王守卫",
+      "evidence_records": [
+        {
+          "season": "S21",
+          "formal_status": "unknown",
+          "s21_rules_source": null,
+          "known_caption_claim": "A 2026-03-10 caption says the board changed to 狼王守卫 and mentions a Wolf King gun skill, but the transcript is garbled.",
+          "source-unverified": "unknown"
+        }
+      ]
+    }
+  },
+  "pending_rules": [
+    {
+      "board_code": "treasure_master",
+      "rule": "盗宝大师本体在屠边判定中归神边还是民边；个人胜利阵营始终为狼人，不从当夜所选技能牌或余牌决定。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "guile_realm",
+      "rule": "魔术师完整效果；诡术师白天出局信息置换对象与时点；同号码对导致无效时是否消耗全局次数。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "masquerade",
+      "rule": "首夜假面验证/赐面具是否有实际操作及无效目标的法官反馈。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "treasure_master",
+      "rule": "盗宝所选技能与实际在场同技能角色的叫醒/执行相对位置。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "all_in",
+      "rule": "典狱长首夜是否加入狼队行动；交易目标映射范围及其与当夜其他技能/伤害的交互。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "all",
+      "rule": "完整法官夜序与结算优先级；本登记册不构成完整法官夜序。",
+      "status": "pending",
+      "infer": false
+    },
+    {
+      "board_code": "all",
+      "rule": "终局拍刀等不完整夜晚的独立事件表示；不得伪装成猎人开枪或虚构后续整轮。",
+      "status": "pending_schema_extension",
+      "infer": false
+    }
+  ],
+  "role_profiles": {
+    "qingqiu_night": {
+      "预言家": 1,
+      "女巫": 1,
+      "守卫": 1,
+      "白泽": 1,
+      "狼人": 3,
+      "九尾狐": 1,
+      "平民": 4
+    },
+    "magic_duel": {
+      "预言家": 1,
+      "女巫": 1,
+      "猎人": 1,
+      "魔术师": 1,
+      "狼人": 3,
+      "狼术师": 1,
+      "平民": 4
+    },
+    "masquerade_role_group": {
+      "one_of": [
+        "白神",
+        "白痴"
+      ],
+      "count": 1
+    }
+  },
+  "confirmed_rule_handling": {
+    "masquerade_first_night_skills": "unavailable; preserve any observed pass/unknown and add no inferred action",
+    "last_god_hunter_terminal": "game_end_before_hunter_shot; do not create a post-terminal shot event"
+  },
+  "review_rules": {
+    "scope_note": "基础及同版型已确认规则跨季共用；观察案例仍受各条目状态、证据和单局作用域约束。来源赛季不等于规则仅适用该季。",
+    "source_context": {
+      "status": "ai_review_reference_pending_human_acceptance",
+      "reference_rulebook": "docs/12_S22正式版型规则与录入流程.md",
+      "reference_sha256": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+      "scope": {
+        "regular_games": 75,
+        "showmatches_included": false
+      },
+      "source_label_note": "S23假面舞会画面采用白神字样；计数检查可与S22白痴槽对应，但不据字样推定技能边界。",
+      "formal_database_writes": false,
+      "season": "S23"
+    },
+    "current_reference_rulebook": "docs/archive/S22/正式版型规则与录入流程.md",
+    "rules": [
+      {
+        "id": "fox_hunt_threshold",
+        "statement": "已标记存活人数加九尾狐自身严格大于未标记存活人数，猎杀时刻才成功；结算出局的是未标记方。",
+        "status": "ai_crosschecked_in_game",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4545390,
+            "end_ms": 4575340,
+            "quote": "12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后"
+          },
+          {
+            "source_path": "data/seasons/S23/第04周_正赛第03期/2026-09-24/2026-09-24_S23_第04周_正赛第03期_第02局_青丘夜影__BV1saaT6jEyK_P01_CID42171630894.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0d544437c0b5c89a0299fd06a7fa14421dff9fe8dd04b8c4ea4a307085262b3c",
+            "start_ms": 4054940,
+            "end_ms": 4076650,
+            "quote": "平民为好人身份\n在第三天白天\n9号玩家九尾狐选择发动技能\n此时的结算为2号玩家身上有标记\n且3号玩家身上有标记\n加上九尾狐\n9号玩家场上一共是三个人\n然后我们剩余没有标记的玩家一共是四个人\n所以没有严格大于九尾狐技能发动失败\n发动失败后"
+          }
+        ]
+      },
+      {
+        "id": "fox_poison_immunity",
+        "statement": "九尾狐免疫普通女巫毒药，原用毒动作仍保存，免疫结算另记。",
+        "status": "ai_crosschecked_in_game",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第02局_青丘夜影__BV1nJer63EDh_P01_CID41978954294.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "start_ms": 3809990,
+            "end_ms": 3822930,
+            "quote": "当夜九尾狐开刀击杀6号平民女巫\n毒杀11号九尾狐\n由于特殊结算规则\n我们九尾狐免疫毒药\n所以当夜为6号平民单死\n在第四天白天"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 4028740,
+            "end_ms": 4045620,
+            "quote": "4号六号十号首页守卫守护3号狼人\n当夜九尾对9号玩家女巫进行标记\n狼人击杀9号女巫毒杀8号九尾毒杀失败\n当夜9号玩家被刀出局"
+          }
+        ]
+      },
+      {
+        "id": "fox_sheriff_vote_mark",
+        "statement": "本局九尾狐8号的警徽票为5号带来额外标记；不得将5号标记错补为夜间标记。是否所有投票类型都触发，仍不从这一个场次扩展。",
+        "status": "ai_crosschecked_in_game",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 899460,
+            "end_ms": 910290,
+            "quote": "带了一刀九对\n因为这板子这个在警下九尾能投一票\n可以出第一个标记\n所以狼在警下可以伪造成这个对"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 2345270,
+            "end_ms": 2353100,
+            "quote": "你一下是这意思吗\n比投了两票五\n他多一个标记\n然后他外置位杀嗯\n这还有啥呀"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 2482740,
+            "end_ms": 2489420,
+            "quote": "你肯定标记的五\n因为你投了五晚上\n你标记了别人\n那你肯定是清了五"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 4110260,
+            "end_ms": 4126029,
+            "quote": "狼人阵营屠神获胜\n这局游戏场上到最后身上有标记的是2号五号\n10号\n还有8号九尾啊\n这个是A阵营\n然后猎杀时刻的时候是B阵营的玩家出局\n而不是身上有标记的玩家出局啊\n这个是跟大家来说明一下的好了"
+          }
+        ]
+      },
+      {
+        "id": "baize_inheritance",
+        "statement": "9月29日白泽1号夜间出局后传承技能给4号平民；9月11日白泽6号被猎杀时刻带走时无法发动技能。具体触发边界以当局法官为准。",
+        "status": "observed_cases_only",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 4081850,
+            "end_ms": 4089530,
+            "quote": "预言家验证5号玩家自己是好人身份\n白泽出局之后\n传承技能于4号平民\n第三天白天"
+          },
+          {
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第02局_青丘夜影__BV1g1YU6kERd_P01_CID41835236131.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "start_ms": 4562720,
+            "end_ms": 4578740,
+            "quote": "所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀"
+          }
+        ]
+      },
+      {
+        "id": "magic_exchange_resolution",
+        "statement": "魔幻对决的原始座位底牌与交换目标、实际命中分开；10月9日魔术师交换2/5后，女巫用毒目标5实际命中2。",
+        "status": "ai_crosschecked_in_game",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+            "start_ms": 5562580,
+            "end_ms": 5582250,
+            "quote": "7号预言家被抗推出局\n入夜魔术师交换2号狼人及5号女巫\n当夜狼人击杀6号魔术师\n女巫毒杀5号女巫\n实际毒杀2号狼人\n当夜为2号六号双死"
+          }
+        ]
+      },
+      {
+        "id": "sorcerer_self_destruct",
+        "statement": "10月16日当局口播明确狼术师可以自爆。",
+        "status": "ai_crosschecked_in_game",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第02局_魔幻对决__BV17QJh6qEid_P01_CID42799531683.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "240434fb2bf0d97ed664ab4ac90bb70c7f7e88867dd16184cbaa82cef6c19918",
+            "start_ms": 4714050,
+            "end_ms": 4722870,
+            "quote": "哈哈呃\n10号是狼术士是可以自爆的\n可以自爆的鬼畜是都见面狼就可以自爆\n对好给各位大宝老师们做本角色的复盘"
+          }
+        ]
+      },
+      {
+        "id": "mixed_blood_vote_control_user_confirmed",
+        "statement": "预女猎白混按个人胜利阵营计放逐票（包括狼混），狼人阵营有效票数>=好人阵营票数构成绑票；警长额外半票计入其阵营，等人数且好人持徽时不能忽略半票。条件达成与实际获胜宣布分开记录。",
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_日夜待核与绑票.txt",
+        "source_sha256": "218f38f74da25ac228c3f6df5d63d8013c4086fbfbc2b20dc6ee375682d31a8c"
+      },
+      {
+        "id": "treasure_first_night_attack_forbidden_user_confirmed",
+        "statement": "盗宝大师首夜狼队禁刀，wolf_attack记forbidden，无刀口目标；不等同主动空刀，也不据禁刀排除摄梦或其他独立技能造成的死亡。",
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_逐日核对.txt",
+        "source_sha256": "61446a8212150f3debeb624c40522be4d1fe05f20dc5cd4acb400b5ca67d9c59"
+      },
+      {
+        "id": "masquerade_first_night_skills_unavailable_user_confirmed",
+        "statement": "S23假面舞会中假面验证、扣面具和舞者共舞均不能在首夜发动；从第一天白天结束后的夜晚起发动。",
+        "scope": "S23 masquerade",
+        "evidence": [
+          {
+            "kind": "user_confirmation",
+            "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+            "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+            "quote": "假面和舞者都是第一天夜晚发动技能阿，首夜不能发动技能"
+          }
+        ],
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+        "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff"
+      },
+      {
+        "id": "last_god_hunter_terminal_user_confirmed",
+        "statement": "猎人作为最后存活神职出局时先判对局结束，没有后续开枪窗口；不得记为主动不开枪。",
+        "scope": "S23 terminal settlement",
+        "evidence": [
+          {
+            "kind": "user_confirmation",
+            "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+            "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+            "quote": "猎人作为出局的最后一神开不出枪游戏就结束了"
+          }
+        ],
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+        "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff"
+      },
+      {
+        "id": "b75_dq_invalidates_wolf_attack_user_confirmed",
+        "statement": "2026-10-13第二局：最后一狼8号当夜DQ，狼刀被判失效，导致平安夜；此为该局结算依据。",
+        "scope": "BV1zmpB6PEcF round3",
+        "evidence": [
+          {
+            "kind": "user_confirmation",
+            "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+            "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+            "quote": "1013因为8号最后一狼晚上被DQ出局，所以狼刀被判定失效 导致平安夜"
+          }
+        ],
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+        "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff"
+      },
+      {
+        "id": "terminal_seer_explanation_user_accepted",
+        "statement": "终局查验未记录可能因为此前技能或狼刀结算已结束对局；仅保留说明，不补造目标，也不据此确定从未查验。",
+        "scope": "S23 unrecorded terminal checks",
+        "evidence": [
+          {
+            "kind": "user_confirmation",
+            "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+            "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff",
+            "quote": "终局查验可能因为前面的技能判定和狼刀判定导致游戏结束了就没有后面的查验环节了，不过不影响 说明就好了"
+          }
+        ],
+        "status": "user_confirmed",
+        "confirmed_on": "2026-10-26",
+        "source_path": "data/extractions/S23/用户确认_20261026_假面夜序与终局结算.txt",
+        "source_sha256": "0897a074747257e10472b3e02e0b9921cc4a50bf5c15dac2bbc5febeb41109ff"
+      }
+    ]
+  },
+  "scoring": {
+    "config_id": "scoring_rules.user_reported.v1",
+    "schema_version": 1,
+    "collected_at": "2026-10-20",
+    "source": "user_reported",
+    "verification_status": "user_reported",
+    "official_verified": false,
+    "applicable_seasons": "shared; explicit documented exceptions override locally",
+    "notes": [
+      "本配置记录用户报告规则，不是官方规则文本。",
+      "基础计分与赛制共用；有明确差异时记录局部例外。用户报告来源保持不变，未经官源确认不标记 official_verified。",
+      "规则未决、身份/胜负不明时不自动算分，记录 unknown/null 并留存证据。"
+    ],
+    "phase_rules": {
+      "season_opening_week_showmatch": {
+        "phase": "showmatch",
+        "description": "每季第一周为表演赛",
+        "source": "user_reported",
+        "verification_status": "user_reported",
+        "official_verified": false
+      },
+      "reported_start_time": {
+        "local_time": "19:00",
+        "timezone": "Asia/Shanghai",
+        "source": "user_reported",
+        "verification_status": "user_reported",
+        "exceptions": null
+      },
+      "extra_game_4_trigger": {
+        "trigger_condition": "前三局在22:30前结束",
+        "cutoff_local_time": "22:30",
+        "trigger_time_definition": null,
+        "certainty": "conditional_trigger_only",
+        "game_4_guaranteed": false,
+        "actual_game_exists_must_be_verified_from_recording_or_official_schedule": true,
+        "source": "user_reported",
+        "verification_status": "user_reported"
+      },
+      "regular_game_4": {
+        "phase": "regular",
+        "game_number": 4,
+        "scoring_eligible": true,
+        "source": "user_reported",
+        "verification_status": "user_reported"
+      },
+      "showmatch_scoring": {
+        "phase": "showmatch",
+        "scoring_eligible": false,
+        "included_in_analysis": null,
+        "description": "不计赛季正式积分；比赛和结果仍可归档及作独立分析",
+        "source": "user_reported",
+        "verification_status": "user_reported"
+      },
+      "finals_week_reset_and_champion": {
+        "phase": "finals_week",
+        "reset_score_at_week_start": true,
+        "champion_rule": "决赛周计分局总分最高者为季冠军",
+        "tie_break_rule": null,
+        "source": "user_reported",
+        "verification_status": "user_reported"
+      },
+      "finals_week_extra_game_4": {
+        "phase": "finals_week",
+        "game_number": 4,
+        "is_extra_game": true,
+        "scoring_eligible": false,
+        "record_game_and_result_if_played": true,
+        "description": "不计分不等于对局不存在，也不等于不归档输赢",
+        "source": "user_reported",
+        "verification_status": "user_reported"
+      }
+    },
+    "scoring_rules": {
+      "unit": "per_player_per_scoring_eligible_game",
+      "interpretation": "暂按该选手最终计分身份/所属方胜负确定基础分；第三方、混血或特殊结算未核实前不自动套用。",
+      "points": {
+        "werewolf_side_win": 1.5,
+        "good_side_win": 1,
+        "good_or_werewolf_side_loss": -1
+      },
+      "draw_points": null,
+      "third_party_or_mixed_faction_points": null,
+      "bonus_points": null,
+      "penalties": null,
+      "base_points_field_independent": true,
+      "adjustments_field_independent": true,
+      "official_points_field_independent": true,
+      "official_points_requires_official_score_source": true,
+      "source": "user_reported",
+      "verification_status": "user_reported",
+      "official_verified": false
+    },
+    "required_record_separation": {
+      "event_phase": true,
+      "game_number": true,
+      "is_extra_game": true,
+      "scoring_eligible": true,
+      "included_in_analysis": true,
+      "base_points": true,
+      "adjustments": true,
+      "official_points": true
+    },
+    "unresolved_rules": [
+      "平局/流局计分",
+      "混血/第三方阵营及特殊胜负条件",
+      "奖励、扣罚、MVP等以及其与基础分的关系",
+      "有证据的局部规则变更",
+      "19:00开始时间的例外",
+      "22:30前结束的判定事件、时区及暂停/延迟处理",
+      "决赛周最高分并列时的冠军判定",
+      "对局阶段、加赛性质、实际是否开局及计分资格"
+    ]
+  }
 }

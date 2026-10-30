@@ -13,7 +13,7 @@ import batch_s22 as batch
 from game_records import template
 
 OUTPUT = batch.ROOT / 'data/exports/S22_最终复核_离线分享版.html'
-MANIFEST = batch.ROOT / 'data/reports/S22_离线分享版验收.json'
+MANIFEST = batch.ROOT / 'data/reports/S22/S22_离线分享版验收.json'
 FORMAT = 's22-offline-review-v1'
 RULE_DOCS = ('docs/archive/S22/正式版型规则与录入流程.md', 'docs/archive/S22/版型规则与夜间顺序.md')
 
@@ -63,14 +63,14 @@ def attach_original_questions(decisions, questions):
 
 def build():
     state = batch.load_state()
-    voting_review_path = batch.ROOT / 'data/reports/S22_投票逐局核对.json'
+    voting_review_path = batch.ROOT / 'data/reports/S22/S22_投票逐局核对.json'
     voting_review = batch.read_json(voting_review_path) if voting_review_path.is_file() else {'items': [], 'dates': []}
     voting_reviews = {item['bvid']: item for item in voting_review['items']}
-    inference = batch.read_json(batch.ROOT / 'data/reports/S22_疑点推理复核.json')
+    inference = batch.read_json(batch.ROOT / 'data/reports/S22/S22_疑点推理复核.json')
     assert inference['state'] == 'complete'
     rules, rule_hashes = embedded_rule_documents()
     findings = {g['bvid']: g for g in inference['items']}
-    alignment_path = batch.ROOT / 'data/reports/S22_正式规则对齐记录.json'
+    alignment_path = batch.ROOT / 'data/reports/S22/S22_正式规则对齐记录.json'
     alignment = batch.read_json(alignment_path) if alignment_path.is_file() else {'items': []}
     aligned = {g['bvid']: g for g in alignment['items'] if g.get('state') == 'applied'}
     index, blobs, templates, frames, hashes = [], {}, {}, set(), {}

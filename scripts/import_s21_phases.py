@@ -12,8 +12,8 @@ from psycopg.types.json import Jsonb
 import s21_phase_review as phase
 
 METHOD = 's21_day_night_review_v1'
-REPORT = Path('data/reports/S21_白天夜间核实进度.json')
-GAPS_REPORT = Path('data/reports/S21_白天夜间待核项.json')
+REPORT = Path('data/reports/S21/S21_白天夜间核实进度.json')
+GAPS_REPORT = Path('data/reports/S21/S21_白天夜间待核项.json')
 AUDIT = Path('data/extractions/S21/phase_primary_audit.json')
 
 

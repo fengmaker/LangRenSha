@@ -49,7 +49,7 @@ def audit():
               "scope": dict(scopes), "summary": progress_summary(state, progress),
               "review_url": "http://127.0.0.1:8766/", "errors": errors,
               "note": "只检查转写来源、补充版本、毫秒时间、续接进度与复核入口；不代替用户确认疑点。"}
-    batch.atomic_json(batch.ROOT / "data/reports/S22_转写补充验收.json", report)
+    batch.atomic_json(batch.ROOT / "data/reports/S22/S22_转写补充验收.json", report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0 if report["valid"] else 1
 

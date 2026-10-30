@@ -84,7 +84,7 @@ def verify():
                          "raw checkpoint normalization exactly matches transcript",
                          "JSON/SRT/reading exports match their originals", "review catalog links completed exports"],
               "accuracy_verified": False, "game_facts_created": False, "entries": checks}
-    save_json(ROOT / "data/reports/S22_全文补转写验收.json", report)
+    save_json(ROOT / "data/reports/S22/S22_全文补转写验收.json", report)
     print(json.dumps({key: value for key, value in report.items() if key != "entries"}, ensure_ascii=False), flush=True)
 
 

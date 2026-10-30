@@ -17,8 +17,8 @@ for import_root in (ROOT, ROOT / "scripts"):
 DEFAULT_MANUAL = ROOT / "S23_manual_bluff_review_a9b3b788d571.json"
 ASSET_PATH = ROOT / "website/assets/bluffs/S23.json"
 USER_ARCHIVE_DIR = ROOT / "data/extractions/S23/bluff_review"
-REPORT_JSON = ROOT / "data/reports/S23_悍跳人工复核应用_20261029.json"
-REPORT_MD = ROOT / "data/reports/S23_悍跳人工复核应用_20261029.md"
+REPORT_JSON = ROOT / "data/reports/S23/S23_悍跳人工复核应用_20261029.json"
+REPORT_MD = ROOT / "data/reports/S23/S23_悍跳人工复核应用_20261029.md"
 
 
 class ManualReviewError(ValueError):
@@ -308,6 +308,61 @@ def _count_summary(payload: dict, games: list[dict], manual_reviewed_games: int)
     return stats
 
 
+def _apply_success_feedback(game: dict, reviewed_game: dict,
+                            feedback_records: dict[str, dict]) -> bool:
+    """Apply only explicit current success feedback; leave all other reviews intact."""
+    from website.api import bluffs
+
+    items = {item["seat"]: item for item in bluffs.review_items([game], {"games": [reviewed_game]})}
+    assessments = {row["seat"]: row for row in reviewed_game.get("assessments", [])
+                   if isinstance(row, dict) and type(row.get("seat")) is int}
+    bvid = (game.get("source") or {}).get("bvid")
+    candidate_feedback = {
+        review_id for review_id, feedback in feedback_records.items()
+        if isinstance(review_id, str) and review_id.startswith(f"{bvid}:")
+        and isinstance(feedback, dict) and "manual_success" in feedback
+    }
+    available_feedback = {f"{bvid}:{seat}" for seat in assessments}
+    if candidate_feedback - available_feedback:
+        raise ManualReviewError(f"{sorted(candidate_feedback - available_feedback)[0]} 的悍跳记录已不在当前复核范围")
+    updated = False
+    for seat, assessment in assessments.items():
+        feedback = feedback_records.get(f"{bvid}:{seat}")
+        if not isinstance(feedback, dict) or "manual_success" not in feedback:
+            continue
+        if feedback.get("decision") not in {None, "", "comment"}:
+            raise ManualReviewError(f"{bvid}:{seat} 含有独立悍跳意见，请先用悍跳推断构建器应用")
+        item = items.get(seat)
+        if (item is None or item["decision"] != "yes" or item.get("claim_needs_review")
+                or feedback.get("claim_fingerprint") != item.get("claim_fingerprint")
+                or feedback.get("success_fingerprint") != item.get("success_fingerprint")
+                or (feedback["manual_success"] is not None
+                    and type(feedback["manual_success"]) is not bool)):
+            raise ManualReviewError(f"{bvid}:{seat} 的成功反馈已过期，或当前悍跳结论待复核")
+
+        assessment["manual_success"] = feedback["manual_success"]
+        assessment["verification_status"] = "user_confirmed"
+        assessment["success_fingerprint"] = item["success_fingerprint"]
+        note = feedback.get("notes")
+        if isinstance(note, str) and note.strip():
+            from scripts.build_s23_bluff_publication import _public_text
+
+            public_note = _public_text(note)
+            old_note = assessment.get("decision_note", "")
+            assessment["decision_note"] = (f"{old_note}；用户成功复核：{public_note}" if old_note
+                                           else f"用户成功复核：{public_note}")
+            assessment["manual_note"] = public_note
+        if feedback["manual_success"] is None:
+            questions = list(assessment.get("review_questions", []))
+            question = "用户将成功结果保留为待定"
+            if question not in questions:
+                questions.append(question)
+            assessment["review_questions"] = questions
+            assessment["requires_user_review"] = True
+        updated = True
+    return updated
+
+
 def _change_record(item: dict, change: str, **extra: Any) -> dict:
     return {
         "change": change,
@@ -325,7 +380,7 @@ def _change_record(item: dict, change: str, **extra: Any) -> dict:
 
 
 def build_payload(manual: dict, source: dict, games: list[dict], baseline: dict,
-                  source_sha256: str) -> tuple[dict, dict]:
+                  source_sha256: str, feedback_records: dict[str, dict] | None = None) -> tuple[dict, dict]:
     """Convert explicit manual selections into the current S23 review payload.
 
     A row means an explicit bluff attempt; ``no_bluff`` means an explicit empty
@@ -354,6 +409,7 @@ def build_payload(manual: dict, source: dict, games: list[dict], baseline: dict,
     reviewed_games = 0
     no_bluff_games = 0
     selections_total = 0
+    feedback_games: set[str] = set()
 
     for bvid, source_row in source_by_bvid.items():
         manual_row = manual_by_bvid[bvid]
@@ -365,7 +421,11 @@ def build_payload(manual: dict, source: dict, games: list[dict], baseline: dict,
         if not filled:
             if existing is None:
                 raise ManualReviewError(f"{bvid}人工复核为空且旧payload无记录，无法保持原值")
-            result_games.append(deepcopy(existing))
+            existing = deepcopy(existing)
+            if _apply_success_feedback(game, existing, feedback_records or {}):
+                feedback_games.add(game_id)
+                changed_game_ids.add(game_id)
+            result_games.append(existing)
             continue
 
         reviewed_games += 1
@@ -386,6 +446,32 @@ def build_payload(manual: dict, source: dict, games: list[dict], baseline: dict,
         existing["assessments"] = _make_assessments(
             game, existing, selected, source_row["review_id"], source_sha256, game_note, source_row,
         )
+        old_assessments = {
+            row["seat"]: row for row in (baseline_by_id.get(game_id) or {}).get("assessments", [])
+            if isinstance(row, dict) and type(row.get("seat")) is int
+        }
+        for assessment in existing["assessments"]:
+            assessment["evidence_source_fingerprint"] = bluffs.evidence_source_fingerprint(
+                assessment.get("evidence", []))
+            assessment["claim_fingerprint"] = bluffs.claim_fingerprint(game, assessment)
+            old = old_assessments.get(assessment["seat"])
+            if ("manual_success" in assessment and old
+                    and old.get("verification_status") == "user_confirmed"
+                    and old.get("manual_success") == assessment["manual_success"]):
+                # A rebuild cannot invent the missing baseline for an old human
+                # result. Keep its original signature, including absence, so
+                # review_items can continue to suspend only that saved result.
+                if isinstance(old.get("success_fingerprint"), str):
+                    assessment["success_fingerprint"] = old["success_fingerprint"]
+                else:
+                    assessment.pop("success_fingerprint", None)
+            else:
+                assessment["success_fingerprint"] = bluffs.success_fingerprint(
+                    game, assessment["seat"], bluffs.assessment_success_day(assessment),
+                    result_review=existing.get("result_review"),
+                )
+        if _apply_success_feedback(game, existing, feedback_records or {}):
+            feedback_games.add(game_id)
         result_games.append(existing)
         changed_game_ids.add(game_id)
 
@@ -421,6 +507,7 @@ def build_payload(manual: dict, source: dict, games: list[dict], baseline: dict,
         "publication_written": False,
         "total_games": len(source_by_bvid),
         "manual_reviewed_games": reviewed_games,
+        "success_feedback_games": len(feedback_games),
         "no_bluff_games": no_bluff_games,
         "blank_games_preserved": len(source_by_bvid) - reviewed_games,
         "physical_wolf_appearances": physical_count,
@@ -540,7 +627,11 @@ def main(argv: list[str] | None = None) -> int:
     manual, raw_manual = _read_json_bytes(args.manual)
     source, _ = build_manual_bluff_review.build(season="S23")
     games, baseline = _read_active_s23()
-    payload, report = build_payload(manual, source, games, baseline, _sha256(raw_manual))
+    feedback_path = USER_ARCHIVE_DIR / "user_confirmed.json"
+    feedback = _read_json_bytes(feedback_path)[0].get("records", {}) if feedback_path.is_file() else {}
+    if not isinstance(feedback, dict):
+        raise ManualReviewError("已导入反馈records必须是对象")
+    payload, report = build_payload(manual, source, games, baseline, _sha256(raw_manual), feedback)
     if args.prepare:
         old_asset = ASSET_PATH.read_bytes() if ASSET_PATH.is_file() else _canonical(baseline) + b"\n"
         old_sha = _sha256(old_asset)

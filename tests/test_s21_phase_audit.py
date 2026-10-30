@@ -50,5 +50,5 @@ def test_invalid_spec_makes_the_audit_command_fail(tmp_path, monkeypatch):
     path.write_text('{}', encoding='utf-8')
     monkeypatch.setattr(sys, 'argv', ['audit_s21_phases.py'])
     assert phase_audit.main() == 1
-    report = json.loads((tmp_path / 'data/reports/S21_白天夜间结构与时序审计.json').read_text(encoding='utf-8'))
+    report = json.loads((tmp_path / 'data/reports/S21/S21_白天夜间结构与时序审计.json').read_text(encoding='utf-8'))
     assert 'validation_error' in report['items'][0]

@@ -75,6 +75,7 @@ class GameDetail(GameSummary):
     referee: str | None
     seats: list[dict[str, Any]]
     rounds: list[dict[str, Any]]
+    rules_state: dict[str, Any] = Field(default_factory=dict)
     presentation: dict[str, Any] = Field(default_factory=dict)
     terminal_observation: dict[str, Any] | None = None
     terminal_events: list[dict[str, Any]] | None = None
@@ -264,7 +265,7 @@ def _game_query(conn, release_id: str, *, season=None, phase=None, board=None, p
     total = conn.execute(f"SELECT count(*) AS total FROM games g WHERE {where}", values).fetchone()["total"]
     rows = conn.execute(
         "SELECT snapshot FROM games g WHERE " + where +
-        " ORDER BY g.event_date DESC, g.game_number NULLS LAST, g.id LIMIT %s OFFSET %s",
+        " ORDER BY g.event_date DESC, g.game_number DESC NULLS LAST, g.id LIMIT %s OFFSET %s",
         [*values, page_size, (page - 1) * page_size],
     ).fetchall()
     return [_summary(row["snapshot"]) for row in rows], total
@@ -413,7 +414,10 @@ def game_detail(game_id: str, conn=Depends(connection_dependency)):
     if not row:
         raise HTTPException(status_code=404, detail="Game not found")
     snapshot = _resolved_snapshot(row["snapshot"])
-    return {**snapshot, "presentation": build_game_presentation(snapshot)}
+    presentation = snapshot.get("presentation")
+    if not isinstance(presentation, dict) or not presentation:
+        presentation = build_game_presentation(snapshot)
+    return {**snapshot, "presentation": presentation}
 
 
 @app.get("/api/v1/photos/{season}/{filename}")
@@ -487,7 +491,7 @@ def player_detail(player_id: str,
                     if any(seat.get("person_id") == player_id for seat in snapshot.get("seats", []))]
     player_games.sort(key=lambda snapshot: (
         snapshot.get("game_number") is None,
-        snapshot.get("game_number") if snapshot.get("game_number") is not None else 0,
+        -snapshot["game_number"] if snapshot.get("game_number") is not None else 0,
         snapshot.get("id", ""),
     ))
     player_games.sort(key=lambda snapshot: snapshot.get("date", ""), reverse=True)

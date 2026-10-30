@@ -812,7 +812,7 @@ def export(
             "termination_reason": manifest.get("termination_reason"),
             "window_post_count": len(manifest.get("posts", [])),
             "archive_image_file_count": sum(1 for item in manifest.get("files", []) if item.get("kind") == "image"),
-            "upstream_collection_audit": "data/reports/微博_2026-02-24_2026-05-26_采集验收.json",
+            "upstream_collection_audit": "data/reports/acquisition/weibo/微博_2026-02-24_2026-05-26_采集验收.json",
         },
         "schedule": {
             "candidate_source": _project_ref(candidate_json, project_root),
@@ -939,7 +939,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--archive-dir", type=Path, default=DEFAULT_ARCHIVE_DIR)
-    parser.add_argument("--report", type=Path, default=Path("data/reports/S21_微博排班与照片来源验收.json"))
+    parser.add_argument("--report", type=Path, default=Path("data/reports/S21/S21_微博排班与照片来源验收.json"))
     parser.add_argument("--name-map", type=Path, default=DEFAULT_NAME_MAP)
     return parser
 

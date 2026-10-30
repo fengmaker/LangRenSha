@@ -16,8 +16,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PATCHSET_PATH = ROOT / "data/extractions/S22/S22_dot_audit_patches_20261028.json"
-REPORT_JSON = ROOT / "data/reports/S22_dot审计落地_20261028.json"
-REPORT_MD = ROOT / "data/reports/S22_dot审计落地_20261028.md"
+REPORT_JSON = ROOT / "data/reports/S22/S22_dot审计落地_20261028.json"
+REPORT_MD = ROOT / "data/reports/S22/S22_dot审计落地_20261028.md"
 _VALIDATED_SOURCE_STAMPS: set[tuple[Any, ...]] = set()
 
 
@@ -500,7 +500,7 @@ def build_report(*, root: Path = ROOT, verification: dict[str, Any] | None = Non
         "common_modified_files": ["scripts/s22_dot_audit.py", "scripts/batch_s22.py", "scripts/voting_records.py",
                                   "scripts/endgame_records.py", "data/extractions/S22/S22_dot_audit_patches_20261028.json",
                                   "tests/test_s22_dot_audit.py", "tests/test_endgame_records.py",
-                                  "data/reports/S22_dot审计落地_20261028.json", "data/reports/S22_dot审计落地_20261028.md"],
+                                  "data/reports/S22/S22_dot审计落地_20261028.json", "data/reports/S22/S22_dot审计落地_20261028.md"],
         "findings": findings,
     }
     md = ["# S22 dot 审计落地（2026-10-28）", "", "本次为AI语义审阅，不是人工审核；未进行真人原音回听。", "",
@@ -549,10 +549,10 @@ def build_report(*, root: Path = ROOT, verification: dict[str, Any] | None = Non
 
 def write_report(*, root: Path = ROOT, verification: dict[str, Any] | None = None) -> dict[str, Any]:
     report, markdown = build_report(root=root, verification=verification)
-    atomic_json(root / "data/reports/S22_dot审计落地_20261028.json", report)
-    (root / "data/reports/S22_dot审计落地_20261028.md").write_text(markdown, encoding="utf-8")
-    return {"json": str(root / "data/reports/S22_dot审计落地_20261028.json"),
-            "markdown": str(root / "data/reports/S22_dot审计落地_20261028.md"),
+    atomic_json(root / "data/reports/S22/S22_dot审计落地_20261028.json", report)
+    (root / "data/reports/S22/S22_dot审计落地_20261028.md").write_text(markdown, encoding="utf-8")
+    return {"json": str(root / "data/reports/S22/S22_dot审计落地_20261028.json"),
+            "markdown": str(root / "data/reports/S22/S22_dot审计落地_20261028.md"),
             "candidates": report["candidate_count"], "applied": report["applied_count"], "held": report["held_count"]}
 
 

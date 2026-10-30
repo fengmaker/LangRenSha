@@ -2,37 +2,371 @@
   "code": "mechanical_wolf_seer",
   "name": "机械狼通灵师",
   "seat_count": 12,
-  "role_counts": {"通灵师": 1, "女巫": 1, "猎人": 1, "守卫": 1, "机械狼": 1, "狼人": 3, "平民": 4},
-  "wake_order": ["守卫", "狼人", "女巫", "猎人", "机械狼", "通灵师"],
+  "role_counts": {
+    "通灵师": 1,
+    "女巫": 1,
+    "猎人": 1,
+    "守卫": 1,
+    "机械狼": 1,
+    "狼人": 3,
+    "平民": 4
+  },
+  "wake_order": [
+    "守卫",
+    "狼人",
+    "女巫",
+    "猎人",
+    "机械狼",
+    "通灵师"
+  ],
   "mechanical_forms": {
-    "机械双刀狼": {"learned_from": "狼人", "phase": "night", "actions": ["attack"], "requires_ordinary_wolves_eliminated": true, "skill_knife_ignores_guard_shield": true},
-    "机械通灵师": {"learned_from": "通灵师", "phase": "night", "actions": ["check"]},
-    "机械女巫": {"learned_from": "女巫", "phase": "night", "actions": ["poison"]},
-    "机械猎人": {"learned_from": "猎人", "phase": "day", "actions": ["shoot"]},
-    "机械守卫": {"learned_from": "守卫", "phase": "night", "actions": ["guard"]},
-    "机械平民": {"learned_from": "平民", "phase": null, "actions": []}
+    "机械双刀狼": {
+      "learned_from": "狼人",
+      "phase": "night",
+      "actions": [
+        "attack"
+      ],
+      "requires_ordinary_wolves_eliminated": true,
+      "skill_knife_ignores_guard_shield": true
+    },
+    "机械通灵师": {
+      "learned_from": "通灵师",
+      "phase": "night",
+      "actions": [
+        "check"
+      ]
+    },
+    "机械女巫": {
+      "learned_from": "女巫",
+      "phase": "night",
+      "actions": [
+        "poison"
+      ]
+    },
+    "机械猎人": {
+      "learned_from": "猎人",
+      "phase": "day",
+      "actions": [
+        "shoot"
+      ]
+    },
+    "机械守卫": {
+      "learned_from": "守卫",
+      "phase": "night",
+      "actions": [
+        "guard"
+      ]
+    },
+    "机械平民": {
+      "learned_from": "平民",
+      "phase": null,
+      "actions": []
+    }
   },
   "night_slots": [
-    {"code": "guard", "label": "守卫守护", "actor_role": "守卫", "actions": ["guard", "pass", "unavailable", "unknown"]},
-    {"code": "wolf_attack", "label": "狼队击杀", "actor_role": "狼队", "actions": ["attack", "pass", "unavailable", "unknown"]},
-    {"code": "witch_save", "label": "女巫解药", "actor_role": "女巫", "actions": ["save", "pass", "unavailable", "unknown"]},
-    {"code": "witch_poison", "label": "女巫毒药", "actor_role": "女巫", "actions": ["poison", "pass", "unavailable", "unknown"]},
-    {"code": "hunter_state", "label": "猎人技能", "actor_role": "猎人", "actions": ["can_shoot", "cannot_shoot", "unavailable", "unknown"]},
-    {"code": "mechanical_knife_status", "label": "机械狼带刀确认", "actor_role": "机械狼", "actions": ["carrying", "not_carrying", "unavailable", "unknown"]},
-    {"code": "mechanical_action", "label": "机械狼夜间技能", "actor_role": "机械狼", "actions": ["learn", "attack", "guard", "poison", "check", "pass", "unavailable", "unknown"]},
-    {"code": "seer_check", "label": "通灵师查验", "actor_role": "通灵师", "actions": ["check", "pass", "unavailable", "unknown"]}
+    {
+      "code": "guard",
+      "label": "守卫守护",
+      "actor_role": "守卫",
+      "actions": [
+        "guard",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "女巫解药",
+      "actor_role": "女巫",
+      "actions": [
+        "save",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "女巫毒药",
+      "actor_role": "女巫",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_state",
+      "label": "猎人技能",
+      "actor_role": "猎人",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "mechanical_knife_status",
+      "label": "机械狼带刀确认",
+      "actor_role": "机械狼",
+      "actions": [
+        "carrying",
+        "not_carrying",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "mechanical_action",
+      "label": "机械狼夜间技能",
+      "actor_role": "机械狼",
+      "actions": [
+        "learn",
+        "attack",
+        "guard",
+        "poison",
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "通灵师查验",
+      "actor_role": "通灵师",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
   ],
   "day_slots": [
-    {"code": "sheriff_candidates", "label": "上警名单", "actor_role": null, "actions": ["register", "continued", "unavailable", "unknown"]},
-    {"code": "sheriff_vote", "label": "警长投票", "actor_role": null, "actions": ["vote", "not_held", "unavailable", "unknown"]},
-    {"code": "sheriff_result", "label": "警长结果", "actor_role": null, "actions": ["elected", "deferred", "none", "unavailable", "unknown"]},
-    {"code": "night_deaths", "label": "夜间出局", "actor_role": null, "actions": ["die", "peaceful", "unknown"]},
-    {"code": "hunter_shot", "label": "猎人开枪", "actor_role": "猎人", "actions": ["shoot", "pass", "unavailable", "unknown"]},
-    {"code": "badge", "label": "警徽", "actor_role": null, "actions": ["transfer", "hold", "none", "unknown"]},
-    {"code": "speech_order", "label": "白天发言顺序", "actor_role": null, "actions": ["order", "not_held", "unknown"]},
-    {"code": "exile_vote", "label": "放逐投票", "actor_role": null, "actions": ["vote", "not_held", "unknown"]},
-    {"code": "exile_result", "label": "放逐结果", "actor_role": null, "actions": ["exile", "none", "unknown"]},
-    {"code": "self_destruct", "label": "狼人自爆", "actor_role": "狼人", "actions": ["self_destruct", "none", "unknown"]},
-    {"code": "mechanical_day_skill", "label": "机械狼白天技能", "actor_role": "机械狼", "actions": ["shoot", "pass", "unavailable", "unknown"]}
-  ]
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_shot",
+      "label": "猎人开枪",
+      "actor_role": "猎人",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "mechanical_day_skill",
+      "label": "机械狼白天技能",
+      "actor_role": "机械狼",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "storage_variants": {
+    "s21_mechanical_wolf_seer": {
+      "code": "s21_mechanical_wolf_seer",
+      "name": "S21 机械狼通灵师（核实归档）",
+      "role_counts": null,
+      "wake_order": [],
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "guard",
+          "wolf_attack",
+          "mechanical_action",
+          "seer_check",
+          "witch_poison",
+          "witch_save",
+          "treasure_extra_attack"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge",
+          "self_destruct",
+          "hunter_shot",
+          "mechanical_day_skill"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "guard": {
+            "actor_role": null
+          },
+          "wolf_attack": {
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          },
+          "witch_poison": {
+            "actor_role": null
+          },
+          "witch_save": {
+            "actor_role": null
+          },
+          "treasure_extra_attack": {
+            "code": "treasure_extra_attack",
+            "label": "额外狼刀",
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          },
+          "self_destruct": {
+            "actor_role": null
+          },
+          "hunter_shot": {
+            "label": "猎人射击",
+            "actor_role": null
+          },
+          "mechanical_day_skill": {
+            "actor_role": null
+          }
+        }
+      }
+    },
+    "s23_mechanical_wolf_seer": {
+      "code": "s23_mechanical_wolf_seer",
+      "name": "S23 机械狼通灵师",
+      "wake_order": [],
+      "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。"
+    }
+  }
 }

@@ -4,8 +4,10 @@ import pytest
 
 from scripts.import_bluff_feedback import validate_feedback,source_games
 from scripts.recover_bluff_feedback_text import recover_feedback
-from website.api.bluffs import source_fingerprint
-from website.tests.test_bluffs import sample
+from scripts import build_manual_bluff_publication
+from scripts import build_bluff_inference
+from website.api.bluffs import claim_fingerprint, review_items, source_fingerprint
+from website.tests.test_bluffs import review as signed_review, sample
 
 
 def feedback():
@@ -22,10 +24,122 @@ def test_feedback_roundtrip_keeps_comments_separate_from_confirmation():
     value, game = feedback()
     result = validate_feedback(value, [game])
     assert next(iter(result.values()))["decision"] == "yes"
+    assert 'manual_success' not in next(iter(result.values()))
     value["records"][0]["decision"] = ""
     assert next(iter(validate_feedback(value, [game]).values()))["decision"] == "comment"
     value["records"][0]["notes"] = "  "
     assert validate_feedback(value, [game]) == {}
+
+
+def test_signed_feedback_survives_unrelated_game_change(monkeypatch):
+    value, game = feedback()
+    game["source"] = {"bvid": game["bvid"]}
+    payload = signed_review(game)
+    item = next(row for row in review_items([game], payload) if row["seat"] == 1)
+    value["records"][0]["claim_fingerprint"] = item["claim_fingerprint"]
+    monkeypatch.setattr("scripts.import_bluff_feedback.load_review", lambda _season: payload)
+
+    changed = deepcopy(game)
+    changed["voting"]["ballots"].append({"kind": "exile", "day": 2, "winner": 4})
+    assert source_fingerprint(changed) != payload["games"][0]["source_fingerprint"]
+    assert next(iter(validate_feedback(value, [changed]).values()))["claim_fingerprint"] == item["claim_fingerprint"]
+
+
+def test_success_feedback_roundtrip_updates_only_selected_legacy_manual_result(monkeypatch):
+    game = sample()
+    game["source"] = {"bvid": "BV1kGVC6cEyg"}
+    game["bvid"] = game["source"]["bvid"]
+    baseline = signed_review(game)
+    reviewed_game = baseline["games"][0]
+    row = reviewed_game["assessments"][0]
+    row.update(verification_status="user_confirmed", manual_success=True,
+               manual_source_sha256="f" * 64, manual_review_id="manual-review",
+               decision_note="既有人工备注保留")
+    row["claim_fingerprint"] = claim_fingerprint(game, row)
+    row.pop("success_fingerprint")  # Existing manual outcome has no dependency baseline.
+    current_item = next(item for item in review_items([game], baseline) if item["seat"] == 1)
+    assert current_item["legacy_success_needs_review"] is False
+    assert current_item['success'] is True
+
+    value = {"kind": "s22_bluff_feedback", "schema_version": 1, "season": "S22", "records": [{
+        "review_id": current_item["review_id"], "game_id": game["id"], "bvid": game["source"]["bvid"],
+        "seat": 1, "name": current_item["name"], "physical_role": current_item["physical_role"],
+        "source_fingerprint": current_item["source_fingerprint"],
+        "claim_fingerprint": current_item["claim_fingerprint"],
+        "success_fingerprint": current_item["success_fingerprint"],
+        "decision": "", "claimed_role": current_item["claimed_role"],
+        "claim_day": current_item["claim_day"], "manual_success": False,
+        "notes": "重新核对后确认失败。",
+    }]}
+    monkeypatch.setattr("scripts.import_bluff_feedback.load_review", lambda _season: baseline)
+    imported = validate_feedback(value, [game])
+    assert len(imported) == 1
+
+    assert build_manual_bluff_publication._apply_success_feedback(game, reviewed_game, imported) is True
+    updated = next(item for item in review_items([game], baseline) if item["seat"] == 1)
+    untouched = next(item for item in review_items([game], baseline) if item["seat"] == 4)
+    assert updated["success"] is False and updated["success_source"] == "user"
+    assert updated["decision_note"].startswith("既有人工备注保留")
+    assert "重新核对后确认失败" in updated["decision_note"]
+    assert untouched["decision"] == "no" and not reviewed_game["assessments"][1].get("manual_success")
+
+
+def test_feedback_can_confirm_only_a_currently_manual_included_seat(monkeypatch):
+    game = sample()
+    game["bvid"] = "BV1kGVC6cEyg"
+    game["source"] = {"bvid": game["bvid"]}
+    payload = signed_review(game)
+    mixed = game["seats"][1]
+    mixed["role"] = "混血儿"
+    mixed["faction"] = "good"
+    row = {"seat": mixed["seat"], "name": mixed["name"], "physical_role": mixed["role"],
+           "decision": "yes", "claimed_role": "通灵师", "claim_day": 1,
+           "verification_status": "user_confirmed", "manual_included": True,
+           "evidence": [{"kind": "recap", "text": "2号悍跳狼人",
+                         "source_ref": "e" * 64, "source_sha256": "a" * 64}]}
+    row["claim_fingerprint"] = claim_fingerprint(game, row)
+    from website.api.bluffs import success_fingerprint
+    row["success_fingerprint"] = success_fingerprint(game, 2, 1)
+    payload["games"][0]["assessments"].append(row)
+    monkeypatch.setattr("scripts.import_bluff_feedback.load_review", lambda _season: payload)
+    item = next(item for item in review_items([game], payload) if item["seat"] == 2)
+    record = {key: item.get(key) for key in (
+        "review_id", "game_id", "bvid", "seat", "name", "physical_role", "source_fingerprint",
+        "claim_fingerprint", "success_fingerprint", "claimed_role", "claim_day")}
+    record.update(decision="", manual_success=True, notes="已确认")
+    value = {"kind": "s22_bluff_feedback", "schema_version": 1, "season": "S22", "records": [record]}
+
+    imported = validate_feedback(value, [game])
+    assert imported[record["review_id"]]["manual_success"] is True
+
+    # The same non-wolf seat is rejected when there is no current manual-inclusion proof.
+    payload["games"][0]["assessments"].pop()
+    with pytest.raises(ValueError, match="选手或狼人底牌不匹配"):
+        validate_feedback(value, [game])
+
+
+def test_inference_builder_applies_only_current_success_feedback():
+    game = sample()
+    payload = signed_review(game)
+    assessment = deepcopy(payload["games"][0]["assessments"][0])
+    item = next(row for row in review_items([game], payload) if row["seat"] == 1)
+    feedback = {
+        "decision": "comment", "claim_day": item["claim_day"],
+        "claimed_role": item["claimed_role"], "claim_fingerprint": item["claim_fingerprint"],
+        "success_fingerprint": item["success_fingerprint"], "manual_success": False,
+        "notes": "人工复核后确认失败",
+    }
+
+    assert build_bluff_inference._apply_success_feedback(game, assessment, feedback) is True
+    assert assessment["manual_success"] is False
+    assert assessment["verification_status"] == "user_confirmed"
+    assert "人工复核后确认失败" in assessment["decision_note"]
+
+    stale = deepcopy(assessment)
+    changed = deepcopy(game)
+    changed["seats"][1]["faction"] = "werewolf"
+    with pytest.raises(ValueError, match="dependency changed"):
+        build_bluff_inference._apply_success_feedback(changed, stale, feedback)
 
 
 def test_s23_feedback_is_season_bound_and_preserves_unknown_fields():

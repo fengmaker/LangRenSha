@@ -23,10 +23,12 @@ SOURCE_INDEX_JSON = WEIBO_ROOT / "人名复核" / "照片人名_来源索引.jso
 REVIEW_CSV = WEIBO_ROOT / "人名复核" / "S22-S23_照片人名_人工复核.csv"
 S23_PROGRESS_JSON = ROOT / "data" / "reports" / "S23_逐局复核进度.json"
 S23_SCHEDULE_CSV = WEIBO_ROOT / "比赛排班.csv"
+S21_SOURCE_INDEX_JSON = ROOT / "data/weibo/2026-02-24_2026-05-26/S21_姓名照片来源索引.json"
 
 OUTPUT_JSON = ROOT / "website" / "api" / "player_photos.json"
 OUTPUT_ASSETS = ROOT / "website" / "assets" / "player-photos"
 OUTPUT_REPORT = ROOT / "data" / "reports" / "S23_网站照片准备验收.json"
+S21_OUTPUT_REPORT = ROOT / "data/reports/S21/S21_网站照片准备验收.json"
 
 APPROVED_STATUSES = {"确认无误", "已修正"}
 PHASE_PRIORITY = {"决赛周": 0, "正赛": 1, "表演赛": 2}
@@ -260,6 +262,65 @@ def choose_for_player(
     return candidates[0][1], None
 
 
+def s21_photos() -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    """Reuse viewed S21 nameplates, including exact names absent from the old alias map."""
+    names = {
+        seat["name"] for path in (ROOT / "data/games/S21").glob("*/dossier.json")
+        for seat in read_json(path)["seats"]
+    }
+    source_index = read_json(S21_SOURCE_INDEX_JSON)
+    if source_index["metadata"]["season"] != "S21":
+        raise ValueError("S21 photo source index has the wrong season")
+    names_by_label = {name.casefold(): name for name in names}
+    choices: dict[str, list] = defaultdict(list)
+    for photo in source_index["photos"]:
+        if not photo.get("included_for_review") or not photo.get("nameplate_observations"):
+            continue
+        labels = photo.get("normalized_names_from_nameplate") or photo.get("nameplate_read_texts", [])
+        matched = {names_by_label[label.casefold()] for label in labels
+                   if label.casefold() in names_by_label}
+        if len(matched) != 1:
+            continue
+        name = next(iter(matched))
+        for occurrence in photo["source_occurrences"]:
+            if (not occurrence.get("included_for_review")
+                    or occurrence.get("image_sha256") != photo["image_sha256"]):
+                continue
+            public_occurrence = {"phase": occurrence["phase"], "event_date": occurrence["game_date"],
+                                 "source_url": occurrence["post_url"]}
+            choices[name].append((occurrence_key(public_occurrence), photo["photo_id"], photo,
+                                  occurrence, public_occurrence))
+
+    players, missing, selected = {}, [], []
+    for name in sorted(names):
+        if not choices[name]:
+            missing.append({"season": "S21", "name": name, "reason": "没有已识读名牌的同季参赛照片"})
+            continue
+        _, _, photo, occurrence, public_occurrence = min(choices[name], key=lambda row: row[:2])
+        source_path = (ROOT / occurrence["image_path"]).resolve()
+        if (not source_path.is_relative_to((ROOT / "data/raw/weibo").resolve())
+                or sha256_file(source_path) != photo["image_sha256"]):
+            raise ValueError(f"S21 photo source path or hash mismatch: {photo['photo_id']}")
+        choice = {"photo_id": photo["photo_id"], "sha256": photo["image_sha256"],
+                  "source_path": source_path, "occurrence": public_occurrence}
+        players[name] = record_for_choice("S21", choice)
+        copy_asset("S21", choice)
+        selected.append({"name": name, "photo_id": photo["photo_id"],
+                         "sha256": photo["image_sha256"], "source_image": occurrence["image_path"],
+                         "source_url": occurrence["post_url"], "source_date": occurrence["game_date"],
+                         "nameplate_texts": photo["nameplate_read_texts"]})
+    return players, {
+        "schema_version": 1, "season": "S21", "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "target_source": "data/games/S21/*/dossier.json canonical seat names",
+        "source_index": S21_SOURCE_INDEX_JSON.relative_to(ROOT).as_posix(),
+        "source_index_sha256": sha256_file(S21_SOURCE_INDEX_JSON),
+        "target_player_count": len(names), "covered_player_count": len(players),
+        "coverage_rate": len(players) / len(names) if names else 1, "missing": missing,
+        "policy": "复用已识读的S21名牌及规范名；新标签按当前档案姓名精确匹配，英文字母仅忽略大小写。原图不修改。",
+        "selected_sources": selected,
+    }
+
+
 def build() -> dict[str, Any]:
     mapping_rows = read_csv(MAPPING_CSV)
     review_rows = read_csv(REVIEW_CSV)
@@ -368,20 +429,26 @@ def build() -> dict[str, Any]:
         else:
             direct_count += 1
 
+    s21_report = None
+    if (ROOT / "data/games/S21").is_dir():
+        players["S21"], s21_report = s21_photos()
     retained_missing = [
         item for item in old_manifest.get("missing", [])
-        if item.get("season") != "S23"
+        if item.get("season") != "S23" and (s21_report is None or item.get("season") != "S21")
     ]
     result = {
         "schema_version": 1,
         "players": players,
-        "missing": [*retained_missing, *missing],
+        "missing": [*retained_missing, *missing, *(s21_report["missing"] if s21_report else [])],
     }
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_JSON.write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    if s21_report is not None:
+        S21_OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
+        S21_OUTPUT_REPORT.write_text(json.dumps(s21_report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     covered = len(s23_names) - len(missing)
     missing_names = {item["name"] for item in missing}
     OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
@@ -391,7 +458,7 @@ def build() -> dict[str, Any]:
                 "schema_version": 1,
                 "generated_at_utc": datetime.now(timezone.utc).isoformat(),
                 "season": "S23",
-                "target_source": "data/reports/S23_逐局复核进度.json candidate_dossiers canonical seat names",
+                "target_source": "data/reports/S23/S23_逐局复核进度.json candidate_dossiers canonical seat names",
                 "candidate_dossier_count": len(candidate_dossiers),
                 "candidate_dossiers": candidate_dossiers,
                 "target_player_count": len(s23_names),
@@ -515,6 +582,7 @@ if __name__ == "__main__":
     print(
         json.dumps(
             {
+                "S21": len(output["players"].get("S21", {})),
                 "S22": len(output["players"]["S22"]),
                 "S23_manifest_entries": len(output["players"]["S23"]),
                 "S23_target_players": report["target_player_count"],

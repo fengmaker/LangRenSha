@@ -16,9 +16,11 @@ import sys
 import tempfile
 import time
 
+from board_config import template_path
+
 ROOT = Path(__file__).resolve().parents[1]
 SEASON_DIR = ROOT / "data/games/S22"
-REPORT_DIR = ROOT / "data/reports"
+REPORT_DIR = ROOT / "data/reports/S22"
 STATE_FILE = REPORT_DIR / "S22_对局批处理进度.json"
 JOURNAL_FILE = REPORT_DIR / "S22_对局批处理日志.jsonl"
 LOCK_FILE = REPORT_DIR / "S22_对局批处理.lock"
@@ -250,7 +252,7 @@ def input_digest(entry):
         "source_path", "audio_path", "transcript_origin", "catalog_issues")}, ensure_ascii=False, sort_keys=True))
     if entry["source_path"]:
         parts.append(digest(ROOT / entry["source_path"]))
-    for path in [Path(__file__), ROOT / "scripts/recap_parser.py", ROOT / "scripts/recap_specials.py", ROOT / "scripts/batch_people.py", ROOT / "scripts/batch_review.py", ROOT / "scripts/board_catalog.py", ROOT / "scripts/game_records.py", ROOT / "config/board_templates" / (entry["board"] + ".json")]:
+    for path in [Path(__file__), ROOT / "scripts/recap_parser.py", ROOT / "scripts/recap_specials.py", ROOT / "scripts/batch_people.py", ROOT / "scripts/batch_review.py", ROOT / "scripts/board_catalog.py", ROOT / "scripts/game_records.py", ROOT / "scripts/board_config.py", template_path(entry["board"], ROOT)]:
         parts.append(digest(path))
     # S22 dot-audit decisions are formal, source-bound extraction input. A
     # patchset or applicator change must invalidate cached generated dossiers.
@@ -392,6 +394,39 @@ def coverage(value):
             "named_seats": sum(p.get("name") is not None for p in value["seats"]),
             "rounds": len(value["rounds"]), "known_events": sum(e["action"] != "unknown" for e in events),
             "total_events": len(events)}
+
+
+def derive_formal_records(value, folder):
+    """Derive only from an existing dossier and sidecars; never create a ballot file."""
+    from game_derivations import derive_game, restore_source_records
+    from sheriff_speech_evidence import load_bound_sheriff_speeches
+
+    def optional(name):
+        path = folder / name
+        return read_json(path) if path.is_file() else None
+
+    voting = optional("voting.json")
+    previous = optional("rule_derivations.json")
+    if previous and previous.get("game_slug") == value.get("slug"):
+        restored = restore_source_records(value, voting, previous)
+        value, voting = restored["dossier"], restored["voting"]
+    supplemental = optional("supplemental.json")
+    result = derive_game(value, voting, supplemental=supplemental,
+                         endgame=optional("endgame.json"),
+                         speech_evidence=load_bound_sheriff_speeches(supplemental, root=ROOT, voting=voting))
+    return result["dossier"], result["voting"], result["derivations"]
+
+
+def import_prepared_records(value, voting, derivations):
+    """Keep changed survival and its existing vote electorate in one transaction."""
+    from database import connect
+    from game_records import import_game
+    from voting_records import import_voting
+    with connect() as conn:
+        receipt = import_game(value, allow_incomplete=True, conn=conn, derivations=derivations)
+        if voting is not None:
+            receipt["voting"] = import_voting(voting, conn=conn)
+        return receipt
 
 
 def backup_database(state):
@@ -550,22 +585,30 @@ def process_entry(entry, state, *, dry_run=False):
     issues = location["issues"] + issues
     if entry.get("catalog_issues"):
         issues.append("来源目录待核：" + entry["catalog_issues"])
+    value, derived_voting, derivations = derive_formal_records(value, out)
     validate(value, allow_incomplete=True)
+    if derived_voting is not None:
+        from voting_records import validate as validate_voting
+        validate_voting(derived_voting)
+        atomic_json(out / "voting.json", derived_voting)
+    atomic_json(out / "rule_derivations.json", derivations)
     review = {"bvid": entry["bvid"], "title": entry["title"], "board_name": entry["board_name"],
               "audio_path": entry["audio_path"], "source_path": entry["source_path"],
               "recap_segments": recap_segments, "recap_start_ms": recap_segments[0]["start_ms"] if recap_segments else None,
               "recap_end_ms": recap_segments[-1]["end_ms"] if recap_segments else None,
               "recap_status": location["status"], "issues": issues, "unmapped_events": unmapped,
               "dot_audit_applied": dot_audit_applied,
+              "rule_derivations_sha256": digest(out / "rule_derivations.json"),
               "state": "prepared" if dry_run else "awaiting_import", "db_receipt": None,
               "people_sources": people_context}
     atomic_json(out / "dossier.json", value)
     entry.update(coverage(value), input_sha256=signature, generated_dossier_sha256=digest(out / "dossier.json"),
                  state="prepared", stage="validated", issues=issues, updated_at=now())
+    entry["rule_derivations_sha256"] = digest(out / "rule_derivations.json")
     atomic_json(out / "复核记录.json", review)
     checkpoint(state, {"bvid": entry["bvid"], "stage": "validated"})
     if not dry_run:
-        receipt = import_game(value, allow_incomplete=True)
+        receipt = import_prepared_records(value, derived_voting, derivations)
         atomic_json(out / "database_receipt.json", receipt)
         review.update(db_receipt=receipt, state="imported")
         atomic_json(out / "复核记录.json", review)
@@ -647,16 +690,25 @@ def main(argv=None):
                 patchset = load_patchset()
                 validate_sources(patchset)
                 dot_audit_applied = apply_dossier(value, args.bvid, patchset=patchset)
-                if dot_audit_applied:
-                    atomic_json(out / "dossier.json", value)
+                value, derived_voting, derivations = derive_formal_records(value, out)
+                from game_records import validate
+                validate(value, allow_incomplete=True)
                 previous_slug = entry.get("db_receipt", {}).get("slug")
                 if value.get("season") != "S22" or (previous_slug and value.get("slug") != previous_slug):
                     raise ValueError("人工修正不得改变赛季或已登记的对局标识；仅修改本局内容。")
-                receipt = import_game(value, allow_incomplete=True)
+                if derived_voting is not None:
+                    from voting_records import validate as validate_voting
+                    validate_voting(derived_voting)
+                atomic_json(out / "dossier.json", value)
+                if derived_voting is not None:
+                    atomic_json(out / "voting.json", derived_voting)
+                atomic_json(out / "rule_derivations.json", derivations)
+                receipt = import_prepared_records(value, derived_voting, derivations)
                 atomic_json(out / "database_receipt.json", receipt)
                 entry.update(coverage(value), state="imported", db_receipt=receipt, auto_protected=True,
                              dot_audit_applied=sorted(set(entry.get("dot_audit_applied", [])) | set(dot_audit_applied)),
-                             imported_dossier_sha256=digest(out / "dossier.json"), updated_at=now())
+                             imported_dossier_sha256=digest(out / "dossier.json"),
+                             rule_derivations_sha256=digest(out / "rule_derivations.json"), updated_at=now())
                 # No generated hash: future automatic runs protect manual edits.
                 entry.pop("generated_dossier_sha256", None)
                 entry["issues"] = ["用户编辑的dossier已重新入库，尚未标记人工复核完成。"]
@@ -673,6 +725,7 @@ def main(argv=None):
                 "title": entry["title"], "board_name": entry["board_name"], "recap_segments": [],
                 "audio_path": entry["audio_path"], "source_path": entry.get("source_path")}
             review.update(state=entry["state"], issues=entry.get("issues", []), db_receipt=entry.get("db_receipt"),
+                          rule_derivations_sha256=digest(out / "rule_derivations.json"),
                           review_note=args.note, updated_at=now())
             atomic_json(review_path, review)
             render_game(out, value, review)

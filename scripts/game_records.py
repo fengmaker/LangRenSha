@@ -10,6 +10,10 @@ from pathlib import Path
 from psycopg.types.json import Jsonb
 
 from database import ROOT, ReviewError, artifact, connect
+try:
+    from .board_config import load_template
+except ImportError:
+    from board_config import load_template
 
 ALIASES = {
     "其人": ["其人的心事"],
@@ -50,7 +54,7 @@ def primary_source_file(files):
 def template(code):
     if not code.replace("_", "").isalnum():
         raise ReviewError("版型代码不合法")
-    return json.loads((ROOT / "config/board_templates" / (code+".json")).read_text(encoding="utf-8"))
+    return load_template(code, ROOT)
 
 
 def empty_event(slot, actor=None):
@@ -874,30 +878,44 @@ def ensure_person(conn, name):
     return person["id"]
 
 
-def import_game(value, *, allow_incomplete=False, conn=None):
+def sync_board_template(conn, board):
+    """Insert or update one board template while retaining its transaction lock."""
+    conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("board-template-"+board["code"],))
+    conn.execute("""INSERT INTO board_templates(code,name,seat_count,role_counts,wake_order) VALUES(%s,%s,%s,%s,%s)
+        ON CONFLICT(code) DO UPDATE SET name=EXCLUDED.name,seat_count=EXCLUDED.seat_count,role_counts=EXCLUDED.role_counts,wake_order=EXCLUDED.wake_order""",
+        (board["code"],board["name"],board["seat_count"],Jsonb(board.get("role_counts") or {}),board["wake_order"]))
+    for phase in ["night", "day"]:
+        # Move existing positions clear before applying an expanded template.
+        conn.execute("""UPDATE board_event_slots SET position=position+
+            (SELECT COALESCE(max(position),0)+%s FROM board_event_slots WHERE board_code=%s AND phase=%s)
+            WHERE board_code=%s AND phase=%s""",
+            (len(board[phase+"_slots"])+1,board["code"],phase,board["code"],phase))
+        for position,slot in enumerate(board[phase+"_slots"],1):
+            conn.execute("""INSERT INTO board_event_slots(board_code,phase,code,position,label,actor_role,allowed_actions)
+                VALUES(%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(board_code,phase,code) DO UPDATE SET
+                position=EXCLUDED.position,label=EXCLUDED.label,actor_role=EXCLUDED.actor_role,allowed_actions=EXCLUDED.allowed_actions""",
+                (board["code"],phase,slot["code"],position,slot["label"],slot["actor_role"],slot["actions"]))
+
+
+def import_game(value, *, allow_incomplete=False, conn=None, derivations=None, sync_template=True):
+    """Import one game; batch callers may disable template sync after batch pre-sync."""
     from game_scope import exclusion_reason
     excluded = exclusion_reason(value)
     if excluded:
         raise ReviewError("该局已移出对局范围，禁止重新入库：" + excluded)
+    # The same preparation used by season builders also guards manual imports.
+    # It is deliberately before validation and SQL, not an API-only projection.
+    if derivations is None:
+        from game_derivations import derive_game
+        prepared = derive_game(value)
+        value, derivations = prepared["dossier"], prepared["derivations"]
     board = validate(value, allow_incomplete=allow_incomplete)
     primary_file = primary_source_file(value["files"])
     transaction = connect() if conn is None else nullcontext(conn)
     with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-"+value["slug"],))
-        conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("board-template-"+board["code"],))
-        conn.execute("""INSERT INTO board_templates(code,name,seat_count,role_counts,wake_order) VALUES(%s,%s,%s,%s,%s)
-            ON CONFLICT(code) DO UPDATE SET name=EXCLUDED.name,seat_count=EXCLUDED.seat_count,role_counts=EXCLUDED.role_counts,wake_order=EXCLUDED.wake_order""",
-            (board["code"],board["name"],board["seat_count"],Jsonb(board.get("role_counts") or {}),board["wake_order"]))
-        for phase in ["night","day"]:
-            # Move existing positions clear before applying an expanded template.
-            conn.execute("""UPDATE board_event_slots SET position=position+
-                (SELECT COALESCE(max(position),0)+%s FROM board_event_slots WHERE board_code=%s AND phase=%s)
-                WHERE board_code=%s AND phase=%s""",(len(board[phase+"_slots"])+1,board["code"],phase,board["code"],phase))
-            for position,slot in enumerate(board[phase+"_slots"],1):
-                conn.execute("""INSERT INTO board_event_slots(board_code,phase,code,position,label,actor_role,allowed_actions)
-                    VALUES(%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(board_code,phase,code) DO UPDATE SET
-                    position=EXCLUDED.position,label=EXCLUDED.label,actor_role=EXCLUDED.actor_role,allowed_actions=EXCLUDED.allowed_actions""",
-                    (board["code"],phase,slot["code"],position,slot["label"],slot["actor_role"],slot["actions"]))
+        if sync_template:
+            sync_board_template(conn, board)
         season = conn.execute("SELECT id FROM seasons WHERE code=%s", (value["season"],)).fetchone()
         if not season: raise ReviewError("赛季尚未登记")
         file_records=[]
@@ -951,6 +969,16 @@ def import_game(value, *, allow_incomplete=False, conn=None):
                         conn.execute("INSERT INTO game_event_targets(event_id,game_id,position,seat_number) VALUES(%s,%s,%s,%s)", (row["id"],game_id,position,target))
                     for vote in event["votes"]:
                         conn.execute("INSERT INTO game_event_votes(event_id,game_id,ballot_round,voter_seat,target_seat,abstained) VALUES(%s,%s,%s,%s,%s,%s)", (row["id"],game_id,vote["round"],vote["voter"],vote["target"],vote["abstained"]))
+        if derivations is not None:
+            import hashlib
+            rule_path = Path(__file__).with_name("game_derivations.py")
+            conn.execute("""INSERT INTO game_formal_annotations
+                (game_id,annotation_key,annotation_type,source_path,source_sha256,payload)
+                VALUES(%s,'shared-rule-derivations','review_context',%s,%s,%s)
+                ON CONFLICT(game_id,annotation_key) DO UPDATE SET
+                source_path=EXCLUDED.source_path,source_sha256=EXCLUDED.source_sha256,
+                payload=EXCLUDED.payload,recorded_at=now()""",
+                (game_id, "scripts/game_derivations.py", hashlib.sha256(rule_path.read_bytes()).hexdigest(), Jsonb(derivations)))
         event_count = sum(len(round_[phase]) for round_ in value["rounds"] for phase in ("night", "day"))
         return {"game_id":str(game_id),"slug":value["slug"],"people":len(identities),"seats":len(value["seats"]),
                 "rounds":len(value["rounds"]),"night_slots":len(board["night_slots"]),"day_slots":len(board["day_slots"]),

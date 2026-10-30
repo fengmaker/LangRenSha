@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1aawEzcEeM-p01-cid36677027797",
+  "registrations": [
+    {
+      "id": "derived-judge-initial-registration",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "off_police": [
+        4,
+        9,
+        10,
+        12
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "BV1aawEzcEeM-ballot-01",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        4,
+        9,
+        10,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 5,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 4,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 5,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1aawEzcEeM-ballot-02",
+      "day": 1,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": null,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 5,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 5,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1aawEzcEeM-ballot-03",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        8,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": null,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 2,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1aawEzcEeM-event-016",
+      "day": 2,
+      "actor": 9,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "recorded",
+      "exile": "recorded"
+    },
+    {
+      "day": 2,
+      "sheriff": "not_applicable",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "not_applicable",
+      "exile": "recorded"
+    }
+  ]
+}

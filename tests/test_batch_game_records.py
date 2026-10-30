@@ -8,6 +8,8 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from board_config import load_template
+import game_records
 from game_records import ReviewError, ensure_person, import_game, validate
 
 
@@ -59,7 +61,7 @@ class BatchGameRecordTests(unittest.TestCase):
                 "effects": [],
             }
 
-        board = json.loads((ROOT / f"config/board_templates/{board_code}.json").read_text(encoding="utf-8"))
+        board = load_template(board_code, ROOT)
         value["rounds"] = [{
             "number": 1,
             "night": [blank_event(slot["code"]) for slot in board["night_slots"]],
@@ -262,7 +264,7 @@ class BatchGameRecordTests(unittest.TestCase):
         }
         candidate = next(p for p in value["seats"] if p["seat"] not in actor_seats)
         candidate.update(role="盗宝人", faction="third_party")
-        board = json.loads((ROOT / "config/board_templates/mechanical_wolf_seer.json").read_text(encoding="utf-8"))
+        board = load_template("mechanical_wolf_seer", ROOT)
         board.update(role_counts={}, dynamic_roles=True)
         with patch("game_records.template", return_value=board):
             self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["seat_count"], 12)
@@ -277,7 +279,7 @@ class BatchGameRecordTests(unittest.TestCase):
             if event["actor"] is not None
         }
         candidate = next(p for p in value["seats"] if p["seat"] not in actor_seats)
-        board = json.loads((ROOT / "config/board_templates/mechanical_wolf_seer.json").read_text(encoding="utf-8"))
+        board = load_template("mechanical_wolf_seer", ROOT)
         board.update(role_counts={}, dynamic_roles=True)
         with self.subTest(role="狼王"):
             candidate.update(role="狼王", faction="good")
@@ -303,7 +305,7 @@ class BatchGameRecordTests(unittest.TestCase):
         candidate.update(role="狼王", faction="werewolf")
         attack = next(e for e in value["rounds"][0]["night"] if e["slot"] == "wolf_attack")
         attack["actor"] = candidate["seat"]
-        board = json.loads((ROOT / "config/board_templates/mechanical_wolf_seer.json").read_text(encoding="utf-8"))
+        board = load_template("mechanical_wolf_seer", ROOT)
         board.update(role_counts={}, dynamic_roles=True)
         with patch("game_records.template", return_value=board):
             self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["seat_count"], 12)
@@ -391,8 +393,13 @@ class BatchGameRecordTests(unittest.TestCase):
         value["rounds"] = []
         with patch("game_records.connect", return_value=conn), \
              patch("game_records.artifact", return_value="artifact-id"), \
-             patch("game_records.data_file", return_value=Path("synthetic")):
+             patch("game_records.data_file", return_value=Path("synthetic")), \
+             patch("game_records.sync_board_template", wraps=game_records.sync_board_template) as sync_template:
             import_game(value, allow_incomplete=True)
+            sync_template.assert_called_once()
+            sync_template.reset_mock()
+            import_game(value, allow_incomplete=True, sync_template=False)
+            sync_template.assert_not_called()
 
         people = [params for query, params in conn.queries if query.startswith("INSERT INTO people")]
         staff = [params for query, params in conn.queries if query.startswith("INSERT INTO game_staff")]

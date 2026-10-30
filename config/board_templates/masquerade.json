@@ -211,5 +211,113 @@
         "unknown"
       ]
     }
-  ]
+  ],
+  "storage_variants": {
+    "s21_masquerade": {
+      "code": "s21_masquerade",
+      "name": "S21 假面舞会（核实归档）",
+      "role_counts": null,
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "wolf_attack",
+          "seer_check",
+          "dancer_dance",
+          "masquerade_mask",
+          "witch_save",
+          "witch_poison"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge",
+          "self_destruct"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "wolf_attack": {
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          },
+          "seer_check": {
+            "label": "预言家或通灵师查验",
+            "actor_role": null
+          },
+          "dancer_dance": {
+            "label": "舞者行动",
+            "actor_role": null,
+            "actions": [
+              "dance",
+              "pass",
+              "unknown"
+            ]
+          },
+          "masquerade_mask": {
+            "label": "面具行动",
+            "actor_role": null,
+            "actions": [
+              "give_mask",
+              "unknown"
+            ]
+          },
+          "witch_save": {
+            "actor_role": null
+          },
+          "witch_poison": {
+            "actor_role": null
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          },
+          "self_destruct": {
+            "actor_role": null
+          }
+        }
+      }
+    },
+    "s23_masquerade": {
+      "code": "s23_masquerade",
+      "name": "S23 假面舞会",
+      "role_counts": {
+        "预言家": 1,
+        "女巫": 1,
+        "舞者": 1,
+        "白痴": 1,
+        "平民": 4,
+        "狼人": 3,
+        "假面": 1,
+        "白神": 1
+      },
+      "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。",
+      "slot_codes": {},
+      "slot_overrides": {
+        "day": {
+          "idiot_reveal": {
+            "label": "白神/白痴公开身份（按当局底牌）",
+            "actor_role": null
+          }
+        }
+      }
+    }
+  }
 }

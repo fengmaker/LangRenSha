@@ -8,7 +8,7 @@ from rapidocr import RapidOCR
 from collect_bilibili_audio import save_json
 from read_s22_frame_labels import run_pass,norm,names_in_text
 ROOT=Path(__file__).resolve().parents[1]
-CAPTURE=ROOT/'data/reports/S21_截图采集进度.json';STATE=ROOT/'data/reports/S21_画面OCR候选进度.json'
+CAPTURE=ROOT/'data/reports/S21/S21_截图采集进度.json';STATE=ROOT/'data/reports/S21/S21_画面OCR候选进度.json'
 ROLES={'狼人','平民','预言家','女巫','猎人','白神','白痴','混血儿','守卫','狼王','黑狼王','骑士','机械狼','通灵师','机械女巫','机械猎人','机械守卫','机械通灵师','机械平民','傀儡','诡术师','鬼术师','魔术师','定序王子','舞者','假面','盗宝大师','盗贼','鬼魂新娘'}
 def digest(p):
  with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
@@ -97,7 +97,7 @@ def process(entry,capture,engine,names):
  save_json(out,result);return result
 
 def main(args):
- index=json.loads((ROOT/'data/reports/S21_文字与截图时点索引.json').read_text(encoding='utf-8'));entries=index['entries']
+ index=json.loads((ROOT/'data/reports/S21/S21_文字与截图时点索引.json').read_text(encoding='utf-8'));entries=index['entries']
  if args.bvid:entries=[e for e in entries if e['bvid'] in args.bvid]
  if args.limit:entries=entries[:args.limit]
  engine=RapidOCR(params={'EngineConfig.onnxruntime.intra_op_num_threads':4,'EngineConfig.onnxruntime.inter_op_num_threads':1})

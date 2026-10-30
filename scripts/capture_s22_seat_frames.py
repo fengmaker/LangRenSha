@@ -8,7 +8,7 @@ import batch_s22 as batch
 from capture_bilibili_frame import capture
 
 BASE = batch.ROOT / "data/extractions/S22/frame_seats"
-PROGRESS = batch.ROOT / "data/reports/S22_画面截帧进度.json"
+PROGRESS = batch.ROOT / "data/reports/S22/S22_画面截帧进度.json"
 
 
 def capture_one(entry, fraction=0.45, force=False):

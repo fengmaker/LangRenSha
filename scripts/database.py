@@ -471,10 +471,10 @@ def import_rule(path: Path) -> dict:
 
 
 def seed_reported_rules() -> dict:
-    value = json.loads((ROOT / "config/scoring_rules.user_reported.v1.json").read_text(encoding="utf-8"))
+    value = json.loads((ROOT / "config/game_rules.json").read_text(encoding="utf-8"))["scoring"]
     with connect() as conn:
         source = conn.execute("""INSERT INTO sources(platform,external_key,title,metadata)
-            VALUES('user_reported','2026-10-20-base-rules','用户报告的基础赛制，适用赛季逐季核实',%s)
+            VALUES('user_reported','2026-10-20-base-rules','用户报告的共同基础赛制',%s)
             ON CONFLICT(platform,external_key) DO UPDATE SET title=EXCLUDED.title RETURNING id""",
             (Jsonb({"official_verified":False}),)).fetchone()["id"]
         row = conn.execute("""INSERT INTO rule_versions(code,kind,source_id,definition)

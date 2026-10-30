@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def check():
-    progress = json.loads((ROOT / 'data/reports/S23_逐局复核进度.json').read_text(encoding='utf-8'))
+    progress = json.loads((ROOT / 'data/reports/S23/S23_逐局复核进度.json').read_text(encoding='utf-8'))
     html = (ROOT / 'data/exports/S23_逐局推导与复核.html').read_text(encoding='utf-8')
     payload = json.loads(html.split('window.__S23_REVIEW__=', 1)[1].split(';</script>', 1)[0])
     old_path = ROOT / 'data/archive/S23_daily_review_20261026/before/data/reports/S23_日夜待核定位.json'
@@ -106,7 +106,7 @@ def check():
               'old_pending': sum(len(v) for v in old_pending.values()),
               'pending': sum(g['pending'] for g in games), 'issues': issues, 'passed': not issues,
               'formal_database_writes': False}
-    (ROOT / 'data/reports/S23_逐日复核验收_20261026.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (ROOT / 'data/reports/S23/S23_逐日复核验收_20261026.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     return result
 
 

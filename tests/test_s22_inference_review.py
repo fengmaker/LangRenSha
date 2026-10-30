@@ -51,7 +51,7 @@ class InferenceContentTests(unittest.TestCase):
                 "after_sha256": current_hash, "before_snapshot": before_path.relative_to(root).as_posix(),
                 "file": after_path.relative_to(root).as_posix(), "changes": changes,
                 "evidence": [{"path": "data/source.txt", "quote": "守卫空过", "source_sha256": batch.digest(source)}]}]}
-            batch.atomic_json(root / "data/reports/S22_正式规则对齐记录.json", report)
+            batch.atomic_json(root / "data/reports/S22/S22_正式规则对齐记录.json", report)
             with patch.object(batch, "ROOT", root):
                 self.assertTrue(later_rule_alignment_valid("BVtest", old_hash, current_hash, {}))
                 self.assertFalse(later_rule_alignment_valid("BVtest", "wrong-before", current_hash, {}))
@@ -61,9 +61,10 @@ class InferenceContentTests(unittest.TestCase):
     def test_historical_plan_skips_newly_excluded_game(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            policy = root / "config" / "S22_game_scope.json"
+            policy = root / "config" / "seasons.json"
             policy.parent.mkdir()
-            policy.write_text(json.dumps({"season": "S22", "excluded_bvids": ["BV1tj8p6REfY"]}),
+            policy.write_text(json.dumps({"seasons": {"S22": {"scope": {
+                "excluded_bvids": ["BV1tj8p6REfY"]}}}}),
                               encoding="utf-8")
             entries = [
                 {"bvid": "BV1tj8p6REfY", "phase": "finals_week", "date": "2026-08-19"},

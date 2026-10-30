@@ -20,12 +20,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from recap_parser import extract_recap
 
-SCOPE_PATH = ROOT / "config/S21_game_scope.json"
-RULE_EVIDENCE_PATH = ROOT / "data/reports/S21_范围与规则证据.json"
+SCOPE_PATH = ROOT / "config/seasons.json"
+RULE_EVIDENCE_PATH = ROOT / "data/reports/S21/S21_范围与规则证据.json"
 PLAN_PATH = ROOT / "data/indexes/S21_采集计划.json"
 MEDIA_ROOT = ROOT / "data/extractions/S21/media_evidence"
 OUTPUT_ROOT = ROOT / "data/extractions/S21/game_reviews"
-REPORT_PATH = ROOT / "data/reports/S21_候选基线验收.json"
+REPORT_PATH = ROOT / "data/reports/S21/S21_候选基线验收.json"
 
 NUM = r"(?:12|11|10|[1-9]|十二|十一|十|一|二|两|三|四|五|六|七|八|九)"
 SEAT = rf"{NUM}号(?:玩家)?"
@@ -415,10 +415,10 @@ def build_game(entry: dict[str, Any], plan_entry: dict[str, Any], limit_index: i
         claim["seat_tokens_mentioned"] = sorted({seat_number(m.group(1)) for m in re.finditer(rf"({NUM})号", claim["quote"]) if seat_number(m.group(1))})
 
     policy = {
-        "scope_path": "config/S21_game_scope.json",
-        "rules_evidence_path": "data/reports/S21_范围与规则证据.json",
-        "S21_formal_rules_path": "config/S21_formal_rules.json",
-        "S21_formal_rules_file_exists": False,
+        "scope_path": "config/seasons.json",
+        "rules_evidence_path": "data/reports/S21/S21_范围与规则证据.json",
+        "S21_formal_rules_path": "config/game_rules.json",
+        "S21_formal_rules_file_exists": True,
         "S21_rule_card_files_identified": [],
         "S21_vote_sheriff_rules": "unknown_pending_S21_primary_evidence",
         "S21_night_wake_order": "unknown_pending_S21_primary_evidence",
@@ -598,7 +598,8 @@ def render_packet(dossier: dict[str, Any], votes: dict[str, Any], evidence: dict
 
 
 def run(limit: int | None = None) -> dict[str, Any]:
-    scope = read_json(SCOPE_PATH)
+    from rule_config import load_scope
+    scope = load_scope("S21", ROOT)
     plan = read_json(PLAN_PATH)
     report_rules = read_json(RULE_EVIDENCE_PATH)
     retained_phases = set(scope.get("retained_phases", ["regular", "finals_week"]))
@@ -635,16 +636,16 @@ def run(limit: int | None = None) -> dict[str, Any]:
         "schema_version": 1, "season": "S21",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "machine_candidates_only_not_confirmed",
-        "scope": {"scope_path": "config/S21_game_scope.json", "scope_sha256": digest(SCOPE_PATH),
+        "scope": {"scope_path": "config/seasons.json", "scope_sha256": digest(SCOPE_PATH),
                   "retained_media_total": scope.get("current_pending_media_total"),
                   "retained_phase_counts": scope.get("current_pending_media_by_phase"),
                   "indexed_baseline_media_count": len(results), "excluded_media_count": scope.get("excluded_media_total"),
                   "excluded_bvids_applied": len(excluded)},
         "rule_adaptation": {
-            "rules_evidence_path": "data/reports/S21_范围与规则证据.json",
+            "rules_evidence_path": "data/reports/S21/S21_范围与规则证据.json",
             "rules_evidence_sha256": digest(RULE_EVIDENCE_PATH),
-            "S21_formal_rules_path": "config/S21_formal_rules.json",
-            "S21_formal_rules_exists": False,
+            "S21_formal_rules_path": "config/game_rules.json",
+            "S21_formal_rules_exists": True,
             "S21_rule_card_files_identified": report_rules.get("rules_and_flow_evidence", {}).get("S21_rule_card_files_identified_in_data_raw_rules", []),
             "vote_and_sheriff_rules": "unknown_pending_S21_primary_evidence",
             "night_wake_order": "unknown_pending_S21_primary_evidence",

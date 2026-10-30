@@ -45,14 +45,15 @@ def _as_object(value: Any, label: str) -> dict:
 
 
 def _expected_game_count(season: str) -> int | None:
-    path = publisher.PACKAGE_ROOT / "config" / f"{season}_formal_rules.json"
+    path = publisher.PACKAGE_ROOT / "config/seasons.json"
     if not path.is_file():
         return None
     try:
-        rules = json.loads(path.read_text(encoding="utf-8-sig"))
+        registry = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError) as exc:
         raise BluffReviewError("赛季正式范围配置无法读取") from exc
-    count = (rules.get("scope") or {}).get("scored_total")
+    settings = registry["seasons"].get(season, {}).get("formal_import", {})
+    count = (settings.get("scope") or {}).get("scored_total")
     return count if type(count) is int and count >= 0 else None
 
 

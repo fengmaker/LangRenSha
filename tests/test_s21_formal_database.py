@@ -12,6 +12,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from board_config import template_path
 from psycopg import sql
 import database
 import endgame_records
@@ -54,7 +55,8 @@ class S21FormalDatabaseTests(unittest.TestCase):
             templates = root / "config/board_templates"
             templates.mkdir(parents=True)
             board = item["dossier"]["board"]
-            shutil.copyfile(ROOT / f"config/board_templates/{board}.json", templates / f"{board}.json")
+            source_template = template_path(board, ROOT)
+            shutil.copyfile(source_template, templates / source_template.name)
             shutil.copyfile(ROOT / "config/game_rules.json", root / "config/game_rules.json")
 
             def run(payload):
@@ -69,6 +71,9 @@ class S21FormalDatabaseTests(unittest.TestCase):
                 before_counts = {name: conn.execute(sql.SQL("SELECT count(*) AS n FROM {}").format(sql.Identifier(name))).fetchone()["n"]
                                  for name in ("games", "game_seats", "game_event_records", "game_ballots", "game_ballot_choices", "game_formal_annotations")}
                 self.assertEqual(conn.execute("SELECT count(*) AS n FROM game_files WHERE file_role='audio'").fetchone()["n"], 0)
+                derived = conn.execute("SELECT payload FROM game_formal_annotations WHERE annotation_key='shared-rule-derivations'").fetchone()
+                self.assertIsNotNone(derived)
+                self.assertEqual(derived["payload"], item["rule_derivations"])
             run(copy.deepcopy(item))
             with database.connect(self.schema) as conn:
                 after_counts = {name: conn.execute(sql.SQL("SELECT count(*) AS n FROM {}").format(sql.Identifier(name))).fetchone()["n"]

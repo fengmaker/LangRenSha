@@ -44,6 +44,106 @@ def get_event(presentation, number, phase, slot):
     return next((row for row in round_[phase] if row["slot"] == slot), None)
 
 
+@pytest.mark.parametrize('board', ['mechanical_wolf_seer', 's21_mechanical_wolf_seer', 's23_mechanical_wolf_seer'])
+@pytest.mark.parametrize('recorded_slot', [True, False])
+def test_mechanical_knife_is_only_shown_on_nights_after_all_ordinary_wolves_depart(board, recorded_slot):
+    def knife(action='unknown'):
+        return [event('mechanical_knife_status', action, actor=12)] if recorded_slot else []
+    source = game([(1, '狼人', None), (2, '狼人', None), (3, '狼人', None),
+                   (5, '平民', None), (12, '机械狼', '机械平民')], [
+        {'number': 1, 'night': knife('carrying'), 'day': [event('self_destruct', 'self_destruct', actor=1)]},
+        {'number': 2, 'night': knife('not_carrying'), 'day': [event('night_deaths', 'die', targets=[2]),
+                                                            event('exile_result', 'exile', targets=[3])]},
+        {'number': 3, 'night': knife(), 'day': knife('carrying')},
+        {'number': 4, 'night': knife('unavailable'), 'day': [event('exile_result', 'exile', targets=[12])]},
+        {'number': 5, 'night': knife('carrying'), 'day': []},
+    ], board=board)
+    before = deepcopy(source)
+    result = build_game_presentation(source)
+    assert [(r['number'], e['action'], e['actor']) for r in result['rounds']
+            for e in r['night'] if e['slot'] == 'mechanical_knife_status'] == [(3, 'carrying', 12), (4, 'carrying', 12)]
+    assert all(e['slot'] != 'mechanical_knife_status' for r in result['rounds'] for e in r['day'])
+    assert source == before
+
+
+def test_mechanical_knife_does_not_use_current_night_deaths_or_unknown_departures():
+    source = game([(1, '狼人', None), (2, '狼人', None), (3, '狼人', None), (12, '机械狼', None)], [
+        {'number': 1, 'night': [], 'day': [event('night_deaths', 'die', targets=[1, 2])]},
+        {'number': 2, 'night': [event('mechanical_knife_status', 'carrying', actor=12)],
+         'day': [event('night_deaths', 'die', targets=[3])]},
+        {'number': 3, 'night': [event('mechanical_knife_status', actor=12)], 'day': []},
+    ], board='mechanical_wolf_seer')
+    result = build_game_presentation(source)
+    assert get_event(result, 2, 'night', 'mechanical_knife_status') is None
+    assert get_event(result, 3, 'night', 'mechanical_knife_status')['action'] == 'carrying'
+    source['rounds'][1]['day'][0].update(action='unknown', targets=[])
+    assert get_event(build_game_presentation(source), 3, 'night', 'mechanical_knife_status') is None
+
+
+def test_prepared_unavailability_hides_only_empty_template_slots():
+    source = game([], [{'number': 2, 'night': [event('puppet_select')], 'day': []}], board='s21_neighbor_puppet')
+    source['rules_state'] = {'slots': [{'round': 2, 'phase': 'night', 'slot': 'puppet_select',
+                                       'status': 'unavailable', 'reason': 'puppet_selection_is_first_night_only'}]}
+    assert build_game_presentation(source)['rounds'][0]['night'] == []
+    source['rounds'][0]['night'][0].update(action='select', targets=[3])
+    assert get_event(build_game_presentation(source), 2, 'night', 'puppet_select')['targets'] == [3]
+
+
+def test_absent_hunter_placeholder_requires_complete_roster():
+    source = game([(n, '平民', None) for n in range(1, 13)], [
+        {'number': 1, 'night': [event('hunter_state')], 'day': []},
+    ], board='treasure_master')
+    assert get_event(build_game_presentation(source), 1, 'night', 'hunter_state') is None
+    source['seats'][0]['role'] = None
+    assert get_event(build_game_presentation(source), 1, 'night', 'hunter_state') is not None
+
+
+def test_unknown_night_death_is_only_shown_once_in_its_day_phase():
+    source = game([], [{'number': 1, 'night': [event('night_deaths')], 'day': [event('night_deaths')]}])
+    result = build_game_presentation(source)
+    assert get_event(result, 1, 'night', 'night_deaths') is None
+    assert get_event(result, 1, 'day', 'night_deaths')['action'] == 'unknown'
+
+
+@pytest.mark.parametrize("board", ["s21_mechanical_wolf_seer", "mechanical_wolf_seer", "s23_mechanical_wolf_seer"])
+def test_shared_witch_projection_hides_the_other_unused_bottle_even_with_a_source_note(board):
+    source = game([(7, "女巫", None)], [{"number": 1, "night": [
+        event("witch_poison", "pass", actor=7, result="本夜压毒，复盘核实说明"),
+        event("witch_save", "save", actor=7, targets=[5], result="女巫7号用药解救5号"),
+    ], "day": []}], board=board)
+    original = deepcopy(source)
+    result = build_game_presentation(source)
+    assert get_event(result, 1, "night", "witch_poison") is None
+    assert get_event(result, 1, "night", "witch_save")["targets"] == [5]
+    assert source == original
+
+
+@pytest.mark.parametrize("morning", [True, False])
+def test_shared_day_order_distinguishes_morning_and_post_exile_shots(morning):
+    source = game([(6, "猎人", None)], [{"number": 1, "night": [], "day": [
+        event("exile_result", "exile", targets=[11 if morning else 6]),
+        event("hunter_shot", "shoot", actor=6, targets=[10]),
+        event("night_deaths", "die" if morning else "peaceful", targets=[6] if morning else []),
+    ]}], board="s21_mechanical_wolf_seer")
+    slots = [e["slot"] for e in build_game_presentation(source)["rounds"][0]["day"]]
+    assert slots.index("night_deaths") < slots.index("exile_result")
+    assert (slots.index("hunter_shot") < slots.index("exile_result")) == morning
+
+
+def test_common_display_labels_and_results_preserve_source_notes_outside_the_display_text():
+    source = game([(4, "守卫", None), (9, "通灵师", None)], [{"number": 1, "night": [
+        {**event("guard", "pass", actor=4, result="首位通过按守卫空过的ASR同音转写保存"), "slot_label": "旧守卫槽"},
+        event("seer_check", "check", actor=9, targets=[12], result="通灵师9号验证12号为平民"),
+    ], "day": []}], board="s21_mechanical_wolf_seer")
+    original = deepcopy(source)
+    result = build_game_presentation(source)
+    guard = get_event(result, 1, "night", "guard")
+    assert guard["slot_label"] == "守卫守护"
+    assert guard["display_result"] is None
+    assert get_event(result, 1, "night", "seer_check")["display_result"] == "平民"
+    assert source == original
+
+
 def test_real_s23_untriggered_hunter_and_no_self_destruct_slots_are_hidden():
     folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEur'))
     source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
@@ -62,12 +162,43 @@ def test_unavailable_hunter_explanations_and_actual_outcomes_remain_visible():
     for result, flags in [
         ('猎人中毒，不能开枪', {}),
         ('最后一神出局，对局结束', {'blocked_by_game_end': True}),
-        (None, {}),
     ]:
         shot = event('hunter_shot', 'unavailable', actor=6, result=result)
         shot.update(flags)
         source = game([(6, '猎人', None)], [{'number': 1, 'night': [], 'day': [shot]}])
         assert get_event(build_game_presentation(source), 1, 'day', 'hunter_shot') is not None
+
+
+def test_untriggered_unavailable_shots_are_hidden_but_death_trigger_is_preserved():
+    source = game([(6, '猎人', None)], [{'number': 1, 'night': [], 'day': [
+        event('hunter_shot', 'unavailable', actor=6),
+    ]}])
+    assert get_event(build_game_presentation(source), 1, 'day', 'hunter_shot') is None
+    source['rounds'][0]['day'].append(event('night_deaths', 'die', targets=[6]))
+    assert get_event(build_game_presentation(source), 1, 'day', 'hunter_shot') is not None
+
+
+def test_initial_sheriff_signup_is_only_displayed_by_the_voting_panel():
+    source = game([], [{'number': 1, 'night': [], 'day': [
+        event('sheriff_candidates', 'register', targets=[1, 2, 3]),
+    ]}])
+    source['voting'] = {'registrations': [{'day': 1, 'on_police': [1, 2, 3], 'off_police': [4]}]}
+    assert get_event(build_game_presentation(source), 1, 'day', 'sheriff_candidates') is None
+    source['rounds'][0]['day'][0]['targets'] = [1, 2]
+    assert get_event(build_game_presentation(source), 1, 'day', 'sheriff_candidates') is not None
+
+
+def test_inactive_mechanical_slots_are_omitted_and_learned_form_is_shared():
+    source = game([(11, '机械狼', None)], [
+        {'number': 1, 'night': [event('mechanical_action', 'learn', actor=11, targets=[3],
+                                    result='机械狼11号首夜模仿3号狼人同伴，复盘说明为机械双刀版型')], 'day': []},
+        {'number': 2, 'night': [event('mechanical_action', 'unavailable')],
+         'day': [event('mechanical_day_skill', 'unavailable')]},
+    ])
+    presentation = build_game_presentation(source)
+    assert get_event(presentation, 1, 'night', 'mechanical_action')['display_result'] == '机械双刀狼人'
+    assert presentation['rounds'][1]['night'] == []
+    assert presentation['rounds'][1]['day'] == []
 
 
 def test_real_s23_explicit_terminal_hides_d4_and_keeps_the_final_double_death():

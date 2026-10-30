@@ -18,7 +18,7 @@ import database
 from season_config import season_codes
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT/'data/reports'/f"data_cleanup_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.json"
+REPORT = ROOT/'data/reports/maintenance'/f"data_cleanup_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.json"
 REFERENCE_DIRS = ('candidates', 'reviews', 'extractions', 'games', 'transcripts')
 SHA256_PATTERN = re.compile(r'^[0-9a-fA-F]{64}$')
 PATH_KEY_PARTS = ('path', 'file', 'source', 'transcript', 'audio', 'subtitle', 'frame',
@@ -71,7 +71,7 @@ def current_media_references(root: Path = ROOT) -> dict:
     running_seasons: list[str] = []
     season_counts: dict[str, dict[str, int]] = {}
     for season in season_codes(root):
-        progress_path = root/'data/reports'/f'{season}_采集进度.json'
+        progress_path = root/'data/reports'/season/f'{season}_采集进度.json'
         if not progress_path.is_file():
             continue
         progress = json.loads(progress_path.read_text(encoding='utf-8'))
@@ -212,7 +212,7 @@ def build_plan() -> dict:
 
     # Retain the active audio/Chinese caption set, not superseded exported copies.
     for season in season_codes(ROOT):
-        if not (ROOT/'data/reports'/f'{season}_采集进度.json').is_file():
+        if not (ROOT/'data/reports'/season/f'{season}_采集进度.json').is_file():
             continue
         for path in (ROOT/'data/seasons'/season).rglob('*'):
             if path.is_file() and path.resolve() not in references['active_exports'] and '字幕_' in path.name:

@@ -9,8 +9,8 @@ import av
 from collect_bilibili_audio import Collector,CollectionError,save_json
 ROOT=Path(__file__).resolve().parents[1]
 PLAN=ROOT/'data/indexes/S21_采集计划.json'
-INDEX=ROOT/'data/reports/S21_文字与截图时点索引.json'
-STATE=ROOT/'data/reports/S21_截图采集进度.json'
+INDEX=ROOT/'data/reports/S21/S21_文字与截图时点索引.json'
+STATE=ROOT/'data/reports/S21/S21_截图采集进度.json'
 STOP=threading.Event();LOCK=threading.Lock();PREVIOUS=0.0
 
 def digest(p):

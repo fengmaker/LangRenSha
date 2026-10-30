@@ -11,7 +11,7 @@ from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path('data/exports/S21_悍跳人工复核.html')
-REPORT = Path('data/reports/S21_悍跳人工复核页验收.json')
+REPORT = Path('data/reports/S21/S21_悍跳人工复核页验收.json')
 TEMPLATE = Path('scripts/templates/manual_bluff_review.html')
 FORMAT = 'masters-manual-bluff-review-v1'
 
@@ -42,10 +42,11 @@ def clock(ms: int) -> str:
 
 
 def build_s21(root: Path) -> tuple[dict, dict]:
-    index_path = 'data/reports/S21_文字与截图时点索引.json'
-    scope_path = 'config/S21_game_scope.json'
+    index_path = 'data/reports/S21/S21_文字与截图时点索引.json'
+    from rule_config import load_scope
+    scope_path = 'config/seasons.json'
     entries = read(root, index_path)['entries']
-    excluded = set(read(root, scope_path)['excluded_bvids'])
+    excluded = set(load_scope('S21', root)['excluded_bvids'])
     catalog = {row['BVID']: row for row in read(root, 'data/seasons/S21/S21_中文优先复核目录.json')['entries']}
     games, verified_images = [], {}
     for entry in entries:
@@ -145,7 +146,7 @@ def build_s23(root: Path) -> tuple[dict, dict]:
     from prepare_s23_review import segments
     from s23_daily_audit import load_audit, recap_rows
 
-    index_path = 'data/reports/S23_逐局复核计划.json'
+    index_path = 'data/reports/S23/S23_逐局复核计划.json'
     entries = {row['bvid']: row for row in read(root, index_path)['entries']}
     catalog_path = 'data/seasons/S23/S23_中文优先复核目录.json'
     catalog = {row['BVID']: row for row in read(root, catalog_path)['entries']}
@@ -244,7 +245,7 @@ def main() -> None:
         output = ROOT / report['review_page']
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(template.replace('__REVIEW_SEASON__', args.season).replace('__REVIEW_DATA__', safe_json), encoding='utf-8')
-        report_path = ROOT / f'data/reports/{args.season}_悍跳人工复核页验收.json'
+        report_path = ROOT / f'data/reports/{args.season}/{args.season}_悍跳人工复核页验收.json'
         report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({**report, 'written': not args.check}, ensure_ascii=False, indent=2))
 

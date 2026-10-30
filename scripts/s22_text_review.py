@@ -12,7 +12,7 @@ import sys
 import batch_s22 as batch
 from game_records import empty_event, import_game, template, validate
 
-PROGRESS = batch.ROOT / "data/reports/S22_转写逐句复核进度.json"
+PROGRESS = batch.ROOT / "data/reports/S22/S22_转写逐句复核进度.json"
 ANNOTATIONS = batch.ROOT / "data/extractions/S22"
 REVIEW_VERSION = 3
 
@@ -267,7 +267,7 @@ def apply_all():
             batch.backup_database(progress)
             batch.atomic_json(PROGRESS, progress)
         annotations = load_annotations()
-        frame_progress_path = batch.ROOT / "data/reports/S22_画面座位补全进度.json"
+        frame_progress_path = batch.ROOT / "data/reports/S22/S22_画面座位补全进度.json"
         frame_progress = batch.read_json(frame_progress_path) if frame_progress_path.exists() else {"items": {}}
         for entry in state["items"].values():
             bvid = entry["bvid"]

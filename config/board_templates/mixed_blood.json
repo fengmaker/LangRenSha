@@ -223,5 +223,91 @@
         "unknown"
       ]
     }
-  ]
+  ],
+  "storage_variants": {
+    "s21_seer_witch_hunter_white_mixed": {
+      "code": "s21_seer_witch_hunter_white_mixed",
+      "name": "S21 预女猎白混（核实归档）",
+      "role_counts": null,
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "wolf_attack",
+          "seer_check",
+          "mixed_blood_model",
+          "witch_save",
+          "witch_poison"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge",
+          "self_destruct",
+          "hunter_shot"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "wolf_attack": {
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unavailable",
+              "unknown"
+            ]
+          },
+          "seer_check": {
+            "label": "预言家或通灵师查验",
+            "actor_role": null
+          },
+          "mixed_blood_model": {
+            "label": "混血儿榜样",
+            "actor_role": null,
+            "actions": [
+              "choose",
+              "pass",
+              "unknown"
+            ]
+          },
+          "witch_save": {
+            "actor_role": null
+          },
+          "witch_poison": {
+            "actor_role": null
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          },
+          "self_destruct": {
+            "actor_role": null
+          },
+          "hunter_shot": {
+            "label": "猎人射击",
+            "actor_role": null
+          }
+        }
+      }
+    },
+    "s23_mixed_blood": {
+      "code": "s23_mixed_blood",
+      "name": "S23 预女猎白混",
+      "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。"
+    }
+  }
 }
