@@ -97,6 +97,9 @@ def _install_fake_verify_database(monkeypatch, batch, tmp_path, *, receipts, fin
     monkeypatch.setattr(formal, "db_season_fingerprint", lambda _conn, code: {"season": code})
     monkeypatch.setattr(formal, "sync_batch_templates", lambda _conn, games: None)
     monkeypatch.setattr(formal, "sha256_file", lambda _path: "source-hash")
+    monkeypatch.setattr(formal, "ROOT", tmp_path)
+    monkeypatch.setattr(formal, "REPORT_PATH", tmp_path / "data/reports/S23/progress.json")
+    monkeypatch.setattr(formal, "RULES_PATH", tmp_path / "config/game_rules.json")
     auth_path = tmp_path / "data/extractions/S23/authorization.txt"
     auth_path.parent.mkdir(parents=True, exist_ok=True)
     auth_path.write_text("authorized", encoding="utf-8")

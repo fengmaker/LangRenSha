@@ -57,6 +57,10 @@ class ConfirmedGameRulesTests(unittest.TestCase):
     def prepare_poison(self,mechanical=False):
         number=2 if mechanical else 1
         self.value["rounds"]=self.value["rounds"][:number]
+        if not mechanical:
+            # The source dossier used its antidote on night one; this scenario
+            # instead tests poison with the witch's single nightly action.
+            self.event(number,"night","witch_save").update(action="pass",targets=[])
         poison=self.event(number,"night","mechanical_action" if mechanical else "witch_poison")
         poison.update(action="poison",targets=[7],result=None)
         if mechanical:

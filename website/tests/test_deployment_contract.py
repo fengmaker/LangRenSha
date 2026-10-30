@@ -36,7 +36,10 @@ def test_formal_publish_mounts_cover_both_seasons_and_default_full_release(tmp_p
         destination.parent.mkdir(parents=True, exist_ok=True)
         origin = (WEBSITE / source).resolve()
         if origin.is_dir():
-            shutil.copytree(origin, destination)
+            # Preflight reads text evidence, not the archived audio/video.
+            shutil.copytree(origin, destination, ignore=shutil.ignore_patterns("*.m4a", "*.mp4"))
+        elif origin.is_file():
+            shutil.copyfile(origin, destination)
         else:
             # Voting audit directories are optional; no source mutation here.
             assert "/extractions/" in target and target.endswith("/voting")

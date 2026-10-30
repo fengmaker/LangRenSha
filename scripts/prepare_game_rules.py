@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+import hashlib
 import json
 from pathlib import Path
 
@@ -36,6 +37,12 @@ def prepare(seasons, *, bvids=(), apply=False, materialize=False):
             dossier, voting = read(folder / "dossier.json"), read(folder / "voting.json")
             if dossier is None or voting is None:
                 continue
+            audit_path = ROOT / "data/extractions/S22/voting" / f"{folder.name.rsplit('_', 1)[-1]}.json"
+            audit = read(audit_path) if season == "S22" else None
+            if apply and audit is not None:
+                source_hash = hashlib.sha256((ROOT / audit["source_path"]).read_bytes()).hexdigest()
+                if source_hash != audit["source_sha256"]:
+                    raise ValueError(f"投票来源已变化，不能沿用旧提取：{audit_path.name}")
             stored = {"dossier": dossier, "voting": voting}
             prior = read(folder / "rule_derivations.json")
             was_materialized = False
@@ -69,6 +76,20 @@ def prepare(seasons, *, bvids=(), apply=False, materialize=False):
                         if materialize or stored[key] != result[key]:
                             (folder / f"{key}.json").write_text(json.dumps(result[key], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
                             totals["typed_files_written"] += 1
+                if audit is not None:
+                    from game_flow import replay
+                    from voting_crosscheck import day_outcomes
+
+                    current = result if materialize or was_materialized else stored
+                    updated = dict(audit, facts=current["voting"],
+                                   dossier_sha256=hashlib.sha256((folder / "dossier.json").read_bytes()).hexdigest(),
+                                   game_flow=replay(current["dossier"], current["voting"],
+                                                    audit.get("night_death_supplements", []),
+                                                    audit.get("endgame_phases", []), audit.get("causal_terminal")))
+                    updated["day_outcomes"] = day_outcomes(current["voting"], updated, current["dossier"])
+                    if updated != audit:
+                        audit_path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                        totals["voting_audits_written"] += 1
     return {"schema_version": 1, "applied": apply, "materialized": materialize and apply,
             "typed_files_written": totals["typed_files_written"],
             "database_write": False, "publication": False, "totals": dict(totals), "games": games}

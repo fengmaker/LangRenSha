@@ -122,6 +122,9 @@ class MechanicalGameRulesTests(unittest.TestCase):
     def test_ordinary_guard_does_not_reflect_poison(self):
         self.value["rounds"]=self.value["rounds"][:1]
         self.event(1,"night","guard")["targets"]=[7]
+        # The source dossier used the antidote this night. Free it in this
+        # synthetic poison scenario so the ordinary witch uses one potion.
+        self.event(1,"night","witch_save").update(action="pass",targets=[])
         self.event(1,"night","witch_poison").update(action="poison",targets=[7])
         self.event(1,"day","night_deaths").update(action="die",targets=[7])
         apply_derived_rules(self.value)
@@ -141,6 +144,8 @@ class MechanicalGameRulesTests(unittest.TestCase):
 
     def test_mechanical_hunter_poison_disables_day_shot(self):
         self.form(7,"机械猎人",rounds=1)
+        # Keep the test night legal: the witch cannot save and poison together.
+        self.event(1,"night","witch_save").update(action="pass",targets=[])
         self.event(1,"night","witch_poison").update(action="poison",targets=[8])
         self.event(1,"day","night_deaths").update(action="die",targets=[8])
         self.event(1,"day","mechanical_day_skill").update(action="unavailable")

@@ -98,7 +98,10 @@ class FixedGameEventTests(unittest.TestCase):
 
     def test_unknown_stays_distinct_from_pass_and_an_actual_abstention(self):
         value = self.valid_sample()
-        unknown = value["rounds"][0]["night"][2]
+        # The dossier records a save here; use a synthetic unknown event to
+        # exercise the description distinction without changing that record.
+        unknown = copy.deepcopy(value["rounds"][0]["night"][2])
+        unknown.update(action="unknown", targets=[])
         self.assertEqual(unknown["action"], "unknown")
         unknown_text = describe(value, 1, "night", unknown)
         self.assertEqual(unknown_text, "第一夜10号女巫解药未知")
@@ -156,6 +159,10 @@ class FixedGameEventTests(unittest.TestCase):
                     event.update(action="unavailable",targets=[],result=None)
                     guard=next(e for e in round_["night"] if e["slot"]=="guard")
                     guard.update(action="pass",targets=[])
+                    # Repeated rounds reuse event slots, not the sample's one
+                    # global antidote.
+                    save=next(e for e in round_["night"] if e["slot"]=="witch_save")
+                    save.update(action="pass",targets=[])
                 apply_derived_rules(value)
                 validate(value, check_files=False)
                 self.assertEqual(

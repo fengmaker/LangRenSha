@@ -61,6 +61,7 @@ Set-Location D:\langrensha
 安装分组见[requirements说明](requirements/README.md)；主Python3.12与FunASR Python3.9的依赖不能混装。前端在`website/web`安装Node依赖。启动与生产构建细节见[网站手册](website/README.md)。
 
 ```powershell
+.\.venv\Scripts\python.exe scripts/local_postgres.py start
 .\.venv\Scripts\python.exe -m pytest tests website/tests -q
 .\.venv\Scripts\python.exe scripts/backup_database.py
 .\.venv\Scripts\python.exe scripts/cleanup_data.py

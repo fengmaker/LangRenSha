@@ -296,3 +296,50 @@ def test_prepare_refreshes_materialized_dependents_when_a_base_fact_changes(tmp_
     command.prepare(["S22"], apply=True)
     updated = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
     assert get(updated, 2, "witch_save")["action"] == "unknown"
+
+
+def test_prepare_refreshes_s22_voting_lineage_after_materializing_facts(tmp_path, monkeypatch):
+    import hashlib
+    import pytest
+    import prepare_game_rules as command
+    from game_flow import replay
+
+    monkeypatch.setattr(command, "ROOT", tmp_path)
+    folder = tmp_path / "data/games/S22/fixture_BV1xYEo6QEGV"
+    folder.mkdir(parents=True)
+    game, votes = fixture(), voting([])
+    source = tmp_path / "data/source.txt"
+    source.write_text("recorded source", encoding="utf-8")
+    audit_path = tmp_path / "data/extractions/S22/voting/BV1xYEo6QEGV.json"
+    audit_path.parent.mkdir(parents=True)
+    evidence = [{"quote": "recorded source", "start_ms": 1000}]
+    audit = {
+        "source_path": "data/source.txt",
+        "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+        "dossier_sha256": "previous dossier",
+        "facts": votes,
+        "game_flow": replay(game, votes),
+        "evidence": evidence,
+    }
+    audit_path.write_text(json.dumps(audit), encoding="utf-8")
+    get(game, 2, "night_deaths").update(action="die", targets=[1])
+    (folder / "dossier.json").write_text(json.dumps(game), encoding="utf-8")
+    (folder / "voting.json").write_text(json.dumps(votes), encoding="utf-8")
+
+    command.prepare(["S22"], apply=True, materialize=True)
+
+    updated = json.loads(audit_path.read_text(encoding="utf-8"))
+    assert updated["dossier_sha256"] == hashlib.sha256((folder / "dossier.json").read_bytes()).hexdigest()
+    assert updated["game_flow"]["rounds"][1]["night_deaths"] == [1]
+    assert updated["facts"] == json.loads((folder / "voting.json").read_text(encoding="utf-8"))
+    assert updated["evidence"] == evidence
+    assert updated["source_sha256"] == audit["source_sha256"]
+    saved = audit_path.read_bytes()
+    command.prepare(["S22"], apply=True)
+    assert audit_path.read_bytes() == saved
+    derivations = (folder / "rule_derivations.json").read_bytes()
+    source.write_text("changed source", encoding="utf-8")
+    with pytest.raises(ValueError, match="投票来源已变化"):
+        command.prepare(["S22"], apply=True)
+    assert audit_path.read_bytes() == saved
+    assert (folder / "rule_derivations.json").read_bytes() == derivations

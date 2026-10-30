@@ -55,6 +55,20 @@ services:
       - ../config:/source/config:ro
       - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro
       - ../data/extractions/S23/voting:/source/data/extractions/S23/voting:ro
+      # Include sources needed to reproduce the evidence fingerprints.
+      - ../data/seasons/S22:/source/data/seasons/S22:ro
+      - ../data/seasons/S23:/source/data/seasons/S23:ro
+      - ../data/raw/bilibili/BV17QJh6qEid/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV17QJh6qEid/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1saaT6jEyK/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1saaT6jEyK/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1yt7v6QE3Q/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1yt7v6QE3Q/p01/subtitle.01.raw.json:ro
+      - ../data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr_hotwords343_20261022/transcript.json:/source/data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr_hotwords343_20261022/transcript.json:ro
+      - ../data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json:ro
+      - ../data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json:ro
+      - ../data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json:ro
     depends_on:
       db:
         condition: service_healthy
