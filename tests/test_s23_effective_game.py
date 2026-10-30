@@ -55,6 +55,8 @@ def reviewed_game(tmp_path, monkeypatch):
     monkeypatch.setattr(audit_module, 'ROOT', tmp_path)
     monkeypatch.setattr(audit_module, 'BASE', tmp_path / 'data/extractions/S23/game_reviews')
     monkeypatch.setattr(effective, 'ROOT', tmp_path)
+    # file_url captured EXPORT as a default argument at import time.
+    monkeypatch.setattr(effective.file_url, '__defaults__', (tmp_path / 'data/exports',))
     monkeypatch.setattr(local_check, 'ROOT', tmp_path)
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
     return tmp_path, entry

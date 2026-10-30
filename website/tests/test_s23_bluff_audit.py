@@ -10,10 +10,18 @@ from website.api.bluff_frames import public_image_url
 from website.api import bluff_frames
 from fastapi.testclient import TestClient
 from website.api.app import app
-from website.api.bluffs import review_items
+from website.api.bluffs import assessment_success_day, claim_fingerprint, review_items, success_fingerprint
 from website.tests.test_bluffs import sample,review
 
 BVID='BV1KfYE6HEDv'
+
+
+def refresh_signatures(game,payload):
+    source=payload['games'][0]
+    for row in source['assessments']:
+        row['claim_fingerprint']=claim_fingerprint(game,row)
+        row['success_fingerprint']=success_fingerprint(
+            game,row['seat'],assessment_success_day(row),result_review=source.get('result_review'))
 
 
 def fixture(tmp_path):
@@ -114,6 +122,7 @@ def test_known_late_claim_does_not_reuse_an_earlier_badge():
     game=sample(exile=2,badge=1);payload=review(game)
     row=payload['games'][0]['assessments'][0]
     row.update(claim_day='later',actual_claim_day=4,review_stage='reviewed',requires_user_review=False)
+    refresh_signatures(game,payload)
     item=review_items([game],payload)[0]
     assert item['decision']=='yes' and item['success'] is False
     assert not item['needs_review'] and not item['assistant_pending']
@@ -127,10 +136,12 @@ def test_supplementary_badge_loss_resolves_only_missing_result():
     assert review_items([game],payload)[0]['success'] is None
     payload['games'][0]['result_review']={'badge':'lost','note':'法官与复盘明确流徽',
                                           'evidence':[{'kind':'transcript','text':'本局游戏警徽流失','start_ms':2677070}]}
+    refresh_signatures(game,payload)
     assert review_items([game],payload)[0]['success'] is False
     elected=sample(exile=None,badge=1)
     elected_payload=review(elected)
     elected_payload['games'][0]['result_review']=payload['games'][0]['result_review']
+    refresh_signatures(elected,elected_payload)
     assert review_items([elected],elected_payload)[0]['success'] is True
 
 
