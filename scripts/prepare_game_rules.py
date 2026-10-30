@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
+from batch_s22 import atomic_json
 from game_derivations import ROOT, derive_game, fingerprint, restore_source_records
 from sheriff_speech_evidence import load_bound_sheriff_speeches
 
@@ -67,16 +68,17 @@ def prepare(seasons, *, bvids=(), apply=False, materialize=False):
             games.append({"slug": dossier["slug"], "season": season, "changes": len(report["changes"]),
                           "review_tasks": len(report["review_tasks"]), "issues": report["issues"]})
             if apply:
-                (folder / "rule_derivations.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                atomic_json(folder / "rule_derivations.json", report)
                 # Once typed records contain our derived fields, refresh those
                 # fields along with the sidecar; otherwise neither the saved
                 # input nor output fingerprint would match the old typed file.
                 if materialize or was_materialized:
                     for key in ("dossier", "voting"):
                         if materialize or stored[key] != result[key]:
-                            (folder / f"{key}.json").write_text(json.dumps(result[key], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                            atomic_json(folder / f"{key}.json", result[key])
                             totals["typed_files_written"] += 1
                 if audit is not None:
+                    from causal_voting_review import day_outcomes as causal_day_outcomes
                     from game_flow import replay
                     from voting_crosscheck import day_outcomes
 
@@ -86,9 +88,12 @@ def prepare(seasons, *, bvids=(), apply=False, materialize=False):
                                    game_flow=replay(current["dossier"], current["voting"],
                                                     audit.get("night_death_supplements", []),
                                                     audit.get("endgame_phases", []), audit.get("causal_terminal")))
-                    updated["day_outcomes"] = day_outcomes(current["voting"], updated, current["dossier"])
+                    if current["voting"] != audit.get("facts") or "day_outcomes" not in audit:
+                        updated["day_outcomes"] = causal_day_outcomes(
+                            day_outcomes(current["voting"], updated, current["dossier"]), audit,
+                        )
                     if updated != audit:
-                        audit_path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                        atomic_json(audit_path, updated)
                         totals["voting_audits_written"] += 1
     return {"schema_version": 1, "applied": apply, "materialized": materialize and apply,
             "typed_files_written": totals["typed_files_written"],

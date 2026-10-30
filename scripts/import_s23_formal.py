@@ -24,6 +24,7 @@ if str(ROOT / "scripts") not in sys.path:
 
 from database import ReviewError, connect
 import game_records
+import import_manual_slot_review as manual_slot_review
 import voting_records
 from game_derivations import derive_game
 from rule_config import load_formal_rules, load_rules, load_scope
@@ -440,6 +441,8 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
             "phase": source_terminal_observation["phase"],
         }
     unknown_count_after_normalization = all_unknown_after
+    manual_slot_sidecar = manual_slot_review.apply_manual_slot_review(
+        bvid, normalized["rounds"], root=ROOT, season="S23")
     from sheriff_speech_evidence import load_bound_sheriff_speeches
     derivation = derive_game(normalized, sidecars["voting"],
                              supplemental=sidecars["supplemental"], endgame=sidecars["endgame"],
@@ -471,6 +474,9 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         "daily_audit": {"path": rel(daily_path), "sha256": sha256_file(daily_path)},
         **sidecar_paths,
     }
+    if manual_slot_sidecar:
+        manual_path = ROOT / f"data/extractions/S23/game_reviews/{bvid}/slot.reviewed.json"
+        source_hashes["manual_slot_review"] = {"path": rel(manual_path), "sha256": sha256_file(manual_path)}
     for entry in source_files:
         path = ROOT / entry["path"]
         source_hashes[f"source:{entry['role']}:{entry['path']}"] = {
@@ -501,7 +507,7 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     source_hashes[f"board_template:{storage_code}"] = {
         "path": rel(template_dep), "sha256": sha256_file(template_dep),
     }
-    for dependency in ("import_s23_formal.py", "game_records.py", "voting_records.py",
+    for dependency in ("import_s23_formal.py", "import_manual_slot_review.py", "game_records.py", "voting_records.py",
                        "game_derivations.py", "sheriff_speech_evidence.py", "board_config.py",
                        "rule_config.py", "season_config.py"):
         dependency_path = ROOT / "scripts" / dependency
@@ -555,9 +561,15 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         source_hashes["terminal_review_rules"] = {
             "path": rel(REVIEW_RULES_PATH), "sha256": sha256_file(REVIEW_RULES_PATH),
         }
+    recorded_check_rounds = {
+        round_["number"] for round_ in normalized["rounds"]
+        if any(event["slot"] == "seer_check" and event["action"] == "check"
+               for event in round_["night"])
+    }
     unpublished_terminal_checks = [
         copy.deepcopy(row) for row in daily.get("unpublished_source_records", [])
         if row.get("bvid") == bvid and "seer_check" in str(row.get("field", ""))
+        and row.get("round") not in recorded_check_rounds
     ]
     for row in unpublished_terminal_checks:
         row["public_text"] = "终局查验未记录；可能因前序技能或狼刀结算已结束对局。保留未知，不补目标，也不据此确定从未查验。"
@@ -606,6 +618,8 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
         },
         "field_confirmation_note": "批量授权不代表逐字段确认；candidate中unknown保持unknown。",
     }
+    if manual_slot_sidecar:
+        formal_context["manual_slot_review"] = manual_slot_sidecar
     if unknown_count_after_normalization < all_unknown_before:
         raise ReviewError(f"规范化转换意外减少源未知项: {slug}")
     if formal_context["normalization"]["round_numbers_before"] != formal_context["normalization"]["round_numbers_after"]:

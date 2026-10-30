@@ -8,6 +8,66 @@ export function formatDate(value: string | null | undefined): string {
   return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
 }
 
+function chineseNumber(value: number): string {
+  const digits = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+  const units = ["", "十", "百", "千"];
+  if (!Number.isInteger(value) || value < 1 || value > 9999) return String(value);
+  let result = "", zero = false;
+  for (let position = 3; position >= 0; position -= 1) {
+    const digit = Math.floor(value / 10 ** position) % 10;
+    if (!digit) {
+      if (result && value % 10 ** position) zero = true;
+      continue;
+    }
+    if (zero) result += digits[0];
+    zero = false;
+    if (!(position === 1 && digit === 1 && !result)) result += digits[digit];
+    result += units[position];
+  }
+  return result;
+}
+
+export function gamePhaseLabel(round: number, phase: "night" | "day"): string {
+  if (phase === "night") return round === 1 ? "首夜" : `第${chineseNumber(round - 1)}天夜晚`;
+  return `第${chineseNumber(round)}天白天`;
+}
+
+function parseChineseNumber(value: string): number {
+  if (/^\d+$/.test(value)) return Number(value);
+  const digits: Record<string, number> = { 零: 0, 〇: 0, 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+  const units: Record<string, number> = { 十: 10, 百: 100, 千: 1000, 万: 10000 };
+  let total = 0, current = 0;
+  for (const character of value) {
+    if (character in digits) current = digits[character];
+    else if (character in units) {
+      const unit = units[character];
+      if (unit === 10000) {
+        total = (total + (current || 1)) * unit;
+        current = 0;
+      } else {
+        total += (current || 1) * unit;
+        current = 0;
+      }
+    }
+  }
+  return total + current;
+}
+
+export function gameTimeText(value: string): string {
+  const number = "\\d+|[零〇一二两三四五六七八九十百千万]+";
+  return value
+    .replace(new RegExp(`第\\s*(${number})\\s*夜`, "g"), (_match, numberedRound: string) => {
+      const round = parseChineseNumber(numberedRound);
+      return gamePhaseLabel(round, "night");
+    })
+    .replace(new RegExp(`第\\s*(${number})\\s*天\\s*(白天|夜晚)`, "g"), (_match, numberedDay: string, phase: string) => {
+      const day = parseChineseNumber(numberedDay);
+      return phase === "夜晚" ? gamePhaseLabel(day + 1, "night") : gamePhaseLabel(day, "day");
+    })
+    .replace(new RegExp(`第\\s*(${number})\\s*天(?!白天|夜晚|晚上)`, "g"), (_match, numberedDay: string) =>
+      gamePhaseLabel(parseChineseNumber(numberedDay), "day"));
+}
+
 export function phaseLabel(value: string | null | undefined): string {
   if (!value) return "阶段待核";
   const labels: Record<string, string> = { regular: "正赛", finals_week: "决赛周", qualifier: "资格赛", promotion: "晋级赛", special: "特别场", exhibition: "表演赛" };

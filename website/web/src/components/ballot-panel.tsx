@@ -43,7 +43,7 @@ function BallotCard({ ballot, seats, resultConflict }: { ballot: Ballot; seats: 
 }
 function missingRoundMessage(data: VotingData, day: number, kind: "sheriff" | "exile") {
   const status = data.days?.find((item) => item.day === day)?.[kind];
-  if (!status || ["unknown", "not_applicable", "not_held"].includes(status)) return null;
+  if (!status || ["unknown", "not_applicable", "not_held", "none"].includes(status)) return null;
   if (status === "recorded") return `${kind === "sheriff" ? "警长" : "放逐"}结果已记录，逐票明细待补。`;
   if (status === "interrupted_self_destruct") return `${kind === "sheriff" ? "警长竞选" : "放逐投票"}因狼人自爆中断。`;
   if (status === "deferred" || status === "delayed") return "警长竞选延期到下一天继续。";

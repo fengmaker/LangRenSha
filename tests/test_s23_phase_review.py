@@ -76,7 +76,7 @@ class VoteControlTests(unittest.TestCase):
         self.assertEqual((first['badge_holder'],first['good_votes']),(6,5.5))
         self.assertEqual((second['badge_holder'],second['werewolf_votes'],second['good_votes']),(None,5,4))
         announcement=next(f for f in game['review']['phase_findings'] if f['id']=='announced-death')
-        self.assertEqual((announcement['phase'],announcement['phase_label']),('day','第1天白天'))
+        self.assertEqual((announcement['phase'],announcement['phase_label']),('day','第一天白天'))
 
 
 class PhaseInferenceTests(unittest.TestCase):

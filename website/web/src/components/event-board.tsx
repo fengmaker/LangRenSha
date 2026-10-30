@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import type { GameEvent, GameRound, Seat, VotingData } from "@/lib/types";
-import { actionLabel, availabilityLabel } from "@/lib/format";
+import { actionLabel, availabilityLabel, gamePhaseLabel, gameTimeText } from "@/lib/format";
 import { BallotPanel } from "@/components/ballot-panel";
 
 function slotLabel(event: GameEvent): string {
@@ -22,6 +22,9 @@ function slotLabel(event: GameEvent): string {
     whiteze_clear_mark: "白泽清除标记",
   };
   return event.slot ? labels[event.slot] ?? (/[\u4e00-\u9fff]/.test(event.slot) ? event.slot : "其他事件") : "对局事件";
+}
+function eventDescription(value: string): string {
+  return gameTimeText(value).replace(/^(?:首夜|第\s*(?:\d+|[零〇一二三四五六七八九十百千万两]+)\s*(?:夜|天(?:白天|夜晚)?)|[零〇一二三四五六七八九十百千万两]+\s*(?:夜|天(?:白天|夜晚)?))[，,、：:\s]*/, "");
 }
 function resultLabel(value: string): string {
   const labels: Record<string, string> = {
@@ -59,6 +62,7 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   if (event.slot === "mixed_blood_model" && event.action === "choose") return `${actor || "混血儿"}选择${targets || "榜样待核"}作为榜样。`;
   if (event.slot === "mixed_blood_alignment" && ["wolf", "werewolf", "good"].includes(event.action)) return `${actor || "混血儿"}本局跟随${event.action === "good" ? "好人" : "狼人"}阵营。`;
   if (event.slot === "wolf_attack" && event.action === "attack") return `狼队选择击杀${targets || "目标待核"}${resolved ? `，交换后实际刀口为${resolved}` : ""}。`;
+  if (event.slot === "nine_tail_kill" && event.action === "kill") return `${actor || "九尾狐"}选择击杀${targets || "目标待核"}。`;
   if (event.slot === "witch_save" && event.action === "save") return isFailedResult(event)
     ? `${actor || "女巫"}尝试使用解药救起${targets || "目标待核"}，但未生效。`
     : `${actor || "女巫"}使用解药，救起${targets || "目标待核"}。`;
@@ -78,6 +82,9 @@ function narrative(event: GameEvent, seats: Seat[]): string {
     if (event.action && choices[event.action]) return `${targets ? `按${targets}的顺序，` : ""}${choices[event.action]}。`;
   }
   if (event.action === "dream") return `${actor || "摄梦人"}梦游${targets || "目标待核"}。`;
+  if (event.slot === "dancer_dance" && event.action === "dance") return `${actor || "舞者"}选择${targets || "对象待核"}共舞。`;
+  if (event.slot === "masquerade_verify" && event.action === "verify") return `${actor || "假面"}验证${targets || "对象待核"}是否在舞池${result ? `，结果为${resultLabel(result)}` : ""}。`;
+  if (event.slot === "masquerade_mask" && event.action === "give_mask") return `${actor || "假面"}赐予${targets || "对象待核"}面具。`;
   if (event.slot === "puppet_skill_effect") {
     if (event.action === "reverse_check") return `${targets || "傀儡预言家"}的查验反馈按傀儡规则反转。`;
     if (event.action === "skill_disabled") return `${targets || "傀儡"}因傀儡效果无法使用原技能。`;
@@ -85,8 +92,10 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   }
   if (event.action === "carrying") return `${actor || "机械狼"}已接过狼刀。`;
   if (event.action === "not_carrying") return `${actor || "机械狼"}尚未接过狼刀。`;
-  if (["hunter_state", "wolf_king_state"].includes(event.slot ?? "") && event.action === "can_shoot") return `${actor || slotLabel(event)}本夜可开枪。`;
-  if (["hunter_state", "wolf_king_state"].includes(event.slot ?? "") && event.action === "cannot_shoot") return `${actor || slotLabel(event)}本夜不能开枪。`;
+  if (event.slot === "wolf_king_state" && event.action === "can_shoot") return `${actor || slotLabel(event)}本次出局可以开枪。`;
+  if (event.slot === "wolf_king_state" && event.action === "cannot_shoot") return `${actor || slotLabel(event)}本次出局不能开枪。`;
+  if (event.slot === "hunter_state" && event.action === "can_shoot") return `${actor || slotLabel(event)}本夜可开枪。`;
+  if (event.slot === "hunter_state" && event.action === "cannot_shoot") return `${actor || slotLabel(event)}本夜不能开枪。`;
   if (event.slot === "night_deaths") {
     if (event.terminal) return ["peaceful", "no_death"].includes(event.action)
       ? "本夜终局结算：平安夜。" : targets ? `本夜终局出局：${targets}。` : "本夜终局结算待核。";
@@ -95,7 +104,7 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   if (event.slot === "sheriff_result" && event.action === "elected") return `${targets || actor || "当选者待核"}当选警长。`;
   if (event.slot === "sheriff_result" && event.action === "deferred") return "警长竞选延期至次日继续。";
   if (event.slot === "badge" && event.action === "badge_lost") return "警徽流失，本局不再进行警长竞选。";
-  if (event.slot === "disqualification" && event.action === "disqualify") return event.description ?? `${targets || actor || "玩家"}被DQ出局；与普通死亡结算分开记录。`;
+  if (event.slot === "disqualification" && event.action === "disqualify") return (event.description ? eventDescription(event.description) : "") || `${targets || actor || "玩家"}被DQ出局；与普通死亡结算分开记录。`;
   if (event.slot === "exile_result" && event.action === "exile") return `${targets || "放逐对象待核"}被放逐出局。`;
   if (event.action === "self_destruct") return `${actor || targets || "狼人"}自爆。`;
   if (event.action === "surrender") return `${actor || "狼人"}选择交牌，对局结束。`;
@@ -106,8 +115,8 @@ function narrative(event: GameEvent, seats: Seat[]): string {
   if (event.slot === "witch_poison" && event.action === "pass") return `${actor || "女巫"}本夜未使用毒药。`;
   if (event.action === "pass") return `${actor || slotLabel(event)}本轮未发动。`;
   if (event.action === "none" && event.slot === "exile_result") return result === "double_tie" ? "首轮与 PK 轮均平票，本日无人被放逐。" : "本日无人被放逐。";
-  const description = event.description?.replace(/^第\s*\d+\s*(?:夜|天白天)[，,\s]*/, "")
-    .replace(/^[a-z][a-z _-]*[：:]\s*/i, `${slotLabel(event)}：`);
+  const description = event.description ? eventDescription(event.description)
+    .replace(/^[a-z][a-z _-]*[：:]\s*/i, `${slotLabel(event)}：`) : undefined;
   if (description && !/记录动作\s+[a-z_]+|记录槽|记录未知/i.test(description)) return description;
   return [actor, actionLabel(event.action), targets ? `目标：${targets}` : ""].filter(Boolean).join("，") + "。";
 }
@@ -191,7 +200,7 @@ function EventList({ events, seats, isNight = false }: { events: GameEvent[]; se
           return <Fragment key={`${card.key}-detail-${index}`}>
             {result && result !== "double_tie" && !narrativeShowsResult(item) ? <small className="game-event-result">{resultLabel(result)}</small> : null}
             {item.effects?.length ? <small className="game-event-effects">{item.effects.map((effect) => effectText(effect, seats)).join("；")}</small> : null}
-            {item.inference_note && !item.resolved_targets?.length && item.action !== "badge_lost" && !(item.slot === "hunter_state" && ["can_shoot", "cannot_shoot"].includes(item.action ?? "")) && result !== "double_tie" ? <small>{item.inference_note}</small> : null}
+            {item.inference_note && !item.resolved_targets?.length && item.action !== "badge_lost" && !(item.slot === "hunter_state" && ["can_shoot", "cannot_shoot"].includes(item.action ?? "")) && result !== "double_tie" ? <small>{gameTimeText(item.inference_note)}</small> : null}
             {item.availability && !item.inferred ? <small>{availabilityLabel(item.availability)}</small> : null}
           </Fragment>;
         })}
@@ -207,7 +216,7 @@ function votingForDay(voting: VotingData, day: number): VotingData {
 }
 function hasVoting(voting: VotingData) {
   return Boolean(voting.ballots?.length || voting.registrations?.some((row) => row.on_police != null || row.off_police != null)
-    || voting.days?.some((row) => [row.sheriff, row.exile].some((status) => status && !["unknown", "not_applicable", "not_held"].includes(status))));
+    || voting.days?.some((row) => [row.sheriff, row.exile].some((status) => status && !["unknown", "not_applicable", "not_held", "none"].includes(status))));
 }
 function DayRecap({ events, voting, seats }: { events: GameEvent[]; voting: VotingData; seats: Seat[] }) {
   const resultConflictIds: string[] = [];
@@ -255,18 +264,18 @@ export function EventBoard({ rounds, voting = {}, seats = [], terminal = null }:
     const dayVoting = votingForDay(voting, number);
     return <Fragment key={number}>
       {night.length ? <section className="timeline-phase timeline-night" data-phase="night" data-day={number}>
-        <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☾</span><div><p>夜间行动</p><h3>第 {number} 夜{number === 1 ? " · 首夜" : ""}</h3></div></header>
+        <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☾</span><div><p>夜间行动</p><h3>{gamePhaseLabel(number, "night")}</h3></div></header>
         <EventList events={night} seats={seats} isNight />
       </section> : null}
       {(!terminal || number < terminal.round || terminal.phase === "day") && (day.length || hasVoting(dayVoting)) ? <section className="timeline-phase timeline-day" data-phase="day" data-day={number}>
-        <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☼</span><div><p>白天复盘</p><h3>第 {number} 天</h3></div></header>
+        <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">☼</span><div><p>白天复盘</p><h3>{gamePhaseLabel(number, "day")}</h3></div></header>
         <DayRecap events={day} voting={dayVoting} seats={seats} />
       </section> : null}
     </Fragment>;
   })}
     {terminal?.events.length ? <section className="timeline-phase timeline-terminal" data-phase="terminal" data-day={terminal.round}>
       <header className="timeline-phase-header"><span className="timeline-phase-symbol" aria-hidden="true">◆</span><div>
-        <p>终局结算</p><h3>第 {terminal.round} {terminal.phase === "night" ? "夜" : "天"} · 游戏结束</h3>
+        <p>终局结算</p><h3>{gamePhaseLabel(terminal.round, terminal.phase)} · 游戏结束</h3>
       </div></header>
       <EventList events={terminal.events} seats={seats} />
     </section> : null}

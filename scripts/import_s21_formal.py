@@ -17,6 +17,7 @@ if SCRIPTS not in sys.path:
 import database
 import endgame_records
 import game_records
+import import_manual_slot_review as manual_slot_review
 import s21_phase_review as phase_review
 import voting_records
 from rule_config import load_formal_rules, load_scope
@@ -788,6 +789,8 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
         event, mapped = rows[0]
         phase_events[slot_position] = mapped
 
+    manual_slot_sidecar = manual_slot_review.apply_manual_slot_review(bvid, rounds, root=root)
+
     winner, winner_issues = event_winner(reviewed.get("events", []))
     unmapped.extend({"event_id": item.get("event_id"), "phase": "endgame", "action": "game_end",
                      "reason": item["reason"]} for item in winner_issues)
@@ -828,12 +831,16 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
         "phase_reviewed": reviewed,
         "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
     }
+    if manual_slot_sidecar:
+        supplemental["manual_slot_review"] = manual_slot_sidecar
+        supplemental["manual_slot_review_source_sha256"] = manual_slot_sidecar["source_sha256"]
     from game_derivations import derive_game
     from sheriff_speech_evidence import load_bound_sheriff_speeches
     derived = derive_game(dossier, voting, supplemental=supplemental, endgame=endgame,
                           speech_evidence=load_bound_sheriff_speeches(supplemental, root=root, voting=voting))
     dossier, voting = derived["dossier"], derived["voting"]
     derivations = derived["derivations"]
+    manual_slot_review.validate_terminal_reviews(manual_slot_sidecar, derivations, bvid)
     game_records.validate(dossier, check_files=False, allow_incomplete=True)
     voting_records.validate(voting)
     endgame_records.validate(endgame)

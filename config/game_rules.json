@@ -88,6 +88,23 @@
         "path": "data/extractions/S22/用户确认_20261025_摄梦人结算.txt"
       }
     },
+    "wolf_king": {
+      "status": "user_confirmed",
+      "qualification_display_requires_current_departure": true,
+      "ordinary_shot_triggers": [
+        "exile",
+        "wolf_attack_death"
+      ],
+      "poison_death_blocks_shot": true,
+      "dream_link_death_blocks_shot": true,
+      "repeat_dream_death_blocks_shot": true,
+      "last_wolf_exiled_game_end_prevents_shot": true,
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-30",
+        "statement": "狼王资格只在狼王本次出局后展示；通常只有公投出局和狼刀出局能开枪，毒杀、摄梦人连带、连续两夜梦游出局不能开枪；最后一狼被公投出局即游戏结束，没有后续开枪环节。"
+      }
+    },
     "ordinary_witch": {
       "status": "user_confirmed",
       "applies_when": "实际角色为普通女巫",
@@ -183,7 +200,25 @@
         "confirmed_on": "2026-10-24"
       }
     },
-    "winner_entry": "记录明确播报或正式结算的胜方；无法确认结算时保留 unknown。"
+    "winner_entry": "记录明确播报或正式结算的胜方；无法确认结算时保留 unknown。",
+    "nine_tail": {
+      "status": "user_confirmed",
+      "knife_requires_all_ordinary_wolves_departed": true,
+      "takeover_kill_replaces_wolf_attack_display": true,
+      "source": {
+        "type": "user_confirmation",
+        "confirmed_on": "2026-10-30",
+        "statement": "青丘夜影中，普通狼人全部出局后，九尾狐接过普通狼刀；接刀前不展示九尾狐击杀槽位，接刀后该槽位替代普通狼队击杀，既有刀口与结算不丢失。",
+        "evidence": [
+          {
+            "kind": "user_confirmation",
+            "source_path": "data/extractions/shared/用户确认_20261030_白天顺序与九尾狐接刀.txt",
+            "source_sha256": "384d0e68242d52e5bd7497b5b64b1efbbc06541a61f3f27da7f2b06a0bda8269",
+            "quote": "只有小狼都出局后，判定九尾狐接刀，狼队击杀的槽位就可以不要了，此时击杀就是九尾狐击杀"
+          }
+        ]
+      }
+    }
   },
   "boards": {
     "mixed_blood": {

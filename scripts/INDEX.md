@@ -118,6 +118,8 @@
 | [build_s23_review.py](build_s23_review.py) | Assemble S23 AI candidates and a local human-review workspace; no DB import. |
 | [build_season_media_review.py](build_season_media_review.py) | Build a linked media/text/frame review index and verify selected outputs. |
 | [build_transcript_review.py](build_transcript_review.py) | Create a standalone, read-only HTML review page for transcript candidates. |
+| [build_pending_slot_review.py](build_pending_slot_review.py) | 由2026-10-30剩余清单生成槽位复核页，保存备注并导出反馈，不写对局事实。 |
+| [import_manual_slot_review.py](import_manual_slot_review.py) | 校验人工槽位反馈的来源、身份与修改前值，归档原JSON并生成S21/S23重建使用的复核sidecar；后续批次保留其他坐标和原批次依据；默认只检查，`--apply`写入。 |
 | [build_weibo_name_review.py](build_weibo_name_review.py) | Join visual label readings to schedule photos and build offline review artifacts. |
 | [capture_bilibili_frame.py](capture_bilibili_frame.py) | Capture selected original-video frames for game fact checking; no stream URLs logged. |
 | [capture_s22_seat_frames.py](capture_s22_seat_frames.py) | Capture one source-video frame per game for visible seat-name labels. |

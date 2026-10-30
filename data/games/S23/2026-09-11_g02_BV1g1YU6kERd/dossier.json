@@ -146,8 +146,8 @@
         },
         {
           "slot": "guard",
-          "action": "unknown",
-          "actor": null,
+          "action": "pass",
+          "actor": 11,
           "targets": [],
           "result": null,
           "start_seat": null,
@@ -974,11 +974,9 @@
         },
         {
           "slot": "wolf_attack",
-          "action": "attack",
+          "action": "unavailable",
           "actor": null,
-          "targets": [
-            11
-          ],
+          "targets": [],
           "result": null,
           "start_seat": null,
           "direction": null,
@@ -1004,10 +1002,12 @@
         },
         {
           "slot": "seer_check",
-          "action": "unknown",
-          "actor": null,
-          "targets": [],
-          "result": null,
+          "action": "check",
+          "actor": 3,
+          "targets": [
+            2
+          ],
+          "result": "好人",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -1062,9 +1062,11 @@
         },
         {
           "slot": "nine_tail_kill",
-          "action": "unknown",
-          "actor": null,
-          "targets": [],
+          "action": "kill",
+          "actor": 4,
+          "targets": [
+            11
+          ],
           "result": null,
           "start_seat": null,
           "direction": null,

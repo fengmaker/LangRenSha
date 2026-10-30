@@ -6,29 +6,33 @@ quieter presentation and marks any inferred status on its copied event.
 
 from __future__ import annotations
 
+from collections import Counter
 from copy import deepcopy
 import re
 from typing import Any
 
 try:
     from .board_config import load_canonical_template
-    from .role_constraints import mechanical_knife_constraint
+    from .role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules
 except ImportError:
     from board_config import load_canonical_template
-    from role_constraints import mechanical_knife_constraint
+    from role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules
 
 
 _EMPTY_ACTIONS = {None, "unknown"}
-PRESENTATION_VERSION = 8
+PRESENTATION_VERSION = 11
 _KEEP_UNKNOWN_SLOTS = {
     # Unknown actions that can change survival, information, or skill access.
     "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
     "hunter_state", "mechanical_knife_status", "mechanical_action",
     "puppet_select", "puppet_skill_effect", "wolf_king_state",
     "mixed_blood_model", "night_deaths", "wolf_king_shot", "exile_result",
-    "mechanical_day_skill", "puppet_hunter_eligibility",
+    "mechanical_day_skill", "puppet_hunter_eligibility", "nine_tail_kill",
 }
 _DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile", "disqualify"}
+_TERMINAL_GOD_ROLES = {
+    "mechanical_wolf_seer": {"通灵师", "女巫", "猎人", "守卫"},
+}
 
 
 def terminal_from_events(game: dict) -> dict | None:
@@ -58,7 +62,9 @@ def terminal_day_events(events: list[dict]) -> list[dict]:
         if (event.get('slot') == 'night_deaths'
             and (event.get('action') not in {None, 'unknown'} or event.get('targets') or event.get('result')))
         or (event.get('slot') in {'hunter_shot', 'wolf_king_shot'}
-            and (event.get('action') not in {None, 'unknown'} or event.get('blocked_by_game_end') is True))
+            and (event.get('action') not in {None, 'unknown', 'unavailable'}
+                 or event.get('targets') or event.get('result') or event.get('effects')
+                 or event.get('blocked_by_game_end') is True))
         or (event.get('slot') == 'exile_result'
             and event.get('action') in {'none', 'unknown', 'not_held'} and not event.get('targets')
             and isinstance(event.get('result'), str)
@@ -85,6 +91,100 @@ def _role_seats(game: dict) -> dict[str, list[int]]:
         if number is not None and isinstance(role, str):
             result.setdefault(role, []).append(number)
     return result
+
+
+def _known_god_seats(game: dict) -> set[int] | None:
+    """Return a complete, board-known god roster when this board defines one here."""
+    code = _board_code(game)
+    board_family = family(code)
+    god_roles = _TERMINAL_GOD_ROLES.get(board_family)
+    if board_family == "mixed_blood":
+        season = game.get("season") or ("S23" if isinstance(code, str) and code.startswith("s23_") else None)
+        if isinstance(season, str) and season.upper() == "S23":
+            god_roles = {"预言家", "女巫", "猎人", "白神"}
+    seats = _seat_rows(game)
+    if (god_roles is None or len(seats) != 12
+            or any(type(row.get("seat", row.get("number"))) is not int
+                   or not isinstance(row.get("role"), str)
+                   or row.get("role") in {"", "unknown", "未知", "身份未知"}
+                   for row in seats)):
+        return None
+    gods = {
+        number
+        for row in seats
+        if (number := _as_int(row.get("seat", row.get("number")))) is not None
+        and row.get("role") in god_roles
+    }
+    return gods or None
+
+
+def terminal_god_departure(
+    game: dict, number: int, phase: str, previously_eliminated: set[int],
+    phase_events: list[dict], terminal: dict | None,
+) -> bool:
+    """Whether a confirmed terminal phase begins after its last god departs."""
+    if (not isinstance(terminal, dict) or terminal.get("round") != number
+            or terminal.get("phase") != phase):
+        return False
+    gods = _known_god_seats(game)
+    if not gods:
+        return False
+    departed_now: set[int] = set()
+    for event in phase_events:
+        slot, action = event.get("slot"), event.get("action")
+        targets = event.get("targets") if isinstance(event.get("targets"), list) else []
+        if slot == "night_deaths" and action == "die":
+            departed_now.update(value for value in targets if type(value) is int)
+        elif slot == "exile_result" and action == "exile":
+            departed_now.update(value for value in targets if type(value) is int)
+        elif action in {"die_after_speech", "suicide", "disqualify"}:
+            departed_now.update(value for value in targets if type(value) is int)
+            if not targets and (actor := _as_int(event.get("actor"))) is not None:
+                departed_now.add(actor)
+    return gods <= previously_eliminated | departed_now
+
+
+def terminal_wolf_attack_kills_last_god(
+    game: dict, number: int, previously_eliminated: set[int],
+    events: list[dict], terminal: dict | None,
+) -> bool:
+    """Confirm the terminal night ends at the wolf attack, before later wakes."""
+    if (family(_board_code(game)) != "mechanical_wolf_seer"
+            or not isinstance(terminal, dict)
+            or terminal.get("round") != number
+            or terminal.get("phase") != "night"):
+        return False
+    gods = _known_god_seats(game)
+    remaining = gods - previously_eliminated if gods else set()
+    if len(remaining) != 1:
+        return False
+    last_god = next(iter(remaining))
+    attacks = [event for event in events
+               if event.get("slot") == "wolf_attack" and event.get("action") == "attack"]
+    terminal_events = terminal.get("events")
+    death_events = events + (terminal_events if isinstance(terminal_events, list) else [])
+    confirmed_deaths = {
+        seat for event in death_events
+        if event.get("slot") == "night_deaths" and event.get("action") == "die"
+        for seat in (event.get("targets") if isinstance(event.get("targets"), list) else [])
+        if type(seat) is int
+    }
+    return any(last_god in event.get("targets", []) for event in attacks) and last_god in confirmed_deaths
+
+
+def night_slot_after_wolf_attack(game: dict, slot: str) -> bool:
+    """Whether the board's confirmed wake order puts Medium check after wolf action."""
+    if slot != "seer_check":
+        return False
+    template = load_canonical_template(_board_code(game) or "")
+    wake_order = template.get("wake_order", [])
+    if "狼人" not in wake_order:
+        return False
+    actors = {row.get("code"): row.get("actor_role") for row in template.get("night_slots", [])}
+    seer_role = actors.get(slot)
+    if seer_role not in wake_order:
+        return False
+    return wake_order.index(seer_role) > wake_order.index("狼人")
 
 
 def _board_code(game: dict) -> str | None:
@@ -115,7 +215,7 @@ def _actor_for_tracking(event: dict, slot_roles: dict[str, list[int]]) -> int | 
         "sorcerer_exchange": ("狼术师",), "magic_duel_wolf_sorcerer_swap": ("狼术师",),
         "guile_exchange": ("诡术师",), "dreamer_action": ("摄梦人",),
         "masquerade_mask": ("假面",), "masquerade_verify": ("假面",), "dancer_dance": ("舞者",),
-        "white_god_reveal": ("白神",), "idiot_reveal": ("白痴",), "knight_duel": ("骑士",),
+        "white_god_reveal": ("白神", "白痴"), "idiot_reveal": ("白痴", "白神"), "knight_duel": ("骑士",),
         "whiteze_clear": ("白泽",), "whiteze_clear_mark": ("白泽",),
         "nine_tail_mark": ("九尾狐",), "nine_tail_hunt": ("九尾狐",), "nine_tail_kill": ("九尾狐",),
         "nine_tail_skill": ("九尾狐",), "nine_tail_vote_mark": ("九尾狐",),
@@ -142,6 +242,18 @@ def _has_recorded_content(event: dict) -> bool:
         if value not in (None, [], {}):
             return True
     return False
+
+
+def _has_recorded_seer_check(event: dict) -> bool:
+    """Only targets, feedback, or a structured effect make an empty check recorded."""
+    targets = event.get("targets")
+    if isinstance(targets, list) and targets:
+        return True
+    result = event.get("result")
+    if result not in (None, "", "unknown"):
+        return True
+    effects = event.get("effects")
+    return isinstance(effects, list) and bool(effects)
 
 
 def _is_empty_unknown(event: dict) -> bool:
@@ -304,6 +416,142 @@ def _actual_deaths(events: list[dict]) -> set[int]:
 
         dead.update(_effect_dead_seats(event))
     return dead
+
+
+def _ordinary_wolf_king_seat(role_seats: dict[str, list[int]]) -> int | None:
+    kings = role_seats.get("狼王", [])
+    return kings[0] if len(kings) == 1 else None
+
+
+def _wolf_king_exiles(game: dict, number: int, events: list[dict]) -> set[int]:
+    exiled = {
+        seat for event in events
+        if event.get("slot") == "exile_result" and event.get("action") == "exile"
+        for seat in (event.get("targets") if isinstance(event.get("targets"), list) else [])
+        if type(seat) is int
+    }
+    for ballot in (game.get("voting") or {}).get("ballots", []):
+        if ballot.get("day") == number and ballot.get("kind") == "exile" and type(ballot.get("winner")) is int:
+            exiled.add(ballot["winner"])
+    return exiled
+
+
+def ordinary_wolf_king_shot_triggered(game: dict, number: int, actor: int,
+                                      events: list[dict], exiles: set[int] | None = None) -> bool | None:
+    """Return True/False for a proven trigger, None when a night death's cause is unknown."""
+    rules = wolf_king_rules()
+    triggers = rules.get("ordinary_shot_triggers", [])
+    exiled = actor in (exiles if exiles is not None else _wolf_king_exiles(game, number, events))
+    if exiled and "exile" in triggers:
+        return True
+    if any(event.get("slot") == "self_destruct" and event.get("action") == "self_destruct"
+           and event.get("actor") == actor for event in events):
+        return False
+    died_at_night = any(
+        event.get("slot") == "night_deaths" and event.get("action") == "die"
+        and actor in (event.get("targets") or []) for event in events
+    )
+    if not died_at_night:
+        return False
+    attacks = [event for event in events if event.get("slot") == "wolf_attack"]
+    for event in attacks:
+        if (event.get("action") == "attack" and actor in (event.get("targets") or [])
+                and "wolf_attack_death" in triggers):
+            return True
+    if not attacks:
+        return None
+    if any(event.get("action") in {"unknown", None} for event in attacks):
+        return None
+    if any(event.get("action") not in {"pass", "forbidden", "unavailable", "attack"}
+           for event in attacks):
+        return None
+    # A confirmed pass proves the wolf attack did not cause this night death.
+    if any(event.get("action") in {"pass", "forbidden", "unavailable"} for event in attacks):
+        return False
+    # An attack on another seat plus this death leaves the cause unresolved.
+    return None
+
+
+def terminal_last_wolf_king_exile(
+    game: dict, number: int, previously_eliminated: set[int],
+    current_departures: set[int], current_exiles: set[int], terminal: dict | None,
+) -> bool:
+    """Confirm a known ordinary king is the final wolf exiled at a day terminal."""
+    if not wolf_king_rules().get("last_wolf_exiled_game_end_prevents_shot"):
+        return False
+    if (not isinstance(terminal, dict) or terminal.get("round") != number
+            or terminal.get("phase") != "day" or game.get("winner") != "good"):
+        return False
+    seats = _seat_rows(game)
+    if (len(seats) != 12
+            or any(row.get("role") in {None, "", "unknown", "未知", "身份未知"}
+                   or row.get("faction") not in {"good", "werewolf"} for row in seats)):
+        return False
+    king = _ordinary_wolf_king_seat(_role_seats(game))
+    wolf_seats = {
+        seat for row in seats
+        if row.get("faction") == "werewolf"
+        and (seat := _as_int(row.get("seat", row.get("number")))) is not None
+    }
+    departed = previously_eliminated | current_departures
+    return bool(king is not None and king in current_exiles
+                and wolf_seats and wolf_seats <= departed)
+
+
+def _wolf_king_shot_status(game: dict, number: int, actor: int) -> dict:
+    return event_constraint(
+        game, number, "day", {"slot": "wolf_king_shot", "action": "unknown", "actor": actor,
+                               "targets": []},
+        actor=actor, dead_before=set(), uses=Counter(), used_targets={}, previous={}, learning={},
+    )
+
+
+def _wolf_king_shot_has_recorded_outcome(event: dict) -> bool:
+    return bool(event.get("targets") or event.get("result") or event.get("effects"))
+
+
+def _project_wolf_king_qualification(
+    state: dict, shot: dict | None, *, game: dict, number: int, actor: int,
+    triggered: bool | None,
+) -> None:
+    constraint = _wolf_king_shot_status(game, number, actor)
+    if constraint.get("status") == "unavailable":
+        action = "cannot_shoot"
+        reason = constraint.get("reason")
+        note = ("狼王本轮因中毒或摄梦结算不能开枪。"
+                if reason in {"wolf_king_poisoned", "dream_death_blocks_shot"}
+                else "狼王本轮不具备开枪资格。")
+    elif shot and shot.get("action") == "shoot":
+        action = "can_shoot"
+        note = "档案记录狼王本轮实际开枪，确认具备开枪资格。"
+    elif shot and shot.get("action") in {"unavailable", "cannot_shoot", "forbidden"}:
+        action = "cannot_shoot"
+        note = "档案记录本轮狼王不能开枪。"
+    elif triggered is False:
+        action = "unavailable"
+        note = "狼王本轮出局方式不触发开枪。"
+    elif triggered is None:
+        action = "unknown"
+        note = "狼王本轮夜间出局原因未确认，开枪触发条件仍待核。"
+    else:
+        if constraint.get("status") == "available":
+            action = "can_shoot"
+            note = "狼王本轮出局，规则确认具备开枪资格。"
+        elif constraint.get("status") == "unavailable":
+            action = "cannot_shoot"
+            reason = constraint.get("reason")
+            note = ("狼王本轮因中毒或摄梦结算不能开枪。"
+                    if reason in {"wolf_king_poisoned", "dream_death_blocks_shot"}
+                    else "狼王本轮不具备开枪资格。")
+        else:
+            action = state.get("action") or "unknown"
+            note = "狼王本轮出局，开枪资格仍待核。"
+    if state.get("action") != action:
+        state["inferred"] = True
+    state["action"] = action
+    state["actor"] = actor
+    state["inference_note"] = note
+    state["_wolf_king_qualification_projection"] = True
 
 
 def _annotate_exchange_settlement(events: list[dict], game: dict) -> None:
@@ -878,6 +1126,8 @@ def _annotate_pending_hunter_shot(
     role_seats: dict[str, list[int]],
     puppet_hunter_seats: set[int],
     game: dict,
+    terminal: dict | None,
+    number: int,
 ) -> None:
     hunter_seats = role_seats.get("猎人", [])
     if len(hunter_seats) != 1:
@@ -894,6 +1144,11 @@ def _annotate_pending_hunter_shot(
     if hunter in known_poison_victims:
         return
     if hunter in puppet_hunter_seats:
+        return
+
+    if terminal_god_departure(
+        game, number, "day", previously_eliminated, night_events + day_events, terminal,
+    ):
         return
 
     if any(event.get("slot") == "hunter_shot"
@@ -965,6 +1220,36 @@ def _project_mechanical_knife_status(events: list[dict], game: dict, number: int
     return max(0, len(recorded) - 1)
 
 
+def _project_nine_tail_knife(events: list[dict], game: dict, number: int, *,
+                             role_seats: dict[str, list[int]], departed: set[int]) -> int:
+    foxes = role_seats.get("九尾狐", [])
+    if len(foxes) != 1:
+        return 0
+    actor = foxes[0]
+    state = nine_tail_knife_constraint(game, number, "night", actor=actor, dead_before=departed)
+    fox_kill = next((e for e in events if e.get("slot") == "nine_tail_kill"), None)
+    if state["status"] != "available":
+        if fox_kill is not None:
+            events.remove(fox_kill)
+            return 1
+        return 0
+    attacks = [e for e in events if e.get("slot") in {"wolf_attack", "nine_tail_kill"}]
+    # Older archives store the same normal knife in wolf_attack. Keep its
+    # factual target and outcome when the dedicated fox slot is still blank.
+    chosen = fox_kill if fox_kill is not None and not _is_empty_unknown(fox_kill) else next(
+        (e for e in attacks if e.get("slot") == "wolf_attack"), fox_kill,
+    )
+    event = deepcopy(chosen) if chosen is not None else {"action": "unknown", "targets": []}
+    event.update(slot="nine_tail_kill", actor=actor, slot_label="九尾狐击杀")
+    if event.get("action") == "attack":
+        event["action"] = "kill"
+    if chosen is None or chosen.get("slot") != "nine_tail_kill":
+        event.update(inferred=True, inference_note="本夜开始前普通狼人均已出局，普通狼刀由九尾狐接手。")
+    events[:] = [e for e in events if e not in attacks]
+    events.append(event)
+    return max(0, len(attacks) - 1)
+
+
 def _display_result(event: dict, roles: dict[str, list[int]]) -> str | None:
     value = event.get("result")
     if not isinstance(value, str) or not value:
@@ -995,7 +1280,12 @@ def _display_result(event: dict, roles: dict[str, list[int]]) -> str | None:
 
 def _display_events(events: list[dict], phase: str, template: dict, roles: dict[str, list[int]]) -> list[dict]:
     slots = template.get(phase + "_slots", [])
-    order = {slot["code"]: index for index, slot in enumerate(slots)}
+    codes = [slot["code"] for slot in slots]
+    if phase == "day":
+        # Archive templates can list day actions before the morning results.
+        morning = ["sheriff_candidates", "sheriff_vote", "sheriff_result", "night_deaths", "badge"]
+        codes = morning + [code for code in codes if code not in morning]
+    order = {code: index for index, code in enumerate(codes)}
     labels = {slot["code"]: slot["label"] for slot in slots}
     positions: dict[int, float] = {}
     if phase == "day":
@@ -1012,8 +1302,33 @@ def _display_events(events: list[dict], phase: str, template: dict, roles: dict[
                 departed.update(shot.get("targets", []))
                 pending.remove(shot)
     for event in events:
-        if event.get("slot") in labels:
+        wolf_king_qualification = event.pop("_wolf_king_qualification_projection", False)
+        if event.get("slot") in labels and not wolf_king_qualification:
             event["slot_label"] = labels[event["slot"]]
+        if wolf_king_qualification:
+            event["slot_label"] = "狼王开枪资格"
+            event["description"] = "狼王本轮出局；开枪资格在出局阶段展示。"
+            actor = _actor_for_tracking(event, roles)
+            actual_shot = next((row for row in events
+                                if row.get("slot") == "wolf_king_shot"
+                                and row.get("action") == "shoot"
+                                and _actor_for_tracking(row, roles) == actor), None)
+            if actual_shot is not None and id(actual_shot) in positions:
+                positions[id(event)] = positions[id(actual_shot)] - .01
+            else:
+                departure = next((row for row in events
+                                  if actor in (row.get("targets") or [])
+                                  and row.get("action") in {"die", "exile"}), None)
+                if departure is None:
+                    departure = next((row for row in events
+                                      if row.get("action") == "self_destruct"
+                                      and _actor_for_tracking(row, roles) == actor), None)
+                if departure is None:
+                    positions[id(event)] = order.get("wolf_king_shot", len(order)) - .1
+                else:
+                    departure_pos = positions.get(
+                        id(departure), order.get(departure.get("slot"), len(order)))
+                    positions[id(event)] = departure_pos + .01
         if event.get("slot") == "witch_poison" and _actor_for_tracking(event, roles) in roles.get("毒师", []):
             event["slot_label"] = "毒师毒药"
         event["display_result"] = _display_result(event, roles)
@@ -1078,11 +1393,29 @@ def build_game_presentation(game: dict) -> dict:
         # database-backed event dictionaries passed by the API.
         night = [deepcopy(event) for event in source_night if isinstance(event, dict)]
         day = [deepcopy(event) for event in source_day if isinstance(event, dict)]
+        wolf_killed_last_god = bool(
+            terminal and type(number) is int
+            and terminal_wolf_attack_kills_last_god(
+                game, number, eliminated_before_round, night + day, terminal,
+            )
+        )
         # Storage variants may lack an unavailable action enum. The prepared
         # rule state still proves that their empty slot cannot be played.
         for phase, events in (("night", night), ("day", day)):
             kept = []
             for event in events:
+                if (phase == "night" and number == 1 and display_template.get("code") == "masquerade"
+                        and event.get("slot") in {"masquerade_verify", "masquerade_mask", "dancer_dance"}
+                        and event.get("action") in {None, "unknown", "unavailable", "pass"}
+                        and not any(event.get(key) for key in ("targets", "votes", "effects"))):
+                    omitted += 1
+                    continue
+                if (phase == "night" and wolf_killed_last_god
+                        and night_slot_after_wolf_attack(game, event.get("slot"))
+                        and event.get("action") in {None, "unknown", "unavailable"}
+                        and not _has_recorded_seer_check(event)):
+                    omitted += 1
+                    continue
                 state = rule_states.get((number, phase, event.get("slot")), {})
                 absent_hunter = (event.get("slot") == "hunter_state" and len(seats) == 12
                                  and all(s.get("role") not in {None, "", "unknown", "未知", "身份未知"} for s in seats)
@@ -1098,8 +1431,53 @@ def build_game_presentation(game: dict) -> dict:
                                  inference_note="已确认的用药结算未命中该角色，具备开枪资格。")
                 kept.append(event)
             events[:] = kept
+        ordinary_wolf_king = _ordinary_wolf_king_seat(role_seats)
+        current_events = night + day
+        current_departures = _actual_deaths(current_events)
+        current_exiles = _wolf_king_exiles(game, number, current_events) if type(number) is int else set()
+        terminal_last_wolf_king = bool(
+            ordinary_wolf_king is not None and type(number) is int
+            and terminal_last_wolf_king_exile(
+                game, number, eliminated_before_round, current_departures,
+                current_exiles, terminal,
+            )
+        )
+        if ordinary_wolf_king is not None and type(number) is int:
+            state_event = next((event for event in night
+                                if event.get("slot") == "wolf_king_state"
+                                and _actor_for_tracking(event, role_seats) == ordinary_wolf_king), None)
+            if (state_event is None
+                    and (ordinary_wolf_king in current_departures
+                         or ordinary_wolf_king in current_exiles)):
+                state_event = {"slot": "wolf_king_state", "action": "unknown",
+                               "actor": ordinary_wolf_king, "targets": [], "inferred": True}
+            if state_event is not None:
+                if state_event in night:
+                    night.remove(state_event)
+                if ordinary_wolf_king in eliminated_before_round or ordinary_wolf_king not in current_departures:
+                    omitted += 1
+                elif terminal_last_wolf_king:
+                    omitted += 1
+                else:
+                    shot_event = next((event for event in day
+                                       if event.get("slot") == "wolf_king_shot"
+                                       and _actor_for_tracking(event, role_seats) == ordinary_wolf_king), None)
+                    triggered = ordinary_wolf_king_shot_triggered(
+                        game, number, ordinary_wolf_king, current_events,
+                    )
+                    _project_wolf_king_qualification(
+                        state_event, shot_event, game=game, number=number,
+                        actor=ordinary_wolf_king, triggered=triggered,
+                    )
+                    if terminal and terminal.get("round") == number and terminal.get("phase") == "night":
+                        terminal["events"].append(state_event)
+                    else:
+                        day.append(state_event)
         if display_template.get("code") == "mechanical_wolf_seer":
             omitted += _project_mechanical_knife_status(night, game, number,
+                role_seats=role_seats, departed=eliminated_before_round)
+        if display_template.get("code") == "qingqiu_night":
+            omitted += _project_nine_tail_knife(night, game, number,
                 role_seats=role_seats, departed=eliminated_before_round)
         if terminal and number == terminal['round'] and terminal['phase'] == 'night':
             outcomes = terminal_day_events(day)
@@ -1220,10 +1598,35 @@ def build_game_presentation(game: dict) -> dict:
             role_seats=role_seats,
             puppet_hunter_seats=puppet_hunter_seats,
             game=game,
+            terminal=terminal,
+            number=number if type(number) is int else 0,
         )
         filtered_day = []
         for event in day:
             if id(event) in omitted_day_event_ids:
+                continue
+            if (event.get("slot") in {"white_god_reveal", "idiot_reveal"}
+                    and event.get("action") in {None, "unknown", "unavailable", "pass", "none"}
+                    and not any(event.get(key) for key in ("targets", "votes", "effects"))):
+                if _actor_for_tracking(event, role_seats) in current_exiles:
+                    filtered_day.append(event)
+                else:
+                    omitted += 1
+                continue
+            if (ordinary_wolf_king is not None
+                    and event.get("slot") == "wolf_king_shot"
+                    and _actor_for_tracking(event, role_seats) == ordinary_wolf_king
+                    and event.get("action") in {None, "unknown", "unavailable"}
+                    and not _wolf_king_shot_has_recorded_outcome(event)
+                    and event.get("blocked_by_game_end") is not True
+                    and (terminal_last_wolf_king
+                         or ordinary_wolf_king in eliminated_before_round
+                         or (ordinary_wolf_king in current_departures
+                             and _wolf_king_shot_status(game, number, ordinary_wolf_king).get("status") == "unavailable")
+                         or ordinary_wolf_king_shot_triggered(
+                             game, number, ordinary_wolf_king, current_events,
+                         ) is False)):
+                omitted += 1
                 continue
             if (event.get("slot") in {"hunter_shot", "wolf_king_shot", "mechanical_day_skill"}
                     and event.get("action") == "unavailable"

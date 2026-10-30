@@ -7,6 +7,16 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import import_s23_formal as formal
 
 
+def test_confirmed_terminal_check_supersedes_historical_unobserved_note():
+    batch = formal.build_batch(['BV1MheH6wEBb'])
+    game = batch['games'][0]
+    check = next(e for r in game['dossier']['rounds'] if r['number'] == 3
+                 for e in r['night'] if e['slot'] == 'seer_check')
+    assert (check['action'], check['targets'], check['result']) == ('check', [1], '好人')
+    assert game['formal_context']['unpublished_terminal_checks'] == []
+    assert game['formal_context']['public_notes'] == []
+
+
 def _game():
     return {
         "slug": "fixture-s23", "bvid": "BVfixture", "candidate_path": "data/candidate/candidate.json",

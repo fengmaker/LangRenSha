@@ -282,6 +282,10 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
     for ri, r in enumerate(game.get("rounds", [])):
         n = r["number"]
         before = set(dead)
+        round_events = [*r.get("night", []), *r.get("day", [])]
+        wolf_killed_last_god = inference.terminal_wolf_attack_kills_last_god(
+            game, n, before, round_events, terminal,
+        )
         night_dead, night_known = _night_deaths(r)
         if not night_known:
             settled = _ordinary_settlement(game, r, before, uses, roles)
@@ -298,6 +302,11 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
         current_dq = disqualifications.get((n, "night"), set()) | disqualifications.get((n, "day"), set())
         before_vote = before | night_dead | current_dq
         day_non_results = [e for e in r.get("day", []) if e.get("slot") != "night_deaths"]
+        current_ballots = [b for b in (votes or {}).get("ballots", []) if b.get("day") == n]
+        exile_ballots = [b for b in current_ballots if b.get("kind") == "exile"]
+        current_exiles = {s for e in day_non_results if e.get("action") == "exile"
+                          for s in e.get("targets", [])}
+        current_exiles.update(b.get("winner") for b in exile_ballots if type(b.get("winner")) is int)
         # Before-vote deaths are distinct from the ensuing exile and shot.
         before_vote.update(s for e in day_non_results if e.get("action") == "die_after_speech"
                            for s in e.get("targets", []))
@@ -310,8 +319,15 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
             victims = set(morning_shots.get(pending.pop(), [])) - before_vote
             before_vote.update(victims)
             pending.update(victims)
-        current_ballots = [b for b in (votes or {}).get("ballots", []) if b.get("day") == n]
-        exile_ballots = [b for b in current_ballots if b.get("kind") == "exile"]
+        current_departures = before_vote | current_exiles | inference._actual_deaths(day_non_results)
+        ordinary_kings = roles.get("狼王", [])
+        ordinary_king = ordinary_kings[0] if len(ordinary_kings) == 1 else None
+        terminal_last_wolf_king = bool(
+            ordinary_king is not None
+            and inference.terminal_last_wolf_king_exile(
+                game, n, before, current_departures, current_exiles, terminal,
+            )
+        )
         day_record = next((d for d in (votes or {}).get("days", []) if d.get("day") == n), None)
         exile_result = _event(r, "exile_result", "day")
         if (day_record and _self_destruct_ends_unvoted_day(r, current_ballots)
@@ -393,8 +409,66 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                 if board_constraint and board_constraint["status"] != "unknown":
                     constraint = {**constraint, **board_constraint}
                 status, reason = constraint.get("status", "unknown"), constraint.get("reason", "evidence_needed")
-                if past_end:
+                ordinary_king_trigger = (
+                    inference.ordinary_wolf_king_shot_triggered(
+                        game, n, actor, round_events, exiles=current_exiles,
+                    )
+                    if actor == ordinary_king and slot in {"wolf_king_state", "wolf_king_shot"}
+                    else None
+                )
+                terminal_check_skipped = (
+                    phase == "night" and wolf_killed_last_god
+                    and inference.night_slot_after_wolf_attack(game, slot)
+                )
+                terminal_hunter_shot_skipped = (
+                    phase == "day" and slot == "hunter_shot"
+                    and inference.terminal_god_departure(
+                        game, n, phase, before, round_events, terminal,
+                    )
+                )
+                ordinary_king_state_before_departure = (
+                    slot == "wolf_king_state" and actor in roles.get("狼王", [])
+                    and actor not in current_departures and actor not in before
+                )
+                ordinary_king_state_ended = (
+                    slot == "wolf_king_state" and terminal_last_wolf_king and actor == ordinary_king
+                )
+                ordinary_king_state_without_trigger = (
+                    phase == "night" and slot == "wolf_king_state"
+                    and actor == ordinary_king and actor in current_departures
+                    and not terminal_last_wolf_king
+                    and ordinary_king_trigger is False
+                    and reason not in {"wolf_king_poisoned", "dream_death_blocks_shot"}
+                )
+                terminal_wolf_king_shot_skipped = (
+                    phase == "day" and slot == "wolf_king_shot"
+                    and terminal_last_wolf_king and actor == ordinary_king
+                )
+                ordinary_king_shot_without_trigger = (
+                    phase == "day" and slot == "wolf_king_shot"
+                    and actor == ordinary_king and not terminal_last_wolf_king
+                    and ordinary_king_trigger is False
+                )
+                ordinary_king_shot_trigger_unknown = (
+                    phase == "day" and slot == "wolf_king_shot"
+                    and actor == ordinary_king and actor in current_departures
+                    and not terminal_last_wolf_king and ordinary_king_trigger is None
+                    and inference._is_empty_unknown(e)
+                )
+                if terminal_check_skipped or terminal_hunter_shot_skipped or terminal_wolf_king_shot_skipped:
+                    status, reason = "unavailable", "game_ended_before_action"
+                elif past_end:
                     status, reason = "unavailable", "game_ended"
+                elif ordinary_king_state_ended:
+                    status, reason = "unavailable", "game_ended_before_action"
+                elif ordinary_king_state_before_departure:
+                    status, reason = "unknown", "wolf_king_departure_not_confirmed"
+                elif ordinary_king_state_without_trigger:
+                    status, reason = "unavailable", "death_trigger_absent"
+                elif ordinary_king_shot_without_trigger and e.get("action") in {None, "unknown", "unavailable"}:
+                    status, reason = "unavailable", "death_trigger_absent"
+                elif ordinary_king_shot_trigger_unknown and status != "unavailable":
+                    status, reason = "unknown", "wolf_king_trigger_unknown"
                 elif actor in current_dq and phase == "day":
                     status, reason = "unavailable", "disqualified"
                 elif actor in before and slot in {"hunter_state", "wolf_king_state", "mechanical_knife_status"}:
@@ -415,7 +489,9 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                         replacement = "forbidden"
                     elif slot in {"hunter_state", "wolf_king_state"} and reason in {"hunter_poisoned", "wolf_king_poisoned", "dream_death_blocks_shot"}:
                         replacement = "cannot_shoot"
-                    if inference._is_empty_unknown(e) and replacement in templates[phase].get(slot, {}).get("actions", []):
+                    if (inference._is_empty_unknown(e) and replacement in templates[phase].get(slot, {}).get("actions", [])
+                            and not ordinary_king_state_before_departure
+                            and not ordinary_king_state_ended):
                         change(e, "action", replacement, path, reason, [n, phase, actor])
                     elif (slot in {"hunter_state", "wolf_king_state", "mechanical_knife_status"}
                           and actor in before and "unavailable" in templates[phase].get(slot, {}).get("actions", [])):
@@ -432,6 +508,8 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                     if illegal and status != "unavailable":
                         issue("illegal_targets", n, phase, slot, actor=actor, targets=illegal, reason=reason)
                 review_required = status != "unavailable"
+                if slot == "wolf_king_state" and actor in roles.get("狼王", []):
+                    review_required = False
                 if slot in {"hunter_state", "wolf_king_state"} and night_known and actor not in night_dead:
                     review_required = False
                 if slot == "self_destruct" and exile_ballots:

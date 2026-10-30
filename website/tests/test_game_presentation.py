@@ -44,6 +44,78 @@ def get_event(presentation, number, phase, slot):
     return next((row for row in round_[phase] if row["slot"] == slot), None)
 
 
+def wolf_king_game(rounds):
+    return game(
+        [(3, "猎人", None), (4, "狼王", None), (5, "狼人", None),
+         (6, "狼人", None), (7, "狼人", None)],
+        rounds,
+        board="wolf_king_guard",
+    )
+
+
+@pytest.mark.parametrize('board', ['qingqiu_night', 'magic_duel', 'mechanical_wolf_seer'])
+def test_day_results_precede_badge_transfer_and_day_actions(board):
+    source = game([(4, '狼人', None), (6, '狼人', None)], [
+        {'number': 1, 'night': [], 'day': [
+            event('self_destruct', 'self_destruct', actor=6),
+            event('night_deaths', 'die', targets=[5, 4]),
+            event('sheriff_result', 'elected', targets=[4]),
+            event('badge', 'transfer', targets=[7]),
+        ]},
+        {'number': 2, 'night': [], 'day': [
+            event('self_destruct', 'self_destruct', actor=8),
+            event('night_deaths', 'peaceful'),
+        ]},
+        {'number': 3, 'night': [], 'day': [
+            event('exile_result', 'exile', targets=[9]),
+            event('night_deaths', 'peaceful'),
+        ]},
+    ], board=board)
+    before = deepcopy(source)
+    result = build_game_presentation(source)
+    assert [[e['slot'] for e in r['day']] for r in result['rounds']] == [
+        ['sheriff_result', 'night_deaths', 'badge', 'self_destruct'],
+        ['night_deaths', 'self_destruct'],
+        ['night_deaths', 'exile_result'],
+    ]
+    assert source == before
+
+
+def test_nine_tail_kill_replaces_wolf_attack_only_after_ordinary_wolves_depart():
+    source = game([(2, '狼人', None), (4, '狼人', None), (6, '狼人', None), (9, '九尾狐', None)], [
+        {'number': 1, 'night': [event('wolf_attack', 'attack', targets=[5]), event('nine_tail_kill')],
+         'day': [event('night_deaths', 'die', targets=[2]), event('self_destruct', 'self_destruct', actor=4)]},
+        {'number': 2, 'night': [event('wolf_attack'), event('nine_tail_kill')],
+         'day': [event('self_destruct', 'self_destruct', actor=6)]},
+        {'number': 3, 'night': [event('wolf_attack'), event('nine_tail_kill', 'kill', actor=9, targets=[1])], 'day': []},
+        {'number': 4, 'night': [event('wolf_attack', 'attack', targets=[3]), event('nine_tail_kill')], 'day': []},
+    ], board='qingqiu_night')
+    before = deepcopy(source)
+    result = build_game_presentation(source)
+    assert get_event(result, 1, 'night', 'wolf_attack')['targets'] == [5]
+    assert get_event(result, 1, 'night', 'nine_tail_kill') is None
+    assert get_event(result, 2, 'night', 'wolf_attack') is not None
+    assert get_event(result, 2, 'night', 'nine_tail_kill') is None
+    assert get_event(result, 3, 'night', 'wolf_attack') is None
+    assert get_event(result, 3, 'night', 'nine_tail_kill')['targets'] == [1]
+    assert get_event(result, 4, 'night', 'wolf_attack') is None
+    mapped = get_event(result, 4, 'night', 'nine_tail_kill')
+    assert (mapped['action'], mapped['actor'], mapped['targets']) == ('kill', 9, [3])
+    assert mapped['slot_label'] == '九尾狐击杀'
+    assert source == before
+
+
+def test_nine_tail_takeover_keeps_an_unknown_kill_slot_when_target_is_missing():
+    source = game([(2, '狼人', None), (9, '九尾狐', None)], [
+        {'number': 1, 'night': [], 'day': [event('exile_result', 'exile', targets=[2])]},
+        {'number': 2, 'night': [event('wolf_attack')], 'day': []},
+    ], board='qingqiu_night')
+    result = build_game_presentation(source)
+    assert get_event(result, 2, 'night', 'wolf_attack') is None
+    kill = get_event(result, 2, 'night', 'nine_tail_kill')
+    assert (kill['action'], kill['actor'], kill['targets']) == ('unknown', 9, [])
+
+
 @pytest.mark.parametrize('board', ['mechanical_wolf_seer', 's21_mechanical_wolf_seer', 's23_mechanical_wolf_seer'])
 @pytest.mark.parametrize('recorded_slot', [True, False])
 def test_mechanical_knife_is_only_shown_on_nights_after_all_ordinary_wolves_depart(board, recorded_slot):
@@ -87,6 +159,42 @@ def test_prepared_unavailability_hides_only_empty_template_slots():
     assert build_game_presentation(source)['rounds'][0]['night'] == []
     source['rounds'][0]['night'][0].update(action='select', targets=[3])
     assert get_event(build_game_presentation(source), 2, 'night', 'puppet_select')['targets'] == [3]
+
+
+@pytest.mark.parametrize('board', ['masquerade', 's21_masquerade', 's23_masquerade'])
+@pytest.mark.parametrize('action', ['unknown', 'unavailable', 'pass'])
+def test_masquerade_first_night_has_no_unplayable_skill_cards(board, action):
+    skills = [('masquerade_verify', 9), ('masquerade_mask', 9), ('dancer_dance', 6)]
+    source = game([(9, '假面', None), (6, '舞者', None)], [
+        {'number': 1, 'night': [event(slot, action, actor=actor, result='首夜不能发动')
+                                for slot, actor in skills], 'day': []},
+        {'number': 2, 'night': [event('dancer_dance', 'dance', actor=6, targets=[8, 10, 12])], 'day': []},
+    ], board=board)
+    before = deepcopy(source)
+    result = build_game_presentation(source)
+    assert result['rounds'][0]['night'] == []
+    assert get_event(result, 2, 'night', 'dancer_dance')['targets'] == [8, 10, 12]
+    assert source == before
+
+
+@pytest.mark.parametrize('slot,role', [('idiot_reveal', '白痴'), ('idiot_reveal', '白神'),
+                                       ('white_god_reveal', '白神')])
+@pytest.mark.parametrize('trigger', ['alive', 'night_death', 'exile', 'ballot', 'revealed'])
+def test_white_god_reveal_card_requires_public_exile(slot, role, trigger):
+    reveal = event(slot, 'reveal' if trigger == 'revealed' else 'unavailable')
+    day = [reveal]
+    voting = None
+    if trigger == 'night_death':
+        day.insert(0, event('night_deaths', 'die', targets=[4]))
+    elif trigger == 'exile':
+        day.insert(0, event('exile_result', 'exile', targets=[4]))
+    elif trigger == 'ballot':
+        voting = {'days': [], 'ballots': [{'day': 1, 'kind': 'exile', 'status': 'complete', 'winner': 4}]}
+    source = game([(4, role, None)], [{'number': 1, 'night': [], 'day': day}], voting=voting)
+    before = deepcopy(source)
+    result = get_event(build_game_presentation(source), 1, 'day', slot)
+    assert (result is not None) == (trigger in {'exile', 'ballot', 'revealed'})
+    assert source == before
 
 
 def test_absent_hunter_placeholder_requires_complete_roster():
@@ -598,6 +706,170 @@ def test_hunter_who_shot_does_not_return_for_a_later_night_slot():
     assert get_event(presentation, 2, "night", "hunter_state") is None
 
 
+def test_live_ordinary_wolf_king_has_no_night_qualification_or_day_shot_card():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("wolf_king_state", actor=4)],
+        "day": [event("wolf_king_shot", actor=4)],
+    }])
+
+    presentation = build_game_presentation(source)
+
+    assert get_event(presentation, 1, "night", "wolf_king_state") is None
+    assert get_event(presentation, 1, "day", "wolf_king_shot") is None
+
+
+def test_ordinary_wolf_king_qualification_moves_to_departure_day_and_shot_proves_it():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("wolf_attack", "attack", targets=[4]),
+                  event("wolf_king_state", actor=4)],
+        "day": [event("night_deaths", "die", targets=[4]),
+                event("wolf_king_shot", "shoot", actor=4, targets=[5])],
+    }])
+
+    presentation = build_game_presentation(source)
+    qualification = get_event(presentation, 1, "day", "wolf_king_state")
+
+    assert get_event(presentation, 1, "night", "wolf_king_state") is None
+    assert qualification is not None and qualification["action"] == "can_shoot"
+    assert qualification["slot_label"] == "狼王开枪资格"
+    assert get_event(presentation, 1, "day", "wolf_king_shot")["targets"] == [5]
+    day = next(row for row in presentation["rounds"] if row["number"] == 1)["day"]
+    assert [row["slot"] for row in day].index("wolf_king_state") < [row["slot"] for row in day].index("wolf_king_shot")
+
+
+def test_exiled_ordinary_wolf_king_qualification_uses_the_day_shot_result():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("wolf_king_state", actor=4)],
+        "day": [event("exile_result", "exile", targets=[4]),
+                event("wolf_king_shot", "shoot", actor=4, targets=[5])],
+    }])
+
+    presentation = build_game_presentation(source)
+    qualification = get_event(presentation, 1, "day", "wolf_king_state")
+
+    assert qualification is not None and qualification["action"] == "can_shoot"
+    assert get_event(presentation, 1, "day", "wolf_king_shot")["action"] == "shoot"
+
+
+def test_ordinary_wolf_king_self_destruct_does_not_create_a_shot_opportunity():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("wolf_king_state", actor=4)],
+        "day": [event("self_destruct", "self_destruct", actor=4),
+                event("wolf_king_shot", "unavailable", actor=4)],
+    }])
+
+    presentation = build_game_presentation(source)
+    qualification = get_event(presentation, 1, "day", "wolf_king_state")
+
+    assert get_event(presentation, 1, "night", "wolf_king_state") is None
+    assert qualification is not None
+    assert qualification["action"] in {"cannot_shoot", "unavailable"}
+    assert get_event(presentation, 1, "day", "wolf_king_shot") is None
+
+
+def test_unknown_night_death_cause_keeps_ordinary_wolf_king_shot_reviewable():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("night_deaths", "die", targets=[4]),
+                  event("wolf_king_state", actor=4)],
+        "day": [event("wolf_king_shot", actor=4)],
+    }])
+
+    presentation = build_game_presentation(source)
+
+    qualification = get_event(presentation, 1, "day", "wolf_king_state")
+    shot = get_event(presentation, 1, "day", "wolf_king_shot")
+    assert qualification is not None and qualification["action"] == "unknown"
+    assert shot is not None and shot["action"] == "unknown"
+
+
+def test_departed_wolf_king_without_source_state_gets_departure_qualification():
+    source = wolf_king_game([{
+        "number": 1,
+        "night": [event("wolf_attack", "attack", targets=[4])],
+        "day": [event("night_deaths", "die", targets=[4]),
+                event("wolf_king_shot", "shoot", actor=4, targets=[5])],
+    }])
+
+    presentation = build_game_presentation(source)
+
+    qualification = get_event(presentation, 1, "day", "wolf_king_state")
+    assert qualification is not None and qualification["action"] == "can_shoot"
+    assert qualification["inferred"] is True
+    assert get_event(presentation, 1, "day", "wolf_king_shot")["targets"] == [5]
+
+
+def test_actual_shot_does_not_override_confirmed_dream_death_block():
+    source = game([(2, "摄梦人", None), (4, "狼王", None), (5, "狼人", None)], [
+        {"number": 1, "night": [event("dreamer_action", "dream", actor=2, targets=[4])],
+         "day": [event("night_deaths", "peaceful")]},
+        {"number": 2, "night": [event("dreamer_action", "dream", actor=2, targets=[4]),
+                    event("wolf_attack", "attack", targets=[4])],
+         "day": [event("night_deaths", "die", targets=[2, 4]),
+                 event("wolf_king_shot", "shoot", actor=4, targets=[5])]},
+    ], board="wolf_king_guard")
+
+    presentation = build_game_presentation(source)
+
+    qualification = get_event(presentation, 2, "day", "wolf_king_state")
+    shot = get_event(presentation, 2, "day", "wolf_king_shot")
+    assert qualification is not None and qualification["action"] == "cannot_shoot"
+    assert shot is not None and shot["action"] == "shoot" and shot["targets"] == [5]
+
+
+def test_blocked_departed_wolf_king_hides_actorless_empty_shot_placeholder():
+    source = game([(2, "摄梦人", None), (4, "狼王", None), (5, "狼人", None)], [
+        {"number": 1, "night": [event("dreamer_action", "dream", actor=2, targets=[4])],
+         "day": [event("night_deaths", "peaceful")]},
+        {"number": 2, "night": [event("dreamer_action", "dream", actor=2, targets=[4]),
+                    event("wolf_attack", "attack", targets=[5])],
+         "day": [event("night_deaths", "die", targets=[2, 4]), event("wolf_king_shot")]},
+    ], board="wolf_king_guard")
+
+    presentation = build_game_presentation(source)
+
+    qualification = get_event(presentation, 2, "day", "wolf_king_state")
+    assert qualification is not None and qualification["action"] == "cannot_shoot"
+    assert get_event(presentation, 2, "day", "wolf_king_shot") is None
+
+
+def test_last_ordinary_wolf_king_exiled_at_terminal_has_no_qualification_or_shot_card():
+    roles = ["预言家", "女巫", "猎人", "守卫", "平民", "平民",
+             "平民", "平民", "狼人", "狼人", "狼人", "狼王"]
+    source = game([(i, role, None) for i, role in enumerate(roles, 1)], [
+        {"number": 1, "night": [event("night_deaths", "die", targets=[9, 10, 11])], "day": []},
+        {"number": 2, "night": [event("night_deaths", "peaceful") , event("wolf_king_state", actor=12)],
+         "day": [event("exile_result", "exile", targets=[12]), event("wolf_king_shot", actor=12)]},
+    ], board="wolf_king_guard")
+    source["winner"] = "good"
+    source["terminal_observation"] = {"round": 2, "phase": "day"}
+    for seat, role in zip(source["seats"], roles):
+        seat["role"] = role
+        seat["faction"] = "werewolf" if role in {"狼王", "狼人"} else "good"
+
+    presentation = build_game_presentation(source)
+
+    assert get_event(presentation, 2, "day", "wolf_king_state") is None
+    assert get_event(presentation, 2, "day", "wolf_king_shot") is None
+
+
+def test_later_departure_projection_does_not_hide_an_earlier_recorded_wolf_king_shot():
+    source = wolf_king_game([
+        {"number": 1, "night": [], "day": [event("wolf_king_shot", "shoot", actor=4, targets=[5])]},
+        {"number": 2, "night": [event("wolf_king_state", actor=4)],
+         "day": [event("wolf_king_shot", actor=4)]},
+    ])
+
+    presentation = build_game_presentation(source)
+
+    assert get_event(presentation, 1, "day", "wolf_king_shot")["targets"] == [5]
+    assert get_event(presentation, 2, "day", "wolf_king_shot") is None
+
+
 def test_empty_optional_unknown_slots_are_omitted_but_actual_events_remain():
     source = game(
         [
@@ -973,6 +1245,101 @@ def test_empty_hunter_shot_is_omitted_when_poison_proves_hunter_cannot_shoot():
     explicit_pre_settlement = build_game_presentation(source)
     assert get_event(explicit_pre_settlement, 1, "night", "hunter_state")["action"] == "can_shoot"
     assert get_event(explicit_pre_settlement, 1, "day", "hunter_shot") is None
+
+
+def test_bv1faccz5e9e_terminal_wolf_kill_skips_later_seer_slot_but_keeps_recorded_check():
+    # BV1FacCz5E9e: 2 Hunter shoots 1 Guard, then 8 self-destructs. On the
+    # following night the wolves kill 9 Medium, the last god, and the game ends
+    # before the later Medium check slot.
+    seats = [
+        (1, "守卫", None), (2, "猎人", None), (3, "平民", None),
+        (4, "机械狼", "机械女巫"), (5, "平民", None), (6, "狼人", None),
+        (7, "女巫", None), (8, "狼人", None), (9, "通灵师", None),
+        (10, "狼人", None), (11, "平民", None), (12, "平民", None),
+    ]
+    rounds = [
+        {"number": 1, "night": [event("night_deaths", "die", targets=[7, 4])],
+         "day": [event("self_destruct", "self_destruct", actor=10)]},
+        {"number": 2, "night": [event("wolf_attack", "attack", targets=[2]),
+                                  event("night_deaths", "die", targets=[2])],
+         "day": [event("hunter_shot", "shoot", actor=2, targets=[1]),
+                 event("self_destruct", "self_destruct", actor=8)]},
+        {"number": 3, "night": [event("wolf_attack", "attack", targets=[9]),
+                                  event("night_deaths", "die", targets=[9]),
+                                  event("seer_check", actor=9)],
+         "day": []},
+    ]
+    source = game(seats, rounds, board="s21_mechanical_wolf_seer")
+    source["terminal_observation"] = {"round": 3, "phase": "night", "basis": "explicit_game_end"}
+
+    pending = build_game_presentation(source)
+
+    assert get_event(pending, 3, "night", "seer_check") is None
+
+    # A source record of a check remains visible even if it conflicts with the
+    # reconstructed terminal ordering; projection must not erase observed facts.
+    source["rounds"][2]["night"][2].update(action="check", targets=[12], result="平民")
+    recorded = build_game_presentation(source)
+    actual = get_event(recorded, 3, "night", "seer_check")
+    assert actual["action"] == "check"
+    assert actual["targets"] == [12]
+
+
+def test_terminal_last_god_hunter_does_not_get_a_shot_window():
+    source = game(
+        [(1, "守卫", None), (2, "猎人", None), (3, "平民", None), (4, "机械狼", None),
+         (5, "平民", None), (6, "狼人", None), (7, "女巫", None), (8, "狼人", None),
+         (9, "通灵师", None), (10, "狼人", None), (11, "平民", None), (12, "平民", None)],
+        [
+            {"number": 1, "night": [event("night_deaths", "die", targets=[1, 7, 9])], "day": []},
+            {"number": 2, "night": [], "day": [
+                event("exile_result", "exile", targets=[2]),
+                event("hunter_shot", actor=2),
+            ]},
+        ],
+        board="s21_mechanical_wolf_seer",
+    )
+    source["terminal_observation"] = {"round": 2, "phase": "day", "basis": "last_god_departed"}
+
+    presentation = build_game_presentation(source)
+
+    assert get_event(presentation, 2, "day", "hunter_shot") is None
+
+
+def test_ordinary_exile_trigger_still_shows_hunter_shot_review():
+    source = game(
+        [(6, "猎人", None), (11, "平民", None)],
+        [{"number": 1, "night": [], "day": [
+            event("exile_result", "exile", targets=[6]),
+            event("hunter_shot", actor=6),
+        ]}],
+        board="s21_mechanical_wolf_seer",
+    )
+
+    shot = get_event(build_game_presentation(source), 1, "day", "hunter_shot")
+
+    assert shot is not None
+    assert shot["inferred"] is True
+    assert "待核" in shot["inference_note"]
+
+
+def test_previous_day_departed_hunter_has_no_later_shot_slot():
+    source = game(
+        [(6, "猎人", None), (11, "平民", None)],
+        [
+            {"number": 1, "night": [], "day": [
+                event("exile_result", "exile", targets=[6]),
+                event("hunter_shot", "shoot", actor=6, targets=[11]),
+            ]},
+            {"number": 2, "night": [], "day": [event("hunter_shot", actor=6)]},
+        ],
+        board="s21_mechanical_wolf_seer",
+    )
+
+    presentation = build_game_presentation(source)
+
+    assert get_event(presentation, 1, "day", "hunter_shot")["action"] == "shoot"
+    assert get_event(presentation, 2, "day", "hunter_shot") is None
 
 
 def test_bv1j_sample_projection_preserves_rounds_and_source_and_uses_ballot_evidence():
