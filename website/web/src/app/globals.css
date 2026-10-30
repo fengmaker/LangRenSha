@@ -1025,6 +1025,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .bluff-status-pending, .bluff-review-questions { color: var(--gold); }
 .bluff-status-known { color: var(--mint); }
 .bluff-review-card header > strong { flex: none; font-size: 13px; }
+.bluff-review-entries { display: grid; gap: 16px; margin-top: 18px; }
+.bluff-review-entry { padding-top: 16px; border-top: 1px solid var(--line-strong); }
+.bluff-review-entry header h3 { margin: 0; font-size: 16px; }
+.bluff-review-entry header h3 span { color: var(--muted); font-size: 13px; font-weight: 400; }
+.bluff-success-comparison { margin: 14px 0; padding: 14px; border-left: 2px solid var(--gold); background: var(--panel); }
+.bluff-success-comparison h4 { margin: 0 0 10px; font-size: 14px; }
+.bluff-success-comparison dl { display: grid; gap: 8px; margin: 0; }
+.bluff-success-comparison dl div { display: grid; grid-template-columns: minmax(150px, 0.4fr) 1fr; gap: 12px; }
+.bluff-success-comparison dt { color: var(--muted); font-size: 13px; }
+.bluff-success-comparison dd { margin: 0; font-size: 14px; }
 .bluff-review-evidence { display: grid; gap: 12px; margin: 16px 0; }
 .bluff-review-evidence > div { padding: 13px; background: var(--panel); }
 .bluff-review-evidence blockquote { margin: 0; padding-left: 12px; border-left: 2px solid var(--mint); font-size: 14px; }
@@ -1051,6 +1061,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 760px) {
   .bluff-review-card { padding: 16px; }
   .bluff-review-card header { flex-direction: column; gap: 4px; }
+  .bluff-success-comparison dl div { grid-template-columns: 1fr; gap: 2px; }
   .bluff-feedback-choices { grid-template-columns: 1fr; }
   .bluff-feedback-tools { padding: 10px; }
 }

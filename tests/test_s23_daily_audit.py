@@ -5,6 +5,7 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+from board_config import load_template
 from s23_daily_audit import apply_events, apply_findings, recap_rows
 
 
@@ -69,8 +70,7 @@ class DailyAuditTests(unittest.TestCase):
         dossier_path = next((root / 'data/games/S23').glob('*BV1nJer63EDh/dossier.candidate.json'))
         import json
         dossier = json.loads(dossier_path.read_text(encoding='utf-8'))
-        board_path = root / 'config/board_templates/s23_qingqiu_night.json'
-        board = json.loads(board_path.read_text(encoding='utf-8'))
+        board = load_template('s23_qingqiu_night', root)
         guard_slot = next(slot for slot in board['night_slots'] if slot['code'] == 'guard')
         n1_guard = next(event for event in dossier['rounds'][0]['night'] if event['slot'] == 'guard')
         self.assertIn('pass', guard_slot['actions'])

@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-29",
+  "season": "S21",
+  "media_covered": 122,
+  "recent_game_reviews_reused": 10,
+  "remaining_source_reviews": 112,
+  "coverage_status": "complete_for_requested_day_night_fields_with_declared_gaps",
+  "field_scope": [
+    "night_actions",
+    "day_events",
+    "death_vs_announcement",
+    "sheriff_badge",
+    "actual_ballots",
+    "endgame"
+  ],
+  "excluded_scope": [
+    "bluff_reverification",
+    "identity_reidentification"
+  ],
+  "section_reports": {
+    "data/reports/S21/S21_本次日夜复核_前段_20261029.json": "b1e012c992ec02b5108af7a327785a57f4b7de624496f038a333740887dc2168",
+    "data/reports/S21/S21_本次日夜复核_前中段_20261029.json": "1c83bb6249cf93981b45603887168130513725b1d20b936c78f7d13232733941",
+    "data/reports/S21/S21_本次日夜复核_中段_20261029.json": "4776a4279ae3cc4e1d16eed54ea505a8e7ed5f0e4a906fc2f80c5b26f975d367",
+    "data/reports/S21/S21_本次日夜复核_后段_20261029.json": "6dca98ff43396c333a3aa2e0c8fdddb84ded20a68de1f89e38943bbd5376aa38"
+  },
+  "source_corrections_report": "data/reports/S21/S21_本次日夜修正_20261029.json",
+  "primary_decisions_on_additional_proposals": [
+    {
+      "bvid": "BV1iQ9sBAEwq",
+      "decision": "维持8→6及完整票型",
+      "reason": "2702先误报8→4并带呃，2703更正为6→4，2704另报8→6；这是现场连续更正，旧spec已保留解释，不把更正后票降为未知。",
+      "segments": [
+        2702,
+        2703,
+        2704
+      ]
+    },
+    {
+      "bvid": "BV1wgRtBQEms",
+      "decision": "维持12→11及完整票型",
+      "reason": "8746明确包含十二号投11；十一为上票尾音重复或合并报票，不能因同句有十一就抹去十二号。",
+      "segments": [
+        8745,
+        8746
+      ]
+    },
+    {
+      "bvid": "BV1un5z6AEBQ",
+      "decision": "维持N1死亡9/10与D1吞毒自爆的先后分层",
+      "reason": "2013明确9/10双死，2016明确吞毒自爆；683–684为自爆后的延迟双死公布。实际死亡与公布前程序行为分别保存，不因自爆恢复票权。",
+      "segments": [
+        682,
+        683,
+        684,
+        2011,
+        2012,
+        2013,
+        2016
+      ]
+    },
+    {
+      "bvid": "BV1un5z6AEKX",
+      "decision": "维持N2死亡3/9及D2吞毒自爆",
+      "reason": "1367–1368为刀9/毒3，1371明确吞毒自爆；865公布3/9双死，旧spec已说明延迟公布，不撤销已核夜死。",
+      "segments": [
+        861,
+        865,
+        1367,
+        1368,
+        1371
+      ]
+    },
+    {
+      "bvid": "BV1MfQkBeEmg",
+      "decision": "维持N3守卫9自守，旧coverage note标为过期文字",
+      "reason": "2741守卫守护承接2742九号自首（自守近音），与9号已核物理守卫一致；原event自带解释。",
+      "segments": [
+        2740,
+        2741,
+        2742,
+        2743
+      ]
+    },
+    {
+      "bvid": "BV1otogBAE42",
+      "decision": "保留首日警长2号票权冲突及该轮partial",
+      "reason": "初始报名更正与实际报票出现矛盾，不能凭最终候选或弃票消歧；程序issue不是已证明的非法票。",
+      "segments": [
+        382,
+        383,
+        384,
+        1050,
+        1057,
+        1058,
+        1059,
+        1061
+      ]
+    }
+  ],
+  "verification": {
+    "source_audit": {
+      "media": 122,
+      "events": 2800,
+      "ballots": 322,
+      "source_gap_records_retained": 81,
+      "warnings": 0,
+      "validation_errors": 0
+    },
+    "targeted_tests": {
+      "passed": 167,
+      "failed": 0,
+      "groups": [
+        89,
+        77,
+        1
+      ]
+    },
+    "all_requested_media_accounted_for_exactly_once": true,
+    "changed_cases_readback": "all three morning-shot electorates complete; corrected sheriff registration, PK and failed-poison cases have no derivation issues",
+    "website_acceptance": {
+      "state": "passed",
+      "mode": "full",
+      "release_id": "S21_S22_S23-02af63bf4f0366c7-fafe3224-p8-s2",
+      "source_games_matched": 345,
+      "browser_pages": 52,
+      "report": "data/reports/S21/S21_日夜全季复核后网站验收_20261029.json",
+      "report_sha256": "14bfc5d530ed531b2f92ddb4f61e4a7f0458c36566306b8547e2a9ea5b957f2d"
+    },
+    "git_diff_check": "passed for task code, tests and report index"
+  },
+  "bluff_assets_before": {
+    "website/assets/bluffs/S22.json": "1e3aa2acd02e9fa302e5f214497ddb54c6e4892aca11e0ac0139402b80432cfe",
+    "website/assets/bluffs/S23.json": "0a02aab646d1bd8ee7d7b1d9aca97227511c7940bfa5a4294d548abed0add9c9"
+  },
+  "database_backup": "data/backups/S21-day-night-review-before-publish-20261029/receipt.json",
+  "business_database_imported_this_run": false,
+  "website_publication": {
+    "activated": true,
+    "release_id": "S21_S22_S23-02af63bf4f0366c7-fafe3224-p8-s2",
+    "game_count": 345,
+    "seasons": {
+      "S21": 122,
+      "S22": 148,
+      "S23": 75
+    },
+    "ballots": 846,
+    "votes": 6053,
+    "bluff_review_reperformed": false,
+    "existing_bluff_inputs_preserved": true,
+    "per_season_counts": {
+      "S21": {
+        "games": 122,
+        "seats": 1464,
+        "rounds": 372,
+        "ballots": 322,
+        "votes": 2247
+      },
+      "S22": {
+        "games": 148,
+        "seats": 1776,
+        "rounds": 472,
+        "ballots": 346,
+        "votes": 2507
+      },
+      "S23": {
+        "games": 75,
+        "seats": 900,
+        "rounds": 227,
+        "ballots": 178,
+        "votes": 1299
+      }
+    }
+  },
+  "known_unresolved": "原始81条缺口记录继续保留，部分已由已有规则派生解答；2号警长投票资格冲突BV1otogBAE42仍未决。其他来源不足项详见分段报告，不补为弃票或空过。",
+  "bluff_assets_unchanged": true
+}

@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1fS536BEUq/transcript.selected.json",
     "selected_sha256": "fde98c21cabf61d80c01bbd6e60538b83b720e24c6d02df792fd369d8ab67133",
@@ -600,6 +600,40 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1fS536BEUq-event-018",
+      "phase": "day",
+      "round": 2,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第二日复盘确认放逐投票前终局。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1fS536BEUq/transcript.selected.json",
+          "source_sha256": "fde98c21cabf61d80c01bbd6e60538b83b720e24c6d02df792fd369d8ab67133",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-12/2026-05-12_S21_第12周_决赛周_第01局_预女猎白混__BV1fS536BEUq_P01_CID38287509173.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "2f2eabc66fe7a141c7f91d283caf8b35c537904dac17f7c2f64f34a85b80f165",
+          "source_segment_indices": [
+            2539,
+            2540,
+            2541,
+            2542
+          ],
+          "start_ms": 5228909,
+          "end_ms": 5233889,
+          "quote": "白神在第二天的白天\n4号狼人选择交牌\n游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1112,7 +1146,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "d5d8891580fd838154a4e80411e1fcad89b8db6a93cb907a3743d2508848835b",
+    "spec_sha256": "42874c643a5bd448485cf7cfb732cba3933945beda5121da5e22c053d057041b",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1123,6 +1157,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-032"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

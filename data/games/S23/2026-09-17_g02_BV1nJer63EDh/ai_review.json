@@ -554,7 +554,15 @@
     "checks": [
       "N1狼刀3、女巫救3，平安；D1 10狼自爆。",
       "N2狼刀3守卫、白泽清标记、狐标记1；3单死。N3狼刀7，7单死；D3 5狼自爆。",
-      "N4狼刀6、毒11但狐免疫毒，复盘明确只有6单死；狐猎杀时刻技能使2、4出局。"
+      "N4狼刀6、毒11但狐免疫毒，复盘明确只有6单死；狐猎杀时刻技能使2、4出局。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-070"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -625,6 +633,45 @@
         "changes": {
           "result": "好人"
         }
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "slot": "exile_result",
+        "changes": {
+          "action": "none",
+          "targets": [],
+          "result": null
+        },
+        "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json",
+            "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+            "source_segment_indices": [
+              1917,
+              1918,
+              1919,
+              1920,
+              1921,
+              1922,
+              1923,
+              1924,
+              1925,
+              1926,
+              1927,
+              1928,
+              1929
+            ],
+            "start_ms": 3819750,
+            "end_ms": 3848640,
+            "quote": "所以当夜为6号平民单死\n在第四天白天\n九尾狐选择发动猎杀时刻技能\n当夜呃\n当日我们以身上有标记的玩家为一号平民\n8号平民以及12号平民\n加上我们九尾狐本身\n11号玩家四张牌大于仅剩的两张牌\n2号白泽以及4号女巫\n所以技能发动成功\n2号四号出局\n游戏结束\n狼队阵营屠神获胜",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-070",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
       }
     ],
     "finding_resolutions": [
@@ -1020,6 +1067,19 @@
           8
         ],
         "result": "好人"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "before": null,
+      "after": {
+        "slot": "exile_result",
+        "actor": null,
+        "targets": [],
+        "action": "none",
+        "result": null
       }
     }
   ],

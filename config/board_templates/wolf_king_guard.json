@@ -211,5 +211,70 @@
         "unknown"
       ]
     }
-  ]
+  ],
+  "storage_variants": {
+    "s21_wolf_king_guard": {
+      "code": "s21_wolf_king_guard",
+      "name": "S21 狼王守卫（核实归档）",
+      "role_counts": null,
+      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "slot_codes": {
+        "night": [
+          "guard",
+          "wolf_attack",
+          "witch_save",
+          "seer_check",
+          "witch_poison"
+        ],
+        "day": [
+          "sheriff_candidates",
+          "sheriff_result",
+          "night_deaths",
+          "exile_result",
+          "badge"
+        ]
+      },
+      "slot_overrides": {
+        "night": {
+          "guard": {
+            "actor_role": null
+          },
+          "wolf_attack": {
+            "actor_role": null,
+            "actions": [
+              "attack",
+              "pass",
+              "unknown"
+            ]
+          },
+          "witch_save": {
+            "actor_role": null
+          },
+          "seer_check": {
+            "label": "预言家或通灵师查验",
+            "actor_role": null
+          },
+          "witch_poison": {
+            "actor_role": null
+          }
+        },
+        "day": {
+          "sheriff_candidates": {
+            "label": "警长候选"
+          },
+          "sheriff_result": {
+            "actions": [
+              "elected",
+              "deferred",
+              "none",
+              "unknown"
+            ]
+          },
+          "badge": {
+            "label": "警徽状态"
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,242 @@
+{
+  "code": "all_in",
+  "name": "孤注一掷",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "女巫": 1,
+    "猎人": 1,
+    "摄梦人": 1,
+    "平民": 4,
+    "狼人": 3,
+    "典狱长": 1
+  },
+  "wake_order": [],
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。",
+  "night_slots": [
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "女巫解药",
+      "actor_role": "女巫",
+      "actions": [
+        "save",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "女巫毒药",
+      "actor_role": "女巫",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "预言家查验",
+      "actor_role": "预言家",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "dreamer_action",
+      "label": "摄梦人技能",
+      "actor_role": "摄梦人",
+      "actions": [
+        "dream",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "warden_trade_targets",
+      "label": "典狱长选择交易双方（第二夜起）",
+      "actor_role": "典狱长",
+      "actions": [
+        "select_pair",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "trade_decisions",
+      "label": "按交易双方目标顺序记录两人选择：trade双交易、betray双背叛、trade_betray前交易后背叛、betray_trade前背叛后交易",
+      "actor_role": null,
+      "actions": [
+        "trade",
+        "betray",
+        "trade_betray",
+        "betray_trade",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "trade_resolution",
+      "label": "交易结算与目标映射",
+      "actor_role": null,
+      "actions": [
+        "immune",
+        "betrayal_death",
+        "mutual_targets",
+        "warden_self_trade",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "warden_wolf_join",
+      "label": "典狱长加入狼队行动",
+      "actor_role": "典狱长",
+      "actions": [
+        "join",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_state",
+      "label": "猎人技能",
+      "actor_role": "猎人",
+      "actions": [
+        "can_shoot",
+        "cannot_shoot",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "hunter_shot",
+      "label": "猎人开枪",
+      "actor_role": "猎人",
+      "actions": [
+        "shoot",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    }
+  ]
+}

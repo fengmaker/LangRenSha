@@ -578,7 +578,19 @@
     "checks": [
       "N1标记10，狼刀3、女巫救3，平安；D1 9自爆。",
       "N2标记5/清10，狼刀5、毒1，1/5双死；D2 7自爆。N3狼刀8，8单死；D3 10自爆。",
-      "N4狼刀11、狐标记/猎杀时刻技能使3、6出局；复盘明确是技能结算，非普通放逐；狼队随后拍刀。"
+      "N4狼刀11、狐标记/猎杀时刻技能使3、6出局；复盘明确是技能结算，非普通放逐；狼队随后拍刀。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-068",
+          "DN-211",
+          "DN-213",
+          "DN-214",
+          "DN-217"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -682,6 +694,228 @@
         "changes": {
           "result": "好人"
         }
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "witch_save",
+        "changes": {
+          "action": "save",
+          "actor": 12,
+          "targets": [
+            3
+          ],
+          "result": null
+        },
+        "reason": "N1狼刀3号后救起，形成平安夜；N2明确毒杀1号平民，故N1毒药未用。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2347,
+              2348,
+              2349,
+              2350,
+              2357,
+              2358,
+              2359
+            ],
+            "start_ms": 4457490,
+            "end_ms": 4480770,
+            "quote": "当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节\n当夜狼队击杀5号平民女巫\n毒杀一号平民\n一号5号双死",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-211",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "changes": {
+          "action": "attack",
+          "targets": [
+            3
+          ],
+          "result": null
+        },
+        "reason": "N1明确狼队击杀3号，女巫救起并形成平安夜。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2346,
+              2347,
+              2348,
+              2349
+            ],
+            "start_ms": 4452770,
+            "end_ms": 4463110,
+            "quote": "首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-214",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "peaceful",
+          "targets": [],
+          "result": null
+        },
+        "reason": "N1明确狼队击杀3号，女巫救起并形成平安夜。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2346,
+              2347,
+              2348,
+              2349
+            ],
+            "start_ms": 4452770,
+            "end_ms": 4463110,
+            "quote": "首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-214",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "seer_check",
+        "changes": {
+          "action": "check",
+          "actor": 3,
+          "targets": [
+            4
+          ],
+          "result": "狼人"
+        },
+        "reason": "N1连续复盘“预言家验证4号玩家九尾狐为狼人身份”；目标4、反馈狼人。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2348,
+              2349,
+              2350
+            ],
+            "start_ms": 4459890,
+            "end_ms": 4464010,
+            "quote": "救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-213",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 4,
+        "phase": "night",
+        "slot": "guard",
+        "changes": {
+          "action": "guard",
+          "actor": 11,
+          "targets": [
+            12
+          ],
+          "result": null
+        },
+        "reason": "连续转写“守护十／二号女巫”合读为12号女巫；10号已在此前白天自爆，不能作为本夜守护目标。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2371,
+              2372,
+              2373,
+              2374,
+              2375,
+              2376
+            ],
+            "start_ms": 4502430,
+            "end_ms": 4514660,
+            "quote": "第三天的白天\n10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-217",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 4,
+        "phase": "day",
+        "slot": "exile_result",
+        "changes": {
+          "action": "none",
+          "targets": [],
+          "result": null
+        },
+        "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+            "source_segment_indices": [
+              2371,
+              2372,
+              2373,
+              2374,
+              2375,
+              2376,
+              2377,
+              2378,
+              2379,
+              2380,
+              2381,
+              2382,
+              2383,
+              2384,
+              2385,
+              2386,
+              2387,
+              2388,
+              2389,
+              2390,
+              2391,
+              2392,
+              2393,
+              2394,
+              2395,
+              2396,
+              2397,
+              2398,
+              2399,
+              2400,
+              2401
+            ],
+            "start_ms": 4502430,
+            "end_ms": 4584240,
+            "quote": "第三天的白天\n10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民\n此时场上有标记的玩家是2号平民\n嗯你如果清12的话就赢了嗯\n嗯此时场上标记为2号平民以及12号女巫\n带标记\n算上我们当夜哦\n我们夜间啊\n夜间的环节是九尾狐带刀击杀了11号\n首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记\n12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀\n12号女巫拍刀成功\n游戏结束\n狼队阵营屠城获胜",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-068",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
       }
     ],
     "finding_resolutions": [
@@ -1611,6 +1845,112 @@
           8
         ],
         "result": "好人"
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "before": null,
+      "after": {
+        "slot": "witch_save",
+        "actor": 12,
+        "targets": [
+          3
+        ],
+        "action": "save",
+        "result": null
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "before": null,
+      "after": {
+        "slot": "wolf_attack",
+        "actor": null,
+        "targets": [
+          3
+        ],
+        "action": "attack",
+        "result": null
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": {
+        "slot": "night_deaths",
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": "N1狼刀3号预言家，女巫救起，形成平安夜。",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "night_deaths",
+        "action": "peaceful",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "before": null,
+      "after": {
+        "slot": "seer_check",
+        "actor": 3,
+        "targets": [
+          4
+        ],
+        "action": "check",
+        "result": "狼人"
+      }
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "guard",
+      "before": null,
+      "after": {
+        "slot": "guard",
+        "actor": 11,
+        "targets": [
+          12
+        ],
+        "action": "guard",
+        "result": null
+      }
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "before": null,
+      "after": {
+        "slot": "exile_result",
+        "actor": null,
+        "targets": [],
+        "action": "none",
+        "result": null
       }
     }
   ],

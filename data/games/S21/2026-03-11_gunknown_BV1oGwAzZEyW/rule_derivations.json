@@ -1,0 +1,1096 @@
+{
+  "schema_version": 1,
+  "version": 1,
+  "game_slug": "bili-BV1oGwAzZEyW-p01-cid36631022722",
+  "input_hashes": {
+    "dossier": "877da8ba87e5388582c9ba20da4fcc5686a536bcc205955ae6b04c86e18e527f",
+    "voting": "ff4aab74a99be50accf1c31f7b4255249a8b0cb4d1b6f803e49ed88f2bc68f50",
+    "supplemental": "0807101963c37269f7b1e0469cbd21ff49f88207c890f471ce7efb1fd8d14ccb",
+    "endgame": "a7c558c86be9db28aeba4d6886dbffea4ef80db0887dbe36f5cfac96fa93c542",
+    "speech_evidence": "80b4060e3a59a77ccc6689c076116286f4d48b8682ec4e17a3fb0996a808ab7b"
+  },
+  "rule_sources": {
+    "config/game_rules.json": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237",
+    "config/seasons.json": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
+    "config/board_templates/all_in.json": "92a2f0bbf3ad6d5f432ee1e67a152edf647afd63b5e626af674f62a4bce35f69",
+    "config/board_templates/black_wolf_king_knight.json": "6af92bc57d68525080724bf37c8a5a9f9e9e03d50140806b67b68e728dc92016",
+    "config/board_templates/four_wolves_eight_hunters.json": "f5aa2b7d64ad296b76904bdc62470c0bebfe38d5a9ec4a1e5c91754996d7fe70",
+    "config/board_templates/ghost_bride.json": "0098882ac958a5e11d837f32ff4c5767ecfaa63a1dc6ac053bd629a1736f2e5d",
+    "config/board_templates/guile_realm.json": "89fa800c767606f0323bbaa29b9854880687e4b5b6a019beb6475d0cd39c8d3d",
+    "config/board_templates/magic_duel.json": "0fdfd0a750b2e393a42713871c380ebddedda24fdbdb6ef3f6e31133aab3d1a6",
+    "config/board_templates/masquerade.json": "acd1a4a475a2e1aa848e58f31691b688596bd8f906ed3d2f8283ab1601fe8072",
+    "config/board_templates/mechanical_wolf_seer.json": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85",
+    "config/board_templates/mixed_blood.json": "20535eb52ccd0cca0b366954f862f8d931e873805163864fca0a363e7fec6ad2",
+    "config/board_templates/neighbor_puppet.json": "93b0065923e394eeec4963e2164da6068168716cbe6269a2c3c40eb8a07fb697",
+    "config/board_templates/qingqiu_night.json": "9d70a0929c98f450717ceb93c81ada556fac8c44d3e91349efd78023cf8282cc",
+    "config/board_templates/seer_witch_hunter_white.json": "0d1dc941b1e8440d3b04b57b45000db5ad25cd3c4dcec7c1d4131579b6bca6a0",
+    "config/board_templates/treasure_master.json": "d7cdc835a5ad65820e112f0742acc99ddecbc335531ffe88a1f32ba247a9880a",
+    "config/board_templates/wolf_king_guard.json": "f5b5e442b88bbbe598d7915b41e58faaf82241ad094b85fdd4220a6207750717",
+    "config/board_templates/wolf_king_knight.json": "cdf25153ffc08f9163d29fa71a99ee0a5076154f6d32d638445864c8fc20116f",
+    "scripts/game_derivations.py": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32",
+    "scripts/role_constraints.py": "2a8ed51f271eb65b51686960a6d8a7c2124a782a19cb695483fc667e9eda5e96",
+    "scripts/board_outcomes.py": "cbf8483c43674bf62da8cc39ef335860367a5c5126dd53a263613f57a288b43d",
+    "scripts/game_inference.py": "d849be0f823c5b7e54b67058b2f7b24b278c604da43179a0eab21e969f4f1f47",
+    "scripts/sheriff_speech_evidence.py": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a",
+    "scripts/voting_records.py": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f",
+    "scripts/board_config.py": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f",
+    "scripts/rule_config.py": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f",
+    "scripts/season_config.py": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+  },
+  "terminal": {
+    "round": 2,
+    "phase": "day",
+    "basis": "reviewed_game_end_and_preceding_phase"
+  },
+  "rounds": [
+    {
+      "day": 1,
+      "dead_before_night": [],
+      "night_deaths": [],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_after_day": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "known_departed_after_day": [
+        6
+      ],
+      "disqualified": [],
+      "badge_holder": 2,
+      "badge_known": true,
+      "badge_lost": false
+    },
+    {
+      "day": 2,
+      "dead_before_night": [
+        6
+      ],
+      "night_deaths": [
+        3
+      ],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        2,
+        4,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "living_after_day": [
+        1,
+        2,
+        4,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "known_departed_after_day": [
+        3,
+        5,
+        6,
+        12
+      ],
+      "disqualified": [],
+      "badge_holder": 2,
+      "badge_known": true,
+      "badge_lost": false
+    }
+  ],
+  "slot_states": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "puppet_select",
+      "actor": null,
+      "status": "available",
+      "reason": "first_night_puppet_targets_adjacent_to_any_wolf",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        6,
+        8
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 1,
+      "status": "available",
+      "reason": "guard_targets_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": null,
+      "status": "unknown",
+      "reason": "wolf_attack_actor_unknown",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "actor": 6,
+      "status": "available",
+      "reason": "medicine_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 12,
+      "status": "available",
+      "reason": "seer_check_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 6,
+      "status": "unavailable",
+      "reason": "one_witch_medicine_per_night",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "badge",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 3,
+      "status": "unavailable",
+      "reason": "death_trigger_absent",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "wolf_king_shot",
+      "actor": 5,
+      "status": "unavailable",
+      "reason": "death_trigger_absent",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "puppet_select",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "puppet_selection_is_first_night_only",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 1,
+      "status": "available",
+      "reason": "guard_targets_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": null,
+      "status": "unknown",
+      "reason": "wolf_attack_actor_unknown",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_save",
+      "actor": 6,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 12,
+      "status": "available",
+      "reason": "seer_check_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 6,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "badge",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 3,
+      "status": "available",
+      "reason": "hunter_not_poisoned",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "wolf_king_shot",
+      "actor": 5,
+      "status": "available",
+      "reason": "wolf_king_not_poisoned",
+      "legal_targets": null,
+      "review_required": false
+    }
+  ],
+  "review_tasks": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "badge",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    }
+  ],
+  "vote_review_tasks": [
+    {
+      "round": 1,
+      "phase": "day",
+      "ballot_id": "BV1oGwAzZEyW-ballot-01",
+      "slot": "vote_eligibility",
+      "reason": "electorate_evidence_needed"
+    }
+  ],
+  "changes": [
+    {
+      "path": [
+        "dossier",
+        "seats",
+        0,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "守卫"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        1,
+        "faction"
+      ],
+      "before": null,
+      "after": "werewolf",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "狼人"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        2,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "猎人"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        3,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "平民"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        4,
+        "faction"
+      ],
+      "before": null,
+      "after": "werewolf",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "狼王"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        5,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "女巫"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        6,
+        "faction"
+      ],
+      "before": null,
+      "after": "werewolf",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "狼人"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        7,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "平民"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        8,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "平民"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        9,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "平民"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        10,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "平民"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "seats",
+        11,
+        "faction"
+      ],
+      "before": null,
+      "after": "good",
+      "rule": "physical_role_victory_faction",
+      "dependencies": [
+        "预言家"
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        0,
+        "night",
+        5,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "one_witch_medicine_per_night",
+      "dependencies": [
+        1,
+        "night",
+        6
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        0,
+        "day",
+        6,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "death_trigger_absent",
+      "dependencies": [
+        1,
+        "day",
+        3
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        0,
+        "day",
+        7,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "death_trigger_absent",
+      "dependencies": [
+        1,
+        "day",
+        5
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        1,
+        "night",
+        3,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        2,
+        "night",
+        6
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        1,
+        "night",
+        5,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        2,
+        "night",
+        6
+      ]
+    },
+    {
+      "path": [
+        "voting",
+        "days",
+        1,
+        "sheriff"
+      ],
+      "before": "unknown",
+      "after": "not_applicable",
+      "rule": "election_already_resolved",
+      "dependencies": [
+        1
+      ]
+    }
+  ],
+  "consequences": [
+    {
+      "round": 1,
+      "type": "skill_disabled",
+      "seat": 1,
+      "role": "守卫",
+      "rule": "S22:boards.neighbor_puppet.board_rules.effects",
+      "effective_from_round": 2
+    },
+    {
+      "round": 2,
+      "type": "skill_disabled",
+      "seat": 1,
+      "role": "守卫",
+      "rule": "S22:boards.neighbor_puppet.board_rules.effects",
+      "effective_from_round": 2
+    },
+    {
+      "round": 2,
+      "type": "puppet_effect",
+      "result": "skill_disabled",
+      "targets": [
+        1
+      ],
+      "rule": "S22:boards.neighbor_puppet.board_rules.effects"
+    },
+    {
+      "round": 2,
+      "type": "observed_ineffective_action",
+      "slot": "guard",
+      "actor": 1,
+      "targets": [
+        12
+      ],
+      "action": "guard",
+      "observed_result": "failed",
+      "rule": "S22:boards.neighbor_puppet.board_rules.effects"
+    }
+  ],
+  "issues": [],
+  "gaps": [],
+  "output_hashes": {
+    "dossier": "473624f81f7daedf8872c5ee81e76d1250024bbb37463c8faeb851151c61b5bd",
+    "voting": "08ed71a20f73c09691038fff911e11d847a9ce253fec34e56e07b55fffe2bfe8"
+  },
+  "sheriff_speech_evidence": {
+    "rounds": [
+      {
+        "round_id": "sheriff_signup_day1",
+        "day": 1,
+        "kind": "initial_sheriff_signup",
+        "registration": {
+          "kind": "registration",
+          "position": 335,
+          "match_position": 0,
+          "start_ms": 728540,
+          "end_ms": 731620,
+          "quote": "上警玩家请亮红灯",
+          "segment_refs": [
+            {
+              "index": 335,
+              "start_ms": 728540,
+              "end_ms": 731620,
+              "quote": "上警玩家请亮红灯"
+            }
+          ]
+        },
+        "order_start": {
+          "kind": "order_start",
+          "position": 336,
+          "match_position": 0,
+          "start_ms": 736160,
+          "end_ms": 740420,
+          "quote": "随机点数五由6号玩家开始正式发言",
+          "segment_refs": [
+            {
+              "index": 336,
+              "start_ms": 736160,
+              "end_ms": 740420,
+              "quote": "随机点数五由6号玩家开始正式发言"
+            }
+          ],
+          "anchor_seat": 6,
+          "direction": null
+        },
+        "closure": {
+          "kind": "closure",
+          "position": 919,
+          "match_position": 15,
+          "start_ms": 1817350,
+          "end_ms": 1821610,
+          "quote": "哈就这样过了\n井上所玩家发言结束\n退水自爆环节",
+          "segment_refs": [
+            {
+              "index": 919,
+              "start_ms": 1817350,
+              "end_ms": 1818550,
+              "quote": "哈就这样过了"
+            },
+            {
+              "index": 920,
+              "start_ms": 1818550,
+              "end_ms": 1820030,
+              "quote": "井上所玩家发言结束"
+            },
+            {
+              "index": 921,
+              "start_ms": 1820030,
+              "end_ms": 1821610,
+              "quote": "退水自爆环节"
+            }
+          ],
+          "closure_kind": "withdrawal_or_self_destruct_phase"
+        },
+        "interrupted_by": null,
+        "start_ms": 728540,
+        "end_ms": 1821610,
+        "on_police": [
+          6,
+          8,
+          9,
+          10,
+          11,
+          12,
+          1
+        ],
+        "off_police": null,
+        "speakers": [
+          6,
+          8,
+          9,
+          10,
+          11,
+          12,
+          1
+        ],
+        "count": 7,
+        "complete": false,
+        "procedural_complete": true
+      }
+    ],
+    "evidence": [
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 6,
+        "strength": "supporting",
+        "quote": "7号玩家请做发言准备\n6号玩家请发言",
+        "segment_refs": [
+          {
+            "index": 337,
+            "start_ms": 740420,
+            "end_ms": 742320,
+            "quote": "7号玩家请做发言准备"
+          },
+          {
+            "index": 338,
+            "start_ms": 742320,
+            "end_ms": 744240,
+            "quote": "6号玩家请发言"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 8,
+        "strength": "supporting",
+        "quote": "哼没了过了嗯\n8号玩家请发言",
+        "segment_refs": [
+          {
+            "index": 415,
+            "start_ms": 877920,
+            "end_ms": 879760,
+            "quote": "哼没了过了嗯"
+          },
+          {
+            "index": 416,
+            "start_ms": 879760,
+            "end_ms": 882360,
+            "quote": "8号玩家请发言"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 9,
+        "strength": "supporting",
+        "quote": "然后过了9号请发言",
+        "segment_refs": [
+          {
+            "index": 442,
+            "start_ms": 925550,
+            "end_ms": 929760,
+            "quote": "然后过了9号请发言"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 10,
+        "strength": "supporting",
+        "quote": "我过了10号的请发言",
+        "segment_refs": [
+          {
+            "index": 490,
+            "start_ms": 1022459,
+            "end_ms": 1025440,
+            "quote": "我过了10号的请发言"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 11,
+        "strength": "supporting",
+        "quote": "过了11号玩家请发言呃",
+        "segment_refs": [
+          {
+            "index": 559,
+            "start_ms": 1134120,
+            "end_ms": 1137389,
+            "quote": "过了11号玩家请发言呃"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 12,
+        "strength": "supporting",
+        "quote": "我被你被我验了过\n12号的请发言",
+        "segment_refs": [
+          {
+            "index": 601,
+            "start_ms": 1196110,
+            "end_ms": 1197950,
+            "quote": "我被你被我验了过"
+          },
+          {
+            "index": 602,
+            "start_ms": 1197950,
+            "end_ms": 1200030,
+            "quote": "12号的请发言"
+          }
+        ]
+      },
+      {
+        "round_id": "sheriff_signup_day1",
+        "claim": "on_police",
+        "seat": 1,
+        "strength": "supporting",
+        "quote": "过一号玩家请发言",
+        "segment_refs": [
+          {
+            "index": 679,
+            "start_ms": 1326730,
+            "end_ms": 1330179,
+            "quote": "过一号玩家请发言"
+          }
+        ]
+      }
+    ],
+    "gaps": [],
+    "method": "initial_speech_round_fallback",
+    "source_binding": {
+      "path": "data/extractions/S21/media_evidence/BV1oGwAzZEyW/transcript.selected.json",
+      "sha256": "e35f169cef9aec683249c369d51f6a95f82af3dee50bdacac12415ade8dd6121"
+    }
+  }
+}

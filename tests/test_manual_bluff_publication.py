@@ -141,6 +141,54 @@ def test_manual_success_overrides_automatic_success_and_user_remark_survives():
     assert assessment["first_day_claim"] is None
 
 
+def test_rebuilding_legacy_manual_success_keeps_the_locked_human_result():
+    manual, source, games, baseline = fixture()
+    selected = manual["games"][0]["reviews"][0]["rows"][0]
+    selected.update(seat=1, success="yes", note="原人工成功备注")
+    old = baseline["games"][0]["assessments"][0]
+    old.update(decision="yes", verification_status="user_confirmed", manual_success=True,
+               manual_source_sha256="d" * 64, manual_review_id=manual["games"][0]["review_id"],
+               decision_note="旧备注")
+
+    payload, _ = builder.build_payload(manual, source, games, baseline, "d" * 64)
+
+    assessment = next(row for row in payload["games"][0]["assessments"] if row["seat"] == 1)
+    assert assessment["manual_success"] is True
+    assert "success_fingerprint" not in assessment
+    item = next(row for row in bluffs.review_items(games, payload) if row["seat"] == 1)
+    assert item["decision"] == "yes" and item["success"] is True
+    assert item["legacy_success_needs_review"] is False
+    assert item["previous_success"] is True
+
+
+def test_feedback_import_and_builder_apply_an_explicit_change_to_a_locked_success(monkeypatch):
+    from scripts.import_bluff_feedback import validate_feedback
+
+    manual, source, games, baseline = fixture()
+    games[0]["bvid"] = games[0]["source"]["bvid"]
+    baseline, _ = builder.build_payload(manual, source, games, baseline, "d" * 64)
+    assessment = next(row for row in baseline["games"][0]["assessments"] if row["seat"] == 2)
+    assessment.pop("success_fingerprint")
+    item = next(row for row in bluffs.review_items(games, baseline) if row["seat"] == 2)
+    assert item["success"] is False and item["legacy_success_needs_review"] is False
+    record = {key: item.get(key) for key in (
+        "review_id", "game_id", "bvid", "seat", "name", "physical_role", "source_fingerprint",
+        "claim_fingerprint", "success_fingerprint", "claimed_role", "claim_day")}
+    record.update(decision="", manual_success=True, notes="用户明确改为成功")
+    value = {"kind": "s22_bluff_feedback", "schema_version": 1, "season": "S23", "records": [record]}
+    monkeypatch.setattr("scripts.import_bluff_feedback.load_review", lambda _season: baseline)
+    imported = validate_feedback(value, games, "S23")
+
+    updated, report = builder.build_payload(manual, source, games, baseline, "d" * 64, imported)
+
+    saved = next(row for row in updated["games"][0]["assessments"] if row["seat"] == 2)
+    item = next(row for row in bluffs.review_items(games, updated) if row["seat"] == 2)
+    assert saved["manual_success"] is True and saved["success_fingerprint"] == record["success_fingerprint"]
+    assert item["success"] is True and item["success_source"] == "user"
+    assert "用户备注原文" in item["decision_note"] and "用户明确改为成功" in item["decision_note"]
+    assert report["success_feedback_games"] == 1
+
+
 @pytest.mark.parametrize("mutation, message", [
     ("duplicate", "重复选择"),
     ("contradiction", "无人悍跳和选中座位"),

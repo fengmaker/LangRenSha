@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1Bi526NEQk-p01-cid38313331853",
+  "registrations": [
+    {
+      "id": "derived-judge-initial-registration",
+      "day": 1,
+      "on_police": [
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        11,
+        12
+      ],
+      "off_police": [
+        1,
+        6,
+        9,
+        10
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "BV1Bi526NEQk-ballot-01",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        2,
+        3,
+        4,
+        6,
+        9,
+        10
+      ],
+      "tied_candidates": [],
+      "winner": 9,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 2,
+          "target": 9,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 9,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 9,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 9,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1Bi526NEQk-event-012",
+      "day": 2,
+      "actor": 11,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "BV1Bi526NEQk-event-020",
+      "day": 1,
+      "actor": 7,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    }
+  ]
+}

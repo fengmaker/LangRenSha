@@ -21,9 +21,49 @@
           "quote": "好给各位弹幕老师们做本九局的复盘\n本剧版行为机械狼通灵师神阵营通灵师\n8号女巫\n9号猎人\n7号守卫6号狼人阵营一号2号\n3号机械狼12号本就戏为机械平民平民阵营\n4号五号十号11号深夜守卫守护一号狼人\n狼队击杀8号通灵师\n女望救起\n形成平安夜\n机械狼模仿5号平民\n本就虚位\n机械平民通灵师验证一号玩家唯一狼人身份\n经商精选环节\n一号狼人选择自爆\n入夜守卫守护6号自守\n狼队击杀9号女巫\n女巫技能空过9号女巫单死\n当夜通灵师验证了6号玩家为首位身份\n暂延期竞选环节\n8号通灵师获得警徽\n在第二天的白天\n4号平民被抗推出局\n入夜首位守护8号通灵师狼队击杀6号\n首位通灵师验证3号玩家为狼人身份\n在第三天白天\n2号狼人选择自爆入夜\n狼队击杀8号通灵师\n通灵师验证12号玩家机械狼为平民身份\n并在出局后将警徽移交至7号猎人\n在第三天白天\n3号狼人选择自爆后\n机械狼选择击杀场上最后一神\n7号猎人\n游戏结束\n狼队阵营屠神获胜\n各位当老师们"
         }
       ]
+    },
+    {
+      "field": "deep_day_night_source_review_20261029",
+      "status": "inferred",
+      "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+      "review_ids": [
+        "DN-227"
+      ]
     }
   ],
-  "event_patches": [],
+  "event_patches": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "changes": {
+        "action": "pass",
+        "actor": 9,
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续复盘明确女巫技能空过；解药首夜已使用，不改成空过；仅补本夜尚未使用的毒药空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "source_segment_indices": [
+            2350,
+            2351,
+            2352,
+            2353
+          ],
+          "start_ms": 4701620,
+          "end_ms": 4710540,
+          "quote": "入夜守卫守护6号自守\n狼队击杀9号女巫\n女巫技能空过9号女巫单死\n当夜通灵师验证了6号玩家为首位身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-227",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ],
   "finding_resolutions": [
     {
       "id": "b87-r1-night-death",

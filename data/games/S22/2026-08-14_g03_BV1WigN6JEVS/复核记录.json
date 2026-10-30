@@ -1420,5 +1420,44 @@
     }
   },
   "review_note": "AI疑点推理核查：3项已核实，0项仍待review。关联发现：同段关联字段已按复盘及规则一并更正。\n本局判断：第二夜机械通灵1查3反馈“首位”是守卫，身份表及当夜3号守卫中刀印证。普通狼人6首日放逐、10第二夜毒死、9第二日自爆后，第三夜机械狼1接普通狼刀击杀8，不能写为机械通灵技能attack。第三天1号交牌结束是同一局末狼身份表述，不增添自爆或多一轮；未报第三夜查验则机械查验保持未知。",
-  "user_saved_at": "2026-10-24T15:12:51+08:00"
+  "user_saved_at": "2026-10-24T15:12:51+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-062",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第12周_正赛第11期/2026-08-14/2026-08-14_S22_第12周_正赛第11期_第03局_机械狼通灵师__BV1WigN6JEVS_P01_CID40915176411.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "fa85b0aa76597ac01caacd446c07115f3c731615d616df6ce3223be6b0a92e10",
+          "segment_indices": [
+            2308,
+            2309,
+            2310,
+            2311,
+            2312
+          ],
+          "source_segment_ids": [
+            2309,
+            2310,
+            2311,
+            2312,
+            2313
+          ],
+          "start_ms": 4710160,
+          "end_ms": 4717030,
+          "original_sentence": "为我们的通灵师身份啊；在第三天的白天场上；最后一狼一号机械通灵选择交牌；游戏结束；好人正义获胜"
+        }
+      ],
+      "reason": "第三轮夜后连续发言，讨论中提及“昨天就投给八了”等旧票回顾，但没有本日投票流程。末尾明确狼队选择交牌、游戏结束、好人获胜。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

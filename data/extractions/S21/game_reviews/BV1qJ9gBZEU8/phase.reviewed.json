@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1qJ9gBZEU8/transcript.selected.json",
     "selected_sha256": "13e709ca65f90305269c6d163fd3dd52b0158259592eeba3d0d3d280fc56cc40",
@@ -652,10 +652,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "通灵师2号验7号机械女巫，反馈女巫。",
+      "status": "text_explicit",
+      "result": "女巫身份",
       "details": {},
-      "note": null,
+      "note": "复盘直述7号女巫身份反馈，保留目标与行动者。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1851,7 +1851,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "107ac356d80bab128b0ff89948f99021898a2a21c76b7f183b75736596424c2a",
+    "spec_sha256": "6bb977b30d8bb2772c27545a7f7cede22a4e58a30e66732e306f891cb51170e1",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1862,6 +1862,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-114"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

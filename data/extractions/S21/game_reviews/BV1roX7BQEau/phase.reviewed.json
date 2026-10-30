@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
     "selected_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
@@ -975,6 +975,38 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1roX7BQEau-event-029",
+      "phase": "day",
+      "round": 1,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：首日仅宣布平安后直接天黑，未发生放逐投票。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
+          "source_sha256": "7f9daa316ee180ace1823182536b2c56a47cfed93c9bc9d182f92b439dfcd694",
+          "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-25/2026-03-25_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1roX7BQEau_P01_CID36979672873.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "25912e944babe30019b72791c91d860e7a5d1004e086e9d94471f3318e78035f",
+          "source_segment_indices": [
+            763,
+            764
+          ],
+          "start_ms": 1602800,
+          "end_ms": 1607040,
+          "quote": "作业平安夜\n天黑请闭眼",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1737,7 +1769,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "ca45a7068e889dd6b805a8e905aca82bce41de9440b8fa6e4a4312f1bc7cd341",
+    "spec_sha256": "d049cda97bbc330a73387bc81886c7655f8a34f56bb9bb889fd2c7dae358899d",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1747,6 +1779,14 @@
       "live_vote_flow_source_inspected",
       "false_pk_round_removed"
     ],
-    "gaps_retained": 3
+    "gaps_retained": 3,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-015"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

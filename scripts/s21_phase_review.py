@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = Path('data/reports/S21_文字与截图时点索引.json')
+INDEX = Path('data/reports/S21/S21_文字与截图时点索引.json')
 SPEC_DIR = Path('data/extractions/S21/phase_specs')
 PACK_DIR = Path('data/extractions/S21/phase_inputs')
 SCOPE = ['night_actions', 'day_events', 'ballots', 'badge', 'endgame']

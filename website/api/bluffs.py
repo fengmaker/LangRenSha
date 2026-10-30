@@ -41,8 +41,8 @@ def included_in_review(game: dict, seat: dict, assessment: dict | None) -> bool:
         and assessment.get('decision') == 'yes')
 
 
-def source_fingerprint(game: dict) -> str:
-    """Bind inference to identity, vote and result facts, ignoring presentation."""
+def _direct_source_fingerprint(game: dict) -> str:
+    """Hash the broad source projection used only to conservatively read legacy rows."""
     voting = game.get("voting") or {}
     core = {
         "id": game.get("id", game.get("slug")), "date": str(game.get("date", "")),
@@ -62,6 +62,139 @@ def source_fingerprint(game: dict) -> str:
     }
     return hashlib.sha256(json.dumps(core, ensure_ascii=False, sort_keys=True,
                                       separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def source_fingerprint(game: dict) -> str:
+    """Prefer a validated source binding while its derived view stays unchanged."""
+    current = _direct_source_fingerprint(game)
+    binding = game.get("bluff_source_binding")
+    if isinstance(binding, dict) and set(binding) == {"derived_fingerprint", "source_fingerprint"}:
+        derived = binding.get("derived_fingerprint")
+        source = binding.get("source_fingerprint")
+        if (isinstance(derived, str) and re.fullmatch(r"[a-f0-9]{64}", derived)
+                and isinstance(source, str) and re.fullmatch(r"[a-f0-9]{64}", source)
+                and derived == current):
+            return source
+    return current
+
+
+def _fingerprint(value: dict) -> str:
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def evidence_source_ref(source_path: str) -> str:
+    """Return a non-path key for matching a frozen evidence source hash."""
+    normalized = source_path.replace("\\", "/")
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def evidence_source_fingerprint(evidence: list[dict]) -> str:
+    """Bind a claim to its text, locator and source content hashes."""
+    fields = ("kind", "text", "start_ms", "end_ms", "interpretation", "source_sha256",
+              "source_ref", "image_url")
+    rows = [{key: entry[key] for key in fields if key in entry}
+            for entry in evidence if isinstance(entry, dict)]
+    return _fingerprint({"version": 1, "evidence": rows})
+
+
+def claim_fingerprint(game: dict, assessment: dict) -> str:
+    """Hash the identity, claimed turn and evidence needed to decide bluff attribution."""
+    seat_number = assessment.get("seat")
+    seat = next((row for row in game.get("seats", []) if row.get("seat") == seat_number), None)
+    identity = None if seat is None else {
+        "seat": seat.get("seat"), "name": seat.get("name"), "role": seat.get("role"),
+        # A personal faction change matters only if it changes eligibility for
+        # review; manual-included mixed-blood assessments remain eligible.
+        "included_in_review": included_in_review(game, seat, assessment),
+    }
+    evidence = assessment.get("evidence")
+    evidence = evidence if isinstance(evidence, list) else []
+    frozen_sources = game.get("bluff_evidence_sources")
+    evidence_rows = []
+    for entry in evidence:
+        if not isinstance(entry, dict):
+            continue
+        row = {key: entry[key] for key in (
+            "kind", "text", "start_ms", "end_ms", "interpretation", "source_ref", "source_sha256", "image_url"
+        ) if key in entry}
+        source_ref = entry.get("source_ref")
+        if isinstance(source_ref, str):
+            # A removed binding or missing source intentionally fingerprints stale.
+            row["source_sha256"] = (frozen_sources.get(source_ref)
+                                    if isinstance(frozen_sources, dict) else None)
+        evidence_rows.append(row)
+    evidence_binding = assessment.get("evidence_source_fingerprint")
+    if assessment.get("evidence_source_binding") == "whole_game":
+        evidence_binding = source_fingerprint(game)
+    return _fingerprint({
+        "claim_rules_version": 1, "game_id": game.get("id", game.get("slug")),
+        "date": str(game.get("date", "")), "identity": identity,
+        "claim_basis": {key: assessment.get(key) for key in (
+            "claimed_role", "claim_day", "actual_claim_day", "first_day_claim",
+            "manual_source_sha256", "manual_review_id")},
+        "evidence": evidence_source_fingerprint(evidence_rows),
+        "source_binding": evidence_binding,
+    })
+
+
+def success_fingerprint(game: dict, seat_number: int, claim_day: int | str | None = 1,
+                        *, result_review: dict | None = None) -> str:
+    """Hash computed outcomes and inputs that actually affect bluff success."""
+    if type(claim_day) is not int or claim_day < 1:
+        voting = game.get("voting") or {}
+        days = [row.get("number") for row in game.get("rounds", []) if type(row.get("number")) is int]
+        days.extend(row.get("day") for row in voting.get("days", []) if type(row.get("day")) is int)
+        days.extend(ballot.get("day") for ballot in voting.get("ballots", [])
+                    if ballot.get("kind") == "sheriff" and type(ballot.get("day")) is int)
+        last_day = max(days, default=1)
+        first_possible_claim_day = 3 if claim_day == "later" else 1
+        badge_outcomes = {
+            day: _badge_result(game, seat_number, day, result_review)
+            for day in range(first_possible_claim_day, last_day + 2)
+        }
+        exile = None
+        if first_possible_claim_day == 1:
+            target, known, questions = _final_exile(game, 1)
+            target_seat = next((seat for seat in game.get("seats", []) if seat.get("seat") == target), None)
+            exile = {"target": target, "known": known, "questions": questions,
+                     "faction": effective_faction(game, target_seat) if target_seat else None}
+        official_badge, _ = _badge_result(game, seat_number, first_possible_claim_day)
+        supplemental_result = ({"badge": result_review.get("badge"),
+                                "evidence": result_review.get("evidence")}
+                               if official_badge is None and isinstance(result_review, dict) else None)
+        return _fingerprint({"success_rules_version": 1, "claim_day": claim_day,
+                             "seat": seat_number, "possible_badge_outcomes": badge_outcomes,
+                             "possible_first_day_exile": exile,
+                             "supplemental_badge_result": supplemental_result})
+    official_badge, _ = _badge_result(game, seat_number, claim_day if type(claim_day) is int else 1)
+    badge, badge_questions = _badge_result(
+        game, seat_number, claim_day if type(claim_day) is int else 1, result_review)
+    target, exile_known, exile_questions = (
+        _final_exile(game, 1) if claim_day == 1 and badge is not True else (None, False, [])
+    )
+    target_seat = next((seat for seat in game.get("seats", []) if seat.get("seat") == target), None)
+    supplemental_result = ({"badge": result_review.get("badge"),
+                            "evidence": result_review.get("evidence")}
+                           if official_badge is None and isinstance(result_review, dict) else None)
+    return _fingerprint({
+        "success_rules_version": 1, "claim_day": claim_day, "seat": seat_number,
+        "badge_outcome": badge, "badge_questions": badge_questions,
+        "first_day_exile_target": target,
+        "first_day_exile_known": exile_known, "first_day_exile_questions": exile_questions,
+        "first_day_exile_faction": effective_faction(game, target_seat) if claim_day == 1 and target_seat else None,
+        "supplemental_badge_result": supplemental_result,
+    })
+
+
+def assessment_success_day(assessment: dict | None) -> int | str | None:
+    if not assessment:
+        return None
+    day = assessment.get("claim_day", 1)
+    actual_day = assessment.get("actual_claim_day")
+    if day == "later" and type(actual_day) is int and actual_day > 2:
+        return actual_day
+    return day
 
 
 @lru_cache(maxsize=8)
@@ -156,20 +289,23 @@ def evaluate_success(game: dict, seat_number: int, claim_day: int | str | None =
     if type(claim_day) is not int or claim_day < 1:
         return {"value": None, "reasons": [], "questions": ["悍跳发生天数待确认，暂不判断成功"]}
     badge, badge_questions = _badge_result(game, seat_number, claim_day, result_review)
-    target, final_known, questions = _final_exile(game, 1)
-    target_seat = next((seat for seat in game.get("seats", []) if seat["seat"] == target), None)
-    faction = effective_faction(game, target_seat) if target_seat else None
     reasons = []
     if badge:
         reasons.append({"kind": "elected_badge", "text": "该悍跳者竞选获得警徽"})
+    if claim_day > 1 and badge is False:
+        return {"value": False, "reasons": [{"kind": "later_claim_without_badge",
+                "text": "悍跳发生在首日放逐之后，且未在起跳后竞选拿徽；首日放逐不计入这次尝试成功"}], "questions": []}
+    if claim_day > 1:
+        return {"value": True if badge is True else None, "reasons": reasons,
+                "questions": [] if badge is True else badge_questions}
+    target, final_known, questions = _final_exile(game, 1)
+    target_seat = next((seat for seat in game.get("seats", []) if seat["seat"] == target), None)
+    faction = effective_faction(game, target_seat) if target_seat else None
     if claim_day == 1 and final_known and target is not None and faction == "good":
         reasons.append({"kind": "first_day_good_exiled", "target": target,
                         "text": f"首日最终放逐{target}号好人，按狼队战术结果计成功"})
     if reasons:
         return {"value": True, "reasons": reasons, "questions": []}
-    if claim_day > 2 and badge is False:
-        return {"value":False,"reasons":[{"kind":"later_claim_without_badge",
-                "text":"已确认在后续天数起跳，起跳后没有竞选拿徽；此前的首日放逐不追溯计为这次尝试的成功"}],"questions":[]}
     if final_known and target is not None and faction not in {"good", "werewolf"}:
         questions.append("首日最终被放逐者的个人胜利阵营不明确")
     if badge is False and final_known and not questions:
@@ -185,30 +321,81 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
         game_id = game.get("id", game.get("slug"))
         source = indexed.get(game_id)
         fingerprint = source_fingerprint(game)
-        valid = source is not None and source.get("source_fingerprint") == fingerprint
-        assessments = {row["seat"]: row for row in source.get("assessments", [])} if valid else {}
+        source_valid = source is not None and source.get("source_fingerprint") == fingerprint
+        assessments = {row["seat"]: row for row in source.get("assessments", [])} if source else {}
         for seat in game.get("seats", []):
             record = assessments.get(seat["seat"])
             if not included_in_review(game, seat, record):
                 continue
             questions = list(record.get("review_questions", [])) if record else []
             decision = record.get("decision", "uncertain") if record else "uncertain"
-            if not valid:
-                questions.append("尚无对应推断记录" if source is None else "原始身份或结果已变化，需要重核推断")
+            identity_matches = bool(record and record.get("name") == seat.get("name")
+                                    and record.get("physical_role") == seat.get("role"))
+            # User-confirmed fields are authoritative. Dependency signatures
+            # may flag changed inputs for an assistant inference, but cannot
+            # revoke a human decision or remove it from the statistics.
+            user_confirmed = bool(record and record.get('verification_status') == 'user_confirmed'
+                                  and identity_matches and decision in {'yes', 'no'})
+            input_change_notes = []
+            claim_signature = record.get("claim_fingerprint") if record else None
+            claim_legacy_compatible = bool(source_valid and identity_matches)
+            claim_matches = bool(
+                isinstance(claim_signature, str)
+                and re.fullmatch(r"[a-f0-9]{64}", claim_signature)
+                and claim_signature == claim_fingerprint(game, record)
+            ) if record else False
+            if record and not claim_signature:
+                # Old immutable assets have no item-level signature. Keep their
+                # conclusions only while the previous whole-game binding matches.
+                claim_matches = claim_legacy_compatible
+            claim_needs_review = bool(record and not user_confirmed
+                                      and decision in {"yes", "no"} and not claim_matches)
+            if user_confirmed and claim_signature and not claim_matches:
+                input_change_notes.append('关联的发言旁证或阶段输入已变化；人工悍跳结论保持锁定，未据此修改。')
+            success_needs_review = False
+            legacy_success_needs_review = False
+            source_decision = decision
+            if source is None:
+                questions.append("尚无对应推断记录")
             elif record is None:
                 questions.append("该狼人座位尚无悍跳判断")
-            elif record.get("name") != seat["name"] or record.get("physical_role") != seat.get("role"):
+            elif not identity_matches:
                 decision = "uncertain"
                 questions.append("推断中的选手或底牌与当前发布记录不一致")
+            elif claim_needs_review:
+                decision = "uncertain"
+                questions.append("悍跳身份、自称阶段或发言证据依据已变化：上次悍跳结论保留为待复核")
+            if record and source_decision == "yes":
+                stored_success_signature = record.get("success_fingerprint")
+                current_success_signature = success_fingerprint(
+                    game, seat["seat"], assessment_success_day(record),
+                    result_review=source.get("result_review"),
+                )
+                success_matches = bool(
+                    isinstance(stored_success_signature, str)
+                    and re.fullmatch(r"[a-f0-9]{64}", stored_success_signature)
+                    and stored_success_signature == current_success_signature
+                )
+                if not stored_success_signature:
+                    # Missing technical metadata never revokes a human result.
+                    # Unsaved rule-derived results are recalculated below.
+                    success_matches = True
+                if user_confirmed and 'manual_success' in record:
+                    if stored_success_signature and not success_matches:
+                        input_change_notes.append('关联的警徽、放逐或阵营输入已变化；人工成功结果保持锁定，未据此修改。')
+                    success_matches = True
+                    legacy_success_needs_review = False
+                if not success_matches:
+                    success_needs_review = True
+                    questions.append("悍跳结论保留；程序成功判断所依赖的警徽、首日放逐或有效阵营已变化，需重新核对推断")
             if decision == "yes" and not record.get("evidence") and record.get("verification_status") != "user_confirmed":
                 decision = "uncertain"
                 questions.append("悍跳判断缺少定位证据")
-            success_day=record.get("claim_day",1) if record else None
+            success_day=assessment_success_day(record)
             actual_day=record.get("actual_claim_day") if record else None
-            if success_day=='later' and type(actual_day) is int and actual_day>2:
-                success_day=actual_day
             manual_success = bool(record and record.get('verification_status') == 'user_confirmed'
-                                  and 'manual_success' in record and decision == 'yes')
+                                  and 'manual_success' in record and decision == 'yes'
+                                  and user_confirmed)
             if manual_success:
                 value = record['manual_success']
                 label = '成功' if value is True else '失败' if value is False else '待定'
@@ -216,7 +403,7 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
                            'questions': ['用户将成功结果保留为待定'] if value is None else []}
             else:
                 success = evaluate_success(game, seat["seat"], success_day,
-                                           result_review=source.get('result_review') if valid else None) if decision == "yes" else {
+                                           result_review=source.get('result_review')) if source_decision == "yes" else {
                     "value": None, "reasons": [], "questions": []}
             questions.extend(success["questions"])
             if decision == "uncertain" and not questions:
@@ -241,6 +428,10 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
             output.append({
                 "review_id": f"{bvid}:{seat['seat']}",
                 "source_fingerprint": fingerprint,
+                "claim_fingerprint": claim_fingerprint(game, record) if record else None,
+                "success_fingerprint": (success_fingerprint(
+                    game, seat["seat"], success_day, result_review=source.get("result_review"))
+                    if record else None),
                 "game_id": game_id, "date": str(game.get("date", "")),
                 "game_number": game.get("game_number"),
                 "bvid": bvid,
@@ -251,9 +442,21 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
                 "actual_claim_day":actual_day,
                 "first_day_claim": record.get("first_day_claim") if record else None,
                 "decision_note": record.get("decision_note", "") if record else "",
+                "previous_decision": record.get("decision") if record else None,
                 "verification_status": record.get("verification_status", "assistant_inferred") if record else "assistant_inferred",
                 "evidence": evidence,
-                "success": success["value"], "success_reasons": success["reasons"],
+                "success": None if success_needs_review or claim_needs_review else success["value"],
+                "current_success": success["value"],
+                "previous_success": (record.get("manual_success")
+                                     if record and record.get("verification_status") == "user_confirmed"
+                                     and "manual_success" in record else None),
+                "previous_success_saved": bool(record and record.get("verification_status") == "user_confirmed"
+                                                and "manual_success" in record),
+                "success_needs_review": success_needs_review,
+                "legacy_success_needs_review": legacy_success_needs_review,
+                "claim_needs_review": claim_needs_review,
+                "input_change_notes": input_change_notes,
+                "success_reasons": success["reasons"],
                 "success_source": 'user' if manual_success else 'rules',
                 "manual_included": not physical_wolf(game, seat),
                 "review_questions": list(dict.fromkeys(questions)),
@@ -269,7 +472,7 @@ def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, An
         for seat in game.get("seats", []):
             if seat.get("person_id") is not None:
                 stats.setdefault(str(seat["person_id"]), {
-                    "bluff_count": 0, "bluff_count_complete": True, "bluff_pending_games": 0,
+                    "bluff_count": 0, "bluff_count_complete": bool(payload.get("games")), "bluff_pending_games": 0,
                     "bluff_review_count": 0, "bluff_success_rate": {
                         "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": []},
                 })

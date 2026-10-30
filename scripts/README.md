@@ -14,8 +14,9 @@
 | 悍跳与成功率 | 按[第四步](../docs/01_赛季数据全流程.md#第四步识别悍跳与计算成功率)由用户逐局填写 | `build_manual_bluff_review.py --season S21\|S23 [--check]`生成按日期分组的空白表（默认S21），前置12席名单及截图，包含混血儿；不自动识别或预填结论。历史S22/S23构建器保留既有输入 |
 | S23人工悍跳结果应用 | `build_manual_bluff_publication.py --manual <JSON> [--prepare]`；既有 `website.api.publish_bluffs --season S23` | 前者默认只核对并比较，prepare归档原件和写本机资产／报告；后者经检查后事务写入悍跳版本表。人工成功结果优先，用户选中的额外席位完整纳入，空白局保留原值 |
 | 局部事实复核 | 按[第六步](../docs/01_赛季数据全流程.md#第六步局部复核与意见核对)直接只读目标证据 | 只核点名的局、字段和区域，具体矛盾才查直接依赖；不会自动生成整季报告或应用意见 |
+| S23单局机械检查 | `check_s23_game.py --bvid ... [--checks structure rules evidence] [--field ...]`；也可 `workflow --stage review --bvid ...` | 审计、候选生成和导入准备共用`s23_effective_game.py`；输出正式值差异、证据与直接影响。`--field`限制差异/原文旁证，结构通过不代表事实已核 |
 | 整季结构校验/生成 | `workflow --stage review --full-season` | 保留S22/S23原review/audit链；会写整季报告，S23还重建候选/页面；不能与`--bvid`混用，不代表AI事实复核 |
-| 数据库写入 | 按[第五步](../docs/01_赛季数据全流程.md#第五步核对后写入数据库)选择范围；正式适配用`workflow ... --stage import` | S21正式适配复用已核专项记录；原件登记与通用对局支持纯字幕；S23备份→prepare→事务导入；S22单局import-edits不自动导完整voting |
+| 数据库写入 | 按[第五步](../docs/01_赛季数据全流程.md#第五步核对后写入数据库)选择范围；正式适配用`workflow ... --stage import` | S21正式适配复用已核专项记录；原件登记与通用对局支持纯字幕；S23加BV时只生成/准备该局并单遍导入变更，完整范围保留双遍幂等验收；S22单局import-edits不自动导完整voting |
 | S21 正式对局 | `import_s21_formal.py --check/--prepare/--import-db [--bvid ...]` | 从已核身份、主审批准的日夜spec及原文构建正式JSON；局、票型与拍刀共享事务，原始细节保留旁证，未知不补造 |
 | S21 身份专项 | `import_s21_identities.py` | 只验证座位、姓名、物理底牌；`--import-db`写入已核提取层，`reviewed_identity_seats`可查，不生成完整正式对局 |
 | 网站发布／验收 | `workflow ... --stage publish/verify` | 网站模块构建完整release、逐季悍跳同步；`website/check_publication.py`动态核对源/API/页面 |

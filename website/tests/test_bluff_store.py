@@ -28,7 +28,7 @@ def sample_game():
 
 def sample_payload(game=None):
     game = game or sample_game()
-    return {
+    payload = {
         "schema_version": 1,
         "season": "TST",
         "inference_version": "TST-v1",
@@ -45,6 +45,12 @@ def sample_payload(game=None):
             ],
         }],
     }
+    for assessment in payload["games"][0]["assessments"]:
+        assessment["claim_fingerprint"] = bluffs.claim_fingerprint(game, assessment)
+        assessment["success_fingerprint"] = bluffs.success_fingerprint(
+            game, assessment["seat"], bluffs.assessment_success_day(assessment),
+        )
+    return payload
 
 
 def test_validate_review_binds_all_games_and_wolf_seats_to_published_snapshots():
@@ -110,6 +116,9 @@ def test_yes_requires_a_supported_claimed_role_except_for_confirmed_missing_meta
 
     assessment = payload["games"][0]["assessments"][0]
     assessment.update(verification_status="user_confirmed", claim_day="later")
+    assessment["claim_fingerprint"] = bluffs.claim_fingerprint(game, assessment)
+    assessment["success_fingerprint"] = bluffs.success_fingerprint(
+        game, assessment["seat"], bluffs.assessment_success_day(assessment))
     items, summary = bluff_store._validate_review([game], payload, "TST", 1)
 
     confirmed = next(item for item in items if item["seat"] == 1)
@@ -131,6 +140,10 @@ def test_manual_results_accept_selected_mixed_blood_and_do_not_require_unasked_m
         'verification_status': 'user_confirmed', 'manual_included': True, 'manual_success': True,
         'claimed_role': None, 'claim_day': None, 'evidence': [],
     })
+    for assessment in payload['games'][0]['assessments']:
+        assessment['claim_fingerprint'] = bluffs.claim_fingerprint(game, assessment)
+        assessment['success_fingerprint'] = bluffs.success_fingerprint(
+            game, assessment['seat'], bluffs.assessment_success_day(assessment))
     items, summary = bluff_store._validate_review([game], payload, 'TST', 1)
     assert [(i['seat'], i['success']) for i in items] == [(1, False), (4, None), (7, True)]
     assert not any(i['needs_review'] for i in items)

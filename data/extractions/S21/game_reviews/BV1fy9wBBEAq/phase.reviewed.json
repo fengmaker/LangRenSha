@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1fy9wBBEAq/transcript.selected.json",
     "selected_sha256": "3fff11b449ab177a3b6f8ee5aca28b9811e69dd679d5e270363946c109c3ece3",
@@ -178,10 +178,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "11号反馈守卫身份；“首位”为守卫同音转写，与同段物理角色名单一致。",
+      "status": "unique_deduction",
+      "result": "守卫身份",
       "details": {},
-      "note": null,
+      "note": "字幕“首位”结合连续复盘、同音转写及冻结身份表唯一对应“守卫”；目标11号不变。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -943,7 +943,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "495750b6fa88fa4dd07a3cc9b4e501bdfe9575524f988cbafb45cc3b8be3d1f6",
+    "spec_sha256": "bb2046845c85e28efe054a1ddf1395343aaf4ef84b48b81b20343971c4c3337e",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -954,6 +954,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-112"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

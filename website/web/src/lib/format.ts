@@ -50,6 +50,10 @@ export function actionLabel(value: string | null | undefined): string {
     attempt: "尝试发动",
     clear: "清除",
     clear_mark: "清除标记",
+    mark: "施加标记",
+    destroy: "撕毁警徽",
+    disqualify: "DQ出局",
+    invalidated_by_dq: "行动因DQ失效",
     hold: "保留",
     hunt: "发动猎杀时刻",
     kill: "猎杀",
@@ -122,6 +126,8 @@ export function voteStatusLabel(value: string | null | undefined): string {
 
 export function availabilityLabel(value: string | null | undefined): string {
   const labels: Record<string, string> = {
+    available: "可用",
+    no_living_wolves: "已无存活狼人",
     dead: "已出局",
     wrong_phase: "当前阶段不可用",
     wolves_alive: "其他狼人仍在场",

@@ -24,8 +24,8 @@ def build(season: str) -> dict:
     queue.configure_season(season)
     base = ROOT/f'data/seasons/{season}'
     plan = json.loads((ROOT/f'data/indexes/{season}_采集计划.json').read_text(encoding='utf-8'))
-    frames = json.loads((ROOT/f'data/reports/{season}_发言截图进度.json').read_text(encoding='utf-8'))
-    registered = json.loads((ROOT/f'data/reports/{season}_转写入库验收.json').read_text(encoding='utf-8'))
+    frames = json.loads((ROOT/f'data/reports/{season}/{season}_发言截图进度.json').read_text(encoding='utf-8'))
+    registered = json.loads((ROOT/f'data/reports/{season}/{season}_转写入库验收.json').read_text(encoding='utf-8'))
     runs = {r['bvid']: r for r in registered['items']}
     with (base/f'{season}_中文优先复核目录.csv').open(encoding='utf-8-sig', newline='') as stream:
         captions = {r['BVID']: r for r in csv.DictReader(stream)}
@@ -93,7 +93,7 @@ def build(season: str) -> dict:
                   'planned': len(local_entries), 'verified': len(local_verified),
                   'full_audio_duration_ms': sum(i['duration_ms'] for i in local_verified),
                   'sentences': sum(i['sentence_count'] for i in local_verified), 'items': local_verified}
-    save_json(ROOT/f'data/reports/{season}_全文补转写验收.json', asr_report)
+    save_json(ROOT/f'data/reports/{season}/{season}_全文补转写验收.json', asr_report)
     report = {'season': season, 'audited_at_utc': datetime.now(timezone.utc).isoformat(), 'entries': len(rows),
               'registered_transcripts': registered['registered'], 'database_segments': registered['segments'],
               'local_full_transcripts_verified': len(local_verified),
@@ -101,7 +101,7 @@ def build(season: str) -> dict:
               'frames_visually_verified': sum(bool(r['图层已目视检查']) for r in rows),
               'issues': issues, 'index_csv': csv_path.relative_to(ROOT).as_posix(),
               'review_html': html_path.relative_to(ROOT).as_posix(), 'game_facts_changed': False}
-    save_json(ROOT/f'data/reports/{season}_媒体转写汇总验收.json', report)
+    save_json(ROOT/f'data/reports/{season}/{season}_媒体转写汇总验收.json', report)
     return report
 
 

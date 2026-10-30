@@ -29,7 +29,7 @@ import batch_people
 
 ROOT = Path(__file__).resolve().parents[1]
 ANNOTATION_DIR = ROOT / "data/extractions/S22/frame_seats"
-PROGRESS_FILE = ROOT / "data/reports/S22_画面座位补全进度.json"
+PROGRESS_FILE = ROOT / "data/reports/S22/S22_画面座位补全进度.json"
 FRAME_REVIEW_VERSION = 2
 USER_CONFIRMED = "user_confirmed"
 MIN_OCR_CONFIDENCE = 0.80

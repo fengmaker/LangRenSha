@@ -1,0 +1,189 @@
+{
+  "scope": "S21 day/night only; no bluff changes",
+  "backup": "data/backups/S21-day-night-corrections-before-20261029.zip",
+  "corrections": [
+    {
+      "bvid": "BV1ufQkBeEYL",
+      "field": "D1 sheriff ballots",
+      "before": "only final ballot stored as initial",
+      "after": "initial 9→8 / 11→7 tie; existing 9 explicit PK votes retained; unknown voter 9 retained",
+      "segments": [
+        463,
+        464,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016,
+        1129,
+        1130,
+        1131,
+        1132,
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148
+      ]
+    },
+    {
+      "bvid": "BV1ufQkBeEYL",
+      "field": "spec_sha256",
+      "before": "484ecd22dc09f9cba7e6aa195205ca0a04f5e08e62e05d464f77116af7b6ce00",
+      "after": "7a268ebdc05cf8fe92c8a34fb7c1353e3649374410b493ca5e8c6fd7c60ba20f"
+    },
+    {
+      "bvid": "BV1hNXgB5Ewp",
+      "field": "endgame_attack.result",
+      "before": "复盘称场上最后一狼拍刀，狼人获胜；最后神/目标播报为9号。",
+      "after": "success",
+      "segments": [
+        1572,
+        1573,
+        1574,
+        1575,
+        1576,
+        1577,
+        1578
+      ]
+    },
+    {
+      "bvid": "BV1hNXgB5Ewp",
+      "field": "game_end.result",
+      "before": "狼人阵营拍刀成功、屠神获胜。",
+      "after": "werewolf",
+      "segments": [
+        1533,
+        1534,
+        1535,
+        1577,
+        1578
+      ]
+    },
+    {
+      "bvid": "BV1hNXgB5Ewp",
+      "field": "spec_sha256",
+      "before": "1d2f5ecf62598a2cee53a2f8295e01c8b212ad7dead1feff8e8bbc3919103428",
+      "after": "7432f1d8fd44d27c2ad5d468632fef8c370d9b76b22e2a8683e8d30fb7d74ea7"
+    },
+    {
+      "bvid": "BV1NP9HBBEDj",
+      "field": "game_end.result",
+      "before": "狼人阵营拍刀成功，屠神获胜",
+      "after": "werewolf",
+      "segments": [
+        2155,
+        2156,
+        2162,
+        2179,
+        2184,
+        2185
+      ]
+    },
+    {
+      "bvid": "BV1NP9HBBEDj",
+      "field": "spec_sha256",
+      "before": "2162e31d1b95c3a352e0c21253f97f20f9a07d3161f14c90d5812132bf27b9ae",
+      "after": "5eaecdb194b815f5ab65431360aa06fcc21a42d479d0f24e0d2f4531d0add587"
+    },
+    {
+      "bvid": "BV1A8DiBTECq",
+      "field": "endgame_attack.result",
+      "before": "最后8号鬼术师拍刀4号定序王子，游戏结束。",
+      "after": "success",
+      "segments": [
+        1976,
+        1977,
+        1978,
+        2026,
+        2027
+      ]
+    },
+    {
+      "bvid": "BV1A8DiBTECq",
+      "field": "spec_sha256",
+      "before": "a41d0646f2492f13d1386eaa9c8770ce79eb9812da95378e40d7fe1455e75ef9",
+      "after": "e4413334b1e0c959e231f8416992745fcd66465aa7531723fb04db019268bb71"
+    },
+    {
+      "bvid": "BV1Bi526NEYo",
+      "field": "sheriff initial registration",
+      "before": "derived off_police=[9] from initial superseded call",
+      "after": "explicit corrected off_police=[1,9], both cast for8",
+      "segments": [
+        324,
+        325,
+        327,
+        328,
+        329,
+        873,
+        874
+      ]
+    },
+    {
+      "bvid": "BV1Bi526NEYo",
+      "field": "spec_sha256",
+      "before": "de7a6102caa732eebcee08a6dd6365aa9087af0bf4ef6b71ca9a74783442fdb2",
+      "after": "10bb78f76d06d65ee4176de23dd25726bacc3a16b127f900895c4a25247e8943"
+    },
+    {
+      "bvid": "BV18n5z6AEAt",
+      "field": "N2 poison.result",
+      "before": "傀儡女巫尝试毒7，复盘明确毒杀失败；7继续参赛并在次日放逐。",
+      "after": "failed; original target7 and attempt retained",
+      "segments": [
+        2816
+      ]
+    },
+    {
+      "bvid": "BV18n5z6AEAt",
+      "field": "D2 gun resolution classification",
+      "before": "death_announcement mapped to night_deaths",
+      "after": "skill_resolution; existing day shoot7→8 retained, does not add8 to night deaths",
+      "segments": [
+        2788,
+        2820
+      ]
+    },
+    {
+      "bvid": "BV18n5z6AEAt",
+      "field": "spec_sha256",
+      "before": "44490be309798225cbe410948c9389881e25cc055d749ad1045e298877cd3833",
+      "after": "3a149b3b3d5f38b85c16753f9f8850c5b85c71ee4c25cf3561592c786aa971f0"
+    }
+  ],
+  "source_transcripts_changed": false,
+  "database_write": false,
+  "additional_backup": "data/backups/S21-day-night-corrections-late-before-20261029.zip",
+  "rule_fixes": [
+    "night-death-triggered shots remove targets before exile; exile-triggered shots remain after the ballot",
+    "failed poison does not produce victims or prohibit a death-triggered shot"
+  ],
+  "targeted_tests": {
+    "passed": 167,
+    "failed": 0,
+    "groups": [
+      89,
+      77,
+      1
+    ]
+  },
+  "website_acceptance_fix": "Compare the public GameDetail contract; keep bluff source/evidence bindings in stored snapshots and in the independent bluff publication checks."
+}

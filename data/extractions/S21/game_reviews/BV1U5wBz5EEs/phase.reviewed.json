@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1U5wBz5EEs/transcript.selected.json",
     "selected_sha256": "715bba37cf77421a28ba7fe31567ce90921e88685b62397a0857e8456c3583e3",
@@ -754,6 +754,39 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1U5wBz5EEs-event-022",
+      "phase": "day",
+      "round": 4,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第四日复盘确认放逐投票前游戏结束。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1U5wBz5EEs/transcript.selected.json",
+          "source_sha256": "715bba37cf77421a28ba7fe31567ce90921e88685b62397a0857e8456c3583e3",
+          "original_source_path": "data/seasons/S21/第04周_正赛第03期/2026-03-18/2026-03-18_S21_第04周_正赛第03期_第01局_预女猎白混__BV1U5wBz5EEs_P01_CID36797416549.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "d575737c3e91242a849202b40d9686e0f9c203de34212b13274664e65e6a8c4d",
+          "source_segment_indices": [
+            2861,
+            2862,
+            2863
+          ],
+          "start_ms": 5760089,
+          "end_ms": 5766969,
+          "quote": "入夜狼人击杀12号好人混\n白天最后一张狼人3号交牌游戏结束\n好人正义获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1172,7 +1205,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "6ffe893be15dbc6c55fe1cfaed56da2917966da8b5ba46b5e286822737d020a8",
+    "spec_sha256": "b2bb886011f59f359318ceae1d5b3ea95f5b135a7194c12b4ad7246e399f0025",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1182,6 +1215,14 @@
       "delegated_ballot_review_assessed",
       "specific_false_gaps_removed"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-008"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

@@ -19,7 +19,7 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PLAN = ROOT / "data/indexes/S22_采集计划.json"
-DEFAULT_PROGRESS = ROOT / "data/reports/S22_采集进度.json"
+DEFAULT_PROGRESS = ROOT / "data/reports/S22/S22_采集进度.json"
 MAX_CANDIDATE_MS = 180_000
 LOCALIZE_MS = 300_000
 BUFFER_BEFORE_MS = 3_000

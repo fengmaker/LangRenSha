@@ -74,6 +74,22 @@ def client(monkeypatch):
         api.app.dependency_overrides.pop(api.connection_dependency, None)
 
 
+def test_player_games_are_newest_first_with_unknown_game_numbers_last(client, monkeypatch):
+    snapshots = [
+        {**_snapshot("first", "S23", "2026-07-02", "p"), "game_number": 1},
+        {**_snapshot("unknown", "S23", "2026-07-02", "p"), "game_number": None},
+        {**_snapshot("fourth", "S23", "2026-07-02", "p"), "game_number": 4},
+        {**_snapshot("third", "S23", "2026-07-02", "p"), "game_number": 3},
+        {**_snapshot("older", "S23", "2026-07-01", "p"), "game_number": 4},
+    ]
+    monkeypatch.setattr(api, "_scope_snapshots", lambda *args, **kwargs: snapshots)
+    response = client.get("/api/v1/players/p?season=S23")
+    assert response.status_code == 200
+    assert [game["id"] for game in response.json()["games"]] == [
+        "fourth", "third", "first", "unknown", "older",
+    ]
+
+
 def test_player_range_resolves_latest_and_aggregates_season_local_bluff_metrics(client):
     response = client.get("/api/v1/players/p?season_start=S22&season_end=latest")
 

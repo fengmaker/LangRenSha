@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV16NdDB7E3b/transcript.selected.json",
     "selected_sha256": "ca72925f918a33f904fa68bca45304dc23c65e5228cc4d20d529cc300b9fa0c3",
@@ -143,10 +143,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "9号通灵师首夜查验8号平民；机械狼10号该夜刚学习，不使用新技能。",
+      "status": "unique_deduction",
+      "result": "平民身份",
       "details": {},
-      "note": null,
+      "note": "连续复盘结合冻结角色表及已确认的技能时序可唯一确定查验主体；反馈保留原文语义，不交换物理身份。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1966,7 +1966,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "3aa523e9b2f8d48556dee795be4c887d7dfcb3bf52eea849ec4c3525e9b0e2a1",
+    "spec_sha256": "696707fe9c65abe76917c9f13974a8995c51468f947dda367ca704b2eb7eb9a0",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1977,6 +1977,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-133"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

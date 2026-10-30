@@ -15,11 +15,11 @@
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-29_g03_BV15PaW66EjW/ai_review.json",
-      "sha256": "b8d05c2f0c4bf9b1cc40741090fc80bb82a7d2f1b90f9b6a3ef22a4eb85d0090"
+      "sha256": "8055e67203faf5b269fbda99db3f60ef7e63482c0bff6c7d3806a385e5b8c3bc"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV15PaW66EjW/daily_audit.json",
-      "sha256": "9612db38c491190f0c2f5c804b9c9d624a64f869fae42394892db4de6171353b"
+      "sha256": "f934ba44510b3a09857364d5767032e825c44d8c03627ce7a782d4f97f10cd44"
     },
     "voting": {
       "path": "data/games/S23/2026-09-29_g03_BV15PaW66EjW/voting.candidate.json",
@@ -68,6 +68,54 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV15PaW66EjW/p01/audio.m4a",
       "sha256": "67aa7947343be84431b38e174dac5b8edb3a719b511dc358205ce359bdf83470"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "4466e7e2a06c35413e4379ac1716f9bdd142500b9baf09dbba141ffb9991af4d"
+    },
+    "board_template:s23_mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "7c24034586f96f6665ef290e8d65620b8c10577f0a2632e95d055d193bc8507f"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "6a3a9979e0de765e86f20db38896942fcfa3121afd0316d0a4c511d6c301379c"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237"
+    },
+    "board_template:mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
     }
   },
   "normalization": {
@@ -79,6 +127,8 @@
     "explicit_transformations": [],
     "unknown_count_before": 45,
     "unknown_count_after": 45,
+    "unknown_count_after_normalization": 45,
+    "unknown_count_after_derivation": 22,
     "round_numbers_before": [
       1,
       2,
@@ -95,11 +145,29 @@
   "terminal_observations": [],
   "unpublished_terminal_checks": [],
   "public_notes": [],
-  "terminal_observation": null,
+  "terminal_observation": {
+    "round": 4,
+    "phase": "night"
+  },
   "separate_review_context": {
     "daily_human_questions": [],
     "bluff_overrides": [],
-    "daily_terminal_observation_source": null,
+    "daily_terminal_observation_source": {
+      "round": 4,
+      "phase": "night",
+      "basis": "最后神职于该夜出局，连续复盘明确立即结束，无随后白天行动",
+      "review_id": "DN-071",
+      "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第03局_机械狼通灵师__BV15PaW66EjW_P01_CID42315679001.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "e7e4aaca9bc8111ac2f851437904a3d30b2a6dab7441042595e3b2e3f72b73da",
+      "source_segment_indices": [
+        1258,
+        1259,
+        1260,
+        1261
+      ],
+      "start_ms": 2657810,
+      "end_ms": 2666600
+    },
     "report_human_questions": [],
     "report_unpublished_source_items": [],
     "eulogy_statistic_policy": null

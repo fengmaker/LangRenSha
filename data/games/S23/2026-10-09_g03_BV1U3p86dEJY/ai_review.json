@@ -513,9 +513,57 @@
           }
         ]
       },
-      "用户本轮确认6号悍跳，补记6号公开跳通灵师的尝试；10号遗言身份另列，原统计口径问题保留。"
+      "用户本轮确认6号悍跳，补记6号公开跳通灵师的尝试；10号遗言身份另列，原统计口径问题保留。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-257"
+        ]
+      }
     ],
-    "event_patches": [],
+    "event_patches": [
+      {
+        "round": 2,
+        "phase": "night",
+        "slot": "mechanical_action",
+        "changes": {
+          "action": "pass",
+          "actor": 5,
+          "targets": [],
+          "result": null
+        },
+        "reason": "N2连续复盘明确机械女巫技能通过（空过）；本职女巫9号N1已毒10后出局，本夜没有毒杀猎人3号。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+            "source_segment_indices": [
+              1732,
+              1733,
+              1734,
+              1735,
+              1736,
+              1737,
+              1738,
+              1750,
+              1751,
+              1752,
+              1753,
+              1754
+            ],
+            "start_ms": 3478570,
+            "end_ms": 3521400,
+            "quote": "机械狼通灵师深圳营通灵师\n12号女巫\n9号猎人\n3号守卫2号狼人阵营一号6号\n10号机械狼5号\n本游戏机械女巫平民阵营4号七号\n8号11号首页首尾守护一号狼人\n入夜守卫守护2号自首\n狼队击杀12号通灵师\n机械女巫技能通过通灵试验证\n一号玩家为狼人身份\n在延期禁选环节",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-257",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      }
+    ],
     "finding_resolutions": [
       {
         "id": "b73-d3-mechanical-day-skill-ineligible",
@@ -637,7 +685,41 @@
       }
     ]
   },
-  "daily_audit_changes": [],
+  "daily_audit_changes": [
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "before": {
+        "slot": "mechanical_action",
+        "action": "unknown",
+        "actor": 5,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "mechanical_action",
+        "action": "pass",
+        "actor": 5,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    }
+  ],
   "daily_bluff_changes": [
     {
       "before": null,
@@ -677,13 +759,6 @@
   "derived_event_states": [
     {
       "round": 1,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
-      "round": 1,
       "phase": "day",
       "slot": "mechanical_day_skill",
       "action": "unavailable",
@@ -691,31 +766,10 @@
     },
     {
       "round": 2,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
-      "round": 2,
-      "phase": "night",
-      "slot": "mechanical_action",
-      "action": "pass",
-      "basis": "复制毒药只一瓶，已明确第3夜才用毒，本夜保留毒药。"
-    },
-    {
-      "round": 2,
       "phase": "day",
       "slot": "mechanical_day_skill",
       "action": "unavailable",
       "basis": "本局机械狼学习形态为机械女巫，没有机械猎人的白天开枪技能。"
-    },
-    {
-      "round": 3,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "carrying",
-      "basis": "此前普通狼人已全部出局，机械狼接普通狼刀。"
     }
   ],
   "phase_review_counts": {

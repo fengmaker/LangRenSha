@@ -7,12 +7,15 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
-from cleanup_data import (current_media_references, data_path, require_idle_seasons,
+from cleanup_data import (REPORT, current_media_references, data_path, require_idle_seasons,
                           scan_evidence_references)
 from collect_bilibili_audio import is_chinese_subtitle
 
 
 class DataCleanupBoundaryTests(unittest.TestCase):
+    def test_cleanup_receipts_are_written_to_maintenance_reports(self):
+        self.assertEqual(REPORT.parent, ROOT/'data/reports/maintenance')
+
     def test_cleanup_cannot_target_audio_or_leave_data_folder(self):
         for value in ['README.md','data/../../outside.json','data/raw/bilibili/example/audio.m4a']:
             with self.subTest(path=value),self.assertRaises(ValueError):
@@ -54,7 +57,7 @@ class DataCleanupBoundaryTests(unittest.TestCase):
                         'readable': f'{base}/{bvid}.字幕_当前.阅读.txt',
                     }],
                 }
-                progress_path = root/'data/reports'/f'{season}_采集进度.json'
+                progress_path = root/'data/reports'/season/f'{season}_采集进度.json'
                 progress_path.parent.mkdir(parents=True, exist_ok=True)
                 progress_path.write_text(json.dumps({'items': {f'{bvid}:123': {
                     'bvid': bvid, 'status': 'complete', 'exports': exports}},
@@ -76,7 +79,7 @@ class DataCleanupBoundaryTests(unittest.TestCase):
             (root/'config').mkdir()
             (root/'config/seasons.json').write_text(
                 json.dumps({'seasons': {'S22': {}, 'S23': {}}}), encoding='utf-8')
-            progress = root/'data/reports/S22_采集进度.json'
+            progress = root/'data/reports/S22/S22_采集进度.json'
             progress.parent.mkdir(parents=True)
             progress.write_text(json.dumps({'items': {}, 'current_run': {'state': 'running'}}),
                                 encoding='utf-8')
@@ -111,7 +114,8 @@ class DataCleanupBoundaryTests(unittest.TestCase):
             report.write_text(json.dumps({'path': report_target.relative_to(root).as_posix(),
                                           'sha256': hashlib.sha256(report_target.read_bytes()).hexdigest()}),
                               encoding='utf-8')
-            maintenance = root/'data/reports/maintenance_baseline.json'
+            maintenance = root/'data/reports/maintenance/maintenance_baseline.json'
+            maintenance.parent.mkdir(parents=True, exist_ok=True)
             maintenance.write_text(json.dumps({'path': report_target.relative_to(root).as_posix()}),
                                    encoding='utf-8')
 

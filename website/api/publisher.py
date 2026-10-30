@@ -16,12 +16,14 @@ from psycopg import sql
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
-from website.api.game_presentation import terminal_from_events, terminal_day_events
+from website.api.game_presentation import (
+    build_game_presentation, terminal_from_events, terminal_day_events,
+)
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
 PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
-PUBLICATION_FORMAT_VERSION = 7
+PUBLICATION_FORMAT_VERSION = 12
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
 EVENT_FIELDS = (
@@ -83,14 +85,19 @@ def _read_json(path: Path) -> tuple[dict, str]:
 
 
 def _logical_rules(root: Path, season: str) -> tuple[dict[str, str], dict[str, dict]]:
+    from scripts.board_config import load_template
+    from scripts.rule_config import load_formal_rules, load_scope
+
     config_dir = root / "config"
-    scope_path = config_dir / f"{season}_game_scope.json"
-    formal_path = config_dir / f"{season}_formal_rules.json"
+    scope_path = config_dir / "seasons.json"
+    formal_path = config_dir / "game_rules.json"
     board_dir = config_dir / "board_templates"
     if not scope_path.is_file() or not formal_path.is_file() or not board_dir.is_dir():
         raise PublishError("缺少正式范围、正式规则或版型模板配置")
-    scope, scope_digest = _read_json(scope_path)
-    formal, formal_digest = _read_json(formal_path)
+    _, scope_digest = _read_json(scope_path)
+    _, formal_digest = _read_json(formal_path)
+    scope = load_scope(season, root)
+    formal = load_formal_rules(season, root)
     if scope.get("season") != season or formal.get("season") != season:
         raise PublishError("赛季范围配置不匹配")
     hashes = {
@@ -101,9 +108,12 @@ def _logical_rules(root: Path, season: str) -> tuple[dict[str, str], dict[str, d
     for path in sorted(board_dir.glob("*.json")):
         data, data_digest = _read_json(path)
         code = data.get("code")
-        if not isinstance(code, str) or code in boards:
-            raise PublishError("版型模板缺少唯一代码")
-        boards[code] = data
+        public_board = {"code": code, "name": data["name"]}
+        for code in [code, *data.get("storage_variants", {})]:
+            if not isinstance(code, str) or code in boards:
+                raise PublishError("版型模板缺少唯一代码")
+            boards[code] = load_template(code, root)
+            boards[code]["_public_board"] = public_board
         hashes[f"config/board_templates/{path.name}"] = data_digest
     if not boards:
         raise PublishError("版型模板为空")
@@ -244,6 +254,91 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
     return public
 
 
+def _public_rules_state(report: dict) -> dict:
+    """Project only safe, stable rule-state fields into the public snapshot."""
+    def token(value: object) -> str:
+        return value if isinstance(value, str) and re.fullmatch(r"[a-z][a-z0-9_]*", value) else "unknown"
+
+    def rows(field: str) -> list:
+        value = report.get(field)
+        return value if isinstance(value, list) else []
+
+    living = []
+    for row in rows("rounds"):
+        if not isinstance(row, dict) or type(row.get("day")) is not int:
+            continue
+        item = {"day": row["day"]}
+        for field in ("dead_before_night", "night_deaths", "living_before_vote",
+                      "living_after_day", "known_departed_after_day"):
+            seats = row.get(field)
+            if seats is None and field == "living_after_day":
+                item[field] = None
+            elif isinstance(seats, list) and all(type(seat) is int for seat in seats):
+                item[field] = seats
+        if type(row.get("night_deaths_complete")) is bool:
+            item["night_deaths_complete"] = row["night_deaths_complete"]
+        living.append(item)
+
+    slots = []
+    for row in rows("slot_states"):
+        if not isinstance(row, dict) or type(row.get("round")) is not int:
+            continue
+        slot = token(row.get("slot"))
+        if row.get("phase") not in {"night", "day"} or slot == "unknown":
+            continue
+        item = {"round": row["round"], "phase": row["phase"], "slot": slot,
+                "status": token(row.get("status")), "reason": token(row.get("reason"))}
+        targets = row.get("legal_targets")
+        if targets is None or (isinstance(targets, list) and all(type(seat) is int for seat in targets)):
+            item["legal_targets"] = targets
+        if type(row.get("review_required")) is bool:
+            item["review_required"] = row["review_required"]
+        consequences = row.get("consequences")
+        if isinstance(consequences, list):
+            item["consequences"] = [
+                {"type": token(value.get("type")), "seat": value["seat"], "rule": token(value.get("rule"))}
+                for value in consequences
+                if isinstance(value, dict) and type(value.get("seat")) is int
+            ]
+        slots.append(item)
+
+    codes = sorted({token(row.get("code")) for row in rows("issues")
+                    if isinstance(row, dict) and token(row.get("code")) != "unknown"})
+    return {"living": living, "slots": slots, "issues": codes}
+
+
+def _bluff_evidence_source_bindings(root: Path, dossier: dict, folder: Path) -> dict[str, str]:
+    """Freeze hashes for text sources used by bluff evidence without exposing paths."""
+    from website.api.bluffs import evidence_source_ref
+
+    allowed_roles = {"subtitle", "transcript", "recap"}
+    bindings = {}
+    candidates = {
+        row.get("path") for row in dossier.get("files", [])
+        if isinstance(row, dict) and row.get("role") in allowed_roles
+        and isinstance(row.get("path"), str)
+    }
+    # These existing per-game text evidence files are not always listed in
+    # dossier.files. Keep the allowlist narrow so candidate/import artifacts
+    # beside the official records do not enter the release source hash.
+    local_evidence_names = {"复盘原文.txt", "复核记录.json", "定位上下文.txt"}
+    candidates.update(
+        source.relative_to(root).as_posix()
+        for source in folder.iterdir()
+        if source.is_file() and source.name in local_evidence_names
+    )
+    for relative in candidates:
+        source = (root / relative).resolve()
+        if not source.is_relative_to(root) or not source.is_file():
+            continue
+        try:
+            digest = hashlib.sha256(source.read_bytes()).hexdigest()
+        except OSError:
+            continue
+        bindings[evidence_source_ref(relative)] = digest
+    return bindings
+
+
 def _append_supplemental_events(rounds: list[dict], context: dict) -> None:
     for item in context.get("supplemental_events", []):
         if not isinstance(item, dict):
@@ -299,7 +394,8 @@ def _clip_voting(voting: dict, round_number: int, phase: str) -> dict:
 
 
 def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
-                 board: dict, person_ids: dict[str, str]) -> dict:
+                 board: dict, person_ids: dict[str, str], *,
+                 source_voting: dict | None = None, derivations: dict | None = None) -> dict:
     bvid = _bvid(dossier)
     seats = []
     for seat in dossier.get("seats", []):
@@ -313,9 +409,17 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         })
     default_rules: set[tuple[str, int]] = set()
     applications = []
+    source_records = None
     if audit is not None:
-        if audit.get("facts") != voting:
-            raise PublishError("投票旁证与当前投票档案不一致")
+        audited_voting = source_voting if source_voting is not None else voting
+        if audit.get("facts") != audited_voting:
+            if derivations is None:
+                raise PublishError("投票旁证与当前投票档案不一致")
+            from scripts.game_derivations import restore_source_records
+
+            source_records = restore_source_records(dossier, voting, derivations)
+            if audit.get("facts") != source_records["voting"]:
+                raise PublishError("投票旁证与规则推导的原始投票档案不一致")
         for item in audit.get("rule_applications", []):
             if not isinstance(item, dict) or not isinstance(item.get("target"), str):
                 raise PublishError("默认弃票旁证格式不合法")
@@ -367,8 +471,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     details = {
         "id": dossier["slug"], "season": dossier["season"], "date": dossier["date"],
         "phase": dossier["phase"], "game_number": dossier.get("game_number"),
-        "board": {"code": dossier["board"], "name": board["name"].removeprefix("S23 ")
-                  if dossier["season"] == "S23" else board["name"]}, "winner": winner,
+        "board": dict(board["_public_board"]), "winner": winner,
         "players": [{"id": s["person_id"], "name": s["name"], "seat": s["seat"],
                      "role": s["role"], "faction": s["faction"]} for s in seats],
         "ballot_count": len(public_voting["ballots"]), "round_count": len(public_rounds),
@@ -379,6 +482,13 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         "source": {"url": f"https://www.bilibili.com/video/{bvid}/", "bvid": bvid},
         "data_notes": [],
     }
+    evidence_sources = context.get("bluff_evidence_sources")
+    if isinstance(evidence_sources, dict) and all(
+        isinstance(key, str) and re.fullmatch(r"[a-f0-9]{64}", key)
+        and isinstance(value, str) and re.fullmatch(r"[a-f0-9]{64}", value)
+        for key, value in evidence_sources.items()
+    ):
+        details["bluff_evidence_sources"] = dict(evidence_sources)
     if terminal_observation is not None:
         details["terminal_observation"] = terminal_observation
         details["terminal_events"] = terminal_events
@@ -396,6 +506,11 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         if not isinstance(note, str) or re.search(r"source_path|[A-Za-z]:[\\/]|data[\\/]", note):
             raise PublishError("公开补充说明含有无效文字或本地路径")
         details["data_notes"].append(note)
+    if derivations is not None:
+        details["rules_state"] = _public_rules_state(derivations)
+    if dossier["season"] == "S21":
+        details["data_notes"].append("本季按保留媒体逐条展示，正式计分总局数尚未确认。")
+        details["data_notes"].append("版型槽位仅用于归档，未确认的阵营、规则与叫醒顺序保留未知。")
     if dossier["season"] == "S23":
         details["data_notes"].append("夜间槽位排列用于归档，不表示已确认各技能的精确发动顺序。")
         if dossier["board"] == "masquerade":
@@ -413,6 +528,22 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
             details["data_notes"].append(f"档案确认本局在第{number}夜结束，未进入第{number}天白天。")
         else:
             details["data_notes"].append(f"档案确认本局在第{number}天白天结束。")
+    details["presentation"] = build_game_presentation(details)
+    if derivations is not None:
+        from website.api.bluffs import source_fingerprint
+
+        if source_records is None:
+            from scripts.game_derivations import restore_source_records
+
+            source_records = restore_source_records(dossier, voting, derivations)
+        source_view = _public_game(
+            source_records["dossier"], source_records["voting"], endgame, audit, board, person_ids,
+            source_voting=source_records["voting"],
+        )
+        details["bluff_source_binding"] = {
+            "derived_fingerprint": source_fingerprint(details),
+            "source_fingerprint": source_fingerprint(source_view),
+        }
     return details
 
 
@@ -439,6 +570,7 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         if any(not path.is_file() for path in paths.values()):
             raise PublishError("正式对局缺少投票或终局档案")
         voting, voting_digest = _read_json(paths["voting"])
+        source_voting = voting
         endgame, endgame_digest = _read_json(paths["endgame"])
         slug = dossier.get("slug")
         if voting.get("game_slug") != slug or endgame.get("game_slug") != slug:
@@ -460,6 +592,7 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         # the public snapshot; source paths and audit text stay private.
         context = {}
         supplemental = {}
+        supplemental_input = None
         for name in ("supplemental", "vote_control", "formal_context"):
             sidecar_path = folder / f"{name}.json"
             if sidecar_path.is_file():
@@ -471,6 +604,57 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
                     context = sidecar
                 elif name == "supplemental":
                     supplemental = sidecar
+                    supplemental_input = sidecar
+        derivation_path = folder / "rule_derivations.json"
+        derivations = None
+        if derivation_path.is_file():
+            derivations, derivation_digest = _read_json(derivation_path)
+            file_hashes["rule_derivations"] = derivation_digest
+            try:
+                from scripts.game_derivations import apply_precomputed, fingerprint
+
+                input_hashes = derivations.get("input_hashes")
+                if not isinstance(input_hashes, dict):
+                    raise ValueError("规则推导缺少来源指纹")
+                if ("terminal_observation" in input_hashes and input_hashes["terminal_observation"]
+                        != fingerprint(context.get("terminal_observation"))):
+                    raise ValueError("终局边界已变化，规则推导已过期，请重新生成")
+                if (input_hashes.get("supplemental") != fingerprint(supplemental_input)
+                        or input_hashes.get("endgame") != fingerprint(endgame)):
+                    raise ValueError("补充或终局档案已变化，规则推导已过期，请重新生成")
+                if "speech_evidence" in input_hashes:
+                    speech = derivations.get("sheriff_speech_evidence") or {}
+                    binding = speech.get("source_binding") or {}
+                    source_binding = (supplemental_input or {}).get("source_binding") or {}
+                    source = root / binding.get("path", "")
+                    if (fingerprint(speech) != input_hashes["speech_evidence"]
+                            or binding.get("path") != source_binding.get("selected_transcript_path")
+                            or binding.get("sha256") != source_binding.get("selected_transcript_sha256")
+                            or not source.is_file()
+                            or hashlib.sha256(source.read_bytes()).hexdigest() != binding.get("sha256")):
+                        raise ValueError("警上发言旁证的字幕来源已变化，请重新生成规则推导")
+                normalized = apply_precomputed(dossier, source_voting, derivations)
+            except (ValueError, KeyError, IndexError, TypeError) as exc:
+                raise PublishError(str(exc)) from exc
+            dossier, voting = normalized["dossier"], normalized["voting"]
+            report_terminal = derivations.get("terminal")
+            if report_terminal is not None:
+                if (not isinstance(report_terminal, dict)
+                        or type(report_terminal.get("round")) is not int
+                        or report_terminal.get("phase") not in {"night", "day"}):
+                    raise PublishError("规则推导终局缺少有效日夜边界")
+                terminal_boundary = {"round": report_terminal["round"],
+                                     "phase": report_terminal["phase"]}
+                existing_terminal = context.get("terminal_observation")
+                if existing_terminal is not None:
+                    if (not isinstance(existing_terminal, dict)
+                            or type(existing_terminal.get("round")) is not int
+                            or existing_terminal.get("phase") not in {"night", "day"}):
+                        raise PublishError("正式终局观察缺少有效日夜边界")
+                    if (existing_terminal["round"], existing_terminal["phase"]
+                            ) != (terminal_boundary["round"], terminal_boundary["phase"]):
+                        raise PublishError("规则推导与正式终局边界不一致")
+                context["terminal_observation"] = terminal_boundary
         if not context.get("terminal_observation") and audit is not None:
             audited_terminal = (audit.get("game_flow") or {}).get("terminal")
             if (isinstance(audited_terminal, dict)
@@ -481,9 +665,14 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
         if not context.get("terminal_observation"):
             context["terminal_observation"] = _terminal_from_dossier(dossier)
         context["supplemental_events"] = _public_supplemental_events(supplemental)
+        evidence_sources = _bluff_evidence_source_bindings(root, dossier, folder)
+        if evidence_sources:
+            context["bluff_evidence_sources"] = evidence_sources
+            file_hashes["bluff_evidence_sources"] = digest_bytes(canonical_json(evidence_sources))
         dossier = {**dossier, "_publication_context": context}
         entries.append({
             "dossier": dossier, "voting": voting, "endgame": endgame, "audit": audit,
+            "source_voting": source_voting, "derivations": derivations,
             "board": board, "folder": folder, "bvid": _bvid(dossier), "source_hashes": file_hashes,
         })
     if sample and not entries:
@@ -611,7 +800,9 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22", s
                 for item in entries:
                     dossier = item["dossier"]
                     doc = _public_game(dossier, item["voting"], item["endgame"], item["audit"],
-                                       item["board"], person_ids)
+                                       item["board"], person_ids,
+                                       source_voting=item.get("source_voting"),
+                                       derivations=item.get("derivations"))
                     doc["release_id"] = release_id
                     docs.append((item, doc))
                     manifest_games.append({"id": dossier["slug"], "files": item["source_hashes"]})

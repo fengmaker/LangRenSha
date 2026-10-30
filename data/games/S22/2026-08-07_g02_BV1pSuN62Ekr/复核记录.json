@@ -1290,5 +1290,44 @@
     }
   },
   "review_note": "AI疑点推理核查：1项已核实，0项仍待review。关联发现：首夜预言家查7号反馈好人。\n本局判断：主代理另行检查无显式疑点的完整复盘。",
-  "user_saved_at": "2026-10-24T15:16:46+08:00"
+  "user_saved_at": "2026-10-24T15:16:46+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-059",
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第11周_正赛第10期/2026-08-07/2026-08-07_S22_第11周_正赛第10期_第02局_唯邻是从__BV1pSuN62Ekr_P01_CID40694318865.平台AI字幕_ai-zh_01_3f59c9e5b4.原始.json",
+          "sha256": "3f59c9e5b4a8eeb127a91d371b15e92c2e4e56f225e6b64113110bab253d11f3",
+          "segment_indices": [
+            1671,
+            1672,
+            1673,
+            1674,
+            1675
+          ],
+          "source_segment_ids": [
+            1672,
+            1673,
+            1674,
+            1675,
+            1676
+          ],
+          "start_ms": 3187820,
+          "end_ms": 3194180,
+          "original_sentence": "形成平安夜；预言家验证2号玩家为狼人身份；在第二天的白天；狼队直接交牌游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "夜间自爆后明确“天亮了”；当天连续发言中提到准备交牌，但仍继续发言，没有正式投票环节。最后5号选择自爆并交牌，下一段即“游戏结束”。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

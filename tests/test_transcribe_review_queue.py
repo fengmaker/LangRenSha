@@ -197,12 +197,25 @@ class ReviewQueueTests(unittest.TestCase):
         result = queue.do_plan(csv_path, self.root)
         self.assertEqual(result["entry_count"], 4)
         self.assertEqual(result["counts"], {"no_zh_subtitle": 2, "needs_review": 2})
-        plan = queue.load_json(self.root / "data/reports/S22_全文补转写计划.json")
+        plan = queue.load_json(self.root / "data/reports/S22/S22_全文补转写计划.json")
         self.assertEqual([entry["bvid"] for entry in plan["entries"]],
                          [row["BVID"] for row in rows if row["质量筛查"] in queue.SELECTED_QUALITIES])
         summary = self.root / "data/seasons/S22/S22_全文补转写目录.csv"
         with summary.open(encoding="utf-8-sig", newline="") as stream:
             self.assertEqual(len(list(csv.DictReader(stream))), 4)
+
+    def test_season_report_and_runtime_paths_are_scoped_under_the_season(self):
+        from unittest.mock import patch
+
+        with patch.object(queue, "SEASON", "S22"):
+            self.assertEqual(queue.plan_path_for(self.root),
+                             self.root / "data/reports/S22/S22_全文补转写计划.json")
+            self.assertEqual(queue.state_path_for(self.root),
+                             self.root / "data/reports/S22/S22_全文补转写进度.json")
+            self.assertEqual(queue.log_path_for({"bvid": self.bvid}, self.root),
+                             self.root / "data/reports/S22/logs/全文补转写/BVTEST123456.log")
+            with queue.process_lock(self.root):
+                self.assertTrue((self.root / "data/reports/S22/.S22_全文补转写.lock").is_file())
 
 
 if __name__ == "__main__":

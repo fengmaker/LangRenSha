@@ -1886,5 +1886,44 @@
     }
   },
   "review_note": "AI疑点推理核查：3项已核实，0项仍待review。\n本局判断：R2狼队狼刀目标9号预言家；本夜夜死为1、5、9号。1号为女巫毒杀，5号此前已被舞池淘汰后计入当夜结果。；R3夜出局名单为4号、11号；原文明确狼队击杀4号，未说明11号为何出局。",
-  "user_saved_at": "2026-10-24T15:16:14+08:00"
+  "user_saved_at": "2026-10-24T15:16:14+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-048",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第07周_正赛第06期/2026-07-10/2026-07-10_S22_第07周_正赛第06期_第02局_假面舞会__BV1GxNH6YEht_P01_CID39830751496.平台AI字幕_ai-zh_01_feeed585eb.原始.json",
+          "sha256": "feeed585eb01d3a52056d95df8b434b131d40af77c6214f61f29975e7e65920e",
+          "segment_indices": [
+            1325,
+            1326,
+            1327,
+            1328,
+            1329
+          ],
+          "source_segment_ids": [
+            1326,
+            1327,
+            1328,
+            1329,
+            1330
+          ],
+          "start_ms": 2710580,
+          "end_ms": 2716100,
+          "original_sentence": "当夜为4号；11号双子；在第三天白天场上最后一狼假面选择交牌；游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第三轮夜后发言讨论并出现交牌，紧接游戏结束、好人获胜；终局前没有投票流程。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

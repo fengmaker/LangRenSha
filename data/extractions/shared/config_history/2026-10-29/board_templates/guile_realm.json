@@ -1,0 +1,241 @@
+{
+  "code": "guile_realm",
+  "name": "诡术之境",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "女巫": 1,
+    "魔术师": 1,
+    "定序王子": 1,
+    "平民": 4,
+    "狼人": 3,
+    "诡术师": 1
+  },
+  "wake_order": [],
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。",
+  "night_slots": [
+    {
+      "code": "wolf_attack",
+      "label": "狼队击杀",
+      "actor_role": "狼队",
+      "actions": [
+        "attack",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_save",
+      "label": "女巫解药",
+      "actor_role": "女巫",
+      "actions": [
+        "save",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "witch_poison",
+      "label": "女巫毒药",
+      "actor_role": "女巫",
+      "actions": [
+        "poison",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "seer_check",
+      "label": "预言家查验",
+      "actor_role": "预言家",
+      "actions": [
+        "check",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "magician_exchange",
+      "label": "魔术师交换",
+      "actor_role": "魔术师",
+      "actions": [
+        "exchange",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "guile_exchange",
+      "label": "诡术师交换次日出局信息",
+      "actor_role": "诡术师",
+      "actions": [
+        "exchange",
+        "invalid_exchange",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ],
+  "day_slots": [
+    {
+      "code": "sheriff_candidates",
+      "label": "上警名单",
+      "actor_role": null,
+      "actions": [
+        "register",
+        "continued",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_vote",
+      "label": "警长投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sheriff_result",
+      "label": "警长结果",
+      "actor_role": null,
+      "actions": [
+        "elected",
+        "deferred",
+        "none",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "night_deaths",
+      "label": "夜间出局",
+      "actor_role": null,
+      "actions": [
+        "die",
+        "peaceful",
+        "unknown"
+      ]
+    },
+    {
+      "code": "badge",
+      "label": "警徽",
+      "actor_role": null,
+      "actions": [
+        "transfer",
+        "hold",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "speech_order",
+      "label": "白天发言顺序",
+      "actor_role": null,
+      "actions": [
+        "order",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_vote",
+      "label": "放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "unknown"
+      ]
+    },
+    {
+      "code": "exile_result",
+      "label": "放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "self_destruct",
+      "label": "狼人自爆",
+      "actor_role": "狼人",
+      "actions": [
+        "self_destruct",
+        "none",
+        "unknown"
+      ]
+    },
+    {
+      "code": "guile_exchange_result",
+      "label": "诡术师交换效果",
+      "actor_role": null,
+      "actions": [
+        "apply",
+        "cancelled",
+        "none",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "sequential_prince_skill",
+      "label": "定序王子翻牌技能",
+      "actor_role": "定序王子",
+      "actions": [
+        "reveal",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "extra_speech",
+      "label": "定序王子额外发言",
+      "actor_role": "定序王子",
+      "actions": [
+        "speak",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "second_exile_vote",
+      "label": "定序王子第二轮放逐投票",
+      "actor_role": null,
+      "actions": [
+        "vote",
+        "not_held",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "second_exile_result",
+      "label": "定序王子第二轮放逐结果",
+      "actor_role": null,
+      "actions": [
+        "exile",
+        "none",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    }
+  ]
+}

@@ -1,23 +1,18 @@
 # 配置
 
-日常从[赛季注册表](seasons.json)开始，只读本次任务需要的规则文件。执行入口为`python scripts/workflow.py`。
+规则按用途和版型集中维护，不按赛季复制。基础身份、同版型能力和基础计分默认共用；明确的改版只覆盖受影响字段，单局裁定保留场次及证据。
 
 | 文件／目录 | 职责 |
 | --- | --- |
-| `seasons.json` | 唯一运行期赛季注册：名称、状态、官方合集、种子BV、规则／范围文件引用、复核／导入／悍跳适配；采集CLI与网站API共同读取 |
-| `S22_game_scope.json`、`S23_game_scope.json` | 该季正式范围、排除条件或固定候选快照；媒体归档范围与正式范围分开 |
-| `S22_formal_rules.json`、`S23_formal_rules.json` | 该季已采用的版型、字段、角色和结算口径；结构不同是实际适配差异 |
-| `S21_game_scope.json`、`S21_formal_rules.json` | S21媒体排除范围与已有当季规则证据；122是核实媒体数，未确认的计分总局数、规则及字段不补造；正式导入使用独立S21模板 |
-| `S23_review_rules.json` | 带来源、状态和作用域的现场案例／用户确认；不是所有赛季的通用规则 |
-| [board_templates](board_templates/README.md) | 固定事件槽、动作枚举、角色配置；S23同名规则变化用独立模板，不覆盖旧季 |
-| `game_rules.json` | 现有已确认的固定座位及机械狼等共有约定，使用前核对作用域 |
-| `scoring_rules.user_reported.v1.json` | 用户报告计分规则及未决项，不声称已官方验证；旧季计分需逐季确认 |
+| [game_rules.json](game_rules.json) | 共同规则入口：字段定义、基础身份与投票、各版型能力、规则来源与未决项、带状态和作用域的案例、计分与赛制 |
+| [seasons.json](seasons.json) | 赛季来源与运行入口；`scope` 保存正式范围、排除项和快照，`formal_import` 保存局数、轮换、存储代码映射及导入设置 |
+| [board_templates](board_templates/README.md) | 每个版型一份身份及事件槽模板；已有存储代码的归档差异集中保存，不另建赛季规则文件 |
 | `asr_hotwords.txt` | 全文Paraformer热词 |
 | `asr_recap_hotwords.txt` | 复盘专项热词，显式选择，替换默认词表 |
 | `asr_review_hotwords.txt` | Nano片段复核的精简热词，不超过50个 |
-| `S22_standard_sample.json` | 复盘短样本的来源与定位 |
-| `S22-pilot-board.candidate.json` | 早期已登记规则候选，仅供来源追溯，不是正式录入规则 |
 
-运行配置已提取到注册表；历史正式规则和范围文件仍保留原路径与字节，因为S23快照、导入回执和发布版本绑定它们的SHA256。改动规则时应形成明确的新版本和重核范围，而不是为了整理文件夹移动并破坏证据链。
+程序通过 `scripts/rule_config.py` 读取规则、范围与导入配置，通过 `scripts/board_config.py` 读取模板。日常执行入口为 `python scripts/workflow.py`。新增季复用共同规则，只登记来源、实际范围、必要的适配与有证据的差异。
 
-新增季：注册来源 → 准备该季范围／规则／模板 → 指定并实现适配 → 样板验证；仅新增一行注册表不会自动生成逐局复核或授权。
+`review_rules.rules` 的 `status`、`scope` 和证据决定能否采用；观察案例不因移入共同文件就变成通用结论。`scoring` 保留用户报告来源与 `official_verified: false`，未确认计分项继续留空。
+
+整理前的原文件、样本和早期候选已逐字节保存在[历史配置快照](../data/extractions/shared/config_history/2026-10-29/README.md)，供旧收据中的路径与 SHA256 追溯；它们不再作为运行配置读取。保存的推导文件只在计算结果完全相同时迁移规则依赖指纹，不改对局事实、数据库收据或已发布版本。

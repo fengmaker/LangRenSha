@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV178XkB7EXx/transcript.selected.json",
     "selected_sha256": "0100062a27f1114c66c62bd192bf2d44a8466a2ca9733915040e3693c6c36885",
@@ -802,11 +802,48 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV178XkB7EXx-event-023",
+      "phase": "day",
+      "round": 3,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第三日复盘确认终局发生在放逐投票前。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV178XkB7EXx/transcript.selected.json",
+          "source_sha256": "0100062a27f1114c66c62bd192bf2d44a8466a2ca9733915040e3693c6c36885",
+          "original_source_path": "data/seasons/S21/第06周_正赛第05期/2026-03-31/2026-03-31_S21_第06周_正赛第05期_第02局_孤注一掷__BV178XkB7EXx_P01_CID37131193005.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "58e857def06ad97f2abdd5da60cbf94a36d0caec987ba8aaffc2c554dcf81784",
+          "source_segment_indices": [
+            1306,
+            1307,
+            1308
+          ],
+          "start_ms": 2899570,
+          "end_ms": 2904489,
+          "quote": "顺序不分先后\n3号五号12号倒牌\n由邪术好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [],
   "coverage": {
     "recap_spans_actually_read": [
+      [
+        1306,
+        1308
+      ],
       [
         1317,
         1351
@@ -949,7 +986,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "67ada2b21d1d7ddc0714bd4ab53b4a1cf306789525aab117904ff3dc126bda36",
+    "spec_sha256": "09a42ccb64e75c16537027593b1e8118651e1db85b7d579f61f4ced1dd75e6f5",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -960,6 +997,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 2
+    "gaps_retained": 2,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-017"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

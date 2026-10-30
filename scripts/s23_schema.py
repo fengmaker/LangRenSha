@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from game_records import empty_event
+from board_config import load_template
 
 ROOT=Path(__file__).resolve().parents[1]
 FORMS={'狼人':'机械双刀狼','双刀狼':'机械双刀狼','通灵师':'机械通灵师',
@@ -60,9 +61,16 @@ def normalize(dossier,voting=None):
         if s['role']=='机械狼' and s.get('learned_role') in FORMS:
             old=s['learned_role'];s['learned_role']=FORMS[old]
             notes.append({'field':f"seats[{s['seat']}].learned_role",'before':old,'after':s['learned_role'],'basis':'现有机械狼形态的规范名称，底牌和模仿目标不变。'})
-    template=ROOT/f"config/board_templates/{d['board']}.json"
-    if not template.exists():return d,extra,notes,models
-    board=json.loads(template.read_text(encoding='utf-8'))
+    # These S23-only boards already store explicit observations. The S22 slot
+    # projection does not understand their actions (for example nine_tail_mark)
+    # and would clear valid targets after a canonical template is added.
+    # Their formal adapter owns template completion, as before consolidation.
+    if d['board'] in {'qingqiu_night', 'magic_duel'}:
+        return d,extra,notes,models
+    try:
+        board=load_template(d['board'],ROOT)
+    except FileNotFoundError:
+        return d,extra,notes,models
     event_fields=tuple(empty_event('example'))
     aliases={'magician_action':'magician_exchange','trickster_action':'guile_exchange',
              'prince_reveal':'sequential_prince_skill','mechanical_poison':'mechanical_action'}

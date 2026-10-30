@@ -29,10 +29,10 @@ DEFAULT_SEASON = season_codes(ROOT)[0]
 SEASON = DEFAULT_SEASON
 SEASON_CONFIG = load_season(SEASON, ROOT)
 DEFAULT_CSV = ROOT / f"data/seasons/{SEASON}/{SEASON}_中文优先复核目录.csv"
-PLAN_PATH = ROOT / f"data/reports/{SEASON}_全文补转写计划.json"
-STATE_PATH = ROOT / f"data/reports/{SEASON}_全文补转写进度.json"
+PLAN_PATH = ROOT / f"data/reports/{SEASON}/{SEASON}_全文补转写计划.json"
+STATE_PATH = ROOT / f"data/reports/{SEASON}/{SEASON}_全文补转写进度.json"
 SUMMARY_CSV = ROOT / f"data/seasons/{SEASON}/{SEASON}_全文补转写目录.csv"
-LOG_DIR = ROOT / f"data/reports/{SEASON}_全文补转写日志"
+LOG_DIR = ROOT / f"data/reports/{SEASON}/logs/全文补转写"
 TRANSCRIBER = ROOT / "scripts/transcribe_funasr.py"
 QUALITY_FIELD = "质量筛查"
 SELECTED_QUALITIES = ("no_zh_subtitle", "needs_review")
@@ -61,7 +61,7 @@ def configure_season(season: str) -> None:
     PLAN_PATH = plan_path_for(ROOT)
     STATE_PATH = state_path_for(ROOT)
     SUMMARY_CSV = summary_path_for(ROOT)
-    LOG_DIR = ROOT / f"data/reports/{season}_全文补转写日志"
+    LOG_DIR = ROOT / f"data/reports/{season}/logs/全文补转写"
 
 
 def utc_now() -> str:
@@ -216,7 +216,7 @@ def plan_row_map(plan: dict[str, Any]) -> dict[str, dict[str, Any]]:
 @contextmanager
 def process_lock(root: Path) -> Iterator[None]:
     """Hold a nonblocking cross-platform process lock for the entire batch run."""
-    lock_path = root / f"data/reports/.{SEASON}_全文补转写.lock"
+    lock_path = root / f"data/reports/{SEASON}/.{SEASON}_全文补转写.lock"
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     handle = lock_path.open("a+b")
     try:
@@ -555,11 +555,11 @@ def status(plan_path: Path, csv_path: Path, root: Path) -> dict[str, Any]:
 
 
 def state_path_for(root: Path) -> Path:
-    return root / f"data/reports/{SEASON}_全文补转写进度.json"
+    return root / f"data/reports/{SEASON}/{SEASON}_全文补转写进度.json"
 
 
 def plan_path_for(root: Path) -> Path:
-    return root / f"data/reports/{SEASON}_全文补转写计划.json"
+    return root / f"data/reports/{SEASON}/{SEASON}_全文补转写计划.json"
 
 
 def summary_path_for(root: Path) -> Path:
@@ -567,7 +567,7 @@ def summary_path_for(root: Path) -> Path:
 
 
 def log_path_for(entry: dict[str, Any], root: Path) -> Path:
-    return root / f"data/reports/{SEASON}_全文补转写日志" / f"{entry['bvid']}.log"
+    return root / f"data/reports/{SEASON}/logs/全文补转写" / f"{entry['bvid']}.log"
 
 
 def run_one(entry: dict[str, Any], root: Path, state: dict[str, Any],

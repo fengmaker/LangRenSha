@@ -51,6 +51,7 @@
 | 文件 | 职责 |
 | --- | --- |
 | [board_catalog.py](board_catalog.py) | Canonical title lookup for S22 board templates. |
+| [board_config.py](board_config.py) | Load shared board templates and existing storage-code variants. |
 | [endgame_records.py](endgame_records.py) | Generate independent, source-bound S22 wolf-rush endgame sidecars. |
 | [formal_entry.py](formal_entry.py) | Create, check, import and audit scored S22 entries using the formal rulebook. |
 | [formal_rule_checks.py](formal_rule_checks.py) | Known-rule checks for scored S22 boards; never infer an unobserved result. |
@@ -60,6 +61,7 @@
 | [game_scope.py](game_scope.py) | User-selected scope for structured game records; raw media stays independent. |
 | [recap_parser.py](recap_parser.py) | Conservative, deterministic parsing of an already located referee recap. |
 | [recap_specials.py](recap_specials.py) | Conservative extraction of explicit special-board recap actions. |
+| [rule_config.py](rule_config.py) | Load shared rules and season scope, rotation and import settings. |
 | [voting_crosscheck.py](voting_crosscheck.py) | Reconcile announced voting outcomes with the independent referee recap. |
 | [voting_records.py](voting_records.py) | Extract announced ballots from full transcripts; keep evidence outside game facts. |
 | [voting_rules.py](voting_rules.py) | Apply user-confirmed S22 election and default-abstention rules after source corrections. |

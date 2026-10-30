@@ -761,30 +761,6 @@
       "phase_label": "开局夜晚",
       "previous_question": "开局夜预言家查验9号",
       "daily_audited": true
-    },
-    {
-      "id": "coverage-1-night-witch_save",
-      "round": 1,
-      "phase": "night",
-      "phase_label": "开局夜晚",
-      "status": "confirmed",
-      "field": "witch_save",
-      "title": "女巫解救由刀口与最终夜死互证",
-      "conclusion": "首夜女巫救起9号，平安夜",
-      "reasoning": "复盘直接描述狼刀9号后女巫救起。",
-      "evidence": [
-        {
-          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
-          "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
-          "start_ms": 3480090,
-          "end_ms": 3482740,
-          "quote": "形成好人混狼队击杀9号平民"
-        }
-      ],
-      "origin": "phase_coverage_check",
-      "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
-      "previous_question": "女巫解救由刀口与最终夜死互证",
-      "daily_audited": true
     }
   ],
   "structural_normalizations": [
@@ -812,7 +788,15 @@
       "basis": "人工复核边界：从本局最终复盘的角色/版型信息首句起，至明确阵营胜负/游戏结束结算句止；完整行动复盘保留，不含前局尾音和后续主持话语。"
     },
     "checks": [
-      "N1狼刀9、女巫救9，平安；预言家验9为好人；D1放逐10号并交牌，好人胜。"
+      "N1狼刀9、女巫救9，平安；预言家验9为好人；D1放逐10号并交牌，好人胜。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-210"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -822,6 +806,75 @@
         "changes": {
           "result": "好人"
         }
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "witch_save",
+        "changes": {
+          "action": "save",
+          "actor": 4,
+          "targets": [
+            9
+          ],
+          "result": null
+        },
+        "reason": "N1狼刀9号并被女巫救起，复盘明确平安夜；猎人4未被毒杀，且没有可成立的额外毒药出局。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+            "source_segment_indices": [
+              1623,
+              1624,
+              1625,
+              1626,
+              1627,
+              1628
+            ],
+            "start_ms": 3477290,
+            "end_ms": 3487930,
+            "quote": "首先混血儿选择7号白神为榜样\n形成好人混狼队击杀9号平民\n荣耀救起\n启程\n平安夜\n预言家验证9号玩家平民为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-210",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "changes": {
+          "action": "attack",
+          "targets": [
+            9
+          ],
+          "result": null
+        },
+        "reason": "N1狼刀9号并被女巫救起，复盘明确平安夜；猎人4未被毒杀，且没有可成立的额外毒药出局。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+            "source_segment_indices": [
+              1623,
+              1624,
+              1625,
+              1626,
+              1627,
+              1628
+            ],
+            "start_ms": 3477290,
+            "end_ms": 3487930,
+            "quote": "首先混血儿选择7号白神为榜样\n形成好人混狼队击杀9号平民\n荣耀救起\n启程\n平安夜\n预言家验证9号玩家平民为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-210",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
       }
     ],
     "finding_resolutions": [
@@ -970,29 +1023,86 @@
         "availability": null,
         "effects": []
       }
-    }
-  ],
-  "daily_bluff_changes": [],
-  "daily_supplemental_aliases": [],
-  "derived_event_states": [
-    {
-      "round": 1,
-      "phase": "night",
-      "slot": "witch_save",
-      "action": "save",
-      "basis": "本版没有守卫或转移刀口的技能；已核狼刀目标当夜未死且此前存活，唯一对应女巫解救。"
     },
     {
       "round": 1,
       "phase": "night",
-      "slot": "witch_poison",
-      "action": "unavailable",
-      "basis": "同一普通女巫每夜只能用一瓶药；本夜已使用另一瓶。"
+      "slot": "witch_save",
+      "before": {
+        "slot": "witch_save",
+        "action": "unknown",
+        "actor": 4,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "witch_save",
+        "action": "save",
+        "actor": 4,
+        "targets": [
+          9
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "before": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          9
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          9
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
     }
   ],
+  "daily_bluff_changes": [],
+  "daily_supplemental_aliases": [],
+  "derived_event_states": [],
   "phase_review_counts": {
     "unresolved": 0,
-    "confirmed": 5,
+    "confirmed": 4,
     "inferred": 0,
     "not_observed": 0
   },

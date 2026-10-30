@@ -1188,5 +1188,44 @@
     }
   },
   "review_note": "AI疑点推理核查：1项已核实，0项仍待review。\n本局判断：第二夜原句“守卫守护2号自首”，身份名单也明确守卫2号，故自首为自守误写、行动者和目标同为2，不需要额外人工作读音判断。第三夜才守女巫1并被刀2，轮次不混淆。",
-  "user_saved_at": "2026-10-24T15:12:44+08:00"
+  "user_saved_at": "2026-10-24T15:12:44+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-055",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第10周_正赛第09期/2026-07-31/2026-07-31_S22_第10周_正赛第09期_第03局_机械狼通灵师__BV1iDGK61E1c_P01_CID40480540771.平台AI字幕_ai-zh_01_27a71fbec6.原始.json",
+          "sha256": "27a71fbec661ba0f6711dc5220af660b7a83eecae061884010a337393440a94b",
+          "segment_indices": [
+            3122,
+            3123,
+            3124,
+            3125,
+            3126
+          ],
+          "source_segment_ids": [
+            3123,
+            3124,
+            3125,
+            3126,
+            3127
+          ],
+          "start_ms": 6339200,
+          "end_ms": 6345610,
+          "original_sentence": "入夜守卫守护一号女巫；狼队击杀2号守卫；2号守卫单死在第三天白天；狼队选择交牌游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第三轮夜后连续发言，最后一名玩家仍在建议随后归票；之后狼队选择交牌并由好人获胜。终局发生在下一次放逐流程前。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

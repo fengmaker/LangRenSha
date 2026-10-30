@@ -19,10 +19,11 @@ import endgame_records
 import game_records
 import s21_phase_review as phase_review
 import voting_records
+from rule_config import load_formal_rules, load_scope
 from psycopg.types.json import Jsonb
 
-INDEX = Path("data/reports/S21_文字与截图时点索引.json")
-SCOPE = Path("config/S21_game_scope.json")
+INDEX = Path("data/reports/S21/S21_文字与截图时点索引.json")
+SCOPE = Path("config/seasons.json")
 PHASE_AUDIT = Path("data/extractions/S21/phase_primary_audit.json")
 OUTPUT = Path("data/games/S21")
 PHASE_DIR = Path("data/extractions/S21/phase_specs")
@@ -227,7 +228,8 @@ def role_faction(board: str, role: str | None, rules: dict) -> str | None:
     """Use only S21-specific faction evidence; other boards retain unknown factions."""
     if board != "s21_guile_realm" or role is None:
         return None
-    board_evidence = rules["boards"].get("诡术之境", {})
+    board_evidence = next((item for item in rules["boards"]["guile_realm"].get("evidence_records", [])
+                           if item.get("season") == "S21"), {})
     if board_evidence.get("formal_status") != "S21-specific official image verified":
         return None
     for faction_name, roles in board_evidence.get("factions", {}).items():
@@ -261,7 +263,9 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
         return None, None, "source status is unknown; retained in supplemental"
     actor = source.get("actor")
     targets = _event_targets(source)
-    result = None
+    # Keep a directly reviewed slot result even when the action itself carries
+    # the obvious target (for example, guarded/saved and the learned form).
+    result = source.get("result")
     slot, formal_action = None, None
 
     if source["state"] == "pass":
@@ -290,12 +294,12 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
     elif phase == "night":
         if action == "night_deaths":
             slot = "night_deaths"
-            if source.get("result") == "peaceful" or (
-                    isinstance(source.get("result"), str) and
-                    re.search(r"平安夜|无(?:人)?(?:夜间)?死亡|无夜死", source["result"])):
-                formal_action, targets, actor = "peaceful", [], None
-            elif targets:
+            if targets:
                 formal_action, actor = "die", None
+            elif source.get("result") == "peaceful" or (
+                    isinstance(source.get("result"), str) and
+                    re.search(r"平安夜|(?:首|昨)夜平安|无(?:人)?(?:夜间)?死亡|无夜死", source["result"])):
+                formal_action, targets, actor = "peaceful", [], None
             else:
                 return None, None, "no explicit death target/result for the formal slot"
             phase = "day"
@@ -305,7 +309,9 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
         elif action == "poison": slot, formal_action = "witch_poison", "poison"
         elif action == "investigate":
             slot, formal_action, result = "seer_check", "check", source.get("result")
-        elif action == "learn": slot, formal_action = "mechanical_action", "learn"
+        elif action == "learn":
+            slot, formal_action = "mechanical_action", "learn"
+            result = result or source.get("details", {}).get("learned_form")
         elif action == "dream": slot, formal_action = "dreamer_action", "dream"
         elif action == "dance": slot, formal_action = "dancer_dance", "dance"
         elif action == "choose_model": slot, formal_action = "mixed_blood_model", "choose"
@@ -313,12 +319,14 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
             role = source.get("actor_physical_role")
             if role == "魔术师": slot, formal_action = "magician_exchange", "exchange"
             elif role == "诡术师": slot, formal_action = "guile_exchange", "exchange"
-        elif action == "extra_attack": slot, formal_action = "treasure_extra_attack", "attack"
+        elif action == "extra_attack":
+            slot = "mechanical_action" if source.get("actor_physical_role") == "机械狼" else "treasure_extra_attack"
+            formal_action = "attack"
         elif action == "puppet": slot, formal_action = "puppet_select", "select"
         elif action == "wear_mask": slot, formal_action = "masquerade_mask", "give_mask"
         elif action == "steal_card":
             slot, formal_action = "s21_treasure_action", "choose"
-            result = source.get("details", {}).get("selected_identity")
+            result = source.get("details", {}).get("selected_identity") or source.get("result")
             targets = []
     elif phase == "day":
         if action in {"sheriff_signup", "sheriff_candidates"}:
@@ -331,17 +339,20 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
             targets, actor = target, None
         elif action == "sheriff_deferred": slot, formal_action = "sheriff_result", "deferred"
         elif action in {"night_deaths", "death_announcement"}:
+            if action == "death_announcement" and source.get("details", {}).get("night_death") is False:
+                return None, None, "explicit daytime departure is not a night-death settlement; retained in supplemental"
             slot = "night_deaths"
-            if source.get("result") == "peaceful" or (
-                    isinstance(source.get("result"), str) and
-                    re.search(r"平安夜|无(?:人)?(?:夜间)?死亡|无夜死", source["result"])):
-                formal_action, targets, actor = "peaceful", [], None
-            elif targets:
+            if targets:
                 formal_action, actor = "die", None
+            elif source.get("result") == "peaceful" or (
+                    isinstance(source.get("result"), str) and
+                    re.search(r"平安夜|(?:首|昨)夜平安|无(?:人)?(?:夜间)?死亡|无夜死", source["result"])):
+                formal_action, targets, actor = "peaceful", [], None
             else:
                 return None, None, "no explicit death target/result for the formal slot"
         elif action == "badge_transfer": slot, formal_action = "badge", "transfer"
-        elif action in {"badge_lost", "badge_destroyed"}: slot, formal_action = "badge", "none"
+        elif action in {"badge_lost", "badge_destroyed"}:
+            slot, formal_action, result = "badge", "none", action
         elif action == "exile":
             slot, formal_action = "exile_result", "exile"
             actual = source.get("details", {}).get("actual_exile_target")
@@ -378,9 +389,95 @@ def map_phase_event(source: dict) -> tuple[str, int, dict] | tuple[None, None, s
         role = source["actor_physical_role"]
         if role == "机械狼" or role not in game_records.WOLF_ROLES:
             return None, None, "shared formal validator cannot represent self-destruct for this verified role"
+    if (phase == "night" and source.get("actor_physical_role") == "机械狼"
+            and action in {"investigate", "guard", "poison"}):
+        slot = "mechanical_action"
     mapped = game_records.empty_event(slot)
     mapped.update(action=formal_action, actor=actor, targets=list(targets or []), result=result)
     return phase, number, mapped
+
+
+def map_phase_events(source: dict) -> list[tuple[str, int, dict]]:
+    """Map one source row, allowing a whole witch pass to cover both bottles."""
+    if (source.get("phase") == "night" and source.get("action") == "skill_resolution"
+            and source.get("state") == "pass" and source.get("actor_physical_role") in {"女巫", "毒师"}
+            and source.get("status") in {"text_explicit", "visual_explicit", "unique_deduction"}
+            and type(source.get("round")) is int):
+        details = source.get("details", {})
+        skill = details.get("slot") or details.get("skill") or details.get("action")
+        text = str(source.get("result") or "")
+        if source.get("actor_physical_role") == "毒师":
+            slots = ["witch_poison"]
+        elif skill in {"witch_save", "save", "antidote", "解药"}:
+            slots = ["witch_save"]
+        elif skill in {"witch_poison", "poison", "毒药", "毒"}:
+            slots = ["witch_poison"]
+        elif re.search(r"女巫.{0,8}技能.{0,6}(?:空过|空刀|pass)", text, re.I):
+            slots = ["witch_save", "witch_poison"]
+        elif "解药" in text or "自救" in text:
+            slots = ["witch_save"]
+        elif "毒药" in text or "用毒" in text:
+            slots = ["witch_poison"]
+        elif skill is None:
+            # The reviewed typed fact is an unqualified whole-witch pass;
+            # potion-specific passes above keep their narrower scope.
+            slots = ["witch_save", "witch_poison"]
+        else:
+            slots = []
+        return [("night", source["round"], {
+            **game_records.empty_event(slot), "action": "pass", "actor": source.get("actor"),
+            "result": source.get("result"),
+        }) for slot in slots]
+
+    phase, number, mapped = map_phase_event(source)
+    if phase is None:
+        return []
+    return [(phase, number, mapped)]
+
+
+def _merge_learned_forms(placements: dict, events: list[dict], unmapped: list[dict]) -> None:
+    """Attach a reviewed form to one explicit learn action without inventing its time."""
+    learn_rows = [
+        (key, source, mapped)
+        for key, rows in placements.items() if key[2] == "mechanical_action"
+        for source, mapped in rows if mapped.get("action") == "learn" and len(mapped.get("targets", [])) == 1
+    ]
+    for event in events:
+        if event.get("action") != "learned_form":
+            continue
+        targets = _event_targets(event)
+        if not targets:
+            learned_from = event.get("details", {}).get("learned_from")
+            if type(learned_from) is int:
+                targets = [learned_from]
+        candidates = [row for row in learn_rows
+                      if (event.get("actor") is None or row[2].get("actor") is None
+                          or row[2].get("actor") == event.get("actor"))
+                      and (not targets or row[2]["targets"] == targets)]
+        if len(candidates) != 1:
+            unmapped.append({"event_id": event.get("event_id"), "phase": event.get("phase"),
+                             "round": event.get("round"), "action": "learned_form",
+                             "reason": "learned form retained in phase_reviewed; no unique explicit learn action to attach it to"})
+            continue
+        _, _, mapped = candidates[0]
+        form_result = event.get("result")
+        if form_result is None:
+            details = event.get("details", {})
+            form_result = details.get("effective_role") or details.get("learned_identity")
+        if not form_result:
+            unmapped.append({"event_id": event.get("event_id"), "phase": event.get("phase"),
+                             "round": event.get("round"), "action": "learned_form",
+                             "reason": "learned form retained in phase_reviewed; no explicit form result to attach"})
+            continue
+        if mapped.get("result") not in (None, form_result):
+            unmapped.append({"event_id": event.get("event_id"), "phase": event.get("phase"),
+                             "round": event.get("round"), "action": "learned_form",
+                             "reason": "learned form conflicts with the explicit learn result; both source rows remain in supplemental"})
+            continue
+        mapped["result"] = form_result
+        unmapped.append({"event_id": event.get("event_id"), "phase": event.get("phase"),
+                         "round": event.get("round"), "action": "learned_form",
+                         "reason": "form result attached to the unique explicit learn action without changing its round; full source row retained in supplemental"})
 
 
 def _explicit_targets(value, key: str) -> list[int] | None:
@@ -458,7 +555,9 @@ def voting_facts(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
 
     registrations = []
     for event in reviewed.get("events", []):
-        if event["state"] != "performed" or event["action"] not in {"sheriff_signup", "sheriff_candidates"}:
+        # The initial signup split is the voter-registration fact. Later final
+        # candidates belong in the event slot and must not replace that split.
+        if event["state"] != "performed" or event["action"] != "sheriff_signup":
             continue
         details = event.get("details", {})
         on_police = _explicit_targets({"x": event.get("targets") or []}, "x")
@@ -478,9 +577,12 @@ def voting_facts(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
         if type(event.get("round")) is int:
             day_status(event["round"])
 
+    interruptions = []
+    following_nights = {event.get("round") for event in reviewed.get("events", [])
+                        if event.get("phase") == "night" and type(event.get("round")) is int}
     for event in reviewed.get("events", []):
         if (event["phase"] != "day" or event["state"] != "performed" or
-                event["action"] not in {"sheriff_deferred", "badge_lost", "no_exile", "self_destruct"}):
+                event["action"] not in {"sheriff_deferred", "badge_lost", "badge_destroyed", "no_exile", "self_destruct"}):
             continue
         day = event.get("round")
         if type(day) is not int:
@@ -488,20 +590,32 @@ def voting_facts(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
         d = day_status(day)
         if event["action"] == "sheriff_deferred" and d["sheriff"] == "unknown":
             d["sheriff"] = "deferred"
-        elif event["action"] == "badge_lost" and d["sheriff"] == "unknown":
+        elif event["action"] in {"badge_lost", "badge_destroyed"} and d["sheriff"] == "unknown":
             d["sheriff"] = "badge_lost"
         elif event["action"] == "no_exile" and d["exile"] == "unknown":
             d["exile"] = "none"
-        elif event["action"] == "self_destruct" and event.get("details", {}).get("ends_day") is True and d["exile"] == "unknown":
-            d["exile"] = "interrupted_self_destruct"
+        elif event["action"] == "self_destruct":
+            explicit_ends_day = event.get("details", {}).get("ends_day")
+            following_night = day + 1 in following_nights
+            ends_day = explicit_ends_day if type(explicit_ends_day) is bool else following_night
+            if explicit_ends_day is False and following_night:
+                issues.append({"event_id": event["event_id"],
+                               "reason": "ends_day=false conflicts with a reviewed following-night phase"})
+            if ends_day:
+                if d["exile"] == "unknown":
+                    d["exile"] = "interrupted_self_destruct"
+                interruptions.append({"id": event["event_id"], "day": day,
+                                      "actor": event.get("actor"), "reason": "self_destruct",
+                                      "ends_day": True})
 
     facts = {"schema_version": 1, "game_slug": slug, "registrations": registrations,
-             "ballots": ballots, "interruptions": [], "days": [days[d] for d in sorted(days)]}
+             "ballots": ballots, "interruptions": interruptions, "days": [days[d] for d in sorted(days)]}
     return facts, issues
 
 
 def endgame_sidecar(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
     phases, issues = [], []
+    known_winner, _ = event_winner(reviewed.get("events", []))
     for event in reviewed.get("events", []):
         if event.get("action") != "endgame_attack":
             continue
@@ -520,7 +634,27 @@ def endgame_sidecar(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
         if details.get("actor_identity_unresolved") is True:
             actor = None
         result = event.get("result")
-        result = result if result in {"werewolf_win", "good_win", "unknown"} else "unknown"
+        if result in {"werewolf_win", "good_win", "unknown"}:
+            if result in {"werewolf_win", "good_win"} and known_winner is not None:
+                expected_winner = "werewolf" if result == "werewolf_win" else "good"
+                if known_winner != expected_winner:
+                    issues.append({"event_id": event["event_id"],
+                                   "reason": "endgame result conflicts with the directly recorded game winner; result left unknown"})
+                    result = "unknown"
+        else:
+            text = re.sub(r"\s+", "", str(result or "")).lower()
+            success = text in {"success", "successful", "成功"} or bool(re.search(r"拍刀成功", text))
+            failure = text in {"failure", "failed", "失败"} or bool(re.search(r"拍刀失败", text))
+            expected = "werewolf" if success else "good" if failure else None
+            if expected and known_winner is not None:
+                if known_winner == expected:
+                    result = "werewolf_win" if expected == "werewolf" else "good_win"
+                else:
+                    issues.append({"event_id": event["event_id"],
+                                   "reason": "endgame success/failure conflicts with the directly recorded game winner; result left unknown"})
+                    result = "unknown"
+            else:
+                result = "unknown"
         day = event.get("round")
         if type(day) is not int:
             day = details.get("day") if type(details.get("day")) is int else None
@@ -534,14 +668,13 @@ def endgame_sidecar(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
                        "evidence": evidence})
     sidecar = {"schema_version": 1, "game_slug": slug, "phases": phases,
                "source_sha256": reviewed["source"]["original_sha256"]}
-    endgame_records.validate(sidecar)
     return sidecar, issues
 
 
 def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *, root: Path = ROOT) -> dict:
     bvid, cid, page = entry["bvid"], entry["cid"], entry["page"]
     board = board_for_title(entry["title"])
-    rules = read_json(root, Path("config/S21_formal_rules.json"))
+    rules = load_formal_rules("S21", root)
     date_match = re.match(r"^(20\d{2})(\d{2})(\d{2})", entry["title"])
     date = "-".join(date_match.groups()) if date_match else None
     if date and entry.get("date_candidate") and date != entry["date_candidate"]:
@@ -567,7 +700,8 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
     rounds_by_number = {}
     for event in reviewed.get("events", []):
         number = event.get("round")
-        if event.get("phase") in {"night", "day"} and type(number) is int:
+        if (event.get("phase") in {"night", "day"} and type(number) is int
+                and event.get("action") != "learned_form"):
             rounds_by_number.setdefault(number, {})
     max_round = max(rounds_by_number, default=0)
     template = game_records.template(board)
@@ -578,20 +712,67 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
     placements = {}
     unmapped = []
     for event in reviewed.get("events", []):
-        mapped_phase, number, mapped = map_phase_event(event)
-        if mapped_phase is None:
+        if event.get("action") == "learned_form":
+            continue
+        mapped_rows = map_phase_events(event)
+        if not mapped_rows:
+            _, _, reason = map_phase_event(event)
             if event.get("phase") in {"night", "day"}:
                 unmapped.append({"event_id": event["event_id"], "phase": event["phase"],
                                  "round": event.get("round"), "action": event["action"],
-                                 "reason": mapped})
+                                 "reason": reason})
             continue
-        placements.setdefault((mapped_phase, number, mapped["slot"]), []).append((event, mapped))
+        for mapped_phase, number, mapped in mapped_rows:
+            placements.setdefault((mapped_phase, number, mapped["slot"]), []).append((event, mapped))
+    _merge_learned_forms(placements, reviewed.get("events", []), unmapped)
     for key, rows in placements.items():
         mapped_phase, number, slot = key
+        phase_events = rounds[number - 1][mapped_phase]
+        slot_position = next(i for i, existing in enumerate(phase_events) if existing["slot"] == slot)
+        if slot == "night_deaths" and len(rows) > 1:
+            actions = {mapped["action"] for _, mapped in rows}
+            if actions == {"die"}:
+                mapped = dict(rows[0][1])
+                mapped["targets"] = sorted({seat for _, row in rows for seat in row["targets"]})
+                results = {row.get("result") for _, row in rows if row.get("result")}
+                mapped["result"] = next(iter(results)) if len(results) == 1 else None
+            elif actions == {"peaceful"}:
+                mapped = dict(rows[0][1])
+                results = {row.get("result") for _, row in rows if row.get("result")}
+                mapped["result"] = next(iter(results)) if len(results) == 1 else None
+            else:
+                for event, _ in rows:
+                    unmapped.append({"event_id": event["event_id"], "phase": event["phase"],
+                                     "round": number, "action": event["action"],
+                                     "reason": "conflicting peaceful/death observations for the same formal night-death slot; all source rows retained"})
+                continue
+            phase_events[slot_position] = mapped
+            base = rows[0][0]
+            for duplicate, _ in rows[1:]:
+                unmapped.append({"event_id": duplicate["event_id"], "phase": duplicate["phase"],
+                                 "round": number, "action": duplicate["action"],
+                                 "reason": f"same-night death facts merged into {base['event_id']}; source observations remain in phase_reviewed"})
+            if len({row.get("result") for _, row in rows if row.get("result")}) > 1:
+                unmapped.append({"event_id": base["event_id"], "phase": base["phase"],
+                                 "round": number, "action": base["action"],
+                                 "reason": "conflicting descriptive death results omitted from the formal slot; all source text remains in phase_reviewed"})
+            continue
+        if slot == "sheriff_candidates" and len(rows) > 1:
+            final_rows = [(event, mapped) for event, mapped in rows
+                          if event.get("action") == "sheriff_candidates"]
+            selected = (final_rows or rows)[-1]
+            event, mapped = selected
+            phase_events[slot_position] = mapped
+            for other, _ in rows:
+                if other is event:
+                    continue
+                unmapped.append({"event_id": other["event_id"], "phase": other["phase"],
+                                 "round": number, "action": other["action"],
+                                 "reason": (f"initial signup retained separately; final candidate set from {event['event_id']} occupies the formal slot"
+                                            if final_rows else f"earlier signup superseded by {event['event_id']} in the formal slot")})
+            continue
         if len(rows) > 1 and len({json.dumps(mapped, ensure_ascii=False, sort_keys=True) for _, mapped in rows}) == 1:
             event, mapped = rows[0]
-            phase_events = rounds[number - 1][mapped_phase]
-            slot_position = next(i for i, existing in enumerate(phase_events) if existing["slot"] == slot)
             phase_events[slot_position] = mapped
             for duplicate, _ in rows[1:]:
                 unmapped.append({"event_id": duplicate["event_id"], "phase": duplicate["phase"],
@@ -605,8 +786,6 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
                                  "reason": f"{len(rows)} reviewed events compete for {mapped_phase}/{slot}; all retained outside the formal slot"})
             continue
         event, mapped = rows[0]
-        phase_events = rounds[number - 1][mapped_phase]
-        slot_position = next(i for i, existing in enumerate(phase_events) if existing["slot"] == slot)
         phase_events[slot_position] = mapped
 
     winner, winner_issues = event_winner(reviewed.get("events", []))
@@ -622,10 +801,10 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
     endgame, endgame_issues = endgame_sidecar(slug, reviewed)
     unmapped.extend({"phase": "endgame", **item} for item in endgame_issues)
     supplemental = {
-        "schema_version": 1, "season": "S21", "bvid": bvid, "cid": cid, "page": page,
+        "schema_version": 1, "game_slug": slug, "season": "S21", "bvid": bvid, "cid": cid, "page": page,
         "source_title": entry["title"], "source_phase_candidate": entry.get("phase_candidate"),
         "formal_game_count_note": "A dossier is one source-bound media record. The 122-item S21 media scope is not a confirmed formal game count.",
-        "rule_status": "Only S21-specific evidence is used. Board slots are archive fields; unknown rule and wake-order details remain unknown.",
+        "rule_status": "Observed S21 facts retain their own evidence. User-confirmed common role and same-board rules are derived upstream; genuinely revised variants and unknown wake order remain separate.",
         "source_binding": {
             "identity_reviewed_path": binding["identity"],
             "identity_reviewed_sha256": digest(root, binding["identity"]),
@@ -649,19 +828,25 @@ def build_records(entry: dict, identity: dict, reviewed: dict, binding: dict, *,
         "phase_reviewed": reviewed,
         "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
     }
+    from game_derivations import derive_game
+    from sheriff_speech_evidence import load_bound_sheriff_speeches
+    derived = derive_game(dossier, voting, supplemental=supplemental, endgame=endgame,
+                          speech_evidence=load_bound_sheriff_speeches(supplemental, root=root, voting=voting))
+    dossier, voting = derived["dossier"], derived["voting"]
+    derivations = derived["derivations"]
     game_records.validate(dossier, check_files=False, allow_incomplete=True)
     voting_records.validate(voting)
     endgame_records.validate(endgame)
     folder_name = f"{date or 'date-unknown'}_{f'g{game_number:02d}' if game_number else 'gunknown'}_{bvid}"
     folder = OUTPUT / folder_name
     return {"entry": entry, "slug": slug, "dossier": dossier, "voting": voting,
-            "endgame": endgame, "supplemental": supplemental,
+            "endgame": endgame, "supplemental": supplemental, "rule_derivations": derivations,
             "folder": folder.as_posix(), "unmapped_count": len(unmapped)}
 
 
 def selected_entries(*, root: Path = ROOT, bvids: list[str] | None = None) -> list[dict]:
     index = read_json(root, INDEX)
-    scope = read_json(root, SCOPE)
+    scope = load_scope("S21", root)
     all_entries = index["entries"]
     by_id = {entry["bvid"]: entry for entry in all_entries}
     excluded = set(scope.get("excluded_bvids", []))
@@ -695,7 +880,8 @@ def write_prepared(items: list[dict], *, root: Path = ROOT) -> None:
     for item in items:
         folder = root / item["folder"]
         for filename, key in (("dossier.json", "dossier"), ("voting.json", "voting"),
-                              ("endgame.json", "endgame"), ("supplemental.json", "supplemental")):
+                              ("endgame.json", "endgame"), ("supplemental.json", "supplemental"),
+                              ("rule_derivations.json", "rule_derivations")):
             save_json(folder / filename, item[key])
 
 
@@ -703,7 +889,8 @@ def load_prepared(items: list[dict], *, root: Path = ROOT) -> list[dict]:
     for item in items:
         folder = root / item["folder"]
         for filename, key in (("dossier.json", "dossier"), ("voting.json", "voting"),
-                              ("endgame.json", "endgame"), ("supplemental.json", "supplemental")):
+                              ("endgame.json", "endgame"), ("supplemental.json", "supplemental"),
+                              ("rule_derivations.json", "rule_derivations")):
             path = folder / filename
             if not path.is_file():
                 raise ReviewError(f"{item['entry']['bvid']}: --import-db需要先执行--prepare；缺少{path.relative_to(root).as_posix()}")
@@ -740,7 +927,8 @@ def import_batch(items: list[dict]) -> dict:
         ensure_season(conn)
         for item in items:
             ensure_source(conn, item["entry"])
-            game_receipt = game_records.import_game(item["dossier"], allow_incomplete=True, conn=conn)
+            game_receipt = game_records.import_game(item["dossier"], allow_incomplete=True, conn=conn,
+                                                    derivations=item["rule_derivations"])
             vote_receipt = voting_records.import_voting(item["voting"], conn=conn)
             endgame_receipt = endgame_records.import_endgame(item["endgame"], conn=conn)
             game = conn.execute("SELECT id FROM games WHERE slug=%s", (item["slug"],)).fetchone()

@@ -1539,5 +1539,48 @@
     }
   },
   "review_note": "AI疑点推理核查：3项已核实，0项仍待review。\n本局判断：原句片段“警上竞选环节 / 7号狼人选择自爆”所涉round1.sheriff_result仍不能由上下文唯一确定。仍缺可辨认的完整行动或结算播报。；混血儿11号选择7号狼人为榜样；混血儿11号选择7号狼人为榜样 主代理二次核实：首日警上7号自爆后入夜，次日明确“在延期竞选环节”9号再次自爆、警徽流失，说明首日未完成竞选，应记录deferred，第二日才流失，不需要猜警长当选者。",
-  "user_saved_at": "2026-10-24T15:13:02+08:00"
+  "user_saved_at": "2026-10-24T15:13:02+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-045",
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第06周_正赛第05期/2026-07-01/2026-07-01_S22_第06周_正赛第05期_第01局_预女猎白混__BV1gvTi66EFF_P01_CID39568539813.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "8668f5ed9cd1491ccb3972e43b0d21ae560b63cd8c9c56e7326474257634e6ab",
+          "segment_indices": [
+            1907,
+            1908,
+            1909,
+            1910,
+            1911,
+            1912,
+            1913
+          ],
+          "source_segment_ids": [
+            1908,
+            1909,
+            1910,
+            1911,
+            1912,
+            1913,
+            1914
+          ],
+          "start_ms": 3630959,
+          "end_ms": 3641300,
+          "original_sentence": "入夜狼队击杀2号平民女巫；毒杀10号平民；2号十号双子在第四天的白天；狼队选择拍刀；场上最后一张平民12号拍刀成功；游戏结束；狼队阵营获胜"
+        }
+      ],
+      "reason": "第四轮夜后公告双死并继续发言；狼队选择拍刀，随后游戏结束、狼队获胜。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

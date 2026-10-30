@@ -1,7 +1,6 @@
 """Replay departures at their actual phase; keep deductions outside source facts."""
 from __future__ import annotations
 
-import json
 from pathlib import Path
 import re
 
@@ -84,7 +83,8 @@ def replay(dossier, facts=None, supplements=(), endgame_phases=(), terminal_conf
     seats = dossier.get("seats", [])
     everyone = {s["seat"] for s in seats} or set(range(1, 13))
     roles = {s["seat"]: s.get("role") for s in seats}
-    rules = json.loads((ROOT / "config/S22_formal_rules.json").read_text(encoding="utf-8"))
+    from rule_config import load_rules
+    rules = load_rules(ROOT)
     board = rules["boards"].get(dossier.get("board"), {})
     pool = board.get("role_pool") or board.get("role_composition", [])
     if not isinstance(pool, list):

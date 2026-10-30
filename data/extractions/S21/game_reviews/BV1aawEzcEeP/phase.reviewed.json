@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1aawEzcEeP/transcript.selected.json",
     "selected_sha256": "aae13bb2b5a9aae4c5a57d1f7b7d0dd1a958ee44aa6f2ae477d02bb35ae17e3a",
@@ -1098,6 +1098,10 @@
   "coverage": {
     "recap_spans_actually_read": [
       [
+        1110,
+        1112
+      ],
+      [
         1923,
         1994
       ]
@@ -1163,7 +1167,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "a2161c56cf88200bd9c286385b2817735612d963808a6a890ee977ec23ce2f14",
+    "spec_sha256": "303367bf72dd2860b97f9d1191447b7e3b4e6567163743900eb9b4d622babdec",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1174,6 +1178,15 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 1
+    "gaps_retained": 1,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-006"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation",
+      "owner_rejection": "DN006建议混淆了6号普通狼人和8号狼王；冻结身份表显示狼王8号本夜已出局，枪口仍未知，不补不触发。"
+    }
   }
 }

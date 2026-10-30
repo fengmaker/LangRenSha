@@ -17,7 +17,8 @@ def public_variant():
 
 
 def render(item,ids):
-    return publisher._public_game(item['dossier'],item['voting'],item['endgame'],item['audit'],item['board'],ids)
+    return publisher._public_game(item['dossier'],item['voting'],item['endgame'],item['audit'],item['board'],ids,
+        source_voting=item.get('source_voting'),derivations=item.get('derivations'))
 
 
 def test_terminal_night_keeps_only_observed_phases_and_explains_blocked_hunter():

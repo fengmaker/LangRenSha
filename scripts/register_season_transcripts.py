@@ -44,7 +44,7 @@ def run(season: str) -> dict:
     review_path = ROOT/f'data/seasons/{season}/{season}_中文优先复核目录.csv'
     with review_path.open(encoding='utf-8-sig', newline='') as stream:
         rows = list(csv.DictReader(stream))
-    asr_plan_path = ROOT/f'data/reports/{season}_全文补转写计划.json'
+    asr_plan_path = ROOT/f'data/reports/{season}/{season}_全文补转写计划.json'
     asr_plan = json.loads(asr_plan_path.read_text(encoding='utf-8')) if asr_plan_path.exists() else {'entries': []}
     local_entries = {entry['bvid']: entry for entry in asr_plan['entries']}
     results = []
@@ -84,7 +84,7 @@ def run(season: str) -> dict:
               'planned': len(rows), 'registered': sum(r['status'] == 'registered' for r in results),
               'segments': sum(r.get('segments', 0) for r in results),
               'game_facts_changed': False, 'verification_status': 'unverified', 'items': results}
-    save_json(ROOT/f'data/reports/{season}_转写入库验收.json', report)
+    save_json(ROOT/f'data/reports/{season}/{season}_转写入库验收.json', report)
     return {k: v for k, v in report.items() if k != 'items'}
 
 

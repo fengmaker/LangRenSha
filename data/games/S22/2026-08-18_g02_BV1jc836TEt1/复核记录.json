@@ -1198,5 +1198,46 @@
     }
   },
   "review_note": "AI疑点推理核查：1项已核实，0项仍待review。\n本局判断：R2白天狼队选择交牌并直接结束，好人获胜；模板没有“交牌”专用事件槽，不应将其误记为自爆或放逐。",
-  "user_saved_at": "2026-10-24T15:16:30+08:00"
+  "user_saved_at": "2026-10-24T15:16:30+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-063",
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第13周_决赛周/2026-08-18/2026-08-18_S22_第13周_决赛周_第02局_诡术之境__BV1jc836TEt1_P01_CID41036612240.平台AI字幕_ai-zh_01_f75802a004.原始.json",
+          "sha256": "f75802a00499e919b56cfec4ee4b9f2a9b8aee7fb11e7c83103babef5ba64f41",
+          "segment_indices": [
+            2207,
+            2208,
+            2209,
+            2210,
+            2211,
+            2212
+          ],
+          "source_segment_ids": [
+            2208,
+            2209,
+            2210,
+            2211,
+            2212,
+            2213
+          ],
+          "start_ms": 4233700,
+          "end_ms": 4240620,
+          "original_sentence": "2号五号双子；夜间预言家验证了6号玩家平民为好人身份；在第二天的白天；狼队选择交牌；游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第二轮夜后现场最终宣布狼队直接交牌；随后的同局复盘也明确第二天白天狼队选择交牌、游戏结束、好人获胜。窗口没有当日投票环节。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

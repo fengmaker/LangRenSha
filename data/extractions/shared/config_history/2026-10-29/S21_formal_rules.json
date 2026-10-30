@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "season": "S21",
+  "configuration_status": "partial_evidence_only",
+  "scope_reference": "config/S21_game_scope.json",
+  "evidence_report": "data/reports/S21/S21_当季规则逐项证据.json",
+  "usage_note": "This file contains only what is directly supported by the S21-specific official rule image. It is not a complete S21 board catalog and must not be treated as a full parser configuration.",
+  "source-unverified": "unknown",
+  "boards": {
+    "诡术之境": {
+      "formal_status": "S21-specific official image verified",
+      "source": {
+        "id": "S21-P0105",
+        "weibo_post_id": "5277841865572693",
+        "published_at_local": "2026-03-18 15:30:21 +0800",
+        "image_path": "data/raw/weibo/2026-02-24_2026-05-26_京城大师赛_UID7525583841/images/2026-03/2026-03-18_15-30-21_S21_第03期_阵容公告__WB5277841865572693_图13.jpg",
+        "sha256": "ef303b68692bf7a6b59e78f464297424bef8421ecc1615f1ef436fea927992d0",
+        "visual_inspection": "view_image"
+      },
+      "player_count": 12,
+      "factions": {
+        "神职阵营": ["预言家", "女巫", "魔术师", "定序王子"],
+        "平民阵营": ["平民×4"],
+        "狼人阵营": ["诡术师", "狼人×3"]
+      },
+      "rules_from_s21_image": {
+        "魔术师与诡术师交互": "魔术师和诡术师交换的号码完全相同时，则两者均无效。",
+        "定序王子": "放逐投票后定序王子可以翻牌发动技能，重新组织投票。在重新投票前，定序王子可以进行一次额外发言，整局最多使用一次。",
+        "诡术师": "每晚可以交换两个玩家的号码，每个玩家只能交换一次，可以选择不发动技能，不能连续空换。被诡术师交换的玩家白天出局信息置换。"
+      },
+      "additional_same_season_caption_claims_unverified": {
+        "prince_activation": "S21 platform AI caption says this applies to exile voting, not sheriff election; after initial vote/tie result, Prince may act before PK speeches; cannot act after PK speech/re-vote.",
+        "prince_speech_duration": "A 2026-03-20 SRT says 3 minutes; the official image gives no duration.",
+        "trickster_night_order": "S21 SRT says Trickster acts before meeting the wolf teammates; no night sequence is printed in the official image.",
+        "magician_base_skill": "S21 captions broadly say the Magician changes night skill resolution, but full ability wording is not in S21-P0105."
+      },
+      "unknowns": [
+        "full night wake order",
+        "complete Magician base skill wording",
+        "win condition",
+        "whether Prince's extra speech has a fixed duration",
+        "audio verification of SRT-only tie/PK sequence"
+      ],
+      "source-unverified": "unknown"
+    },
+    "预女猎白混": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_04.jpg",
+      "s21_revision_status": "unknown",
+      "source-unverified": "unknown"
+    },
+    "机械狼通灵师": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_02.jpg",
+      "s21_revision_status": "unknown",
+      "title_variant": "机械狼通灵师修改 occurs once as a title/part metadata variant on BV1roX7BQEau; not a separate board type",
+      "source-unverified": "unknown"
+    },
+    "假面舞会": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_03.jpg",
+      "s21_revision_status": "unknown",
+      "source-unverified": "unknown"
+    },
+    "唯邻是从": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_06.jpg",
+      "s21_revision_status": "unknown",
+      "role_count_conflict": "Printed faction rows sum to 13; S21 AI captions also list 13. Do not normalize to 12.",
+      "source-unverified": "unknown"
+    },
+    "孤注一掷": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_05.jpg",
+      "s21_revision_status": "unknown",
+      "source-unverified": "unknown"
+    },
+    "盗宝大师": {
+      "formal_status": "unknown",
+      "archived_official_rule_card": "data/extractions/S21/official_rule_collection_2025-11-03/rule_01.jpg",
+      "s21_revision_status": "unknown",
+      "printed_faction_rows_sum": 14,
+      "source-unverified": "unknown"
+    },
+    "狼王守卫": {
+      "formal_status": "unknown",
+      "s21_rules_source": null,
+      "known_caption_claim": "A 2026-03-10 caption says the board changed to 狼王守卫 and mentions a Wolf King gun skill, but the transcript is garbled.",
+      "source-unverified": "unknown"
+    }
+  }
+}

@@ -60,8 +60,8 @@ def run(season: str, limit: int | None = None, bvid_filter: str | None = None,
         auth: str = 'none', cookies_file: Path | None = None) -> dict:
     load_season(season, ROOT)
     plan = json.loads((ROOT/f'data/indexes/{season}_采集计划.json').read_text(encoding='utf-8'))
-    collection = json.loads((ROOT/f'data/reports/{season}_采集进度.json').read_text(encoding='utf-8'))
-    progress_path = ROOT/f'data/reports/{season}_发言截图进度.json'
+    collection = json.loads((ROOT/f'data/reports/{season}/{season}_采集进度.json').read_text(encoding='utf-8'))
+    progress_path = ROOT/f'data/reports/{season}/{season}_发言截图进度.json'
     progress = json.loads(progress_path.read_text(encoding='utf-8')) if progress_path.exists() else {'season': season, 'items': {}}
     attempted = 0
     for entry in plan['entries']:

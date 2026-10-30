@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1cLX4BkETh/transcript.selected.json",
     "selected_sha256": "c34f5fc7c7215df2ca792fe1f7453759bc8555237f494aa1c9c400d6459d22bf",
@@ -43,10 +43,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "text_explicit",
-      "result": "复盘称鬼术师交换5号狼人及8号女巫；行动主体与已核身份座位表不一致，保留主体未知。",
+      "status": "unique_deduction",
+      "result": "首夜诡术师交换5号与8号。",
       "details": {},
-      "note": null,
+      "note": "原转写中“11号”属于前一句名单尾部，后接首夜诡术师交换5号与8号；身份结算格确认6号为诡术师、11号为平民，故行动者唯一为6号。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1559,7 +1559,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "e4d2a63d17996284febae54926f4e2166ba8d041b1af63376d7e6d7c5015366d",
+    "spec_sha256": "90106a899a80f6223ea1a066c16bda84e03650c4237b4df9d8489095e1112796",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1570,6 +1570,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 3
+    "gaps_retained": 3,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-016"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

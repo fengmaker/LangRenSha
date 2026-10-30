@@ -720,10 +720,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "查验1号反馈守卫身份，首位为守卫同音转写。",
+      "status": "unique_deduction",
+      "result": "守卫身份",
       "details": {},
-      "note": null,
+      "note": "字幕“首位”结合连续复盘、同音转写及冻结身份表唯一对应“守卫”；目标1号不变。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1276,7 +1276,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "1b7da8d63dc307f622c4442d198a71d6d4d28d4a0a6d7bfaa03d44b236a6ca71",
+    "spec_sha256": "4bedc600f13dc8ecc4d9f53c3fe726fbb5c6cb7b7dd73262e7d8dc2ca34a318e",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1287,6 +1287,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-117"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

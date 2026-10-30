@@ -19,7 +19,7 @@ from typing import Any
 from database import ReviewError, connect
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT_PATH = Path("data/reports/S22_拍刀交叉复核.json")
+REPORT_PATH = Path("data/reports/S22/S22_拍刀交叉复核.json")
 REVIEWED_SOURCES = Path("data/extractions/S22/endgame_reviewed_sources.json")
 SCHEMA_VERSION = 1
 RULE_REFERENCE = {

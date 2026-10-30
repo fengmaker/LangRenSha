@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV19UoEBDEcH-p01-cid37790549863",
+  "registrations": [],
+  "ballots": [
+    {
+      "id": "BV19UoEBDEcH-ballot-01",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        6,
+        9,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 6,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 2,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 2,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV19UoEBDEcH-event-006",
+      "day": 1,
+      "actor": 11,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "BV19UoEBDEcH-event-014",
+      "day": 2,
+      "actor": 8,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    }
+  ]
+}

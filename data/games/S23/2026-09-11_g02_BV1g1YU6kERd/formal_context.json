@@ -11,15 +11,15 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/dossier.candidate.json",
-      "sha256": "e241472d02dbf4516ce59cf732b4d25c4174725ed7c33de091a85233cf8cbcd6"
+      "sha256": "9e33e7b5be0886d35c78cff24a3f209eeb55f9c6699c1fd8baa4cc56592b16c4"
     },
     "ai_review": {
       "path": "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/ai_review.json",
-      "sha256": "d8f239ab51666479ae1a66552eed079835006d40988ceb3233ce24cf4f79a271"
+      "sha256": "11c6b750591168b055cc4ed49cd9a30464469138cd684227e9eb370c457d5570"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1g1YU6kERd/daily_audit.json",
-      "sha256": "a67a4e5a27f496f94a2ce155bc6f825382b79222e57825a110d46bb3c286e077"
+      "sha256": "066304bb23cf3c31c3f7617e03a103bbdd9c2b37f08d75f0c3c9c328ea4e44d2"
     },
     "voting": {
       "path": "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/voting.candidate.json",
@@ -68,6 +68,50 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1g1YU6kERd/p01/audio.m4a",
       "sha256": "afd136789e99e8c1f46aff3c4327a8afbddbcbb5924e7bf4e6ef916aff391c23"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "f95db934cc54304ae2298c2ccaab43f99f4a927c6d7fee578d2bc6eb7231afd4"
+    },
+    "board_template:s23_qingqiu_night": {
+      "path": "config/board_templates/qingqiu_night.json",
+      "sha256": "9d70a0929c98f450717ceb93c81ada556fac8c44d3e91349efd78023cf8282cc"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "7c24034586f96f6665ef290e8d65620b8c10577f0a2632e95d055d193bc8507f"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "6a3a9979e0de765e86f20db38896942fcfa3121afd0316d0a4c511d6c301379c"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237"
     }
   },
   "normalization": {
@@ -83,19 +127,7 @@
       {
         "round": 1,
         "phase": "night",
-        "slot": "wolf_attack",
-        "action": "unknown"
-      },
-      {
-        "round": 1,
-        "phase": "night",
         "slot": "witch_poison",
-        "action": "unknown"
-      },
-      {
-        "round": 1,
-        "phase": "night",
-        "slot": "seer_check",
         "action": "unknown"
       },
       {
@@ -107,12 +139,6 @@
       {
         "round": 1,
         "phase": "night",
-        "slot": "witch_save",
-        "action": "unknown"
-      },
-      {
-        "round": 1,
-        "phase": "night",
         "slot": "whiteze_clear",
         "action": "unknown"
       },
@@ -288,12 +314,6 @@
         "round": 3,
         "phase": "day",
         "slot": "exile_result",
-        "action": "unknown"
-      },
-      {
-        "round": 4,
-        "phase": "night",
-        "slot": "guard",
         "action": "unknown"
       },
       {
@@ -361,19 +381,15 @@
         "phase": "day",
         "slot": "nine_tail_vote_mark",
         "action": "unknown"
-      },
-      {
-        "round": 4,
-        "phase": "day",
-        "slot": "exile_result",
-        "action": "unknown"
       }
     ],
     "not_created_after_game_end": [],
     "source_event_extensions": [],
     "explicit_transformations": [],
     "unknown_count_before": 0,
-    "unknown_count_after": 49,
+    "unknown_count_after": 44,
+    "unknown_count_after_normalization": 44,
+    "unknown_count_after_derivation": 41,
     "round_numbers_before": [
       1,
       2,

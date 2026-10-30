@@ -1,0 +1,1676 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV19UoEBDEt1-p01-cid37790354561",
+  "season": "S21",
+  "bvid": "BV19UoEBDEt1",
+  "cid": 37790354561,
+  "page": 1,
+  "source_title": "20260424 正赛 第八期 Day-4 第一局-预女猎白混",
+  "source_phase_candidate": "regular",
+  "formal_game_count_note": "A dossier is one source-bound media record. The 122-item S21 media scope is not a confirmed formal game count.",
+  "rule_status": "Observed S21 facts retain their own evidence. User-confirmed common role and same-board rules are derived upstream; genuinely revised variants and unknown wake order remain separate.",
+  "source_binding": {
+    "identity_reviewed_path": "data/extractions/S21/game_reviews/BV19UoEBDEt1/identity.reviewed.json",
+    "identity_reviewed_sha256": "55a7d83e6aeb0b83d1f22d22e0ee985d828a9d98d9b0d9f9a8a92734710a7441",
+    "phase_reviewed_path": "data/extractions/S21/game_reviews/BV19UoEBDEt1/phase.reviewed.json",
+    "phase_reviewed_sha256": "18f9f7c961cc33f5bc39ca658fdaf215fc03770a966eef016f8b7604179b449b",
+    "phase_spec_path": "data/extractions/S21/phase_specs/BV19UoEBDEt1.json",
+    "phase_spec_sha256": "ced980215c8a1d834d2f3518c993a0ab5baf0ae3204dc915fba207bb5a2ab542",
+    "selected_transcript_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+    "selected_transcript_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+    "original_transcript_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+    "original_transcript_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+    "phase_approval": {
+      "spec_sha256": "ced980215c8a1d834d2f3518c993a0ab5baf0ae3204dc915fba207bb5a2ab542",
+      "reviewer": "codex_primary",
+      "status": "semantic_source_checked_with_declared_gaps",
+      "checks": [
+        "independent_terminal_recap_read",
+        "live_procedure_evidence_crosscheck",
+        "frozen_identity_crosscheck",
+        "literal_vote_and_round_check",
+        "actual_death_and_announcement_distinguished",
+        "no_bluff_judgement"
+      ],
+      "gaps_retained": 1
+    }
+  },
+  "formal_slot_coverage": {
+    "mapped_events": 21,
+    "reviewed_phase_events": 29,
+    "unmapped_events": 9,
+    "placeholder_rounds": []
+  },
+  "unmapped": [
+    {
+      "event_id": "BV19UoEBDEt1-event-008",
+      "phase": "night",
+      "round": 2,
+      "action": "turn_night",
+      "reason": "no season-neutral formal slot; retained in supplemental"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-016",
+      "phase": "night",
+      "round": 3,
+      "action": "turn_night",
+      "reason": "no season-neutral formal slot; retained in supplemental"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-022",
+      "phase": "night",
+      "round": 4,
+      "action": "turn_night",
+      "reason": "no season-neutral formal slot; retained in supplemental"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-013",
+      "phase": "day",
+      "round": 2,
+      "action": "death_announcement",
+      "reason": "same-night death facts merged into BV19UoEBDEt1-event-012; source observations remain in phase_reviewed"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-012",
+      "phase": "night",
+      "round": 2,
+      "action": "night_deaths",
+      "reason": "conflicting descriptive death results omitted from the formal slot; all source text remains in phase_reviewed"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-020",
+      "phase": "day",
+      "round": 3,
+      "action": "death_announcement",
+      "reason": "same-night death facts merged into BV19UoEBDEt1-event-019; source observations remain in phase_reviewed"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-019",
+      "phase": "night",
+      "round": 3,
+      "action": "night_deaths",
+      "reason": "conflicting descriptive death results omitted from the formal slot; all source text remains in phase_reviewed"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-026",
+      "phase": "day",
+      "round": 4,
+      "action": "death_announcement",
+      "reason": "same-night death facts merged into BV19UoEBDEt1-event-025; source observations remain in phase_reviewed"
+    },
+    {
+      "event_id": "BV19UoEBDEt1-event-025",
+      "phase": "night",
+      "round": 4,
+      "action": "night_deaths",
+      "reason": "conflicting descriptive death results omitted from the formal slot; all source text remains in phase_reviewed"
+    }
+  ],
+  "phase_reviewed": {
+    "schema_version": 1,
+    "season": "S21",
+    "bvid": "BV19UoEBDEt1",
+    "cid": 37790354561,
+    "page": 1,
+    "field_scope": [
+      "night_actions",
+      "day_events",
+      "ballots",
+      "badge",
+      "endgame"
+    ],
+    "excluded_scope": [
+      "bluffs",
+      "public_role_claims"
+    ],
+    "review_status": "assistant_reviewed_with_explicit_limits",
+    "reviewer": "codex_luna_phase_review",
+    "source": {
+      "selected_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+      "selected_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+      "original_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+      "original_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1"
+    },
+    "identity_source": {
+      "path": "data/extractions/S21/game_reviews/BV19UoEBDEt1/identity.reviewed.json",
+      "sha256": "55a7d83e6aeb0b83d1f22d22e0ee985d828a9d98d9b0d9f9a8a92734710a7441"
+    },
+    "round_convention": "night 1 = opening night; night 2 = after day 1; day numbers follow actual game phases, not title Day",
+    "event_time_note": "Evidence times locate original-media words; no live event timestamp or wake order is inferred from recap order.",
+    "events": [
+      {
+        "event_id": "BV19UoEBDEt1-event-001",
+        "phase": "night",
+        "round": 1,
+        "action": "choose_model",
+        "actor": 5,
+        "actor_physical_role": "混血儿",
+        "targets": [
+          8
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "混血儿5号选择8号狼人为榜样，个人阵营随榜样",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2493,
+              2494
+            ],
+            "start_ms": 4830270,
+            "end_ms": 4835690,
+            "quote": "10号混血儿5号\n本游戏狼人混首页混选选择8号狼人为榜样",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-002",
+        "phase": "night",
+        "round": 1,
+        "action": "wolf_attack",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          10
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "复盘称狼人击杀10号平民",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2494,
+              2495
+            ],
+            "start_ms": 4831970,
+            "end_ms": 4838050,
+            "quote": "本游戏狼人混首页混选选择8号狼人为榜样\n形成狼人或狼人击杀10号平民女王救起",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-003",
+        "phase": "night",
+        "round": 1,
+        "action": "save",
+        "actor": 9,
+        "actor_physical_role": "女巫",
+        "targets": [
+          10
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "女巫救起10号，形成平安夜",
+        "details": {},
+        "note": "底牌确认9号为本局唯一女巫；复盘明确10号被救起。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2495,
+              2496
+            ],
+            "start_ms": 4835690,
+            "end_ms": 4840200,
+            "quote": "形成狼人或狼人击杀10号平民女王救起\n形成平安夜预言家验证",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-004",
+        "phase": "night",
+        "round": 1,
+        "action": "investigate",
+        "actor": 7,
+        "actor_physical_role": "预言家",
+        "targets": [
+          11
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "预言家查验11号为狼人",
+        "details": {},
+        "note": "底牌确认7号为本局唯一预言家；终局复盘明确查验11号为狼。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2496,
+              2497
+            ],
+            "start_ms": 4838050,
+            "end_ms": 4841760,
+            "quote": "形成平安夜预言家验证\n11号玩家伪狼人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-005",
+        "phase": "night",
+        "round": 1,
+        "action": "night_deaths",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "首夜形成平安夜，无夜死",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1090,
+              2495,
+              2496
+            ],
+            "start_ms": 2265160,
+            "end_ms": 4840200,
+            "quote": "平安夜天黑请闭眼\n形成狼人或狼人击杀10号平民女王救起\n形成平安夜预言家验证",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-006",
+        "phase": "day",
+        "round": 1,
+        "action": "sheriff_deferred",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "警长竞选未完成，8号狼在警上竞选环节自爆，转入延期",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1086,
+              1087,
+              1088,
+              1089,
+              2498,
+              2499
+            ],
+            "start_ms": 2254090,
+            "end_ms": 4844180,
+            "quote": "我过了井上发言\n结束退水自爆环节\n五四翻译暂停\n8号玩家选择自曝作为信息\n在警上竞选环节\n8号狼人选择自爆",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-007",
+        "phase": "day",
+        "round": 1,
+        "action": "self_destruct",
+        "actor": 8,
+        "actor_physical_role": "狼人",
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "8号狼人首日竞选阶段自爆",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1089,
+              2498,
+              2499
+            ],
+            "start_ms": 2262560,
+            "end_ms": 4844180,
+            "quote": "8号玩家选择自曝作为信息\n在警上竞选环节\n8号狼人选择自爆",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-008",
+        "phase": "night",
+        "round": 2,
+        "action": "turn_night",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": null,
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1089,
+              1090
+            ],
+            "start_ms": 2262560,
+            "end_ms": 2267400,
+            "quote": "8号玩家选择自曝作为信息\n平安夜天黑请闭眼",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-009",
+        "phase": "night",
+        "round": 2,
+        "action": "wolf_attack",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          3
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "复盘称狼人击杀3号白神，刀手未指明",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2500
+            ],
+            "start_ms": 4844180,
+            "end_ms": 4847220,
+            "quote": "入夜狼人击杀3号白神女巫技能空过",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-010",
+        "phase": "night",
+        "round": 2,
+        "action": "poison",
+        "actor": 9,
+        "actor_physical_role": "女巫",
+        "targets": [],
+        "actual_targets": null,
+        "state": "pass",
+        "status": "text_explicit",
+        "result": "复盘称女巫夜2技能空过",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2500
+            ],
+            "start_ms": 4844180,
+            "end_ms": 4847220,
+            "quote": "入夜狼人击杀3号白神女巫技能空过",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-011",
+        "phase": "night",
+        "round": 2,
+        "action": "investigate",
+        "actor": 7,
+        "actor_physical_role": "预言家",
+        "targets": [
+          6
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "预言家查验6号平民为好人",
+        "details": {},
+        "note": "7号为本局唯一预言家，身份已核；复盘明确查验6号为好人。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2501,
+              2502
+            ],
+            "start_ms": 4847220,
+            "end_ms": 4850040,
+            "quote": "预言家验证\n6号玩家平民为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-012",
+        "phase": "night",
+        "round": 2,
+        "action": "night_deaths",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          3
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "3号白神夜死",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1166,
+              1169,
+              2500
+            ],
+            "start_ms": 2427780,
+            "end_ms": 4847220,
+            "quote": "昨夜3号玩家倒牌\n3号玩家灭灯取码离场\n入夜狼人击杀3号白神女巫技能空过",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-013",
+        "phase": "day",
+        "round": 2,
+        "action": "death_announcement",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          3
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "法官播报昨夜3号倒牌并请其离场",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1165,
+              1166,
+              1167,
+              1168,
+              1169
+            ],
+            "start_ms": 2423920,
+            "end_ms": 2438630,
+            "quote": "所有玩家请变蓝灯\n昨夜3号玩家倒牌\n没有遗言\n3号玩家受我方技能54321\n3号玩家灭灯取码离场",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-014",
+        "phase": "day",
+        "round": 2,
+        "action": "self_destruct",
+        "actor": 11,
+        "actor_physical_role": "狼人",
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "延期竞选中狼人自爆并警徽流失；终局复盘记为11号自爆",
+        "details": {},
+        "note": "局中字幕将自爆者识别为1号，但1号随后在Day3实际投票并被放逐（1948、1958），证明其仍存活；终局复盘明确自爆者为11号，故按11号记录。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1163,
+              1164,
+              2503,
+              2504
+            ],
+            "start_ms": 2421600,
+            "end_ms": 4853120,
+            "quote": "一号玩家选择自爆\n本九戏警徽流失\n在第二天延期竞演环节\n11号狼人选择自爆",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-015",
+        "phase": "day",
+        "round": 2,
+        "action": "badge_lost",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "延期竞选自爆后本局警徽流失",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1163,
+              1164,
+              2503,
+              2504,
+              2505
+            ],
+            "start_ms": 2421600,
+            "end_ms": 4854220,
+            "quote": "一号玩家选择自爆\n本九戏警徽流失\n在第二天延期竞演环节\n11号狼人选择自爆\n本局游戏警徽流失",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-016",
+        "phase": "night",
+        "round": 3,
+        "action": "turn_night",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": null,
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1164,
+              1170
+            ],
+            "start_ms": 2422680,
+            "end_ms": 2440390,
+            "quote": "本九戏警徽流失\n各位天黑请闭眼",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-017",
+        "phase": "night",
+        "round": 3,
+        "action": "wolf_attack",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          7
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "复盘称狼人击杀7号预言家，刀手不唯一",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2506
+            ],
+            "start_ms": 4854220,
+            "end_ms": 4855940,
+            "quote": "入夜狼人击杀7号预言家",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-018",
+        "phase": "night",
+        "round": 3,
+        "action": "investigate",
+        "actor": 7,
+        "actor_physical_role": "预言家",
+        "targets": [
+          10
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "预言家查验10号为平民好人",
+        "details": {},
+        "note": "复盘称预言家当夜验证10号；7号在该夜死亡，行动与刀口均在死亡结算前发生。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2506,
+              2507
+            ],
+            "start_ms": 4854220,
+            "end_ms": 4858940,
+            "quote": "入夜狼人击杀7号预言家\n预言家验证10号玩家平民为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-019",
+        "phase": "night",
+        "round": 3,
+        "action": "night_deaths",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          7
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "7号预言家单死",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2506,
+              2508
+            ],
+            "start_ms": 4854220,
+            "end_ms": 4861310,
+            "quote": "入夜狼人击杀7号预言家\n7号玩家单死在第三天白天",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-020",
+        "phase": "day",
+        "round": 3,
+        "action": "death_announcement",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          7
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "第三天白天确认7号夜死",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1216
+            ],
+            "start_ms": 2534340,
+            "end_ms": 2535180,
+            "quote": "7号捏倒牌",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-021",
+        "phase": "day",
+        "round": 3,
+        "action": "exile",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          1
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "1号狼人被放逐；局中公布6票，逐票记录不完整",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1947,
+              1948,
+              1949,
+              1950,
+              1951,
+              1952,
+              1953,
+              1954,
+              1956,
+              1957,
+              1958,
+              2509
+            ],
+            "start_ms": 3821190,
+            "end_ms": 4863370,
+            "quote": "321请出票\n一号投给一号\n2号投给一号\n4号投给5号\n5号投给一号\n6号投给一号\n9号投给一号\n10号投给一号\n2号投给5号\n投票结束\n一号玩家六票出局\n一号狼人被公投出局",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-022",
+        "phase": "night",
+        "round": 4,
+        "action": "turn_night",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": null,
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1958,
+              1967
+            ],
+            "start_ms": 3840040,
+            "end_ms": 3864220,
+            "quote": "一号玩家六票出局\n各位天黑请闭眼",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-023",
+        "phase": "night",
+        "round": 4,
+        "action": "wolf_attack",
+        "actor": 2,
+        "actor_physical_role": "狼人",
+        "targets": [
+          6
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "unique_deduction",
+        "result": "复盘称狼人击杀6号平民",
+        "details": {},
+        "note": "8、11号此前自爆、1号Day3放逐后，2号是唯一存活的物理狼人，故行动者唯一。",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2510
+            ],
+            "start_ms": 4863370,
+            "end_ms": 4867980,
+            "quote": "入夜狼人击杀6号平民牛毒杀4号平民",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-024",
+        "phase": "night",
+        "round": 4,
+        "action": "poison",
+        "actor": 9,
+        "actor_physical_role": "女巫",
+        "targets": [
+          4
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "复盘称女巫毒杀4号平民",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2510
+            ],
+            "start_ms": 4863370,
+            "end_ms": 4867980,
+            "quote": "入夜狼人击杀6号平民牛毒杀4号平民",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-025",
+        "phase": "night",
+        "round": 4,
+        "action": "night_deaths",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          4,
+          6
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "4号与6号双死",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2017,
+              2018,
+              2510,
+              2511
+            ],
+            "start_ms": 3964530,
+            "end_ms": 4871480,
+            "quote": "昨夜双死死亡顺序不分先后\n4号六号倒牌没有遗言\n入夜狼人击杀6号平民牛毒杀4号平民\n当夜4号六号双死在第四天白天",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-026",
+        "phase": "day",
+        "round": 4,
+        "action": "death_announcement",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          4,
+          6
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "法官播报4、6号倒牌并离场",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2017,
+              2018,
+              2019,
+              2020
+            ],
+            "start_ms": 3964530,
+            "end_ms": 3978630,
+            "quote": "昨夜双死死亡顺序不分先后\n4号六号倒牌没有遗言\n4号六号术方技能54321\n4号六号请灭灯举牌离场",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-027",
+        "phase": "day",
+        "round": 4,
+        "action": "exile",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [
+          10
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "10号以3票出局",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2412,
+              2413,
+              2414,
+              2415,
+              2416,
+              2417,
+              2420,
+              2421,
+              2422,
+              2423,
+              2424,
+              2425,
+              2426
+            ],
+            "start_ms": 4678650,
+            "end_ms": 4704739,
+            "quote": "所有玩家发言结束\n请各位戴盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n2号投给10号\n5号投给5号\n9号投给10号\n10号投给2号\n12号投给10号\n投票结束\n10号玩家三票出局",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-028",
+        "phase": "endgame",
+        "round": 4,
+        "action": "endgame_attack",
+        "actor": 2,
+        "actor_physical_role": "狼人",
+        "targets": [
+          5
+        ],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "最后狼人2号拍刀5号混血儿成功；仅保存本局明确结算，不推广胜负规则。",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2479,
+              2480,
+              2512,
+              2513,
+              2514
+            ],
+            "start_ms": 4798839,
+            "end_ms": 4877920,
+            "quote": "5号游戏结束\n拍刀成功\n10号平民被抗推出局后\n狼队拍刀\n5号混血儿快交成功",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      },
+      {
+        "event_id": "BV19UoEBDEt1-event-029",
+        "phase": "endgame",
+        "round": 4,
+        "action": "game_end",
+        "actor": null,
+        "actor_physical_role": null,
+        "targets": [],
+        "actual_targets": null,
+        "state": "performed",
+        "status": "text_explicit",
+        "result": "狼人阵营获胜",
+        "details": {},
+        "note": null,
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2479,
+              2480,
+              2481,
+              2515,
+              2516
+            ],
+            "start_ms": 4798839,
+            "end_ms": 4880520,
+            "quote": "5号游戏结束\n拍刀成功\n狼人阵营获胜\n游戏结束\n狼人阵营获胜",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ]
+      }
+    ],
+    "ballots": [
+      {
+        "ballot_id": "BV19UoEBDEt1-ballot-01",
+        "day": 3,
+        "type": "exile",
+        "stage": "initial",
+        "eligible_voters": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          9,
+          10,
+          12
+        ],
+        "candidate_seats": null,
+        "votes": [
+          {
+            "voter": 1,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1948
+                ],
+                "start_ms": 3824600,
+                "end_ms": 3826360,
+                "quote": "一号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 4,
+            "target": 5,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1950
+                ],
+                "start_ms": 3827740,
+                "end_ms": 3829260,
+                "quote": "4号投给5号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 5,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1951
+                ],
+                "start_ms": 3829260,
+                "end_ms": 3831090,
+                "quote": "5号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 6,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1952
+                ],
+                "start_ms": 3831090,
+                "end_ms": 3833010,
+                "quote": "6号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 9,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1953
+                ],
+                "start_ms": 3833010,
+                "end_ms": 3834630,
+                "quote": "9号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 10,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1954
+                ],
+                "start_ms": 3834630,
+                "end_ms": 3835890,
+                "quote": "10号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 2,
+            "target": 1,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1949
+                ],
+                "start_ms": 3826360,
+                "end_ms": 3827740,
+                "quote": "2号投给一号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 12,
+            "target": 5,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  1955,
+                  1956
+                ],
+                "start_ms": 3835890,
+                "end_ms": 3837710,
+                "quote": "十\n2号投给5号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          }
+        ],
+        "outcome": {
+          "exiled": 1,
+          "reported_votes": 6
+        },
+        "completeness": "complete_for_proven_eligible_set",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1943,
+              1944,
+              1945,
+              1946,
+              1947,
+              1948,
+              1949,
+              1950,
+              1951,
+              1952,
+              1953,
+              1954,
+              1955,
+              1956,
+              1957,
+              1958
+            ],
+            "start_ms": 3815570,
+            "end_ms": 3841900,
+            "quote": "请各位带盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票就是前不要放手\n321请出票\n一号投给一号\n2号投给一号\n4号投给5号\n5号投给一号\n6号投给一号\n9号投给一号\n10号投给一号\n十\n2号投给5号\n投票结束\n一号玩家六票出局",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "eligibility_evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              1166,
+              1169,
+              1943,
+              1947,
+              2508
+            ],
+            "start_ms": 2427780,
+            "end_ms": 4861310,
+            "quote": "昨夜3号玩家倒牌\n3号玩家灭灯取码离场\n请各位带盔做好投票准备\n321请出票\n7号玩家单死在第三天白天",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "note": "1955的十与1956的2号连读为12号，不是2号改票；八名存活选票齐全。"
+      },
+      {
+        "ballot_id": "BV19UoEBDEt1-ballot-02",
+        "day": 4,
+        "type": "exile",
+        "stage": "initial",
+        "eligible_voters": [
+          2,
+          5,
+          9,
+          10,
+          12
+        ],
+        "candidate_seats": null,
+        "votes": [
+          {
+            "voter": 2,
+            "target": 10,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  2420
+                ],
+                "start_ms": 4691510,
+                "end_ms": 4693010,
+                "quote": "2号投给10号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 5,
+            "target": 5,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  2421
+                ],
+                "start_ms": 4693010,
+                "end_ms": 4695110,
+                "quote": "5号投给5号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 9,
+            "target": 10,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  2422
+                ],
+                "start_ms": 4695110,
+                "end_ms": 4696830,
+                "quote": "9号投给10号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 10,
+            "target": 2,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  2423
+                ],
+                "start_ms": 4696830,
+                "end_ms": 4698559,
+                "quote": "10号投给2号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          },
+          {
+            "voter": 12,
+            "target": 10,
+            "state": "cast",
+            "evidence": [
+              {
+                "kind": "literal_transcript",
+                "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+                "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+                "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+                "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+                "source_segment_indices": [
+                  2424
+                ],
+                "start_ms": 4698559,
+                "end_ms": 4700999,
+                "quote": "12号投给10号",
+                "time_kind": "evidence_location_not_actual_event_time"
+              }
+            ]
+          }
+        ],
+        "outcome": {
+          "exiled": 10,
+          "reported_votes": 3
+        },
+        "completeness": "complete_for_proven_eligible_set",
+        "evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2412,
+              2413,
+              2414,
+              2415,
+              2416,
+              2417,
+              2420,
+              2421,
+              2422,
+              2423,
+              2424,
+              2425,
+              2426
+            ],
+            "start_ms": 4678650,
+            "end_ms": 4704739,
+            "quote": "所有玩家发言结束\n请各位戴盔做好投票准备\n本局游戏警徽流失\n各位请自行投票\n唱票结束前不要放手\n321请出票\n2号投给10号\n5号投给5号\n9号投给10号\n10号投给2号\n12号投给10号\n投票结束\n10号玩家三票出局",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "eligibility_evidence": [
+          {
+            "kind": "literal_transcript",
+            "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+            "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+            "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+            "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+            "source_segment_indices": [
+              2020,
+              2021,
+              2412,
+              2417
+            ],
+            "start_ms": 3975720,
+            "end_ms": 4689020,
+            "quote": "4号六号请灭灯举牌离场\n本局游戏警徽流失\n所有玩家发言结束\n321请出票",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "note": "逐人投向完整覆盖Day4仍存活的五名玩家；10号出局后，狼队拍刀及游戏胜方按实际结算原文记录，不推算拍刀目标或继承其他季绑票规则。"
+      }
+    ],
+    "coverage": {
+      "recap_spans_actually_read": [
+        [
+          2488,
+          2516
+        ]
+      ],
+      "live_spans_actually_read": [
+        [
+          1085,
+          1090
+        ],
+        [
+          1158,
+          1170
+        ],
+        [
+          1941,
+          1959
+        ],
+        [
+          1967,
+          1968
+        ],
+        [
+          2010,
+          2023
+        ],
+        [
+          2412,
+          2427
+        ],
+        [
+          2479,
+          2481
+        ]
+      ],
+      "gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "deferred_sheriff_candidate_pool_and_ballot",
+          "reason": "8号自爆中断首日警上竞选，次日延期竞选又由11号自爆并流失警徽；未发现可确认的完整候选名单或实际投票轮。",
+          "sources": [
+            1086,
+            1087,
+            1089,
+            1163,
+            1164,
+            2498,
+            2499,
+            2503,
+            2504,
+            2505
+          ],
+          "evidence": [
+            {
+              "kind": "literal_transcript",
+              "source_path": "data/extractions/S21/media_evidence/BV19UoEBDEt1/transcript.selected.json",
+              "source_sha256": "d5636f71352419af40d7de9d9b9636b7f5534fcfdc64ab07d170d5b38c4111e3",
+              "original_source_path": "data/seasons/S21/第09周_正赛第08期/2026-04-24/2026-04-24_S21_第09周_正赛第08期_第01局_预女猎白混__BV19UoEBDEt1_P01_CID37790354561.平台AI字幕_ai-zh_01.原始.json",
+              "original_source_sha256": "16833e5a831050fed1aff46b53b7c2beee6ca4b41703f7fc34425f6117fb7cd1",
+              "source_segment_indices": [
+                1086,
+                1087,
+                1089,
+                1163,
+                1164,
+                2498,
+                2499,
+                2503,
+                2504,
+                2505
+              ],
+              "start_ms": 2254090,
+              "end_ms": 4854220,
+              "quote": "我过了井上发言\n结束退水自爆环节\n8号玩家选择自曝作为信息\n一号玩家选择自爆\n本九戏警徽流失\n在警上竞选环节\n8号狼人选择自爆\n在第二天延期竞演环节\n11号狼人选择自爆\n本局游戏警徽流失",
+              "time_kind": "evidence_location_not_actual_event_time"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "身份底牌以本局identity.reviewed.json为准：1、2、8、11狼人；3白神；4、6、10平民；5混血儿；7预言家；9女巫；12猎人。终局复盘的角色座位枚举错位，不据此改底牌。",
+        "Day1夜1平安；8号首日自爆后，3号夜2死亡；延期竞选中自爆者按复盘和后续存活校验为11号而非字幕误识的1号；7号夜3死亡后警徽流失。",
+        "Day3票中仅保留无歧义的逐人投向；N4 4/6双死；Day4 10号放逐并有狼人拍刀成功、狼人获胜的结算，但拍刀目标和规则解释未知。"
+      ],
+      "status": "reviewed_with_explicit_gaps"
+    },
+    "primary_audit": {
+      "spec_sha256": "ced980215c8a1d834d2f3518c993a0ab5baf0ae3204dc915fba207bb5a2ab542",
+      "reviewer": "codex_primary",
+      "status": "semantic_source_checked_with_declared_gaps",
+      "checks": [
+        "independent_terminal_recap_read",
+        "live_procedure_evidence_crosscheck",
+        "frozen_identity_crosscheck",
+        "literal_vote_and_round_check",
+        "actual_death_and_announcement_distinguished",
+        "no_bluff_judgement"
+      ],
+      "gaps_retained": 1
+    }
+  },
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+}

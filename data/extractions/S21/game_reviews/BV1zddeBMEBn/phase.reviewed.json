@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
     "selected_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
@@ -674,6 +674,37 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1zddeBMEBn-event-020",
+      "phase": "day",
+      "round": 2,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第二日狼队交牌，未发生放逐投票。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1zddeBMEBn/transcript.selected.json",
+          "source_sha256": "0ddd0fdd11a3ec7c6797f278137c4bb62b8625449e45db67add9b237ee938683",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-16/2026-04-16_S21_第08周_正赛第07期_第02局_盗宝大师__BV1zddeBMEBn_P01_CID37560847092.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "9d0a95d7a45c84d371598cc1b8983862417db13663ac63018dc77035ea6324d1",
+          "source_segment_indices": [
+            1400
+          ],
+          "start_ms": 2957860,
+          "end_ms": 2958700,
+          "quote": "狼队交牌",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1018,6 +1049,10 @@
   "coverage": {
     "recap_spans_actually_read": [
       [
+        1400,
+        1400
+      ],
+      [
         1418,
         1446
       ]
@@ -1087,7 +1122,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "0b122bfe923309f63c89dd150550f607bdb6ea5d7c1529f2ca4edce0c159c33f",
+    "spec_sha256": "357f18c1510069f553960e9c128e1493dd87f113892f699ba20ea6dea2f1adcc",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1098,6 +1133,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 1
+    "gaps_retained": 1,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-025"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

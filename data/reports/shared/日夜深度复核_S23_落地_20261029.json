@@ -1,0 +1,1124 @@
+{
+  "bvids": [
+    "BV14sY36hEPC",
+    "BV14sY36hEp8",
+    "BV15PaW66EjW",
+    "BV17QJh6qEFa",
+    "BV1D2ak6XEji",
+    "BV1LdY46xEUu",
+    "BV1S1YU6rE6R",
+    "BV1U3p86dEJY",
+    "BV1U3p86dEYR",
+    "BV1g1YU6kERd",
+    "BV1nJer63EDh",
+    "BV1nJer6gEkx",
+    "BV1sAYJ6UEoF",
+    "BV1theH6cE6x",
+    "BV1tneS6rEx1",
+    "BV1vMpm6QEdM"
+  ],
+  "patches": [
+    {
+      "bvid": "BV14sY36hEPC",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV14sY36hEPC_P01_CID41768452185.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "3976ac56c91fc9e6ee068c7759c6f3863e064fa972e1fd4fa4bdbd66b231f5fa",
+          "source_segment_indices": [
+            1309,
+            1310,
+            1311,
+            1312,
+            1313
+          ],
+          "start_ms": 2688950,
+          "end_ms": 2697290,
+          "quote": "在第三天的白天场上\n最后一狼\n5号机械猎人选择交牌\n游戏结束\n好人阵营获胜呃",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-067",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV14sY36hEp8",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 1,
+        "targets": [
+          3
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀3号后女巫救起，形成平安夜；N2复盘明确毒杀10号狼，故N1毒药未用。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "source_segment_indices": [
+            2700,
+            2701,
+            2702,
+            2703,
+            2708,
+            2709,
+            2710
+          ],
+          "start_ms": 5261410,
+          "end_ms": 5288139,
+          "quote": "形成狼人混狼队击杀3号预言家\n女巫要救起\n形成平安夜预言家验证了2号玩家\n平民因为好人身份在警上竞选环节\n狼队击杀2号平民女巫\n毒杀10号狼人\n2号十号双死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-208",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV17QJh6qEFa",
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "changes": {
+        "action": "pass",
+        "actor": 9,
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续复盘明确女巫技能空过；解药首夜已使用，不改成空过；仅补本夜尚未使用的毒药空过。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-16/2026-10-16_S23_第07周_正赛第06期_第04局_机械狼通灵师__BV17QJh6qEFa_P01_CID42799726909.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "ef6cc8595213769d514fe884570eb102919f4ce027cb4414f6bc582efda4eff7",
+          "source_segment_indices": [
+            2350,
+            2351,
+            2352,
+            2353
+          ],
+          "start_ms": 4701620,
+          "end_ms": 4710540,
+          "quote": "入夜守卫守护6号自守\n狼队击杀9号女巫\n女巫技能空过9号女巫单死\n当夜通灵师验证了6号玩家为首位身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-227",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1D2ak6XEji",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 10,
+        "targets": [],
+        "result": null
+      },
+      "reason": "完整身份表无本职毒师/女巫；盗宝1号首夜选平民、D1即出局，后续没有毒药来源；梦游始终针对4号，狼王10号未被毒杀或梦死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "source_segment_indices": [
+            3474,
+            3475,
+            3476,
+            3479,
+            3480,
+            3484,
+            3485,
+            3486,
+            3497,
+            3498
+          ],
+          "start_ms": 6339420,
+          "end_ms": 6399870,
+          "quote": "7号狼人阵营8号九号狼王\n10号盗宝大师一号\n本局游戏为盗宝毒师\n2号四号五号11号首页生梦人梦游4号平民\n当夜盗宝大师选择了平民身份\n在第一天的白天\n一号盗宝大师被公推出局\n对被公投出局\n狼队选择了交牌\n游戏结束",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-254",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1D2ak6XEji",
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 10,
+        "targets": [],
+        "result": null
+      },
+      "reason": "完整身份表无本职毒师/女巫；盗宝1号首夜选平民、D1即出局，后续没有毒药来源；梦游始终针对4号，狼王10号未被毒杀或梦死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "source_segment_indices": [
+            3487,
+            3488,
+            3489,
+            3490,
+            3491,
+            3492,
+            3493,
+            3497,
+            3498
+          ],
+          "start_ms": 6371410,
+          "end_ms": 6399870,
+          "quote": "入夜生梦人再次梦游4号平民\n4号平民被梦王出局\n当夜狼队击杀3号射梦人\n三四双子通灵师查验的9号玩家为狼人身份\n在第二天的白天\n9号狼人选择自爆入夜\n狼队击杀12号通灵师\n狼队选择了交牌\n游戏结束",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-255",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1D2ak6XEji",
+      "round": 3,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 10,
+        "targets": [],
+        "result": null
+      },
+      "reason": "完整身份表无本职毒师/女巫；盗宝1号首夜选平民、D1即出局，后续没有毒药来源；梦游始终针对4号，狼王10号未被毒杀或梦死。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第02局_盗宝大师__BV1D2ak6XEji_P01_CID42376365590.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "10a1e2ca13d3a8afff204559b3d873b1323a8d83dd24e039cb27adbe01ee4667",
+          "source_segment_indices": [
+            3492,
+            3493,
+            3494,
+            3495,
+            3496,
+            3497,
+            3498
+          ],
+          "start_ms": 6385180,
+          "end_ms": 6399870,
+          "quote": "9号狼人选择自爆入夜\n狼队击杀12号通灵师\n通灵师验证了7号玩家为蒙面人身份\n并在出局后将警徽移交至7号蒙面人\n在第三天的白天\n狼队选择了交牌\n游戏结束",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-256",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1LdY46xEUu",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 11,
+        "targets": [
+          10
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀10号预言家，女巫开药救起并报平安；同局N4复盘明记女巫毒杀7号，因此N1未用毒。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第01局_预女猎白混__BV1LdY46xEUu_P01_CID41736077790.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "bc2a40ffe6dc20839b0a779782cb49d5aa69531ad746dbde81f0ad114b7c2102",
+          "source_segment_indices": [
+            1686,
+            1687,
+            1688,
+            1699,
+            1700
+          ],
+          "start_ms": 3458939,
+          "end_ms": 3491370,
+          "quote": "首夜狼人击杀10号预言家女巫开药解救行程\n平安夜预言家验证6号玩家为好人身份\n上警环节\n入夜狼人击杀11号女巫\n女巫毒杀7号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-205",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1LdY46xEUu",
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-09/2026-09-09_S23_第02周_正赛第01期_第01局_预女猎白混__BV1LdY46xEUu_P01_CID41736077790.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "bc2a40ffe6dc20839b0a779782cb49d5aa69531ad746dbde81f0ad114b7c2102",
+          "source_segment_indices": [
+            1698,
+            1699,
+            1700,
+            1701,
+            1702,
+            1703,
+            1704,
+            1705
+          ],
+          "start_ms": 3483270,
+          "end_ms": 3498590,
+          "quote": "第三天白天4号白神被抗推出局\n入夜狼人击杀11号女巫\n女巫毒杀7号平民\n白天狼人阵营决定拍刀\n拍了最后一神\n3号猎人游戏结束\n狼人阵营拍刀成功\n屠神获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-066",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1S1YU6rE6R",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 4,
+        "targets": [
+          9
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀9号并被女巫救起，复盘明确平安夜；猎人4未被毒杀，且没有可成立的额外毒药出局。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+          "source_segment_indices": [
+            1623,
+            1624,
+            1625,
+            1626,
+            1627,
+            1628
+          ],
+          "start_ms": 3477290,
+          "end_ms": 3487930,
+          "quote": "首先混血儿选择7号白神为榜样\n形成好人混狼队击杀9号平民\n荣耀救起\n启程\n平安夜\n预言家验证9号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-210",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1S1YU6rE6R",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "attack",
+        "targets": [
+          9
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀9号并被女巫救起，复盘明确平安夜；猎人4未被毒杀，且没有可成立的额外毒药出局。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-11/2026-09-11_S23_第02周_正赛第01期_第01局_预女猎白混__BV1S1YU6rE6R_P01_CID41799910084.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "4a51af50ec7f04ef539911896763a57ab61b3ab0a1d56779d69fe2d779e371e4",
+          "source_segment_indices": [
+            1623,
+            1624,
+            1625,
+            1626,
+            1627,
+            1628
+          ],
+          "start_ms": 3477290,
+          "end_ms": 3487930,
+          "quote": "首先混血儿选择7号白神为榜样\n形成好人混狼队击杀9号平民\n荣耀救起\n启程\n平安夜\n预言家验证9号玩家平民为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-210",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1U3p86dEJY",
+      "round": 2,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "changes": {
+        "action": "pass",
+        "actor": 5,
+        "targets": [],
+        "result": null
+      },
+      "reason": "N2连续复盘明确机械女巫技能通过（空过）；本职女巫9号N1已毒10后出局，本夜没有毒杀猎人3号。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第03局_机械狼通灵师__BV1U3p86dEJY_P01_CID42602201781.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0e97a7ea4bb951c5803852cdbe0e86eb5805e0747a890460c1331c4892017b57",
+          "source_segment_indices": [
+            1732,
+            1733,
+            1734,
+            1735,
+            1736,
+            1737,
+            1738,
+            1750,
+            1751,
+            1752,
+            1753,
+            1754
+          ],
+          "start_ms": 3478570,
+          "end_ms": 3521400,
+          "quote": "机械狼通灵师深圳营通灵师\n12号女巫\n9号猎人\n3号守卫2号狼人阵营一号6号\n10号机械狼5号\n本游戏机械女巫平民阵营4号七号\n8号11号首页首尾守护一号狼人\n入夜守卫守护2号自首\n狼队击杀12号通灵师\n机械女巫技能通过通灵试验证\n一号玩家为狼人身份\n在延期禁选环节",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-257",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1U3p86dEYR",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "attack",
+        "targets": [
+          11
+        ],
+        "result": null
+      },
+      "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "source_segment_indices": [
+            2817,
+            2818,
+            2819,
+            2820
+          ],
+          "start_ms": 5544050,
+          "end_ms": 5558700,
+          "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-073",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1U3p86dEYR",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 5,
+        "targets": [
+          11
+        ],
+        "result": null
+      },
+      "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "source_segment_indices": [
+            2817,
+            2818,
+            2819,
+            2820
+          ],
+          "start_ms": 5544050,
+          "end_ms": 5558700,
+          "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-073",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1U3p86dEYR",
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "peaceful",
+        "targets": [],
+        "result": null
+      },
+      "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+          "source_segment_indices": [
+            2817,
+            2818,
+            2819,
+            2820
+          ],
+          "start_ms": 5544050,
+          "end_ms": 5558700,
+          "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-073",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 12,
+        "targets": [
+          3
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀3号后救起，形成平安夜；N2明确毒杀1号平民，故N1毒药未用。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2347,
+            2348,
+            2349,
+            2350,
+            2357,
+            2358,
+            2359
+          ],
+          "start_ms": 4457490,
+          "end_ms": 4480770,
+          "quote": "当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节\n当夜狼队击杀5号平民女巫\n毒杀一号平民\n一号5号双死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-211",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "changes": {
+        "action": "attack",
+        "targets": [
+          3
+        ],
+        "result": null
+      },
+      "reason": "N1明确狼队击杀3号，女巫救起并形成平安夜。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2346,
+            2347,
+            2348,
+            2349
+          ],
+          "start_ms": 4452770,
+          "end_ms": 4463110,
+          "quote": "首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-214",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "changes": {
+        "action": "peaceful",
+        "targets": [],
+        "result": null
+      },
+      "reason": "N1明确狼队击杀3号，女巫救起并形成平安夜。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2346,
+            2347,
+            2348,
+            2349
+          ],
+          "start_ms": 4452770,
+          "end_ms": 4463110,
+          "quote": "首页首页技能通过九尾狐标记10号狼人\n当夜狼队击杀3号预言家牛蛙\n救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-214",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "changes": {
+        "action": "check",
+        "actor": 3,
+        "targets": [
+          4
+        ],
+        "result": "狼人"
+      },
+      "reason": "N1连续复盘“预言家验证4号玩家九尾狐为狼人身份”；目标4、反馈狼人。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2348,
+            2349,
+            2350
+          ],
+          "start_ms": 4459890,
+          "end_ms": 4464010,
+          "quote": "救起其中\n平安夜预言家验证4号玩家九尾狐为狼人身份\n警上九尾环节",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-213",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 4,
+      "phase": "night",
+      "slot": "guard",
+      "changes": {
+        "action": "guard",
+        "actor": 11,
+        "targets": [
+          12
+        ],
+        "result": null
+      },
+      "reason": "连续转写“守护十／二号女巫”合读为12号女巫；10号已在此前白天自爆，不能作为本夜守护目标。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2371,
+            2372,
+            2373,
+            2374,
+            2375,
+            2376
+          ],
+          "start_ms": 4502430,
+          "end_ms": 4514660,
+          "quote": "第三天的白天\n10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-217",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1g1YU6kERd",
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+          "source_sha256": "15aa583be5c5ffe2b352b67fb944f6944afe2ab3de4fe58bb32bd7a50d48f58d",
+          "source_segment_indices": [
+            2371,
+            2372,
+            2373,
+            2374,
+            2375,
+            2376,
+            2377,
+            2378,
+            2379,
+            2380,
+            2381,
+            2382,
+            2383,
+            2384,
+            2385,
+            2386,
+            2387,
+            2388,
+            2389,
+            2390,
+            2391,
+            2392,
+            2393,
+            2394,
+            2395,
+            2396,
+            2397,
+            2398,
+            2399,
+            2400,
+            2401
+          ],
+          "start_ms": 4502430,
+          "end_ms": 4584240,
+          "quote": "第三天的白天\n10号狼人选择自爆\n入夜守卫守护十\n2号女巫白泽清除3号玩家的标记\n无事发生\n当夜九尾狐标记2号平民\n此时场上有标记的玩家是2号平民\n嗯你如果清12的话就赢了嗯\n嗯此时场上标记为2号平民以及12号女巫\n带标记\n算上我们当夜哦\n我们夜间啊\n夜间的环节是九尾狐带刀击杀了11号\n首位11号守卫单死\n当预言家也验证了2号玩家\n平民为好人身份\n此时场上标记情况为2号平民带标记\n12号女巫带有标记\n我们的结算规则为\n标记人数加上九尾狐自身人数\n严格大于未被标记人数\n所以当时场上玩家只有3号玩家\n预言家和6号玩家白泽身上没有标记\n所以在第三天的白天\n4号九尾狐发动猎杀时刻技能\n导致3号预言家以及6号白泽出局\n此时6号白泽出去无法发动技能后\n狼队最后一狼九尾狐选择拍刀\n12号女巫拍刀成功\n游戏结束\n狼队阵营屠城获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-068",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1nJer63EDh",
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+      "evidence": [
+        {
+          "source_path": "data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json",
+          "source_sha256": "2a524007ce6b9c9a40feba660c8ef2a6a3bd85dc43e07389579cc5d19641db1f",
+          "source_segment_indices": [
+            1917,
+            1918,
+            1919,
+            1920,
+            1921,
+            1922,
+            1923,
+            1924,
+            1925,
+            1926,
+            1927,
+            1928,
+            1929
+          ],
+          "start_ms": 3819750,
+          "end_ms": 3848640,
+          "quote": "所以当夜为6号平民单死\n在第四天白天\n九尾狐选择发动猎杀时刻技能\n当夜呃\n当日我们以身上有标记的玩家为一号平民\n8号平民以及12号平民\n加上我们九尾狐本身\n11号玩家四张牌大于仅剩的两张牌\n2号白泽以及4号女巫\n所以技能发动成功\n2号四号出局\n游戏结束\n狼队阵营屠神获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-070",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1nJer6gEkx",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 9,
+        "targets": [
+          3
+        ],
+        "result": null
+      },
+      "reason": "N1狼队击杀3号，女巫救起后平安；N2女巫毒杀5号，故N1未用毒。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-17/2026-09-17_S23_第03周_正赛第02期_第01局_预女猎白混__BV1nJer6gEkx_P01_CID41978824688.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "954358ad202d90044d1140eaa3d80965793a23cd0268dade4baf0527d0088f3a",
+          "source_segment_indices": [
+            2107,
+            2108,
+            2109,
+            2110,
+            2111,
+            2115,
+            2116,
+            2117
+          ],
+          "start_ms": 4274349,
+          "end_ms": 4298380,
+          "quote": "本局游戏为狼人混\n首页混圈选择5号狼人没榜样\n戏称狼人混狼队击杀3号预言家\n荣耀救起\n形成平安夜\n入夜狼队击杀9号女巫牛\n毒杀5号狼人\n当预言家验证了8号玩家",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-220",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 1,
+      "phase": "night",
+      "slot": "treasure_choice",
+      "changes": {
+        "action": "choose",
+        "actor": 9,
+        "targets": [],
+        "result": "平民"
+      },
+      "reason": "N1狼队禁刀；狼王1号连续两夜被摄梦人梦游后于N2出局，因此N1仍存活，N1毒药没有命中狼王。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 1,
+      "phase": "night",
+      "slot": "dreamer_action",
+      "changes": {
+        "action": "dream",
+        "actor": 6,
+        "targets": [
+          1
+        ],
+        "result": null
+      },
+      "reason": "N1狼队禁刀；狼王1号连续两夜被摄梦人梦游后于N2出局，因此N1仍存活，N1毒药没有命中狼王。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 2,
+      "phase": "night",
+      "slot": "dreamer_action",
+      "changes": {
+        "action": "dream",
+        "actor": 6,
+        "targets": [
+          1
+        ],
+        "result": null
+      },
+      "reason": "N2复盘显示狼王1号被连续梦游后出局，盗宝大师毒师行动另毒杀12号猎人；毒药未命中狼王1。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 2,
+      "phase": "night",
+      "slot": "treasure_card_skill",
+      "changes": {
+        "action": "poison",
+        "actor": 9,
+        "targets": [
+          12
+        ],
+        "result": null
+      },
+      "reason": "N2复盘显示狼王1号被连续梦游后出局，盗宝大师毒师行动另毒杀12号猎人；毒药未命中狼王1。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 1,
+        "targets": [],
+        "result": null
+      },
+      "reason": "全身份表无本职女巫/毒师；首夜盗宝明确选择平民；狼王仅首夜被梦游，没有毒杀或连续梦死，首夜具备开枪资格。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1sAYJ6UEoF",
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "cannot_shoot",
+        "actor": 1,
+        "targets": [],
+        "result": null
+      },
+      "reason": "狼王连续两晚被摄梦人梦游并在本夜梦死，规则禁止由梦死发动开枪；不是仅检查是否中毒。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1theH6cE6x",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-15/2026-09-15_S23_第03周_正赛第02期_第03局_机械狼通灵师__BV1theH6cE6x_P01_CID41924103758.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "fb7fb9fa311a1db4b20197fb97b7c5b1e6199fdfbb757848cb77f87da8024b09",
+          "source_segment_indices": [
+            1445,
+            1446,
+            1447,
+            1448,
+            1449,
+            1450,
+            1451,
+            1452,
+            1453,
+            1454,
+            1455,
+            1456,
+            1457
+          ],
+          "start_ms": 2848800,
+          "end_ms": 2873670,
+          "quote": "机械双刀狼人开刀击杀6号通灵师\n但是当天守卫守护了6号\n形成了平安夜技能刀\n击杀3号守卫\n3号守卫被刀出局\n守卫一天晚上没有自首过\n但是守出了两个平安夜\n当夜通灵师验证了7号玩家为平民身份\n第三天白天最后一张狼人\n5号机械双刀\n狼人选择交牌\n游戏结束\n好人正义获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-069",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "bvid": "BV1tneS6rEx1",
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 7,
+        "targets": [],
+        "result": null
+      },
+      "reason": "首夜盗宝选平民；狼王当日实际被放逐后开枪带走2号，反证本夜没有导致禁枪的毒杀。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第03周_正赛第02期/2026-09-18/2026-09-18_S23_第03周_正赛第02期_第02局_盗宝大师__BV1tneS6rEx1_P01_CID42008183115.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "5e657a9d989f585adf5b1c25753cb3cadf30251c391d78ad14a155d7cb549fdf",
+          "source_segment_indices": [
+            2233,
+            2234,
+            2235,
+            2236,
+            2237,
+            2238,
+            2239,
+            2240,
+            2241
+          ],
+          "start_ms": 4273310,
+          "end_ms": 4294950,
+          "quote": "平民盗宝大师选择切换为平民身份\n通灵师查验\n9号玩家为平民身份\n在紧张记水环节\n5号通灵师获得警徽\n在第一天白天\n7号狼王被公投出局\n并开枪带走了\n2号受某人乳液",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-253",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ],
+  "result": {
+    "report": "data/reports/shared/deep-review-s23-prepare-20261029.json",
+    "games": 16,
+    "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+    "games_rewritten": 16,
+    "formal_files_rewritten": 74
+  }
+}

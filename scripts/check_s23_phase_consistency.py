@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def check():
-    progress=json.loads((ROOT/'data/reports/S23_逐局复核进度.json').read_text(encoding='utf-8'))
+    progress=json.loads((ROOT/'data/reports/S23/S23_逐局复核进度.json').read_text(encoding='utf-8'))
     issues=[]
     for candidate in progress['candidate_dossiers']:
         folder=(ROOT/candidate).parent
@@ -47,7 +47,7 @@ def check():
             'games':len(progress['candidate_dossiers']),'issues':issues,'passed':not issues,
             'boundary':'Only confirmed prior departures and final night-death records exclude voters; unknown deaths are not assumed absent. Sheriff voting may precede the night-death announcement.',
             'formal_database_writes':False}
-    (ROOT/'data/reports/S23_日夜存活票权交叉验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'data/reports/S23/S23_日夜存活票权交叉验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return result
 
 

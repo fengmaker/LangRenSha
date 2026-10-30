@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1KP9HBBEcN/transcript.selected.json",
     "selected_sha256": "1c972ecbd58fe026d883ceac0748d257a2348a8a71595b28972e72f83d6af305",
@@ -214,10 +214,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "通灵师查验9号为守卫；首位为守卫的同音转写，和连续角色名单一致。",
+      "status": "unique_deduction",
+      "result": "守卫身份",
       "details": {},
-      "note": null,
+      "note": "连续复盘的“首位”结合冻结身份表唯一对应守卫；7号为通灵师，目标9号为守卫。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -897,6 +897,39 @@
           "start_ms": 7553000,
           "end_ms": 7555860,
           "quote": "首页首位通过机械狼模仿7号通灵师",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1KP9HBBEcN-event-026",
+      "phase": "day",
+      "round": 3,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第三日复盘确认放逐投票前游戏结束。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1KP9HBBEcN/transcript.selected.json",
+          "source_sha256": "1c972ecbd58fe026d883ceac0748d257a2348a8a71595b28972e72f83d6af305",
+          "original_source_path": "data/seasons/S21/第06周_正赛第05期/2026-04-01/2026-04-01_S21_第06周_正赛第05期_第03局_机械狼通灵师__BV1KP9HBBEcN_P01_CID37157930635.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "e8d6199032f2aa2239a7fe8025b729e5dda205a76ef2acaba4dfcbf310fdc259",
+          "source_segment_indices": [
+            3825,
+            3826,
+            3827
+          ],
+          "start_ms": 7588920,
+          "end_ms": 7596270,
+          "quote": "狼人阵营互认三无老到\n游戏结束\n狼人阵营屠杀祸首好精神大赛第21季会聚集团",
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
@@ -2073,7 +2106,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "1c611608d1b424b12205aced948f1e27ab0af073c524079f321e446ebc28e66f",
+    "spec_sha256": "78b15a58abbad6acc60966cefc4a9229112a42cbb3b45a92f982c18648447728",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -2084,6 +2117,15 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 3
+    "gaps_retained": 3,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-020",
+        "DN-108"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 from collections import Counter
-import json
 from pathlib import Path
+
+from rule_config import load_formal_rules
 
 ROOT = Path(__file__).resolve().parents[1]
 DEPARTURE_OUTCOME_SLOTS = frozenset({
@@ -13,7 +14,7 @@ DEPARTURE_OUTCOME_SLOTS = frozenset({
 
 
 def registry():
-    return json.loads((ROOT / "config/S22_formal_rules.json").read_text(encoding="utf-8"))
+    return load_formal_rules("S22", ROOT)
 
 
 def has_unresolved_departures(round_):

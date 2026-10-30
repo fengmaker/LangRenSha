@@ -11,7 +11,16 @@
     "首夜盗宝大师选平民，wolf_attack按用户确认和版型规则记forbidden；梦游首次命中1号、查验8号，结合“连续两晚被梦游”推断首日未产生夜死。",
     "D1 10号自爆；N2梦游狼王1号出局、狼刀7号、盗宝选毒师毒12号，次日公布1/7/12；3号自爆后警徽交4号。",
     "N3普通狼人已全部出局、盗宝大师9号仍在场；盗宝改选平民额外击杀6号，6/9双死并直接结束，无后续放逐。",
-    "终局未记录的查验只作解释：可能在前序结算时对局已经结束；保留未知，不影响胜负且不再作为个人核对任务。"
+    "终局未记录的查验只作解释：可能在前序结算时对局已经结束；保留未知，不影响胜负且不再作为个人核对任务。",
+    {
+      "field": "deep_day_night_source_review_20261029",
+      "status": "inferred",
+      "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+      "review_ids": [
+        "DN-250",
+        "DN-251"
+      ]
+    }
   ],
   "event_patches": [
     {
@@ -72,6 +81,222 @@
         ],
         "result": "平民"
       }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "treasure_choice",
+      "changes": {
+        "action": "choose",
+        "actor": 9,
+        "targets": [],
+        "result": "平民"
+      },
+      "reason": "N1狼队禁刀；狼王1号连续两夜被摄梦人梦游后于N2出局，因此N1仍存活，N1毒药没有命中狼王。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "dreamer_action",
+      "changes": {
+        "action": "dream",
+        "actor": 6,
+        "targets": [
+          1
+        ],
+        "result": null
+      },
+      "reason": "N1狼队禁刀；狼王1号连续两夜被摄梦人梦游后于N2出局，因此N1仍存活，N1毒药没有命中狼王。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "dreamer_action",
+      "changes": {
+        "action": "dream",
+        "actor": 6,
+        "targets": [
+          1
+        ],
+        "result": null
+      },
+      "reason": "N2复盘显示狼王1号被连续梦游后出局，盗宝大师毒师行动另毒杀12号猎人；毒药未命中狼王1。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "treasure_card_skill",
+      "changes": {
+        "action": "poison",
+        "actor": 9,
+        "targets": [
+          12
+        ],
+        "result": null
+      },
+      "reason": "N2复盘显示狼王1号被连续梦游后出局，盗宝大师毒师行动另毒杀12号猎人；毒药未命中狼王1。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "can_shoot",
+        "actor": 1,
+        "targets": [],
+        "result": null
+      },
+      "reason": "全身份表无本职女巫/毒师；首夜盗宝明确选择平民；狼王仅首夜被梦游，没有毒杀或连续梦死，首夜具备开枪资格。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1957,
+            1958,
+            1959,
+            1960,
+            1961,
+            1964,
+            1965,
+            1966,
+            1967
+          ],
+          "start_ms": 3836130,
+          "end_ms": 3860890,
+          "quote": "可以选择的底牌是平民和毒师\n平民2号五号八号11号\n首页盗宝大师选择平民身份\n圣梦人梦游一号狼王通灵师验证\n8号玩家为平民身份\n第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-250",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_king_state",
+      "changes": {
+        "action": "cannot_shoot",
+        "actor": 1,
+        "targets": [],
+        "result": null
+      },
+      "reason": "狼王连续两晚被摄梦人梦游并在本夜梦死，规则禁止由梦死发动开枪；不是仅检查是否中毒。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-08/2026-09-08_S23_第02周_正赛第01期_第02局_盗宝大师__BV1sAYJ6UEoF_P01_CID41701214461.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "0bebfc31711b716897d01861186d85f5a6cc3abb412f292b24ed8cdfe10484a0",
+          "source_segment_indices": [
+            1964,
+            1965,
+            1966,
+            1967,
+            1970,
+            1971,
+            1972
+          ],
+          "start_ms": 3852340,
+          "end_ms": 3868260,
+          "quote": "第一天白天10号狼人自爆\n入夜射梦人梦游\n一号狼王一号连续两晚被射门人梦游\n被梦王出局\n当夜盗宝大师选择毒师身份\n毒杀12号猎人\n通灵师验证",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-251",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
     }
   ],
   "finding_resolutions": [

@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1CGdLBREUE/transcript.selected.json",
     "selected_sha256": "7699439fcc97daf5641e909b48e765f28c86d6d89bba73628181da32c2883804",
@@ -1003,6 +1003,38 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1CGdLBREUE-event-030",
+      "phase": "night",
+      "round": 2,
+      "action": "save",
+      "actor": 3,
+      "actor_physical_role": "女巫",
+      "targets": [],
+      "actual_targets": null,
+      "state": "forbidden",
+      "status": "unique_deduction",
+      "result": "规则禁止女巫3号自救，第二夜不能以解药救自己。",
+      "details": {},
+      "note": "复盘明确第二夜狼刀目标为女巫3号且当夜只有该死亡；女巫规则禁止自救，因此N2 witch_save不能指定自己。本项不推断是否曾尝试其他行动；首夜毒药已耗，不添加毒药事件或目标猜测。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1CGdLBREUE/transcript.selected.json",
+          "source_sha256": "7699439fcc97daf5641e909b48e765f28c86d6d89bba73628181da32c2883804",
+          "original_source_path": "data/seasons/S21/第08周_正赛第07期/2026-04-17/2026-04-17_S21_第08周_正赛第07期_第03局_机械狼通灵师__BV1CGdLBREUE_P01_CID37590338947.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "1830cbc1342135233214e6041b8a42014c1eeff2c484f0ed4671924b92fe01ec",
+          "source_segment_indices": [
+            3200,
+            3202
+          ],
+          "start_ms": 6048520,
+          "end_ms": 6054650,
+          "quote": "空过狼人击杀3号女巫\n当夜为3号女巫单死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1656,7 +1688,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "fa014e73a9db7ceec99d7f3cf2137bcd4a9cd303b7d5c53bf1c1e65990d5172d",
+    "spec_sha256": "a80e79d004994a5f8ff3d66e79826a4a939dc8b1623866c426baf2e665207427",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1667,6 +1699,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-130"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "seasons": {
     "S22": {
       "name": "曙光航纪",
@@ -7,40 +7,473 @@
       "collection_id": 8209896,
       "seed_bvid": "BV1tj8p6REqy",
       "subtitle_reconcile_entry": "scripts/reconcile_season_subtitles.py",
-      "scope_file": "config/S22_game_scope.json",
-      "formal_rules_file": "config/S22_formal_rules.json",
+      "scope_file": "config/seasons.json",
+      "formal_rules_file": "config/game_rules.json",
       "review_profile": "s22_text_review",
       "review_entry": "scripts/s22_text_review.py",
       "import_profile": "s22_formal_entry",
       "import_entry": "scripts/formal_entry.py",
       "bluff_profile": "s22_bluff_inference",
-      "bluff_entry": "scripts/build_bluff_inference.py"
+      "bluff_entry": "scripts/build_bluff_inference.py",
+      "scope": {
+        "updated_at": "2026-10-24T18:54:14+08:00",
+        "source": "用户确认表演赛、2026-07-03娱乐局及明确列出的六种娱乐版型不计分、不进入正式统计。按确认的版型分类，出现次数不作为判据。",
+        "excluded_board_codes": [
+          "wolf_king_guard",
+          "wolf_king_knight",
+          "seer_witch_hunter_white",
+          "black_wolf_king_knight",
+          "four_wolves_eight_hunters",
+          "ghost_bride"
+        ],
+        "excluded_phases": [
+          "showmatch"
+        ],
+        "excluded_dates": [
+          "2026-07-03"
+        ],
+        "excluded_bvids": [
+          "BV1iJVT6SEL2",
+          "BV1jJVT6SEN4",
+          "BV1jJVT6SEWc",
+          "BV1kdGU6GEsq",
+          "BV1rdGU6GEXm",
+          "BV1rdGU6GEXi",
+          "BV1qKVW6YEZu",
+          "BV1BKVW6YE8u",
+          "BV1v8Ve6oEZP",
+          "BV1v8Ve6oEvR",
+          "BV1v8Ve6oEic",
+          "BV1rETb6MEa2",
+          "BV1wETb6uE59",
+          "BV1rETb6MErB",
+          "BV1tj8p6REfY"
+        ],
+        "retained_phases": [
+          "regular",
+          "finals_week"
+        ],
+        "removal_report": "data/reports/S22/S22_非正赛移除记录.json"
+      },
+      "formal_import": {
+        "scope": {
+          "name": "正式正赛与决赛周",
+          "include_only_registered_formal_boards": true,
+          "scored_total": 148,
+          "count_source": {
+            "type": "catalogue_count_after_user_scope_filter",
+            "catalogue": "data/seasons/S22/S22_音频与字幕总目录.csv",
+            "scope_policy": "config/seasons.json",
+            "counted_on": "2026-10-24"
+          },
+          "exclusions": [
+            {
+              "name": "狼王守卫",
+              "board_code": "wolf_king_guard",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            },
+            {
+              "name": "狼王骑士",
+              "board_code": "wolf_king_knight",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            },
+            {
+              "name": "无混预女猎白",
+              "board_code": "seer_witch_hunter_white",
+              "template_name": "预女猎白",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            },
+            {
+              "name": "黑狼王骑士",
+              "board_code": "black_wolf_king_knight",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            },
+            {
+              "name": "四狼八猎",
+              "board_code": "four_wolves_eight_hunters",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            },
+            {
+              "name": "鬼魂新娘",
+              "board_code": "ghost_bride",
+              "score_eligible": false,
+              "scored_count": 0,
+              "observed_game_count": null
+            }
+          ],
+          "exclusion_note": "scored_count=0 表示不纳入本正式计分集合，不表示该版型未曾出现；场次数不作为纳入条件。"
+        },
+        "rotation": {
+          "daily_game_slots": {
+            "1": [
+              "mixed_blood"
+            ],
+            "2": [
+              "guile_realm",
+              "treasure_master",
+              "masquerade",
+              "neighbor_puppet",
+              "all_in"
+            ],
+            "3": [
+              "mechanical_wolf_seer"
+            ]
+          },
+          "slot_2_order": "rotate; no fixed sequence asserted",
+          "slot_2_regular_scored_count": 47,
+          "slot_2_scored_count_including_exception": 48,
+          "scored_counts": {
+            "mixed_blood": 47,
+            "mechanical_wolf_seer": 53,
+            "guile_realm": 15,
+            "treasure_master": 14,
+            "masquerade": 12,
+            "neighbor_puppet": 6,
+            "all_in": 1
+          },
+          "total_scored": 148,
+          "scored_exception_games": [
+            {
+              "date": "2026-06-26",
+              "game_number": 4,
+              "board_code": "guile_realm",
+              "counted": true,
+              "exception_type": "scored_formal_extra_game"
+            }
+          ],
+          "source": {
+            "type": "catalogue_count_after_user_scope_filter",
+            "catalogue": "data/seasons/S22/S22_音频与字幕总目录.csv",
+            "scope_policy": "config/seasons.json",
+            "counted_on": "2026-10-24"
+          }
+        },
+        "board_counts": {
+          "mixed_blood": 47,
+          "mechanical_wolf_seer": 53,
+          "guile_realm": 15,
+          "treasure_master": 14,
+          "masquerade": 12,
+          "neighbor_puppet": 6,
+          "all_in": 1
+        }
+      }
     },
     "S21": {
       "name": "傀趣奇谭",
       "status": "media_transcribed",
       "collection_id": 7520632,
       "seed_bvid": "BV15EfUBrENW",
-      "scope_file": "config/S21_game_scope.json",
-      "formal_rules_file": "config/S21_formal_rules.json",
+      "scope_file": "config/seasons.json",
+      "formal_rules_file": "config/game_rules.json",
       "import_profile": "s21_formal_import",
       "import_entry": "scripts/import_s21_formal.py",
-      "collection_note": "官方音频与可取得中文字幕已采集；8条缺字幕音轨已全文补转写与术语轻校对。正式导入复用已核身份、日夜及票型，未定字段继续保留未知。"
+      "collection_note": "官方音频与可取得中文字幕已采集；8条缺字幕音轨已全文补转写与术语轻校对。正式导入复用已核身份、日夜及票型，未定字段继续保留未知。2026-10-29已先发布122条媒体档案到本机网站，正式计分总局数待核，未复核悍跳留空。",
+      "scope": {
+        "schema_version": 1,
+        "updated_at": "2026-10-27",
+        "source": "user_confirmed",
+        "source_detail": "本次指令确认：12条表演赛与3条特辑排除后续对局核对、正式库与发布，原件留在本地；112条正赛与10条决赛周媒体共122条为当前待核媒体边界。不得将122直接当作正式局数。",
+        "collection_index": "data/indexes/S21_采集计划.json",
+        "collection_snapshot_at_utc": "2026-10-26T19:44:36.191855+00:00",
+        "collection_media_total": 137,
+        "excluded_media_total": 15,
+        "excluded_phases": [
+          "showmatch",
+          "special"
+        ],
+        "excluded_bvids": [
+          "BV15EfUBrENW",
+          "BV1XEfUB6Equ",
+          "BV19EfUB6EhR",
+          "BV1f5f8BhEXc",
+          "BV1f5f8BhEKS",
+          "BV1z5f8BhE5j",
+          "BV1CBArzEE1s",
+          "BV1yBArzEEyk",
+          "BV1yBArzEEAd",
+          "BV161AXzVEmV",
+          "BV1r1AXzVEDm",
+          "BV1H1AXzVE7Y",
+          "BV1PjdKBwEYg",
+          "BV1AjdKBwEmT",
+          "BV1PjdKBwEkA"
+        ],
+        "excluded_entries": [
+          {
+            "bvid": "BV15EfUBrENW",
+            "cid": 36263952577,
+            "title": "20260224 表演赛 Day-1 第一局-预女猎白混",
+            "event_date_candidate": "2026-02-24",
+            "phase": "showmatch",
+            "board_candidate_from_title": "预女猎白混",
+            "official_announcement_post_id": "5269877281786142",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1XEfUB6Equ",
+            "cid": 36263955419,
+            "title": "20260224 表演赛 Day-1 第二局-狼王守卫",
+            "event_date_candidate": "2026-02-24",
+            "phase": "showmatch",
+            "board_candidate_from_title": "狼王守卫",
+            "official_announcement_post_id": "5269877281786142",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV19EfUB6EhR",
+            "cid": 36264019661,
+            "title": "20260224 表演赛 Day-1 第三局-狼王骑士",
+            "event_date_candidate": "2026-02-24",
+            "phase": "showmatch",
+            "board_candidate_from_title": "狼王骑士",
+            "official_announcement_post_id": "5269877281786142",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1f5f8BhEXc",
+            "cid": 36286562805,
+            "title": "20260225 表演赛 Day-2 第一局-预女猎白混",
+            "event_date_candidate": "2026-02-25",
+            "phase": "showmatch",
+            "board_candidate_from_title": "预女猎白混",
+            "official_announcement_post_id": "5270233132567298",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1f5f8BhEKS",
+            "cid": 36286628299,
+            "title": "20260225 表演赛 Day-2 第二局-盗宝大师",
+            "event_date_candidate": "2026-02-25",
+            "phase": "showmatch",
+            "board_candidate_from_title": "盗宝大师",
+            "official_announcement_post_id": "5270233132567298",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1z5f8BhE5j",
+            "cid": 36286694441,
+            "title": "20260225 表演赛 Day-2 第三局-机械狼通灵师",
+            "event_date_candidate": "2026-02-25",
+            "phase": "showmatch",
+            "board_candidate_from_title": "机械狼通灵师",
+            "official_announcement_post_id": "5270233132567298",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1CBArzEE1s",
+            "cid": 36310158679,
+            "title": "20260226 表演赛 Day-3 第一局-预女猎白混",
+            "event_date_candidate": "2026-02-26",
+            "phase": "showmatch",
+            "board_candidate_from_title": "预女猎白混",
+            "official_announcement_post_id": "5270599053083419",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1yBArzEEyk",
+            "cid": 36310224301,
+            "title": "20260226 表演赛 Day-3 第二局-假面舞会",
+            "event_date_candidate": "2026-02-26",
+            "phase": "showmatch",
+            "board_candidate_from_title": "假面舞会",
+            "official_announcement_post_id": "5270599053083419",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1yBArzEEAd",
+            "cid": 36310289463,
+            "title": "20260226 表演赛 Day-3 第三局-机械狼通灵师",
+            "event_date_candidate": "2026-02-26",
+            "phase": "showmatch",
+            "board_candidate_from_title": "机械狼通灵师",
+            "official_announcement_post_id": "5270599053083419",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV161AXzVEmV",
+            "cid": 36333158573,
+            "title": "20260227 表演赛 Day-4 第一局-预女猎白混",
+            "event_date_candidate": "2026-02-27",
+            "phase": "showmatch",
+            "board_candidate_from_title": "预女猎白混",
+            "official_announcement_post_id": "5270961794319029",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1r1AXzVEDm",
+            "cid": 36333162485,
+            "title": "20260227 表演赛 Day-4 第二局-盗宝大师",
+            "event_date_candidate": "2026-02-27",
+            "phase": "showmatch",
+            "board_candidate_from_title": "盗宝大师",
+            "official_announcement_post_id": "5270961794319029",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1H1AXzVE7Y",
+            "cid": 36333227009,
+            "title": "20260227 表演赛 Day-4 第三局-机械狼通灵师",
+            "event_date_candidate": "2026-02-27",
+            "phase": "showmatch",
+            "board_candidate_from_title": "机械狼通灵师",
+            "official_announcement_post_id": "5270961794319029",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1PjdKBwEYg",
+            "cid": 38169085542,
+            "title": "20260507 特辑 京师和Ta的朋友们 第一局-预女猎白",
+            "event_date_candidate": "2026-05-07",
+            "phase": "special",
+            "board_candidate_from_title": "预女猎白",
+            "official_announcement_post_id": "5295975380027966",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1AjdKBwEmT",
+            "cid": 38169153239,
+            "title": "20260507 特辑 京师和Ta的朋友们 第二局-黑狼王骑士",
+            "event_date_candidate": "2026-05-07",
+            "phase": "special",
+            "board_candidate_from_title": "黑狼王骑士",
+            "official_announcement_post_id": "5295975380027966",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          },
+          {
+            "bvid": "BV1PjdKBwEkA",
+            "cid": 38169218520,
+            "title": "20260507 特辑 京师和Ta的朋友们 第三局-趣味狼人杀",
+            "event_date_candidate": "2026-05-07",
+            "phase": "special",
+            "board_candidate_from_title": "趣味狼人杀",
+            "official_announcement_post_id": "5295975380027966",
+            "scope_decision": "excluded_by_user_confirmation",
+            "publication_database_actions": "do_not_verify_or_enter_or_publish; preserve raw media locally"
+          }
+        ],
+        "retained_phases": [
+          "regular",
+          "finals_week"
+        ],
+        "current_pending_media_total": 122,
+        "current_pending_media_by_phase": {
+          "regular": 112,
+          "finals_week": 10
+        },
+        "formal_game_count": null,
+        "formal_game_count_status": "not_confirmed; 122 is a media review target only",
+        "publication_policy": {
+          "excluded_media": "local_raw_only_no_database_no_website_no_followup_game_identity_or_rules_review",
+          "retained_media": "pending_same_media_boundary_review_before_any_formal_game_count_or_import"
+        },
+        "phase_evidence_index": "data/reports/S21/S21_范围与规则证据.json#official_same_day_announcements"
+      },
+      "formal_import": {
+        "configuration_status": "partial_evidence_only",
+        "evidence_report": "data/reports/S21/S21_当季规则逐项证据.json"
+      }
     },
     "S23": {
       "name": "昆仑归墟",
       "status": "ongoing",
       "collection_id": 8992596,
       "seed_bvid": "BV1z6tG6rEfw",
-      "scope_file": "config/S23_game_scope.json",
-      "formal_rules_file": "config/S23_formal_rules.json",
+      "scope_file": "config/seasons.json",
+      "formal_rules_file": "config/game_rules.json",
       "review_profile": "s23_game_review",
-      "review_rules_file": "config/S23_review_rules.json",
+      "review_rules_file": "config/game_rules.json",
       "review_entry": "scripts/build_s23_review.py",
       "import_profile": "s23_formal_import",
       "import_entry": "scripts/import_s23_formal.py",
       "bluff_profile": "s23_bluff_publication",
-      "bluff_entry": "scripts/build_s23_bluff_publication.py"
+      "bluff_entry": "scripts/build_s23_bluff_publication.py",
+      "scope": {
+        "scope_code": "S23_regular_75",
+        "expected_games": 75,
+        "showmatches_included": false,
+        "snapshot_report": "data/reports/S23/S23_逐局复核进度.json",
+        "authoritative_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+        "candidate_paths_field": "candidate_dossiers",
+        "candidate_suffix": "dossier.candidate.json",
+        "formal_dir": "data/games/S23",
+        "input_preference": "candidate_dossiers_from_current_snapshot",
+        "reviewed_dossiers_are_not_an_input": true,
+        "unknown_policy": "preserve_unknown; never convert_unknown_to_pass_or_unavailable",
+        "batch_authorization_is_not_field_confirmation": true,
+        "unresolved_question_policy": "retain_as_separate_review_context; do_not_change_game_facts"
+      },
+      "formal_import": {
+        "status": "authorized_batch_formal_import; field-level confirmation remains source-specific",
+        "source_review_rules": "config/game_rules.json",
+        "scope_config": "config/seasons.json",
+        "scope_code": "S23_regular_75",
+        "scope": {
+          "scored_total": 75,
+          "excluded_showmatches": 12
+        },
+        "authoritative_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
+        "board_code_map": {
+          "mechanical_wolf_seer": "s23_mechanical_wolf_seer",
+          "mixed_blood": "s23_mixed_blood",
+          "guile_realm": "s23_guile_realm",
+          "masquerade": "s23_masquerade",
+          "treasure_master": "s23_treasure_master",
+          "qingqiu_night": "s23_qingqiu_night",
+          "magic_duel": "s23_magic_duel"
+        },
+        "template_dir": "config/board_templates",
+        "unconfirmed_wake_order": "S23 night slot positions are archival ordering only; wake order remains unknown unless explicitly confirmed per game.",
+        "separate_review_context": {
+          "eulogy_bluff_statistic": {
+            "bvid": "BV1U3p86dEJY",
+            "classification": "eulogy_identity_claim_candidate",
+            "regular_bluff_count": "not_in_confirmed_count_pending_user_decision",
+            "status": "pending_user_confirmation",
+            "user_confirmation_claimed": false,
+            "policy_note": "维护处理：用户尚未确认该行为是否归入常规悍跳；发布时暂不计入已确认次数，单列并保持uncertain。此说明不构成用户确认。"
+          },
+          "confirmed_six_seat_bluff": "Preserve daily_audit.bluff_overrides as a separate statistic review, not as a game event."
+        },
+        "unknown_policy": "unknown remains unknown; omitted slots within an existing round are represented as unknown; no rounds are added after game termination.",
+        "storage_compatibility": {
+          "canonical_board_stays_in_formal_dossier": true,
+          "database_board_code_uses_board_code_map": true,
+          "effects_not_supported_by_core_table_are_saved_in_game_formal_annotations": true
+        },
+        "confirmed_rule_handling": {
+          "treasure_dq_wolf_attack": {
+            "game_slug": "bili-BV1zmpB6PEcF-p01-g02",
+            "action": "invalidated_by_dq",
+            "keep_supplemental_dq_observation": true,
+            "night_death_note": "DQ is a separate departure; do not count it as a wolf-knife death"
+          }
+        }
+      }
     }
   }
 }

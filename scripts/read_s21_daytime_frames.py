@@ -14,7 +14,7 @@ from read_s22_frame_labels import run_pass, names_in_text
 from read_s21_evidence_frames import known_names, ROLES, center
 from capture_s21_evidence_frames import api
 ROOT=Path(__file__).resolve().parents[1]
-STATE=ROOT/'data/reports/S21_白天身份栏候选进度.json'
+STATE=ROOT/'data/reports/S21/S21_白天身份栏候选进度.json'
 
 def digest(p):
  with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
@@ -130,7 +130,7 @@ def process(e,engine,names,args):
  save_json(out,result);return result
 
 def main(args):
- entries=json.loads((ROOT/'data/reports/S21_文字与截图时点索引.json').read_text(encoding='utf-8'))['entries']
+ entries=json.loads((ROOT/'data/reports/S21/S21_文字与截图时点索引.json').read_text(encoding='utf-8'))['entries']
  if args.bvid:entries=[e for e in entries if e['bvid'] in args.bvid]
  if args.limit:entries=entries[:args.limit]
  engine=RapidOCR(params={'EngineConfig.onnxruntime.intra_op_num_threads':4,'EngineConfig.onnxruntime.inter_op_num_threads':1})

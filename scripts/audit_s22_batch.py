@@ -13,7 +13,7 @@ from game_scope import exclusion_reason
 from game_records import validate
 
 
-REPORT = batch.ROOT / "data/reports/S22_对局批处理验收.json"
+REPORT = batch.ROOT / "data/reports/S22/S22_对局批处理验收.json"
 
 
 class LocalLinks(HTMLParser):
@@ -155,7 +155,7 @@ def audit():
     actual = batch.database_snapshot()
     links = check_review_links(state)
     errors.extend({"bvid": "", "error": "复核页本地链接失效：" + str(item)} for item in links["broken"])
-    preservation_file = batch.ROOT / "data/reports/S22_批处理保留示例文件.json"
+    preservation_file = batch.ROOT / "data/reports/S22/S22_批处理保留示例文件.json"
     preserved_checks = {}
     if preservation_file.is_file():
         for relative_path, expected_hash in batch.read_json(preservation_file)["files"].items():

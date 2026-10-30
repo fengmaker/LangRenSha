@@ -106,7 +106,7 @@ def main():
         except (ValueError, OSError, KeyError, TypeError) as exc:
             rows.append({'bvid':bvid,'validation_error':str(exc)})
             print('ERROR',bvid,str(exc))
-    p.save(Path('data/reports/S21_白天夜间结构与时序审计.json'),{'items':rows})
+    p.save(Path('data/reports/S21/S21_白天夜间结构与时序审计.json'),{'items':rows})
     summary = {'media':len(rows),'events':sum(x.get('events',0) for x in rows),
                       'ballots':sum(x.get('ballots',0) for x in rows),'gaps':sum(len(x.get('gaps',[])) for x in rows),
                       'warnings':sum(len(x.get('chronology_warnings',[])) for x in rows),

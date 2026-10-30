@@ -110,9 +110,9 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if path == "/api/games":
                 state = batch.load_state()
-                progress_file = batch.ROOT / "data/reports/S22_转写逐句复核进度.json"
+                progress_file = batch.ROOT / "data/reports/S22/S22_转写逐句复核进度.json"
                 progress = batch.read_json(progress_file) if progress_file.exists() else {"items": {}}
-                frame_file = batch.ROOT / "data/reports/S22_画面座位补全进度.json"
+                frame_file = batch.ROOT / "data/reports/S22/S22_画面座位补全进度.json"
                 frames = batch.read_json(frame_file) if frame_file.exists() else {"items": {}}
                 return self.json_response({"items": [{**e, "text_check": progress.get("items", {}).get(e["bvid"], {}),
                                                        "frame_check": frames.get("items", {}).get(e["bvid"], {})}

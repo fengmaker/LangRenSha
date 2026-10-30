@@ -195,7 +195,7 @@ def audit() -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--report", type=Path, default=ROOT / "data/reports/微博_姓名照片映射验收.json")
+    parser.add_argument("--report", type=Path, default=ROOT / "data/reports/acquisition/weibo/微博_姓名照片映射验收.json")
     args = parser.parse_args()
     result = audit()
     args.report.parent.mkdir(parents=True, exist_ok=True)

@@ -1563,5 +1563,104 @@
     }
   },
   "review_note": "AI疑点推理核查：2项已核实，0项仍待review。\n本局判断：混血儿10号选择8号预言家为榜样；混血儿10号选择8号预言家为榜样",
-  "user_saved_at": "2026-10-24T15:13:02+08:00"
+  "user_saved_at": "2026-10-24T15:13:02+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-159",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 1,
+        "targets": [
+          11
+        ],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "fa621f03e83a94fd5f9b61a924b4685c4dadf0f42bb59a162713d55c7e877754",
+          "segment_indices": [
+            1626,
+            1627,
+            1628,
+            1629,
+            1630,
+            1631,
+            1632,
+            1633,
+            1634,
+            1635
+          ],
+          "source_segment_ids": [
+            1627,
+            1628,
+            1629,
+            1630,
+            1631,
+            1632,
+            1633,
+            1634,
+            1635,
+            1636
+          ],
+          "start_ms": 3263560,
+          "end_ms": 3282590,
+          "original_sentence": "狼队击杀11号猎人；扭腰救起；形成平安夜；预言家验证了7号玩家为狼人身份；在警上竞选环节；9号狼人选择自爆；入夜狼队击杀8号预言家；女巫技能空过当验；预言家验证了3号玩家为狼人身份；在延期竞选环节"
+        }
+      ],
+      "reason": "首夜狼队击杀11号、女巫救起，随后首夜平安；第一天9号自爆后次夜复盘说“女巫技能空过”，因此解药已耗尽，次夜未使用毒药。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    },
+    {
+      "review_id": "DN-159",
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "changes": {
+        "action": "pass",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第01局_预女猎白混__BV1YmTc6yEFd_P01_CID39540952709.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "fa621f03e83a94fd5f9b61a924b4685c4dadf0f42bb59a162713d55c7e877754",
+          "segment_indices": [
+            1626,
+            1627,
+            1628,
+            1629,
+            1630,
+            1631,
+            1632,
+            1633,
+            1634,
+            1635
+          ],
+          "source_segment_ids": [
+            1627,
+            1628,
+            1629,
+            1630,
+            1631,
+            1632,
+            1633,
+            1634,
+            1635,
+            1636
+          ],
+          "start_ms": 3263560,
+          "end_ms": 3282590,
+          "original_sentence": "狼队击杀11号猎人；扭腰救起；形成平安夜；预言家验证了7号玩家为狼人身份；在警上竞选环节；9号狼人选择自爆；入夜狼队击杀8号预言家；女巫技能空过当验；预言家验证了3号玩家为狼人身份；在延期竞选环节"
+        }
+      ],
+      "reason": "首夜狼队击杀11号、女巫救起，随后首夜平安；第一天9号自爆后次夜复盘说“女巫技能空过”，因此解药已耗尽，次夜未使用毒药。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

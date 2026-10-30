@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmg/transcript.selected.json",
     "selected_sha256": "039ff1a19db3125596b5afecaa11140deaddbd3dfa7eff541cc5b88efa05ba92",
@@ -887,6 +887,40 @@
           "start_ms": 5425150,
           "end_ms": 5426350,
           "quote": "8号通灵师获得警徽",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
+    },
+    {
+      "event_id": "BV1MfQkBeEmg-event-026",
+      "phase": "day",
+      "round": 3,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第三日复盘确认放逐投票前游戏结束。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmg/transcript.selected.json",
+          "source_sha256": "039ff1a19db3125596b5afecaa11140deaddbd3dfa7eff541cc5b88efa05ba92",
+          "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-24/2026-03-24_S21_第05周_正赛第04期_第03局_机械狼通灵师__BV1MfQkBeEmg_P01_CID36949985221.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "46c1db4778b127920e0458d906b1ff91230a11f33403434736e6e1d7f5d3f1cc",
+          "source_segment_indices": [
+            2744,
+            2745,
+            2746,
+            2747
+          ],
+          "start_ms": 5449650,
+          "end_ms": 5454610,
+          "quote": "白天最后一张狼人\n3号机械女巫选择交牌\n游戏结束\n好人阵营获胜",
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
@@ -1922,7 +1956,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "ed8efdc7a2398d2b37ef142ca7682b4ab752b9e2c7cdf0c9c7b0db291a18e32b",
+    "spec_sha256": "c7f3a73cf6e5eac40a8cd740f194d57b19a4e4fe2b2b58c9038a8028f8c3a6c1",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1932,6 +1966,14 @@
       "live_vote_flow_source_inspected",
       "false_pk_round_removed"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-013"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

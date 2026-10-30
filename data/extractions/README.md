@@ -16,6 +16,6 @@ S21 座位、姓名、真实底牌专项使用 `S21/game_reviews/{BVID}/identity
 通过 `jcms.reviewed_identity_seats` 查询最新版本。这里的“已核”指助手目视核实，
 不表示用户逐字段确认。它只含座位、姓名、物理底牌，不创建完整正式对局，
 也不恢复日夜、悍跳、阵营、胜负或网站发布。
-进度见 [S21专项报告](../reports/S21_座位姓名身份核实进度.json)，
+进度见 [S21专项报告](../reports/S21/S21_座位姓名身份核实进度.json)，
 验证／重放入口为 `python scripts/import_s21_identities.py`；
 追加 `--import-db` 才写入数据库，重复相同文件不重复生成记录。

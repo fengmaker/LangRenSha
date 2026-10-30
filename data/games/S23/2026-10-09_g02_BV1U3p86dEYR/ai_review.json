@@ -458,37 +458,6 @@
       "daily_audited": true
     },
     {
-      "id": "coverage-1-day-night_deaths",
-      "round": 1,
-      "phase": "day",
-      "phase_label": "第1天白天",
-      "status": "confirmed",
-      "field": "night_deaths",
-      "title": "本日夜死公布待核实",
-      "conclusion": "N1狼队击杀11号平民，女巫救起；D1明确报平安夜。",
-      "reasoning": "最终法官复盘连续播报狼刀11号、女巫救起并形成平安夜，直接核实夜死结算。",
-      "evidence": [
-        {
-          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
-          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
-          "start_ms": 5548360,
-          "end_ms": 5551750,
-          "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验"
-        },
-        {
-          "source_path": "data/seasons/S23/第06周_正赛第05期/2026-10-09/2026-10-09_S23_第06周_正赛第05期_第02局_魔幻对决__BV1U3p86dEYR_P01_CID42602072331.平台AI字幕_ai-zh_01.原始.json",
-          "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
-          "start_ms": 5551750,
-          "end_ms": 5556110,
-          "quote": "当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份"
-        }
-      ],
-      "origin": "phase_coverage_check",
-      "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
-      "previous_question": "本日夜死公布待核实",
-      "daily_audited": true
-    },
-    {
       "id": "user-20261026-last-god-hunter",
       "round": 2,
       "phase": "day",
@@ -535,7 +504,15 @@
           }
         ]
       },
-      "用户确认末神猎人出局先结束游戏，不能继续开枪；未开枪不再作为未公开响应。"
+      "用户确认末神猎人出局先结束游戏，不能继续开枪；未开枪不再作为未公开响应。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-073"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -550,6 +527,101 @@
           "blocked_by_game_end": true,
           "confirmation_status": "user_confirmed"
         }
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "wolf_attack",
+        "changes": {
+          "action": "attack",
+          "targets": [
+            11
+          ],
+          "result": null
+        },
+        "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+            "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+            "source_segment_indices": [
+              2817,
+              2818,
+              2819,
+              2820
+            ],
+            "start_ms": 5544050,
+            "end_ms": 5558700,
+            "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-073",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "night",
+        "slot": "witch_save",
+        "changes": {
+          "action": "save",
+          "actor": 5,
+          "targets": [
+            11
+          ],
+          "result": null
+        },
+        "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+            "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+            "source_segment_indices": [
+              2817,
+              2818,
+              2819,
+              2820
+            ],
+            "start_ms": 5544050,
+            "end_ms": 5558700,
+            "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-073",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
+      },
+      {
+        "round": 1,
+        "phase": "day",
+        "slot": "night_deaths",
+        "changes": {
+          "action": "peaceful",
+          "targets": [],
+          "result": null
+        },
+        "reason": "N1狼队击杀11号平民，女娲/女巫救起，随后明确形成平安夜；无N1夜间出局。",
+        "evidence": [
+          {
+            "source_path": "data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json",
+            "source_sha256": "541616f94a57a58e043a25a862230be5e36d9e9fd1829507277dba88132a31f6",
+            "source_segment_indices": [
+              2817,
+              2818,
+              2819,
+              2820
+            ],
+            "start_ms": 5544050,
+            "end_ms": 5558700,
+            "quote": "10号平民的呃身份牌\n当夜狼队击杀11号平民女娲救起\n形成平安夜预言家查验10号玩家平民实际查验\n3号猎人为好人身份",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-073",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
       }
     ],
     "finding_resolutions": [
@@ -681,6 +753,93 @@
         "blocked_by_game_end": true,
         "confirmation_status": "user_confirmed"
       }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "before": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          11
+        ],
+        "result": "女巫救起；平安夜",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "wolf_attack",
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          11
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "before": {
+        "slot": "witch_save",
+        "action": "save",
+        "actor": 5,
+        "targets": [
+          11
+        ],
+        "result": "救起",
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "witch_save",
+        "action": "save",
+        "actor": 5,
+        "targets": [
+          11
+        ],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "before": null,
+      "after": {
+        "slot": "night_deaths",
+        "actor": null,
+        "targets": [],
+        "action": "peaceful",
+        "result": null
+      }
     }
   ],
   "daily_bluff_changes": [],
@@ -688,7 +847,7 @@
   "derived_event_states": [],
   "phase_review_counts": {
     "unresolved": 0,
-    "confirmed": 4,
+    "confirmed": 3,
     "inferred": 0,
     "not_observed": 0
   },

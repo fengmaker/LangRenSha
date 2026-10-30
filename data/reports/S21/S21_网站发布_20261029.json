@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-29",
+  "state": "published",
+  "url": "http://127.0.0.1:3000/seasons/S21",
+  "authorization": "先发布S21现有数据，后续再复核；未复核悍跳留空。",
+  "release_id": "S21_S22_S23-9b8e9bb4204d2970-0ffceacf-p7-s2",
+  "source_hash": "9b8e9bb4204d29702502b36507d36be5ae9730a3d1063f67ef0ad97955f489be",
+  "rules_hash": "0ffceacf6fd2228afaad5c187a97eb9e7c3e34f9bfd1c10f6fb333057102c6ea",
+  "displayed_records": {
+    "S21": 122,
+    "S22": 148,
+    "S23": 75
+  },
+  "s21_preparation": {
+    "season": "S21",
+    "media_reviewed": 122,
+    "formal_dossiers": 122,
+    "formal_game_count": null,
+    "formal_game_count_note": "media_reviewed is a media count, not a confirmed formal game count",
+    "board_counts": {
+      "s21_all_in": 2,
+      "s21_guile_realm": 14,
+      "s21_masquerade": 9,
+      "s21_mechanical_wolf_seer": 41,
+      "s21_neighbor_puppet": 5,
+      "s21_seer_witch_hunter_white_mixed": 39,
+      "s21_treasure_master": 11,
+      "s21_wolf_king_guard": 1
+    },
+    "known_names": 1464,
+    "known_roles": 1464,
+    "known_factions": 168,
+    "formal_rounds": 372,
+    "mapped_events": 2126,
+    "unmapped_events": 643,
+    "ballots": 321,
+    "explicit_phase_gaps": 81,
+    "unknown_winners": 2,
+    "database_write": false
+  },
+  "s21_formal_scored_game_count": null,
+  "s21_bluff_publication": null,
+  "s21_bluff_count_and_rate_blank_for_all_players": true,
+  "s21_photos": {
+    "state": "published",
+    "covered_players": 59,
+    "target_players": 59,
+    "report": "data/reports/S21_网站照片准备验收.json",
+    "note": "同日后续修正：初次发布漏接已采集的S21微博出场图，现复用已识读名牌补齐全部59名选手；S22/S23照片选择保持。"
+  },
+  "business_database_import": false,
+  "baseline": {
+    "receipt": "data/backups/S21-website-20261029-before/receipt.json",
+    "release_id": "S22_S23-8012409cd1c0e327-ef9d908b-p6-s2",
+    "unchanged_snapshots_ignoring_release_id": {
+      "S22": 148,
+      "S23": 74
+    },
+    "existing_terminal_projection_update": {
+      "game_id": "bili-BV17QJh6qEid-p01-g02",
+      "old_fingerprint": "d6f4b191cc45b23731225a2776cefaebedcd5c58b2918decbf7cd35558bd838b",
+      "new_fingerprint": "cbed901573db7a86c7c922c203c96bb664b2c0255e3f7235a2f43112d4df654e",
+      "reason": "Existing p7 terminal projection removes only unknown day-4 placeholders after the confirmed night-4 game end.",
+      "manual_assessments_unchanged": true,
+      "seats_votes_first_three_rounds_and_fourth_night_unchanged": true
+    }
+  },
+  "retained_bluff_reviews": {
+    "S22": {
+      "publication_id": "bluff-53e5e968b2a4380f78f9f4b29e5f5be52f32dc6efc60a659ef2eae455defd3b2",
+      "all_assessments_and_manual_results_unchanged": true
+    },
+    "S23": {
+      "publication_id": "bluff-9f0e4f00d27d3e43221ddf0ad90bd5fe6d2ba9e106611853de63601751b95dbc",
+      "all_assessments_and_manual_results_unchanged": true
+    }
+  },
+  "validation": {
+    "targeted_tests_passed": 97,
+    "acceptance": "data/reports/S21_网站发布验收_20261029.json",
+    "api_games_matched": 345,
+    "browser_pages": 52,
+    "viewport_widths": [
+      1440,
+      390
+    ],
+    "photo_followup": "data/reports/S21_网站照片准备验收.json"
+  },
+  "next": "从现有人工复核页继续S21悍跳复核；其余未知项按指定对局和字段局部核对，不重跑已完成采集或转写。"
+}

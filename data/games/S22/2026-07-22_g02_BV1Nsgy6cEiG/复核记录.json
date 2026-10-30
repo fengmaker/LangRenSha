@@ -1512,5 +1512,44 @@
     }
   },
   "review_note": "AI疑点推理核查：3项已核实，0项仍待review。\n本局判断：R2夜死为2、3、6：狼刀3号摄梦人，其死亡连带当夜梦游对象2号盗宝大师；毒师毒杀6号狼王。；R1盗宝大师2号选择通灵师牌，随后查验5号为狼人同伴；选择字段只填合法牌名“通灵师”。；R2盗宝大师选择平民牌；现有选择结果已规范为“平民”。",
-  "user_saved_at": "2026-10-24T15:16:19+08:00"
+  "user_saved_at": "2026-10-24T15:16:19+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-053",
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第02局_盗宝大师赛__BV1Nsgy6cEiG_P01_CID40202996799.平台AI字幕_ai-zh_01_1c28d57ef1.原始.json",
+          "sha256": "1c28d57ef14013032e740ade070c55fd2dfc7f7a4b932bd27c6c1681ea5287bf",
+          "segment_indices": [
+            2818,
+            2819,
+            2820,
+            2821,
+            2822
+          ],
+          "source_segment_ids": [
+            2819,
+            2820,
+            2821,
+            2822,
+            2823
+          ],
+          "start_ms": 5563100,
+          "end_ms": 5566560,
+          "original_sentence": "毒杀6号狼王；23634；第二天白天狼人阵营绝对交牌；游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第二轮夜后连续经过当天存活者发言；一名玩家说“等会我们就交牌了”，之后继续发言而无投票流程。紧接同局复盘明确“第二天白天狼人阵营绝对交牌、游戏结束”，好人获胜。以完整连续现场窗口和局后紧接的轮次总结共同确定无正式放逐，不凭孤立交牌句推断。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

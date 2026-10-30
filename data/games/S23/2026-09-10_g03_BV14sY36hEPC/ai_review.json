@@ -466,30 +466,6 @@
       "daily_audited": true
     },
     {
-      "id": "coverage-3-day-exile_result",
-      "round": 3,
-      "phase": "day",
-      "phase_label": "第3天白天",
-      "status": "inferred",
-      "field": "exile_result",
-      "title": "放逐结果待核实",
-      "conclusion": "最后一狼5号交牌直接结束，无D3放逐。",
-      "reasoning": "按复盘中自爆、交牌或游戏结束的明确顺序推断该日未进入普通放逐；不将未提技能记作空过。",
-      "evidence": [
-        {
-          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV14sY36hEPC_P01_CID41768452185.平台AI字幕_ai-zh_01.原始.json",
-          "source_sha256": "3976ac56c91fc9e6ee068c7759c6f3863e064fa972e1fd4fa4bdbd66b231f5fa",
-          "start_ms": 2626920,
-          "end_ms": 2627900,
-          "quote": "6号女巫"
-        }
-      ],
-      "origin": "phase_coverage_check",
-      "source_sha256": "3976ac56c91fc9e6ee068c7759c6f3863e064fa972e1fd4fa4bdbd66b231f5fa",
-      "previous_question": "放逐结果待核实",
-      "daily_audited": true
-    },
-    {
       "id": "daily-correction-3-day-night_deaths-peaceful",
       "status": "confirmed",
       "conclusion": "N3夜间无夜死：守卫保护6号，狼队普通刀6被挡，法官播报平安夜。",
@@ -524,7 +500,15 @@
     "checks": [
       "N1狼队刀12号，女巫救起，形成平安夜；N1机械狼5号模仿2号猎人，获得机械猎人。D1 7号狼人自爆。",
       "N2守卫12号守12号，狼刀12被守，女巫毒10号；D2 8号狼人自爆。",
-      "N3守卫12号守6号通灵师，狼队普通刀6被挡，形成平安夜；通灵师查1号平民。5号机械猎人交牌，好人获胜。"
+      "N3守卫12号守6号通灵师，狼队普通刀6被挡，形成平安夜；通灵师查1号平民。5号机械猎人交牌，好人获胜。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-067"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -551,6 +535,37 @@
           "result": "女巫已在N1使用解药，N3不可再救。",
           "availability": "spent"
         }
+      },
+      {
+        "round": 3,
+        "phase": "day",
+        "slot": "exile_result",
+        "changes": {
+          "action": "none",
+          "targets": [],
+          "result": null
+        },
+        "reason": "连续终局转写确认本日投票前已结束对局，未举行普通放逐。",
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第03局_机械狼通灵师__BV14sY36hEPC_P01_CID41768452185.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "3976ac56c91fc9e6ee068c7759c6f3863e064fa972e1fd4fa4bdbd66b231f5fa",
+            "source_segment_indices": [
+              1309,
+              1310,
+              1311,
+              1312,
+              1313
+            ],
+            "start_ms": 2688950,
+            "end_ms": 2697290,
+            "quote": "在第三天的白天场上\n最后一狼\n5号机械猎人选择交牌\n游戏结束\n好人阵营获胜呃",
+            "time_kind": "evidence_location_not_actual_event_time"
+          }
+        ],
+        "review_id": "DN-067",
+        "reviewer": "codex_primary",
+        "confirmation": "assistant_source_review_not_user_confirmation"
       }
     ],
     "finding_resolutions": [
@@ -773,38 +788,50 @@
         "availability": "spent",
         "effects": []
       }
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "before": {
+        "slot": "exile_result",
+        "action": "unknown",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      },
+      "after": {
+        "slot": "exile_result",
+        "action": "none",
+        "actor": null,
+        "targets": [],
+        "result": null,
+        "start_seat": null,
+        "direction": null,
+        "votes": [],
+        "random_point": null,
+        "speech_scope": null,
+        "availability": null,
+        "effects": []
+      }
     }
   ],
   "daily_bluff_changes": [],
   "daily_supplemental_aliases": [],
   "derived_event_states": [
     {
-      "round": 1,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
-      "round": 2,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
       "round": 2,
       "phase": "night",
       "slot": "mechanical_action",
       "action": "unavailable",
       "basis": "已学习机械猎人；该形态没有额外夜间技能，普通狼刀与白天开枪另列。"
-    },
-    {
-      "round": 3,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "carrying",
-      "basis": "此前普通狼人已全部出局，机械狼接普通狼刀。"
     },
     {
       "round": 3,
@@ -817,7 +844,7 @@
   "phase_review_counts": {
     "unresolved": 0,
     "confirmed": 5,
-    "inferred": 2,
+    "inferred": 1,
     "not_observed": 0
   },
   "historical_ai_followups": []

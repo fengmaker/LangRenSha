@@ -1,0 +1,162 @@
+{
+  "kind": "implementation_validation",
+  "date": "2026-10-29",
+  "season": "S23",
+  "state": "corrected; confirmed_human_results_locked_and_verified_in_active_database",
+  "implemented": [
+    "审计、候选生成和正式导入准备复用同一有效对局加载器",
+    "S23单局检查、字段差异、证据定位和直接影响输出",
+    "悍跳归属与成功结果分别绑定依赖，保留过期人工结果及备注",
+    "S23局部单事务导入、无变化不重写、显式完整双遍幂等验收",
+    "复核页按局聚合、前后对照及明确成功反馈",
+    "网站按赛季或BV限制详情验收，单独保存局部报告及计时"
+  ],
+  "verification": {
+    "related_python_tests_passed": 246,
+    "live_publication_tests_deselected": 2,
+    "python_test_elapsed_seconds": 17.46,
+    "frontend_typecheck": "passed",
+    "frontend_production_build": "passed; Next webpack build completed",
+    "visual_check": "local synthetic fixture; desktop and 390px viewport; no horizontal overflow",
+    "git_diff_check": "passed",
+    "database_transaction_coverage": "S23 importer uses fake connections for no-op, selected-write and rollback regressions; existing endgame transaction tests also ran in disposable test schemas",
+    "business_database_written_by_this_change": false,
+    "website_published_by_this_change": false,
+    "confirmed_human_results_read_from_actual_database": 67
+  },
+  "effective_source_audit": {
+    "games_checked": 75,
+    "errors": [],
+    "warning_count": 2,
+    "full_source_audit_passed": true,
+    "resolved_engineering_issues": [
+      {
+        "bvid": "BV1nJer63EDh",
+        "date": "2026-09-17",
+        "game_number": 2,
+        "cause": "ASR窄窗JSON使用text/raw_result，原校验器误按字幕segments/body读取，造成引文误报。",
+        "fix": "按片段实际格式、时间和来源哈希校验；未修改原证据或事实。"
+      },
+      {
+        "bvid": "BV17mHX6qETb",
+        "date": "2026-10-08",
+        "game_number": 1,
+        "cause": "旧规则文档已迁移至docs/archive/S22/正式版型规则与录入流程.md。",
+        "fix": "精确解析这条已确认迁移路径，原始旁证不改写。"
+      }
+    ]
+  },
+  "candidate_freshness": {
+    "initial_games_with_differences": 10,
+    "normalization_regression_fixed_games": 6,
+    "remaining_games_with_stale_files": 4,
+    "remaining_stale_files": 4,
+    "remaining_files": [
+      {
+        "bvid": "BV1NBhU68EUy",
+        "date": "2026-09-25",
+        "game_number": 1,
+        "file": "ai_review.json"
+      },
+      {
+        "bvid": "BV1KBhU68EjA",
+        "date": "2026-09-25",
+        "game_number": 2,
+        "file": "ai_review.json"
+      },
+      {
+        "bvid": "BV1K3aQ6zEB9",
+        "date": "2026-10-02",
+        "game_number": 2,
+        "file": "ai_review.json"
+      },
+      {
+        "bvid": "BV123aQ6BEu2",
+        "date": "2026-10-02",
+        "game_number": 3,
+        "file": "ai_review.json"
+      }
+    ],
+    "cause_of_six_extra_differences": "配置合并后新增版型进入旧S22槽位投影，错误补槽/清空目标；已恢复S23显式观察的原处理边界。",
+    "remaining_difference_fields": [
+      "phase_findings",
+      "phase_review_counts",
+      "derived_event_states"
+    ],
+    "meaning": "剩余差异仅是自动推导的复核说明，非人工悍跳资产、正式dossier或数据库缺少数据。",
+    "formal_game_facts_differ": false,
+    "candidate_files_rewritten": false
+  },
+  "legacy_manual_success": {
+    "already_published": true,
+    "confirmed_games": 75,
+    "confirmed_assessments": 302,
+    "not_bluff": 235,
+    "bluff": 67,
+    "manual_success": 10,
+    "manual_failure": 57,
+    "disk_payload_equals_database": true,
+    "automatically_suspended_records_after_fix": 0,
+    "requires_repeat_human_review": false,
+    "requires_reimport": false,
+    "handling": "人工定案直接保持有效；技术签名只检查推断/新修订的输入版本，不改变既有人工作结论。"
+  },
+  "limitations": [
+    "本报告是实现与验证记录，不替代完整发布验收。",
+    "日期或局次改变正式目录时仍需完整重建范围。",
+    "S23局级数据库指纹用于内容漂移和回执读回核对，不等同逐字段对照数据库预期投影。"
+  ],
+  "initial_observation": {
+    "effective_source_audit": {
+      "games_checked": 75,
+      "errors": [
+        {
+          "bvid": "BV1nJer63EDh",
+          "code": "quote_mismatch",
+          "source_path": "data/extractions/S23/audio_semantic_review/BV1nJer63EDh/transcript.json",
+          "start_ms": 3740000,
+          "end_ms": 3767000
+        },
+        {
+          "bvid": "BV17mHX6qETb",
+          "code": "evidence_missing",
+          "detail": "既有旁证引用了不存在的旧规则文档路径；本轮未改写事实或历史证据。"
+        }
+      ],
+      "warning_count": 2,
+      "full_source_audit_passed": false
+    },
+    "candidate_freshness": {
+      "games_with_stale_files": 10,
+      "stale_files": 18,
+      "bvids": [
+        "BV1g1YU6kERd",
+        "BV1nJer63EDh",
+        "BV1saaT6jEyK",
+        "BV1NBhU68EUy",
+        "BV1KBhU68EjA",
+        "BV1VPaW66EZz",
+        "BV1K3aQ6zEB9",
+        "BV123aQ6BEu2",
+        "BV1U3p86dEYR",
+        "BV17QJh6qEid"
+      ],
+      "note": "本次观测包含共享工作区同期配置合并后的状态；导入会拒绝这些旧候选。本轮未重写它们。",
+      "rebuild_entry": "scripts/build_s23_review.py --bvid <BV> --require-complete"
+    },
+    "legacy_manual_success": {
+      "records_without_success_dependency_baseline": 67,
+      "handling": "保留旧悍跳、人工成功值和备注供对照；成功暂不计入。现有复核页可明确确认成功、失败或待定，按成功签名验证后由人工结果构建器应用。",
+      "assets_rewritten_by_this_change": false,
+      "s22_rule_results": "121条已有悍跳仍按当前规则计算，不因缺少旧人工成功签名挂起。"
+    },
+    "note": "保留首次观测供追溯；其中把缺少技术签名当成人工结果无效的处理已撤销。"
+  },
+  "correction": {
+    "authority": "用户明确：人工复核即定案锁定，除非明确要求修改，否则结论、备注和统计值保持。",
+    "mistake": "前版把缺少新技术签名当成挂起已确认人工成功结果的理由，且把校验器格式/历史路径问题笼统称为证据问题。",
+    "database_verification": "S23_人工复核锁定核对_20261029.json",
+    "game_data_rewritten": false,
+    "business_database_written": false
+  }
+}

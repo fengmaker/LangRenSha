@@ -18,7 +18,7 @@ from voting_records import extract as extract_votes
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT/'data/extractions/S23/game_reviews'
-PLAN = ROOT/'data/reports/S23_逐局复核计划.json'
+PLAN = ROOT/'data/reports/S23/S23_逐局复核计划.json'
 
 
 def segments(path: Path) -> list[dict]:
@@ -44,9 +44,9 @@ def schedule_for(date):
 
 def prepare():
     plan=json.loads((ROOT/'data/indexes/S23_采集计划.json').read_text(encoding='utf-8'))
-    media=json.loads((ROOT/'data/reports/S23_转写入库验收.json').read_text(encoding='utf-8'))
+    media=json.loads((ROOT/'data/reports/S23/S23_转写入库验收.json').read_text(encoding='utf-8'))
     sources={r['bvid']:r for r in media['items']}
-    frames=json.loads((ROOT/'data/reports/S23_发言截图进度.json').read_text(encoding='utf-8'))['items']
+    frames=json.loads((ROOT/'data/reports/S23/S23_发言截图进度.json').read_text(encoding='utf-8'))['items']
     with (ROOT/'data/seasons/S23/S23_中文优先复核目录.csv').open(encoding='utf-8-sig',newline='') as stream:
         captions={r['BVID']:r for r in csv.DictReader(stream)}
     entries=[]

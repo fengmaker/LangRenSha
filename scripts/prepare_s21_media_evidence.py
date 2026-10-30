@@ -21,8 +21,8 @@ PLAN = ROOT / "data/indexes/S21_采集计划.json"
 CAPTIONS = ROOT / "data/seasons/S21/S21_中文优先复核目录.csv"
 LIGHT_REVIEW = ROOT / "data/seasons/S21/S21_全文转写与轻校对目录.csv"
 OUT = ROOT / "data/extractions/S21/media_evidence"
-REPORT_JSON = ROOT / "data/reports/S21_文字与截图时点索引.json"
-REPORT_CSV = ROOT / "data/reports/S21_文字与截图时点索引.csv"
+REPORT_JSON = ROOT / "data/reports/S21/S21_文字与截图时点索引.json"
+REPORT_CSV = ROOT / "data/exports/S21_文字与截图时点索引.csv"
 
 ROLE_RE = re.compile(r"机械双刀狼|机械通灵师|机械女巫|机械猎人|机械守卫|机械平民|机械狼|预言家|通灵师|女巫|猎人|守卫|白痴|白神|骑士|摄梦人|摄梦师|混血儿|狼人|狼王|平民|毒师|盗宝大师|假面|舞者|魔术师|诡术师|典狱长")
 SEAT_RE = re.compile(r"(?<!\d)(?:1[0-2]|[1-9])\s*号")
@@ -532,6 +532,7 @@ def prepare(limit: int | None = None) -> dict[str, Any]:
               "summary": summary, "entries": items}
     REPORT_JSON.parent.mkdir(parents=True, exist_ok=True)
     REPORT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    REPORT_CSV.parent.mkdir(parents=True, exist_ok=True)
     with REPORT_CSV.open("w", encoding="utf-8-sig", newline="") as handle:
         fields = ["index", "bvid", "title", "timeline_type", "start_ms", "end_ms", "status", "text", "source_path", "record_path"]
         writer = csv.DictWriter(handle, fieldnames=fields)

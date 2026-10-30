@@ -1,6 +1,8 @@
 # 大师赛档案网站
 
-当前发布S22 148局、S23 75局。完整数据加工见[全流程手册](../docs/01_赛季数据全流程.md)；本站负责公开快照、只读查询与页面。
+当前发布S21 122条媒体档案、S22 148局、S23 75局，共345条档案。S21正式计分总局数与现有缺口留待后续复核，未复核悍跳的次数与成功率显示为空。完整数据加工见[全流程手册](../docs/01_赛季数据全流程.md)；本站负责公开快照、只读查询与页面。
+
+网站版型名称和筛选使用共用模板的统一代码与名称，同版型跨赛季合并统计。赛季存储代码继续用于已核事实和规则适配。
 
 ## 目录分工
 
@@ -15,7 +17,7 @@
 | `run.py` | 成对启动API和前端，退出时停子进程；PG单独管理 |
 | `check_publication.py` | 唯一通用端到端验收，按当前源动态核对，不写固定赛季局数 |
 | `backup.py` | 网站schema备份与临时库恢复验证；全库备份用根scripts/backup_database.py |
-| `prepare_photos.py` | 当前S22/S23照片来源适配，生成API清单和静态资产；新季另行确认映射 |
+| `prepare_photos.py` | S21/S22/S23照片来源适配，生成API清单和静态资产；S21复用已识读的同季名牌及当前档案姓名 |
 | `积分榜字段说明.txt` | 现行指标的分子分母、未知及悍跳口径 |
 
 ## 启动
@@ -41,7 +43,7 @@
 
 发布器从`data/games/{season}`正式JSON及规则／投票旁证生成不可变快照，在事务内切换活动release；不从JCMS正式对局表读取事实。底层命令示例为`python -m website.api.publish --seasons S22 S23 --check`，通过后去掉`--check`。单季`--season`或`--sample`会替换完整活动集，不能用于“追加一季”。
 
-game release变化后，悍跳必须逐季重新预检／同步，数据库版本与对应game release绑定。`website/assets/bluffs/*.json`是发布输入，不是运行时绕过数据库的数据源。照片清单与图片在API侧，更新清单后重启API清缓存。
+game release变化后，已有悍跳发布输入必须逐季重新预检／同步，数据库版本与对应game release绑定。统一入口优先复用`website/assets/bluffs/*.json`，避免重建推断覆盖人工结果；没有输入且没有悍跳适配的赛季可先发布档案，悍跳留空。这些JSON是发布输入，不是运行时绕过数据库的数据源。照片清单与图片在API侧，更新清单后重启API清缓存。
 
 `GET /api/v1/releases`查看版本，再用`python -m website.api.publish --activate <真实release-id>`回退。它不回退JCMS或磁盘JSON；回退后核对悍跳绑定。
 
@@ -54,7 +56,7 @@ game release变化后，悍跳必须逐季重新预检／同步，数据库版�
 .\.venv\Scripts\python.exe -m website.backup --verify-restore
 ```
 
-通用验收支持`--seasons`、`--baseline <receipt.json>`和`--output`。源与API逐局比对，检查分页、单季／跨季stats、悍跳绑定、已列入清单的照片和桌面／手机页面；无照片本身合法。原固定S22／S23验收入口已合并；特殊结算保留在语义测试中。
+通用验收支持`--seasons`、`--bvid BV... [BV...]`、`--baseline <receipt.json>`和`--output`。不加BV时保留完整发布验收；按赛季/BV收窄的报告明确标为`partial`，只请求所选局详情，再核对受影响选手及轻量全局版本/覆盖/唯一性。报告记录源读取范围、验收局数、请求数与耗时，局部通过不能代替完整验收。源与API逐局比对，检查分页、单季／跨季stats、悍跳绑定、已列入清单的照片和桌面／手机页面；无照片本身合法。特殊结算保留在语义测试中。
 
 API仅导出白名单公开字段，不含本地路径、凭据或全文转写。原始资源、JCMS业务库与`masters_web`网站库分开。整库备份在`scripts/backup_database.py`，`website.backup`只覆盖网站schema。
 

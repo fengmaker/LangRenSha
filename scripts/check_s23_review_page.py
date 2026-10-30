@@ -91,7 +91,7 @@ def check(require_complete=False):
               'feedback_persistence':True,'feedback_export_import':True,'wrong_snapshot_rejected':True,
               'mobile_390px_without_overflow':True,'snapshot_id':metadata['snapshot'],
               'formal_database_writes':False}
-    (ROOT/'data/reports/S23_逐局复核页面验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'data/reports/S23/S23_逐局复核页面验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return result
 
 

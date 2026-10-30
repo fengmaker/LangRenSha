@@ -9,7 +9,7 @@ import re
 from game_flow import replay
 
 ROOT = Path(__file__).resolve().parents[1]
-RULE_PATH = "config/S22_formal_rules.json"
+RULE_PATH = "config/game_rules.json"
 DEFERRED_EVIDENCE = ROOT / "data/extractions/S22/voting_review/deferred_elections.json"
 
 

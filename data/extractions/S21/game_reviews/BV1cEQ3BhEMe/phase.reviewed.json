@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1cEQ3BhEMe/transcript.selected.json",
     "selected_sha256": "a6563b4dafa0f20e9ce25768241137ae545b9bafe0d89f99dca878cd5da3c2ac",
@@ -175,10 +175,10 @@
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "unknown",
-      "result": "预言家5号查验6号好人；诡术师交换的是放逐结果，不改变身份或夜间行动者。",
+      "status": "unique_deduction",
+      "result": "好人身份",
       "details": {},
-      "note": "identity.reviewed初始底牌为5号预言家，复盘另称夜1诡术师更换4/5身份；缺少本季本局效果依据，保留行动者未知。",
+      "note": "连续复盘结合冻结角色表及已确认的技能时序可唯一确定查验主体；反馈保留原文语义，不交换物理身份。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1363,7 +1363,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "40836f542305fb3ec9361739349ec73732e2a836bca7ef6061d8e87d2901b880",
+    "spec_sha256": "a509c1f8452f46796bbba4164c78c08a2d6cebf1ac857f736b88177b01c24563",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1374,6 +1374,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-125"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

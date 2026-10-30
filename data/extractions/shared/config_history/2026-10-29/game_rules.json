@@ -1,0 +1,16 @@
+{
+  "shared_derivation_policy": {
+    "status": "user_confirmed",
+    "confirmed_on": "2026-10-29",
+    "scope": "S21/S22/S23 basic roles and the same board family share rules; explicit revised variants override locally",
+    "source": "本轮用户确认：基础规则全部通用，同一个版型可以共用；推导必须前移到数据生成与导入阶段",
+    "first_night_witch_save": "requires_observed_use; common practice is not evidence"
+  },
+  "fixed_seats": {"JY": 7},
+  "mechanical_unlock": {"night_round_offset": 1, "day_round_offset": 0},
+  "mechanical_guard_poison": {"original_target_poisoned": false, "poison_caster_dies": true},
+  "hunter_poison_sources": [
+    {"slot": "witch_poison"},
+    {"slot": "mechanical_action", "learned_role": "机械女巫"}
+  ]
+}

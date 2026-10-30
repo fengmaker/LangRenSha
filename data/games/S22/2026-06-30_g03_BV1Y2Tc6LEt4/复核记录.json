@@ -1493,5 +1493,50 @@
     }
   },
   "review_note": "AI疑点推理核查：3项已核实，0项仍待review。关联发现：同段关联字段已按复盘及规则一并更正。\n本局判断：首夜原文明确2号机械狼学6号狼人、机械双刀形态，并在第一天被放逐；学习11号通灵师的旧候选与两次明确描述矛盾，应拒绝。第二夜11号普通通灵师验3反馈猎人，机械狼早已出局不可能提供该查验，夜死5/11有明文。",
-  "user_saved_at": "2026-10-24T15:12:34+08:00"
+  "user_saved_at": "2026-10-24T15:12:34+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-044",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第06周_正赛第05期/2026-06-30/2026-06-30_S22_第06周_正赛第05期_第03局_机械狼通灵师__BV1Y2Tc6LEt4_P01_CID39541345416.平台AI字幕_ai-zh_01_b3dbcdc540.原始.json",
+          "sha256": "b3dbcdc540f351110ee16185d6e1468a01112f296896e7ab22809368c4ae57aa",
+          "segment_indices": [
+            3089,
+            3090,
+            3091,
+            3092,
+            3093,
+            3094,
+            3095,
+            3096
+          ],
+          "source_segment_ids": [
+            3090,
+            3091,
+            3092,
+            3093,
+            3094,
+            3095,
+            3096,
+            3097
+          ],
+          "start_ms": 6213110,
+          "end_ms": 6220390,
+          "original_sentence": "一号守卫；一号守卫单死；第三天的白天；场上剩三狼拍刀；9号平民；12号平民拍刀成功；游戏结束；狼队阵营获胜"
+        }
+      ],
+      "reason": "第三轮夜后连续发言至狼队拍刀，9号和12号拍刀成功，随即游戏结束并由狼队获胜。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

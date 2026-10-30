@@ -1,19 +1,20 @@
 {
   "schema_version": 1,
   "game_slug": "bili-BV1vMpm6QEdM-p01-g03",
-  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:52ec60d62132b7881a798dce0e15073515d437d9041bf0587a937f072f5f8955:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+  "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
   "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
   "candidate_path": "data/games/S23/2026-10-14_g03_BV1vMpm6QEdM/dossier.candidate.json",
   "candidate_sha256": "e8dafb175a4876c40207fcc27a1e08e77746e7a1b2b041853a7175440d7fa7d9",
   "canonical_board": "mechanical_wolf_seer",
   "storage_board": "s23_mechanical_wolf_seer",
   "formal_files": {
-    "dossier.json": "069d59cb5c602f155f7a7cc9691cf289b76799851f6417f103380b10eb86160c",
-    "voting.json": "620186134dd5ab43b7f0da4cd37e9931087f982e2b8e9fc5aafd87ebe57dd22b",
+    "dossier.json": "b52fa3e1d72eb418db32e59af82d3c8f7cdb74ac3464ffcc1f5077284036819a",
+    "voting.json": "c6243fb8ec1c0bd2760a02a5225b7a00a2e3c9721edd676972047d06c325db29",
     "endgame.json": "bf73163b85c82872fffe7f1c5dd6d33b801e9003aeddc837440bba60bb1ae34f",
     "supplemental.json": "ea4f084905d90ba13df2128756e3f960256e6d3d4fdbbe4869d388e43ec929aa",
     "vote_control.json": "41778066ed9d781d87aa1d5bcb2197fc9d001601189d22e7786c0905349c04da",
-    "formal_context.json": "2d559df38d5ca64ff7f3511033f6857a22cfea67d00649e1097f9105073e36de"
+    "formal_context.json": "0887ec4e531bec943fe34179a0460b45e96ae7a89c607ad72d83824e5edc4bab",
+    "rule_derivations.json": "b73387c831ce89db99189d003f00e167b50995846ffd4af301301c90958ffb7c"
   },
   "source_files": {
     "candidate": {
@@ -22,11 +23,11 @@
     },
     "ai_review": {
       "path": "data/games/S23/2026-10-14_g03_BV1vMpm6QEdM/ai_review.json",
-      "sha256": "4a2ccb94d0c1c20852aeb18e3405723c76948d55c28349ad5c7cbfdbdf00a1aa"
+      "sha256": "e422f256a9fc1f2d728e0b5c4e8e76694441c8fcfd9590d57573b04a28ce7e15"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1vMpm6QEdM/daily_audit.json",
-      "sha256": "06d460b49065c30907ac875f54013ca17a6aa071d185447f74ac7841dd35b064"
+      "sha256": "e6d4a043b08e0d3a0c148611bd46dea32b094443cf35a29fa959734aa7c95bcc"
     },
     "voting": {
       "path": "data/games/S23/2026-10-14_g03_BV1vMpm6QEdM/voting.candidate.json",
@@ -75,6 +76,58 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1vMpm6QEdM/p01/audio.m4a",
       "sha256": "7441d6a4524136b9768c8f6b4698cfbfd48b685679b1d03c68f2fa16ef3e2d76"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "4214400138a021aa33e343093fab11071d2b199c6fb04fe925db578508605380"
+    },
+    "board_template:s23_mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "7c24034586f96f6665ef290e8d65620b8c10577f0a2632e95d055d193bc8507f"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "6a3a9979e0de765e86f20db38896942fcfa3121afd0316d0a4c511d6c301379c"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237"
+    },
+    "board_template:mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
+    },
+    "terminal_review_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237"
     }
   },
   "normalization": {
@@ -96,6 +149,8 @@
     "explicit_transformations": [],
     "unknown_count_before": 53,
     "unknown_count_after": 53,
+    "unknown_count_after_normalization": 53,
+    "unknown_count_after_derivation": 19,
     "round_numbers_before": [
       1,
       2,

@@ -23,7 +23,7 @@ DEFAULT_SEASON = season_codes(ROOT)[0]
 SEASON = DEFAULT_SEASON
 SEASON_CONFIG = load_season(SEASON, ROOT)
 PLAN = ROOT / f"data/indexes/{SEASON}_采集计划.json"
-STATE = ROOT / f"data/reports/{SEASON}_采集进度.json"
+STATE = ROOT / f"data/reports/{SEASON}/{SEASON}_采集进度.json"
 COLLECTION_ID = SEASON_CONFIG["collection_id"]
 SEED_BVID = SEASON_CONFIG["seed_bvid"]
 
@@ -36,7 +36,7 @@ def configure_season(season: str) -> None:
     SEED_BVID = SEASON_CONFIG["seed_bvid"]
     SEASON = season
     PLAN = ROOT / f"data/indexes/{season}_采集计划.json"
-    STATE = ROOT / f"data/reports/{season}_采集进度.json"
+    STATE = ROOT / f"data/reports/{season}/{season}_采集进度.json"
 
 
 def build_plan(auth: str, cookies: Path | None) -> dict:

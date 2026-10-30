@@ -1320,5 +1320,50 @@
     }
   },
   "review_note": "AI疑点推理核查：2项已核实，0项仍待review。\n本局判断：狼队终局选择12号与7号拍刀，复盘明确拍刀失败且好人胜利；混血儿12号选择9号狼人为榜样",
-  "user_saved_at": "2026-10-24T15:13:09+08:00"
+  "user_saved_at": "2026-10-24T15:13:09+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-051",
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第09周_正赛第08期/2026-07-22/2026-07-22_S22_第09周_正赛第08期_第01局_预女猎白混__BV1Pxgy68EQC_P01_CID40202797141.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "3ea5c7c975a5c26b098dc90be8c7867e2e0ec20b606dccc1105fc0fe2ebafeda",
+          "segment_indices": [
+            2459,
+            2460,
+            2461,
+            2462,
+            2463,
+            2464,
+            2465,
+            2466
+          ],
+          "source_segment_ids": [
+            2460,
+            2461,
+            2462,
+            2463,
+            2464,
+            2465,
+            2466,
+            2467
+          ],
+          "start_ms": 5208060,
+          "end_ms": 5219110,
+          "original_sentence": "3号预言家被抗推出局；入夜狼人击杀4号女巫女巫毒杀5号狼人四五双死；第二天白天；狼人阵营决定拍刀；狼人可拍两刀；给出了道路是12号和7号拍刀失败；游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第二轮夜后现场连续发言直到游戏结束、好人获胜，未出现正式投票流程；随后同局复盘明确“第二天白天”狼队决定拍刀、拍刀失败而游戏结束。局后信息补足终局原因，现场窗口仍作为主要的未投票顺序证据。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }

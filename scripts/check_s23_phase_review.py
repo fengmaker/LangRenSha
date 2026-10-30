@@ -50,7 +50,7 @@ def check():
         browser.close()
     result={'first_game':FIRST,'snapshot_id':snapshot,'checked_at_utc':datetime.now(timezone.utc).isoformat(),
             'failures':failures,'passed':not failures,'formal_database_writes':False}
-    (ROOT/'data/reports/S23_日夜页面场景验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'data/reports/S23/S23_日夜页面场景验收.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return result
 
 if __name__=='__main__':

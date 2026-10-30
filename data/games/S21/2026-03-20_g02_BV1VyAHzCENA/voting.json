@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1VyAHzCENA-p01-cid36846764036",
+  "registrations": [
+    {
+      "id": "derived-judge-initial-registration",
+      "day": 1,
+      "on_police": [
+        1,
+        3,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "off_police": [
+        2,
+        4,
+        6
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "BV1VyAHzCENA-ballot-01",
+      "day": 3,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "partial",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        9,
+        10,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": null,
+      "unrecorded_voters": [
+        8
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 10,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1VyAHzCENA-ballot-02",
+      "day": 3,
+      "kind": "exile",
+      "number": 2,
+      "stage": "revote",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        5,
+        8,
+        9,
+        10,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 10,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": null,
+          "state": "abstained"
+        },
+        {
+          "voter": 4,
+          "target": 12,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 4,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 10,
+          "state": "cast"
+        }
+      ]
+    },
+    {
+      "id": "BV1VyAHzCENA-ballot-03",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": null,
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        9,
+        12
+      ],
+      "tied_candidates": [],
+      "winner": 1,
+      "unrecorded_voters": [],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 4,
+          "state": "cast"
+        }
+      ]
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "BV1VyAHzCENA-event-007",
+      "day": 1,
+      "actor": 6,
+      "reason": "self_destruct",
+      "ends_day": true
+    },
+    {
+      "id": "BV1VyAHzCENA-event-013",
+      "day": 2,
+      "actor": 11,
+      "reason": "self_destruct",
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "unknown",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "deferred",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    },
+    {
+      "day": 4,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    }
+  ]
+}

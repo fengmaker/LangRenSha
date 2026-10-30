@@ -124,6 +124,7 @@ export type GameEvent = {
   actor?: number | null;
   targets?: number[] | null;
   result?: string | null;
+  display_result?: string | null;
   start_seat?: number | null;
   direction?: string | null;
   votes?: unknown[] | null;
@@ -244,13 +245,19 @@ export type BluffReview = {
   summary: { games: number; wolf_appearances: number; manual_included_appearances?: number; identified_bluffs: number; successes: number; pending: number; assistant_pending?: number; reviewed_games?: number | null };
   notes: string[];
   items: {
-    review_id: string; source_fingerprint: string; game_id: string; date: string; game_number: number | null; bvid: string | null;
+    review_id: string; source_fingerprint: string; claim_fingerprint?: string | null; success_fingerprint?: string | null;
+    game_id: string; date: string; game_number: number | null; bvid: string | null;
     player_id: string; seat: number; name: string; physical_role: string; claimed_role: string | null;
     decision: "yes" | "no" | "uncertain"; confidence: "high" | "medium" | "low";
     claim_day: 1 | 2 | "later" | null; first_day_claim: boolean | null; decision_note: string; verification_status: string;
+    previous_decision?: "yes" | "no" | "uncertain" | null;
     actual_claim_day?: number | null;
     evidence: { kind: string; text: string; start_ms?: number; end_ms?: number; url?: string; image_url?: string; interpretation?: string }[];
     success: boolean | null; success_reasons: { kind: string; text: string; target?: number }[];
+    current_success?: boolean | null; previous_success?: boolean | null; previous_success_saved?: boolean;
+    success_needs_review?: boolean;
+    legacy_success_needs_review?: boolean;
+    claim_needs_review?: boolean;
     success_source?: "user" | "rules"; manual_included?: boolean;
     review_questions: string[]; needs_review: boolean;
     requires_user_review?: boolean; assistant_pending?: boolean; review_stage?: string | null;

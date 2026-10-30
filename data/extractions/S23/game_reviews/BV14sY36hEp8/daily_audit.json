@@ -9,7 +9,15 @@
   },
   "checks": [
     "N1混血儿7选6狼，狼刀预言家3、女巫救3，平安；D1放逐混血儿7，警徽移交6。",
-    "N2狼刀2、女巫毒10，2/10双死；N2后8号狼自爆，同日自爆后拍刀屠民胜利。"
+    "N2狼刀2、女巫毒10，2/10双死；N2后8号狼自爆，同日自爆后拍刀屠民胜利。",
+    {
+      "field": "deep_day_night_source_review_20261029",
+      "status": "inferred",
+      "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+      "review_ids": [
+        "DN-208"
+      ]
+    }
   ],
   "event_patches": [
     {
@@ -47,6 +55,42 @@
       "changes": {
         "result": "好人"
       }
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_save",
+      "changes": {
+        "action": "save",
+        "actor": 1,
+        "targets": [
+          3
+        ],
+        "result": null
+      },
+      "reason": "N1狼刀3号后女巫救起，形成平安夜；N2复盘明确毒杀10号狼，故N1毒药未用。",
+      "evidence": [
+        {
+          "source_path": "data/seasons/S23/第02周_正赛第01期/2026-09-10/2026-09-10_S23_第02周_正赛第01期_第01局_预女猎白混__BV14sY36hEp8_P01_CID41768191620.平台AI字幕_ai-zh_01.原始.json",
+          "source_sha256": "cd464be722b81a675989a60ef3a3438d7974d1714b736011ab40fb65097bd86e",
+          "source_segment_indices": [
+            2700,
+            2701,
+            2702,
+            2703,
+            2708,
+            2709,
+            2710
+          ],
+          "start_ms": 5261410,
+          "end_ms": 5288139,
+          "quote": "形成狼人混狼队击杀3号预言家\n女巫要救起\n形成平安夜预言家验证了2号玩家\n平民因为好人身份在警上竞选环节\n狼队击杀2号平民女巫\n毒杀10号狼人\n2号十号双死",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ],
+      "review_id": "DN-208",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
     }
   ],
   "finding_resolutions": [

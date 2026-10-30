@@ -21,12 +21,12 @@ from database import ROOT, ReviewError, artifact, connect
 from psycopg.types.json import Jsonb
 
 METHOD = "visual_identity_only_v1"
-INDEX = Path("data/reports/S21_文字与截图时点索引.json")
-SCOPE = Path("config/S21_game_scope.json")
+INDEX = Path("data/reports/S21/S21_文字与截图时点索引.json")
+SCOPE = Path("config/seasons.json")
 CORRECTIONS = Path("data/extractions/S21/identity_primary_corrections.json")
 NAMES = Path("data/weibo/2026-05-26_2026-10-20/参赛名单/人名去重_照片映射.csv")
 PHOTOS = Path("data/weibo/2026-02-24_2026-05-26/S21_姓名照片来源索引.json")
-REPORT = Path("data/reports/S21_座位姓名身份核实进度.json")
+REPORT = Path("data/reports/S21/S21_座位姓名身份核实进度.json")
 
 
 def read(path):
@@ -248,7 +248,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--import-db", action="store_true")
     args = parser.parse_args()
-    excluded = set(read(SCOPE)["excluded_bvids"])
+    from rule_config import load_scope
+    excluded = set(load_scope("S21", ROOT)["excluded_bvids"])
     entries = read(INDEX)["entries"]
     if len({e["bvid"] for e in entries}) != len(entries) or any(e["bvid"] in excluded for e in entries):
         raise ReviewError("媒体索引有重复或包含已排除来源")

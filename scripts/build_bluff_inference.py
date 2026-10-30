@@ -13,7 +13,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from website.api.bluffs import METHODOLOGY, S23_VIDEO_METHODOLOGY, physical_wolf, review_items, source_fingerprint
+from website.api.bluffs import (
+    METHODOLOGY, S23_VIDEO_METHODOLOGY, assessment_success_day, claim_fingerprint, evidence_source_fingerprint,
+    evidence_source_ref, physical_wolf, review_items, source_fingerprint, success_fingerprint,
+)
 from website.api import publisher
 
 WORK = ROOT / "data" / "extractions" / "S22" / "bluff_review"
@@ -93,6 +96,45 @@ def listening_hint(game: dict, seat: int) -> dict | None:
     return None
 
 
+def _apply_success_feedback(game: dict, assessment: dict, feedback: dict,
+                            result_review: dict | None = None) -> bool:
+    """Apply an explicit success choice only against the current claim and outcome basis."""
+    if "manual_success" not in feedback:
+        return False
+    if feedback.get("decision") not in {None, "", "comment"}:
+        raise ValueError("成功结果需在悍跳结论确认后单独提交")
+    if assessment.get("decision") != "yes":
+        raise ValueError("当前记录不是已确认悍跳，不能确认成功结果")
+    if (feedback.get("claim_day") != assessment.get("claim_day")
+            or feedback.get("claimed_role") != assessment.get("claimed_role")):
+        raise ValueError("成功结果反馈同时修改了悍跳归属，请先单独确认悍跳结论")
+    value = feedback["manual_success"]
+    if value is not None and type(value) is not bool:
+        raise ValueError("人工成功结果必须是布尔值或待定")
+    seat = assessment["seat"]
+    if (feedback.get("claim_fingerprint") != claim_fingerprint(game, assessment)
+            or feedback.get("success_fingerprint") != success_fingerprint(
+                game, seat, assessment_success_day(assessment), result_review=result_review)):
+        raise ValueError(f"user success dependency changed: {game.get('id')}/{seat}")
+
+    assessment["manual_success"] = value
+    assessment["verification_status"] = "user_confirmed"
+    note = feedback.get("notes")
+    if isinstance(note, str) and note.strip():
+        old_note = assessment.get("decision_note", "")
+        suffix = "用户成功复核：" + note.strip()
+        if suffix not in old_note:
+            assessment["decision_note"] = f"{old_note}；{suffix}" if old_note else suffix
+    questions = [question for question in assessment.get("review_questions", [])
+                 if question != "用户将成功结果保留为待定"]
+    if value is None:
+        questions.append("用户将成功结果保留为待定")
+        assessment["requires_user_review"] = True
+        assessment["review_stage"] = "user_pending"
+    assessment["review_questions"] = list(dict.fromkeys(questions))
+    return True
+
+
 def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
     sources = {}
     entries, _, _ = publisher.load_publication(ROOT, "S22")
@@ -100,7 +142,9 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
         dossier = item["dossier"]
         identities = {seat["name"]: seat["name"] for seat in dossier["seats"]}
         game = publisher._public_game(dossier, item["voting"], item["endgame"],
-                                      item["audit"], item["board"], identities)
+                                      item["audit"], item["board"], identities,
+                                      source_voting=item.get("source_voting"),
+                                      derivations=item.get("derivations"))
         # Evidence lookup stays local; binding and success evaluation use the
         # exact public timeline, including its source-bound terminal boundary.
         game["files"] = dossier.get("files", [])
@@ -170,6 +214,13 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
                 valid_count += int(problem is None)
                 public = {field: entry[field] for field in
                           ("kind", "start_ms", "end_ms", "text", "interpretation") if field in entry}
+                source_path = entry.get("source_path")
+                if not problem and isinstance(source_path, str):
+                    source_ref = evidence_source_ref(source_path)
+                    source_sha256 = (game.get("bluff_evidence_sources") or {}).get(source_ref)
+                    if isinstance(source_sha256, str):
+                        public["source_ref"] = source_ref
+                        public["source_sha256"] = source_sha256
                 if problem:
                     clean["review_questions"].append(problem)
                     validation_issues.append({"game_id": key, "seat": seat, "source_path": entry.get("source_path"),
@@ -181,10 +232,25 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
             if clean["decision"] == "uncertain":
                 hint = listening_hint(game, seat)
                 if hint is not None and validate_evidence(hint, game_dir, bvid) is None:
-                    clean["evidence"].append({field: hint[field] for field in
-                        ("kind", "start_ms", "end_ms", "text", "interpretation")})
+                    public_hint = {field: hint[field] for field in
+                        ("kind", "start_ms", "end_ms", "text", "interpretation")}
+                    source_ref = evidence_source_ref(hint["source_path"])
+                    source_sha256 = (game.get("bluff_evidence_sources") or {}).get(source_ref)
+                    if isinstance(source_sha256, str):
+                        public_hint["source_ref"] = source_ref
+                        public_hint["source_sha256"] = source_sha256
+                    clean["evidence"].append(public_hint)
+            clean["evidence_source_fingerprint"] = evidence_source_fingerprint(clean["evidence"])
+            if any(not isinstance(entry.get("source_ref"), str)
+                   for entry in clean["evidence"] if isinstance(entry, dict)):
+                clean["evidence_source_binding"] = "whole_game"
             human_row = human.get(f"{bvid}:{seat}")
-            if human_row and human_row.get("source_fingerprint") == fingerprint:
+            human_claim_matches = False
+            if human_row and isinstance(human_row.get("claim_fingerprint"), str):
+                human_claim_matches = human_row["claim_fingerprint"] == claim_fingerprint(game, clean)
+                if not human_claim_matches:
+                    raise ValueError(f"user feedback evidence basis changed: {key}/{seat}")
+            if human_row and (human_claim_matches or human_row.get("source_fingerprint") == fingerprint):
                 action = human_row.get("decision")
                 if action in {"yes", "no", "uncertain"}:
                     clean["decision"] = action
@@ -205,7 +271,18 @@ def build(*, allow_partial: bool = False) -> tuple[dict, list[dict], dict]:
                         clean["decision"] = "uncertain"
             elif human_row:
                 clean["review_questions"].append("已有用户反馈对应的原始记录已变化，需重新确认")
+            if human_row and "manual_success" in human_row:
+                _apply_success_feedback(game, clean, human_row, record.get("result_review"))
             clean["review_questions"] = list(dict.fromkeys(clean["review_questions"]))
+            clean["evidence_source_fingerprint"] = evidence_source_fingerprint(clean["evidence"])
+            if any(not isinstance(entry.get("source_ref"), str)
+                   for entry in clean["evidence"] if isinstance(entry, dict)):
+                clean["evidence_source_binding"] = "whole_game"
+            clean["claim_fingerprint"] = claim_fingerprint(game, clean)
+            clean["success_fingerprint"] = success_fingerprint(
+                game, seat, assessment_success_day(clean),
+                result_review=record.get("result_review"),
+            )
             assessments.append(clean)
         expected = {seat["seat"] for seat in game["seats"] if physical_wolf(game, seat)}
         if not expected.issubset(seen):
@@ -242,13 +319,16 @@ def feedback_fields(row: dict) -> str:
                           for value, label in [("", "尚未确定"), ("1", "第一天"), ("2", "第二天（含延期竞选）"), ("later", "后续天数，请见意见")])
     attributes = {"review-id": row["review_id"], "game-id": row["game_id"], "bvid": row["bvid"],
                   "seat": row["seat"], "name": row["name"], "physical-role": row["physical_role"],
-                  "fingerprint": row["source_fingerprint"]}
+                  "fingerprint": row.get("claim_fingerprint") or row["source_fingerprint"],
+                  "source-fingerprint": row["source_fingerprint"],
+                  "success-fingerprint": row.get("success_fingerprint") or ""}
     attrs = " ".join(f'data-{key}="{escape(str(value), quote=True)}"' for key, value in attributes.items())
     return f'''<form class="bluff-feedback-form" {attrs} aria-label="复核 {escape(row['name'])} {row['review_id']}">
 <h3>填写本条复核意见</h3><div class="choices">
 <label for="{prefix}-decision">复核结论<select id="{prefix}-decision" name="decision">{decision_options}</select></label>
 <label for="{prefix}-day">发生天数<select id="{prefix}-day" name="claim_day">{day_options}</select></label>
 <label for="{prefix}-role">所跳身份<select id="{prefix}-role" name="claimed_role">{role_options}</select></label></div>
+{f'<label for="{prefix}-success">悍跳成功结论（可选）<select id="{prefix}-success" name="manual_success"><option value="">尚未复核</option><option value="yes">确认成功</option><option value="no">确认失败</option><option value="unknown">保留待定</option></select></label>' if row.get('decision') == 'yes' and not row.get('claim_needs_review') else ''}
 <label for="{prefix}-notes">其他意见<textarea id="{prefix}-notes" name="notes" rows="3" maxlength="4000" placeholder="可填写正确座位、首日时间点、所跳身份或不同意见。"></textarea></label>
 <p data-feedback-row-status>尚未填写</p></form>'''
 

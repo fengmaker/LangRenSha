@@ -622,7 +622,7 @@ def main() -> int:
     parser.add_argument("--frame-path", type=Path, help="override the capture.json frame path (single BVID only)")
     parser.add_argument("--frame-root", type=Path, default=FRAME_ROOT)
     parser.add_argument("--alias-csv", type=Path, default=ALIAS_CSV)
-    parser.add_argument("--date-plan", type=Path, default=ROOT / "data/reports/S22_按日座位截图计划.json", help="daily BVID/frame selection JSON")
+    parser.add_argument("--date-plan", type=Path, default=ROOT / "data/reports/S22/S22_按日座位截图计划.json", help="daily BVID/frame selection JSON")
     parser.add_argument("--date", action="append", help="limit --fill-uncovered-days to this date; may be repeated")
     parser.add_argument("--max-per-date", type=int, default=3, help="maximum candidate frames to OCR per date (default: 3)")
     parser.add_argument("--dry-run", action="store_true", help="print per-game review summary without writing JSON")

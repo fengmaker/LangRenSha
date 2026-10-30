@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1un5z6AEBQ/transcript.selected.json",
     "selected_sha256": "741a42897b272e20e83eda2cae1c321a296178387f91376697947aca64dff8b1",
@@ -713,6 +713,43 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1un5z6AEBQ-event-021",
+      "phase": "day",
+      "round": 3,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第三日狼队拍刀未能获胜后交牌；第二日12号放逐和其票型继续保留。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1un5z6AEBQ/transcript.selected.json",
+          "source_sha256": "741a42897b272e20e83eda2cae1c321a296178387f91376697947aca64dff8b1",
+          "original_source_path": "data/seasons/S21/第12周_决赛周/2026-05-15/2026-05-15_S21_第12周_决赛周_第01局_预女猎白混__BV1un5z6AEBQ_P01_CID38361566001.平台AI字幕_ai-zh_01.原始.json",
+          "original_source_sha256": "f15727239e7df00e6cfd48e55676d74ef3337c733078aee1be3c06f5223aac9f",
+          "source_segment_indices": [
+            2025,
+            2026,
+            2027,
+            2028,
+            2029,
+            2030,
+            2031
+          ],
+          "start_ms": 4317360,
+          "end_ms": 4327809,
+          "quote": "入夜狼人击杀一号平民\n白天狼人阵营决定拍刀\n狼人最多可怕\n一刀不足屠边\n所以拍刀失败\n游戏结束\n好人阵营获胜",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1081,7 +1118,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "9fd865d7087c8df458e9b2a28063f2926623c072f453d2e46eef5cd4c22b2d6a",
+    "spec_sha256": "3da6e7c673cdbc72bdf104400e755aa367c10c9324de53ba8b16cbca0c563786",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1092,6 +1129,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 1
+    "gaps_retained": 1,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-034"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

@@ -1,0 +1,3964 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-10-29",
+  "generated_at_utc": "2026-10-29T13:37:47Z",
+  "scope": {
+    "method": "sorted(Path(\"data/games/S21\").glob(\"*/dossier.json\"))[36:48]",
+    "sorted_dossier_indices": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "game_count": 12,
+    "date_range": [
+      "2026-03-20_g02",
+      "2026-03-27_g02"
+    ],
+    "included_fields": [
+      "日夜行动",
+      "夜死/白天公布",
+      "警徽",
+      "逐票及PK轮",
+      "终局"
+    ],
+    "excluded_fields": [
+      "悍跳",
+      "公开身份宣称"
+    ],
+    "manual_source_method": "只读各局selected原文中被phase.reviewed事件/逐票/缺口引用的段；索引采用 transcript.selected.json 的Python数组位置 segments[i]，不以每行index或source_segment_index字段替代；只在直接矛盾处补紧邻上下文。",
+    "whole_season_reaudit": false
+  },
+  "summary": {
+    "games_checked": 12,
+    "existing_reviewed_events_source_checked": 285,
+    "existing_ballot_records_source_checked": 35,
+    "primary_audit_and_selected_sha_binding_matched_for_all_checked_inputs": true,
+    "bluff_reviewed": false,
+    "database_or_formal_files_modified_by_this_review": false,
+    "new_findings": [
+      {
+        "bvid": "BV1ufQkBeEYL",
+        "segments": [
+          1009,
+          1011,
+          1012,
+          1013,
+          1014,
+          1015,
+          1016,
+          1129,
+          1130,
+          1131,
+          1133,
+          1136,
+          1137,
+          1138,
+          1139,
+          1140,
+          1141,
+          1142,
+          1143,
+          1144,
+          1145,
+          1147
+        ],
+        "finding": "此前漏记PK前首轮警长票；9→8、11→7，7/8平票后转PK。当前记录的后续票应标为PK；排除7/8后其余十席有票权，9号个人选择仍未知。",
+        "followup": "主代理已告知：已补首轮、将原记录改PK并重建4局。本报告保留变更前检查结论与源段，不声称独立复验重建结果。"
+      },
+      {
+        "bvid": "BV1MfQkBeEmg",
+        "segments": [
+          2740,
+          2741,
+          2742,
+          2743,
+          2744,
+          2745
+        ],
+        "finding": "夜3守卫行动证据与旧coverage note对目标是否已知表述冲突；连续上下文支持“9号自守”的近音解释，9号已核实际守卫。留待主代理判断，不修改事实。"
+      },
+      {
+        "bvid": "BV1hAXgB1ECp",
+        "segments": [
+          2190,
+          2191,
+          2192,
+          2204
+        ],
+        "finding": "2号在D1放逐票字幕连续被记录为投票、弃票、再投给12，彼此冲突；不回填个人票。"
+      }
+    ]
+  },
+  "games": [
+    {
+      "sorted_dossier_index": 36,
+      "date": "2026-03-20",
+      "game_number": 2,
+      "bvid": "BV1VyAHzCENA",
+      "formal_path": "data/games/S21/2026-03-20_g02_BV1VyAHzCENA/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1VyAHzCENA/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1VyAHzCENA.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1VyAHzCENA/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 33,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        349,
+        350,
+        678,
+        796,
+        797,
+        800,
+        801,
+        802,
+        803,
+        913,
+        914,
+        1324,
+        1636,
+        1637,
+        1638,
+        1639,
+        1640,
+        1641,
+        1642,
+        1643,
+        1644,
+        1645,
+        1646,
+        1647,
+        1648,
+        1649,
+        1650,
+        1651,
+        1652,
+        1653,
+        1654,
+        1760,
+        1761,
+        1763,
+        1764,
+        1765,
+        1766,
+        1767,
+        1768,
+        1769,
+        1770,
+        1771,
+        1772,
+        1773,
+        1774,
+        1775,
+        1776,
+        1777,
+        2039,
+        2040,
+        2041,
+        2042,
+        2043,
+        2044,
+        2464,
+        2465,
+        2466,
+        2467,
+        2468,
+        2469,
+        2470,
+        2471,
+        2472,
+        2473,
+        2474,
+        2475,
+        2476,
+        2477,
+        2589,
+        2590,
+        2591,
+        2592,
+        2593,
+        2594,
+        2595,
+        2596,
+        2597,
+        2598,
+        2599,
+        2600,
+        2601,
+        2602,
+        2603,
+        2604,
+        2605,
+        2609,
+        2610,
+        2611,
+        2612,
+        2613,
+        2614,
+        2615,
+        2616,
+        2617,
+        2618,
+        2619,
+        2620
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            10,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 7,
+          "explicit_votes": [
+            [
+              1,
+              8,
+              "cast"
+            ],
+            [
+              2,
+              5,
+              "cast"
+            ],
+            [
+              4,
+              8,
+              "cast"
+            ],
+            [
+              5,
+              10,
+              "cast"
+            ],
+            [
+              9,
+              10,
+              "cast"
+            ],
+            [
+              10,
+              8,
+              "cast"
+            ],
+            [
+              12,
+              10,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1642,
+            1643,
+            1644,
+            1645,
+            1647,
+            1648,
+            1649
+          ],
+          "outcome": {
+            "result": "现场报8号3票、10号4票；另有2号投5号；索引1646含不可解析“18号”，没有补成个人票"
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "prince_repeat",
+          "eligible_voters": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            10,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 8,
+          "explicit_votes": [
+            [
+              1,
+              10,
+              "cast"
+            ],
+            [
+              2,
+              null,
+              "abstained"
+            ],
+            [
+              4,
+              12,
+              "cast"
+            ],
+            [
+              5,
+              10,
+              "cast"
+            ],
+            [
+              8,
+              10,
+              "cast"
+            ],
+            [
+              9,
+              10,
+              "cast"
+            ],
+            [
+              10,
+              4,
+              "cast"
+            ],
+            [
+              12,
+              10,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1768,
+            1769,
+            1770,
+            1771,
+            1772,
+            1773,
+            1774,
+            1775
+          ],
+          "outcome": {
+            "exiled": 10,
+            "result": "Prince复投后10号5票出局；2号弃票、4/12各收1票"
+          }
+        },
+        {
+          "day": 4,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            4,
+            9,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 5,
+          "explicit_votes": [
+            [
+              1,
+              1,
+              "cast"
+            ],
+            [
+              2,
+              1,
+              "cast"
+            ],
+            [
+              4,
+              1,
+              "cast"
+            ],
+            [
+              9,
+              1,
+              "cast"
+            ],
+            [
+              12,
+              4,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2470,
+            2471,
+            2472,
+            2473,
+            2474
+          ],
+          "outcome": {
+            "exiled": 1,
+            "result": "1号4票出局、4号1票"
+          }
+        }
+      ],
+      "conclusion": "33个日夜事件和3轮放逐票的引用段与现有记录相符：首夜刀4救4为平安夜；自爆中断、延期竞选、夜间行动/死讯、王子复投、D4放逐1与N5终局顺序一致。保留首夜魔术师/毒药是否实际行动未知（1324仅是玩家自述），D3初投异常“18号”不补成8号或其他座位。",
+      "explicit_gaps": [
+        {
+          "phase": "night",
+          "round": 1,
+          "field": "首夜魔术师/毒药行动的终局复盘记录",
+          "reason": "终局复盘明确狼刀4、女巫救4并形成平安夜，但未明确魔术师行动或毒药是否使用；现场2号的自述不是独立结算证据，故不把它记成实际空过。",
+          "segments": [
+            1324,
+            2590,
+            2591
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 3,
+          "field": "首轮放逐票的“18号→10号”播报",
+          "reason": "该ASR voter编号不是合法座位且无法从原文消歧，已从逐人票表移除；不以广播总数补成8号或其他玩家。",
+          "segments": [
+            1645,
+            1646,
+            1647,
+            1651,
+            1652
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [
+        {
+          "round": 2,
+          "phase": "night",
+          "slot": "guile_exchange",
+          "actor": 5,
+          "reason": "guile_exchange_targets_available",
+          "legal_targets": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            12
+          ]
+        }
+      ],
+      "vote_review_tasks": [
+        {
+          "round": 3,
+          "phase": "day",
+          "ballot_id": "BV1VyAHzCENA-ballot-01",
+          "slot": "vote_choice",
+          "actor": 8,
+          "legal_targets": [
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            10,
+            12
+          ],
+          "reason": "unresolved_recorded_vote_gap"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 37,
+      "date": "2026-03-20",
+      "game_number": 3,
+      "bvid": "BV1XyAHzkE1w",
+      "formal_path": "data/games/S21/2026-03-20_g03_BV1XyAHzkE1w/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1XyAHzkE1w/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1XyAHzkE1w.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1XyAHzkE1w/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 22,
+      "reviewed_ballot_count_at_report_generation": 1,
+      "python_segment_positions_read": [
+        775,
+        776,
+        777,
+        778,
+        779,
+        780,
+        781,
+        782,
+        783,
+        785,
+        786,
+        1889,
+        2037,
+        2038,
+        2087,
+        2088,
+        2107,
+        2108,
+        2109,
+        2110,
+        2111,
+        2112,
+        2117,
+        2118,
+        2119,
+        2120,
+        2121,
+        2122,
+        2123,
+        2124,
+        2125,
+        2126,
+        2127,
+        2128
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            3,
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "candidate_seats": [
+            2,
+            5,
+            7,
+            9,
+            11
+          ],
+          "explicit_vote_count": 2,
+          "explicit_votes": [
+            [
+              1,
+              null,
+              "abstained"
+            ],
+            [
+              6,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            780,
+            781
+          ],
+          "outcome": {
+            "winner": 7,
+            "result": "记录1号弃票、6号→7；7号当选"
+          }
+        }
+      ],
+      "conclusion": "22个日夜事件和D1警长票源段相符：D1只确认1号弃票、6号投7及7号当选；其余个人警长票未知。N2狼刀4但现有现场窗口未找到独立4号死亡公布，保留该公告缺口；连续自爆、N3守护及终局交牌顺序一致。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "警长选举缺失的警下个人票",
+          "reason": "现场只明确1号弃票、6号投7号及7号当选；其余候选/警下个人票未能核实。",
+          "segments": [
+            775,
+            776,
+            777,
+            778,
+            779,
+            780,
+            781,
+            782
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 2,
+          "field": "4号狼人刀后的现场死亡公布",
+          "reason": "终局复盘称N2狼刀4号；本轮已读现场窗口没有独立的4号倒牌公告索引，故保留实际死亡陈述但不制造公告事件。",
+          "segments": [
+            2118,
+            2120
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": []
+    },
+    {
+      "sorted_dossier_index": 38,
+      "date": "2026-03-24",
+      "game_number": 1,
+      "bvid": "BV1ufQkBeEYL",
+      "formal_path": "data/games/S21/2026-03-24_g01_BV1ufQkBeEYL/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1ufQkBeEYL/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1ufQkBeEYL.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1ufQkBeEYL/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 21,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016,
+        1129,
+        1130,
+        1131,
+        1132,
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148,
+        2241,
+        2242,
+        2243,
+        2244,
+        2245,
+        2246,
+        2247,
+        2248,
+        2249,
+        2250,
+        2251,
+        2252,
+        2253,
+        2254,
+        2255,
+        2256,
+        2257,
+        2258,
+        2259,
+        2260,
+        2261,
+        2360,
+        2361,
+        2362,
+        2363,
+        2781,
+        2782,
+        2827,
+        2828,
+        2829,
+        2830,
+        2831,
+        2832,
+        2961,
+        2962,
+        2963,
+        2964,
+        2968,
+        2969,
+        2970,
+        2971,
+        2972,
+        2973,
+        2974,
+        2975,
+        2978,
+        2979,
+        2980,
+        2981
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": [
+            9,
+            11
+          ],
+          "candidate_seats": [
+            5,
+            7,
+            8,
+            10
+          ],
+          "explicit_vote_count": 2,
+          "explicit_votes": [
+            [
+              9,
+              8,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1013,
+            1014
+          ],
+          "outcome": {
+            "tie_candidates": [
+              7,
+              8
+            ],
+            "result": "7号、8号各一票，进入实际PK"
+          }
+        },
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "pk",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": [
+            7,
+            8
+          ],
+          "explicit_vote_count": 9,
+          "explicit_votes": [
+            [
+              1,
+              7,
+              "cast"
+            ],
+            [
+              2,
+              7,
+              "cast"
+            ],
+            [
+              3,
+              7,
+              "cast"
+            ],
+            [
+              4,
+              7,
+              "cast"
+            ],
+            [
+              5,
+              7,
+              "cast"
+            ],
+            [
+              6,
+              7,
+              "cast"
+            ],
+            [
+              10,
+              7,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ],
+            [
+              12,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1136,
+            1137,
+            1138,
+            1139,
+            1140,
+            1141,
+            1143,
+            1144,
+            1145
+          ],
+          "outcome": {
+            "winner": 7,
+            "result": "广播7号九票当选；9号对应ASR片段只读作“9号七票”，不保留为个人选择"
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 12,
+          "explicit_votes": [
+            [
+              1,
+              9,
+              "cast"
+            ],
+            [
+              2,
+              9,
+              "cast"
+            ],
+            [
+              3,
+              9,
+              "cast"
+            ],
+            [
+              4,
+              9,
+              "cast"
+            ],
+            [
+              5,
+              9,
+              "cast"
+            ],
+            [
+              6,
+              9,
+              "cast"
+            ],
+            [
+              7,
+              9,
+              "cast"
+            ],
+            [
+              8,
+              5,
+              "cast"
+            ],
+            [
+              9,
+              5,
+              "cast"
+            ],
+            [
+              10,
+              8,
+              "cast"
+            ],
+            [
+              11,
+              9,
+              "cast"
+            ],
+            [
+              12,
+              9,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2246,
+            2247,
+            2248,
+            2249,
+            2250,
+            2251,
+            2252,
+            2253,
+            2254,
+            2255,
+            2256,
+            2257,
+            2258,
+            2259
+          ],
+          "outcome": {
+            "exiled": 9,
+            "result": "9号9票出局的播报为9.5；逐人目标票9号9、5号2、8号1，分开记录"
+          }
+        }
+      ],
+      "conclusion": "原reviewed/spec仅有PK后警长票被标作initial；另发现其前的首轮投票。数组位置1009–1016显示候选5/7/8/10，9→8、11→7，7/8各一票平票并转PK。PK后1129–1133明说PK发言结束、除7/8外其他玩家投票，当前9张明确票均投7并报9票；9号个人选择仍不明。D1放逐逐人票和其后终局证据与记录相符。主代理已通知补入首轮并将原票改为PK、重建4局；本报告不独立复验其后重建。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "警长选举9号的个人选择",
+          "reason": "原文片段写“9号七票”，不是可确认的“9号投给7号”；已从逐人票移除，不用9票当选结果补个人选择。",
+          "segments": [
+            1136,
+            1137,
+            1138,
+            1139,
+            1140,
+            1141,
+            1142,
+            1143,
+            1144,
+            1145,
+            1147
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1ufQkBeEYL-ballot-02",
+          "slot": "vote_choice",
+          "actor": 9,
+          "legal_targets": [
+            7,
+            8
+          ],
+          "reason": "unresolved_recorded_vote_gap"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 39,
+      "date": "2026-03-24",
+      "game_number": 2,
+      "bvid": "BV1MfQkBeEmP",
+      "formal_path": "data/games/S21/2026-03-24_g02_BV1MfQkBeEmP/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1MfQkBeEmP/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1MfQkBeEmP.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmP/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 24,
+      "reviewed_ballot_count_at_report_generation": 1,
+      "python_segment_positions_read": [
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        1899,
+        1900,
+        1901,
+        2160,
+        2161,
+        2162,
+        2208,
+        2209,
+        2210,
+        2211,
+        2212,
+        2213,
+        2214,
+        2215,
+        2216,
+        2217,
+        2218,
+        2220,
+        2221,
+        2222,
+        2223,
+        2224,
+        2225,
+        2226
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            2,
+            5,
+            6,
+            12
+          ],
+          "explicit_vote_count": 2,
+          "explicit_votes": [
+            [
+              4,
+              5,
+              "cast"
+            ],
+            [
+              9,
+              5,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            976
+          ],
+          "outcome": {
+            "winner": 5,
+            "result": "5号两票当选警长；只保留明确的4→5、9→5"
+          }
+        }
+      ],
+      "conclusion": "24个日夜事件及一轮警长票与引用原文一致；目前仅明确4→5、9→5且报5号两票当选，其他个人票和选民范围不补。两夜共舞/面具和次日公布、警徽移交、自爆中断、终局顺序一致；rule_derivations仍留Round2座12、Round3座11的mask faction未知。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "警长选举其他个人票",
+          "reason": "字幕把出票、两张投票和“5号两票当选”合在一段；只可确认4、9→5，其他警下票不据总数补齐。",
+          "segments": [
+            972,
+            973,
+            974,
+            975,
+            976,
+            977
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1MfQkBeEmP-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 40,
+      "date": "2026-03-24",
+      "game_number": 3,
+      "bvid": "BV1MfQkBeEmg",
+      "formal_path": "data/games/S21/2026-03-24_g03_BV1MfQkBeEmg/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1MfQkBeEmg/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1MfQkBeEmg.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmg/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 25,
+      "reviewed_ballot_count_at_report_generation": 4,
+      "python_segment_positions_read": [
+        254,
+        255,
+        770,
+        772,
+        774,
+        775,
+        776,
+        777,
+        778,
+        908,
+        910,
+        911,
+        912,
+        913,
+        914,
+        915,
+        916,
+        917,
+        918,
+        919,
+        920,
+        921,
+        922,
+        923,
+        924,
+        925,
+        926,
+        927,
+        928,
+        929,
+        930,
+        2051,
+        2054,
+        2055,
+        2056,
+        2057,
+        2058,
+        2059,
+        2060,
+        2061,
+        2062,
+        2063,
+        2064,
+        2065,
+        2066,
+        2067,
+        2068,
+        2069,
+        2070,
+        2071,
+        2590,
+        2591,
+        2592,
+        2593,
+        2594,
+        2595,
+        2596,
+        2597,
+        2598,
+        2599,
+        2600,
+        2601,
+        2602,
+        2603,
+        2604,
+        2672,
+        2722,
+        2723,
+        2724,
+        2725,
+        2726,
+        2727,
+        2728,
+        2729,
+        2730,
+        2731,
+        2732,
+        2733,
+        2734,
+        2736,
+        2737,
+        2738,
+        2740,
+        2741,
+        2742,
+        2743,
+        2744,
+        2745,
+        2746,
+        2747
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            4,
+            5,
+            6,
+            8
+          ],
+          "explicit_vote_count": 2,
+          "explicit_votes": [
+            [
+              7,
+              6,
+              "cast"
+            ],
+            [
+              9,
+              8,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            775,
+            776
+          ],
+          "outcome": {
+            "tied_seats": [
+              6,
+              8
+            ],
+            "reported_votes_each": 1,
+            "next_stage": "pk"
+          }
+        },
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "pk",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": [
+            6,
+            8
+          ],
+          "explicit_vote_count": 10,
+          "explicit_votes": [
+            [
+              1,
+              8,
+              "cast"
+            ],
+            [
+              2,
+              8,
+              "cast"
+            ],
+            [
+              3,
+              6,
+              "cast"
+            ],
+            [
+              4,
+              8,
+              "cast"
+            ],
+            [
+              5,
+              8,
+              "cast"
+            ],
+            [
+              7,
+              6,
+              "cast"
+            ],
+            [
+              9,
+              8,
+              "cast"
+            ],
+            [
+              10,
+              6,
+              "cast"
+            ],
+            [
+              11,
+              8,
+              "cast"
+            ],
+            [
+              12,
+              8,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            912,
+            913,
+            914,
+            915,
+            916,
+            917,
+            918,
+            919,
+            920,
+            921,
+            922,
+            923,
+            924,
+            925,
+            926,
+            927,
+            928
+          ],
+          "outcome": {
+            "elected": 8,
+            "reported_vote_total": 7
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 12,
+          "explicit_votes": [
+            [
+              1,
+              5,
+              "cast"
+            ],
+            [
+              2,
+              7,
+              "cast"
+            ],
+            [
+              3,
+              5,
+              "cast"
+            ],
+            [
+              4,
+              7,
+              "cast"
+            ],
+            [
+              5,
+              7,
+              "cast"
+            ],
+            [
+              6,
+              5,
+              "cast"
+            ],
+            [
+              7,
+              5,
+              "cast"
+            ],
+            [
+              8,
+              7,
+              "cast"
+            ],
+            [
+              9,
+              7,
+              "cast"
+            ],
+            [
+              10,
+              5,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ],
+            [
+              12,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2056,
+            2057,
+            2058,
+            2059,
+            2060,
+            2061,
+            2062,
+            2063,
+            2064,
+            2065,
+            2066,
+            2067,
+            2068,
+            2069
+          ],
+          "outcome": {
+            "exiled": 7,
+            "reported_vote_total": 7.5
+          }
+        },
+        {
+          "day": 2,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 8,
+          "explicit_votes": [
+            [
+              1,
+              10,
+              "cast"
+            ],
+            [
+              2,
+              10,
+              "cast"
+            ],
+            [
+              3,
+              10,
+              "cast"
+            ],
+            [
+              4,
+              10,
+              "cast"
+            ],
+            [
+              9,
+              10,
+              "cast"
+            ],
+            [
+              10,
+              3,
+              "cast"
+            ],
+            [
+              11,
+              10,
+              "cast"
+            ],
+            [
+              12,
+              10,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2595,
+            2596,
+            2597,
+            2598,
+            2599,
+            2600,
+            2601,
+            2602
+          ],
+          "outcome": {
+            "exiled": 10,
+            "reported_vote_total": 7.5
+          }
+        }
+      ],
+      "conclusion": "4轮票型（D1 sheriff初轮及PK、两轮放逐）和可读逐票段相符：初轮6/8各一票；PK除6/8外10席均有明确票，8号获7票；D1放逐7，D2放逐10。夜3守卫源段2740–2745为“10号出局 / 入夜守卫守护 / 9号自首 / 狼刀4”；复用身份核实为9号实际守卫。事件注释将“自首”按“自守”近音读为9自守，支持target=9；但coverage旧note写目标未知，存在文件内部矛盾，留主代理定案，不由本复核改写。",
+      "explicit_gaps": [],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": []
+    },
+    {
+      "sorted_dossier_index": 41,
+      "date": "2026-03-25",
+      "game_number": 1,
+      "bvid": "BV1roX7BQEfa",
+      "formal_path": "data/games/S21/2026-03-25_g01_BV1roX7BQEfa/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1roX7BQEfa/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1roX7BQEfa.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1roX7BQEfa/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 19,
+      "reviewed_ballot_count_at_report_generation": 2,
+      "python_segment_positions_read": [
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        904,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911,
+        912,
+        913,
+        914,
+        1749,
+        1750,
+        1752,
+        1753,
+        2272,
+        2274,
+        2275,
+        2276,
+        2277,
+        2278,
+        2279,
+        2280,
+        2281,
+        2282,
+        2283,
+        2284,
+        2285,
+        2298,
+        2299,
+        2301,
+        2302,
+        2303,
+        2304,
+        2305,
+        2306,
+        2307,
+        2308,
+        2309,
+        2310,
+        2311,
+        2313,
+        2314
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            10,
+            11
+          ],
+          "explicit_vote_count": 5,
+          "explicit_votes": [
+            [
+              2,
+              10,
+              "cast"
+            ],
+            [
+              5,
+              11,
+              "cast"
+            ],
+            [
+              7,
+              10,
+              "cast"
+            ],
+            [
+              9,
+              11,
+              "cast"
+            ],
+            [
+              12,
+              11,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            908,
+            909,
+            910,
+            911,
+            912
+          ],
+          "outcome": {
+            "elected": 11,
+            "reported_vote_total": 3
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            3,
+            4,
+            5,
+            6,
+            8,
+            9,
+            12
+          ],
+          "candidate_seats": [
+            3,
+            5
+          ],
+          "explicit_vote_count": 7,
+          "explicit_votes": [
+            [
+              3,
+              5,
+              "cast"
+            ],
+            [
+              4,
+              3,
+              "cast"
+            ],
+            [
+              5,
+              3,
+              "cast"
+            ],
+            [
+              6,
+              3,
+              "cast"
+            ],
+            [
+              8,
+              3,
+              "cast"
+            ],
+            [
+              9,
+              3,
+              "cast"
+            ],
+            [
+              12,
+              3,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2275,
+            2276,
+            2277,
+            2278,
+            2279,
+            2280,
+            2281
+          ],
+          "outcome": {
+            "exiled": 3,
+            "reported_vote_total": 6
+          }
+        }
+      ],
+      "conclusion": "19个日夜事件与两轮已记录票型的源段一致；D1最终候选10/11、明确5席投票并报11当选，首轮上警名单转写互相矛盾，警长票权范围也没有证据；不按候选集推补。D1/2自爆中断、夜死与警徽转交、D3放逐3和好人结束相符。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "signup_consistency",
+          "reason": "转写456-460与458处名单不一致；最终候选10/11可确认，首次上警全名单需人工复读原段。",
+          "segments": [
+            456,
+            457,
+            458,
+            459,
+            460,
+            906
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1roX7BQEfa-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 42,
+      "date": "2026-03-25",
+      "game_number": 2,
+      "bvid": "BV1roX7BQE1n",
+      "formal_path": "data/games/S21/2026-03-25_g02_BV1roX7BQE1n/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1roX7BQE1n/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1roX7BQE1n.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1roX7BQE1n/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 21,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        371,
+        1108,
+        1109,
+        1110,
+        1111,
+        1112,
+        1113,
+        1182,
+        2334,
+        2335,
+        2336,
+        2337,
+        2338,
+        2339,
+        2340,
+        2341,
+        2342,
+        2343,
+        2591,
+        2592,
+        3140,
+        3141,
+        3142,
+        3143,
+        3144,
+        3145,
+        3146,
+        3147,
+        3148,
+        3149,
+        3150,
+        3151,
+        3152,
+        3154,
+        3182,
+        3183,
+        3184,
+        3203,
+        3204,
+        3207,
+        3208,
+        3209,
+        3210,
+        3211,
+        3212,
+        3213,
+        3214,
+        3215,
+        3216
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            5,
+            7,
+            9
+          ],
+          "explicit_vote_count": 1,
+          "explicit_votes": [
+            [
+              2,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1112
+          ],
+          "outcome": {
+            "elected": 7
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 12,
+          "explicit_votes": [
+            [
+              1,
+              8,
+              "cast"
+            ],
+            [
+              2,
+              8,
+              "cast"
+            ],
+            [
+              3,
+              5,
+              "cast"
+            ],
+            [
+              4,
+              5,
+              "cast"
+            ],
+            [
+              5,
+              8,
+              "cast"
+            ],
+            [
+              6,
+              5,
+              "cast"
+            ],
+            [
+              7,
+              5,
+              "cast"
+            ],
+            [
+              8,
+              5,
+              "cast"
+            ],
+            [
+              9,
+              8,
+              "cast"
+            ],
+            [
+              10,
+              5,
+              "cast"
+            ],
+            [
+              11,
+              8,
+              "cast"
+            ],
+            [
+              12,
+              5,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2338,
+            2339,
+            2340,
+            2341,
+            2342
+          ],
+          "outcome": {
+            "exiled": 5,
+            "reported_vote_total": 7.5
+          }
+        },
+        {
+          "day": 2,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            7,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 9,
+          "explicit_votes": [
+            [
+              1,
+              12,
+              "cast"
+            ],
+            [
+              2,
+              12,
+              "cast"
+            ],
+            [
+              3,
+              12,
+              "cast"
+            ],
+            [
+              4,
+              12,
+              "cast"
+            ],
+            [
+              6,
+              12,
+              "cast"
+            ],
+            [
+              7,
+              11,
+              "cast"
+            ],
+            [
+              10,
+              12,
+              "cast"
+            ],
+            [
+              11,
+              11,
+              "cast"
+            ],
+            [
+              12,
+              6,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3143,
+            3144,
+            3145,
+            3146,
+            3147,
+            3148,
+            3149,
+            3150,
+            3151
+          ],
+          "outcome": {
+            "exiled": 12,
+            "reported_vote_total": 6
+          }
+        }
+      ],
+      "conclusion": "21个日夜事件及3轮票型引用相符：D1警长仅明确2→7并报7当选（选民范围未知）；D1放逐全12席、D2放逐9个存活席逐票可读。N1守卫空过且狼刀7被救，N2死讯8/9、D2放逐12、技能未发动后终局一致。",
+      "explicit_gaps": [],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1roX7BQE1n-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 43,
+      "date": "2026-03-25",
+      "game_number": 3,
+      "bvid": "BV1roX7BQEau",
+      "formal_path": "data/games/S21/2026-03-25_g03_BV1roX7BQEau/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1roX7BQEau/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1roX7BQEau.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1roX7BQEau/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 28,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        149,
+        150,
+        151,
+        763,
+        764,
+        890,
+        892,
+        975,
+        976,
+        1740,
+        1741,
+        1742,
+        1743,
+        1744,
+        1745,
+        1746,
+        1747,
+        1748,
+        1749,
+        1750,
+        1751,
+        1752,
+        1753,
+        1910,
+        1911,
+        1912,
+        1913,
+        1914,
+        1915,
+        1916,
+        1917,
+        1918,
+        1919,
+        1920,
+        1921,
+        1922,
+        2416,
+        2417,
+        2418,
+        2419,
+        2420,
+        2421,
+        2422,
+        2423,
+        2424,
+        2425,
+        2426,
+        2427,
+        2428,
+        2429,
+        2430,
+        2453,
+        2454,
+        2455,
+        2456,
+        2457,
+        2458,
+        2459,
+        2460,
+        2461,
+        2462,
+        2463,
+        2464,
+        2465,
+        2467,
+        2468,
+        2470,
+        2471,
+        2472,
+        2474,
+        2475,
+        2476,
+        2477
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": null,
+          "explicit_vote_count": 9,
+          "explicit_votes": [
+            [
+              1,
+              2,
+              "cast"
+            ],
+            [
+              2,
+              5,
+              "cast"
+            ],
+            [
+              3,
+              7,
+              "cast"
+            ],
+            [
+              4,
+              9,
+              "cast"
+            ],
+            [
+              5,
+              10,
+              "cast"
+            ],
+            [
+              7,
+              9,
+              "cast"
+            ],
+            [
+              9,
+              2,
+              "cast"
+            ],
+            [
+              10,
+              9,
+              "cast"
+            ],
+            [
+              11,
+              2,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1743,
+            1744,
+            1745,
+            1746,
+            1747,
+            1748,
+            1749,
+            1750,
+            1751
+          ],
+          "outcome": {
+            "tied_seats": [
+              2,
+              9
+            ],
+            "reported_votes_each": 3,
+            "next_stage": "pk"
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "pk",
+          "eligible_voters": null,
+          "candidate_seats": [
+            2,
+            9
+          ],
+          "explicit_vote_count": 7,
+          "explicit_votes": [
+            [
+              1,
+              2,
+              "cast"
+            ],
+            [
+              3,
+              2,
+              "cast"
+            ],
+            [
+              4,
+              2,
+              "cast"
+            ],
+            [
+              5,
+              2,
+              "cast"
+            ],
+            [
+              7,
+              9,
+              "cast"
+            ],
+            [
+              10,
+              9,
+              "cast"
+            ],
+            [
+              11,
+              9,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1914,
+            1915,
+            1916,
+            1917,
+            1918,
+            1919,
+            1920
+          ],
+          "outcome": {
+            "exiled": 2,
+            "reported_vote_total": 4
+          }
+        },
+        {
+          "day": 4,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": null,
+          "explicit_vote_count": 6,
+          "explicit_votes": [
+            [
+              1,
+              7,
+              "cast"
+            ],
+            [
+              3,
+              7,
+              "cast"
+            ],
+            [
+              4,
+              7,
+              "cast"
+            ],
+            [
+              5,
+              11,
+              "cast"
+            ],
+            [
+              7,
+              3,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2419,
+            2420,
+            2421,
+            2422,
+            2423,
+            2424
+          ],
+          "outcome": {
+            "exiled": 7,
+            "reported_vote_total": 4
+          }
+        }
+      ],
+      "conclusion": "28个日夜事件及D3初投/PK、D4放逐引用相符；D1只确认1以外均上警，随后片段直接转夜，未见候选/警长票或中断播报；D3两票轮和D4只见6席逐票，未播报选民不推作弃票。N2守住8后N3追刀8并出局、D2再次自爆流徽、D4出局/带走/终局顺序相符。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "sheriff_election_and_first_day_interruption",
+          "reason": "已确认首次报名除1号外其余上警；连续局中窗口从末段发言直接进入天黑，未找到最终候选、警长票轮、退水名单或中断动作的法官播报。",
+          "segments": [
+            149,
+            150,
+            763,
+            764
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 3,
+          "field": "initial_and_pk_eligibility",
+          "reason": "自由投票轮和PK轮逐票播报不构成完整票权名单；6号等未播报席位不得推为弃票。",
+          "segments": [
+            1741,
+            1743,
+            1753,
+            1912,
+            1922
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 4,
+          "field": "ballot_eligibility",
+          "reason": "7号出局轮只检索到6条逐票播报；不能确认是否完整。",
+          "segments": [
+            2417,
+            2419,
+            2426
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [
+        {
+          "round": 1,
+          "phase": "night",
+          "slot": "mechanical_action",
+          "actor": 9,
+          "reason": "mechanical_form_unknown",
+          "legal_targets": null
+        },
+        {
+          "round": 1,
+          "phase": "night",
+          "slot": "seer_check",
+          "actor": 8,
+          "reason": "seer_check_available",
+          "legal_targets": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ]
+        },
+        {
+          "round": 4,
+          "phase": "day",
+          "slot": "mechanical_day_skill",
+          "actor": 9,
+          "reason": "mechanical_form_unknown",
+          "legal_targets": null
+        }
+      ],
+      "vote_review_tasks": [
+        {
+          "round": 3,
+          "phase": "day",
+          "ballot_id": "BV1roX7BQEau-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        },
+        {
+          "round": 3,
+          "phase": "day",
+          "ballot_id": "BV1roX7BQEau-ballot-02",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        },
+        {
+          "round": 4,
+          "phase": "day",
+          "ballot_id": "BV1roX7BQEau-ballot-03",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 44,
+      "date": "2026-03-26",
+      "game_number": 1,
+      "bvid": "BV1udXxBxEX7",
+      "formal_path": "data/games/S21/2026-03-26_g01_BV1udXxBxEX7/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1udXxBxEX7/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1udXxBxEX7.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1udXxBxEX7/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 24,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        462,
+        463,
+        464,
+        1186,
+        1187,
+        1188,
+        1189,
+        1190,
+        1191,
+        1192,
+        1193,
+        1195,
+        1196,
+        1197,
+        2206,
+        2207,
+        2208,
+        2592,
+        2767,
+        2989,
+        2990,
+        2991,
+        2994,
+        2995,
+        2996,
+        2997,
+        2998,
+        2999,
+        3000,
+        3001,
+        3002,
+        3157,
+        3158,
+        3159,
+        3160,
+        3161,
+        3162,
+        3163,
+        3164,
+        3165,
+        3166,
+        3167,
+        3168,
+        3204,
+        3205,
+        3206,
+        3207,
+        3208,
+        3209,
+        3210,
+        3211,
+        3212,
+        3215,
+        3216,
+        3217,
+        3218,
+        3220,
+        3221,
+        3224,
+        3225,
+        3227,
+        3228,
+        3229
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": [
+            9,
+            10
+          ],
+          "candidate_seats": [
+            1,
+            5
+          ],
+          "explicit_vote_count": 2,
+          "explicit_votes": [
+            [
+              9,
+              1,
+              "cast"
+            ],
+            [
+              10,
+              1,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1191
+          ],
+          "outcome": {
+            "elected": 1,
+            "reported_vote_total": 2
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            5,
+            6,
+            7,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 6,
+          "explicit_votes": [
+            [
+              5,
+              10,
+              "cast"
+            ],
+            [
+              6,
+              5,
+              "cast"
+            ],
+            [
+              7,
+              5,
+              "cast"
+            ],
+            [
+              10,
+              5,
+              "cast"
+            ],
+            [
+              11,
+              5,
+              "cast"
+            ],
+            [
+              12,
+              5,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2995,
+            2996,
+            2997,
+            2998,
+            2999,
+            3000
+          ],
+          "outcome": {
+            "exiled": 5,
+            "reported_vote_total": 5.5
+          }
+        },
+        {
+          "day": 4,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            6,
+            7,
+            10,
+            12
+          ],
+          "candidate_seats": [
+            10
+          ],
+          "explicit_vote_count": 4,
+          "explicit_votes": [
+            [
+              6,
+              7,
+              "cast"
+            ],
+            [
+              7,
+              10,
+              "cast"
+            ],
+            [
+              10,
+              7,
+              "cast"
+            ],
+            [
+              12,
+              10,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3162,
+            3163,
+            3164,
+            3165,
+            3166
+          ],
+          "outcome": {
+            "exiled": 10,
+            "reported_vote_total": 2.5
+          }
+        }
+      ],
+      "conclusion": "24个日夜事件和3轮已记录票型相符：D1警长9/10各投1、1当选，D1狼自爆后无放逐票；D3、D4存活席逐票与放逐结果相符。N1狼刀4被女巫解救且毒3、死讯3/4；后续徽移交和终局拍刀顺序相符。",
+      "explicit_gaps": [],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": []
+    },
+    {
+      "sorted_dossier_index": 45,
+      "date": "2026-03-26",
+      "game_number": 2,
+      "bvid": "BV1cLX4BkETh",
+      "formal_path": "data/games/S21/2026-03-26_g02_BV1cLX4BkETh/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1cLX4BkETh/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1cLX4BkETh.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1cLX4BkETh/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 19,
+      "reviewed_ballot_count_at_report_generation": 3,
+      "python_segment_positions_read": [
+        969,
+        970,
+        971,
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        979,
+        2038,
+        2040,
+        2041,
+        2043,
+        2044,
+        2045,
+        2046,
+        2047,
+        2048,
+        2049,
+        2050,
+        2051,
+        2052,
+        2053,
+        2054,
+        2055,
+        2056,
+        2057,
+        2058,
+        2059,
+        2060,
+        2061,
+        2062,
+        2063,
+        2253,
+        2254,
+        2255,
+        2256,
+        2990,
+        2991,
+        2996,
+        2997,
+        2998,
+        2999,
+        3000,
+        3001,
+        3002,
+        3003,
+        3004,
+        3005,
+        3006,
+        3007,
+        3009,
+        3012,
+        3060,
+        3062,
+        3063,
+        3064,
+        3068,
+        3070,
+        3071,
+        3072,
+        3073,
+        3074,
+        3075,
+        3076,
+        3077,
+        3078,
+        3079,
+        3081,
+        3082,
+        3083,
+        3084
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            5,
+            7
+          ],
+          "explicit_vote_count": 4,
+          "explicit_votes": [
+            [
+              2,
+              5,
+              "cast"
+            ],
+            [
+              8,
+              7,
+              "cast"
+            ],
+            [
+              9,
+              7,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            974,
+            975,
+            976,
+            977
+          ],
+          "outcome": {
+            "elected": 7,
+            "reported_vote_total": 3
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 12,
+          "explicit_votes": [
+            [
+              1,
+              2,
+              "cast"
+            ],
+            [
+              2,
+              5,
+              "cast"
+            ],
+            [
+              3,
+              2,
+              "cast"
+            ],
+            [
+              4,
+              2,
+              "cast"
+            ],
+            [
+              5,
+              10,
+              "cast"
+            ],
+            [
+              6,
+              2,
+              "cast"
+            ],
+            [
+              7,
+              2,
+              "cast"
+            ],
+            [
+              8,
+              2,
+              "cast"
+            ],
+            [
+              9,
+              2,
+              "cast"
+            ],
+            [
+              10,
+              2,
+              "cast"
+            ],
+            [
+              11,
+              2,
+              "cast"
+            ],
+            [
+              12,
+              2,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2044,
+            2045,
+            2046,
+            2047,
+            2048,
+            2049,
+            2050,
+            2051,
+            2052,
+            2053,
+            2054,
+            2055,
+            2056,
+            2057,
+            2058
+          ],
+          "outcome": {
+            "exiled": 2,
+            "reported_vote_total": 10.5
+          }
+        },
+        {
+          "day": 2,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            3,
+            4,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 8,
+          "explicit_votes": [
+            [
+              1,
+              6,
+              "cast"
+            ],
+            [
+              4,
+              6,
+              "cast"
+            ],
+            [
+              6,
+              10,
+              "cast"
+            ],
+            [
+              7,
+              6,
+              "cast"
+            ],
+            [
+              8,
+              6,
+              "cast"
+            ],
+            [
+              10,
+              10,
+              "cast"
+            ],
+            [
+              11,
+              6,
+              "cast"
+            ],
+            [
+              12,
+              6,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2997,
+            3000,
+            3001,
+            3002,
+            3003,
+            3004,
+            3005,
+            3006
+          ],
+          "outcome": {
+            "exiled": 6,
+            "reported_vote_total": 7.5
+          }
+        }
+      ],
+      "conclusion": "19个日夜事件和3轮票的引用逐项相符；D1警长票明确2→5、8/9/11→7，报7当选但选民范围未知。D1放逐12席逐票、2出局及王子发动与否缺证据；D2票中原字幕出现“2号投给3号”（但2已出局）和随后无投票人的“投给6号”，均留缺口，不改为有效票。N2两技能互抵、夜死5/9和D2出局6相符。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "initial_signup",
+          "reason": "候选5、7号及最终警长票轮可核；未找到首次上警/警下名单和其它退水人。",
+          "segments": [
+            969,
+            971,
+            972
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "prince_skill_resolution",
+          "reason": "法官询问王子发动技能，最终仍确认2号出局；未明确记录实际发动/未发动及其效果。",
+          "segments": [
+            2061,
+            2062,
+            2063
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 2,
+          "field": "ballot_conflicting_personal_choice",
+          "reason": "首日2063已确认2号出局；次日2998却转写为“2号投给3号”，与存活状态冲突。紧接2999仅有“投给6号”且无投票人，不能据顺序补给3号。两段均不列入已核逐票。",
+          "segments": [
+            2061,
+            2062,
+            2063,
+            2998,
+            2999
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1cLX4BkETh-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        },
+        {
+          "round": 2,
+          "phase": "day",
+          "ballot_id": "BV1cLX4BkETh-ballot-03",
+          "slot": "vote_choice",
+          "actor": 3,
+          "legal_targets": [
+            1,
+            3,
+            4,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12
+          ],
+          "reason": "unresolved_recorded_vote_gap"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 46,
+      "date": "2026-03-27",
+      "game_number": 1,
+      "bvid": "BV18NXgB5E8k",
+      "formal_path": "data/games/S21/2026-03-27_g01_BV18NXgB5E8k/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV18NXgB5E8k/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV18NXgB5E8k.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV18NXgB5E8k/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 26,
+      "reviewed_ballot_count_at_report_generation": 5,
+      "python_segment_positions_read": [
+        1118,
+        1119,
+        1120,
+        1121,
+        1122,
+        1123,
+        1124,
+        1125,
+        1126,
+        2302,
+        2303,
+        2304,
+        2305,
+        2306,
+        2307,
+        2308,
+        2309,
+        2310,
+        2311,
+        2312,
+        2313,
+        2314,
+        2315,
+        2316,
+        2317,
+        2318,
+        2319,
+        2320,
+        2321,
+        2322,
+        2323,
+        2324,
+        2325,
+        2352,
+        2357,
+        2358,
+        2431,
+        2432,
+        2433,
+        2435,
+        2436,
+        2437,
+        3155,
+        3156,
+        3157,
+        3158,
+        3245,
+        3246,
+        3860,
+        3863,
+        3864,
+        3865,
+        3866,
+        3867,
+        3868,
+        3869,
+        3870,
+        3871,
+        3872,
+        3916,
+        3917,
+        3943,
+        3944,
+        3945,
+        4390,
+        4391,
+        4392,
+        4393,
+        4394,
+        4395,
+        4396,
+        4397,
+        4398,
+        4399,
+        4400,
+        4401,
+        4402,
+        4403,
+        4404,
+        4414,
+        4415,
+        4416,
+        4417,
+        4418,
+        4419,
+        4423,
+        4424,
+        4426,
+        4427,
+        4429,
+        4431,
+        4432,
+        4434,
+        4435,
+        4436,
+        4438,
+        4439,
+        4440
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            8,
+            9,
+            11,
+            12
+          ],
+          "explicit_vote_count": 3,
+          "explicit_votes": [
+            [
+              7,
+              null,
+              "abstained"
+            ],
+            [
+              1,
+              9,
+              "cast"
+            ],
+            [
+              10,
+              9,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            1124,
+            1125
+          ],
+          "outcome": {
+            "elected": 9,
+            "reported_vote_total": 2
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 12,
+          "explicit_votes": [
+            [
+              1,
+              12,
+              "cast"
+            ],
+            [
+              2,
+              9,
+              "cast"
+            ],
+            [
+              3,
+              9,
+              "cast"
+            ],
+            [
+              4,
+              9,
+              "cast"
+            ],
+            [
+              5,
+              9,
+              "cast"
+            ],
+            [
+              6,
+              9,
+              "cast"
+            ],
+            [
+              7,
+              12,
+              "cast"
+            ],
+            [
+              8,
+              9,
+              "cast"
+            ],
+            [
+              9,
+              12,
+              "cast"
+            ],
+            [
+              10,
+              12,
+              "cast"
+            ],
+            [
+              11,
+              9,
+              "cast"
+            ],
+            [
+              12,
+              9,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2308,
+            2309,
+            2310,
+            2311,
+            2312,
+            2313,
+            2314,
+            2315,
+            2316,
+            2317,
+            2318,
+            2319,
+            2320,
+            2321,
+            2322,
+            2323
+          ],
+          "outcome": {
+            "exiled": 9,
+            "reported_vote_total": 8
+          }
+        },
+        {
+          "day": 2,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            11
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 9,
+          "explicit_votes": [
+            [
+              1,
+              6,
+              "cast"
+            ],
+            [
+              2,
+              1,
+              "cast"
+            ],
+            [
+              3,
+              1,
+              "cast"
+            ],
+            [
+              4,
+              1,
+              "cast"
+            ],
+            [
+              5,
+              1,
+              "cast"
+            ],
+            [
+              6,
+              1,
+              "cast"
+            ],
+            [
+              7,
+              7,
+              "cast"
+            ],
+            [
+              8,
+              1,
+              "cast"
+            ],
+            [
+              11,
+              1,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3155,
+            3156,
+            3157
+          ],
+          "outcome": {
+            "exiled": 1,
+            "result_text": "高票出局"
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "candidate_seats": [
+            2,
+            7
+          ],
+          "explicit_vote_count": 7,
+          "explicit_votes": [
+            [
+              2,
+              7,
+              "cast"
+            ],
+            [
+              3,
+              7,
+              "cast"
+            ],
+            [
+              4,
+              7,
+              "cast"
+            ],
+            [
+              5,
+              7,
+              "cast"
+            ],
+            [
+              6,
+              2,
+              "cast"
+            ],
+            [
+              7,
+              7,
+              "cast"
+            ],
+            [
+              8,
+              2,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3864,
+            3865,
+            3866,
+            3867,
+            3868,
+            3869,
+            3870
+          ],
+          "outcome": {
+            "exiled": 7,
+            "reported_vote_total": 5
+          }
+        },
+        {
+          "day": 4,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            2,
+            3,
+            5,
+            6,
+            8
+          ],
+          "candidate_seats": [
+            2,
+            5
+          ],
+          "explicit_vote_count": 5,
+          "explicit_votes": [
+            [
+              2,
+              5,
+              "cast"
+            ],
+            [
+              3,
+              2,
+              "cast"
+            ],
+            [
+              5,
+              2,
+              "cast"
+            ],
+            [
+              6,
+              5,
+              "cast"
+            ],
+            [
+              8,
+              2,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            4395,
+            4396,
+            4397,
+            4398,
+            4399
+          ],
+          "outcome": {
+            "exiled": 2,
+            "reported_vote_total": 3,
+            "other_candidate_reported_votes": 2.5
+          }
+        }
+      ],
+      "conclusion": "26个日夜事件、5轮票型的直接引用相符：警长仅记录7弃票、1/10→9并报9当选，选民范围未知；D1全12席放逐票、D2“其余玩家投1”仅作用于当日仍存活且未点名者，D3/4票数与警徽权重下的结果一致。N3狼刀11，但次日字幕误作1；1号此前已出局，依连续夜间狼刀及旧复核记录保留11号死讯，记下文本冲突。",
+      "explicit_gaps": [],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV18NXgB5E8k-ballot-01",
+          "slot": "vote_eligibility",
+          "reason": "electorate_evidence_needed"
+        }
+      ]
+    },
+    {
+      "sorted_dossier_index": 47,
+      "date": "2026-03-27",
+      "game_number": 2,
+      "bvid": "BV1hAXgB1ECp",
+      "formal_path": "data/games/S21/2026-03-27_g02_BV1hAXgB1ECp/dossier.json",
+      "review_path": "data/extractions/S21/game_reviews/BV1hAXgB1ECp/phase.reviewed.json",
+      "phase_spec_path": "data/extractions/S21/phase_specs/BV1hAXgB1ECp.json",
+      "selected_transcript_path": "data/extractions/S21/media_evidence/BV1hAXgB1ECp/transcript.selected.json",
+      "selected_sha256_matches_review": true,
+      "primary_audit_status": "semantic_source_checked_with_declared_gaps",
+      "primary_audit_spec_sha256_matches": true,
+      "phase_event_count_read": 23,
+      "reviewed_ballot_count_at_report_generation": 4,
+      "python_segment_positions_read": [
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        979,
+        980,
+        2183,
+        2184,
+        2188,
+        2189,
+        2190,
+        2191,
+        2192,
+        2193,
+        2194,
+        2195,
+        2196,
+        2197,
+        2198,
+        2199,
+        2200,
+        2201,
+        2202,
+        2203,
+        2204,
+        2357,
+        2359,
+        3119,
+        3121,
+        3122,
+        3124,
+        3125,
+        3126,
+        3127,
+        3128,
+        3129,
+        3130,
+        3131,
+        3132,
+        3133,
+        3134,
+        3135,
+        3136,
+        3137,
+        3138,
+        3280,
+        3281,
+        3282,
+        3283,
+        3284,
+        3285,
+        3543,
+        3544,
+        3545,
+        3546,
+        3547,
+        3548,
+        3549,
+        3550,
+        3551,
+        3552,
+        3553,
+        3554,
+        3555,
+        3557,
+        3558,
+        3559,
+        3572,
+        3573,
+        3575,
+        3576,
+        3577,
+        3581,
+        3582,
+        3583,
+        3584,
+        3585,
+        3587,
+        3588,
+        3589,
+        3590,
+        3591,
+        3592,
+        3593,
+        3594,
+        3595,
+        3596
+      ],
+      "ballots_reviewed": [
+        {
+          "day": 1,
+          "type": "sheriff",
+          "stage": "initial",
+          "eligible_voters": null,
+          "candidate_seats": [
+            2,
+            7,
+            8,
+            11
+          ],
+          "explicit_vote_count": 1,
+          "explicit_votes": [
+            [
+              12,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            977
+          ],
+          "outcome": {
+            "elected": 7
+          }
+        },
+        {
+          "day": 1,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 11,
+          "explicit_votes": [
+            [
+              1,
+              5,
+              "cast"
+            ],
+            [
+              3,
+              12,
+              "cast"
+            ],
+            [
+              4,
+              5,
+              "cast"
+            ],
+            [
+              5,
+              12,
+              "cast"
+            ],
+            [
+              6,
+              12,
+              "cast"
+            ],
+            [
+              7,
+              5,
+              "cast"
+            ],
+            [
+              8,
+              12,
+              "cast"
+            ],
+            [
+              9,
+              12,
+              "cast"
+            ],
+            [
+              10,
+              12,
+              "cast"
+            ],
+            [
+              11,
+              12,
+              "cast"
+            ],
+            [
+              12,
+              5,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            2189,
+            2193,
+            2194,
+            2195,
+            2196,
+            2197,
+            2198,
+            2199,
+            2200,
+            2201,
+            2202
+          ],
+          "outcome": {
+            "exiled": 12,
+            "reported_vote_total": 8
+          }
+        },
+        {
+          "day": 2,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 10,
+          "explicit_votes": [
+            [
+              1,
+              7,
+              "cast"
+            ],
+            [
+              2,
+              1,
+              "cast"
+            ],
+            [
+              3,
+              4,
+              "cast"
+            ],
+            [
+              4,
+              5,
+              "cast"
+            ],
+            [
+              5,
+              1,
+              "cast"
+            ],
+            [
+              6,
+              1,
+              "cast"
+            ],
+            [
+              7,
+              1,
+              "cast"
+            ],
+            [
+              9,
+              4,
+              "cast"
+            ],
+            [
+              10,
+              1,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3125,
+            3126,
+            3127,
+            3128,
+            3129,
+            3130,
+            3131,
+            3132,
+            3133,
+            3134,
+            3135,
+            3136
+          ],
+          "outcome": {
+            "exiled": 1,
+            "reported_vote_total": 5.5
+          }
+        },
+        {
+          "day": 3,
+          "type": "exile",
+          "stage": "initial",
+          "eligible_voters": [
+            2,
+            4,
+            6,
+            7,
+            9,
+            10,
+            11
+          ],
+          "candidate_seats": null,
+          "explicit_vote_count": 7,
+          "explicit_votes": [
+            [
+              2,
+              7,
+              "cast"
+            ],
+            [
+              4,
+              7,
+              "cast"
+            ],
+            [
+              6,
+              7,
+              "cast"
+            ],
+            [
+              7,
+              7,
+              "cast"
+            ],
+            [
+              9,
+              6,
+              "cast"
+            ],
+            [
+              10,
+              7,
+              "cast"
+            ],
+            [
+              11,
+              7,
+              "cast"
+            ]
+          ],
+          "source_segments": [
+            3548,
+            3549,
+            3550,
+            3551,
+            3552,
+            3553,
+            3554
+          ],
+          "outcome": {
+            "exiled": 7,
+            "result_text": "高票出局"
+          }
+        }
+      ],
+      "conclusion": "23个日夜事件及4轮票的直接引用相符；D1警长仅明确12→7，投票范围未知；D1最终候选2/7/8/11但完整上警名单未知。D1放逐的座2在4367180–4369480连续出现“2号投/2号弃票哦/2号投给12号”，互相矛盾，12出局不以总票补其选择；其余票、D2/D3放逐票已按存活席引用。首夜盗宝刀目标规则未知，保持unknown。",
+      "explicit_gaps": [
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "initial_signup",
+          "reason": "只确认退水后的2/7/8/11竞选名单，未找到首次上警及其余退水名单。",
+          "segments": [
+            972,
+            973,
+            974,
+            976
+          ]
+        },
+        {
+          "phase": "day",
+          "round": 1,
+          "field": "voter_2_choice",
+          "reason": "原字幕在2号附近连续出现“2号投…/2号弃票/2号投给12号”，一人重复矛盾，票型不complete。",
+          "segments": [
+            2190,
+            2191,
+            2192,
+            2204
+          ]
+        }
+      ],
+      "rule_derivation_issues": [],
+      "non_generic_review_tasks": [
+        {
+          "round": 1,
+          "phase": "night",
+          "slot": "wolf_attack",
+          "actor": null,
+          "reason": "legacy_treasure_knife_rule_unknown",
+          "legal_targets": null
+        },
+        {
+          "round": 1,
+          "phase": "night",
+          "slot": "witch_poison",
+          "actor": 1,
+          "reason": "medicine_available",
+          "legal_targets": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ]
+        },
+        {
+          "round": 1,
+          "phase": "day",
+          "slot": "hunter_shot",
+          "actor": null,
+          "reason": "hunter_actor_unknown",
+          "legal_targets": null
+        },
+        {
+          "round": 2,
+          "phase": "night",
+          "slot": "witch_poison",
+          "actor": 1,
+          "reason": "medicine_available",
+          "legal_targets": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "round": 2,
+          "phase": "day",
+          "slot": "hunter_shot",
+          "actor": null,
+          "reason": "hunter_actor_unknown",
+          "legal_targets": null
+        },
+        {
+          "round": 3,
+          "phase": "day",
+          "slot": "hunter_shot",
+          "actor": null,
+          "reason": "hunter_actor_unknown",
+          "legal_targets": null
+        }
+      ],
+      "vote_review_tasks": [
+        {
+          "round": 1,
+          "phase": "day",
+          "ballot_id": "BV1hAXgB1ECp-ballot-02",
+          "slot": "vote_choice",
+          "actor": 2,
+          "legal_targets": null,
+          "reason": "unresolved_recorded_vote_gap"
+        }
+      ]
+    }
+  ],
+  "not_checked": "不检查12局之外的资料，不重跑ASR，不改phase spec、主审批准、正式对局/票型、数据库或网站。",
+  "followup_state": {
+    "primary_agent_reported": "主代理已补入BV1ufQkBeEYL首轮警长票、将PK后票改为stage=pk，并重建4局。",
+    "report_boundary": "本报告的人工判读依据是所列Python数组位置的源段；不将主代理后续写入视为本代理独立复核。ballots_reviewed中的结构化票行取报告生成时可读的复核文件；BV1ufQkBeEYL首轮及PK的源段已在上报修改前逐段人工核对。",
+    "post_rebuild_semantic_recheck": false
+  }
+}

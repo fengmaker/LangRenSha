@@ -83,7 +83,7 @@ def main():
                 page.screenshot(path=str(ROOT/'website/artifacts/S23-bluff-review-390.png'),full_page=True)
         context.close();browser.close()
     assert not report['browser_errors'],report['browser_errors']
-    path=ROOT/'data/reports/S23_悍跳视频交叉复核验收_20261026.json'
+    path=ROOT/'data/reports/S23/S23_悍跳视频交叉复核验收_20261026.json'
     path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False,indent=2))
 

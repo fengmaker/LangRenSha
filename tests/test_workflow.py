@@ -14,8 +14,8 @@ class WorkflowTests(unittest.TestCase):
     def registry(self, root):
         (root / "config").mkdir()
         (root / "config/seasons.json").write_text(json.dumps({"seasons": {
-            code: {"name": code, "scope_file": f"config/{code}_game_scope.json",
-                   "formal_rules_file": f"config/{code}_formal_rules.json",
+            code: {"name": code, "scope_file": "config/seasons.json",
+                   "formal_rules_file": "config/game_rules.json",
                    "bluff_entry": "scripts/build_bluff_inference.py"}
             for code in ("S01", "S02")
         }}), encoding="utf-8")
@@ -34,6 +34,19 @@ class WorkflowTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "尚无复核适配"):
                 workflow.stage_commands("review", "S01", root=root, full_season=True)
             self.assertFalse((root / "data").exists(), "Preview must not create data files")
+
+    def test_status_reads_season_reports_from_the_season_folder(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.registry(root)
+            report = root / "data/reports/S01/S01_采集进度.json"
+            report.parent.mkdir(parents=True)
+            report.write_text(json.dumps({"planned": 3, "items": []}), encoding="utf-8")
+
+            value = workflow.status("S01", root=root)
+
+            self.assertEqual(value["reports"]["采集进度"]["path"],
+                             "data/reports/S01/S01_采集进度.json")
 
     def test_collect_uses_existing_plan_and_runs_only_acquisition(self):
         with TemporaryDirectory() as temporary:
@@ -67,6 +80,30 @@ class WorkflowTests(unittest.TestCase):
             publication = next(job for job in jobs if "website.api.publish" in job)
             self.assertEqual(publication[publication.index("--seasons") + 1:][:2], ["S01", "S02"])
 
+    def test_publication_allows_unreviewed_season_and_reuses_existing_user_reviews(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.registry(root)
+            registry_path = root / "config/seasons.json"
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            del registry["seasons"]["S01"]["bluff_entry"]
+            registry_path.write_text(json.dumps(registry), encoding="utf-8")
+            for code in ("S01", "S02"):
+                folder = root / "data/games" / code / "example"
+                folder.mkdir(parents=True)
+                (folder / "dossier.json").write_text("{}", encoding="utf-8")
+            asset = root / "website/assets/bluffs/S02.json"
+            asset.parent.mkdir(parents=True)
+            asset.write_text('{"manual_review": true}', encoding="utf-8")
+
+            jobs = workflow.stage_commands("publish", "S01", root=root)
+            self.assertEqual(jobs[0][1:], ["scripts/prepare_game_rules.py", "--season", "S01", "S02", "--apply"])
+            self.assertEqual([job[1:3] for job in jobs[1:]], [["-m", "website.api.publish"]] * 2
+                             + [["-m", "website.api.publish_bluffs"]] * 2)
+            self.assertTrue(all(job[job.index("--season") + 1] == "S02"
+                                for job in jobs if "website.api.publish_bluffs" in job))
+            self.assertEqual(asset.read_text(encoding="utf-8"), '{"manual_review": true}')
+
     def test_s23_import_prepares_then_uses_the_validated_transaction_entry(self):
         jobs = workflow.stage_commands("import", "S23")
         self.assertEqual([job[1:] for job in jobs], [
@@ -93,10 +130,30 @@ class WorkflowTests(unittest.TestCase):
         ])
 
     def test_local_review_does_not_schedule_a_full_season_pipeline(self):
-        for season in ("S21", "S22", "S23"):
+        for season in ("S21", "S22"):
             with self.subTest(season=season):
                 with self.assertRaisesRegex(ValueError, "局部复核"):
                     workflow.stage_commands("review", season, bvid="BV1234567890")
+
+    def test_s23_local_review_limits_the_game_checks_and_evidence_fields(self):
+        jobs = workflow.stage_commands('review', 'S23', bvid='BVfixture',
+                                       checks=['structure', 'evidence'], fields=['seats[7].name'])
+        self.assertEqual(len(jobs), 1)
+        self.assertEqual(jobs[0][1:8], ['scripts/check_s23_game.py', '--bvid', 'BVfixture',
+                                       '--checks', 'structure', 'evidence', '--field'])
+        self.assertIn('seats[7].name', jobs[0])
+        self.assertEqual(jobs[0][jobs[0].index('--output') + 1],
+                         'data/reports/S23/S23_局部复核_BVfixture.json')
+        self.assertFalse(any('build_s23_review.py' in value for job in jobs for value in job))
+
+    def test_s23_local_import_prepares_only_the_selected_game_and_keeps_full_acceptance_explicit(self):
+        jobs = workflow.stage_commands('import', 'S23', bvid='BVfixture')
+        self.assertEqual([job[1:] for job in jobs], [
+            ['scripts/backup_database.py'],
+            ['scripts/build_s23_review.py', '--bvid', 'BVfixture', '--require-complete'],
+            ['scripts/import_s23_formal.py', '--prepare', '--bvid', 'BVfixture'],
+            ['scripts/import_s23_formal.py', '--import-db', '--bvid', 'BVfixture'],
+        ])
 
     def test_explicit_full_season_review_keeps_existing_checks(self):
         s22 = workflow.stage_commands("review", "S22", full_season=True)

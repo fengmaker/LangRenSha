@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmP/transcript.selected.json",
     "selected_sha256": "19b907910d7fc9e0928841d865d9228fde0a38c23bdfdf19d7b79841d3115a74",
@@ -854,6 +854,38 @@
           "time_kind": "evidence_location_not_actual_event_time"
         }
       ]
+    },
+    {
+      "event_id": "BV1MfQkBeEmP-event-025",
+      "phase": "day",
+      "round": 3,
+      "action": "no_exile",
+      "actor": null,
+      "actor_physical_role": null,
+      "targets": [],
+      "actual_targets": null,
+      "state": "performed",
+      "status": "unique_deduction",
+      "result": "本日未举行放逐投票。",
+      "details": {},
+      "note": "依据连续终局/转夜程序及本轮无放逐票型核对：第三日复盘确认终局发生在放逐投票前。",
+      "evidence": [
+        {
+          "kind": "literal_transcript",
+          "source_path": "data/extractions/S21/media_evidence/BV1MfQkBeEmP/transcript.selected.json",
+          "source_sha256": "19b907910d7fc9e0928841d865d9228fde0a38c23bdfdf19d7b79841d3115a74",
+          "original_source_path": "data/seasons/S21/第05周_正赛第04期/2026-03-24/2026-03-24_S21_第05周_正赛第04期_第02局_假面舞会__BV1MfQkBeEmP_P01_CID36949855741.本地全文轻校对_funasr.json",
+          "original_source_sha256": "2004733691ab6ae26fc5d07e8a1d8d6c7b0001685455d1f9826a1749e5ea6714",
+          "source_segment_indices": [
+            2225,
+            2226
+          ],
+          "start_ms": 4163990,
+          "end_ms": 4169885,
+          "quote": "一号平民第三天白天最后一张狼人十二号假面选择招牌，\n游戏结束好人阵营获胜。",
+          "time_kind": "evidence_location_not_actual_event_time"
+        }
+      ]
     }
   ],
   "ballots": [
@@ -1021,7 +1053,7 @@
     "status": "reviewed_with_explicit_gaps"
   },
   "primary_audit": {
-    "spec_sha256": "a5b72978c8bfd9691e1e15fdde3d032e5928c39c0386d03a64ed8067e0161512",
+    "spec_sha256": "65fa0915fa7edf6b1609bb87afe6a17a8984386eb68ad1dc3e9f9bf3d603aa63",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1031,6 +1063,14 @@
       "delegated_ballot_review_assessed",
       "original_text_preserved"
     ],
-    "gaps_retained": 1
+    "gaps_retained": 1,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-012"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

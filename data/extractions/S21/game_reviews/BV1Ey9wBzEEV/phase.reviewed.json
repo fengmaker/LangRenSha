@@ -16,7 +16,7 @@
     "public_role_claims"
   ],
   "review_status": "assistant_reviewed_with_explicit_limits",
-  "reviewer": "codex_luna_phase_review",
+  "reviewer": "codex_primary",
   "source": {
     "selected_path": "data/extractions/S21/media_evidence/BV1Ey9wBzEEV/transcript.selected.json",
     "selected_sha256": "033d09fbe3ff0b6dbf457482156d618c3288cff570df2db75e3e69e7610e8e3f",
@@ -102,28 +102,17 @@
       "phase": "night",
       "round": 1,
       "action": "save",
-      "actor": 7,
-      "actor_physical_role": "守卫",
+      "actor": 1,
+      "actor_physical_role": "女巫",
       "targets": [
         9
       ],
       "actual_targets": null,
       "state": "performed",
-      "status": "text_explicit",
-      "result": "傀儡女巫救起9号，形成平安夜。",
-      "details": {
-        "effective_role": "女巫",
-        "transformation": "傀儡女巫",
-        "form_evidence_indices": [
-          2446,
-          2447,
-          2449,
-          2450,
-          2451,
-          2452
-        ]
-      },
-      "note": "连续复盘先说“傀儡为7号/原本守卫牌”，再说“选择了7号”及“傀儡女巫”，随后明确解救9号；物理底牌仍为守卫。",
+      "status": "unique_deduction",
+      "result": "女巫1号解救9号，形成平安夜。",
+      "details": {},
+      "note": "2446–2453连续复盘先说明7号是傀儡、原本守卫牌，随后说选择7号为傀儡并由女巫解救9号；底牌确认唯一女巫为1号，因此救9行动者唯一是1号。7号身份与傀儡关系均不改。",
       "evidence": [
         {
           "kind": "literal_transcript",
@@ -1546,7 +1535,7 @@
     "status": "reviewed_explicit_events"
   },
   "primary_audit": {
-    "spec_sha256": "acdfef5e7a30f8b2f3f710e89e0d8bda61821ec53f12d912ffbf7aa792ae0034",
+    "spec_sha256": "3587075c0eda67e56e227ead36f6d6471c76d2bfb923de787ee605f7517fd19f",
     "reviewer": "codex_primary",
     "status": "semantic_source_checked_with_declared_gaps",
     "checks": [
@@ -1557,6 +1546,14 @@
       "actual_death_and_announcement_distinguished",
       "no_bluff_judgement"
     ],
-    "gaps_retained": 0
+    "gaps_retained": 0,
+    "deep_day_night_review": {
+      "report": "data/reports/shared/日夜深度复核_S21_20261029.json",
+      "report_sha256": "4ad9227ff3ecbdec1ff2139f92e1a72cb843b9190b498feaf117c6baf878088f",
+      "item_ids": [
+        "DN-109"
+      ],
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
   }
 }

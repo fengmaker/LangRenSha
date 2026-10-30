@@ -26,7 +26,9 @@ def _preflight(root: Path, season: str | list[str], sample: str | None) -> dict:
     rounds = ballots = votes = seats = 0
     for item in entries:
         doc = publisher._public_game(item["dossier"], item["voting"], item["endgame"], item["audit"],
-                                     item["board"], identities)
+                                     item["board"], identities,
+                                     source_voting=item.get("source_voting"),
+                                     derivations=item.get("derivations"))
         rounds += doc["round_count"]
         ballots += doc["ballot_count"]
         votes += sum(len(ballot["votes"]) for ballot in doc["voting"]["ballots"])

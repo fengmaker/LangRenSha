@@ -18,7 +18,8 @@ def published_game(season: str, bvid: str) -> tuple[dict, dict]:
     item = next(entry for entry in entries if entry["bvid"] == bvid)
     person_ids = {seat["name"]: seat["name"] for seat in item["dossier"]["seats"]}
     public = publisher._public_game(
-        item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"], person_ids
+        item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"], person_ids,
+        source_voting=item.get("source_voting"), derivations=item.get("derivations"),
     )
     return item, public
 
@@ -88,6 +89,7 @@ def test_all_nine_s22_audited_night_terminals_hide_the_next_day():
         public = publisher._public_game(
             item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"],
             {seat["name"]: seat["name"] for seat in item["dossier"]["seats"]},
+            source_voting=item.get("source_voting"), derivations=item.get("derivations"),
         )
         final_round = public["terminal_observation"]["round"]
         assert next(row for row in public["rounds"] if row["number"] == final_round)["day"] == []
@@ -189,7 +191,8 @@ def test_terminal_vote_clipping_preserves_unknown_day_and_rejects_recorded_after
         voting[collection].append(row)
         with pytest.raises(publisher.PublishError, match="终局边界之后"):
             publisher._public_game(
-                item["dossier"], voting, item["endgame"], None, item["board"], identities
+                item["dossier"], voting, item["endgame"], None, item["board"], identities,
+                source_voting=item.get("source_voting"), derivations=item.get("derivations"),
             )
 
 

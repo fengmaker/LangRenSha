@@ -1,0 +1,1802 @@
+{
+  "schema_version": 1,
+  "migrated_on": "2026-10-29",
+  "comparison": "All 345 reports were recomputed read-only. Every field except rule_sources was identical. Only rule_sources was migrated.",
+  "previous_rule_sources": {
+    "config/game_rules.json": "fc94402122ef6defcfe414cc99d6401aac3986ff38f0b220f4eb5985e2f62f6d",
+    "config/S22_formal_rules.json": "a2d92ca820ba5709320577a79d564ee3398d86019399af6d084fbda6d117726a",
+    "config/S23_formal_rules.json": "52ec60d62132b7881a798dce0e15073515d437d9041bf0587a937f072f5f8955",
+    "config/S23_review_rules.json": "9cd9e559a478202d62878072ee77806fe284af1b31be02575d26b85aef31e7b4",
+    "config/board_templates/all_in.json": "531fea63ab0a657c1ce3611d654352f5e6440a06e8da15df9e5e8c8ec6d0d4d7",
+    "config/board_templates/black_wolf_king_knight.json": "6af92bc57d68525080724bf37c8a5a9f9e9e03d50140806b67b68e728dc92016",
+    "config/board_templates/four_wolves_eight_hunters.json": "f5aa2b7d64ad296b76904bdc62470c0bebfe38d5a9ec4a1e5c91754996d7fe70",
+    "config/board_templates/ghost_bride.json": "0098882ac958a5e11d837f32ff4c5767ecfaa63a1dc6ac053bd629a1736f2e5d",
+    "config/board_templates/guile_realm.json": "12859cdade494e59b29c88aecb12e3fb4b6b035b28d22ff0d7ead04726d9641a",
+    "config/board_templates/masquerade.json": "7f914682762dfc0d12e7cd95977315d3944d7c0e2e871396718a40143d99e1ef",
+    "config/board_templates/mechanical_wolf_seer.json": "0cd9a72f44c4a0cca4bc9351c05b4c6c7a119480ebc69586f73349d889f12fa5",
+    "config/board_templates/mixed_blood.json": "9142e2961c3177fd6207cf4f69c63244b07a4745c9c3a520cd4e327fbb01865b",
+    "config/board_templates/neighbor_puppet.json": "788190a6b9d35e3e5ed6d06ff6875dfaffbf52ddaad3afaef99a355893194f84",
+    "config/board_templates/s21_all_in.json": "3db649c1430b59321dec3d3dbed86105b2fcf44423667c45bcab8261b65d99f1",
+    "config/board_templates/s21_guile_realm.json": "03d730f31601bfda2747a2408338bc31cf8e7fa43f7efbed71a6801d7aff92f0",
+    "config/board_templates/s21_masquerade.json": "29074aeb3b05b148dc8be0e921fe251444a7338bd906a8d9264e3ccf0b01876c",
+    "config/board_templates/s21_mechanical_wolf_seer.json": "dc6ea852672cce3a38a90faaced40c2d3bc09a91e70528c38bf26a49d56ac524",
+    "config/board_templates/s21_neighbor_puppet.json": "7ec767da15f119e59faa63a0aef763784fa9b70ac5ef430612c642b5df49fd05",
+    "config/board_templates/s21_seer_witch_hunter_white_mixed.json": "4424f7c60e807bd720a799dce0e5469cc435beab228ef04191cb086dd483f51b",
+    "config/board_templates/s21_treasure_master.json": "b43aee489a8450eda55b06d302653b9f97b861bd964a09fee200126b75c77d8b",
+    "config/board_templates/s21_wolf_king_guard.json": "28b9c83258df74d3479152e4d854d400d55152358214c80db0d80f3d2c70b278",
+    "config/board_templates/s23_guile_realm.json": "359e650ff24e24bb0e7f172fd51df61af8aa37c18f47205811915ce19f2867db",
+    "config/board_templates/s23_magic_duel.json": "9f3bc62c4a10447b5bc08f33c4aae6f3028e6c235e7fd5f6db78b51bf125de67",
+    "config/board_templates/s23_masquerade.json": "56680a5d513f3ddfd3dd87407960e06160bc90bc1f62ec57a83a4eb93e9294d0",
+    "config/board_templates/s23_mechanical_wolf_seer.json": "a90d5104fd5a51588823e6b9418862f99dfabf1e3df09a743627505808a89591",
+    "config/board_templates/s23_mixed_blood.json": "dbe586a0321886b0db16d2bde7e8748811101b78d996505f973d115292d08237",
+    "config/board_templates/s23_qingqiu_night.json": "f1d7047ef24394aa39563b1c3666ba4a7b8df6c2e5fb6b6b9b0303a49bd9b4d9",
+    "config/board_templates/s23_treasure_master.json": "7511ba8bbe881fc2cb23c9f709e6e4ebf81ba93b77bcbbb742e3f509bb7414fc",
+    "config/board_templates/seer_witch_hunter_white.json": "0d1dc941b1e8440d3b04b57b45000db5ad25cd3c4dcec7c1d4131579b6bca6a0",
+    "config/board_templates/treasure_master.json": "3170c18e2b6314f597f8254278b219ee9b178a2fe5b9a767492d0293edb91759",
+    "config/board_templates/wolf_king_guard.json": "ea741fb173f2ae4063963d32f1f00d0b80272fd44c4b008c50a353202d983d23",
+    "config/board_templates/wolf_king_knight.json": "cdf25153ffc08f9163d29fa71a99ee0a5076154f6d32d638445864c8fc20116f",
+    "scripts/game_derivations.py": "9fc605765ac3329abd91b8775afcbf65f869e99eedddaefef7f0e68919a9c662",
+    "scripts/role_constraints.py": "7dbeecd964582db3d668d066d5ddb6d9f8902b2eef3acf3cfdb733ff73724ac0",
+    "scripts/board_outcomes.py": "451dbde4a3264441dfab412dd05cfa13faea4b217139d11cfe9d8633cbd9f685",
+    "scripts/game_inference.py": "6d0bb888fb9ead8bc0e1245c16a97da16b429cdf82e6c2ab33a24c3d81d3d567",
+    "scripts/sheriff_speech_evidence.py": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a",
+    "scripts/voting_records.py": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+  },
+  "current_rule_sources": {
+    "config/game_rules.json": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237",
+    "config/seasons.json": "0873b0f64fafe56053e6bb477a6939051a2f0fe151d60d3bde80cfc050580a2c",
+    "config/board_templates/all_in.json": "92a2f0bbf3ad6d5f432ee1e67a152edf647afd63b5e626af674f62a4bce35f69",
+    "config/board_templates/black_wolf_king_knight.json": "6af92bc57d68525080724bf37c8a5a9f9e9e03d50140806b67b68e728dc92016",
+    "config/board_templates/four_wolves_eight_hunters.json": "f5aa2b7d64ad296b76904bdc62470c0bebfe38d5a9ec4a1e5c91754996d7fe70",
+    "config/board_templates/ghost_bride.json": "0098882ac958a5e11d837f32ff4c5767ecfaa63a1dc6ac053bd629a1736f2e5d",
+    "config/board_templates/guile_realm.json": "89fa800c767606f0323bbaa29b9854880687e4b5b6a019beb6475d0cd39c8d3d",
+    "config/board_templates/magic_duel.json": "322766bd67a166bfb0b200026d13cedede5f6f3f3f840334fc2b7025e3e6640d",
+    "config/board_templates/masquerade.json": "acd1a4a475a2e1aa848e58f31691b688596bd8f906ed3d2f8283ab1601fe8072",
+    "config/board_templates/mechanical_wolf_seer.json": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85",
+    "config/board_templates/mixed_blood.json": "7343e61ac95d67fa1ad8ff0170f8a6bcb46b6a1b8afd92b7e78b88505d91ba13",
+    "config/board_templates/neighbor_puppet.json": "93b0065923e394eeec4963e2164da6068168716cbe6269a2c3c40eb8a07fb697",
+    "config/board_templates/qingqiu_night.json": "b75c44d23124b1a1a3cb6f11f507ea639959ddb546c0b81afefb3d8f4b08bda6",
+    "config/board_templates/seer_witch_hunter_white.json": "0d1dc941b1e8440d3b04b57b45000db5ad25cd3c4dcec7c1d4131579b6bca6a0",
+    "config/board_templates/treasure_master.json": "d7cdc835a5ad65820e112f0742acc99ddecbc335531ffe88a1f32ba247a9880a",
+    "config/board_templates/wolf_king_guard.json": "f5b5e442b88bbbe598d7915b41e58faaf82241ad094b85fdd4220a6207750717",
+    "config/board_templates/wolf_king_knight.json": "cdf25153ffc08f9163d29fa71a99ee0a5076154f6d32d638445864c8fc20116f",
+    "scripts/game_derivations.py": "44418b216af532d9cc0faffb31627782427513c663d450a77036f9c8c459e20b",
+    "scripts/role_constraints.py": "7dbeecd964582db3d668d066d5ddb6d9f8902b2eef3acf3cfdb733ff73724ac0",
+    "scripts/board_outcomes.py": "451dbde4a3264441dfab412dd05cfa13faea4b217139d11cfe9d8633cbd9f685",
+    "scripts/game_inference.py": "6d0bb888fb9ead8bc0e1245c16a97da16b429cdf82e6c2ab33a24c3d81d3d567",
+    "scripts/sheriff_speech_evidence.py": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a",
+    "scripts/voting_records.py": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f",
+    "scripts/board_config.py": "ffaaa130ab80b5b054746015e4604fa4632515c23c46e2fe2254a33a93b3fd26",
+    "scripts/rule_config.py": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f",
+    "scripts/season_config.py": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+  },
+  "files": [
+    {
+      "path": "data/games/S21/2026-03-03_g01_BV1juPwzfEj5/rule_derivations.json",
+      "before_sha256": "9fd3a8c54ab68be48389677aed3ccbe77f952581b310e8a9dbd83c5914816a1b",
+      "after_sha256": "0a37192c6765fd4ca7634193c308f6d5399f4a7b72b0668adff93d50cdba0722"
+    },
+    {
+      "path": "data/games/S21/2026-03-03_g02_BV1juPwzfEQL/rule_derivations.json",
+      "before_sha256": "91cafcb222d511c05333238a70d4c36a421ed7a1b4bf6c0fa36eb84d1267946e",
+      "after_sha256": "755a238efe0a52891fff56d5431d733948ae2b3fa7d88414b325bf8acb541aab"
+    },
+    {
+      "path": "data/games/S21/2026-03-03_g03_BV1juPwzfEgi/rule_derivations.json",
+      "before_sha256": "5fdf898a8fa7b1c6b839c1d728bb2be54882f0feed57a161c467c0f1fb399a14",
+      "after_sha256": "ab20ccc851893aa6f72e57f2a3aa66c51908298f2a49966d721f7a5b4c7d2860"
+    },
+    {
+      "path": "data/games/S21/2026-03-03_g04_BV1nwPwzeEWx/rule_derivations.json",
+      "before_sha256": "681e7793bae22cce9c95e1e998d6fefcd4ed318ea80f82b9078bad7882b07a46",
+      "after_sha256": "1341b888fdccf969793fc8b6e54dc16c169115f4f2cf35f37a362af95019f701"
+    },
+    {
+      "path": "data/games/S21/2026-03-04_g01_BV1SMPqzjExw/rule_derivations.json",
+      "before_sha256": "2c2e45e76ea1370b4c7fb3ae4a9e175d8e05499df4ff3ed87c85c503eae6087f",
+      "after_sha256": "7cde3c30966da2cbf83d6f2a6b530d9694cd58787a8989cbde1271b5e4d7496e"
+    },
+    {
+      "path": "data/games/S21/2026-03-04_g02_BV1SMPqzjEe6/rule_derivations.json",
+      "before_sha256": "289a8b6bcad487e6f78f2b01b91a7108958f0adec4269e40eb8b63354405c133",
+      "after_sha256": "7dc42630b1e39ed1a13f0229e8c762f640921136a1e1b0925a5d4d3be8d18ccf"
+    },
+    {
+      "path": "data/games/S21/2026-03-04_g03_BV1UMPqzjEvH/rule_derivations.json",
+      "before_sha256": "63f6c145dbb6d0be67b4e267bac9acd0f64964a4bc05f6b86426a9d46f963d45",
+      "after_sha256": "9582a06eb31f6e0d55b0e3456b35e680f7f2798138e39c808dd54badb6c0cf4b"
+    },
+    {
+      "path": "data/games/S21/2026-03-05_g01_BV14UPyzAEhn/rule_derivations.json",
+      "before_sha256": "d7948af1c69865c9c72963fbc0423512c548343b3755331fa52bb8c73e693421",
+      "after_sha256": "9a27178e98eff5228ccea6dd2d516cc2f4d1e64cc2205f1c3cbc81dedea66272"
+    },
+    {
+      "path": "data/games/S21/2026-03-05_g02_BV1TUPyzAEwW/rule_derivations.json",
+      "before_sha256": "db247e079fd048efd80b83933828bcc37ca93d9f9dd3283792054224c1971a9b",
+      "after_sha256": "793b7d550807c0d7154c9bb25d68c71c7dc783c2fc824f898101892f077bc96d"
+    },
+    {
+      "path": "data/games/S21/2026-03-05_g03_BV1KUPyzAETp/rule_derivations.json",
+      "before_sha256": "80f17f6f327ea138e95d736dee1a032169797e6baa120b79a3a3532e23ee3fc6",
+      "after_sha256": "25c6e90ffc5048404371789a13631203d2f18f92fc4f507273fed81e26acaa06"
+    },
+    {
+      "path": "data/games/S21/2026-03-06_g01_BV1MMPxzmEps/rule_derivations.json",
+      "before_sha256": "842125d4a8a9aae35ddf578bd466cba2f193bf22e250a5f75deec3c356697b84",
+      "after_sha256": "2666a8785a184d330c04d557b2b8d98f83847f4a22cddf6ac5fe3fe563fc4d79"
+    },
+    {
+      "path": "data/games/S21/2026-03-06_g02_BV1MMPxzmEWJ/rule_derivations.json",
+      "before_sha256": "190da9eda36c58022557215fc9e44a257f625f608e7f795cb951cf4933029110",
+      "after_sha256": "c95bd118f96a0090a857d901253cfcccaa9f60bda79fb97b6d653eda7358a9b9"
+    },
+    {
+      "path": "data/games/S21/2026-03-06_g03_BV1uMPxzmEtV/rule_derivations.json",
+      "before_sha256": "110ff9391447dfca34bef97ce7ca7688851b73eaa1b92cd07d8dd6eae107b78f",
+      "after_sha256": "44cbad462cff21dc1d47188b3204e4bb87235dde9bfbb469320a0da303c0f738"
+    },
+    {
+      "path": "data/games/S21/2026-03-10_g01_BV1Vsc9zfEJv/rule_derivations.json",
+      "before_sha256": "4740b4bbe6cb0650eb3bc9829c47b181ad355fe111918431df55e4d207d82daf",
+      "after_sha256": "4b9666e5a0518f6992f8604615eeb1869759d887feb24889706fe04c2f6549c8"
+    },
+    {
+      "path": "data/games/S21/2026-03-10_g02_BV1Gsc9zfEmb/rule_derivations.json",
+      "before_sha256": "6c26fa3f149ea941124b4e71d13c8315db4f875114ee6f3928723a0c515dadef",
+      "after_sha256": "2e14af129ae7e5c44ff4f7c0feb6d1f5aa72b6fb74185ef65d1ec06cf9ed4c63"
+    },
+    {
+      "path": "data/games/S21/2026-03-10_g03_BV1Vsc9zfEJt/rule_derivations.json",
+      "before_sha256": "da19380268ee22d0dc962033c4ed3f339ebde5b49e2107810a8b5c9576cf2b8b",
+      "after_sha256": "204cc1e9c22dee1643a9cba2d06adc5ce7ab7acd74120c1cf770f8a2d0198782"
+    },
+    {
+      "path": "data/games/S21/2026-03-11_g01_BV1ZGwAzZEny/rule_derivations.json",
+      "before_sha256": "90fce16a43bd78325c575d48a59235f7945018a39e87d3f8fe9792b3321dd3ec",
+      "after_sha256": "988797fba257cb33bc2694dbc28cc0e07b78b295fa8e2b4b0b4a45b993133643"
+    },
+    {
+      "path": "data/games/S21/2026-03-11_g03_BV1oGwAzZEXf/rule_derivations.json",
+      "before_sha256": "2801a7c7c2a4905cd19f35ecd0c0bfadb34cc4dca9aafe370e2f8bec9fb742e6",
+      "after_sha256": "630cd12ccc325670a76e37f0dae2f86f11932daff34dcb4bc10b8f7d64027d32"
+    },
+    {
+      "path": "data/games/S21/2026-03-11_gunknown_BV1oGwAzZEyW/rule_derivations.json",
+      "before_sha256": "00430badd13909157958294b0b8cc2fab27b11086b96a098c8ef6e44458ffd3d",
+      "after_sha256": "aa048e0abfa67e38de5911c62bda1e56ddba59cf5a02decdee586cb0cf21f018"
+    },
+    {
+      "path": "data/games/S21/2026-03-12_g01_BV1FacCz5EyR/rule_derivations.json",
+      "before_sha256": "a9accb23dec1c02413118d63aee1c52b44ab1778d48b293a6bf39fd872987cf2",
+      "after_sha256": "ed7654412c4ea113293370eb4bd081fc5d0390861186d196eb9fc027a99f8091"
+    },
+    {
+      "path": "data/games/S21/2026-03-12_g02_BV1nacCz5EDV/rule_derivations.json",
+      "before_sha256": "6620eac89656788b0a0a79525abd4a88421c4b403a66ba2358390e5cb533bbae",
+      "after_sha256": "a45771ee04e67d825f7088a6252b22f2578186f6a9f6787914e25a851160a6a6"
+    },
+    {
+      "path": "data/games/S21/2026-03-12_g03_BV1FacCz5E9e/rule_derivations.json",
+      "before_sha256": "5ee2b8b4b00f5f59dd879bc9e15ccf83d6ac235d9a01888a40a03e462fac8fd6",
+      "after_sha256": "ff76a413623e3ee141ae3edf0af743fd74ee5717b10f51b0f0d77c1bf63d9da6"
+    },
+    {
+      "path": "data/games/S21/2026-03-12_g04_BV1HacCz5EMk/rule_derivations.json",
+      "before_sha256": "37229244955756b606ac7b8423f80b2368d7d751d4d58813864e29770280a0ea",
+      "after_sha256": "fdd4f755c25572999782a600184ba26d6be5d37af6a54a654f63f3c7024f2891"
+    },
+    {
+      "path": "data/games/S21/2026-03-13_g01_BV1XawEzcEGc/rule_derivations.json",
+      "before_sha256": "debd8a6d1cae35016ffb71347e406f1d4c22088ba86c601c489c698a7ec07f21",
+      "after_sha256": "3213ec2c39b97873645b5792ad82e76a499a58d6b5a17a96c8b8f16f4856209a"
+    },
+    {
+      "path": "data/games/S21/2026-03-13_g02_BV1aawEzcEeP/rule_derivations.json",
+      "before_sha256": "cef2a5747222bda5dd130c077d08f9583ceac59b15483c8bea6f6eda668153b6",
+      "after_sha256": "dc8105fc6528bca94c64709fe2c89ffabd18a5d7d88d6a3fa49b3436e516abe6"
+    },
+    {
+      "path": "data/games/S21/2026-03-13_g03_BV1aawEzcEeM/rule_derivations.json",
+      "before_sha256": "c62ae0958d1d67a35d16afe52863098562eba97965bb35030c69b587e7fc66dc",
+      "after_sha256": "c14900b35d9b7a1635d9c08aa75e2ce52e7b8c99602293808de87aabe8d5cc6c"
+    },
+    {
+      "path": "data/games/S21/2026-03-17_g01_BV1Xdw9zhEsh/rule_derivations.json",
+      "before_sha256": "c218d46bb382b0f08427a58c81861efbc1ffc8351630826d580bb9ae9d9095e3",
+      "after_sha256": "9aa65824c946794ffc3e1e31cb4390b3e3936daaf81472eb900e42c89e59d837"
+    },
+    {
+      "path": "data/games/S21/2026-03-17_g02_BV1LUw9zTEZT/rule_derivations.json",
+      "before_sha256": "caccf6ef298f188be6425bef81e733f9cf7113d042a83dbcd5ab9b913da35771",
+      "after_sha256": "a7f5db77299a71cd09739b2253fc4ac563c1ecec223cfc97be8180127c73f131"
+    },
+    {
+      "path": "data/games/S21/2026-03-17_g03_BV1dUw9zKExP/rule_derivations.json",
+      "before_sha256": "6cd58f2d5f87805d574d4def1bb5a5ed4aa85d1adf7a8fa9b165146ed1a46ac9",
+      "after_sha256": "083c74e3422f0e65df71101be00310655a04867d7211dbd242f52d90cbd27d8e"
+    },
+    {
+      "path": "data/games/S21/2026-03-18_g01_BV1U5wBz5EEs/rule_derivations.json",
+      "before_sha256": "b4a45c594c800e9eb63859e33ce4aec903a097ad6442ed20276d2ce9882fe969",
+      "after_sha256": "6251e31091000adc7ff0891f4a0be4ca2c17fd0d835eb9a03e675614e9b17eb8"
+    },
+    {
+      "path": "data/games/S21/2026-03-18_g02_BV1b5wBz5E6T/rule_derivations.json",
+      "before_sha256": "c68827ec6e7fe081e526485aae27ce510a0e857a2ba4ccdaf336c4b19f1b8ec5",
+      "after_sha256": "14b779d29a5d45bc7dda36b7dcd515365d3d2b853635bc9b570d9e6156439568"
+    },
+    {
+      "path": "data/games/S21/2026-03-18_g03_BV1b5wBz5Exk/rule_derivations.json",
+      "before_sha256": "12fcb17c5b13b5e29994557c67f86ed5fc9c89527f76d59dc34f295149f45684",
+      "after_sha256": "e365b33f597c7ed23868617fd9d0354d21f55eb63753c6cc61c505ce1b7f809b"
+    },
+    {
+      "path": "data/games/S21/2026-03-19_g01_BV1w3AVzPEZM/rule_derivations.json",
+      "before_sha256": "1d5ac8392e2491d5c51b64d5034f3b7f69fa9389f312f3ed588c98b084af04b0",
+      "after_sha256": "14ea09c618c55081d622a3c1d87afdf194eb91349eac00ce52ca7b9afb743320"
+    },
+    {
+      "path": "data/games/S21/2026-03-19_g02_BV1w3AVzPEAL/rule_derivations.json",
+      "before_sha256": "2d7a4c6484c56736ae9d59b4a0f647f704f6029b65f1d0b85ac16cfe35ac6fac",
+      "after_sha256": "dc8830c3014726fb6f25aa84fbcfbfa9419e323cbcd502df37dcf7b6520e1d67"
+    },
+    {
+      "path": "data/games/S21/2026-03-19_g03_BV1w3AVzPE3R/rule_derivations.json",
+      "before_sha256": "2f2f5e03024a9b8c10839da0379e33c8feb5794c73ec3edc780a04def24a8133",
+      "after_sha256": "6cc4b89a998a69c976ae205f07bc99987dc784651db8da023427561397322c77"
+    },
+    {
+      "path": "data/games/S21/2026-03-20_g01_BV1XyAHzkE9U/rule_derivations.json",
+      "before_sha256": "6422f805749921b3551f292f38a40d9accf4d464b282f80b35ee3f030c31a91c",
+      "after_sha256": "9d016b826d3ed52fb67dc093ec0c7fefe4957c47a9b5dbd0595b5f3f797147c1"
+    },
+    {
+      "path": "data/games/S21/2026-03-20_g02_BV1VyAHzCENA/rule_derivations.json",
+      "before_sha256": "49b464cc35c1362cea57c4f229b83fa7c25910e930e915a69b7c1af00360c50e",
+      "after_sha256": "b6a12da575969175eb7b900bcb782b2c3f392a13219128ac80d11a42531a6692"
+    },
+    {
+      "path": "data/games/S21/2026-03-20_g03_BV1XyAHzkE1w/rule_derivations.json",
+      "before_sha256": "cd69307214204bf60658c8773fff4586f6283d0009ca6a0f2f37c0f023b647ff",
+      "after_sha256": "0e4bb0f76e441bb1f3c92661ad370d2b485ac280084ba9cf9a3c92be8d946740"
+    },
+    {
+      "path": "data/games/S21/2026-03-24_g01_BV1ufQkBeEYL/rule_derivations.json",
+      "before_sha256": "499a63c117af96b91e7acd3beeedf68f3794a103ba0f805760c8d8d7572ee32e",
+      "after_sha256": "e59708e5be99baf16afe833ec23710bde24370e81ce6e5f2b21fe75fb3963720"
+    },
+    {
+      "path": "data/games/S21/2026-03-24_g02_BV1MfQkBeEmP/rule_derivations.json",
+      "before_sha256": "9b6ef843a3d2088c1df7c8b31f560f24968fa7556602b937499d05536a3cd6a1",
+      "after_sha256": "b064b73763ff4742484cde3682835af10c7039e7ad455b79b6deccbe064b5a63"
+    },
+    {
+      "path": "data/games/S21/2026-03-24_g03_BV1MfQkBeEmg/rule_derivations.json",
+      "before_sha256": "95247590758d24837790575faf0d4d2014eab016390b18bfadcf4ca217863f95",
+      "after_sha256": "8bbb6299868a8c2f3ae440c9dbbcfc6b6848b64f3e9101cecbb3635c13eb6a5b"
+    },
+    {
+      "path": "data/games/S21/2026-03-25_g01_BV1roX7BQEfa/rule_derivations.json",
+      "before_sha256": "ff64ce64dd4ac8783f0c53226565b6d2f1009f46c4282d20757e848cc2dfeaef",
+      "after_sha256": "da503d1976fad7d4c448ad00db0afecf4faad3f87aa263bb57f7c24217d1132d"
+    },
+    {
+      "path": "data/games/S21/2026-03-25_g02_BV1roX7BQE1n/rule_derivations.json",
+      "before_sha256": "a0f815af1b99ee514813922a543b5716ebeb73278426101683dab74bdd440683",
+      "after_sha256": "48b69aaca6dfaff8fd116b44c768005b38a24ccc0163d3de242dff3630438305"
+    },
+    {
+      "path": "data/games/S21/2026-03-25_g03_BV1roX7BQEau/rule_derivations.json",
+      "before_sha256": "e1428d1ae6e5206f242f9bb8012417bee6d1711e7c93123e4f72344095e29fa5",
+      "after_sha256": "7ae9cdfc634b99c790a1734c79499de1df4c18dfd4e8ed649534b8dea5794d7f"
+    },
+    {
+      "path": "data/games/S21/2026-03-26_g01_BV1udXxBxEX7/rule_derivations.json",
+      "before_sha256": "de88008eab4091ee8b74e34330fde85dcc5fa35a415aca6d33a5a5b1a6914c8c",
+      "after_sha256": "81424ec3dad26fe95111ea24f27082940fdad21433d537c8633d479adc64c4f1"
+    },
+    {
+      "path": "data/games/S21/2026-03-26_g02_BV1cLX4BkETh/rule_derivations.json",
+      "before_sha256": "bbb55935cb7f4ce6adcdb2071598bca606089b8489573e82d558b94fa4be174e",
+      "after_sha256": "0e098a5e732e79df31b748913461ea2fce599203aeae9411f42d0b7bd85eec55"
+    },
+    {
+      "path": "data/games/S21/2026-03-27_g01_BV18NXgB5E8k/rule_derivations.json",
+      "before_sha256": "40567415252f6ee20d6e6a6f3dcf17bbd7e0b8630968ec36f1c657e469222de4",
+      "after_sha256": "f529b7f495f40f03cbf3ff954ad511b0bebd2623b17875237978131d4350c8b2"
+    },
+    {
+      "path": "data/games/S21/2026-03-27_g02_BV1hAXgB1ECp/rule_derivations.json",
+      "before_sha256": "91a4f1fd2e475093abdaa887d908eb536d3a4f2bb0d6a9969bcefba3485d4d73",
+      "after_sha256": "bb8ff4367d14c3b7bfb027b304f2bf4adf1028b0898c126818cf45950f105a31"
+    },
+    {
+      "path": "data/games/S21/2026-03-27_g03_BV1hNXgB5Ewp/rule_derivations.json",
+      "before_sha256": "b3ea57c4aa67c08fcd29271a67b69323050d48109e5dbe641024471b24301972",
+      "after_sha256": "22f109f0af323c3e67cd6e44d6b30582d2dcb051d4bacadf69c96ecdf9e8bec6"
+    },
+    {
+      "path": "data/games/S21/2026-03-31_g01_BV1j8XkB7EUD/rule_derivations.json",
+      "before_sha256": "2e58cc53feae05e1fa1967c3c5d7570cd3aa05f6ee00e7ab3ffd5f6249680de7",
+      "after_sha256": "6fcf2c410905832665fd580cbf48853e54dc07d4c11ec8cf16be31f97380ff2f"
+    },
+    {
+      "path": "data/games/S21/2026-03-31_g02_BV178XkB7EXx/rule_derivations.json",
+      "before_sha256": "cff665ac3ce9d2036c6d304871f9424f6c68eff3369e74d2ba1236d1768ea2b4",
+      "after_sha256": "a650e66595d490dc17f9bb9db5c6c781dee53a2684cb9fc7c5da29832c804a3c"
+    },
+    {
+      "path": "data/games/S21/2026-03-31_g03_BV178XkB7ECz/rule_derivations.json",
+      "before_sha256": "297e959406224dc84a83c32c7709296d5268d462857c8fa7d22315b1e6816622",
+      "after_sha256": "3a4365d40c4ae0997c3d0e4446b3ec0041dda0bb4f2b5e17d2aa659056b5a55f"
+    },
+    {
+      "path": "data/games/S21/2026-04-01_g01_BV1NP9HBBEDj/rule_derivations.json",
+      "before_sha256": "2e58844c69f1a74956edd7aff97f8be86739215910a872ce1e336f10ad17d407",
+      "after_sha256": "96e9d1ba867c256a295e687189fb581e6bb6a2c1709e5bb4a30fb67eb336cd2c"
+    },
+    {
+      "path": "data/games/S21/2026-04-01_g02_BV1NP9HBBEKw/rule_derivations.json",
+      "before_sha256": "185e781dd656dba9ddeb3710487bf277c4653298ea17cf6d9510b56e1bcc924f",
+      "after_sha256": "25cf6443216f1356e60fbdfb0ddb8863418d37293d8139baf5d23609e8d6559e"
+    },
+    {
+      "path": "data/games/S21/2026-04-01_g03_BV1KP9HBBEcN/rule_derivations.json",
+      "before_sha256": "f0fe47859ce47cea82114b63406b01fb55c8a562ebad0266abee093fc5183a6d",
+      "after_sha256": "400a12d08f6e5d8d05ea93a560f6f323e1f03be70add8b7de04c1431edfe3796"
+    },
+    {
+      "path": "data/games/S21/2026-04-02_g01_BV1Zy9wBBE1P/rule_derivations.json",
+      "before_sha256": "a5b228d902b9d7159ca01b8d8cf5d231a29c6f3f47b792392f694edd8f2159ed",
+      "after_sha256": "10c18f7f76e0c9d4ed42d0f293aa6ee8cedae64da0cadddf2fae96a521255ad3"
+    },
+    {
+      "path": "data/games/S21/2026-04-02_g02_BV1Ey9wBzEEV/rule_derivations.json",
+      "before_sha256": "a9e688e6430bd8071960048c70a1f3acb4953b7a4f070178e91d505ae5b19a6a",
+      "after_sha256": "2ad9a9217c3be046647df278699ef4acdc2c7bf71d914f4617eb5a612e5373fc"
+    },
+    {
+      "path": "data/games/S21/2026-04-02_g03_BV1fy9wBBEAq/rule_derivations.json",
+      "before_sha256": "d73de3b85826dc90a98a488254258e80ae365c9108d076955c5961ddb9148cb7",
+      "after_sha256": "ba5023ae93fcfe225c3b39f625bec9503875a4b7707904e4b61c1ffdb99bd6c1"
+    },
+    {
+      "path": "data/games/S21/2026-04-03_g01_BV17J9gBZEb8/rule_derivations.json",
+      "before_sha256": "fe9f6bd344869b8fe2c0ee46d69ce0e5688110e35f974f3a705831593d78f54b",
+      "after_sha256": "51847a8b788f40c75ac084ca29f1bbdc2c52de8b566af41d9b885e61de23e2bc"
+    },
+    {
+      "path": "data/games/S21/2026-04-03_g02_BV17J9gBZEJy/rule_derivations.json",
+      "before_sha256": "bdc018b9d2c474c10b75e3397a8d7b4a226efd511490746ee73cca6b9ed91eb7",
+      "after_sha256": "ed5cc57f56770680afd289fd4ed5fe81ae75ca4ca909491c33515d2da8aea08c"
+    },
+    {
+      "path": "data/games/S21/2026-04-03_g03_BV1qJ9gBZEU8/rule_derivations.json",
+      "before_sha256": "b5bf8c598f5bcd8ea8973878a8d7107ffde1ee744e096c7f367239ce4149a66e",
+      "after_sha256": "e4aff33fd20f8e0b14928b2f8a77c7e08a731603164a184d54391fcdcf2afa1e"
+    },
+    {
+      "path": "data/games/S21/2026-04-07_g01_BV1W8DiBKEYM/rule_derivations.json",
+      "before_sha256": "c1198ad6a6d4a03c4aaf3fe46315fbc5bdcc5befc2a8b45247e56eaedd4fc754",
+      "after_sha256": "6ba7b5cb2a0bc8e1feef044443395e393ee15772be64dbc0b8f24db5e6216727"
+    },
+    {
+      "path": "data/games/S21/2026-04-07_g02_BV1W8DiBKE66/rule_derivations.json",
+      "before_sha256": "0fc6a1cbc06c454123150aa1d6cc09799a2e9af0352c8ed22e33ed2ebf1e96d6",
+      "after_sha256": "07da933a2eccc08ce6b312aaa1885c0937b2865a5946f65d568feab1097f781f"
+    },
+    {
+      "path": "data/games/S21/2026-04-07_g03_BV1W8DiBKEhd/rule_derivations.json",
+      "before_sha256": "479ff548830b97b874f021f3443abc406e451766aeb95f022b12b50e620f4cff",
+      "after_sha256": "b1f68a6993300dc9f371f7dd3095bde914644ef2bb36fa836ee58606eed8f2d0"
+    },
+    {
+      "path": "data/games/S21/2026-04-07_g04_BV1A8DiBTECq/rule_derivations.json",
+      "before_sha256": "34b98011fef54bd9f5fe50e2b2a7d0f46590fcf07ef39f4f0648215939b58eef",
+      "after_sha256": "c84c1a0b426685b5a40974104b45897e58045707e1dd5ba57b5e255ab6a7a6f5"
+    },
+    {
+      "path": "data/games/S21/2026-04-08_g01_BV17MD7BBE7Z/rule_derivations.json",
+      "before_sha256": "3eed2e2cd4c254ed962e11895b2228dad50b6b2138b245670097c4a44eea4eb0",
+      "after_sha256": "4747651c336d02d3217f314b8ea16b8101a5ed6e21521a3c3b92127ece03528c"
+    },
+    {
+      "path": "data/games/S21/2026-04-08_g02_BV17MD7BzEv9/rule_derivations.json",
+      "before_sha256": "54fdc82a8e3411cb63b0c137f61799ccd05505a2e20558cebcfe9d9c002447e4",
+      "after_sha256": "22014a6168815132126e87095f2aed1f2b9efbbe01b3928a22f4cfece3992361"
+    },
+    {
+      "path": "data/games/S21/2026-04-08_g03_BV17MD7BBE4v/rule_derivations.json",
+      "before_sha256": "7814bb4a21f88b4e314beec38dc9a100d323e81d9255fd252a4b90203239bef1",
+      "after_sha256": "54757689cf553ccebc87b69ad67bf746a25296d1ad9aba54abc2d440234f0065"
+    },
+    {
+      "path": "data/games/S21/2026-04-09_g01_BV1ViDtBFE1W/rule_derivations.json",
+      "before_sha256": "9a7d79dc4bf165ceaf387ce1c1da038b72ae2820322ddf32a7b357ca74f0e041",
+      "after_sha256": "41e3156b5a835a4a72a44cbc30ba8bc21aca41c7bce4773dd34169fa40ebfa73"
+    },
+    {
+      "path": "data/games/S21/2026-04-09_g02_BV1ViDtBFE1n/rule_derivations.json",
+      "before_sha256": "665b26054dd28f9a5ed5afb2abda4fed7255c96e45dad8644ba980c1b6d950a5",
+      "after_sha256": "11d21c424a54169f67ac5f682e2c3d6e394c05b236f03dd765af06713e8a0f3e"
+    },
+    {
+      "path": "data/games/S21/2026-04-09_g03_BV1GiDtBFErB/rule_derivations.json",
+      "before_sha256": "9ac11f3c692b945fcaa720605a5d37b7351c74e351da056b8e5fc2afab7a66cd",
+      "after_sha256": "ccb1be253d6af1be6cfebe143154317efa2add5c6e19c907c26721eff636d5e5"
+    },
+    {
+      "path": "data/games/S21/2026-04-10_g01_BV11vQAB2EwD/rule_derivations.json",
+      "before_sha256": "530a845641fca7d7aa21c9c05aa95314f99a0231a602eba649af2e72f89fc67f",
+      "after_sha256": "376fec734900da9ea4210393ad87f6cec2eba108cb83ab4bdc61c76a8f5c27c3"
+    },
+    {
+      "path": "data/games/S21/2026-04-10_g02_BV1NvQABmEhe/rule_derivations.json",
+      "before_sha256": "2871e0c44e792a05ee58e1c8229d38f49089dfa9cff223d9c79756594f0e5d88",
+      "after_sha256": "9200cc6a938bc4d89205edbedaf892343a35439bf4655b99d127b1112ef8c120"
+    },
+    {
+      "path": "data/games/S21/2026-04-10_g03_BV11vQAB2ELZ/rule_derivations.json",
+      "before_sha256": "007f45728c2f4c8a011a4d64a3f03fa465c3f1ae7af7b45b76a5376c91e96682",
+      "after_sha256": "6702499c1c35e525d68977d6a4f637b50fbb9ad3ad760e938c48ad80af8ec48c"
+    },
+    {
+      "path": "data/games/S21/2026-04-14_g01_BV16EQ3BhEe4/rule_derivations.json",
+      "before_sha256": "1a682c16b99509d08185216f8951736cc4047e5c3f95f959f72b24481fc6abc6",
+      "after_sha256": "b2ae19716294f3f6a81ce0fd510cc10febc53a4324767095156a80c710eb86a4"
+    },
+    {
+      "path": "data/games/S21/2026-04-14_g02_BV1cEQ3BhEMe/rule_derivations.json",
+      "before_sha256": "e5f6b7f796256e8f96e8d9c905a818d4df13edf31b52d99d57e0e6badeddcce2",
+      "after_sha256": "edaab10647aa077739bf0fd95897b67200029738774226a0a3e2ec6c29ba8e28"
+    },
+    {
+      "path": "data/games/S21/2026-04-14_g03_BV1cEQ3BhEpC/rule_derivations.json",
+      "before_sha256": "8ddbf9613083f8d2943d2ccff9e3d491d28a7b119082c2f33a88a529089d0a95",
+      "after_sha256": "ef89e3a5b80310c53557952af362583aa83131db0d2f5d78eb31efd594d20560"
+    },
+    {
+      "path": "data/games/S21/2026-04-14_g04_BV1FEQ3BhEqY/rule_derivations.json",
+      "before_sha256": "e848142b91b9987c56ecee3eda6ee8f1245907b26db5f6f8ae301b7a353d3986",
+      "after_sha256": "71dc9d97182b6f27f66ca921864cb3e4ece2fe3257f1fdeeef224ef7504928f0"
+    },
+    {
+      "path": "data/games/S21/2026-04-15_g01_BV1fBQJBUEwd/rule_derivations.json",
+      "before_sha256": "a18cadc93e6206d2405780d74e2c595c9ed39235c1f57471a228fe2dfac02ab8",
+      "after_sha256": "76a9437c71600bc8e4cb00fbad2ea3df23f37e6cfce63241e75621c6106bb864"
+    },
+    {
+      "path": "data/games/S21/2026-04-15_g02_BV1ZBQJBUEZJ/rule_derivations.json",
+      "before_sha256": "a80827f4760e49d35d20f0d6531b4ff2966b2103d46fec1939d3730d830362c3",
+      "after_sha256": "4834bb81be570fffb1ca1cd9ca1fa23e41f92d0ff8f600f87d9e278406c712ba"
+    },
+    {
+      "path": "data/games/S21/2026-04-15_g03_BV1fBQJBUEnp/rule_derivations.json",
+      "before_sha256": "bae9783af2f648e2dd94bf5b7ebe0e5034894b50ce195db1d884c097684d36be",
+      "after_sha256": "ebe9e7cde393347a495cda7990886d68c0931b4e44ae97539098039935f7bded"
+    },
+    {
+      "path": "data/games/S21/2026-04-16_g01_BV16ddeBMEWW/rule_derivations.json",
+      "before_sha256": "3193345f17a8785d4c1d9127063b8912c2136a428b49706092c6066e268c909b",
+      "after_sha256": "bd9d5cef9ca46fdb96908b7937b38257596f18e4fb7acd151b051d9a1bf71865"
+    },
+    {
+      "path": "data/games/S21/2026-04-16_g02_BV1zddeBMEBn/rule_derivations.json",
+      "before_sha256": "542a03e0e73f32959a737c5efe1ed44f6e647f11fb8e2b4ecbf8646bb3bed832",
+      "after_sha256": "4caa9bf7cc82b2fc157cb213c8d2d03ade6616cdbf20da466c7e2429f8a96f2e"
+    },
+    {
+      "path": "data/games/S21/2026-04-16_g03_BV16ddeBMEW7/rule_derivations.json",
+      "before_sha256": "8c589b3904a81f6f241169b3f9c0a07210ffbace7810dfa6e1f41b4c3823b189",
+      "after_sha256": "fd6a13f0d66792f351f09090de39d3bb767624666ee0fe55f194c6cdd7fec9f8"
+    },
+    {
+      "path": "data/games/S21/2026-04-17_g01_BV1CGdLBREUY/rule_derivations.json",
+      "before_sha256": "55e08a5723baf3fb12c66606d5bdfc164ab1a3a263cbe5c998a57636c59e2281",
+      "after_sha256": "fb2df79fdb691c79c5d0a25590362bdf2a2205059ec3507a9abe8d24de5dfa3c"
+    },
+    {
+      "path": "data/games/S21/2026-04-17_g02_BV1sGdLBdEPX/rule_derivations.json",
+      "before_sha256": "0e94445198379442d4b239cdf1eb0a8096f4ce443d0fce1fe31c3c0f3175b4dd",
+      "after_sha256": "e2d3da627d17d4ef350cd31af4a78654d9957d8efdd34336af5568c8a499b2d4"
+    },
+    {
+      "path": "data/games/S21/2026-04-17_g03_BV1CGdLBREUE/rule_derivations.json",
+      "before_sha256": "8ee2cd420b9ae6b369764e9dbbf831e363df60d0d218c210dcca5aeca6e751ef",
+      "after_sha256": "1ec29e5e3d9c6e262a2f2e267498e860804f3936b1ceba26e54224452fd3a6f1"
+    },
+    {
+      "path": "data/games/S21/2026-04-21_g01_BV16NdDB7ETc/rule_derivations.json",
+      "before_sha256": "7cd62509591503db200661cadb4aa07b4c8dafd47aac93c86c121f0f94a8bb45",
+      "after_sha256": "06c47c6a15a2589de882d0c5939552659e3a2d4e1d54afdce00281c1d6436726"
+    },
+    {
+      "path": "data/games/S21/2026-04-21_g02_BV1ENdDB7Emb/rule_derivations.json",
+      "before_sha256": "82b482beda8b0c59b1cc26f683e004dc9cfc3ecc51dfd80d48f3b80af5a7488b",
+      "after_sha256": "c5e747c935a3d6c4adf3329a5815b96b6e59cdb6cc76b18da0ff8a2b3d0d83b1"
+    },
+    {
+      "path": "data/games/S21/2026-04-21_g03_BV16NdDB7E3b/rule_derivations.json",
+      "before_sha256": "832aa76c80e356f73c8e0a8a1beee88a6f5522ba1ea2136e22926330b236c0ce",
+      "after_sha256": "ca7e813e2d232848165210fcaeaa957f0141fdbaaae131f25637331bf14965a9"
+    },
+    {
+      "path": "data/games/S21/2026-04-22_g02_BV1ayoxBqEyr/rule_derivations.json",
+      "before_sha256": "60fc13e6f0fce1ce37e4d7f091f97d81798fb9a47e7ee7bef7519c8eea94a3e0",
+      "after_sha256": "4604ffd5bb757f075677a08bce4414f1f6e251eed1d03526cd3c9394d94974a0"
+    },
+    {
+      "path": "data/games/S21/2026-04-22_g03_BV1QyoxBqEdA/rule_derivations.json",
+      "before_sha256": "705393c4303ef6e5d44271bb4433a2eaef9ea3e8ac89e5c7797e2923a9379608",
+      "after_sha256": "d2da5eafdeff0d00837c103d6283159124a814d74d128c74b796b88b35536b1c"
+    },
+    {
+      "path": "data/games/S21/2026-04-23_g02_BV1otogBAE42/rule_derivations.json",
+      "before_sha256": "6278d7b4417d804fba4a0e8fb4e114e4be7b484582188aa587a8aceb4276c6a8",
+      "after_sha256": "fca1ca4dcc3a9b8a3a7ed42e839f2b90efe9a5373f2270e4c9f41ad339028666"
+    },
+    {
+      "path": "data/games/S21/2026-04-23_g03_BV1dtogBAED7/rule_derivations.json",
+      "before_sha256": "d1aef5732d9999066a9739adab282ac76c01cf03b5671d45f69c5a4804239055",
+      "after_sha256": "82e46a8e45239562c343174e0b5e4aaacfb5c318f3465d456988fa0bc55bd44e"
+    },
+    {
+      "path": "data/games/S21/2026-04-24_g01_BV19UoEBDEt1/rule_derivations.json",
+      "before_sha256": "27601f11b425192f49e60e9872563fce3cba08abf34572aecc3ee0d25e815fe3",
+      "after_sha256": "d5d199bb5a228ae3d57ae91e04316c25c434a2a55d0ce385e7c7c5b78fb3c7b6"
+    },
+    {
+      "path": "data/games/S21/2026-04-24_g02_BV19UoEBDEcH/rule_derivations.json",
+      "before_sha256": "29c9aa016248072644289cd70ea559a46efd2436341f06fe5c1dae465eb66b8d",
+      "after_sha256": "210d6434d374731ac6bb39c0bf7af7e808cad386c544874f7e79b30350aa1e67"
+    },
+    {
+      "path": "data/games/S21/2026-04-24_g03_BV1XUoEBDEYD/rule_derivations.json",
+      "before_sha256": "5372ae28fe8904c3fd401f3037307620e64e0bbc0d87ffdb5833b5f7c80b3ef9",
+      "after_sha256": "fab3b034de25fdf86bab98244bf4c00e160c1d3a781828272e1f193b4f6b0148"
+    },
+    {
+      "path": "data/games/S21/2026-04-29_g02_BV1iQ9sBAEwq/rule_derivations.json",
+      "before_sha256": "8611e7528f6f3f23da4505d75750b717a6e431fc38e9618835de705d8b700d3c",
+      "after_sha256": "6df2265395fb276710cc4d6e9f3697e77bb6afe70ec8c9b1521fdf24b367762c"
+    },
+    {
+      "path": "data/games/S21/2026-04-29_g03_BV1LQ9sBAEkn/rule_derivations.json",
+      "before_sha256": "67d7e19ce330d8df2c40a6bf4d9918fbd11d9bf8c9a3c5219c4fd900d2f7a6e6",
+      "after_sha256": "dd4ca82fb53a4a6257168be4dcc5d44ec39cd57cac8e84e7715493652bf39261"
+    },
+    {
+      "path": "data/games/S21/2026-04-30_g01_BV1JC9iBMEZw/rule_derivations.json",
+      "before_sha256": "42fcc4eee1d75f9ea338b1de93a43ff591a9b734a907b33a1ce1b3e3f79fd36a",
+      "after_sha256": "db60c789d6fda5c08cc0dc5870e8b5d7d2e711740a1c01d1d3bda74df0702850"
+    },
+    {
+      "path": "data/games/S21/2026-04-30_g03_BV1FC9iBMEqk/rule_derivations.json",
+      "before_sha256": "e2dacbf3da3ca31780a5f3937cd0ba19cce86d4a4d2ef2c78907abd4db176d99",
+      "after_sha256": "922bd17cc1f361602ecebdd60034595a7b85a94c5c3fd5f9f700ffb5445772c6"
+    },
+    {
+      "path": "data/games/S21/2026-05-01_g01_BV1tDR3BJEz3/rule_derivations.json",
+      "before_sha256": "798527c8bcf4328387b20c4e86ea0186e9d322827e04929b9d4fd6d6b265ac36",
+      "after_sha256": "d71ff5d74f75ff0952e2b7e363f7c1fa5df6a1e5725324b399973c0633bbfb17"
+    },
+    {
+      "path": "data/games/S21/2026-05-01_g02_BV1tDR3BJE8x/rule_derivations.json",
+      "before_sha256": "47ce144812749a6d647dda70a17d0101ad4999679185705666f1ece64bc7df5d",
+      "after_sha256": "1adaa572e33b6230a3170bc39fdd8fa013647889414d36afd6a0f79fc4091d72"
+    },
+    {
+      "path": "data/games/S21/2026-05-01_g03_BV14DR3BJEyL/rule_derivations.json",
+      "before_sha256": "64b7b67eb8c05a6ed86741f236ec4140281c34876e4af424e104717a2968fc54",
+      "after_sha256": "81d0566920199476b8f325095f757fdac39843002d4f8eacf21ef48ed9078d48"
+    },
+    {
+      "path": "data/games/S21/2026-05-05_g01_BV1jURJB9Eao/rule_derivations.json",
+      "before_sha256": "12305303bc60b68ec6b72286013e6084bc7d35edc9c55e3cc6d484ad762dc364",
+      "after_sha256": "a425e696efc1c83983d10da41816fc0ffe81a660fa8560d4a9a8269a7e50e6ec"
+    },
+    {
+      "path": "data/games/S21/2026-05-05_g02_BV1iURJBXExP/rule_derivations.json",
+      "before_sha256": "a3ad95de25474a6a59a04d29cce1b9d9b227e36a08bb2a11757010254a1c15c8",
+      "after_sha256": "eefca73e98f517896570e561ff9dddd2e9dd4fb09075e917e7334cd9cec43515"
+    },
+    {
+      "path": "data/games/S21/2026-05-05_g03_BV1iURJBXETp/rule_derivations.json",
+      "before_sha256": "760f6d63d329146dbb5af2c7d04db556923452fdc165e20e318a46791d1d5b98",
+      "after_sha256": "d30929fee007243a4278c0679c42bd04bf556f0f2ccfec68ead02bcc5aab6961"
+    },
+    {
+      "path": "data/games/S21/2026-05-06_g01_BV1wgRtBQEms/rule_derivations.json",
+      "before_sha256": "45361a254a6b251ffef77779666beeac5859a520dbd513509be53a11e1bd61e9",
+      "after_sha256": "6b7c10acedd663f8e71701926b5c558fac96eda4e29193da4375ab2b9f4d0ab4"
+    },
+    {
+      "path": "data/games/S21/2026-05-06_g02_BV1wgRtBQEmG/rule_derivations.json",
+      "before_sha256": "3cede0e91e5f0f14f52ecb6fb63f85cc26d4fe914eccbec4602ea40119ea24dc",
+      "after_sha256": "d13210f91421105be8133f3a027f04d937cb5e2731f72c9852a012692a0fbfe0"
+    },
+    {
+      "path": "data/games/S21/2026-05-08_g01_BV1DMRmB9EQR/rule_derivations.json",
+      "before_sha256": "69ebf0f9a5641d8685d35d59ff39207916774294a1cd594322e0ee320fea2a21",
+      "after_sha256": "87d080d07f59cc9f0aeb2b8392c22d9cd9e6cbecfe0b3eabef261f89393a3592"
+    },
+    {
+      "path": "data/games/S21/2026-05-08_g02_BV1DMRmB9Evw/rule_derivations.json",
+      "before_sha256": "f4a6f4506c5e6274a9415670eb59d14be470c8c0c79a51753cbe5e4a8eba02e0",
+      "after_sha256": "9eb67b4d67ffc692f7321e1eb91998a7be248c434c9f6b91332b8e45122a7c49"
+    },
+    {
+      "path": "data/games/S21/2026-05-08_g03_BV1QMRmB9Ecv/rule_derivations.json",
+      "before_sha256": "fb79155a16956e68fc456956b295d09787963ec24d016a05d1b068805ff14f9e",
+      "after_sha256": "9e9ec9afada6ef7e48ba7c27d11b2a787e72a157bcb1627c83b1080f6db6fda9"
+    },
+    {
+      "path": "data/games/S21/2026-05-12_g01_BV1fS536BEUq/rule_derivations.json",
+      "before_sha256": "57916f809622f1b7868eed54c2af53a739a4638de73939097a05bfe6782ef05e",
+      "after_sha256": "70118a2f37eb7d7b14611511432c4d164a86f04c93a19edb2a14684fb1f5f0f2"
+    },
+    {
+      "path": "data/games/S21/2026-05-12_g03_BV1FS536zEwq/rule_derivations.json",
+      "before_sha256": "da6f865ec9cdfb5792fd68f4d404e4bd3271a945a41fc98f054340ead098f2e7",
+      "after_sha256": "bcf0070a9ea0f93c208c8f5872457c96763e8a4d19d4a0e0e0828f3e769ccc3f"
+    },
+    {
+      "path": "data/games/S21/2026-05-13_g01_BV1Bi526NEQk/rule_derivations.json",
+      "before_sha256": "4f3d648f9323bb24cc0cca20cc0d71327c9270feb084a87b84e0db7b92f2608f",
+      "after_sha256": "bd4da6e419956087aba7c30865dd2cf4ff380c688228aa3222a12068a795d68a"
+    },
+    {
+      "path": "data/games/S21/2026-05-13_g02_BV1Zi526NEUU/rule_derivations.json",
+      "before_sha256": "c67c034989f3f6854a462dc470599b4ab0afff051b0257472d14b22e09c5bc67",
+      "after_sha256": "6bae59769e36658d62b377cf0b8f77be6d1720313084f2af83c44701c18671db"
+    },
+    {
+      "path": "data/games/S21/2026-05-13_g03_BV1Bi526NEYo/rule_derivations.json",
+      "before_sha256": "0c856190b9a93f04b6cfbe86749a4fec81f23405be8cd0b2409e733e5726f4fe",
+      "after_sha256": "b568869fc5e7039a98b25058a9f041f93a3aa9c21af47a38ded1fbec9cc25233"
+    },
+    {
+      "path": "data/games/S21/2026-05-14_g01_BV1U85R63Ev5/rule_derivations.json",
+      "before_sha256": "830c50ff1a6e381362c5b99581bfddc0e380c48927a81f57b11f8efb76bb56a3",
+      "after_sha256": "8675b0478d64e3b037182b865002194671821f378fde0ac84d987cd4f7a53e7a"
+    },
+    {
+      "path": "data/games/S21/2026-05-14_g02_BV1U85R63EM6/rule_derivations.json",
+      "before_sha256": "48c8a24350d44c527752688ae24d3c1bf829fc8f59d97ce0ae1f5d41ad1a66a2",
+      "after_sha256": "d242789e98be519c2d603335b84cc41229e7e6519843fa1e6a153eda82e4eccf"
+    },
+    {
+      "path": "data/games/S21/2026-05-15_g01_BV1un5z6AEBQ/rule_derivations.json",
+      "before_sha256": "bfa5137eec093c885c3b4e9090563fde5f3a22b2ea0d70970679d2c114583b8d",
+      "after_sha256": "9370e7f2c5f79b02de3b77df1f96a42678a6ee18ce2477d078d7015ba71405d5"
+    },
+    {
+      "path": "data/games/S21/2026-05-15_g02_BV18n5z6AEAt/rule_derivations.json",
+      "before_sha256": "9374077b54d62955b8d6e0544c63e9a4d63a03f9c82383be719b69816b558c73",
+      "after_sha256": "4b970f9499d28cd245441080d293517e449bdff3bcebe95cad09c809c2455724"
+    },
+    {
+      "path": "data/games/S21/2026-05-15_g03_BV1un5z6AEKX/rule_derivations.json",
+      "before_sha256": "0e328662bf3a7247e90cc0a5ac67809084f775a015a7aade0591af73e3a72bf9",
+      "after_sha256": "2470d1be5183b867187c215db79756414046de935fefd3619d6ad3fd59edf13a"
+    },
+    {
+      "path": "data/games/S22/2026-06-02_g01_BV1kGVC6cEyg/rule_derivations.json",
+      "before_sha256": "9a69b6de0f1771e632da022da6d1e838f006001ac81ae943b6e49891e63772bd",
+      "after_sha256": "3d8c624c6523430a6ddc5b9756841ee9c3d91674bbdd8dfed388af03ab8b546f"
+    },
+    {
+      "path": "data/games/S22/2026-06-02_g02_BV1CGVC6cE8T/rule_derivations.json",
+      "before_sha256": "82945fb7c8c6a5fb3b70ddc7d3e27d6114e20d41648cb8d69389d429136256cf",
+      "after_sha256": "1416363b560e610fc1b953ff1d824ff198b7528dc2600fb26501f1a8cee07fa9"
+    },
+    {
+      "path": "data/games/S22/2026-06-02_g03_BV1pGVC6cEbW/rule_derivations.json",
+      "before_sha256": "c5c93edf59ddeb0768fb9ed271f4c71219ade9402482402ef037d67d22a63c39",
+      "after_sha256": "6ed8b77b3545cf7cc9726072600e965de412e0abfb674bd0a3177f0534834565"
+    },
+    {
+      "path": "data/games/S22/2026-06-03_g01_BV1hb7R6XEtD/rule_derivations.json",
+      "before_sha256": "c7a1b8dffcac4ec2c68e40d89d76cc5652192e7717d95b88fd9d92d8a62dd00c",
+      "after_sha256": "435ab74bfe5486c1345c877c5ea3c691fc3d5084abf48da86aa6adc1bfe94e36"
+    },
+    {
+      "path": "data/games/S22/2026-06-03_g02_BV1vH7R6tEQp/rule_derivations.json",
+      "before_sha256": "a3aa4c4567479ba13fc3b3444c574840fdc8247277abff88ae9fd4c5505a9cc0",
+      "after_sha256": "d948cbdafcf09608608680a54db272a03b683008859998d66b4ab2ada5f8a2b7"
+    },
+    {
+      "path": "data/games/S22/2026-06-03_g03_BV1dJ7R6fEUw/rule_derivations.json",
+      "before_sha256": "c9e21ffb5e84d8a259f08489d2e0f615f8d7cd4f6bb5337fbfa6c7783f8e9c5b",
+      "after_sha256": "48afea7606f0a8ecb26ce6a1c4fa4bc6c537c7207f8edf363c8a0dd96ed33108"
+    },
+    {
+      "path": "data/games/S22/2026-06-04_g01_BV12GEA6iEx5/rule_derivations.json",
+      "before_sha256": "eeb14d585b3a8b9da0b1a3849df250102fb4a6c960761c1840077bf388bed5fc",
+      "after_sha256": "62f2a74c52f96b70c7d95c33c28a4f26c240d98e973fcf6309901f2373566b8c"
+    },
+    {
+      "path": "data/games/S22/2026-06-04_g02_BV117EA6AEcV/rule_derivations.json",
+      "before_sha256": "68c2f26e91531c4f05c253e71352b513974742318435940b9cccd6f742cd3817",
+      "after_sha256": "6bf0e14991908deccfffb48604f9f4441e3509d912918aa4f727032f1c06a9da"
+    },
+    {
+      "path": "data/games/S22/2026-06-05_g01_BV1FX7C6BEAC/rule_derivations.json",
+      "before_sha256": "feda4fcdf1b5cb96e9cad5da66516c582dd182e1fd6e75b2a56fb5085e74037f",
+      "after_sha256": "3ca7beda4edf0bf6f69df97447f3c1ed567541d262de4262d4b1a96edf6bdef0"
+    },
+    {
+      "path": "data/games/S22/2026-06-05_g02_BV1fX7C6qESY/rule_derivations.json",
+      "before_sha256": "9b220a26657a12b338eec12e6c72a30c540b08110b0a2dc7951457f79615c2d9",
+      "after_sha256": "a808a1aaf0aca2a19a6c13d744db8c77fe59504deadee6bdb1d6e764d1134769"
+    },
+    {
+      "path": "data/games/S22/2026-06-05_g03_BV1zX7C6qEmR/rule_derivations.json",
+      "before_sha256": "ddaed317ce30407f337a1e7acfd5d039b4188e488e1a2dc10187895fb92b1435",
+      "after_sha256": "32b6af776283b7c2e5d1b23cbc72ab971ef3d234175e1be0be7f5c0729b4e274"
+    },
+    {
+      "path": "data/games/S22/2026-06-09_g01_BV1iaE26kE1w/rule_derivations.json",
+      "before_sha256": "742eb58b431d2cbc0c345ddef20497a1656ccc7e213f47a83233eb1a9959986e",
+      "after_sha256": "f61300cf538663d8ee2e9ebef13f5ea0a492bf6f62440fdacff8fff174835145"
+    },
+    {
+      "path": "data/games/S22/2026-06-09_g02_BV1jaE26kELR/rule_derivations.json",
+      "before_sha256": "67aab9b425508b97309c8db15bee01b499f796794a139536e1ae62ca47fb0362",
+      "after_sha256": "4d8782d72730b4cfabaa3c082d59774a9b557a0c4a07989030c74df71300bef6"
+    },
+    {
+      "path": "data/games/S22/2026-06-09_g03_BV1jaE26kE8T/rule_derivations.json",
+      "before_sha256": "c52f60b177556b13c83c5e3e19cfbf2c77d38c05c21e83befe9d799443119023",
+      "after_sha256": "20e3a788c6cea02a9252ee35c5fdec8280527e5597287e9b265d97addf9c20a8"
+    },
+    {
+      "path": "data/games/S22/2026-06-10_g01_BV1xYEo6QE3H/rule_derivations.json",
+      "before_sha256": "89e305a37c54ef4a59a67dd918139e65bdedf0e9f41107da241507ba70047b1e",
+      "after_sha256": "6aee91cd63eb0a7db46d3ed5c750b99bae0dc3812ea8b4e6fc5b1aeba0161831"
+    },
+    {
+      "path": "data/games/S22/2026-06-10_g02_BV1xYEo6QE3E/rule_derivations.json",
+      "before_sha256": "5cc3495646c539e8c0c1bf560fe0a728587c128fce50d3d55bfd2ce823cedd73",
+      "after_sha256": "96868411264896f61bd590da7034f6a01a9a3d46d90b0bd82a8b2391a4d5ffde"
+    },
+    {
+      "path": "data/games/S22/2026-06-10_g03_BV1sYEo6QEyS/rule_derivations.json",
+      "before_sha256": "225433f5deb3fcc98f6a969c05385df5950ef7b8ca7df2f349a3ddcfda7f7260",
+      "after_sha256": "26a69946e99678759e5b795dcdaf4137da4245cce1bc4ff90a799c3e2dd5ff8f"
+    },
+    {
+      "path": "data/games/S22/2026-06-10_g04_BV1xYEo6QEGV/rule_derivations.json",
+      "before_sha256": "a0c1b9c1aa451a4147f680dbfc00c937fdbf70af27741510d3bd930e804d1a4f",
+      "after_sha256": "1fd4462c87cb2aa88d0bf3ececf3f1c23829342b57ee11eb974dba10ee976206"
+    },
+    {
+      "path": "data/games/S22/2026-06-11_g01_BV13tEB6VE1J/rule_derivations.json",
+      "before_sha256": "d489c0c45564074ccab87f04a0acfe5f95ab4820af06d941d38cb8c61fb67b47",
+      "after_sha256": "b36648f5331a73bb8902cbf869cb4de79f5a28edfbe256df7b5ab834b45948d8"
+    },
+    {
+      "path": "data/games/S22/2026-06-11_g02_BV13tEB6VEVV/rule_derivations.json",
+      "before_sha256": "6c674f2901987ff4aa71ad152bb8ff1f1a92e9615cb55bab24ad7791409ac3de",
+      "after_sha256": "f1bc56394abb5802fbb04411acdbe712ff76a08ee424118b4c6ec5138c19fb31"
+    },
+    {
+      "path": "data/games/S22/2026-06-11_g03_BV1uaEB66E7q/rule_derivations.json",
+      "before_sha256": "a3c20ed0ac0a6a98a577b9161786fbf476a1a90b9005f226a6412a99a9be3030",
+      "after_sha256": "85fba2c840bfaf69b090d4e32bf1bd26d04e67b2ba934113bb104b20a9471826"
+    },
+    {
+      "path": "data/games/S22/2026-06-11_g04_BV1wmEB68Exu/rule_derivations.json",
+      "before_sha256": "fccbb54c20a3dd9d3646fb280f7da845f99a09c76d45b1711df62573778ca0c9",
+      "after_sha256": "8a7e574d32dfae5acc1b99822c4d8a1d8b38c6001d2fbc0e0e5107e2f87ce27c"
+    },
+    {
+      "path": "data/games/S22/2026-06-12_g01_BV1sKJ56PEey/rule_derivations.json",
+      "before_sha256": "9466c5be899bade6408e959b8d8ef4e94baada38d04ec5595d18b2d2936f18fc",
+      "after_sha256": "bec4ac02d3fd8135ef228d33a4a28e600bfba56a5fdb41a0ae639b9052496062"
+    },
+    {
+      "path": "data/games/S22/2026-06-12_g03_BV11KJ56PEPY/rule_derivations.json",
+      "before_sha256": "dde3812f0cf99f4bf69effbf470ed687c464721ba21c86ae8e7a216a3e24fbc9",
+      "after_sha256": "2ba329226ee9b28495bdd1b3cf5e43dd3473eef4d08e0276591aeaf2dfbd02e3"
+    },
+    {
+      "path": "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/rule_derivations.json",
+      "before_sha256": "075e7363c4e76dfdd2c5e6d451a084855794de839491c33c5753279ff4dcbe46",
+      "after_sha256": "4c63d1968dfe087688af364034437f1afdbb5b22c65cf72b09a9996bbe58086a"
+    },
+    {
+      "path": "data/games/S22/2026-06-16_g01_BV1W6jG6HEeT/rule_derivations.json",
+      "before_sha256": "45517c757caaa197a33d9f9ea2738e25df880995a1cca947c248e56a24f6fa2b",
+      "after_sha256": "d441b36e40b28e00a2b7fbe308513ce364910eb496d23b68ced944f39a8af383"
+    },
+    {
+      "path": "data/games/S22/2026-06-16_g02_BV1W6jG6HELj/rule_derivations.json",
+      "before_sha256": "1fd7f0365f5d293771b07eec06018882ef6600d12f994af8723f56c04db943ff",
+      "after_sha256": "8a033df38fc341d564994b240ba50fc7e0bec40e70427f3a2f03442b3275f673"
+    },
+    {
+      "path": "data/games/S22/2026-06-16_g03_BV1W6jG6HEkC/rule_derivations.json",
+      "before_sha256": "59b7550c9162581fc5250543afc4126308d71ae787e48cbf390189da79772a3a",
+      "after_sha256": "c8a464250f167f72ddfdcf78c76239381410df07ac8019e4a7f96839cfd01bb5"
+    },
+    {
+      "path": "data/games/S22/2026-06-17_g01_BV1KkL96MEuH/rule_derivations.json",
+      "before_sha256": "2bccd88998606591a06fe831eec1f77fcc7c99e7374365d7db6d48216676935b",
+      "after_sha256": "7fcbd242c74d4cc3e83ad9c8d8a5758d05bb24e9b1dfb8c99a49f66ced458a8e"
+    },
+    {
+      "path": "data/games/S22/2026-06-17_g02_BV1KkL96MEim/rule_derivations.json",
+      "before_sha256": "8688634b69fd176931ad82eb7dc0237207d78b12c9214f43b9439dd164a46c98",
+      "after_sha256": "2dca0b598a393c0aab6732a1afb04f11360a45d4c0bd701ef0452063fbcbefc1"
+    },
+    {
+      "path": "data/games/S22/2026-06-17_g03_BV1xkL96MEsd/rule_derivations.json",
+      "before_sha256": "ebc9e28f2a0f26d24e61256c64e868d8724aa667f20dd872b5655834c54beb34",
+      "after_sha256": "a5b1b177af652dd045ffab69555b151bc254660a3f84b29f73954ad1d95a7221"
+    },
+    {
+      "path": "data/games/S22/2026-06-18_g01_BV1Ajja66EuC/rule_derivations.json",
+      "before_sha256": "21f5c912c7b9cbad70052d1b1a9810f51dccbe5553e285bf302ecb58afabcce2",
+      "after_sha256": "5669dbd4126aa1c651f80d6bcb3e54a84d3f6db35b06e0861ca17c8a51d6cbb6"
+    },
+    {
+      "path": "data/games/S22/2026-06-18_g02_BV1Hjja6zEZa/rule_derivations.json",
+      "before_sha256": "b8060d19da00a48b2e7b9729dd8d7bdeaa587105a5a6eb670fd7129e244697af",
+      "after_sha256": "396b4c0684356b1971f9e6c917987c7498ef52413aea5eab03b64457ba5071c9"
+    },
+    {
+      "path": "data/games/S22/2026-06-18_g03_BV1Wjja66EFz/rule_derivations.json",
+      "before_sha256": "e97721ce4dbdc24d56cf4183335e3e99f10df6fc6155ddd2fd261be4b3ba22b5",
+      "after_sha256": "bfbfebec9b1c470d382a399dea666d5ed57d80bf5bb4f0120aa74552981a8023"
+    },
+    {
+      "path": "data/games/S22/2026-06-19_g01_BV17kj669ED5/rule_derivations.json",
+      "before_sha256": "03d08201b1aad3d071918dd6a3ff0db171b868f77d2cd74db1756dbf0a3bf174",
+      "after_sha256": "63bf6718788c50e96e8741135ffe7da7aae0294395e20414fef8a0f168f5f0db"
+    },
+    {
+      "path": "data/games/S22/2026-06-19_g02_BV1Hej66FE1Y/rule_derivations.json",
+      "before_sha256": "85b243b4bc0a98796bdf49261804f7c3d1fffa052e89d05e655c909e77761b19",
+      "after_sha256": "b293146b5ba73d58707df47557f90639c3b6cb7b0d11052bac39deeb7e4b846c"
+    },
+    {
+      "path": "data/games/S22/2026-06-19_g03_BV1nBj664EFS/rule_derivations.json",
+      "before_sha256": "3492a36978572d76e864bd692709db192eeef2509261efbdd87d1d90e04691da",
+      "after_sha256": "9295057ba775d19028221fb8a30b6154f5dc4aa3584a2be240c426f9d0632f96"
+    },
+    {
+      "path": "data/games/S22/2026-06-23_g01_BV18ijD6BExh/rule_derivations.json",
+      "before_sha256": "a50229ed38555eba52e570caed5685adb8fa35a27dd6eb75101199816ca208ef",
+      "after_sha256": "add80a90909d61ac053d6a1eb208a022799295889579c0e4bf06301ae444024c"
+    },
+    {
+      "path": "data/games/S22/2026-06-23_g02_BV1DijD6BE4g/rule_derivations.json",
+      "before_sha256": "0cbf1dff48c5b1e9c4e9c84a9781f458a9a866a0c76504eeb8ba0de6d9abe9d3",
+      "after_sha256": "5d342ca75903f775fe520cb37728d956c1592483a84803bf7901ab8212993649"
+    },
+    {
+      "path": "data/games/S22/2026-06-23_g03_BV18ijD6BExE/rule_derivations.json",
+      "before_sha256": "10f835554f047fcbca8b2403cb292e1c0ae3899ee9d52b78430edbe7081fda0c",
+      "after_sha256": "01f9d2bcacefb6e721acfe181ad3573b0d119b7f53ff24faba0e019ff6e9fbfa"
+    },
+    {
+      "path": "data/games/S22/2026-06-24_g01_BV1QAjo6sEEc/rule_derivations.json",
+      "before_sha256": "6c8307bae3edeffb517e36a3c94a8367796455e25999293f4537ea50e0d24f81",
+      "after_sha256": "b471f8d3915398fc8a2bdccd36f75f62ca8895e57d940075308b41c22ad0a306"
+    },
+    {
+      "path": "data/games/S22/2026-06-24_g02_BV1QAjo6sEaN/rule_derivations.json",
+      "before_sha256": "4c636be2523ee1633909b58474557ea38f43358ab36bd3bfbdff3eb31984f197",
+      "after_sha256": "c753e0d7ff1dad8ee58e8d044e124ed3f0dc8549d4d16bbc9ab8048969a80c48"
+    },
+    {
+      "path": "data/games/S22/2026-06-24_g03_BV13Ajo6xEY8/rule_derivations.json",
+      "before_sha256": "a4a22968bdeff981047424d97e9a89342738d6cc6ab456dc30ac4559fe1109ee",
+      "after_sha256": "cc4570ea14b2400db74f6cba26aa7f4e8ffdf6213736b29a51561c0ef8b142fa"
+    },
+    {
+      "path": "data/games/S22/2026-06-25_g01_BV1Pt7v6XEP4/rule_derivations.json",
+      "before_sha256": "7377c446fc9c9022163bdfae7751e19acdb6f0b4dc0c390abd618ee5d0a274cf",
+      "after_sha256": "1e5a5ccbb5d4596600aa40240122faee01afe0f5c21c21d524b246daafedccbf"
+    },
+    {
+      "path": "data/games/S22/2026-06-25_g02_BV1yt7v6QEny/rule_derivations.json",
+      "before_sha256": "34031424be175dd39ced858864492e0fec9c5bd6d95a406274e9a197dfa75de0",
+      "after_sha256": "35d2c41478f22e638e1e5672864d8142eb7cf31173311ea8ff639e48aae0b9b2"
+    },
+    {
+      "path": "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/rule_derivations.json",
+      "before_sha256": "d466a6fb02bab89b117d4741c7c38f73917d6507b518c2e94dd05e3019dba691",
+      "after_sha256": "4ebd66a05309a844779a3971dbdbba069480aacb52ce39bb6ac7a1c8c3c66d00"
+    },
+    {
+      "path": "data/games/S22/2026-06-26_g01_BV1o47L6DECA/rule_derivations.json",
+      "before_sha256": "60d174d5eb7de1992f33af5338db0d128bb0eda7856d625f6fcf27785da40073",
+      "after_sha256": "b821f8a20c48f54c7a72ca44cfc16a39435103bf47c7cdc1b1fea00fb2256e8c"
+    },
+    {
+      "path": "data/games/S22/2026-06-26_g02_BV1747L6QETh/rule_derivations.json",
+      "before_sha256": "2c0ae649a9ec71c8bbb9e076224eaf352ef7964df3be6353523a9f944a9e3649",
+      "after_sha256": "7b5a1d431263931e5b6d1b1da2404fe974ed0fec3297932455cc67b26668f7e0"
+    },
+    {
+      "path": "data/games/S22/2026-06-26_g03_BV1d47L6DEoo/rule_derivations.json",
+      "before_sha256": "4023fb59b4af32237a3dc5de57f8cc028ccdf543a9b97713ffbcd4ad47fcf35f",
+      "after_sha256": "cfad77b6053ef305e1a8f824fa293a9d0ebbe8454228d30cc88188117125a2a0"
+    },
+    {
+      "path": "data/games/S22/2026-06-26_g04_BV1cJ7L64EBW/rule_derivations.json",
+      "before_sha256": "e34ca45eba3309a7a7ca93ebcdaaf44832dd619d57addccbfed4826dd1671bbc",
+      "after_sha256": "34491d8fefe174a41ab94af7bd46797c14f6d60688a1e5f6defe6ea348d89be3"
+    },
+    {
+      "path": "data/games/S22/2026-06-30_g01_BV1YmTc6yEFd/rule_derivations.json",
+      "before_sha256": "8a4cdf5067c5542eaa3134b59bf04faad252ef10104e01787570a4853f6be068",
+      "after_sha256": "d87dcf4bada2b1250744a02455d200637a1752bdfe9c823b0a4b7e9862d8c7d7"
+    },
+    {
+      "path": "data/games/S22/2026-06-30_g02_BV1GmTc61EMA/rule_derivations.json",
+      "before_sha256": "a78f178fc2340b659403b89dcc38f36856ae9ff8b57149d46c0370871e952b36",
+      "after_sha256": "d2f997f23aad2dd7117459671c9b981f936c1ae88018b878632df5af9fbb8007"
+    },
+    {
+      "path": "data/games/S22/2026-06-30_g03_BV1Y2Tc6LEt4/rule_derivations.json",
+      "before_sha256": "4f7679edbe6047e7f47f92d24be9d295b162fe6495b52f405de58e2f7e135865",
+      "after_sha256": "63080a79f4daf425b4100c82ee29b48a416a3f768cf6002f1d1e649c277f1830"
+    },
+    {
+      "path": "data/games/S22/2026-07-01_g01_BV1gvTi66EFF/rule_derivations.json",
+      "before_sha256": "c4e61cb554dbbfeb5ba79807e6ff99b92e26e667323b07d49cfe0bdd92da200b",
+      "after_sha256": "6e4f3affd14e395bd9e012faeb86651fed19a67a7c4c534875f549073e02df69"
+    },
+    {
+      "path": "data/games/S22/2026-07-01_g02_BV1gvTi66E7y/rule_derivations.json",
+      "before_sha256": "b250cec9fcb641b3c625649461ecb891aca850b587f55a3799454d55e32f12a4",
+      "after_sha256": "1225fdd4c8f6a7c523379d6f271ee82a820f5087e9ea725f910809fcaa5b6940"
+    },
+    {
+      "path": "data/games/S22/2026-07-01_g03_BV18vTi66EnN/rule_derivations.json",
+      "before_sha256": "a93e108a7ca4fbf019c052f59a5bb2355cbcd2d50c91d786332489c8bb62a8f7",
+      "after_sha256": "1780314f93f0fc64ea5f1ce121380500ec62f718fc3a9b3a41cdabd4fba3ea5f"
+    },
+    {
+      "path": "data/games/S22/2026-07-02_g01_BV1K9TJ6WEBv/rule_derivations.json",
+      "before_sha256": "35aeea8434f07044737a27d9deff7a252b625bb1d1934249b2461356e0e3dd3b",
+      "after_sha256": "09655e2ef3d8ad4c51bdb191ae5b69209417105d0b0bdb99a18d6bd866b5eb6e"
+    },
+    {
+      "path": "data/games/S22/2026-07-02_g02_BV119TJ6pEtC/rule_derivations.json",
+      "before_sha256": "694a3bafea69788719c03b16e30f9f8835d413daa55c9915ce966552f44027f7",
+      "after_sha256": "8481cc8765040407c4cd8b3b132111b0ccb8f5dfc4ab6792ddd1430dcfaec9fe"
+    },
+    {
+      "path": "data/games/S22/2026-07-02_g03_BV149TJ6WETs/rule_derivations.json",
+      "before_sha256": "2c414f89923cb808e55648db363259a8e1a12b3520c15ae3948028fd9d22c397",
+      "after_sha256": "fb34826b790f03bbda73bebc581155c1b8ff229dc2f71c2457af52c8313a9cc7"
+    },
+    {
+      "path": "data/games/S22/2026-07-07_g01_BV1BjMh63EEK/rule_derivations.json",
+      "before_sha256": "a4eaef75693eb85d8e1da619740aa80d859440a68fa18524572fe0ee47f02753",
+      "after_sha256": "c987985628cfb5035fa198c10340ea3edf5f29733e74af52a738e0eb1d444cdb"
+    },
+    {
+      "path": "data/games/S22/2026-07-07_g02_BV1BjMh63ED9/rule_derivations.json",
+      "before_sha256": "1f821147aaa0d4509774e8b2e14d4b582c800dbf4b03dc7a18adf9491dd05039",
+      "after_sha256": "d0ccd87b4ded0931b8ec93c0d77c5580f45e0c2ac76ad97cb3027f429ac56996"
+    },
+    {
+      "path": "data/games/S22/2026-07-07_g03_BV1BjMh63EDf/rule_derivations.json",
+      "before_sha256": "6316e8ee61618a0a4b924b4bf544dd284ac9a6fa207afce927cb9f964743888d",
+      "after_sha256": "c9b60d6a988f188355a099f744f74d382af49ea676c55ed792fa2f499f4f1d62"
+    },
+    {
+      "path": "data/games/S22/2026-07-08_g01_BV11uMG6PEkr/rule_derivations.json",
+      "before_sha256": "fbc6cb32bf1e52644b5ec1829d820a339e80abf0fb5d5f763eac9e4cb993812d",
+      "after_sha256": "9a71a59c174dff828cd192b788641c03b81816af0d83eceb849e1350388a3a7e"
+    },
+    {
+      "path": "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/rule_derivations.json",
+      "before_sha256": "b3c20b1ae12707cb65618378f41e73633fd37c93b352dd62513e5e1167b06f9b",
+      "after_sha256": "f259b8f03637502e8314915006fdb1f92e602513dd6494a1d241e0fac0fbe5be"
+    },
+    {
+      "path": "data/games/S22/2026-07-08_g03_BV1suMG6PEYP/rule_derivations.json",
+      "before_sha256": "c8161cec89e3b98ffa84c6bace9b8fe37f420b7928cc90bf9c37632dd47b64d7",
+      "after_sha256": "700b03b9ca927d16c1b9df7f7ee5fbcbef82d5875efa0c5ed390bb0e83c03ae9"
+    },
+    {
+      "path": "data/games/S22/2026-07-09_g01_BV13ZMp63EPs/rule_derivations.json",
+      "before_sha256": "4fd8a5c8b0fdeee9b70a3fcb9b5826bd15886db66d61a6e58dc88f4b54fc13a5",
+      "after_sha256": "233b5fe495795a0732d7a1ae093c4ec75639f593d3d4dcd7faede116a52a80be"
+    },
+    {
+      "path": "data/games/S22/2026-07-09_g02_BV1hZMp63Esx/rule_derivations.json",
+      "before_sha256": "9eaa20def218226c7499210ffe1a55565b0a6fabf55b0cf70196586fe5eec50d",
+      "after_sha256": "ebdfd58d33c0a95874ad0f395f81b85d2a1fcaee4e139c129c92095c679dd0c0"
+    },
+    {
+      "path": "data/games/S22/2026-07-09_g03_BV13ZMp63EEB/rule_derivations.json",
+      "before_sha256": "e9d3663d94f08fb91bcc97372143a99bc431fa594f2396f6f4501a3d95e5913c",
+      "after_sha256": "b7a0fa974a2e98b0e2722fe52dc59142f7cc37d9a48295f6d09fa527307f0868"
+    },
+    {
+      "path": "data/games/S22/2026-07-10_g01_BV1GxNH6YESw/rule_derivations.json",
+      "before_sha256": "2138f75bed5c42681ba89ffacc974d2a0b66171109421a67ec76d2ad2e01af22",
+      "after_sha256": "1f3f4d3caddc9d09fb98e3b006eaebe59fc970d53030ddea644d7314ff00ca5d"
+    },
+    {
+      "path": "data/games/S22/2026-07-10_g02_BV1GxNH6YEht/rule_derivations.json",
+      "before_sha256": "02f81a52c4c5e1b0197871279d75a71e5782a5d516d0ff8e7a28fa9cc7680ca0",
+      "after_sha256": "5cbb1495ee5c19c187153f0db84f0991525346ceae47a74bcb0db451fecee4af"
+    },
+    {
+      "path": "data/games/S22/2026-07-10_g03_BV1VxNH6YETC/rule_derivations.json",
+      "before_sha256": "e0b64ea118f46acfe6be3a5971f125654c2be38b6e18c07567edef7d97e5a786",
+      "after_sha256": "6316075d35689abd0e87274bd8d9bc3d254d0cc2b1e67a6efd172e0ba6d42069"
+    },
+    {
+      "path": "data/games/S22/2026-07-10_g04_BV1YxNH6YEqY/rule_derivations.json",
+      "before_sha256": "44197dbe11625e7e9a02284793f3e0d6b2da3f9f87c77fd2cc5f5e8cd4dc7eac",
+      "after_sha256": "da3f379e7c4e920910706f3f63d9d394bd2d58ec91c536f048424e8673d60033"
+    },
+    {
+      "path": "data/games/S22/2026-07-14_g01_BV1sEN86gEM2/rule_derivations.json",
+      "before_sha256": "dc23904cd552fb9f84f51f6bf9e6a5fec0e2a5f4aba686d836c8edd15ed9114d",
+      "after_sha256": "828d77f90a39080b961fd7b807452d3698646939da0cf095de2109355ffc705d"
+    },
+    {
+      "path": "data/games/S22/2026-07-14_g02_BV1PEN863EXG/rule_derivations.json",
+      "before_sha256": "f6081bd1f9f9cdd749590b41dc97a02960b35b3a36b2126a8c6995cf26a97801",
+      "after_sha256": "18e91fbba6e78d5a870fc4151a4645384e67635dbc5aff17e43901deb5f4b164"
+    },
+    {
+      "path": "data/games/S22/2026-07-14_g03_BV1WEN86gE1i/rule_derivations.json",
+      "before_sha256": "9b32f83e6814d4bd2464a903af0fa6e391ad8038ca28fb3b6fc1f14f4d6c3cac",
+      "after_sha256": "2d82c68991a55fe64408d50e01b1cabf419222fed186266206439ebe6aa107e4"
+    },
+    {
+      "path": "data/games/S22/2026-07-14_g04_BV1WEN86gERp/rule_derivations.json",
+      "before_sha256": "8640983334c4ef3828abe9af1c76c55826a75c7397ada56d9311bb400bccea97",
+      "after_sha256": "56f766aa50c7760594decb50bbad8a23c4e2bfb8b3a46af5e2d44c81eaa19a9a"
+    },
+    {
+      "path": "data/games/S22/2026-07-15_g01_BV1BPNB6QE1s/rule_derivations.json",
+      "before_sha256": "cb191d6334076f27d718d36f9c68cc2032eec50bfe9b016502a53450a0ca873a",
+      "after_sha256": "d3e83b8732b807ff6abe5251486bb2ba77f861ba73b9142868e0864d902119b6"
+    },
+    {
+      "path": "data/games/S22/2026-07-15_g02_BV1BPNB6QE1V/rule_derivations.json",
+      "before_sha256": "6b8111cf3e036afe00c5be4833d8a363cba93e99c02be203fefc12b6fe8dc828",
+      "after_sha256": "f07206bace59937fd58ad3874af6ac55af8c5d799a82d3ba83dbe2db46581b82"
+    },
+    {
+      "path": "data/games/S22/2026-07-15_g03_BV1BPNB6QE4z/rule_derivations.json",
+      "before_sha256": "c06100fa23c539284bf489c6855c856ba71eb661e603bdf6cbf436910a75c782",
+      "after_sha256": "8713eb6fd8357e6457d33f22a8273834cf57cdddab97648f88714cda4bfd9a38"
+    },
+    {
+      "path": "data/games/S22/2026-07-16_g01_BV1jYKV6SETU/rule_derivations.json",
+      "before_sha256": "26ecc5041b2aae706ab1e769fba1487c7b5a64888c8423cce27b364e16cb144c",
+      "after_sha256": "bb35ef153d99d0ba300d611ce6f45c896f74f37479bb3e2cecaf48679085fa2d"
+    },
+    {
+      "path": "data/games/S22/2026-07-16_g02_BV1jYKV6SEwK/rule_derivations.json",
+      "before_sha256": "7b7a12295e9db00185d8311f9ee70ec92b2566e132e4303c21e7bbc222c8610a",
+      "after_sha256": "74f92e2b6c8689885e7463bb5cec23ef9b17c0fded18976f1905192b8b04c08e"
+    },
+    {
+      "path": "data/games/S22/2026-07-16_g03_BV1dYKV6UEYM/rule_derivations.json",
+      "before_sha256": "4bcf44d88b843b86808a8d42ac6d389adc9825318fbdf2121480b5a3ccf4f26c",
+      "after_sha256": "42e3227476b9e4f3541db157967f0893cd1d57af8f0fa997d9256944ccdc5efc"
+    },
+    {
+      "path": "data/games/S22/2026-07-17_g01_BV12pNo6HEtA/rule_derivations.json",
+      "before_sha256": "b133b7b6051ce3fb59ee91db7fda98288340edb3eadf142a3a21996659ea2f79",
+      "after_sha256": "897774fb06d09567ec1ed47c00800332a28c462e55f7af1ebe30493a38c6e622"
+    },
+    {
+      "path": "data/games/S22/2026-07-17_g02_BV12pNo6HEuV/rule_derivations.json",
+      "before_sha256": "f873e22f7189d40fa881595dc2d7daa0d4fe96d1106f95939df5abc2caba326a",
+      "after_sha256": "c3e2333d3cc105e8894d4e01e2e25f0dcaaf9419779853339e1187f24b9aea12"
+    },
+    {
+      "path": "data/games/S22/2026-07-17_g03_BV12pNo6HEiz/rule_derivations.json",
+      "before_sha256": "07a87a450d2f83ed3eb7d7fde7c8c2329e334baf46ce9cdc4564709e7a0c323e",
+      "after_sha256": "69aafd46b58b94737affb3d884f9c13a15e1135f108cebecf0b45dc42be08c1a"
+    },
+    {
+      "path": "data/games/S22/2026-07-21_g01_BV1oNKY6zE1Z/rule_derivations.json",
+      "before_sha256": "39895f8313852c24438e378f34957a16476ec5a3f1ee30fb95c46e496347efb0",
+      "after_sha256": "a6868dce332805c1838c7b9416394cae0a3984856e4dcb59dec6ad0e8b6463d4"
+    },
+    {
+      "path": "data/games/S22/2026-07-21_g02_BV1fPKY6gEFp/rule_derivations.json",
+      "before_sha256": "f79999d631337e59c6d3734506ec1a1cbf0f5ddf23c166cd5b34cad1fbce950b",
+      "after_sha256": "cff8e6018096384194e465af4d48883b5cb035a76d89f47dd063a04b70de1357"
+    },
+    {
+      "path": "data/games/S22/2026-07-21_g03_BV1bWKY6tEri/rule_derivations.json",
+      "before_sha256": "0ccd75211dea92483df1724e0431d3aba61a537a9f065373ac1ae70b667969ed",
+      "after_sha256": "e87655d0c4c6ce176e15f1987fb861ad3218e552cf50d357620bcc7932fa38cf"
+    },
+    {
+      "path": "data/games/S22/2026-07-22_g01_BV1Pxgy68EQC/rule_derivations.json",
+      "before_sha256": "0375fd7a66b2c7973a74e301cfa49236a94393b0bb2995e0113c2003e7f71d70",
+      "after_sha256": "7a90363f2188262d56c166234a172c5f13e4147b126f6885ab8873a3ba6674be"
+    },
+    {
+      "path": "data/games/S22/2026-07-22_g02_BV1Nsgy6cEiG/rule_derivations.json",
+      "before_sha256": "6a45b9ecaa430325de365b2e0b9680cdf9ecc59b33af344a3835cf4cc7a0414b",
+      "after_sha256": "7933cd513abd0b143aad57799e9edc8cfbd36d4aa88224f9330119ff3e6ca92f"
+    },
+    {
+      "path": "data/games/S22/2026-07-22_局次待核_BV1Abgy6tEP8/rule_derivations.json",
+      "before_sha256": "aac8b93ec5e871fa77b10cf3d03da2a7cad5f247d7a448c646805a638ab3ad44",
+      "after_sha256": "3016a98620c2585d187df2ee3bac1030ff263d612672f209a00fe87a1ec2bb84"
+    },
+    {
+      "path": "data/games/S22/2026-07-23_g01_BV1RGgx6xEun/rule_derivations.json",
+      "before_sha256": "c7deb820424cb83a6e51f1335ebb044b6083bb76b6a5e2ad4e23a71a51747419",
+      "after_sha256": "19e667d1b3c887e33d6ea13e1f87793800f7d91ae48adb50c07a48ecc80f7263"
+    },
+    {
+      "path": "data/games/S22/2026-07-23_g02_BV19Ggx6xEqE/rule_derivations.json",
+      "before_sha256": "d3690aa88420e331e87a6fce56c15b870de4902130f9b54f1a8d4280823dd968",
+      "after_sha256": "5194f086ab581a505b8642832f2bc627cdfb066749b6184860ca88c23acc1627"
+    },
+    {
+      "path": "data/games/S22/2026-07-23_g03_BV1RGgx6xEP9/rule_derivations.json",
+      "before_sha256": "114fb6f05753a0c790a070fa22be1bfff1a6c569e692010c3276616e797cad50",
+      "after_sha256": "f504aedf4f13b03a433144bb246fb28e5cb177585db6f0a10a04f43fc80edd79"
+    },
+    {
+      "path": "data/games/S22/2026-07-24_g01_BV1iMgq6ZE5t/rule_derivations.json",
+      "before_sha256": "d7009370a99fc33cd319135f4ab1e8326339b214f6b1579a226f3cbf6c3cb67f",
+      "after_sha256": "8152743b44a5120e2c760809a42408205b655fa2b1b6badfa73a1fe28562e507"
+    },
+    {
+      "path": "data/games/S22/2026-07-24_g02_BV1iMgq6ZEtz/rule_derivations.json",
+      "before_sha256": "6a0153f9df1b7219947471f8bb0a1c5d6128e6a6ff25401860aa874890e99c3a",
+      "after_sha256": "5c4b388496208796d91fe06dcb717684c7087a86777cab76fbdab267504b108e"
+    },
+    {
+      "path": "data/games/S22/2026-07-24_g03_BV1iMgq6ZEWn/rule_derivations.json",
+      "before_sha256": "1c48a2b33267e31ab3a399b0efd093b95a6b5cb8fc56fda691f2b8838964a8c9",
+      "after_sha256": "3f88e7ab6aa76b72df016ec4a73ac42b1be73cbbbe33e5c9cd2eb6f24e4f7222"
+    },
+    {
+      "path": "data/games/S22/2026-07-28_g01_BV1mE3z6XEB1/rule_derivations.json",
+      "before_sha256": "01b4c5fc1d7a0f09f4453dadf1f3fc1bb9462f7e33d0ae68bae2a3ca46431bc7",
+      "after_sha256": "6b11219e4eaff42a61729155919d23bd4166042ee076d9153b666ba705523f07"
+    },
+    {
+      "path": "data/games/S22/2026-07-28_g02_BV1h33z6tEqx/rule_derivations.json",
+      "before_sha256": "5b6929f6096454351170fd62a3bf7ced5605cf184970e044191948b42b27282a",
+      "after_sha256": "f9805031ca00623abc19716cd9b081315d67955f40dc45fd56a06ea1524163e6"
+    },
+    {
+      "path": "data/games/S22/2026-07-28_g03_BV13g3z6FEdh/rule_derivations.json",
+      "before_sha256": "02451a646f8d6b0712976448c5de89b2329549715fe715b0b513776e869cbc6d",
+      "after_sha256": "a0579d0ec65975f8b10752509019b2a64f78d7ca435ff7c939d520ed37075377"
+    },
+    {
+      "path": "data/games/S22/2026-07-29_g01_BV12m3J6wE3m/rule_derivations.json",
+      "before_sha256": "f31842125cd3fc02d307394c1d39508037828b291da3f5f522913685c8026468",
+      "after_sha256": "957532e97cf103c15434078cc8077332a87dccadb82bddfe927c0b3a7377a52b"
+    },
+    {
+      "path": "data/games/S22/2026-07-29_g02_BV1xm3J6wEbr/rule_derivations.json",
+      "before_sha256": "5401ec38094c59a6b403c9d73b06cd876ec50b01355de103e865d1257c56ca05",
+      "after_sha256": "2cc1347013b35224defabae79ea9eb6a1c2aafea16fd522a1d0c71ccd05b514b"
+    },
+    {
+      "path": "data/games/S22/2026-07-29_g03_BV1413J6YEh2/rule_derivations.json",
+      "before_sha256": "b2d1cd3455be2ab9a20e6f21117f676459dcb034da1b9bbb22f5f7e94f444e2d",
+      "after_sha256": "e9b8c45d20755ca957a4def80a4dd66fb0ff90b6489379bf6894ea7d0fc48edc"
+    },
+    {
+      "path": "data/games/S22/2026-07-30_g01_BV1hQ3t6hEbS/rule_derivations.json",
+      "before_sha256": "beb12e1c28190f13a804f1f19464ce02ced7c21cc780fc2326aba6a769639a4a",
+      "after_sha256": "4a95b3a38d3dca60310405467d101f78f47b34452da77c1b994cdf48c8c2755f"
+    },
+    {
+      "path": "data/games/S22/2026-07-30_g02_BV1aQ3t6hEcU/rule_derivations.json",
+      "before_sha256": "76ae3d56e31e799ab8743f6930c4295d3ead44fb75400cc9164f201db99262ab",
+      "after_sha256": "74ed949acad49ce645a2cd289e191816939b0fce0ae770a5e8a395917f929f31"
+    },
+    {
+      "path": "data/games/S22/2026-07-30_g03_BV1aQ3t6hEcB/rule_derivations.json",
+      "before_sha256": "6108d9be8732afb2de62f356f8ce74b4cdbd58f7fcbaaa1f96638a2ca8f2c0da",
+      "after_sha256": "414ef929c1da25db81adee0b65440df43b02e58b800acfb672990da22df53154"
+    },
+    {
+      "path": "data/games/S22/2026-07-31_g01_BV1iDGK61EYt/rule_derivations.json",
+      "before_sha256": "5c5bbfa0f154a74edd8ef12a84d7476b3dbdde9d9d35fffcb09918fbb45f4d86",
+      "after_sha256": "6128dbd9737639a0f1b4cc2b5705961f19cb341dd5e528d6bded4bf8f5e7ebc4"
+    },
+    {
+      "path": "data/games/S22/2026-07-31_g02_BV1iDGK61E2z/rule_derivations.json",
+      "before_sha256": "987dd1faf5aad75488d4594b471e4ca5653b5290b59d2ad440aa64fae61fd60b",
+      "after_sha256": "1916365ac4768e32d42a61a3384fcdf1c3b97a5ca4416c8e9f9c8a688c1631a0"
+    },
+    {
+      "path": "data/games/S22/2026-07-31_g03_BV1iDGK61E1c/rule_derivations.json",
+      "before_sha256": "d0d1bd3ca9237863a283ac0d1b949825a88f98ccc9a8aa6f81f7ab57f2763428",
+      "after_sha256": "3cd15bd74da9e8a71d198ce5dd06d459d4176721b7885b9678a5574b916e51c0"
+    },
+    {
+      "path": "data/games/S22/2026-08-04_g01_BV1q9MB6FEhU/rule_derivations.json",
+      "before_sha256": "97acd2ceefd9af004504a1c79dc85fdb801722598eed20bbc880bc6f38a7f75e",
+      "after_sha256": "46c3b433ab1a6d95c129fd8cf2c69cd59d25ff4b746e3724ac7caadc7450e11d"
+    },
+    {
+      "path": "data/games/S22/2026-08-04_g02_BV179MB6FE36/rule_derivations.json",
+      "before_sha256": "cf11d4f397e48129d699b8487c0f3916b1abbb1250d8e0b0d813b94423667c90",
+      "after_sha256": "ea8fd81a526fdb0bbc65519d1bae409443ad9d8ac0e8b8aefad9c2b73e30f6d3"
+    },
+    {
+      "path": "data/games/S22/2026-08-04_g03_BV179MB6FEne/rule_derivations.json",
+      "before_sha256": "cf3a2d20610432982953700da4bcf92f9ef74c3d1ec65cebc8678e67e383aab3",
+      "after_sha256": "93840da59ccdb8c7b01416007cce674f878f3f78ba08572ad2b2ba5ef5aad13d"
+    },
+    {
+      "path": "data/games/S22/2026-08-04_g04_BV1oXMB6fEQ4/rule_derivations.json",
+      "before_sha256": "442c7994864c45d296effc257ff1636723c5310e873c1b75be9508261cee965d",
+      "after_sha256": "93a8a0b7c4a031a8e5b117443a190b0013e67b0e33593f9f85742ba9a0b8ee35"
+    },
+    {
+      "path": "data/games/S22/2026-08-05_g01_BV1DFM26ME2R/rule_derivations.json",
+      "before_sha256": "604d2c6d64c56ae7e84f04376f3228b017423ed92d674ae9bbc4aaac61187824",
+      "after_sha256": "5609e7da527555624e2c8480e1081c70ebb18c81847cf7ecceadbca873d0794f"
+    },
+    {
+      "path": "data/games/S22/2026-08-05_g02_BV1hFM26ME7o/rule_derivations.json",
+      "before_sha256": "34a68cb045437745436f0ebe6ba5294a9f7e684a508908f433a6c261540ae624",
+      "after_sha256": "8cd2b0b02f4c6dea4dee9e18c23c273635a6ccc9469a2ab876fdb27efc135ff0"
+    },
+    {
+      "path": "data/games/S22/2026-08-05_g03_BV1DFM26MEWR/rule_derivations.json",
+      "before_sha256": "d10420166854253d1cb72ab76c2a25847b97bb3952b0559161c2f6612ac96687",
+      "after_sha256": "c0552ba861a33047c9acc4219cddcf656f128a12dc6f78987067d1b105083933"
+    },
+    {
+      "path": "data/games/S22/2026-08-05_g04_BV1DFM26ME2o/rule_derivations.json",
+      "before_sha256": "d644f18a3ebe0a3519e16a979b16245b1587b20cd2ab0bac62d59284620dca22",
+      "after_sha256": "fe72d6ec4ee7118c8dd6ffbc769c18b0de01960894fb8ea45ebadafbf1c68e8c"
+    },
+    {
+      "path": "data/games/S22/2026-08-06_g01_BV1TDun6wEqw/rule_derivations.json",
+      "before_sha256": "fcdd0c5f6a12cc6c0113e7c9f1d4ad5534b0dd962b11a8e711c0888f449bba25",
+      "after_sha256": "321e1348f60f7e727dab214d38a5510cab97afc99088b4f3d5b6a2318829832d"
+    },
+    {
+      "path": "data/games/S22/2026-08-06_g02_BV1mDun6wEhp/rule_derivations.json",
+      "before_sha256": "32f6d3b3d233039e793fcceb26c4411a4500db2af56cb69163c971fa9988a6af",
+      "after_sha256": "e6a88c1ec363826f34b900deb0db0e192d48fa8fff3fec1890d9a826bcf55729"
+    },
+    {
+      "path": "data/games/S22/2026-08-06_g03_BV1mDun6wE3m/rule_derivations.json",
+      "before_sha256": "5d842e38944d2fe0dc13aa95eb61241b44208bb164654730bede308df30905f0",
+      "after_sha256": "06bce20e1803d680c062dead09619009281d79844e85f79fa7fbf746695a9cca"
+    },
+    {
+      "path": "data/games/S22/2026-08-07_g01_BV1pSuN62EoT/rule_derivations.json",
+      "before_sha256": "e3dd0bf04fcab4562b25d95400e228d7993836402f07adb67cf07e63c1de31e4",
+      "after_sha256": "e69e8e73a3b1395088f59ca58789ea9728e16034d5441c292ebe755339e38892"
+    },
+    {
+      "path": "data/games/S22/2026-08-07_g02_BV1pSuN62Ekr/rule_derivations.json",
+      "before_sha256": "45be8535a7f1e292d22c56dde5e503ebe4ccfcb28106069eff1f4327d33017b5",
+      "after_sha256": "12dcef4b1b29aeee26fb4624447e41cc5d3032fb6d51d38248f9dcbfb4b44299"
+    },
+    {
+      "path": "data/games/S22/2026-08-07_g03_BV1CSuN62Ee2/rule_derivations.json",
+      "before_sha256": "604e7cbfb7e9cc9a96a161db6e5ed6d529d618053ef3576073826b569d279117",
+      "after_sha256": "88e6577e8c197bc2b16c567f1ab0d7154226ed3ea1a471eecb514cf934c46791"
+    },
+    {
+      "path": "data/games/S22/2026-08-07_g04_BV1CSuN62Eey/rule_derivations.json",
+      "before_sha256": "5cff5ec2e3819419e6ef2172caf4e3b4c9614e0d4d5fc02590d34c136c9177b7",
+      "after_sha256": "cf75009e2938e6591598bc0a91955b76eea244defe83af792c1b356a3c5f6931"
+    },
+    {
+      "path": "data/games/S22/2026-08-11_g01_BV11Mur6nEZb/rule_derivations.json",
+      "before_sha256": "4fb9008d80fc391a0650bedac9ea2efbea0bb3933f45d358bc3064d4bb4aa895",
+      "after_sha256": "f6c8b2ea61bcbb58adc77fae1217dad5b0885cc2539655b5b56ac11c696fb706"
+    },
+    {
+      "path": "data/games/S22/2026-08-11_g02_BV1KMur6HE7b/rule_derivations.json",
+      "before_sha256": "29516675d8478e1ea03f1aaf657817f7c6a906a8f6faa3857fb24cb0a650dafc",
+      "after_sha256": "d1083469548c2df30daed87c71e350b610559cdb74fe579fff2838cdae06b088"
+    },
+    {
+      "path": "data/games/S22/2026-08-11_g03_BV12Mur6nEns/rule_derivations.json",
+      "before_sha256": "e6e86b00033bb483d8097fee750a0bae7a3010ee742431227d1898920a7add8a",
+      "after_sha256": "0c74b67bc09a8c2280b522a1a54ff51870e1a51f9108e3990e13d3a5828e521c"
+    },
+    {
+      "path": "data/games/S22/2026-08-12_g01_BV1JNgj6gEty/rule_derivations.json",
+      "before_sha256": "9d9d29bc31f46d25dcf27dcbb373e2083f3e46af1048b6585ce1fb68b072abcb",
+      "after_sha256": "a4ef9b3aea4802104746c1399693f560fe4a815ea4884f5eacecab483535d866"
+    },
+    {
+      "path": "data/games/S22/2026-08-12_g02_BV1JNgj6gEaf/rule_derivations.json",
+      "before_sha256": "7fb525a5e3a600e41b0177e7c19a2ae67f5db37c7b914a4f1b55d6cec962df23",
+      "after_sha256": "aeaaac5edb876ce7e54455962ba9d8666f6e80e01d243de0178531037009c2a7"
+    },
+    {
+      "path": "data/games/S22/2026-08-12_g03_BV1JNgj6gEta/rule_derivations.json",
+      "before_sha256": "f2f22889eaff2eed6ba76d477abc29dbcf2476c6c227fdfe770d2f8682379af3",
+      "after_sha256": "a5c328769a332f26ce1acf43edac7638eb9e3fc00b426805fef5f7b333ba9342"
+    },
+    {
+      "path": "data/games/S22/2026-08-13_g01_BV1GXgW6HEmA/rule_derivations.json",
+      "before_sha256": "a160e31209c542cb28b0624c48ff4d976919725263b302689bcc3331b5f83650",
+      "after_sha256": "fcc9c51369fcae8dfa44230f393f3bc5ff6703030b09db49658370b6ee2fb9d4"
+    },
+    {
+      "path": "data/games/S22/2026-08-13_g02_BV1aXgW6nE6E/rule_derivations.json",
+      "before_sha256": "efdab291d50dfad010ea430f61a83506e62c94dece39a52d72d2cd8bca85f8d1",
+      "after_sha256": "53787e1abb5122ae0f2292f908218ce4ab7817ec8bd41ebe7c9f38322ba14925"
+    },
+    {
+      "path": "data/games/S22/2026-08-13_g03_BV1XXgW6nEZ5/rule_derivations.json",
+      "before_sha256": "e4a543def2a3b54178b8460ba7aeb41b547eac4b19300ceea6061735b66f9ff6",
+      "after_sha256": "0071a15bbe3b5b09464a3a1331adcb70b4020550bfaa09074f233d3b1de33cba"
+    },
+    {
+      "path": "data/games/S22/2026-08-14_g01_BV1PigN6nEjA/rule_derivations.json",
+      "before_sha256": "5f7c8f9786465377242b282a8773eb37238ab2057b90c783b09784c80d1e9b95",
+      "after_sha256": "e8817e34de4600cc44671b6be13e44e3e381d531d0030075d028fdb88d59b491"
+    },
+    {
+      "path": "data/games/S22/2026-08-14_g02_BV1yigN6JE5Y/rule_derivations.json",
+      "before_sha256": "a73092ef9e94421633afe551d0b127a2a62ef047587f28508628120812db38e2",
+      "after_sha256": "276a9cad3ae6227268b56566521622204a85435dfd07c73028690a821f859c8a"
+    },
+    {
+      "path": "data/games/S22/2026-08-14_g03_BV1WigN6JEVS/rule_derivations.json",
+      "before_sha256": "5c0095feed8f634be4965dd5e6b60d7c9d1eeb6de1d96cae313cb61ebc371657",
+      "after_sha256": "78019adf2801563264d83291bfb55b1f120bf2f073176a1dbc4c8e95be8a77d6"
+    },
+    {
+      "path": "data/games/S22/2026-08-18_g01_BV1dc836KEjJ/rule_derivations.json",
+      "before_sha256": "1ade610dd2f794adbca9a24b9b85417643eb9b2f62145860f8dbceb01a43027d",
+      "after_sha256": "b6ac47c6bd75d666c2b16cf955d3f9b7aab4aec29311263d5686780155114bbc"
+    },
+    {
+      "path": "data/games/S22/2026-08-18_g02_BV1jc836TEt1/rule_derivations.json",
+      "before_sha256": "08abc5f4e1e55f6a2fe7f4c7bdf68e4e09bd8aa7afd8288b629d1c499a7d50fc",
+      "after_sha256": "e17bc5ac9c99f97e5440fa47dbb247e169d408a45cc1f5aebca44c6eeaf33a50"
+    },
+    {
+      "path": "data/games/S22/2026-08-18_g03_BV17f8g6BEFQ/rule_derivations.json",
+      "before_sha256": "e5f7865ea367f7f4792a408d2aeecf7df217562411b85ed21922c593939e40cd",
+      "after_sha256": "2b80965d7565efdff8241f30c425e5d1450cce029826239a9b7b452ff6b9cb6e"
+    },
+    {
+      "path": "data/games/S22/2026-08-19_g01_BV1tj8p6REqy/rule_derivations.json",
+      "before_sha256": "56ef9bd8c02c34e6be9483c1f25e53ed3ba508a4a86bd787f61f9da3cf05518a",
+      "after_sha256": "6a7f35673fc86c85fad58b78dd0df9d2424e7a1dd1bbac1ca375b2894c487770"
+    },
+    {
+      "path": "data/games/S22/2026-08-19_g02_BV1tj8p6RE2h/rule_derivations.json",
+      "before_sha256": "930f4dbb6af49574be888ecf550f97b1d50052dfa686100d43c4378302acce81",
+      "after_sha256": "d7a896e01b9c78ac137bab07741f32919cc3971cc3af33f15d723a09e671a0a1"
+    },
+    {
+      "path": "data/games/S22/2026-08-19_g03_BV1tj8p6RE1V/rule_derivations.json",
+      "before_sha256": "26e430a898eb8b6f5e6ccd5df4504f69782dc6c07a562efaed11ce3a802f2462",
+      "after_sha256": "a17938152b91c9bd2d38c512fdf605ac282bd7db7b957664ddfe91aa16c2419f"
+    },
+    {
+      "path": "data/games/S22/2026-08-20_g01_BV1kG8A6dEfF/rule_derivations.json",
+      "before_sha256": "22dd6526aa3c1539fe066a1ef7365467e4488c792c66027911b88cddac7ad837",
+      "after_sha256": "58a2ad726143fb2e6f39ce241993c1fc44e4612175544efef5d267d0c5713e62"
+    },
+    {
+      "path": "data/games/S22/2026-08-20_g02_BV1kG8A6dEye/rule_derivations.json",
+      "before_sha256": "8e5c20c061efd767619dd4a33dd809e8d4caf617d9bd9c607ce208ac7e3812a0",
+      "after_sha256": "8e12dcf80ef9a6d5badf1d0d629e6f7a205f5363bfab72fab28b13bd128e5fd9"
+    },
+    {
+      "path": "data/games/S22/2026-08-20_g03_BV1kG8A6dE7A/rule_derivations.json",
+      "before_sha256": "3e88fc8070c362547b754e7414c848c4b0dac6aaab9aede86c478a2f5dba26cb",
+      "after_sha256": "34e86603ca64c12e613d22eb162e2dcd26537daacaac3b9341a49b826a904b83"
+    },
+    {
+      "path": "data/games/S22/2026-08-21_g01_BV1jM8B6jE2i/rule_derivations.json",
+      "before_sha256": "6b6333555bce5115c1ec25b3870e00308fa81be21ff57c6b28bc2ee1c93c292a",
+      "after_sha256": "f6850f1851fcd5c649869fdf6f6624339ce3b35b91fcb3549f8cc8fc0b66a39f"
+    },
+    {
+      "path": "data/games/S22/2026-08-21_g02_BV1jM8B6jEkF/rule_derivations.json",
+      "before_sha256": "757335a1f4123dadd5923e3683ce1c7f436c84596c3874b89794b60e680a8287",
+      "after_sha256": "46f48376baf4de3f42ec23dcba7d629eb08bb81d203d8b0c94e20af2186c99d3"
+    },
+    {
+      "path": "data/games/S22/2026-08-21_g03_BV18W8B6KE7C/rule_derivations.json",
+      "before_sha256": "bb6f5b4f54442b15900361900ea93e7377ccac0bba760d32d9447a8509f19872",
+      "after_sha256": "083a6ff887acebf046106b87cea4da71877c46d98d2a547dd1519f4c8bea044e"
+    },
+    {
+      "path": "data/games/S23/2026-09-08_g01_BV1KfYE6HEDv/rule_derivations.json",
+      "before_sha256": "e101abe7670143654418273baecc4b8f3edb3863aff0764fe3564da18eb1edda",
+      "after_sha256": "849328d3646effb431966e6e085d6bb192d0d7dfd2ebbf3219680c81b831ba0f"
+    },
+    {
+      "path": "data/games/S23/2026-09-08_g02_BV1sAYJ6UEoF/rule_derivations.json",
+      "before_sha256": "1dbe8a8460956725c86ee422b876c4b87eee39713085a838d725637c62439300",
+      "after_sha256": "c98f1ba27e3b9e0a54033c6617fe5036ca93ea1e973d9563185405949d0ed5ad"
+    },
+    {
+      "path": "data/games/S23/2026-09-08_g03_BV1U9YE69E6Q/rule_derivations.json",
+      "before_sha256": "716e7667fad6fc64facbcec1ab2ccd93f3982afc6b95f1329a46f2bab1f58d77",
+      "after_sha256": "dd209128675688568b6d1f42ae8d8570764a260f2efca1e1d4c6e63b36771b38"
+    },
+    {
+      "path": "data/games/S23/2026-09-09_g01_BV1LdY46xEUu/rule_derivations.json",
+      "before_sha256": "5432b036804827a01e80134d7ab58ae6ab18780a6af029b4cc36b066f2feddf3",
+      "after_sha256": "708134df46d206ce8515ccf529fafec11676a2a9816936dde0e523388f644998"
+    },
+    {
+      "path": "data/games/S23/2026-09-09_g02_BV1ddY46sEgn/rule_derivations.json",
+      "before_sha256": "4c58e6ac4a404cd3ba4a4d1b7eb3ac3602dd10f14015e75b1cc20fc764713346",
+      "after_sha256": "236bb0cce760cc598e35a661f77ccc9ad884e71e2967b0d0cd64022c20597c3a"
+    },
+    {
+      "path": "data/games/S23/2026-09-09_g03_BV1ddY46sEzY/rule_derivations.json",
+      "before_sha256": "3a43a8251793b0cea07b2e1ddc4fc270db13a25b294d9ded5cb595b2adf65002",
+      "after_sha256": "5d9dee313f5ebe7100e6d44fe4ffae134402c00789451eea8ac7ce580a6d2889"
+    },
+    {
+      "path": "data/games/S23/2026-09-10_g01_BV14sY36hEp8/rule_derivations.json",
+      "before_sha256": "c4c4371a8d3a2a0bc65c1b731104022d78dd712e44bbaf396536ade247a1872f",
+      "after_sha256": "52b762cfae2cc38a40f0be32d13c6469d171947c14a1581d91f3de2393fdc41d"
+    },
+    {
+      "path": "data/games/S23/2026-09-10_g02_BV12sY36hEQh/rule_derivations.json",
+      "before_sha256": "ca93a8ba4210423eaee415474cc3d32c3ab909241d1cb74b8f4b0c72caca0917",
+      "after_sha256": "f50bd3d966fed1187d89eed5d9833b2f6bf53b42f573f8b48df36d3b0b2e91c4"
+    },
+    {
+      "path": "data/games/S23/2026-09-10_g03_BV14sY36hEPC/rule_derivations.json",
+      "before_sha256": "7daeca8b0a6725376d5fddfa7cd066ac193005310223dca16ae2669e71a727b6",
+      "after_sha256": "1d4f815b629980d5a88d2e30673c3d1464b8ef6b6aa00787d810749b1cc3c58d"
+    },
+    {
+      "path": "data/games/S23/2026-09-10_g04_BV12sY36hEdr/rule_derivations.json",
+      "before_sha256": "aee07a901208e29b442dc2e812d09cf8c6a9c0ad157b2de7f93cb199fb04a40d",
+      "after_sha256": "41171a2e0bd27ede02d8a8d55c0fa66e5f7ed3336b33e0a6713e4fa5b0cfcdc3"
+    },
+    {
+      "path": "data/games/S23/2026-09-11_g01_BV1S1YU6rE6R/rule_derivations.json",
+      "before_sha256": "ca3fbb5dfcc454246fdf48aea794f45afd0fc906cdf90838bd70694750037d70",
+      "after_sha256": "38e96874f04f83e2089915973756b84ac86c896f23681bb18f2eb798f5413a93"
+    },
+    {
+      "path": "data/games/S23/2026-09-11_g02_BV1g1YU6kERd/rule_derivations.json",
+      "before_sha256": "9e3eb8f66a6027c0ad58608088d5703e316f916bb56c8eebb78432fb494bc5d4",
+      "after_sha256": "beae58a8b4f1eb731fe5608ec4546043c8005ce1dfc2aef063d4c1330110280b"
+    },
+    {
+      "path": "data/games/S23/2026-09-11_g03_BV1D1YU6rEhh/rule_derivations.json",
+      "before_sha256": "e412fe23102ca17e25cf70a935e4a8ed2361cb85a49662ff69305b7ede1efdb3",
+      "after_sha256": "e43b2472a60359ee371cc04a1277373ced1a95fb3b1bf20bd1dc7ca43ff87c99"
+    },
+    {
+      "path": "data/games/S23/2026-09-15_g01_BV1theH6cESW/rule_derivations.json",
+      "before_sha256": "49a4a8a44d9758fc909fc5d038d520befb1fb11c0019d41b8ff225b0b5eddad5",
+      "after_sha256": "e6057abfd6799ab753f6900ddf0de541d9dcbf98d9a6d536b721f1125cd68ad3"
+    },
+    {
+      "path": "data/games/S23/2026-09-15_g02_BV1MheH6wEBb/rule_derivations.json",
+      "before_sha256": "aa96dcb188c60a901b8c36a8d5a212e92a6f6b1adfb37b1443a20732033d89a3",
+      "after_sha256": "e0dac7c6747daa1aa0287f162b283a2c43d2a1b773ed502a1643fedb725610dc"
+    },
+    {
+      "path": "data/games/S23/2026-09-15_g03_BV1theH6cE6x/rule_derivations.json",
+      "before_sha256": "9cb8cb2750871e4e2499abd8d6ee3375b2abacc2082f5bae257b545fb14830bb",
+      "after_sha256": "0ead380f241bf572021a1caae0ae6c3267bf75a3467b6cadbef4e86a9a3f39ed"
+    },
+    {
+      "path": "data/games/S23/2026-09-16_g01_BV1CAeA6qErr/rule_derivations.json",
+      "before_sha256": "4e7a258f997a9638db78e06fe7ba15e710eda82de564aec6c2a0dad76e282d63",
+      "after_sha256": "6236ad306572956637ce34bbd0ec08b42e5cea65c430c296eab4bab82c9a9a36"
+    },
+    {
+      "path": "data/games/S23/2026-09-16_g02_BV1yAeA6qE7X/rule_derivations.json",
+      "before_sha256": "14c0a95949dd21266248caf57d130452acb2241b9f70d7e3a872ef31fad4fa35",
+      "after_sha256": "892968e3cef110acdc7314ea10c722527339a0dc53faf720a7f95a14e14a3bcc"
+    },
+    {
+      "path": "data/games/S23/2026-09-16_g03_BV1yAeA6qEMd/rule_derivations.json",
+      "before_sha256": "5a77cf2aad75a683e392525e842d7957b09923b7b5fde58831c989d661a3b189",
+      "after_sha256": "53e8e33be91413f120b2912ecc7fa01b5228ae81a7d6764fe3fc03b80a5cab03"
+    },
+    {
+      "path": "data/games/S23/2026-09-17_g01_BV1nJer6gEkx/rule_derivations.json",
+      "before_sha256": "7bd979b53f732e466dc8bde1c440d9f9e9d86dbb8e6ec3f3ceef4ea388fade63",
+      "after_sha256": "c3cff5118c761aba3d7058b47bfa0d8530debb59bb1280f71e5e1ccbc93e1cb3"
+    },
+    {
+      "path": "data/games/S23/2026-09-17_g02_BV1nJer63EDh/rule_derivations.json",
+      "before_sha256": "ba47d2c81768872674d9d5ec4e7b0495b45d8c8203896c6e83c5b3e029e25621",
+      "after_sha256": "8f1591043f1b9f96d5e09267af5ab0c336d5d75d3c57071afea66fb4b345ee6b"
+    },
+    {
+      "path": "data/games/S23/2026-09-17_g03_BV1nJer6gEBP/rule_derivations.json",
+      "before_sha256": "a33f3c9f4fb9402d9369aab1857b1121412a423f0be0413a81b407b4072cb6b1",
+      "after_sha256": "0ec512e3be78a40cf5075960297de06b9083ef5e03912273626e5e40db08c0fa"
+    },
+    {
+      "path": "data/games/S23/2026-09-18_g01_BV1tneS6kEnQ/rule_derivations.json",
+      "before_sha256": "7042d0b6fdec1c4f85dfe566139c6b4ccd4ea6477a6a47bb91af48a2223712d1",
+      "after_sha256": "ee9d4c19c19294ad13f1d1fd046baf894be192ca68a7d11cf7c64334c961e5f2"
+    },
+    {
+      "path": "data/games/S23/2026-09-18_g02_BV1tneS6rEx1/rule_derivations.json",
+      "before_sha256": "97a2f63d5bccd6bddc0842aa27d395d04de1a1f7192d2a4b15bbb2393570ca5b",
+      "after_sha256": "a8133f7a3dd57668b435604950a4d51ca0efcbcfbb8c36e002f63cf95ed52194"
+    },
+    {
+      "path": "data/games/S23/2026-09-18_g03_BV1MneS6kEWz/rule_derivations.json",
+      "before_sha256": "45f307f450cac0c1b6f2fa87c9102456d7ba04f9e2fe700a947e5081f6eef3ca",
+      "after_sha256": "fde7b7597097ec13af477aa25b82ef17c2b0c7d982e9b708579a52f4aa09e346"
+    },
+    {
+      "path": "data/games/S23/2026-09-22_g01_BV1gBhn6dE5c/rule_derivations.json",
+      "before_sha256": "4a99034ff1f7d6700b71c36fc89386189416e45d2d19fd0564cbf7845649b01c",
+      "after_sha256": "eeaa98e4bfa730af8b364f923f8452983bbcaa50079e5e4d73b4a3adb04026e4"
+    },
+    {
+      "path": "data/games/S23/2026-09-22_g02_BV18Bhn6dEJ6/rule_derivations.json",
+      "before_sha256": "2a353c1375f6860748b8cbf27166fed8ea965c121821b84ac2aed2635a692eec",
+      "after_sha256": "828cff8c2ec31d2352c4f621fd8c4fbfbb161c6db97f28aee259891819160d92"
+    },
+    {
+      "path": "data/games/S23/2026-09-22_g03_BV1gBhn6dEEJ/rule_derivations.json",
+      "before_sha256": "45c48685a7aae8043bb8d7510487cc764cf0c9eecfcf087bab0c8dbd83b0619d",
+      "after_sha256": "e59251641631a9c7569ec79b47a2efab5989d49a567a79f323b90083515b3b5d"
+    },
+    {
+      "path": "data/games/S23/2026-09-24_g01_BV1KaaT67Eca/rule_derivations.json",
+      "before_sha256": "6360002ac61d3659e695b5f2851fb24914aaeac90361881f5b0542f85737806b",
+      "after_sha256": "153b0960f8cae757d34787d315a88fd297d7dec1f43de717db64308affaf9c3d"
+    },
+    {
+      "path": "data/games/S23/2026-09-24_g02_BV1saaT6jEyK/rule_derivations.json",
+      "before_sha256": "4058848a6b9651050437438eac7b56e55e18ddba557bc4c30edd5e6c7fce3d90",
+      "after_sha256": "b0ddc66ccad208580c0e72e41b2cff44a4edf58db29d8de79ddd55d8fbd4a9e5"
+    },
+    {
+      "path": "data/games/S23/2026-09-24_g03_BV1gpaT6WEMb/rule_derivations.json",
+      "before_sha256": "a7b35a71fbfd397ff1a9fe925bfa392f570b0c8bde0e74777cf925cea717ecf4",
+      "after_sha256": "5c5896c3dcf3bb03c61bd61cc9d2730f29575d14f143e9999c2bce7c131d123b"
+    },
+    {
+      "path": "data/games/S23/2026-09-25_g01_BV1NBhU68EUy/rule_derivations.json",
+      "before_sha256": "9ac5eb429cce8e233c4b5a687233a5e0bafe8760c51a7801c544fe92dfca249f",
+      "after_sha256": "dd9683f77afe1dfdd8036375de79bdd22e353ac83cebe60fc2942be9d0a31ea6"
+    },
+    {
+      "path": "data/games/S23/2026-09-25_g02_BV1KBhU68EjA/rule_derivations.json",
+      "before_sha256": "1358a775d23be70197209fe6092bcd2b57aef4cdbbde663b3d4c36999535ebd9",
+      "after_sha256": "a8895991658b4e003548004f7b2ef151e2af6e47056503d2eb288939ecd45a1f"
+    },
+    {
+      "path": "data/games/S23/2026-09-25_g03_BV1NBhU68EyT/rule_derivations.json",
+      "before_sha256": "d486d7242b32a0433f66979456e513f55f066de02ecca8715db4a56d299f4362",
+      "after_sha256": "eea5de68463a47c3e5a224fe52cd293a317a81e4595fa70f2cbd3282ab768806"
+    },
+    {
+      "path": "data/games/S23/2026-09-29_g01_BV1RPaW6zEcm/rule_derivations.json",
+      "before_sha256": "75379fd79308434da5063b3c847c80722680893f5f01ebbac4321e962f8848f1",
+      "after_sha256": "fa9f1e250b0f51e367f91339cbf31662aa85b18d6cdf8e92a11f6a6e11be2670"
+    },
+    {
+      "path": "data/games/S23/2026-09-29_g02_BV1VPaW66EZz/rule_derivations.json",
+      "before_sha256": "f863155123428aa1ab3f453cf278eaf11128b7a0b9a36dcce4cc84886e1d97d4",
+      "after_sha256": "4fa93e837ffc571c827049545085574620a619034b40a4b00b6d8b7f3a942a2a"
+    },
+    {
+      "path": "data/games/S23/2026-09-29_g03_BV15PaW66EjW/rule_derivations.json",
+      "before_sha256": "852c8c6bdd5dda34a0f0df950d0e6755cdcba328d5edb60df5d0da56885b021f",
+      "after_sha256": "8731f8bcd408abbbe4965ac63c425dfedcb959870059edf48ad0a51b721d9727"
+    },
+    {
+      "path": "data/games/S23/2026-09-29_g04_BV1RPaW6zEg8/rule_derivations.json",
+      "before_sha256": "1c74a4dc90c40ee0c3aed5f71c9abfb040685883c35a5387a48c8d13fbac6eb0",
+      "after_sha256": "b97f32ee000ddaa963a737a930836ad7d730f2d78829f7348f3b0eef9321d65c"
+    },
+    {
+      "path": "data/games/S23/2026-09-30_g01_BV1V8af6zE56/rule_derivations.json",
+      "before_sha256": "48b1734d04836361664dbb603d4f4f9145fa28a031cbd1aaa023d0a816b132db",
+      "after_sha256": "133069b8db94eda3812560df865544d6bdf06a78d31e80a2a9621d4261cbafa0"
+    },
+    {
+      "path": "data/games/S23/2026-09-30_g02_BV1V8af6zEtX/rule_derivations.json",
+      "before_sha256": "2c5d1a5de0809a8b643187d732b9fc36bfcf13acee397329c4bc073d4bb3f825",
+      "after_sha256": "a96b47a068cecc6caef312786ca16b8c6ed46a7af63b9340e8ed2c08a44c3446"
+    },
+    {
+      "path": "data/games/S23/2026-09-30_g03_BV1V8af6zE5T/rule_derivations.json",
+      "before_sha256": "c5c7f5622684bf6d888f946f9f619604f8f6cf35f3f183fd8f759f8ca27100cd",
+      "after_sha256": "15a72a78301840ccae5aec2c37817cd1ad5e72e8361690e38d24ed30fcc56c71"
+    },
+    {
+      "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/rule_derivations.json",
+      "before_sha256": "7a1905863683f6416ba1c691f161cd255374929a57215f4a74f153f406115122",
+      "after_sha256": "7656070abdd2a38f058d5b4ff9183962320bbc3fb02a3e7f90151b101ae956a1"
+    },
+    {
+      "path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/rule_derivations.json",
+      "before_sha256": "ca4619a93ab45a25dc030a79905e7237e15e6cb5c72ad024a3e177da465d862f",
+      "after_sha256": "031f0d53b9b99fb7b4a1b819552e85cb29460ff2636aa64edf72403225dc3836"
+    },
+    {
+      "path": "data/games/S23/2026-10-01_g03_BV1D2ak6XEMa/rule_derivations.json",
+      "before_sha256": "00cd61bac258b7b6c8c8103e0aa353b790cbb1739c64fca5af7d616a51fa1a27",
+      "after_sha256": "460059213654af14f5bd68cd959d6c30b892ae2d883a9dc42b26a9b13c785681"
+    },
+    {
+      "path": "data/games/S23/2026-10-02_g01_BV1N3aQ6zEXr/rule_derivations.json",
+      "before_sha256": "1bb56b26bd345882a108d35237887ee151a20dd90d86381e35737189d0d29be4",
+      "after_sha256": "b50bfd855e17511d2e288e935a7454a14c58e301119fee8f027b4a16e2b68327"
+    },
+    {
+      "path": "data/games/S23/2026-10-02_g02_BV1UNaQ6kEWR/rule_derivations.json",
+      "before_sha256": "7bc444f4ab5376875a2691f437316cb506f6c22858f3fe56cf56aca232fec063",
+      "after_sha256": "5407d9c92446b4985ed966e5ca7f0bcde94a0c6f737d2263ba5b972bc1c8714c"
+    },
+    {
+      "path": "data/games/S23/2026-10-02_g03_BV1K3aQ6zEB9/rule_derivations.json",
+      "before_sha256": "4e179572cd65469ecc7ca2171250c994f138c8889ab584678138538924dadc2a",
+      "after_sha256": "1bc41fa0d7103fbdd269bdcfc03f28d20ed1a9c72ebab56bd22015f64f0af23a"
+    },
+    {
+      "path": "data/games/S23/2026-10-02_g04_BV123aQ6BEu2/rule_derivations.json",
+      "before_sha256": "8608049d3272b76892144e6bf61363b5d08b6dbf69358bbf4a222e4f717b43f1",
+      "after_sha256": "337df8b54838b69ec1dda1eeb806498f72219251ee8f0c41e92dd227135b8d84"
+    },
+    {
+      "path": "data/games/S23/2026-10-06_g01_BV17xpA6aE77/rule_derivations.json",
+      "before_sha256": "b58b014cef6c1a3ac69cafbebc9bc314b9cfaa0ac432f28d7e7e53db84cca7a2",
+      "after_sha256": "2f8cd4bcbbc13895ce04651dc4cfb75bc4494cddd90e8a84c4d39a6dae3fefb7"
+    },
+    {
+      "path": "data/games/S23/2026-10-06_g02_BV17xpA6aE7N/rule_derivations.json",
+      "before_sha256": "d4c79b47ac38e4b44178af4475ffedc9e9be24de97ff20c4b6bddeb412e2b418",
+      "after_sha256": "2adf5842ae4147ee870a51e34804e240f1a6f5f3e3de973d7fad044bf0afa428"
+    },
+    {
+      "path": "data/games/S23/2026-10-06_g03_BV1EspA6AENf/rule_derivations.json",
+      "before_sha256": "53c230cc1794aaf17a89b592fe16acd58764264ea2b1f7af5fee1105d71c9fc5",
+      "after_sha256": "5c2f9ffb31ed5f8f7de22de45e43517c7f94ee98234cd1d102d1df18d2330422"
+    },
+    {
+      "path": "data/games/S23/2026-10-07_g01_BV1SmHy6eEQQ/rule_derivations.json",
+      "before_sha256": "68711115d6ade5666e6ed54b6e1234a9e849c895b84e18545ed0096cee3543b3",
+      "after_sha256": "a4b1f051c34748aaec9465700aeaae76c8255d219b18f9a04a1e1ed549873ea4"
+    },
+    {
+      "path": "data/games/S23/2026-10-07_g02_BV1gmHy6vECS/rule_derivations.json",
+      "before_sha256": "5c9d6fb732a01c779d5084b4d5c3a329b366c7b87debcba4feb3bb467252cfee",
+      "after_sha256": "dc0507d1be681cec39a2a2c2f34d387fb2129565dfc83f3d60355bb7de6c2058"
+    },
+    {
+      "path": "data/games/S23/2026-10-07_g03_BV1hmHy6vEGv/rule_derivations.json",
+      "before_sha256": "5838db8b1a5c9f036abfbfaeaeb0d0c95541ce9463fb36880867d622b0ef7db5",
+      "after_sha256": "fa45920cf2bee50cf73bf3e5b55901a5aa58fb127a933dd9d258862485ad7860"
+    },
+    {
+      "path": "data/games/S23/2026-10-08_g01_BV17mHX6qETb/rule_derivations.json",
+      "before_sha256": "e6e74e7620d3e30afb8f73c8eef44738628b72b63699cba96b07f3a3b12d83c6",
+      "after_sha256": "c549e5e9c752b952a5e735ea1eb1f9a65cb9026c74ba5a4f965476d38728a257"
+    },
+    {
+      "path": "data/games/S23/2026-10-08_g02_BV1ZmHX6iEcx/rule_derivations.json",
+      "before_sha256": "d20d32758e865a25d99947e4be4ff44d7d7eb23a30993caef7555aa897638ec8",
+      "after_sha256": "b3a8a70b4a1dffa075d02dee7e90f8a86ad2ae4658f6089ad9c1743e5d2e1716"
+    },
+    {
+      "path": "data/games/S23/2026-10-08_g03_BV1ZmHX6iEW4/rule_derivations.json",
+      "before_sha256": "5007e0913ba2fd8d6a08f3616d7e5f0d109d5568aeda117f0b618491cbfe3687",
+      "after_sha256": "d1d9afefb682df754ed8493c6b633027a8a14d8859ab86b1a8eda0a790ff735f"
+    },
+    {
+      "path": "data/games/S23/2026-10-08_g04_BV1omHX6iEQz/rule_derivations.json",
+      "before_sha256": "16b5bc7921e2cf0911c9d65c3dcef4d135ea71957b52f37c6fea3620bb31065c",
+      "after_sha256": "914168baadf9f8fe99050a5a917a2b41a490afc8f2e7bcb6a988d128482db6b7"
+    },
+    {
+      "path": "data/games/S23/2026-10-09_g01_BV1U3p86dEHL/rule_derivations.json",
+      "before_sha256": "d76188210dca1a4e77cbf641c28ccb70eb4201657b3c0661681a0e6fee40ff62",
+      "after_sha256": "7be99179d382b903c3caa04885a893e50cda53c7256f664a11159529ff328d14"
+    },
+    {
+      "path": "data/games/S23/2026-10-09_g02_BV1U3p86dEYR/rule_derivations.json",
+      "before_sha256": "a7a572400a46fd0a93fd6c491a62c838b0b0a413a4a9949d8f2d9cec33768456",
+      "after_sha256": "8d9760da3e20e18253c4a1d6e68e067f1b9e788844e1d7715c9e0f19be5ae858"
+    },
+    {
+      "path": "data/games/S23/2026-10-09_g03_BV1U3p86dEJY/rule_derivations.json",
+      "before_sha256": "978c7ad1778f58324bfb0067cac559e29465ba337cd1531b71473c48b8d25861",
+      "after_sha256": "d7af4123cecf032da37bc3ca31bc13a95f2674ff0278986e21c2dd2ccd814be3"
+    },
+    {
+      "path": "data/games/S23/2026-10-13_g01_BV1zmpB6PEWL/rule_derivations.json",
+      "before_sha256": "d374687db294a8bcebbc695b950c58eb0b1f8af6af3913326f096f44a9c6e816",
+      "after_sha256": "aefbaa74eceaf993699eed9e798503cf76cfaea87f0d8d7ef6ab27f7777f2f2c"
+    },
+    {
+      "path": "data/games/S23/2026-10-13_g02_BV1zmpB6PEcF/rule_derivations.json",
+      "before_sha256": "a2edff39537604dc424c0f6dbae3e2f68dca4ae240cdf8751877cdd3e8537aa4",
+      "after_sha256": "72796e22b20bce1f6d2a2c65455b80a037aa14870bfd2e8aec6a126da90074ee"
+    },
+    {
+      "path": "data/games/S23/2026-10-13_g03_BV1BmpB6PE2C/rule_derivations.json",
+      "before_sha256": "dc8d3abd9e90e1c86352621d1278865feccc2296200cb26dfd41373aff7da307",
+      "after_sha256": "31fbe30befec9f0e0804a9ab2a7a33d5f70e5e2213751a539b96c2615c39f583"
+    },
+    {
+      "path": "data/games/S23/2026-10-14_g01_BV1Rgpm6nERY/rule_derivations.json",
+      "before_sha256": "60ebd0a67dc42222c2c33ddf8f1f358131a8b3020507aa8f89f8ac8d04f4a0f7",
+      "after_sha256": "5bc437b1dd86477a145395269ec8a6951d238eb530557f3cacd7dee1acb7497a"
+    },
+    {
+      "path": "data/games/S23/2026-10-14_g02_BV1vgpm6nEz6/rule_derivations.json",
+      "before_sha256": "aa1899837a87b854499bfee1e4a441a5cd64e15fb3c8b4dbb433d2942527a2f2",
+      "after_sha256": "811c8efce342c2199099228d4176f55a6d8075e2ce07c21e0342637351a2a148"
+    },
+    {
+      "path": "data/games/S23/2026-10-14_g03_BV1vMpm6QEdM/rule_derivations.json",
+      "before_sha256": "530fd1f2ed6aff2dc071477d3f2314cf59f0286b64608c61a8ce8b5aeb21c307",
+      "after_sha256": "8a6ab197af52717bdfeeb4baec282c032ae7c11e5957c870e4a7192d961f1286"
+    },
+    {
+      "path": "data/games/S23/2026-10-15_g01_BV1i6J163EnN/rule_derivations.json",
+      "before_sha256": "97fe2a6f547676a11fc2c6fff34a516c736d6a65fe6178b1a26778625ebe0db4",
+      "after_sha256": "fb9861fa15cb7db7b05e1f74a64b409f3193af3d7a18749e0bead0933994c0ab"
+    },
+    {
+      "path": "data/games/S23/2026-10-15_g02_BV1i6J163Ees/rule_derivations.json",
+      "before_sha256": "0df4278c4246ea1313465ba494e1d328658c6823338fbf37ca3270af74389a27",
+      "after_sha256": "883f3ee22877a038dbc3976a596a0863e686f3fc096046529d486b82a96265c2"
+    },
+    {
+      "path": "data/games/S23/2026-10-15_g03_BV1i6J163Eqb/rule_derivations.json",
+      "before_sha256": "e1acfd48508230f33bd1c354042ddea6163040cf530fb84306cd0357465a7425",
+      "after_sha256": "a87186d87a0a1a72410c13ea7ad786e98a83e73fac6d28775f3aacd067992ca3"
+    },
+    {
+      "path": "data/games/S23/2026-10-15_g04_BV1i6J163EWn/rule_derivations.json",
+      "before_sha256": "54e3db6a1434fbc167adc0d7135d9b63a227d1a6df28740a3ec97a57472ddb25",
+      "after_sha256": "0815bf4e67c66f4b6b4303e72571ee490d5fd1be4bf0a10595bb5e3290592240"
+    },
+    {
+      "path": "data/games/S23/2026-10-16_g01_BV17QJh6qEur/rule_derivations.json",
+      "before_sha256": "9b2c68ea591b9f699b61eb2b33e7dbd21cbcf24d53c3cc783157cf27ab762356",
+      "after_sha256": "5a0da8d5e7ea80fef271ddcd0d1a0b1f8798a66d0a51609353b3da6db984312a"
+    },
+    {
+      "path": "data/games/S23/2026-10-16_g02_BV17QJh6qEid/rule_derivations.json",
+      "before_sha256": "7bfb2cdcc8bee77a133420437007663a58ed58ceecc66e0fdfd3ee68460d04ef",
+      "after_sha256": "61ed96d243234fcbd373e51457ec7028b92288798184ae396ec21873c6c03664"
+    },
+    {
+      "path": "data/games/S23/2026-10-16_g03_BV17QJh6qEVo/rule_derivations.json",
+      "before_sha256": "9e27afdab136a76a6aa13836c2bfe592f672f696c806c880c6a234cfcea970e0",
+      "after_sha256": "167d362ff4f3267caff1f692ef028971227bf9c95b12eb2cddcc0d8af4202eee"
+    },
+    {
+      "path": "data/games/S23/2026-10-16_g04_BV17QJh6qEFa/rule_derivations.json",
+      "before_sha256": "7f6aabbfc72bb0dc230562d212f3125a57d6c3229d77a53e92999ee7819fb268",
+      "after_sha256": "94439bf057bb8f051ddfdd6b33ce90e916e549db88a8320250c096bfca17b1fe"
+    }
+  ],
+  "database_write": false,
+  "publication": false
+}

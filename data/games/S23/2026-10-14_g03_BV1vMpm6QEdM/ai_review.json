@@ -627,7 +627,15 @@
           }
         ]
       },
-      "用户确认末神猎人出局先结束游戏，不能继续开枪；未开枪不再作为未公开响应。"
+      "用户确认末神猎人出局先结束游戏，不能继续开枪；未开枪不再作为未公开响应。",
+      {
+        "field": "deep_day_night_source_review_20261029",
+        "status": "inferred",
+        "conclusion": "仅复核待补日夜字段及直接依赖，逐条原文和推理见event_patches的review_id。",
+        "review_ids": [
+          "DN-074"
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -685,7 +693,25 @@
         "phase_label": "第3天夜晚终局时"
       }
     ],
-    "human_questions": []
+    "human_questions": [],
+    "terminal_observation": {
+      "round": 4,
+      "phase": "night",
+      "basis": "最后神职于该夜出局，连续复盘明确立即结束，无随后白天行动",
+      "review_id": "DN-074",
+      "source_path": "data/seasons/S23/第07周_正赛第06期/2026-10-14/2026-10-14_S23_第07周_正赛第06期_第03局_机械狼通灵师__BV1vMpm6QEdM_P01_CID42744940707.平台AI字幕_ai-zh_01.原始.json",
+      "source_sha256": "c1eb5d19927449984dd632e8b2597fdf0b260cd24f9e38242e0ca90c55fb6261",
+      "source_segment_indices": [
+        2684,
+        2685,
+        2686,
+        2687,
+        2688,
+        2689
+      ],
+      "start_ms": 5333999,
+      "end_ms": 5346010
+    }
   },
   "daily_audit_changes": [
     {
@@ -729,24 +755,10 @@
   "derived_event_states": [
     {
       "round": 1,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
-      "round": 1,
       "phase": "day",
       "slot": "mechanical_day_skill",
       "action": "unavailable",
       "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
-    },
-    {
-      "round": 2,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
     },
     {
       "round": 2,
@@ -765,13 +777,6 @@
     {
       "round": 3,
       "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "not_carrying",
-      "basis": "本夜开始仍有普通狼人存活，机械狼尚未接普通狼刀。"
-    },
-    {
-      "round": 3,
-      "phase": "night",
       "slot": "mechanical_action",
       "action": "unavailable",
       "basis": "已学习机械平民；该形态没有额外夜间技能，普通狼刀与白天开枪另列。"
@@ -782,13 +787,6 @@
       "slot": "mechanical_day_skill",
       "action": "unavailable",
       "basis": "本局机械狼学习形态为机械平民，没有机械猎人的白天开枪技能。"
-    },
-    {
-      "round": 4,
-      "phase": "night",
-      "slot": "mechanical_knife_status",
-      "action": "carrying",
-      "basis": "此前普通狼人已全部出局，机械狼接普通狼刀。"
     },
     {
       "round": 4,

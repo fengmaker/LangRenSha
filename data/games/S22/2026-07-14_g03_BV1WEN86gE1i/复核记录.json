@@ -1348,5 +1348,48 @@
     }
   },
   "review_note": "AI疑点推理核查：2项已核实，0项仍待review。关联发现：同段关联字段已按复盘及规则一并更正。\n本局判断：首夜8号“同守同救奶穿出局”是明确出局事实；第三夜普通狼人3/2/10此前已全部出局，机械双刀6号带刀，普通刀5、技能刀12且原文明说5/12双死，破盾刀无视守卫对12的守护。结尾“选择交牌”是认输和好人胜的明确表述，不需为它伪造毒药/自爆事件。",
-  "user_saved_at": "2026-10-24T15:12:38+08:00"
+  "user_saved_at": "2026-10-24T15:12:38+08:00",
+  "source_bound_deep_reviews": [
+    {
+      "review_id": "DN-050",
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "changes": {
+        "action": "none",
+        "targets": [],
+        "result": null
+      },
+      "evidence": [
+        {
+          "source_path": "data/seasons/S22/第08周_正赛第07期/2026-07-14/2026-07-14_S22_第08周_正赛第07期_第03局_机械狼通灵师__BV1WEN86gE1i_P01_CID39951664767.平台AI字幕_ai-zh_01.原始.json",
+          "sha256": "369b1a66c960fb0a1edcf69673f9ee2654e454f9ac9c43cd842289b9cddf8889",
+          "segment_indices": [
+            1980,
+            1981,
+            1982,
+            1983,
+            1984,
+            1985,
+            1986
+          ],
+          "source_segment_ids": [
+            1981,
+            1982,
+            1983,
+            1984,
+            1985,
+            1986,
+            1987
+          ],
+          "start_ms": 4062250,
+          "end_ms": 4069090,
+          "original_sentence": "击杀12号平民52双死；通灵师验证7号鸟位平民身份；第三天白天最后一张狼人；6号机械双刀；狼人选择交牌；游戏结束；好人阵营获胜"
+        }
+      ],
+      "reason": "第三轮夜后公告死亡并完成现场发言，随后狼队交牌、游戏结束、好人获胜。 连续转写从最后一夜到终局可见，窗口内没有正式投票程序；当局已在投票前结束，因此不属于“已投票但结果漏记”。",
+      "reviewer": "codex_primary",
+      "confirmation": "assistant_source_review_not_user_confirmation"
+    }
+  ]
 }
