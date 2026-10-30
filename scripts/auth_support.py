@@ -23,7 +23,7 @@ PLATFORM_DOMAINS = {
 PLATFORM_URLS = {
     "bilibili": "https://www.bilibili.com/",
     "douyin": "https://www.douyin.com/",
-    "weibo": "https://m.weibo.cn/",
+    "weibo": "https://weibo.com/",
 }
 
 # Browser exports request only cookies affecting these platform URLs. In an

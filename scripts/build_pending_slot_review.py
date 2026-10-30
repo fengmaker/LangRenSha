@@ -14,7 +14,8 @@ from game_derivations import apply_precomputed
 
 read = lambda p: json.loads(p.read_text(encoding='utf-8-sig'))
 REPORT = ROOT / 'data/reports/shared'
-rows = list(csv.DictReader((REPORT / '日夜深度复核剩余待核_20261030.csv').open(encoding='utf-8-sig', newline='')))
+MANUAL_REVIEW = ROOT / 'data/manual_review'
+rows = list(csv.DictReader((MANUAL_REVIEW / '日夜深度复核剩余待核_20261030.csv').open(encoding='utf-8-sig', newline='')))
 items = {i['编号']: i for i in read(REPORT / '日夜深度复核交付_20261030.json')['items']}
 mapping = {
     '狼王枪口': ['wolf_king_shot'], '猎人枪口': ['hunter_shot'],
@@ -84,7 +85,7 @@ assert sum(len(g['questions']) for g in games.values()) == len(rows)
 data = json.dumps(payload, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 
 html = (ROOT / 'scripts/templates/pending_slot_review.html').read_text(encoding='utf-8')
-output = REPORT / '日夜待核槽位人工复核_20261030.html'
+output = MANUAL_REVIEW / '日夜待核槽位人工复核_20261030.html'
 migration = None
 if output.is_file():
     previous_html = output.read_text(encoding='utf-8')
@@ -103,6 +104,7 @@ if output.is_file():
         old_migration = re.search(r'<script id="draft-migration" type="application/json">(.*?)</script>', previous_html, re.S)
         migration = json.loads(old_migration.group(1)) if old_migration else None
 migration_data = json.dumps(migration, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
+output.parent.mkdir(parents=True, exist_ok=True)
 with output.open('w', encoding='utf-8', newline='\n') as f:
     f.write(html.replace('__DATA__', data).replace('__DRAFT_MIGRATION__', migration_data))
 print(json.dumps({'page': str(output), 'games': len(games), 'questions': len(rows),

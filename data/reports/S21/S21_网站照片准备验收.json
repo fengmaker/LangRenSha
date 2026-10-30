@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "season": "S21",
-  "generated_at_utc": "2026-10-29T08:33:47.222944+00:00",
+  "generated_at_utc": "2026-10-30T14:24:25.430453+00:00",
   "target_source": "data/games/S21/*/dossier.json canonical seat names",
   "source_index": "data/weibo/2026-02-24_2026-05-26/S21_姓名照片来源索引.json",
   "source_index_sha256": "9e43219ad7ce78d33d9da6117ce1f64dcc3ab65a9cba569af0ca19af332bcc66",
@@ -660,48 +660,5 @@
         "鱼刺"
       ]
     }
-  ],
-  "publication": {
-    "state": "passed",
-    "url": "http://127.0.0.1:3000/players?season=S21",
-    "release_id": "S21_S22_S23-9b8e9bb4204d2970-0ffceacf-p7-s2",
-    "photo_api": {
-      "manifest": "checked",
-      "entries_checked": 59,
-      "api_assets_checked": 59,
-      "leaderboard_photos": {
-        "S21": 59
-      },
-      "players_without_photo": {
-        "S21": 0
-      }
-    },
-    "browser_pages": [
-      {
-        "width": 1440,
-        "path": "/players?season=S21",
-        "decoded_s21_images": 48
-      },
-      {
-        "width": 1440,
-        "path": "/players/434fdd8e-0ec8-4f45-a816-ba1b3efb45e8?season_start=S21&season_end=S21",
-        "decoded_s21_images": 1
-      },
-      {
-        "width": 390,
-        "path": "/players?season=S21",
-        "decoded_s21_images": 48
-      },
-      {
-        "width": 390,
-        "path": "/players/434fdd8e-0ec8-4f45-a816-ba1b3efb45e8?season_start=S21&season_end=S21",
-        "decoded_s21_images": 1
-      }
-    ],
-    "s22_s23_photo_records_unchanged": true,
-    "s21_bluffs_still_blank": true,
-    "regression_tests_passed": 4
-  },
-  "root_cause": "初次发布沿用只处理S22/S23的照片构建入口，未将已有S21姓名照片来源索引接入API清单。",
-  "reproduction_before_fix": "S21 website photos: 0 / 59"
+  ]
 }

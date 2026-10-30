@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-30T14:14:32.360082+00:00",
+  "status": "needs_attention",
+  "errors": [
+    "正式座位姓名缺少照片：S23/['AA', '夏夏', '天策', '小乖', '小张', '小白', '小肥', '智贤', '李大花', '老狼']"
+  ],
+  "archive_window": {
+    "uid": "7525583841",
+    "since": "2026-05-26",
+    "until": "2026-10-20",
+    "keywords": [],
+    "max_pages": 300,
+    "request_interval_seconds": 1.5
+  },
+  "archive_counts": {
+    "pages_fetched": 33,
+    "target_posts_seen": 332,
+    "date_window_posts_seen": 298,
+    "keyword_candidates_saved": 298,
+    "posts_saved": 298,
+    "seed_posts_reused": 57,
+    "new_posts_saved": 241,
+    "images_downloaded": 1278,
+    "images_not_downloaded": 0,
+    "long_posts": 203,
+    "long_posts_expanded": 203,
+    "unparseable_dates_skipped": 0
+  },
+  "schedule_posts": 79,
+  "unique_pictures": 217,
+  "image_occurrences_checked": 951,
+  "source_images_hashed": 951,
+  "human_status_counts": {
+    "确认无误": 210,
+    "已修正": 4,
+    "待确认": 3
+  },
+  "pending_photo_ids": [
+    "P0199",
+    "P0200",
+    "P0201"
+  ],
+  "roster_people": 77,
+  "roster_season_people": {
+    "S22": 63,
+    "S23": 56
+  },
+  "excluded_people": [
+    "陈泽",
+    "花小龙",
+    "斩虎",
+    "老崔",
+    "呆妹",
+    "KB",
+    "郭小仙"
+  ],
+  "formal_photo_coverage": {
+    "S22": {
+      "formal_games": 148,
+      "formal_player_names": 62,
+      "manifest_entries": 62,
+      "covered": 62,
+      "missing": []
+    },
+    "S23": {
+      "formal_games": 84,
+      "formal_player_names": 61,
+      "manifest_entries": 57,
+      "covered": 51,
+      "missing": [
+        "AA",
+        "夏夏",
+        "天策",
+        "小乖",
+        "小张",
+        "小白",
+        "小肥",
+        "智贤",
+        "李大花",
+        "老狼"
+      ]
+    }
+  },
+  "aliases": [
+    {
+      "season": "S23",
+      "name": "天天的星_",
+      "type": "confirmed_same_post_alias",
+      "photo_name": "天星",
+      "evidence_url": "https://m.weibo.cn/detail/5349233155638005",
+      "evidence_date": "2026-10-01",
+      "evidence": "S23第4期官方阵容排班与人工确认照片P0205来自同一官方微博帖；P0205原图名牌经人工确认是‘天星’，该帖正文与同日排班均列canonical handle‘天天的星_’。"
+    }
+  ],
+  "source_files_unchanged": true,
+  "incremental_photo_indexes": [],
+  "input_sha256": {
+    "data/raw/weibo/2026-05-26_2026-10-20_京城大师赛_UID7525583841/manifest.json": "cacdef54517c3e57d661fae430c38f1d8f68b1215628b9917af4037e5e0c0b59",
+    "data/weibo/2026-05-26_2026-10-20/人名复核/S22-S23_照片人名_人工复核.csv": "0af1a74517204b2fa6d959969c073600c7388d1479c4f590f7c4edb7f47ae86d",
+    "data/weibo/2026-05-26_2026-10-20/人名复核/照片人名_候选结果.json": "f002ac1971e6443c99d2a00842be3097f9520b1b86827974ecf406eadd2339d1",
+    "data/weibo/2026-05-26_2026-10-20/人名复核/照片人名_来源索引.json": "1c93dcc308564f5833a72b62747294a9efe7d12d02e1abe1142d0383305fac5f",
+    "data/weibo/2026-05-26_2026-10-20/参赛名单/人名去重_照片映射.csv": "01c7b6ca1d54e5da3bff84898ebe5597905f4ca8a86370aa753bf9a515b577f1",
+    "data/weibo/2026-05-26_2026-10-20/比赛排班.csv": "8b0dd1bd490eed749444cf7e62be45872ec166946246d4b6e91a3c9812d61c69",
+    "website/api/player_photos.json": "c54974eb8851ca7dbef4d6d49c62f985b60958561756c5f72c449b983bfde390",
+    "data/weibo/2026-05-26_2026-10-20/参赛名单/参赛人名名单.json": "1a76144189764434bd9165407bf187e82b2332b264c9aded7467d6096c574e9e"
+  },
+  "limits": [
+    "仅验收现有S22/S23批次；未扩展采集日期、联网、写库或发布。",
+    "检查引用、复核状态、映射重建及正式座位姓名照片覆盖；未重新逐图识读或逐局确认座位。",
+    "待确认照片保持待确认；同名已确认记录不能确认此张照片。"
+  ]
+}

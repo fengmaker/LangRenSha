@@ -107,7 +107,7 @@ class WeiboArchiveTests(unittest.TestCase):
                             "--since", "2026-05-26", "--until", "2026-05-26",
                             "--archive-dir", str(root)]
                     with mock.patch.object(archive, "configure_auth"), \
-                            mock.patch.object(archive, "WeiboCollector", return_value=collector), \
+                            mock.patch.object(archive, "DesktopWeiboCollector", return_value=collector), \
                             mock.patch.object(archive.sys, "argv", argv), \
                             mock.patch("builtins.print"):
                         self.assertEqual(archive.main(), expected_code)

@@ -541,6 +541,78 @@ class WeiboCollector:
         return manifest
 
 
+class DesktopWeiboCollector(WeiboCollector):
+    """Read the official website's author-post pages, never the mobile getIndex API."""
+
+    list_backend = "desktop"
+
+    def _website_json(self, path: str, params: dict) -> dict:
+        response = self._get("https://weibo.com" + path, params)
+        try:
+            body = response.text if isinstance(response.text, str) else ""
+            if response.status_code != 200:
+                raise _failure_from_response(response, body)
+            try:
+                payload = response.json()
+            except ValueError:
+                raise _failure_from_response(response, body) from None
+            if not isinstance(payload, dict):
+                raise CollectionError("微博网页响应结构异常", "partial", "unrecognized_response")
+            target = urlsplit(str(payload.get("url") or ""))
+            if payload.get("ok") == -100 or (target.hostname == "weibo.com" and "login" in target.path):
+                raise CollectionError(
+                    "微博网页端要求登录；请在 https://weibo.com 正常登录后运行 "
+                    r".\.venv\Scripts\python.exe scripts/login_session.py weibo "
+                    "导出Cookie，再重跑本次窗口采集。",
+                    "login_required", "login_required")
+            if payload.get("ok") != 1:
+                raise CollectionError("微博网页帖子接口拒绝请求", "blocked", "api_rejected")
+            return payload
+        finally:
+            response.close()
+
+    def get_timeline_page(self, uid: str, since_id: str) -> dict:
+        # Preserve the archive reader's page protocol while keeping the two
+        # platforms' pagination cursors explicitly distinct.
+        if not since_id:
+            page = 1
+        else:
+            match = re.fullmatch(r"desktop:([1-9]\d*)", since_id)
+            if not match:
+                raise CollectionError("现有窗口使用移动端游标；请为网页采集新建窗口目录并复用原件",
+                                      "partial", "archive_backend_mismatch")
+            page = int(match[1])
+        payload = self._website_json("/ajax/statuses/mymblog", {"uid": uid, "page": page, "feature": 0})
+        data = payload.get("data")
+        if not isinstance(data, dict) or not isinstance(data.get("list"), list):
+            raise CollectionError("微博网页响应缺少明确帖子列表", "partial", "missing_cards")
+        posts = data["list"]
+        if any(not isinstance(post, dict) for post in posts):
+            raise CollectionError("微博网页帖子列表含无效记录", "partial", "unrecognized_response")
+        return {"cards": [{"card_type": 9, "mblog": post} for post in posts],
+                "cardlistInfo": {"since_id": f"desktop:{page + 1}" if posts else ""},
+                "has_more": bool(posts), "source_endpoint": "https://weibo.com/ajax/statuses/mymblog",
+                "website_response": payload}
+
+    def get_long_text(self, post_id: str) -> dict:
+        payload = self._website_json("/ajax/statuses/longtext", {"id": post_id})
+        data = payload.get("data")
+        if (not isinstance(data, dict) or not isinstance(data.get("longTextContent"), str)
+                or not data["longTextContent"].strip()):
+            raise CollectionError("微博网页长文未展开", "partial", "long_text_not_expanded")
+        return payload
+
+    def get_post_data(self, post_id: str) -> dict:
+        payload = self._website_json("/ajax/statuses/show", {"id": post_id})
+        data = payload.get("data") if isinstance(payload.get("data"), dict) else payload
+        if str(data.get("idstr") or data.get("id") or "") != str(post_id):
+            raise CollectionError("微博网页详情不是指定帖子", "partial", "detail_not_found")
+        return data
+
+    def get_post(self, post_id: str) -> dict:
+        return self.get_post_data(post_id)
+
+
 def new_manifest(mode: str, request_info: dict) -> dict:
     return {
         "schema_version": 1,

@@ -144,6 +144,7 @@ def audit() -> dict:
     pictures_by_sha = {p["image_sha256"]: p for p in pictures}
     coverage = {}
     aliases = []
+    incremental_choices, incremental_indexes = prepare_photos.s23_incremental_photo_choices()
     for season, records in photos["players"].items():
         if season not in {"S22", "S23"}:
             continue
@@ -166,7 +167,8 @@ def audit() -> dict:
                 aliases.append({"season": season, "name": name, **record["name_mapping"]})
             else:
                 check(prepare_photos.manifest_record_is_reviewed(season, name, record,
-                    mappings_by_name, reviews_by_id, pictures_by_sha, ROOT / "website/assets/player-photos"),
+                    mappings_by_name, reviews_by_id, pictures_by_sha, ROOT / "website/assets/player-photos",
+                    incremental_choices=incremental_choices),
                     f"网站照片未通过人工复核及原图校验：{season}/{name}")
         dossier_paths = sorted((ROOT / "data/games" / season).glob("*/dossier.json"))
         names = {s["name"] for p in dossier_paths for s in read_json(p)["seats"] if s.get("name")}
@@ -187,6 +189,7 @@ def audit() -> dict:
             "roster_people": summary["unique_people"], "roster_season_people": summary["season_people"],
             "excluded_people": summary["excluded_people_names"], "formal_photo_coverage": coverage,
             "aliases": aliases, "source_files_unchanged": unchanged,
+            "incremental_photo_indexes": [p.relative_to(ROOT).as_posix() for p in incremental_indexes],
             "input_sha256": {p.relative_to(ROOT).as_posix(): sha for p, sha in before.items()},
             "limits": ["仅验收现有S22/S23批次；未扩展采集日期、联网、写库或发布。",
                        "检查引用、复核状态、映射重建及正式座位姓名照片覆盖；未重新逐图识读或逐局确认座位。",

@@ -371,5 +371,60 @@ class WeiboHistoryBoundaryTests(unittest.TestCase):
             self.assertFalse(target.exists())
 
 
+class DesktopWeiboTests(unittest.TestCase):
+    def client(self, response):
+        session = mock.Mock()
+        session.headers = {}
+        session.get.return_value = response
+        return weibo.DesktopWeiboCollector(session=session, sleep=lambda _: None), session
+
+    def test_desktop_author_list_adapts_page_cursor_without_mobile_timeline(self):
+        raw = mblog("12345678")
+        client, session = self.client(FakeResponse({"ok": 1, "data": {"list": [raw]}}))
+        data = client.get_timeline_page("7525583841", "")
+        self.assertEqual(weibo.timeline_statuses(data), [raw])
+        self.assertEqual(data["cardlistInfo"]["since_id"], "desktop:2")
+        self.assertTrue(data["has_more"])
+        self.assertEqual(session.get.call_args.args[0], "https://weibo.com/ajax/statuses/mymblog")
+        self.assertEqual(session.get.call_args.kwargs["params"]["page"], 1)
+        client.get_timeline_page("7525583841", "desktop:2")
+        self.assertEqual(session.get.call_args.kwargs["params"]["page"], 2)
+
+    def test_desktop_explicit_empty_list_is_end_but_missing_list_is_error(self):
+        client, _ = self.client(FakeResponse({"ok": 1, "data": {"list": []}}))
+        self.assertFalse(client.get_timeline_page("7525583841", "")["has_more"])
+        client, _ = self.client(FakeResponse({"ok": 1, "data": {}}))
+        with self.assertRaises(weibo.CollectionError):
+            client.get_timeline_page("7525583841", "")
+
+    def test_desktop_login_required_is_explicit_and_does_not_follow_or_log_url(self):
+        client, session = self.client(FakeResponse({"ok": -100, "url": "https://weibo.com/login.php?token=DO_NOT_LOG"}))
+        with self.assertRaises(weibo.CollectionError) as caught:
+            client.get_timeline_page("7525583841", "")
+        self.assertEqual(caught.exception.reason, "login_required")
+        self.assertIn("weibo.com", str(caught.exception))
+        self.assertNotIn("DO_NOT_LOG", str(caught.exception))
+        session.get.assert_called_once()
+
+    def test_old_mobile_cursor_is_not_reinterpreted_as_desktop_page(self):
+        client, session = self.client(FakeResponse({"ok": 1, "data": {"list": []}}))
+        with self.assertRaises(weibo.CollectionError) as caught:
+            client.get_timeline_page("7525583841", "123456789")
+        self.assertEqual(caught.exception.reason, "archive_backend_mismatch")
+        session.get.assert_not_called()
+
+    def test_desktop_long_text_uses_website_path_only(self):
+        payload = {"ok": 1, "data": {"longTextContent": "完整正文"}}
+        client, session = self.client(FakeResponse(payload))
+        self.assertEqual(client.get_long_text("12345678"), payload)
+        self.assertEqual(session.get.call_args.args[0], "https://weibo.com/ajax/statuses/longtext")
+
+    def test_desktop_access_limit_never_falls_back_to_mobile(self):
+        client, session = self.client(FakeResponse(status=432, text=""))
+        with self.assertRaises(weibo.CollectionError):
+            client.get_timeline_page("7525583841", "")
+        session.get.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()

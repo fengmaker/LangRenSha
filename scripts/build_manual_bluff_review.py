@@ -10,7 +10,7 @@ import sys
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = Path('data/exports/S21_悍跳人工复核.html')
+OUTPUT = Path('data/manual_review/S21_悍跳人工复核.html')
 REPORT = Path('data/reports/S21/S21_悍跳人工复核页验收.json')
 TEMPLATE = Path('scripts/templates/manual_bluff_review.html')
 FORMAT = 'masters-manual-bluff-review-v1'
@@ -212,7 +212,7 @@ def build_s23(root: Path) -> tuple[dict, dict]:
     payload = {'format': FORMAT, 'season': 'S23', 'source_fingerprint': fingerprint,
                'dates': sorted({game['date'] for game in games}), 'games': games}
     report = {
-        'season': 'S23', 'format': FORMAT, 'review_page': 'data/exports/S23_悍跳人工复核.html',
+        'season': 'S23', 'format': FORMAT, 'review_page': 'data/manual_review/S23_悍跳人工复核.html',
         'dates': len(payload['dates']), 'media_items': len(games), 'seats': sum(len(game['seats']) for game in games),
         'identity_images': len(verified_images), 'source_fingerprint': fingerprint,
         'all_twelve_seats_selectable': True, 'automatic_bluff_decisions': False,

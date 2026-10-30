@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
 from website.api.app import app
@@ -57,13 +58,59 @@ def test_s23_manifest_covers_canonical_names_from_all_75_candidate_dossiers():
     assert alias["sha256"] == s23_players["天星"]["sha256"]
 
     report = json.loads(Path("data/reports/S23/S23_网站照片准备验收.json").read_text(encoding="utf-8"))
-    assert report["candidate_dossier_count"] == 75
-    assert report["target_player_count"] == 51
-    assert report["covered_player_count"] == 51
+    formal_paths = list(Path("data/games/S23").glob("*/dossier.json"))
+    formal_names = {seat["name"] for path in formal_paths
+                    for seat in json.loads(path.read_text(encoding="utf-8"))["seats"]}
+    assert report["formal_dossier_count"] == len(formal_paths)
+    assert report["target_player_count"] == len(formal_names)
+    assert report["covered_player_count"] == len(formal_names)
     assert report["coverage_rate"] == 1.0
     assert report["missing"] == []
     assert report["alias_matched_count"] == 1
     assert report["aliases_used"][0]["photo_id"] == "P0205"
+
+
+def test_s23_photos_cover_players_in_the_current_formal_archive():
+    names = {
+        seat["name"] for path in Path("data/games/S23").glob("*/dossier.json")
+        for seat in json.loads(path.read_text(encoding="utf-8"))["seats"]
+        if seat.get("name")
+    }
+    missing = sorted(name for name in names if photo_for(name, "S23") is None)
+    assert not missing, f"S23 formal players missing website photos: {missing}"
+
+
+def test_incremental_photo_nameplate_is_bound_to_the_archived_original(tmp_path, monkeypatch):
+    from website import prepare_photos
+
+    monkeypatch.setattr(prepare_photos, "ROOT", tmp_path)
+    archive = tmp_path / "data/raw/weibo/window"
+    archive.mkdir(parents=True)
+    image = archive / "nameplate.jpg"
+    image.write_bytes(b"original official photo")
+    sha = hashlib.sha256(image.read_bytes()).hexdigest()
+    source_url = "https://m.weibo.cn/detail/5358654468915627"
+    (archive / "manifest.json").write_text(json.dumps({
+        "request": {"uid": "7525583841"}, "posts": [{
+            "post_id": "5358654468915627", "post_url": source_url,
+            "author_uid": "7525583841", "text": "第23季阵容公告",
+            "images": [{"file": "nameplate.jpg", "status": "downloaded", "sha256": sha}],
+        }]}), encoding="utf-8")
+    index = tmp_path / "data/weibo/window/S23_增量照片名牌核对.json"
+    index.parent.mkdir(parents=True)
+    index.write_text(json.dumps({"season": "S23", "verification_method": "assistant_nameplate_read",
+        "source_manifest": "data/raw/weibo/window/manifest.json", "photos": [{
+            "name": "小张", "nameplate_text": "小张", "source_image": "data/raw/weibo/window/nameplate.jpg",
+            "sha256": sha, "source_url": source_url, "source_date": "2026-10-27",
+            "post_id": "5358654468915627", "image_index": 1}]}), encoding="utf-8")
+
+    choices, indexes = prepare_photos.s23_incremental_photo_choices()
+    assert indexes == [index]
+    assert choices["小张"]["source_path"] == image
+    assert choices["小张"]["photo_id"] == "WB5358654468915627_01"
+    image.write_bytes(b"a different photo")
+    with pytest.raises(ValueError, match="hash mismatch"):
+        prepare_photos.s23_incremental_photo_choices()
 
 
 def test_s21_manifest_covers_published_players_using_viewed_same_season_nameplates():

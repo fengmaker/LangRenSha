@@ -1,0 +1,239 @@
+{
+  "season": "S23",
+  "reviewed_games": 9,
+  "notes_with_patches": 0,
+  "apply": false,
+  "publish": false,
+  "state": "prepared_cached",
+  "blocked_games": [],
+  "games": [
+    {
+      "review_id": "BV1RQx364EaF:43105127019:p01",
+      "formal_dir": "data/games/S23/2026-10-27_g01_BV1RQx364EaF",
+      "candidate_sha256": "139b9453db7c9bddc953a4a718d8dfdbc193203f3d7da2e21d38243a8cce3080",
+      "source_sha256": "dbd48ccaa5b8bfadcfe15ddb03b2374b2e1adf3c21f89cb011e78de623aaf138",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "首轮放逐逐人票型共12张，10号收到7张原始票、11号5张；字幕公布10号7.5票出局，差额对应持徽7号的半票，不能当成额外座位票。",
+        "第三夜最后一张狼人11号交牌结束对局；记录在该夜wolf_attack.result，action保留unknown，不把交牌伪装成狼刀、自爆或放逐。",
+        "第三夜11号交牌后未进入第三天白天；未公开的终局夜查验目标及猎人技能状态保留未知，未复制首夜行动或第一天票轮。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1RQx364EVx:43105321908:p01",
+      "formal_dir": "data/games/S23/2026-10-27_g02_BV1RQx364EVx",
+      "candidate_sha256": "c1ce6a02ed2fbfd4757673814676a2fe3cd19e064659e0fe605a84b8f62975db",
+      "source_sha256": "eb13914f53b70b691c3964598b1b8e03e9578a3ba60d3f9dd32fbd4ef9f9c5c9",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "上警开场字幕[283]把警下名单识别为2、9、12，紧接着[284]及预言家发言[303–306]、警长票[771–774]指向2、10、12警下；按后续相互印证记录，保留开场ASR数字差异待复核。",
+        "第一轮放逐票中12号收8票后触发4号定序王子翻牌，未立即放逐；第二次投票独立记录，2号弃票、7票出局。",
+        "第2夜记录的狼刀原目标为3号，魔术师交换1/3后实际1号中刀；预言家选择验1号但实际验到3号。保留原目标，并在result中记明复盘所述实际结果。",
+        "第2天5号自爆结束对局，未开始放逐票；不生成终局后的第三天或未知行动。",
+        "首夜魔术师动作在字幕中被识为“通过”，可能指空过；保留该槽未知，其他首夜刀3、救3、验12狼人及诡术师交换5/12均由连续复盘明确。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1RQx364Eit:43105389215:p01",
+      "formal_dir": "data/games/S23/2026-10-27_g03_BV1RQx364Eit",
+      "candidate_sha256": "edc26ec1c206cd458f4e8c23022cd92cf6a56496c5519c276129b7b8877aae6f",
+      "source_sha256": "0e199c58e086eecefb0b8a7f1a70fb5b0090a9d0d30b35fe32b4c010ec4d100f",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "首夜守卫具体目标未由当前连续复盘确认，保留unknown。",
+        "后续各日发言方向、猎人技能状态及没有明示的行动保持未知；本局实际票型为第三至第五天3轮放逐，没有警长票或首两天放逐票。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1HksX6QEr5:43131208365:p01",
+      "formal_dir": "data/games/S23/2026-10-28_g01_BV1HksX6QEr5",
+      "candidate_sha256": "adb409970ffccf58d5fb979608636ef6afa5ad8d3f2c6f828c8c2ede34b64d80",
+      "source_sha256": "5b361b7a50dbfa8ebf8e4454750a97e76a3f2159702898249cf5e84597e53513",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "座位姓名与物理底牌依据本局终局12席名牌/身份复盘整屏；官方微博原文只提供当日账号名单，未能在不凭人脸的前提下把12个账号逐一映射到屏幕别名，规范名与官方账号的交叉表仍待核。",
+        "标题的原始“Day-2”标签没有独立字幕证据，day_in_episode留空。",
+        "三轮放逐票逐座播报清楚，但各轮完整候选池没有连续播报证据，候选名单留空；不按得票倒推候选。",
+        "白神是否/何时公开身份、猎人技能状态、首夜外其他未明示角色动作均保留unknown，不能从角色牌或死亡结果补成pass/未发动。",
+        "发言顺序未逐轮复核；不影响已记录的警徽流失与三轮实际票型。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1kksX6DEK8:43131339020:p01",
+      "formal_dir": "data/games/S23/2026-10-28_g02_BV1kksX6DEK8",
+      "candidate_sha256": "f8fcf447ca3356dd033ce5e3280cbf40e2c0471d412b69f21ecea7637d65cbce",
+      "source_sha256": "6fea3d9eaef64509c11548a75fbbf2b84a59d2309c02a36a704919120eee4db7",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "官方微博列的是12个账号名，本局终局板使用场上别名；没有不凭人脸地逐一映射，名字仍按板上称呼。",
+        "开局上警转写先说除1/8/12号，紧接着重播为除1/8号；本候选按最终口径记12上警，12号登记状态待原片人工确认。",
+        "D1放逐逐人票型明确，但完整上票候选池没有证据，候选名单留空；不按投票结果倒推。",
+        "除证据明确的行动外，盗宝余牌、其他夜间行动、毒/猎状态和警长发言顺序保持unknown。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1kksX6DEbH:43131407038:p01",
+      "formal_dir": "data/games/S23/2026-10-28_g03_BV1kksX6DEbH",
+      "candidate_sha256": "8ef1ab456d1ac551fa0daebdb3d51efb903bf1959c72a54979b4bbd3930a9784",
+      "source_sha256": "7df251a945bb586c903b97003f03774f80228ee281fd11f587d9e605e30cffbc",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "官方微博仅列账号名；不凭人脸把官方账号对应到座位屏幕别名，姓名保留场上称呼。",
+        "首夜守卫的具体目标未被当前可读复盘确认，guard槽留unknown；D2画面只能确认后续自守信息。",
+        "第一天5号自爆的即时字幕识别成“自保”，但终局复盘称5号狼人自爆且随后天黑，按复盘记录；两日均无放逐票。",
+        "D2末端ASR写作“第二天八天四号，狼人自爆”“八号最后一张狼人选择招牌”；结合底牌/离场顺序记录4号自爆、8号末狼交牌，原始措辞歧义保留待音频复核。",
+        "第1/2夜未在复盘中逐项说明的机械狼夜间状态、警徽后续交接、猎人状态和发言顺序保持unknown。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1cJxc6zEgf:43157749877:p01",
+      "formal_dir": "data/games/S23/2026-10-29_g01_BV1cJxc6zEgf",
+      "candidate_sha256": "73a50bb32bf49e4ae1af1d78e4595a9fa5de9365aebcafe462ab1bcab088fbe9",
+      "source_sha256": "369936391c50840aae2a8e26ac455fbd18d7879be0a887f9e13ca1a77f3ef4de",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "第一夜已确认混血12号选择5号、狼人刀11号、女巫救11号、预言家验6号；其余首夜行动没有被复盘逐项证实，保留unknown，不解释成pass。",
+        "第二夜已确认狼人刀5号、女巫毒2号、预言家验10号及2/5双死；其余夜间行动未见直接结论，保留unknown。",
+        "首轮警长名单字幕疑似把候选1号/11号识成“11号/12号”；三张逐票播报的目标为1号或11号，且复盘确认11号得徽，因此候选池记为1号、11号。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1FJxc6zEzg:43157818773:p01",
+      "formal_dir": "data/games/S23/2026-10-29_g02_BV1FJxc6zEzg",
+      "candidate_sha256": "af8b3caf2db422add183178f129086ffb1831cd7e41bd54a57a53669aab398ba",
+      "source_sha256": "4d9bce6fe96f2f4bc7f4242d9bc6643c94ede2a96dfd3495460a16a1fc4c1ce6",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [
+        {
+          "round": 4,
+          "code": "dance_mask_state_unknown",
+          "phase": "night",
+          "slot": "dance_resolution",
+          "reason": "mask slot does not prove whether a participant's dance faction changed"
+        }
+      ],
+      "issues": [
+        "全片中文字幕完整阅读，未见法官宣布出票、逐票播报、投票结束或正式PK后投票；首轮警选由5号自爆中断，延期警选由2号自爆中断并流徽，第三天由4号自爆直接入夜。因此本候选记录0个实际票轮、0张逐票；发言中的“投一号”“PK台”等是讨论/建议，不当作已举行投票。",
+        "N2女巫解药在首夜救6号时已耗尽；毒药当夜是否使用没有明确播报，保留unknown。",
+        "终局夜复盘明确舞者7号舞池为1、3、11，假面重复验证3号而出局；字幕对假面另一项“连续查验或连续戴面具”规则转写可辨，但未能确认终局夜是否另行执行赐面动作及其目标，该槽保留unknown。",
+        "终局发生在第4夜，官方复盘随后即宣布假面交牌、游戏结束；不存在D4白天或D4放逐投票。终局夜后的D4槽位仅用模板既有not_held/none/unavailable表达未发生，不增加新事件槽。",
+        "规则冲突：{\"round\": 4, \"code\": \"dance_participant_reused\", \"phase\": \"night\", \"slot\": \"dancer_dance\", \"seats\": [1]}",
+        "规则冲突：{\"code\": \"action_unavailable\", \"round\": 4, \"phase\": \"night\", \"slot\": \"masquerade_verify\", \"actor\": 1, \"reason\": \"masquerade_verify_target_repeat\"}",
+        "规则冲突：{\"code\": \"illegal_targets\", \"round\": 4, \"phase\": \"night\", \"slot\": \"dancer_dance\", \"actor\": 7, \"targets\": [1], \"reason\": \"dance_three_living_players_once_per_game\"}",
+        "终局三条规则提示对应本局法官明确判离的实际违规操作：舞者重复邀1号入舞池、假面连续验证3号。保留实际目标和判离经过，不能为了消除提示把操作改成合法目标；这些提示与复盘结果一致。",
+        {
+          "round": 4,
+          "code": "dance_participant_reused",
+          "phase": "night",
+          "slot": "dancer_dance",
+          "seats": [
+            1
+          ]
+        },
+        {
+          "code": "action_unavailable",
+          "round": 4,
+          "phase": "night",
+          "slot": "masquerade_verify",
+          "actor": 1,
+          "reason": "masquerade_verify_target_repeat"
+        },
+        {
+          "code": "illegal_targets",
+          "round": 4,
+          "phase": "night",
+          "slot": "dancer_dance",
+          "actor": 7,
+          "targets": [
+            1
+          ],
+          "reason": "dance_three_living_players_once_per_game"
+        }
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    },
+    {
+      "review_id": "BV1cJxc6zEbr:43158077626:p01",
+      "formal_dir": "data/games/S23/2026-10-29_g03_BV1cJxc6zEbr",
+      "candidate_sha256": "f1515aeebf2a6ce1c1f86da93214022f7cd395f3fd0793d352f191589cdc3ed3",
+      "source_sha256": "32e3ab66a3ef82a3d45c350f05ad97081045a1354b49c878bb80b30711b7e701",
+      "patches": [],
+      "unresolved": [],
+      "unknown": [],
+      "issues": [
+        "首日/次日/第三日发言方向的左右映射未核清；直接记下实际首位3号、11号、5号的文字证据，speech_order 槽位保持 unknown。",
+        "完整中文字幕未见法官出票/投票口令；第一、二、三天分别由10、6、1号自爆中断放逐，故无实际放逐票、PK票或重投票，不能补默认弃票。",
+        "解说员及法官规范姓名未由本局字幕/当前排班来源可靠确认，分别保留空名单与null。"
+      ],
+      "bluffs": {
+        "reviewed": false,
+        "no_bluff": false,
+        "items": []
+      },
+      "phases": {}
+    }
+  ],
+  "preview_path": "data/reports/S23/incremental/previews/3b7478f520687ff579aa50c3c60fc8dab2f8943803a553eaed86e07a468376f0.json"
+}
