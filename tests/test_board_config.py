@@ -30,6 +30,9 @@ def test_old_template_shapes_are_preserved(path):
         phase, slot, action = additions[code]
         actions = next(s["actions"] for s in previous[phase] if s["code"] == slot)
         actions.insert(actions.index("unknown") if action == "unavailable" else len(actions), action)
+    if code == "s23_qingqiu_night":
+        # 九尾狐接刀后的普通狼刀不可用，已在现有模板中保留这一终局状态。
+        next(s["actions"] for s in previous["night_slots"] if s["code"] == "wolf_attack").append("unavailable")
     assert load_template(code) == previous
     assert not template_path(code).stem.startswith(("s21_", "s23_"))
 

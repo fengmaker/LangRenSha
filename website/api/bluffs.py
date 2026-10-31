@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 from typing import Any
 
-from website.api.analytics import effective_faction
+from website.api.analytics import _add_denominator, _add_excluded, _metric_result, _new_metric, effective_faction
 from website.api.bluff_frames import public_image_url
 
 ASSET_ROOT = Path(__file__).resolve().parents[1] / "assets" / "bluffs"
@@ -20,7 +20,8 @@ METHODOLOGY = [
     "悍跳成功按狼队战术结果判断：该悍跳者竞选拿到警徽，或第一天最终被放逐的是好人，满足任一条件即成功；不要求其本人归票或过半好人跟票。",
     "以最终放逐结果为准，不把平票首轮、夜间死亡、技能出局、首日自爆中断后的次日放逐算作首日成功。",
     "悍跳身份由转写、复盘及警徽票交叉推断；仅上警、成为候选人或拿徽不能单独证明悍跳。用户明确填写的复核结论及备注优先，已确认记录和助手推断分别标注。",
-    "悍跳归属不确定时不计为已识别次数；成功结果不确定时排除在成功率分母之外，并列入待复核。三项技能正确率仍留空。",
+    "悍跳归属不确定时不计为已识别次数；成功结果不确定时排除在成功率分母之外，并列入待复核。",
+    "悍跳率为悍跳次数除以可判定的狼人阵营出场次数；悍跳归属或阵营未知时排除，用户明确额外纳入的记录按对应复核结果计入。",
 ]
 S23_VIDEO_METHODOLOGY = [
     "优先核对首日警上最后一位发言临近结束时的原视频截图；自爆提前中断时核对中断前画面，必要时补看PK、警下或延期竞选。",
@@ -468,15 +469,28 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
 
 def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, Any]]:
     stats: dict[str, dict] = {}
+    items = review_items(games, payload)
+    by_seat = {(item["game_id"], item["seat"]): item for item in items}
     for game in games:
         for seat in game.get("seats", []):
             if seat.get("person_id") is not None:
-                stats.setdefault(str(seat["person_id"]), {
+                row = stats.setdefault(str(seat["person_id"]), {
                     "bluff_count": 0, "bluff_count_complete": bool(payload.get("games")), "bluff_pending_games": 0,
-                    "bluff_review_count": 0, "bluff_success_rate": {
-                        "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": []},
+                    "bluff_rate": _new_metric(),
+                    "bluff_review_count": 0, "bluff_success_rate": _new_metric(),
                 })
-    for item in review_items(games, payload):
+                game_id = game.get("id", game.get("slug"))
+                item = by_seat.get((game_id, seat["seat"]))
+                faction = effective_faction(game, seat)
+                if faction == "werewolf" or item and item["manual_included"]:
+                    if item and item["decision"] == "uncertain":
+                        _add_excluded(row["bluff_rate"])
+                    else:
+                        _add_denominator(row["bluff_rate"], game_id,
+                                         success=bool(item and item["decision"] == "yes"))
+                elif faction is None:
+                    _add_excluded(row["bluff_rate"])
+    for item in items:
         player_id = str(item["player_id"])
         if player_id not in stats:
             continue
@@ -486,16 +500,14 @@ def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, An
         if item["decision"] == "uncertain":
             row["bluff_count_complete"] = False
             row["bluff_pending_games"] += 1
-            metric["excluded"] += 1
+            _add_excluded(metric)
         elif item["decision"] == "yes":
             row["bluff_count"] += 1
             if item["success"] is None:
-                metric["excluded"] += 1
+                _add_excluded(metric)
             else:
-                metric["denominator"] += 1
-                metric["numerator"] += int(item["success"])
-                metric["game_ids"].append(item["game_id"])
+                _add_denominator(metric, item["game_id"], success=item["success"])
     for row in stats.values():
-        metric = row["bluff_success_rate"]
-        metric["rate"] = metric["numerator"] / metric["denominator"] if metric["denominator"] else None
+        row["bluff_rate"] = _metric_result(row["bluff_rate"])
+        row["bluff_success_rate"] = _metric_result(row["bluff_success_rate"])
     return stats

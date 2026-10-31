@@ -82,6 +82,15 @@ def test_api_image_includes_all_manifest_frames():
             assert (WEBSITE / "assets/bluff-frames" / season / filename).is_file()
 
 
+def test_api_image_packages_shared_timeline_and_its_rule_dependencies():
+    dockerfile = (WEBSITE / "Dockerfile.api").read_text(encoding="utf-8")
+    for module in ("game_timeline", "game_inference", "game_time", "board_config",
+                   "role_constraints", "rule_config", "season_config"):
+        assert f"scripts/{module}.py" in dockerfile
+    assert "COPY config/game_rules.json /app/config/game_rules.json" in dockerfile
+    assert "COPY config/board_templates /app/config/board_templates" in dockerfile
+
+
 def test_runtime_and_publication_credentials_remain_separate():
     api = _service("api")
     assert "postgresql://masters_web_reader:" in api

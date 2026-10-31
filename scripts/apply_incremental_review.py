@@ -176,7 +176,7 @@ def _apply_note(candidate: dict, note: str, review_id: str, *, root: Path,
         + "并返回bluffs:{reviewed:boolean,no_bluff:boolean,items:[{seat,decision,success,note}]}。"
         + "只从本条备注抄录明确的悍跳判断：decision为yes（明确悍跳）、no（明确未悍跳）或uncertain（备注明确说待定）；"
         + "success只有decision=yes时可为true/false/null，其他decision必须为null；"
-        + "no_bluff仅在备注明确确认整局无人悍跳时为true。未提到的座位不推断为未悍跳，保持未知。"
+        + "no_bluff仅在备注明确确认整局无人悍跳时为true。未提到的座位不生成item，名单默认口径由应用器统一处理。"
         + "每个item.note必须逐字摘录备注；非悍跳备注返回reviewed:false,no_bluff:false,items:[]。"
         + "模糊到不能唯一确定座位、尝试与成功结果时列入unresolved。"
         + "非空备注必须有实际字段补丁或明确悍跳条目/无人悍跳判断；否则列为unresolved。"
@@ -635,6 +635,8 @@ def _new_bluff_assessments(game: dict, plan: dict, bluffs_module) -> list[dict]:
     items = {row["seat"]: row for row in review.get("items", [])}
     physical = {seat["seat"] for seat in game.get("seats", [])
                 if bluffs_module.physical_wolf(game, seat)}
+    complete_wolf_list = any(number in physical and row.get("decision") == "yes"
+                             for number, row in items.items())
     seats = {seat["seat"]: seat for seat in game.get("seats", [])}
     explicit = {number for number, row in items.items()
                 if number in physical or row.get("decision") == "yes"}
@@ -647,7 +649,7 @@ def _new_bluff_assessments(game: dict, plan: dict, bluffs_module) -> list[dict]:
         if seat is None:
             raise ReviewApplyError(f"{game.get('id')} 悍跳备注提及不存在的 {number} 号座位")
         item = items.get(number)
-        if item is None and not review.get("no_bluff"):
+        if item is None and not review.get("no_bluff") and not complete_wolf_list:
             assessment = {
                 "seat": number, "name": seat.get("name"), "physical_role": seat.get("role"),
                 "decision": "uncertain", "claimed_role": None, "confidence": "low",
@@ -657,9 +659,11 @@ def _new_bluff_assessments(game: dict, plan: dict, bluffs_module) -> list[dict]:
                 "review_stage": "assistant_pending", "requires_user_review": False,
             }
         else:
-            text = item["note"] if item else plan["review_record"].get("note", "")
+            text = (item["note"] if item else "用户确认的本局悍跳名单未包含该座位。"
+                    if complete_wolf_list else plan["review_record"].get("note", ""))
             evidence = ([{"kind": "user_confirmation", "text": text,
                           "interpretation": ("来自人工悍跳选择。" if item and item.get("input_method") == "selection"
+                                             else "按用户确认的完整悍跳名单处理。" if item is None and complete_wolf_list
                                              else "直接摘自增量人工复核备注。"),
                           "source_sha256": plan["review_record"]["manual_sha256"]}]
                         if text else [])
@@ -754,8 +758,8 @@ def _merge_bluff_records(root: Path, season: str, plans: list[dict], state: dict
             existing_by_seat = {row.get("seat"): row for row in current.get("assessments", [])
                                 if isinstance(row, dict)}
             generated_by_seat = {row["seat"]: row for row in generated["assessments"]}
-            # Explicit user notes replace only the named seat(s); all unmentioned
-            # conclusions already in the asset remain intact.
+            # A selected wolf completes the list by default; explicit note
+            # exceptions are already combined into the generated assessments.
             for number, new_row in generated_by_seat.items():
                 if new_row.get("verification_status") in {"user_confirmed", "user_uncertain"}:
                     old_row = existing_by_seat.get(number, {})

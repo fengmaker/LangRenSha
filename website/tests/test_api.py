@@ -99,12 +99,42 @@ def test_invalid_inputs_and_missing_ids_use_http_errors(client):
     assert client.get("/api/v1/players/not-a-published-person").status_code == 404
 
 
+def test_game_date_range_is_inclusive_and_combines_with_other_filters(client):
+    def read_all(params):
+        first = client.get("/api/v1/games", params={**params, "page_size": 100}).json()
+        items = first["items"]
+        for page in range(2, (first["total"] + 99) // 100 + 1):
+            items += client.get("/api/v1/games", params={**params, "page_size": 100, "page": page}).json()["items"]
+        return items
+
+    games = read_all({})
+    dates = sorted({game["date"] for game in games})
+    start, end = dates[len(dates) // 3], dates[2 * len(dates) // 3]
+    for params, expected in [
+        ({"date_from": start, "date_to": end}, [g for g in games if start <= g["date"] <= end]),
+        ({"date_from": start}, [g for g in games if g["date"] >= start]),
+        ({"date_to": end}, [g for g in games if g["date"] <= end]),
+        ({"date_from": end, "date_to": end}, [g for g in games if g["date"] == end]),
+    ]:
+        assert [g["id"] for g in read_all(params)] == [g["id"] for g in expected]
+
+    sample = games[0]
+    params = {"date_from": sample["date"], "date_to": sample["date"],
+              "season": sample["season"], "board": sample["board"]["code"],
+              "player": sample["players"][0]["id"], "page_size": 1}
+    filtered = client.get("/api/v1/games", params=params).json()
+    assert filtered["total"] >= 1 and len(filtered["items"]) == 1
+    assert filtered["items"][0]["id"] == sample["id"]
+    assert client.get("/api/v1/games?date_from=invalid").status_code == 422
+    assert client.get(f"/api/v1/games?date_from={end}&date_to={start}").status_code == 422
+
+
 def test_bluff_review_and_season_metrics_are_consistent_and_do_not_export_local_paths(client):
     board = client.get("/api/v1/leaderboard").json()
     finals = client.get("/api/v1/leaderboard?phase=finals_week").json()
     by_id = {row["id"]: row for row in board["items"]}
     fields = ("bluff_count", "bluff_count_complete", "bluff_pending_games",
-              "bluff_review_count", "bluff_success_rate")
+              "bluff_review_count", "bluff_rate", "bluff_success_rate")
     for row in finals["items"]:
         for key in fields:
             assert row[key] == by_id[row["id"]][key]

@@ -18,3 +18,13 @@ def test_generated_inference_and_endgame_notes_are_normalized_in_public_projecti
 
 def test_generated_note_normalizer_leaves_nontext_values_unchanged():
     assert display_time_text(None) is None
+
+
+def test_internal_import_placeholder_is_not_published_as_an_endgame_note():
+    internal = 'S21 primary-reviewed endgame attack; unspecified settlement remains unknown.'
+    source = {'phases': [{'kind': 'wolf_rush', 'declared_targets': [3],
+                         'result': 'unknown', 'note': internal}]}
+    public = _public_endgame(source)['phases'][0]
+    assert not public.get('note')
+    assert public['declared_targets'] == [3] and public['result'] == 'unknown'
+    assert source['phases'][0]['note'] == internal

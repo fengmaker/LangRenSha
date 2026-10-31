@@ -1,0 +1,123 @@
+.page { padding-top: 32px; }
+.page :global(.breadcrumb) { margin-bottom: 24px; font-size: .875rem; line-height: 1.6; }
+.page :global(.breadcrumb a) { display: inline-flex; align-items: center; min-height: 32px; }
+.page :global(.match-hero) { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px 40px; padding: 30px 32px 26px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--ink-soft); }
+.page :global(.match-hero-main) { min-width: 0; }
+.page :global(.match-hero h1) { margin: 0; font-size: 2.5rem; font-weight: 650; line-height: 1.3; letter-spacing: -.025em; text-wrap: balance; overflow-wrap: anywhere; }
+.page :global(.match-date) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 0; margin: 14px 0 0; color: var(--muted); font-size: .9375rem; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.page :global(.match-date > *) { padding-inline: 14px; border-left: 1px solid var(--line-strong); }
+.page :global(.match-date > :first-child) { padding-left: 0; border: 0; color: var(--mint-strong); }
+.page :global(.match-outcome) { display: grid; gap: 6px; padding-left: 32px; border-left: 1px solid var(--line-strong); text-align: right; }
+.page :global(.match-outcome > span) { color: var(--muted); font-size: .8125rem; }
+.page :global(.match-outcome > strong) { color: var(--text); font-size: 1.75rem; font-weight: 600; line-height: 1.4; }
+.page :global(.match-outcome[data-winner="good"] > strong) { color: var(--mint); }
+.page :global(.match-outcome[data-winner="werewolf"] > strong) { color: var(--rose); }
+.page :global(.match-credits) { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr .8fr 1.4fr; gap: 20px; padding-top: 22px; margin: 0; border-top: 1px solid var(--line); }
+.page :global(.match-credits > div) { min-width: 0; }
+.page :global(.match-credits dt) { margin-bottom: 5px; color: var(--muted); font-size: .8125rem; }
+.page :global(.match-credits dd) { margin: 0; font-size: .9375rem; line-height: 1.7; overflow-wrap: anywhere; }
+.page :global(.match-source dd) { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; }
+.page :global(.match-source a) { display: inline-flex; align-items: center; min-height: 32px; color: var(--mint); text-decoration: underline; text-underline-offset: 4px; }
+.page :global(.match-source code) { color: var(--muted); font-size: .75rem; }
+.page :global(.match-section-nav) { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 20px 0 0; border-bottom: 1px solid var(--line-strong); background: var(--ink); }
+.page :global(.match-section-nav a) { display: inline-flex; align-items: center; min-height: 52px; padding: 8px 2px; color: var(--muted); font-size: .9375rem; text-underline-offset: 7px; }
+.page :global(.match-section-nav a:hover) { color: var(--mint-strong); text-decoration: underline; }
+.page :global(.detail-section) { padding-top: 40px; scroll-margin-top: 72px; }
+.page :global(.section-heading) { align-items: start; margin-bottom: 20px; }
+.page :global(.section-heading h2) { margin: 0; font-size: 1.5rem; font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.page :global(.section-subtitle) { margin-top: 8px; color: var(--muted); font-size: .9375rem; line-height: 1.7; }
+
+.page :global(.timeline-index) { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.page :global(.timeline-index a) { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 6px; color: var(--muted); font-size: .875rem; line-height: 1.5; }
+.page :global(.timeline-index a:hover) { border-color: var(--mint); color: var(--mint-strong); background: var(--ink-soft); }
+.page :global(.timeline-index a[data-phase="day"]:hover) { border-color: var(--gold); color: var(--gold); }
+.page :global(.game-timeline) { display: grid; gap: 24px; }
+.page :global(.timeline-phase) { min-width: 0; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--ink-soft); scroll-margin-top: 76px; }
+.page :global(.timeline-phase-header) { display: flex; align-items: center; gap: 12px; padding: 20px 24px; border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; background: #10221f; }
+.page :global(.timeline-day .timeline-phase-header) { background: #1b241f; }
+.page :global(.timeline-phase-symbol) { flex: none; color: var(--mint); }
+.page :global(.timeline-day .timeline-phase-symbol) { color: var(--gold); }
+.page :global(.timeline-phase-header h3) { margin: 0; font-size: 1.1875rem; font-weight: 600; line-height: 1.5; text-wrap: balance; }
+.page :global(.timeline-terminal-label) { margin-left: auto; color: var(--gold); font-size: .8125rem; white-space: nowrap; }
+.page :global(.game-event-list) { padding: 0 24px; }
+.page :global(.game-event) { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.page :global(.game-event:last-child) { border-bottom: 0; }
+.page :global(.game-event-label) { color: var(--muted); font-size: .875rem; font-weight: 500; line-height: 1.85; overflow-wrap: anywhere; }
+.page :global(.game-event-content) { min-width: 0; max-width: 72ch; }
+.page :global(.game-event-content p) { margin: 0; color: var(--text); font-size: 1rem; line-height: 1.85; overflow-wrap: anywhere; }
+.page :global(.game-event-content p + p) { margin-top: 6px; }
+.page :global(.game-event-content > small) { display: block; margin-top: 6px; color: var(--muted); font-size: .875rem; line-height: 1.8; overflow-wrap: anywhere; }
+.page :global(.game-event-content > .game-event-effects) { color: var(--gold); }
+.page :global(.day-ballots) { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.page :global(.game-event-list > :last-child .day-ballots) { border-bottom: 0; }
+.page :global(.ballot-card) { min-width: 0; padding: 0; border: 0; background: transparent; }
+.page :global(.ballot-card header) { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.page :global(.ballot-card header > div) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.page :global(.ballot-card h4), .page :global(.registration-card h4) { order: -1; margin: 0; color: var(--text); font-size: 1rem; font-weight: 600; line-height: 1.7; }
+.page :global(.ballot-stage), .page :global(.ballot-record-status) { color: var(--muted); font-size: .8125rem; line-height: 1.6; }
+.page :global(.ballot-record-status) { padding: 3px 8px; border: 1px solid var(--line-strong); border-radius: 4px; }
+.page :global(.ballot-meta) { display: grid; justify-content: start; gap: 6px; padding: 14px 0; margin-top: 12px; border-block: 1px solid var(--line); color: var(--muted); font-size: .875rem; line-height: 1.8; overflow-wrap: anywhere; }
+.page :global(.ballot-meta > strong) { color: var(--mint); font-size: .9375rem; font-weight: 500; }
+.page :global(.vote-groups) { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.page :global(.vote-groups > li) { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 24px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.page :global(.vote-groups > li:last-child) { border-bottom: 0; padding-bottom: 0; }
+.page :global(.vote-group-title) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; line-height: 1.7; }
+.page :global(.vote-group-title strong) { color: var(--text); font-size: .9375rem; font-weight: 500; }
+.page :global(.vote-group-title > span) { color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+.page :global(.vote-group-voters) { display: flex; flex-wrap: wrap; gap: 6px; }
+.page :global(.vote-group-voters > span) { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 3px 9px; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--text); font-size: .875rem; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.page :global(.vote-group-voters small) { color: var(--gold); font-size: .75rem; }
+.page :global(.registration-card) { padding: 0; border: 0; background: transparent; }
+.page :global(.registration-card p) { margin: 10px 0 0; color: var(--text); font-size: .9375rem; line-height: 1.8; overflow-wrap: anywhere; }
+.page :global(.registration-card p > span) { display: inline-block; min-width: 54px; color: var(--muted); }
+.page :global(.ballot-day-status), .page :global(.ballot-gap) { margin: 12px 0 0; padding: 12px 14px; border: 1px solid #5d5439; border-radius: 6px; background: #24241a; color: #dac89c; font-size: .875rem; line-height: 1.8; }
+.page :global(.endgame-card) { padding: 22px 24px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--ink-soft); }
+.page :global(.endgame-card h3) { margin: 0 0 8px; color: var(--text); font-size: 1.125rem; line-height: 1.6; }
+.page :global(.endgame-card p), .page :global(.endgame-card small) { color: var(--muted); font-size: .9375rem; line-height: 1.8; overflow-wrap: anywhere; }
+.page :global(.game-finish) { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 32px; padding: 24px; border-block: 1px solid var(--line-strong); }
+.page :global(.game-finish > span) { color: var(--muted); font-size: .9375rem; }
+.page :global(.game-finish h2) { margin: 0; color: var(--mint); font-size: 1.5rem; font-weight: 600; line-height: 1.5; }
+.page :global(.game-finish[data-winner="werewolf"] h2), .page :global(.game-finish[data-winner="werewolf_win"] h2) { color: var(--rose); }
+.page :global(.game-finish[data-winner="unknown"] h2), .page :global(.game-finish[data-winner="draw"] h2) { color: var(--text); }
+.page :global(.match-record-notes) { margin-top: 28px; padding: 16px 0; border-top: 1px solid var(--line); }
+.page :global(.match-record-notes summary) { display: list-item; width: fit-content; padding-block: 8px; color: var(--muted); font-size: .9375rem; cursor: pointer; }
+.page :global(.match-record-notes ul) { padding-left: 22px; color: var(--muted); font-size: .9375rem; line-height: 1.9; }
+.page :global(.release-details summary), .page :global(.release-detail-content) { font-size: .8125rem; }
+.page :global(.timeline-empty) { margin: 0; padding: 24px; border: 1px solid var(--line); color: var(--muted); font-size: 1rem; }
+
+@media (max-width: 760px) {
+  .page :global(.match-hero) { gap: 24px; padding: 24px; }
+  .page :global(.match-hero h1) { font-size: 2rem; }
+  .page :global(.match-outcome) { padding-left: 24px; }
+  .page :global(.match-outcome > strong) { font-size: 1.5rem; }
+  .page :global(.match-credits) { grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+  .page :global(.match-source) { grid-column: 1 / -1; }
+  .page :global(.game-event), .page :global(.vote-groups > li) { grid-template-columns: minmax(0, 1fr); gap: 7px; }
+  .page :global(.timeline-phase-header) { padding: 16px 20px; }
+  .page :global(.game-event-list) { padding-inline: 20px; }
+}
+
+@media (max-width: 480px) {
+  .page :global(.breadcrumb) { margin-bottom: 18px; }
+  .page :global(.match-hero) { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 22px 18px; }
+  .page :global(.match-hero h1) { font-size: 1.875rem; }
+  .page :global(.match-date) { gap: 6px 0; margin-top: 12px; font-size: .875rem; }
+  .page :global(.match-date > *) { padding-inline: 10px; }
+  .page :global(.match-outcome) { display: flex; align-items: center; justify-content: space-between; padding: 0; border: 0; text-align: left; }
+  .page :global(.match-credits) { padding-top: 16px; }
+  .page :global(.match-section-nav) { column-gap: 20px; }
+  .page :global(.match-section-nav a) { min-height: 48px; font-size: .875rem; }
+  .page :global(.detail-section) { padding-top: 30px; }
+  .page :global(.section-heading h2) { font-size: 1.375rem; }
+  .page :global(.section-subtitle) { font-size: .875rem; }
+  .page :global(.timeline-index) { gap: 6px; margin-bottom: 20px; }
+  .page :global(.timeline-index a) { padding-inline: 10px; font-size: .8125rem; }
+  .page :global(.timeline-phase-header) { padding: 16px; gap: 10px; }
+  .page :global(.timeline-phase-header h3) { font-size: 1.125rem; }
+  .page :global(.timeline-terminal-label) { font-size: .75rem; }
+  .page :global(.game-event-list) { padding-inline: 16px; }
+  .page :global(.game-event) { padding-block: 18px; }
+  .page :global(.ballot-card header) { align-items: start; }
+  .page :global(.endgame-card) { padding: 18px; }
+  .page :global(.game-finish) { padding-inline: 0; }
+}

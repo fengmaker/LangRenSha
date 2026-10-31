@@ -24,6 +24,7 @@ from season_config import season_codes
 from website.api.analytics import compute_player_stats
 from website.api import publisher
 from website.api.app import _resolved_snapshot
+from scripts.game_timeline import build_game_timeline
 
 API = os.environ.get("MASTERS_API_URL", "http://127.0.0.1:8000").rstrip("/")
 WEB = os.environ.get("MASTERS_WEB_URL", "http://127.0.0.1:3000").rstrip("/")
@@ -153,7 +154,7 @@ def projection(game: dict, source: bool = False) -> dict:
     # Publication bindings stay in the stored snapshot; GameDetail intentionally
     # omits them from the public API. Their integrity is checked by bluff publish.
     value = {key: field for key, field in game.items() if key not in {
-        "presentation", "analytics_version", "bluff_evidence_sources", "bluff_source_binding",
+        "presentation", "timeline", "analytics_version", "bluff_evidence_sources", "bluff_source_binding",
     }}
     if source:
         value["players"] = [{k: v for k, v in player.items() if k != "id"} for player in value["players"]]
@@ -245,6 +246,7 @@ def check_release(
             expected = dict(source_games[game_id])
             expected["release_id"] = release_id
             require_match(projection(expected, source=True), projection(details[game_id], source=True), game_id)
+            require_match(build_game_timeline(expected), details[game_id]["timeline"], f"{game_id} timeline")
     if full_mode and (
         overview["release"]["source_hash"] != source_hash
         or publisher._release_id("_".join(seasons), source_hash, rules_hash) != release_id

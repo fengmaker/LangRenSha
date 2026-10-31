@@ -665,7 +665,7 @@ def endgame_sidecar(slug: str, reviewed: dict) -> tuple[dict, list[dict]]:
                              "end_ms": ref["end_ms"], "quote": ref["quote"]})
         phases.append({"kind": "wolf_rush", "day": day, "actor": actor,
                        "declared_targets": targets, "result": result,
-                       "note": event.get("note") or "S21 primary-reviewed endgame attack; unspecified settlement remains unknown.",
+                       "note": event.get("note"),
                        "evidence": evidence})
     sidecar = {"schema_version": 1, "game_slug": slug, "phases": phases,
                "source_sha256": reviewed["source"]["original_sha256"]}

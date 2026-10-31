@@ -189,7 +189,9 @@ def _neighbor_puppet(game: dict, number: int, living_before_night,
     elif living is None:
         status, reason, legal = "unknown", "living_before_night_unknown", None
     else:
-        wolves, roles_complete = _wolf_seats(seats)
+        # 首夜相邻资格以原狼牌为准；已归狼阵营的傀儡不能扩展可选邻座。
+        wolves = {seat for seat in seats if _role(seats, seat) in {'狼人', '狼王'}}
+        roles_complete = all(_role(seats, seat) is not None for seat in seats)
         roster_complete = bool(seats) and set(seats) == set(range(1, max(seats) + 1))
         if not roles_complete or not roster_complete or not wolves:
             status, reason, legal = "unknown", "wolf_seats_unknown", None

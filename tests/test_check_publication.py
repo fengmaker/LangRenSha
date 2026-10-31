@@ -18,6 +18,8 @@ class PublicationAcceptanceTests(unittest.TestCase):
              "round_count": 0,
              "players": [{"id": "person-2", "name": "乙", "seat": 1}]},
         ]
+        for item in self.items:
+            item['board'] = {'code': 'mixed_blood', 'name': '预女猎白混'}
         self.details = {
             item["id"]: {
                 "id": item["id"], "season": item["season"], "release_id": "release-1",
@@ -25,6 +27,7 @@ class PublicationAcceptanceTests(unittest.TestCase):
                                                           "person_id": item["players"][0]["id"],
                                                           "name": item["players"][0]["name"]}],
                 "rounds": [], "voting": {"ballots": []}, "round_count": 0, "ballot_count": 0,
+                "board": item['board'], "timeline": {"phases": []},
                 "presentation": {}, "analytics_version": 1,
             }
             for item in self.items

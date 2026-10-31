@@ -7,9 +7,9 @@
 .form label > span { color: var(--muted); font-size: 14px; }
 .form input, .form select { width: 100%; min-width: 0; height: 46px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 6px; color: var(--text); background: var(--ink-soft); font-size: 16px; }
 .form input::placeholder { color: var(--faint); }
-.search { grid-column: span 2; }
-.actions { grid-column: span 2; display: flex; align-items: center; justify-content: flex-end; gap: 24px; }
-.actions button { min-height: 46px; padding: 0 28px; border-radius: 6px; font-size: 15px; }
+.search { grid-column: auto; }
+.actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+.actions button { min-height: 46px; padding: 0 18px; border-radius: 6px; font-size: 15px; white-space: nowrap; }
 .actions a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 14px; }
 .actions a:hover { color: var(--mint); }
 .results { padding-top: 38px; }
@@ -22,6 +22,7 @@
   .intro p { font-size: 15px; }
   .filters { padding: 18px; }
   .form { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; }
+  .search, .actions { grid-column: span 2; }
   .actions { justify-content: flex-start; }
   .results { padding-top: 30px; }
   .results h2 { font-size: 22px; }

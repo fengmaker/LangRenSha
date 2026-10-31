@@ -8,8 +8,14 @@
   const keyFor = game => `${format}:${encodeURIComponent(data.season)}:${encodeURIComponent(game.review_id)}:${game.candidate_sha256}:${game.source_sha256}`;
   const oldKeyFor = (game, prefix) => `${prefix}:${encodeURIComponent(data.season)}:${encodeURIComponent(game.review_id)}:${game.candidate_sha256}:${game.source_sha256}`;
   const emptyBluffs = game => game.seats.map(seat => ({seat, decision:'', success:''}));
+  const noBluffs = game => game.seats.map(seat => ({seat, decision:'no', success:''}));
+  const isAllNo = rows => rows.every(row => row.decision === 'no');
   const rowsFor = card => Array.from(card.querySelectorAll('[data-bluff-row]'));
   const readCard = card => {
+    if (card.querySelector('[data-no-bluff]').checked) {
+      return {note:card.querySelector('[data-note]').value, reviewed:card.querySelector('[data-reviewed]').checked,
+        bluffs:noBluffs(card.reviewGame)};
+    }
     const bySeat = new Map(card.reviewBluffs.map(row => [row.seat,
       row.decision === 'yes' ? {seat:row.seat, decision:'', success:''} : {...row}]));
     for (const row of rowsFor(card)) {
@@ -21,14 +27,17 @@
   };
   const updateRows = card => {
     const rows = rowsFor(card);
+    const noBluff = card.querySelector('[data-no-bluff]').checked;
     const selected = new Set(rows.map(row => row.querySelector('[data-bluff-person]').value).filter(Boolean));
     for (const row of rows) {
       const person = row.querySelector('[data-bluff-person]');
       for (const option of person.options) option.disabled = !!option.value && selected.has(option.value) && option.value !== person.value;
-      row.querySelector('[data-remove-bluff]').disabled = rows.length === 1 && !person.value;
+      person.disabled = noBluff;
+      row.querySelector('[data-bluff-success]').disabled = noBluff || !person.value;
+      row.querySelector('[data-remove-bluff]').disabled = noBluff || (rows.length === 1 && !person.value);
     }
-    card.querySelector('[data-add-bluff]').disabled = rows.length >= card.reviewBluffs.length;
-    const other = card.reviewBluffs.filter(row => ['no','uncertain'].includes(row.decision));
+    card.querySelector('[data-add-bluff]').disabled = noBluff || rows.length >= card.reviewBluffs.length;
+    const other = noBluff ? [] : card.reviewBluffs.filter(row => ['no','uncertain'].includes(row.decision));
     const summary = card.querySelector('[data-other-bluff-decisions]');
     summary.hidden = other.length === 0;
     summary.textContent = other.map(row => `${row.seat}号：${row.decision === 'no' ? '未悍跳' : '悍跳待定'}`).join('；');
@@ -44,6 +53,7 @@
     card.querySelector('[data-note]').value = value.note;
     card.querySelector('[data-reviewed]').checked = value.reviewed;
     card.reviewBluffs = value.bluffs.map(row => ({...row}));
+    card.querySelector('[data-no-bluff]').checked = isAllNo(value.bluffs);
     card.querySelector('[data-bluff-rows]').replaceChildren();
     const selected = value.bluffs.filter(row => row.decision === 'yes');
     for (const item of selected) addRow(card,item);
@@ -64,6 +74,7 @@
       (row.decision === 'yes' || row.success === ''));
   for (const game of data.games) {
     const card = cards.get(game.review_id);
+    card.reviewGame = game;
     writeCard(card,{note:'',reviewed:false,bluffs:emptyBluffs(game)});
     try {
       let saved = JSON.parse(localStorage.getItem(keyFor(game)) || 'null');
@@ -75,6 +86,12 @@
     } catch (_) { status.textContent='部分草稿未能读取，可导入此前导出的意见。'; }
     card.querySelector('[data-note]').addEventListener('input',()=>saveCard(game,card));
     card.addEventListener('change',event=>{
+      if (event.target.matches('[data-no-bluff]')) {
+        const value = readCard(card);
+        value.bluffs = event.target.checked ? noBluffs(game) :
+          (isAllNo(value.bluffs) ? emptyBluffs(game) : value.bluffs);
+        writeCard(card,value);
+      }
       if (event.target.matches('[data-bluff-person]')) {
         const success=event.target.closest('[data-bluff-row]').querySelector('[data-bluff-success]');
         success.disabled=!event.target.value;

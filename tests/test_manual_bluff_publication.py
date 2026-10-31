@@ -189,6 +189,36 @@ def test_feedback_import_and_builder_apply_an_explicit_change_to_a_locked_succes
     assert report["success_feedback_games"] == 1
 
 
+@pytest.mark.parametrize("initial_success, initial_note", [
+    ("yes", "暂定成功"), ("unknown", ""),
+])
+def test_explicit_success_feedback_resolves_previous_pending_result(initial_success, initial_note):
+    manual, source, games, baseline = fixture()
+    games[0]["seats"][11].update(role="狼王", faction="werewolf")
+    for document in (manual, source):
+        document["games"][0]["seats"][11]["role"] = "狼王"
+    manual["games"][0]["reviews"][0]["rows"] = [{
+        "seat": 12, "success": initial_success, "note": initial_note,
+    }]
+    baseline, _ = builder.build_payload(manual, source, games, baseline, "d" * 64)
+    item = next(row for row in bluffs.review_items(games, baseline) if row["seat"] == 12)
+    assert item["needs_review"] is True
+    feedback = {item["review_id"]: {
+        "decision": "comment", "manual_success": True, "notes": "确认成功，不再暂定",
+        "claim_fingerprint": item["claim_fingerprint"],
+        "success_fingerprint": item["success_fingerprint"],
+    }}
+
+    updated, _ = builder.build_payload(manual, source, games, baseline, "d" * 64, feedback)
+
+    item = next(row for row in bluffs.review_items(games, updated) if row["seat"] == 12)
+    assert item["success"] is True
+    assert item["review_questions"] == []
+    assert item["needs_review"] is False
+    assert item["requires_user_review"] is False
+    assert item["review_stage"] == "reviewed"
+
+
 @pytest.mark.parametrize("mutation, message", [
     ("duplicate", "重复选择"),
     ("contradiction", "无人悍跳和选中座位"),

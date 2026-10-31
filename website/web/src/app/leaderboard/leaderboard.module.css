@@ -7,9 +7,10 @@
 .page :global(.leaderboard-summary article) { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; min-height: 0; padding: 0; border: 0; }
 .page :global(.leaderboard-summary span) { color: var(--muted); font-size: 14px; }
 .page :global(.leaderboard-summary strong) { color: var(--text); font: 500 16px var(--display); }
-.page :global(.leaderboard-summary article:last-child strong) { color: var(--text); font: 500 15px var(--display); }
+.page :global(.leaderboard-summary article:last-child strong) { color: var(--text); font: 500 16px var(--display); }
 .page :global(.leaderboard-table-section) { padding-top: 28px; }
 .page :global(.leaderboard-table.leaderboard-comparison) { width: 3152px; min-width: 3152px; }
+.page :global(.leaderboard-comparison th), .page :global(.leaderboard-comparison td) { text-align: center; vertical-align: middle; }
 .page :global(.leaderboard-comparison .leaderboard-rank-col) { width: 56px; }
 .page :global(.leaderboard-comparison .leaderboard-name-col) { width: 120px; }
 .page :global(.leaderboard-comparison th) { width: auto; padding: 10px 12px; font-size: 14px; letter-spacing: 0; }
@@ -20,6 +21,7 @@
 .page :global(.leaderboard-points > strong) { color: var(--mint); font-size: 17px; }
 .page :global(.leaderboard-detail-controls) { margin-bottom: 12px; }
 .page :global(.leaderboard-rules-link) { font-size: 14px; }
+.page :global(.leaderboard-rate-detail .sample-trigger) { padding: 0; border: 0; background: transparent; color: var(--mint); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; cursor: pointer; }
 .page :global(.leaderboard-detail-controls button) { min-height: 38px; padding: 0 13px; border-color: var(--line-strong); color: var(--muted); background: transparent; }
 .page :global(.leaderboard-calculation-rules) { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); }
 .page :global(.leaderboard-calculation-rules > summary) { font-size: 15px; cursor: pointer; }

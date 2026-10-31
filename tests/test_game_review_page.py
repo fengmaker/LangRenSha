@@ -5,9 +5,29 @@ import re
 
 import pytest
 
-from scripts.game_review_page import render_review_page
+from scripts.game_review_page import render_review_page, seat_html, timeline_html
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_neighbor_review_keeps_base_role_with_wolf_faction_and_chronological_surrender():
+    path = ROOT / 'data/games/S22/2026-08-07_g02_BV1pSuN62Ekr'
+    dossier = json.loads((path / 'dossier.json').read_text(encoding='utf-8'))
+    voting = json.loads((path / 'voting.json').read_text(encoding='utf-8'))
+    before = deepcopy(dossier)
+    seats = seat_html(dossier)
+    row = re.search(r'<tr data-seat="4">(.*?)</tr>', seats).group(1)
+    assert '平民<small>傀儡 · 不带刀</small>' in row
+    assert '<span class="faction wolf">狼人</span>' in row
+    dossier['_publication_context'] = {'supplemental_events': json.loads((path / 'supplemental.json').read_text(encoding='utf-8'))['events']}
+    flow = timeline_html(dossier, voting)
+    assert '12号大卫（守卫）本夜空守' in flow
+    assert 'data-slot="puppet_skill_effect"' not in flow
+    assert 'no_effect' not in flow
+    assert flow.rfind('data-slot="night_deaths"') < flow.index('data-slot="werewolf_surrender"')
+    assert '狼人选择交牌' in flow
+    del dossier['_publication_context']
+    assert dossier == before
 
 
 def sample(root):
@@ -37,6 +57,8 @@ def test_approved_page_has_all_seats_single_bluff_row_combined_flow_and_only_rec
     assert re.findall(r'<option value="(\d+)">', person_options) == [str(n) for n in range(1, 13)]
     assert text.count('<select data-bluff-person') == 1
     assert text.count('<select data-bluff-success disabled') == 1
+    assert text.count('<input type="checkbox" data-no-bluff>') == 1
+    assert '本局无人悍跳' in text
     assert '<aside' not in text and '<audio' not in text and '<video' not in text
     assert 'data:image/png;base64,' in text
     assert '选中的连续复盘 &lt;script&gt;文字&lt;/script&gt;' in text

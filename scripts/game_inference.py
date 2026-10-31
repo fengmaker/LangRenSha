@@ -13,14 +13,14 @@ from typing import Any
 
 try:
     from .board_config import load_canonical_template
-    from .role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules
+    from .role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules, neighbor_puppet_sides
 except ImportError:
     from board_config import load_canonical_template
-    from role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules
+    from role_constraints import event_constraint, family, mechanical_knife_constraint, nine_tail_knife_constraint, wolf_king_rules, neighbor_puppet_sides
 
 
 _EMPTY_ACTIONS = {None, "unknown"}
-PRESENTATION_VERSION = 11
+PRESENTATION_VERSION = 12
 _KEEP_UNKNOWN_SLOTS = {
     # Unknown actions that can change survival, information, or skill access.
     "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
@@ -95,6 +95,9 @@ def _role_seats(game: dict) -> dict[str, list[int]]:
 
 def _known_god_seats(game: dict) -> set[int] | None:
     """Return a complete, board-known god roster when this board defines one here."""
+    sides = neighbor_puppet_sides(game)
+    if sides is not None:
+        return sides['god']
     code = _board_code(game)
     board_family = family(code)
     god_roles = _TERMINAL_GOD_ROLES.get(board_family)
@@ -493,6 +496,9 @@ def terminal_last_wolf_king_exile(
         if row.get("faction") == "werewolf"
         and (seat := _as_int(row.get("seat", row.get("number")))) is not None
     }
+    sides = neighbor_puppet_sides(game)
+    if sides is not None:
+        wolf_seats = sides['werewolf']
     departed = previously_eliminated | current_departures
     return bool(king is not None and king in current_exiles
                 and wolf_seats and wolf_seats <= departed)

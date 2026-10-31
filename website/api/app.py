@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from datetime import datetime
+from datetime import date, datetime
 import json
 import os
 from pathlib import Path
@@ -30,10 +30,12 @@ from website.api.bluffs import METHODOLOGY as BLUFF_METHODOLOGY, S23_VIDEO_METHO
 from website.api.bluff_store import read_review
 from website.api.game_presentation import build_game_presentation
 from scripts.season_config import load_season, season_codes
+from scripts.game_timeline import build_game_timeline
+from scripts.role_constraints import puppet_target
 
 
 app = FastAPI(title="Masters archive API", version="1.0.0", debug=False)
-ANALYTICS_VERSION = 9
+ANALYTICS_VERSION = 15
 SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
 
 
@@ -77,6 +79,7 @@ class GameDetail(GameSummary):
     rounds: list[dict[str, Any]]
     rules_state: dict[str, Any] = Field(default_factory=dict)
     presentation: dict[str, Any] = Field(default_factory=dict)
+    timeline: dict[str, Any]
     terminal_observation: dict[str, Any] | None = None
     terminal_events: list[dict[str, Any]] | None = None
     voting: dict[str, Any]
@@ -216,7 +219,8 @@ def _release(conn) -> dict:
 
 def _resolved_snapshot(snapshot: dict) -> dict:
     """Resolve derived factions for display without changing persisted source facts."""
-    seats = [{**seat, "faction": effective_faction(snapshot, seat),
+    puppet = puppet_target(snapshot)
+    seats = [{**seat, "faction": effective_faction(snapshot, seat), "is_puppet": seat['seat'] == puppet,
               "faction_inferred": seat.get("faction") is None and effective_faction(snapshot, seat) is not None}
              for seat in snapshot["seats"]]
     by_number = {seat["seat"]: seat for seat in seats}
@@ -240,6 +244,7 @@ def _summary(snapshot: dict) -> dict:
 
 
 def _game_query(conn, release_id: str, *, season=None, phase=None, board=None, player=None, q=None,
+                date_from=None, date_to=None,
                 page=1, page_size=24) -> tuple[list[dict], int]:
     conditions = ["g.release_id = %s"]
     values: list[Any] = [release_id]
@@ -252,6 +257,12 @@ def _game_query(conn, release_id: str, *, season=None, phase=None, board=None, p
     if board:
         conditions.append("g.board_code = %s")
         values.append(board)
+    if date_from:
+        conditions.append("g.event_date >= %s")
+        values.append(date_from)
+    if date_to:
+        conditions.append("g.event_date <= %s")
+        values.append(date_to)
     if player:
         conditions.append(
             "EXISTS (SELECT 1 FROM game_players gp WHERE gp.release_id=g.release_id AND gp.game_id=g.id "
@@ -324,23 +335,28 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
         for player_id, season_row in season_stats.items():
             row = combined.setdefault(player_id, {
                 "bluff_count": 0, "bluff_count_complete": True, "bluff_pending_games": 0,
+                "bluff_rate": {"numerator": 0, "denominator": 0, "rate": None,
+                               "excluded": 0, "game_ids": [], "samples": []},
                 "bluff_review_count": 0, "bluff_success_rate": {
-                    "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": []},
+                    "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": [], "samples": []},
             })
             row["bluff_count"] += season_row["bluff_count"]
             row["bluff_count_complete"] = row["bluff_count_complete"] and season_row["bluff_count_complete"]
             row["bluff_pending_games"] += season_row["bluff_pending_games"]
             row["bluff_review_count"] += season_row["bluff_review_count"]
-            metric = row["bluff_success_rate"]
-            season_metric = season_row["bluff_success_rate"]
-            for key in ("numerator", "denominator", "excluded"):
-                metric[key] += season_metric[key]
-            metric["game_ids"].extend(season_metric["game_ids"])
+            for metric_key in ("bluff_rate", "bluff_success_rate"):
+                metric = row[metric_key]
+                season_metric = season_row[metric_key]
+                for key in ("numerator", "denominator", "excluded"):
+                    metric[key] += season_metric[key]
+                metric["game_ids"].extend(season_metric["game_ids"])
+                metric["samples"].extend(season_metric.get("samples", []))
 
     for row in combined.values():
-        metric = row["bluff_success_rate"]
-        metric["game_ids"] = list(dict.fromkeys(metric["game_ids"]))
-        metric["rate"] = metric["numerator"] / metric["denominator"] if metric["denominator"] else None
+        for metric_key in ("bluff_rate", "bluff_success_rate"):
+            metric = row[metric_key]
+            metric["game_ids"] = list(dict.fromkeys(metric["game_ids"]))
+            metric["rate"] = metric["numerator"] / metric["denominator"] if metric["denominator"] else None
 
     versions = [version for _, version in inference_versions]
     if not any(versions):
@@ -397,12 +413,17 @@ def games(season: str | None = Query(default=None, max_length=32),
           board: str | None = Query(default=None, max_length=64),
           player: str | None = Query(default=None, max_length=120),
           q: str | None = Query(default=None, max_length=120),
+          date_from: date | None = None,
+          date_to: date | None = None,
           page: int = Query(default=1, ge=1, le=100000),
           page_size: int = Query(default=24, ge=1, le=100),
           conn=Depends(connection_dependency)):
+    if date_from and date_to and date_from > date_to:
+        raise HTTPException(status_code=422, detail="开始日期不能晚于截止日期")
     release = _release(conn)
     items, total = _game_query(conn, release["id"], season=season, phase=phase,
-                               board=board, player=player, q=q, page=page, page_size=page_size)
+                               board=board, player=player, q=q, date_from=date_from, date_to=date_to,
+                               page=page, page_size=page_size)
     return {"items": items, "total": total, "page": page, "page_size": page_size,
             "release_id": release["id"]}
 
@@ -417,7 +438,7 @@ def game_detail(game_id: str, conn=Depends(connection_dependency)):
     presentation = snapshot.get("presentation")
     if not isinstance(presentation, dict) or not presentation:
         presentation = build_game_presentation(snapshot)
-    return {**snapshot, "presentation": presentation}
+    return {**snapshot, "presentation": presentation, "timeline": build_game_timeline(snapshot)}
 
 
 @app.get("/api/v1/photos/{season}/{filename}")
@@ -469,6 +490,7 @@ def player_detail(player_id: str,
                   season: str = Query(default="S22", max_length=32),
                   season_start: str | None = Query(default=None, max_length=32),
                   season_end: str | None = Query(default=None, max_length=32),
+                  minimum_appearances: int = Query(default=0, ge=0),
                   phase: Literal["all", "regular", "finals_week"] = "all",
                   conn=Depends(connection_dependency)):
     release = _release(conn)
@@ -501,12 +523,12 @@ def player_detail(player_id: str,
     )
     boards = [{"code": code, "name": name, "count": count}
               for (code, name), count in sorted(board_counts.items(), key=lambda row: (-row[1], row[0][1]))]
-    stats = compute_player_stats(player_id, snapshots, season=resolved_start, seasons=selected_seasons,
-                                 name=player["name"])
     bluff_stats, bluff_inference_version = _combine_player_bluff_stats(
         snapshots_by_season, release["id"], conn,
     )
-    stats.update(bluff_stats.get(player_id, {}))
+    stats = compute_player_stats(player_id, snapshots, season=resolved_start, seasons=selected_seasons,
+                                 name=player["name"], minimum_appearances=minimum_appearances,
+                                 bluff_stats=bluff_stats)
     roles = [{"role": role["role"], "count": role["appearances"]} for role in stats["roles"]]
     return {**player, "appearances": stats["appearances"], "roles": roles,
             "photo": photo_for(player["name"], resolved_end),
@@ -515,6 +537,7 @@ def player_detail(player_id: str,
             "bluff_data_source": "database", "bluff_inference_version": bluff_inference_version,
             "scope": {"season": resolved_end, "season_start": resolved_start,
                       "season_end": resolved_end, "seasons": selected_seasons,
+                      "minimum_appearances": minimum_appearances,
                       "phase": "all", "games": len(snapshots)},
             "available_seasons": available_seasons}
 
@@ -542,6 +565,11 @@ def leaderboard(season: str = Query(default="S22", max_length=32),
         "pending_games": sum(item["pending_games"] for item in items),
         "scoring": {"werewolf_win": 1.5, "good_win": 1, "loss": -1},
         "items": items,
+        "sample_games": [{"game_id": game["id"], "season": game["season"], "date": game["date"],
+                          "game_number": game.get("game_number"), "board_name": game["board"]["name"],
+                          "roles": {seat["person_id"]: seat.get("role") for seat in game.get("seats", [])
+                                    if seat.get("person_id") is not None}}
+                         for game in season_snapshots],
         "notes": analytics_notes(season_snapshots, season=season, phase=phase) + BLUFF_METHODOLOGY
         + (["本季已采用用户人工复核；明确选中的混血儿与人工成功结果按该批记录优先。"]
            if bluff_payload.get('manual_review') else []),

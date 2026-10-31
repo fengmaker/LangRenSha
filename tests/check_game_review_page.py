@@ -93,6 +93,7 @@ def current_ui(page) -> dict:
       return {
         note: card.querySelector('[data-note]').value,
         reviewed: card.querySelector('[data-reviewed]').checked,
+        noBluff: card.querySelector('[data-no-bluff]').checked,
         rows: Array.from(card.querySelectorAll('[data-bluff-row]')).map(row => ({
           seat: row.querySelector('[data-bluff-person]').value,
           success: row.querySelector('[data-bluff-success]').value,
@@ -134,6 +135,8 @@ def check_page_behavior(browser, source_path: Path, output_dir: Path, checks: li
     require([person_selects.first.locator('option').nth(i).get_attribute('value') for i in range(1, 13)] ==
             [str(seat) for seat in range(1, 13)], '候选席位不是 1 至 12 号')
     require(success_selects.count() == 1 and success_selects.first.is_disabled(), '默认成功选择没有禁用')
+    no_bluff = card.locator('[data-no-bluff]')
+    require(no_bluff.count() == 1 and not no_bluff.is_checked(), '默认错误勾选本局无人悍跳')
     checks.append('默认一条空白悍跳行、12 个候选席位、成功选择禁用')
 
     person_selects.first.select_option('1')
@@ -162,6 +165,24 @@ def check_page_behavior(browser, source_path: Path, output_dir: Path, checks: li
     require(person_selects.count() == 1 and person_selects.first.input_value() == '1',
             '删除第二行后没有保留第一行')
     checks.append('支持添加多人、阻止重复席位并删除指定行')
+
+    no_bluff.check()
+    require(no_bluff.is_checked() and person_selects.first.is_disabled() and
+            card.locator('[data-add-bluff]').is_disabled(), '确认无人悍跳后仍可填写悍跳人')
+    no_bluff_export = export_json(page, output_dir / 'game_review_no_bluff_toggle.json')
+    no_bluff_rows = next(row for row in no_bluff_export['games'] if row['review_id'] == game['review_id'])['bluffs']
+    require(len(no_bluff_rows) == 12 and all(row['decision'] == 'no' and row['success'] == ''
+                                             for row in no_bluff_rows),
+            '勾选本局无人悍跳后没有导出全席 no')
+    no_bluff.uncheck()
+    require(not no_bluff.is_checked() and not person_selects.first.is_disabled() and
+            person_selects.first.input_value() == '', '取消无人悍跳后控件未恢复或悍跳人未清空')
+    cleared_export = export_json(page, output_dir / 'game_review_no_bluff_cancel.json')
+    cleared_rows = next(row for row in cleared_export['games'] if row['review_id'] == game['review_id'])['bluffs']
+    require(all(row['decision'] == '' and row['success'] == '' for row in cleared_rows),
+            '取消无人悍跳后仍残留全席 no')
+    person_selects.first.select_option('1')
+    checks.append('无人悍跳可勾选导出全席 no，取消后恢复输入并清空全席标记')
 
     card.locator('[data-note]').fill('QA 浏览器验证草稿')
     card.locator('[data-reviewed]').check()
@@ -224,6 +245,32 @@ def check_page_behavior(browser, source_path: Path, output_dir: Path, checks: li
             card.locator('[data-bluff-success]').first.input_value() == 'failure',
             'v1 导入清除了已有 yes 悍跳选择')
     checks.append('v1 导入保留已有悍跳选择')
+
+    all_no = output_dir / 'fixture_all_no.json'
+    write_payload(all_no, format_name=FORMAT, season=metadata['season'], game=game,
+                  note='全席无人悍跳导入', reviewed=True,
+                  bluffs=[{'seat': seat, 'decision': 'no', 'success': ''} for seat in range(1, 13)])
+    import_json(page, all_no)
+    page.wait_for_function("document.querySelector('#status').textContent.includes('已导入1局')")
+    require(no_bluff.is_checked() and person_selects.first.is_disabled(),
+            '导入全席 no 后没有恢复本局无人悍跳勾选')
+    all_no_export = export_json(page, output_dir / 'game_review_no_bluff_import_roundtrip.json')
+    all_no_rows = next(row for row in all_no_export['games'] if row['review_id'] == game['review_id'])['bluffs']
+    require(len(all_no_rows) == 12 and all(row['decision'] == 'no' and row['success'] == ''
+                                            for row in all_no_rows),
+            '全席 no 导入导出往返改变了决定')
+    page.reload(wait_until='load')
+    card = page.locator(f'[data-review-id="{game["review_id"]}"]')
+    no_bluff = card.locator('[data-no-bluff]')
+    person_selects = card.locator('[data-bluff-person]')
+    require(no_bluff.is_checked() and person_selects.first.is_disabled(),
+            '刷新后没有恢复全席 no 对应的本局无人悍跳勾选')
+    no_bluff.uncheck()
+    cleared_import_export = export_json(page, output_dir / 'game_review_no_bluff_import_cancel.json')
+    cleared_import_rows = next(row for row in cleared_import_export['games'] if row['review_id'] == game['review_id'])['bluffs']
+    require(all(row['decision'] == '' and row['success'] == '' for row in cleared_import_rows),
+            '取消导入恢复的无人悍跳后仍残留全席 no')
+    checks.append('全席 no 导入自动勾选，刷新恢复并可取消清除')
 
     before_bad_import = current_ui(page)
     invalid = output_dir / 'fixture_bad_version.json'

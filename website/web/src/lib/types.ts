@@ -43,7 +43,9 @@ export type PlayerLedgerEntry = {
 };
 export type RankingEntry = { id: string; name: string; rank: number; tied: boolean; value: number; sample_count: number; appearances: number; effective_game_count?: number };
 export type MetricRanking = { rank: number; total: number; tied: boolean };
-export type PlayerRankingKey = "points" | "appearances" | "attendance" | "total_win_rate" | "wins" | "losses" | "werewolf_win_rate" | "good_win_rate" | "sheriff_registration_rate" | "seer_follow_rate" | "sheriff_seer_vote_rate";
+export type PlayerRankingKey = "points" | "appearances" | "attendance" | "total_win_rate" | "wins" | "losses" | "werewolf_win_rate" | "good_win_rate" | "sheriff_registration_rate" | "seer_follow_rate" | "sheriff_seer_vote_rate"
+  | "good_wins" | "wolf_vote_rate" | "good_sheriff_registration_rate" | "werewolf_appearances" | "werewolf_wins"
+  | "werewolf_draw_rate" | "werewolf_self_explosion_rate" | "werewolf_sheriff_registration_rate" | "bluff_count" | "bluff_rate" | "bluff_success_rate";
 export type PlayerBoardStats = {
   code: string | null;
   name: string | null;
@@ -69,6 +71,20 @@ export type PlayerStats = {
   werewolf_win_rate: Metric;
   good_win_rate: Metric;
   sheriff_registration_rate: Metric;
+  wolf_vote_rate: Metric;
+  exile_abstentions: number;
+  good_sheriff_registration_rate: Metric;
+  good_off_police_rate: Metric;
+  werewolf_appearances: number;
+  werewolf_draw_rate: Metric;
+  werewolf_self_explosion_rate: Metric;
+  werewolf_sheriff_registration_rate: Metric;
+  werewolf_off_police_rate: Metric;
+  bluff_count: number;
+  bluff_count_complete: boolean;
+  bluff_pending_games: number;
+  bluff_rate: Metric;
+  bluff_success_rate: Metric;
   seer_follow_rate: Metric;
   sheriff_seer_vote_rate: Metric;
   rankings?: Partial<Record<PlayerRankingKey, MetricRanking | null>>;
@@ -146,6 +162,7 @@ export type GameRound = {
   day: GameEvent[];
 };
 export type Seat = {
+  is_puppet?: boolean;
   seat: number;
   person_id: string | null;
   name: string | null;
@@ -176,12 +193,25 @@ export type VotingData = {
   interruptions?: { day?: number; kind?: string; reason?: string; status?: string }[];
   days?: VotingDay[];
 };
+export type GameTimeline = {
+  phases: {
+    number: number;
+    phase: "night" | "day";
+    label: string;
+    terminal: boolean;
+    items: (
+      { kind: "event"; slot: string; title: string; text: string; events: GameEvent[] }
+      | { kind: "ballot"; slot: string; title: string; ballot: Ballot }
+    )[];
+  }[];
+};
 export type GameDetail = GameSummary & {
   release_id: string;
   commentators: string[];
   referee: string | null;
   seats: Seat[];
   rounds: GameRound[];
+  timeline: GameTimeline;
   presentation?: {
     version: number; rounds: GameRound[]; omitted_events: number;
     terminal?: { round: number; phase: "night" | "day"; events: GameEvent[] } | null;
@@ -200,7 +230,7 @@ export type PlayerDetail = {
   games: GameSummary[];
   release_id: string;
   stats?: PlayerStats;
-  scope?: { season: string; phase: string; games: number; season_start?: string; season_end?: string; seasons?: string[] };
+  scope?: { season: string; phase: string; games: number; season_start?: string; season_end?: string; seasons?: string[]; minimum_appearances?: number };
   available_seasons?: string[];
   photo?: PlayerPhoto | null;
 };
@@ -219,18 +249,22 @@ export type LeaderboardItem = {
   good_win_rate: Metric;
   attendance: Metric;
   sheriff_registration_rate: Metric;
+  good_sheriff_registration_rate: Metric;
+  good_off_police_rate: Metric;
   wolf_vote_rate: Metric;
   exile_abstentions: number;
   werewolf_appearances: number;
   werewolf_draw_rate: Metric;
   werewolf_self_explosion_rate: Metric;
   werewolf_sheriff_registration_rate: Metric;
+  werewolf_off_police_rate: Metric;
   seer_follow_rate: Metric;
   sheriff_seer_vote_rate: Metric;
   bluff_count: number;
   bluff_count_complete: boolean;
   bluff_pending_games: number;
   bluff_review_count: number;
+  bluff_rate: Metric;
   bluff_success_rate: Metric;
   photo: PlayerPhoto | null;
 };
@@ -272,6 +306,8 @@ export type Leaderboard = {
   pending_games: number;
   scoring: { werewolf_win: number; good_win: number; loss: number };
   items: LeaderboardItem[];
+  sample_games: { game_id: string; season: string; date: string; game_number: number | null;
+    board_name: string; roles: Record<string, string | null> }[];
   notes: string[];
 };
 export type Stats = {

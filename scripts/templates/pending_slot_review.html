@@ -12,6 +12,7 @@ main,#json-panel,#status{max-width:1100px;margin:auto;padding:0 20px}#status{fon
 .seats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin:17px 0 21px}.seat{border-radius:7px;background:#f4f7f8;padding:8px 9px;min-width:0}.seat strong{font-weight:600;font-size:13px;display:block;overflow-wrap:anywhere}.seat span{color:var(--muted);font-size:12px;display:block;margin-top:2px}.slot-choice{border-top:1px solid var(--line);padding-top:17px}.slot-choice label{font-size:13px;font-weight:600;margin-right:10px}.slot-choice select{min-width:310px}.slot-form{background:#f8fafb;border:1px solid var(--line);padding:16px;border-radius:9px;margin-top:12px}.slot-title{font-size:13px;font-weight:600;margin-bottom:12px}.fields{display:flex;gap:13px;align-items:flex-start;flex-wrap:wrap}.field{min-width:145px;flex:1}.field>label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.field select,.field input{width:100%}.known{min-height:42px;display:flex;align-items:center;overflow-wrap:anywhere;font-size:14px}.targets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;width:100%}.targets label{display:flex;align-items:center;gap:6px;font-size:13px}.targets input{accent-color:var(--accent);width:17px;height:17px}.wide{flex-basis:100%}.hint{color:var(--muted);font-size:12px;margin:10px 0 0}.filled{color:#347159;font-size:12px;margin-left:8px}#json-panel{padding-top:15px}#json-panel textarea{width:100%;height:230px;border:1px solid var(--line);padding:12px;font:12px/1.5 Consolas,monospace}#json-panel p{font-size:13px;color:var(--muted)}[hidden]{display:none!important}
 @media(max-width:650px){header{padding:18px 14px}h1{font-size:20px}main,#status,#json-panel{padding-left:12px;padding-right:12px}.game{padding:15px;margin:12px 0}.seats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.slot-choice label{display:block;margin-bottom:6px}.slot-choice select{width:100%;min-width:0}.targets{grid-template-columns:repeat(4,1fr)}nav{gap:6px;padding:10px 8px}nav select{min-width:0;width:100%;max-width:54vw;font-size:14px}nav button{padding:8px;font-size:13px}.field{min-width:125px}.slot-form{padding:12px}}
 .review-note{margin-top:14px}.review-note label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}.review-note textarea{width:100%;min-height:82px;resize:vertical;padding:10px;border:1px solid #bdced3;border-radius:7px;color:var(--ink);background:white}
+.board-rule-note{max-width:1060px;margin:14px auto;padding:12px 16px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--muted);font-size:13px}.board-rule-note summary{color:var(--ink);font-weight:600;cursor:pointer}.board-rule-note p{margin:12px 0 0;line-height:1.8}@media(max-width:1100px){.board-rule-note{margin-inline:12px}}
 </style></head><body>
 <header><div><h1>日夜待核槽位 · 人工复核</h1><p id="summary"></p></div><div class="actions"><button class="primary" id="export">导出复核结果</button><button id="show-json">显示 / 复制结果</button></div></header>
 <nav aria-label="按日期浏览"><button id="previous">前一天</button><select id="date" aria-label="选择日期"></select><button id="next">后一天</button></nav>
@@ -31,8 +32,13 @@ try{
  let saved=JSON.parse(localStorage.getItem(key)||'null');
  const migration=JSON.parse(document.getElementById('draft-migration').textContent);
  if(!saved&&migration){
-  const prior=JSON.parse(localStorage.getItem(DATA.format+':'+migration.source_fingerprint)||'null');
-  if(prior){const ids=new Set(migration.question_ids);saved={...prior,answers:Object.fromEntries(Object.entries(prior.answers||{}).filter(([id])=>ids.has(id))),notes:Object.fromEntries(Object.entries(prior.notes||{}).filter(([id])=>ids.has(id)))};localStorage.setItem(key,JSON.stringify(saved));}
+  let step=migration,ids=new Set(migration.question_ids);
+  while(!saved&&step){
+   ids=new Set(step.question_ids.filter(id=>ids.has(id)));
+   const prior=JSON.parse(localStorage.getItem(DATA.format+':'+step.source_fingerprint)||'null');
+   if(prior){saved={...prior,answers:Object.fromEntries(Object.entries(prior.answers||{}).filter(([id])=>ids.has(id))),notes:Object.fromEntries(Object.entries(prior.notes||{}).filter(([id])=>ids.has(id)))};localStorage.setItem(key,JSON.stringify(saved));}
+   step=step.previous;
+  }
  }
  if(saved)state=saved;
 }catch{}

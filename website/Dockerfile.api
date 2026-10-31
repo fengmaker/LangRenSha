@@ -6,7 +6,10 @@ RUN pip install --no-cache-dir -r /app/requirements/web.txt \
     && useradd --create-home --uid 10001 app
 COPY website/api /app/website/api
 COPY scripts/season_config.py /app/scripts/season_config.py
+COPY scripts/game_timeline.py scripts/game_inference.py scripts/game_time.py scripts/board_config.py scripts/role_constraints.py scripts/rule_config.py /app/scripts/
 COPY config/seasons.json /app/config/seasons.json
+COPY config/game_rules.json /app/config/game_rules.json
+COPY config/board_templates /app/config/board_templates
 COPY website/assets/player-photos /app/website/assets/player-photos
 COPY website/assets/bluffs /app/website/assets/bluffs
 COPY website/assets/bluff-frames /app/website/assets/bluff-frames
