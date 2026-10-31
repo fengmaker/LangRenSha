@@ -38,6 +38,9 @@ def test_neighbor_puppet_uses_circular_wolf_neighbors_and_unknown_living_boundar
     report = derive_board_outcomes(source, 1, living_before_night=range(1, 13))
     assert constraint(report, "puppet_select")["legal_targets"] == [2, 9, 11, 12]
     assert not report["issues"]
+    source['seats'][-1]['faction'] = 'werewolf'
+    aligned = derive_board_outcomes(source, 1, living_before_night=range(1, 13))
+    assert constraint(aligned, 'puppet_select')['legal_targets'] == [2, 9, 11, 12]
     second = derive_board_outcomes(source, 2, living_before_night=range(1, 13))
     assert constraint(second, "puppet_select")["status"] == "unavailable"
 

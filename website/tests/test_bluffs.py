@@ -97,6 +97,50 @@ def test_unpublished_review_keeps_all_player_counts_incomplete_even_with_unknown
                and row["bluff_success_rate"]["rate"] is None for row in stats.values())
 
 
+def test_bluff_rate_uses_wolf_appearances_and_excludes_undecided_claims():
+    games, reviewed = [], []
+    for decision in ('yes', 'no', 'uncertain'):
+        game = sample()
+        game['id'] = decision
+        games.append(game)
+        reviewed.extend(review(game, decision)['games'])
+    mixed = sample()
+    mixed['id'] = 'wolf-mixed'
+    mixed['seats'][0]['role'] = '混血儿'
+    good = sample()
+    good['id'] = 'good'
+    good['seats'][0].update(role='平民', faction='good')
+    unknown = sample()
+    unknown['id'] = 'unknown'
+    unknown['seats'][0]['faction'] = None
+    games.extend([mixed, good, unknown])
+
+    metric = aggregate_bluffs(games, {'games': reviewed})['wolf']['bluff_rate']
+
+    assert (metric['numerator'], metric['denominator'], metric['excluded']) == (1, 3, 2)
+    assert metric['rate'] == 1 / 3
+    assert metric['game_ids'] == ['yes', 'no', 'wolf-mixed']
+    assert aggregate_bluffs([good], {'games': []})['wolf']['bluff_rate']['rate'] is None
+
+
+def test_bluff_success_samples_match_confirmed_results_and_exclude_pending():
+    games, records = [], []
+    for gid, result in [('success', True), ('failure', False), ('pending', None)]:
+        game = sample()
+        game['id'] = gid
+        payload = review(game)
+        payload['games'][0]['assessments'][0].update(
+            verification_status='user_confirmed', manual_success=result)
+        games.append(game)
+        records.extend(payload['games'])
+    metric = aggregate_bluffs(games, {'games': records})['wolf']['bluff_success_rate']
+    assert (metric['numerator'], metric['denominator'], metric['excluded']) == (1, 2, 1)
+    assert metric['samples'] == [
+        {'game_id': 'success', 'positive': 1, 'negative': 0},
+        {'game_id': 'failure', 'positive': 0, 'negative': 1},
+    ]
+
+
 def test_team_first_day_good_exile_succeeds_without_personal_call_or_majority():
     game = sample(exile=2, badge=3)
     game["voting"]["ballots"] = [{"id": "vote1", "day": 1, "kind": "exile", "winner": 2,

@@ -85,12 +85,27 @@ assert sum(len(g['questions']) for g in games.values()) == len(rows)
 data = json.dumps(payload, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 
 html = (ROOT / 'scripts/templates/pending_slot_review.html').read_text(encoding='utf-8')
+if any(game['board'] == '唯邻是从' for game in payload['games']):
+    note = ('<details id="neighbor-puppet-rule-note" class="board-rule-note"><summary>唯邻是从 · 复核与发布规则</summary>'
+            '<p>傀儡个人胜利阵营跟狼人，物理底牌不变，且不带刀。傀儡平民不显示独立技能事项；傀儡神职只在实际发动技能时于对应技能事项说明影响。'
+            '按正常出局条件结算，傀儡仍存活时不能判好人胜；狼方屠边不将傀儡计入其原底牌所属的神职边或平民边。傀儡为神职时，击杀其余3神或5民任一边清空即狼人胜；傀儡为平民时，击杀4神或其余4民任一边清空即狼人胜。</p>'
+            '<p>默认夜间阅读排列为守卫守护→狼队击杀→首夜指定傀儡→女巫用药→预言家查验；实际已核时点优先，此排列不证明完整叫醒顺序。'
+            '首日按上警名单→警长票（含PK）→警长结果→夜间出局→实际死亡技能/警徽处理及白天事件阅读。确认空守写“本夜空守”，未知不按空守处理。'
+            '已确认交牌须在发生阶段单列“狼人交牌”，随后说明胜方并停止后续流程；交牌人未知不填座位。平安夜后交牌时，先保留平安夜，再显示交牌。交牌认输按已确认终局处理，不倒推原狼或傀儡已被击杀/放逐。</p>'
+            '<p>S22 2026-08-07第2局：首夜12号大卫空守，第二天白天公布平安夜后狼人交牌；这是单局确认，不泛化其他局。拍刀目标和实际结算保留，导入器英文占位备注不显示。'
+            '页内已有的首夜傀儡效果待核题保留为本局时序核对项，不代表逐局或发布流程要显示独立傀儡技能行；本说明不推定具体夜序或技能先后。</p></details>')
+    marker = '<section id="json-panel" hidden>'
+    if html.count(marker) != 1:
+        raise ValueError('待核槽位页缺少唯一规则旁注插入位置')
+    html = html.replace(marker, note + '\n' + marker, 1)
 output = MANUAL_REVIEW / '日夜待核槽位人工复核_20261030.html'
 migration = None
 if output.is_file():
     previous_html = output.read_text(encoding='utf-8')
     previous_match = re.search(r'<script id="review-data" type="application/json">(.*?)</script>', previous_html, re.S)
     previous = json.loads(previous_match.group(1)) if previous_match else None
+    old_migration = re.search(r'<script id="draft-migration" type="application/json">(.*?)</script>', previous_html, re.S)
+    previous_migration = json.loads(old_migration.group(1)) if old_migration else None
     if previous and previous.get('source_fingerprint') != payload['source_fingerprint']:
         old_games = {game['bvid']: game for game in previous['games']}
         compatible = []
@@ -100,9 +115,10 @@ if output.is_file():
                 old_questions = {q['id']: q for q in old['questions']}
                 compatible.extend(q['id'] for q in game['questions'] if old_questions.get(q['id']) == q)
         migration = {'source_fingerprint': previous['source_fingerprint'], 'question_ids': compatible}
+        if previous_migration:
+            migration['previous'] = previous_migration
     elif previous:
-        old_migration = re.search(r'<script id="draft-migration" type="application/json">(.*?)</script>', previous_html, re.S)
-        migration = json.loads(old_migration.group(1)) if old_migration else None
+        migration = previous_migration
 migration_data = json.dumps(migration, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 output.parent.mkdir(parents=True, exist_ok=True)
 with output.open('w', encoding='utf-8', newline='\n') as f:

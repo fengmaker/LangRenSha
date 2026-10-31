@@ -23,8 +23,11 @@
       "小白",
       "大卫"
     ],
-    "commentators": [],
-    "referee": null,
+    "commentators": [
+      "华仔仔",
+      "Ted"
+    ],
+    "referee": "豆儿啵",
     "seats": [
       {
         "seat": 1,
@@ -1012,7 +1015,7 @@
             "targets": [
               3
             ],
-            "result": "重复前夜对3号的验证，假面被判离出局。",
+            "result": "重复前夜对3号的验证，假面被判离；判离后仍需追刀追投，不计入本夜死亡。",
             "start_seat": null,
             "direction": null,
             "votes": [],
@@ -1044,7 +1047,7 @@
               3,
               11
             ],
-            "result": "舞池重复导致行动失效，7号舞者被判离出局。",
+            "result": "舞池重复导致行动失效，7号舞者被判离；判离后仍需追刀追投，不计入本夜死亡。",
             "start_seat": null,
             "direction": null,
             "votes": [],
@@ -1113,13 +1116,10 @@
           },
           {
             "slot": "night_deaths",
-            "action": "die",
+            "action": "peaceful",
             "actor": null,
-            "targets": [
-              1,
-              7
-            ],
-            "result": "终局夜1号假面与7号舞者均被判离；游戏结束，不再有D4白天。",
+            "targets": [],
+            "result": "本夜为平安夜；1号假面与7号舞者被判离，仍需追刀追投；1号假面交牌，游戏结束，不再有D4白天。",
             "start_seat": null,
             "direction": null,
             "votes": [],
@@ -1605,6 +1605,12 @@
       "quote": "3号六号八号 11号首夜狼队击杀6号平民女巫救起行程 平安夜预言家验证了7号玩家无者为好人身份 警上进尾环节",
       "note": "首夜已使用解药救6号；按本季单次解药规则，本夜解药耗尽，毒药是否使用另列未知。",
       "sha256": "4d9bce6fe96f2f4bc7f4242d9bc6643c94ede2a96dfd3495460a16a1fc4c1ce6"
+    },
+    {
+      "kind": "field_revision",
+      "field": "commentators/referee/terminal_settlement",
+      "source_path": "data/reports/解说裁判与判离修订_20261031.json",
+      "note": "缺失的解说/裁判及BV1FJxc6zEzg终局判离/平安夜"
     }
   ],
   "issues": [

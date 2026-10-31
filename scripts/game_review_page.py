@@ -16,6 +16,7 @@ if str(ROOT / 'scripts') not in sys.path:
 
 from scripts.board_config import load_canonical_template
 from scripts.game_timeline import build_game_timeline
+from scripts.role_constraints import puppet_target
 from scripts.game_derivations import apply_precomputed
 from scripts.incremental_common import load_state, work_dir
 from scripts.prepare_s23_review import segments
@@ -79,12 +80,16 @@ def timeline_html(dossier: dict, voting: dict) -> str:
 
 def seat_html(dossier: dict) -> str:
     rows = []
+    puppet = puppet_target(dossier)
     for row in sorted(dossier['seats'], key=lambda item: item['seat']):
         number, name = row['seat'], row.get('name') or '姓名未知'
-        faction = {'good': '好人', 'werewolf': '狼人', 'third_party': '第三方'}.get(row.get('faction'), '未知')
-        css = 'wolf' if row.get('faction') == 'werewolf' else 'good'
+        is_puppet = number == puppet
+        side = 'werewolf' if is_puppet else row.get('faction')
+        faction = {'good': '好人', 'werewolf': '狼人', 'third_party': '第三方'}.get(side, '未知')
+        css = 'wolf' if side == 'werewolf' else 'good'
+        identity = esc(row.get('role') or '未知') + ('<small>傀儡 · 不带刀</small>' if is_puppet else '')
         rows.append(f'<tr data-seat="{number}"><td class="seat-number">{number}</td><td>{esc(name)}</td>'
-                    f'<td>{esc(row.get("role") or "未知")}</td><td><span class="faction {css}">{faction}</span></td></tr>')
+                    f'<td>{identity}</td><td><span class="faction {css}">{faction}</span></td></tr>')
     return ''.join(rows)
 
 
@@ -92,7 +97,9 @@ def bluff_controls_html(dossier: dict) -> str:
     options = ''.join(f'<option value="{row["seat"]}">{row["seat"]}号 {esc(row.get("name") or "姓名未知")}</option>'
                       for row in sorted(dossier['seats'], key=lambda row: row['seat']))
     return ('<div class="bluff-controls"><div data-bluff-rows></div>'
+            '<label class="no-bluff-toggle"><input type="checkbox" data-no-bluff>本局无人悍跳</label>'
             '<button class="button add-bluff" type="button" data-add-bluff>添加悍跳人</button>'
+            '<p class="muted">默认每局最多一名狼悍跳，选定后其余狼人记为未悍跳；特殊情况请在备注说明。</p>'
             '<p class="muted" data-other-bluff-decisions hidden></p></div>'
             '<template data-bluff-row-template><div class="bluff-row" data-bluff-row>'
             '<label class="bluff-person">悍跳人<select data-bluff-person aria-label="选择悍跳人">'
@@ -140,7 +147,7 @@ def game_card(game: dict, *, season: str, root: Path, review_id: str) -> str:
     winner = {'good': '好人胜', 'werewolf': '狼人胜', 'draw': '平局'}.get(dossier.get('winner'), '胜方待核')
     video = f'https://www.bilibili.com/video/{entry["bvid"]}/?p={int(entry.get("page", 1))}'
     return f'''<main class="game-card" data-review-id="{esc(review_id)}" hidden>
-<section class="card game-heading"><div><p class="eyebrow">{esc(season)} · 逐局复核</p><h1>{esc(date)} 第{esc(number)}局 <span style="white-space:nowrap">· {esc(board)}</span></h1><p class="muted">法官：{esc(dossier.get('referee') or '未知')} · <a href="{esc(video)}" target="_blank" rel="noopener">打开原视频 ↗</a></p></div><span class="winner">{winner}</span></section>
+<section class="card game-heading"><div><p class="eyebrow">{esc(season)} · 逐局复核</p><h1>{esc(date)} 第{esc(number)}局 <span style="white-space:nowrap">· {esc(board)}</span></h1><p class="muted">解说：{esc('、'.join(dossier.get('commentators') or []) or '未知')} · 法官：{esc(dossier.get('referee') or '未知')} · <a href="{esc(video)}" target="_blank" rel="noopener">打开原视频 ↗</a></p></div><span class="winner">{winner}</span></section>
 <section class="card"><div class="section-head"><h2>身份截图</h2><span>点击图片可放大</span></div>{''.join(figures)}</section>
 <section class="card"><h2>座位身份与悍跳复核</h2><div class="table-wrap"><table class="seats"><thead><tr><th>座位</th><th>选手</th><th>真实身份</th><th>阵营</th></tr></thead><tbody>{seat_html(dossier)}</tbody></table></div>{bluff_controls_html(dossier)}</section>
 <section class="card game-flow"><h2>对局流程</h2>{timeline_html(dossier, candidate['voting'])}</section>

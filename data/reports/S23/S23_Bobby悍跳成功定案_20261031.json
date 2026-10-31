@@ -1,0 +1,55 @@
+{
+  "state": "published_and_verified",
+  "scope": "S23 2026-10-06 第二局 12号 Bobby，仅成功结果定案",
+  "user_message": "10 6 号的就算成功，不用暂定了",
+  "feedback_path": "data/extractions/S23/bluff_review/user_feedback_20261031_bobby_success.json",
+  "archived_before": "data/archive/S23_bluffs_before_bobby_final_20261031_36f320a90f55.json",
+  "changed_assessments": [
+    [
+      "BV17xpA6aE7N",
+      12
+    ]
+  ],
+  "before": {
+    "success": true,
+    "needs_review": true,
+    "review_stage": "user_pending",
+    "review_questions": [
+      "狼王起跳被推出局能开枪算不算悍跳成功，这里你标注一下，暂定成功"
+    ]
+  },
+  "after": {
+    "success": true,
+    "needs_review": false,
+    "review_stage": "reviewed",
+    "review_questions": []
+  },
+  "tests": "tests/test_manual_bluff_publication.py + website/tests/test_bluffs.py: 48 passed",
+  "release_id": "S21_S22_S23-2db23da281c47098-0d76e912-p12-s2",
+  "inference_version": "S23-manual-20261029-a53921fcae87-bobby-final-20261031",
+  "api_summary": {
+    "games": 84,
+    "wolf_appearances": 336,
+    "manual_included_appearances": 2,
+    "identified_bluffs": 75,
+    "successes": 11,
+    "pending": 0,
+    "assistant_pending": 24,
+    "reviewed_games": 75
+  },
+  "leaderboard_bobby": {
+    "name": "Bobby",
+    "bluff_count": 2,
+    "bluff_review_count": 0,
+    "bluff_success_rate": {
+      "numerator": 1,
+      "denominator": 2,
+      "rate": 0.5,
+      "excluded": 0,
+      "game_ids": [
+        "bili-BV17xpA6aE7N-p01-g02",
+        "bili-BV1i6J163EnN-p01-g01"
+      ]
+    }
+  }
+}

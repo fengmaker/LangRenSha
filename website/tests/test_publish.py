@@ -363,6 +363,7 @@ def test_game_detail_uses_persisted_presentation_and_keeps_legacy_fallback(monke
     stored = {"id": "game", "presentation": {"rounds": [{"number": 9}]}}
     monkeypatch.setattr(app, "_release", lambda conn: {"id": "release"})
     monkeypatch.setattr(app, "_resolved_snapshot", lambda snapshot: snapshot)
+    monkeypatch.setattr(app, "build_game_timeline", lambda snapshot: {"phases": []})
 
     class Conn:
         def __init__(self, snapshot):

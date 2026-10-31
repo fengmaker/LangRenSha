@@ -48,6 +48,13 @@ def client(monkeypatch):
         numerator = 1 if payload["season"] == "S22" else 0
         return {"p": {
             "bluff_count": 1, "bluff_count_complete": True, "bluff_pending_games": 0,
+            "bluff_rate": {
+                "numerator": 1, "denominator": denominator,
+                "rate": 1 / denominator, "excluded": 0,
+                "game_ids": [f"{payload['season']}-bluff"],
+                "samples": [{"game_id": f"{payload['season']}-bluff", "positive": 1,
+                             "negative": denominator - 1}],
+            },
             "bluff_review_count": 0, "bluff_success_rate": {
                 "numerator": numerator, "denominator": denominator,
                 "rate": numerator / denominator, "excluded": 0,
@@ -138,8 +145,28 @@ def test_player_range_resolves_latest_and_aggregates_season_local_bluff_metrics(
     metric = detail["stats"]["bluff_success_rate"]
     assert metric["numerator"] == 1 and metric["denominator"] == 3
     assert metric["rate"] == 1 / 3
+    attempt_rate = detail["stats"]["bluff_rate"]
+    assert attempt_rate["numerator"] == 2 and attempt_rate["denominator"] == 3
+    assert attempt_rate["rate"] == 2 / 3
+    assert attempt_rate["samples"] == [
+        {"game_id": "S22-bluff", "positive": 1, "negative": 0},
+        {"game_id": "S23-bluff", "positive": 1, "negative": 1},
+    ]
     assert detail["bluff_inference_version"] == "S22: review-S22, S23: review-S23"
     assert detail["photo"]["season"] == "S23"
+
+
+def test_profile_appearance_filter_is_applied_to_rankings_only(client):
+    included = client.get('/api/v1/players/p?season_start=S22&season_end=latest&minimum_appearances=2').json()
+    excluded = client.get('/api/v1/players/p?season_start=S22&season_end=latest&minimum_appearances=3').json()
+    assert included['scope']['minimum_appearances'] == 2
+    assert included['stats']['rankings']['total_win_rate']['rank'] == 1
+    assert excluded['scope']['minimum_appearances'] == 3
+    assert excluded['stats']['rankings']['total_win_rate'] is None
+    for key in ('appearances', 'wins', 'losses', 'total_win_rate', 'ledger', 'bluff_rate'):
+        assert included['stats'][key] == excluded['stats'][key]
+    assert client.get('/api/v1/players/p?minimum_appearances=-1').status_code == 422
+    assert client.get('/api/v1/players/p?minimum_appearances=1.5').status_code == 422
 
 
 def test_player_default_season_stays_compatible_and_invalid_ranges_are_rejected(client):

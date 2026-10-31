@@ -343,6 +343,8 @@ def _apply_success_feedback(game: dict, reviewed_game: dict,
         assessment["manual_success"] = feedback["manual_success"]
         assessment["verification_status"] = "user_confirmed"
         assessment["success_fingerprint"] = item["success_fingerprint"]
+        old_manual_note = assessment.get("manual_note", "")
+        questions = list(assessment.get("review_questions", []))
         note = feedback.get("notes")
         if isinstance(note, str) and note.strip():
             from scripts.build_s23_bluff_publication import _public_text
@@ -353,12 +355,17 @@ def _apply_success_feedback(game: dict, reviewed_game: dict,
                                            else f"用户成功复核：{public_note}")
             assessment["manual_note"] = public_note
         if feedback["manual_success"] is None:
-            questions = list(assessment.get("review_questions", []))
             question = "用户将成功结果保留为待定"
             if question not in questions:
                 questions.append(question)
-            assessment["review_questions"] = questions
-            assessment["requires_user_review"] = True
+        else:
+            resolved = {"用户将成功结果保留为待定"}
+            if "暂定" in old_manual_note:
+                resolved.add(old_manual_note)
+            questions = [question for question in questions if question not in resolved]
+        assessment["review_questions"] = questions
+        assessment["requires_user_review"] = bool(questions)
+        assessment["review_stage"] = "user_pending" if questions else "reviewed"
         updated = True
     return updated
 
@@ -545,8 +552,7 @@ def _markdown(report: dict) -> str:
         f"- 物理狼人座位 {report['physical_wolf_appearances']}；用户额外明确纳入 {report['manual_included_appearances']} 个非物理狼座位。",
         f"- 相对旧payload：新增 {report['added_count']}、取消 {report['removed_count']}、成功结果变化 {report['success_change_count']}，影响 {report['affected_game_count']} 局。",
         *([f"- 总数变化：悍跳 {report['before']['identified_bluffs']} → {report['identified_bluffs']}；成功 {report['before']['successes']} → {report['successes']}。"] if report.get('before') else []),
-        '- 成功数包含2026-10-06第二局12号Bobby的1次“暂定成功”；按用户本次选择计入，同时保留原备注与待复核标记。仅因狼王被放逐后能开枪并不满足原自动成功条件，本条作为人工结果保存，不推广为其他局的规则。',
-        "- success=unknown或空值按人工待定保留；只有明确写有‘暂定’备注的当前记录额外保留该原备注并标为待用户复核。此规则仅对应本次人工文件，不扩展为全赛季规则。",
+        "- 人工成功结果优先于自动规则；原文件中的待定或暂定结果由后续明确的成功复核结论定案，保留原备注，不推广为其他对局的规则。",
         "",
         "## 全部差异",
         "",

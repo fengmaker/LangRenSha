@@ -85,6 +85,34 @@ _INACTIVE_ACTIONS = {
 _NO_VALUE = object()
 
 
+def puppet_target(game: dict) -> int | None:
+    """Return the uniquely recorded first-night puppet, preserving its base role."""
+    board = game.get('board')
+    code = board.get('code') if isinstance(board, dict) else board
+    if family(code) != 'neighbor_puppet':
+        return None
+    choices = [event.get('targets', []) for round_ in game.get('rounds', [])
+               if round_.get('number') == 1 for event in round_.get('night', [])
+               if event.get('slot') == 'puppet_select' and event.get('action') == 'select']
+    if len(choices) != 1 or len(choices[0]) != 1:
+        return None
+    target = choices[0][0]
+    return target if type(target) is int and any(s.get('seat') == target for s in game.get('seats', [])) else None
+
+
+def neighbor_puppet_sides(game: dict) -> dict[str, set[int]] | None:
+    """Separate victory sides from the three physical cards allowed to carry a knife."""
+    puppet = puppet_target(game)
+    seats = {s['seat']: s for s in game.get('seats', [])}
+    if puppet is None or len(seats) != 12 or any(not s.get('role') for s in seats.values()):
+        return None
+    wolves = {n for n, s in seats.items() if s['role'] in {'狼人', '狼王'}}
+    gods = {n for n, s in seats.items() if s['role'] in {'预言家', '女巫', '猎人', '守卫'}}
+    civilians = {n for n, s in seats.items() if s['role'] == '平民'}
+    return {'werewolf': wolves | {puppet}, 'god': gods - {puppet},
+            'civilian': civilians - {puppet}, 'knife': wolves - {puppet}}
+
+
 def family(code: str | None) -> str | None:
     """Return the shared family key for season-prefixed board codes."""
     if not isinstance(code, str) or not code:
@@ -255,6 +283,12 @@ def _seer_check_constraint(game, phase, event, *, actor, dead_before):
 
 
 def _wolf_attack_constraint(game, number, event, *, actor, dead_before):
+    puppet = puppet_target(game)
+    if puppet is not None and actor == puppet:
+        return _result('unavailable', 'puppet_has_no_wolf_knife', legal_targets=None)
+    sides = neighbor_puppet_sides(game)
+    if sides is not None and dead_before is not None and sides['knife'] <= set(dead_before):
+        return _result('unavailable', 'no_wolf_knife_carrier', legal_targets=None)
     role = _actor_role(game, actor)
     if dead_before is None:
         return _result("unknown", "wolf_attack_survival_unknown", legal_targets=None)

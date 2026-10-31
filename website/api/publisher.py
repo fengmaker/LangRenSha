@@ -17,6 +17,7 @@ from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
 from scripts.game_time import display_time_text, phase_label
+from scripts.role_constraints import puppet_target
 from website.api.game_presentation import (
     build_game_presentation, terminal_from_events, terminal_day_events,
 )
@@ -273,6 +274,8 @@ def _public_endgame(endgame: dict) -> dict:
     phases = []
     for item in endgame.get("phases", []):
         public = _pick(item, ENDGAME_FIELDS)
+        if public.get('note') == 'S21 primary-reviewed endgame attack; unspecified settlement remains unknown.':
+            public.pop('note')
         if isinstance(public.get("note"), str):
             public["note"] = display_time_text(public["note"])
         phases.append(public)
@@ -422,6 +425,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
                  board: dict, person_ids: dict[str, str], *,
                  source_voting: dict | None = None, derivations: dict | None = None) -> dict:
     bvid = _bvid(dossier)
+    puppet = puppet_target(dossier)
     seats = []
     for seat in dossier.get("seats", []):
         name = seat.get("name")
@@ -429,7 +433,8 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
             raise PublishError("座位姓名为空")
         seats.append({
             "seat": seat["seat"], "person_id": person_ids[name], "name": name,
-            "role": seat["role"], "faction": seat["faction"],
+            "role": seat["role"], "faction": 'werewolf' if seat['seat'] == puppet else seat["faction"],
+            "is_puppet": seat['seat'] == puppet,
             "learning_target": seat.get("learning_target"), "learned_role": seat.get("learned_role"),
         })
     default_rules: set[tuple[str, int]] = set()

@@ -301,6 +301,41 @@ def test_preview_shows_applied_changes_and_caches_only_local_preparation(tmp_pat
     assert len(calls) == 2
 
 
+@pytest.mark.parametrize('decisions, expected', [
+    ({1: 'yes'}, ['yes', 'no', 'no']),
+    ({1: 'yes', 2: 'yes'}, ['yes', 'yes', 'no']),
+    ({1: 'yes', 2: 'uncertain'}, ['yes', 'uncertain', 'no']),
+    ({}, ['uncertain', 'uncertain', 'uncertain']),
+])
+def test_selected_wolf_completes_bluff_list_and_preserves_explicit_exceptions(decisions, expected):
+    from website.api import bluffs
+
+    game = {
+        'id': 'new-game', 'season': 'S23', 'date': '2026-10-31',
+        'source': {'bvid': 'BV1234567890'}, 'rounds': [], 'voting': {},
+        'seats': [{'seat': n, 'person_id': str(n), 'name': f'选手{n}',
+                   'role': '狼人', 'faction': 'werewolf'} for n in range(1, 4)],
+    }
+    plan = {'review_record': {
+        'review_id': 'BV1234567890:123:p01', 'manual_sha256': 'a' * 64, 'note': '',
+        'bluffs_review': {'reviewed': bool(decisions), 'no_bluff': False,
+                         'items': [{'seat': seat, 'decision': decision, 'success': False,
+                                    'note': f'{seat}号：{decision}'}
+                                   for seat, decision in decisions.items()]},
+    }}
+
+    assessments = apply._new_bluff_assessments(game, plan, bluffs)
+    payload = {'games': [{'game_id': game['id'], 'assessments': assessments}]}
+    items = bluffs.review_items([game], payload)
+
+    assert [item['decision'] for item in items] == expected
+    assert [item['needs_review'] for item in items] == [value == 'uncertain' for value in expected]
+    for assessment in assessments:
+        if assessment['decision'] == 'no':
+            assert assessment['verification_status'] == 'user_confirmed'
+            assert assessment['evidence'][0]['source_sha256'] == 'a' * 64
+
+
 def test_explicit_bluff_note_can_include_mixed_blood_with_bound_fingerprints():
     from website.api import bluffs
 

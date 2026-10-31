@@ -65,13 +65,14 @@ const getPlayerRequest = (id: string, params: URLSearchParams) => {
   return request<PlayerDetail>(`/api/v1/players/${encodeURIComponent(id)}?${params.toString()}`);
 }
 
-export const getPlayer = cache((id: string, season = "S22", phase = "all", seasonEnd?: string) => {
+export const getPlayer = cache((id: string, season = "S23", phase = "all", seasonEnd?: string, minimumAppearances = 0) => {
   const params = new URLSearchParams({ season, phase });
   if (seasonEnd) { params.set("season_start", season); params.set("season_end", seasonEnd); }
+  if (minimumAppearances !== 0) params.set("minimum_appearances", String(minimumAppearances));
   return getPlayerRequest(id, params);
 });
 
-export function getLeaderboard(season = "S22", phase: "all" | "finals_week" = "all") {
+export function getLeaderboard(season = "S23", phase: "all" | "finals_week" = "all") {
   const params = new URLSearchParams({ season, phase });
   return request<Leaderboard>(`/api/v1/leaderboard?${params.toString()}`);
 }

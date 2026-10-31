@@ -14,7 +14,7 @@ function first(value: string | string[] | undefined): string { return Array.isAr
 function positiveInt(value: string, fallback: number): number { const n = Number(value); return Number.isInteger(n) && n > 0 ? n : fallback; }
 
 function ArchiveIntro() {
-  return <header className={styles.intro}><h1>对局档案</h1><p>按赛季、阶段、版型或选手，找到想看的对局。</p></header>;
+  return <header className={styles.intro}><h1>对局档案</h1><p>按日期、赛季、阶段、版型或选手，找到想看的对局。</p></header>;
 }
 
 export default async function GamesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
@@ -25,6 +25,8 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
     board: first(query.board),
     player: first(query.player),
     q: first(query.q),
+    date_from: first(query.date_from),
+    date_to: first(query.date_to),
   };
   const page = positiveInt(first(query.page), 1);
   const params = new URLSearchParams();
@@ -56,6 +58,8 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
         <label><span>比赛阶段</span><select name="phase" aria-label="比赛阶段" defaultValue={filters.phase}><option value="">全部阶段</option><option value="regular">正赛</option><option value="finals_week">决赛周</option></select></label>
         <label><span>版型</span><select name="board" aria-label="版型" defaultValue={filters.board}><option value="">全部版型</option>{overview.boards.map((board) => <option key={board.code} value={board.code}>{board.name}</option>)}</select></label>
         <label><span>选手</span><input name="player" type="search" placeholder="输入选手姓名" defaultValue={filters.player} /></label>
+        <label><span>开始日期</span><input name="date_from" type="date" defaultValue={filters.date_from} /></label>
+        <label><span>截止日期</span><input name="date_to" type="date" defaultValue={filters.date_to} min={filters.date_from || undefined} /></label>
         <div className={styles.actions}><button className="button button-primary" type="submit">检索对局</button><Link href="/games">清除条件</Link></div>
       </form>
     </section>

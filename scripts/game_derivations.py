@@ -15,13 +15,13 @@ from pathlib import Path
 
 try:
     from . import game_inference as inference
-    from .role_constraints import event_constraint, family
+    from .role_constraints import event_constraint, family, puppet_target
     from .board_outcomes import derive_board_outcomes
     from .board_config import load_template
     from .season_config import load_season
 except ImportError:
     import game_inference as inference
-    from role_constraints import event_constraint, family
+    from role_constraints import event_constraint, family, puppet_target
     from board_outcomes import derive_board_outcomes
     from board_config import load_template
     from season_config import load_season
@@ -224,6 +224,11 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
             faction = "werewolf" if role in WOLF_ROLES else "good" if role in GOOD_ROLES else None
             if faction and seat.get("faction") is None:
                 change(seat, "faction", faction, ["dossier", "seats", si], "physical_role_victory_faction", [role])
+    puppet = puppet_target(game)
+    if puppet is not None:
+        si = next(i for i, seat in enumerate(game['seats']) if seat['seat'] == puppet)
+        change(game['seats'][si], 'faction', 'werewolf', ['dossier', 'seats', si],
+               'neighbor_puppet_follows_wolves', [1, 'night', 'puppet_select', puppet])
     forms = board_template("mechanical_wolf_seer").get("mechanical_forms", {})
     for ri, r in enumerate(game.get("rounds", [])):
         for ei, e in enumerate(r.get("night", [])):

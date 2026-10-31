@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from fractions import Fraction
 from typing import Any
+from scripts.role_constraints import puppet_target
 
 
 PHASES = {"all", "regular", "finals_week"}
@@ -17,6 +18,10 @@ PLAYER_RANKING_KEYS = (
     "points", "appearances", "attendance", "total_win_rate", "wins", "losses",
     "werewolf_win_rate", "good_win_rate", "sheriff_registration_rate",
     "seer_follow_rate", "sheriff_seer_vote_rate",
+    "good_wins", "wolf_vote_rate", "good_sheriff_registration_rate",
+    "werewolf_appearances", "werewolf_wins", "werewolf_draw_rate",
+    "werewolf_self_explosion_rate", "werewolf_sheriff_registration_rate",
+    "bluff_count", "bluff_rate", "bluff_success_rate",
 )
 
 
@@ -46,14 +51,17 @@ def _role(seat: dict[str, Any]) -> str:
 
 
 def _effective_faction_detail(game: dict[str, Any], seat: dict[str, Any]) -> tuple[str | None, bool]:
-    """Resolve only an explicitly missing mixed-blood faction from its exemplar.
+    """Resolve a recorded puppet's victory faction or a missing mixed-blood side.
 
-    The source snapshot remains untouched. A recorded faction is authoritative;
+    The source snapshot remains untouched. An explicit puppet follows wolves;
+    otherwise a recorded faction is authoritative.
     a missing mixed-blood faction is inferred only from one unique `choose`
     event and a known exemplar faction, with a recorded alignment event used as
     a consistency check.
     """
     faction = seat.get("faction")
+    if (puppet := puppet_target(game)) is not None and seat.get('seat') == puppet:
+        return 'werewolf', faction != 'werewolf'
     if faction is not None or seat.get("role") != MIXED_BLOOD_ROLE:
         return faction, False
 
@@ -195,6 +203,22 @@ def _player_rank_value(acc: dict[str, Any], key: str) -> tuple[int | Fraction | 
         if acc["scope_games"] <= 0 or acc["appearances"] <= 0:
             return None, 0
         return Fraction(acc["appearances"], acc["scope_games"]), acc["scope_games"]
+    if key == "werewolf_appearances":
+        known_factions = acc["werewolf_draw"]["denominator"]
+        return (acc["werewolf_appearances"], known_factions) if known_factions else (None, 0)
+    if key in {"good_wins", "werewolf_wins"}:
+        metric = acc["faction_win_rates"]["good" if key == "good_wins" else "werewolf"]
+        return (metric["numerator"], metric["denominator"]) if metric["denominator"] else (None, 0)
+    if key in {"bluff_count", "bluff_rate", "bluff_success_rate"}:
+        review = acc.get("bluffs")
+        if review is None:
+            return None, 0
+        if key == "bluff_count":
+            return ((review["bluff_count"], review["bluff_rate"]["denominator"])
+                    if review["bluff_count_complete"] else (None, 0))
+        metric = review[key]
+        denominator = metric["denominator"]
+        return (Fraction(metric["numerator"], denominator), denominator) if denominator else (None, 0)
 
     metric_sources = {
         "total_win_rate": acc["total_win_rate"],
@@ -203,6 +227,11 @@ def _player_rank_value(acc: dict[str, Any], key: str) -> tuple[int | Fraction | 
         "sheriff_registration_rate": acc["registration"],
         "seer_follow_rate": acc["follow"],
         "sheriff_seer_vote_rate": acc["sheriff_seer"],
+        "wolf_vote_rate": acc["wolf_vote"],
+        "good_sheriff_registration_rate": acc["good_registration"],
+        "werewolf_draw_rate": acc["werewolf_draw"],
+        "werewolf_self_explosion_rate": acc["werewolf_self_explosion"],
+        "werewolf_sheriff_registration_rate": acc["werewolf_registration"],
     }
     metric = metric_sources[key]
     denominator = metric["denominator"]
@@ -247,6 +276,7 @@ def _player_rankings(
         "sheriff_registration_rate": "registration",
         "seer_follow_rate": "follow",
         "sheriff_seer_vote_rate": "sheriff_seer",
+        "wolf_vote_rate": "wolf_vote",
     }
     for key, cohort in values.items():
         descending = key != "losses"
@@ -361,6 +391,7 @@ def _new_player_acc(seat: dict[str, Any], game_count: int) -> dict[str, Any]:
         "registration": _new_metric(), "follow": _new_metric(), "sheriff_seer": _new_metric(),
         "wolf_vote": _new_metric(), "werewolf_draw": _new_metric(),
         "werewolf_self_explosion": _new_metric(), "werewolf_registration": _new_metric(),
+        "good_registration": _new_metric(),
         "exile_abstentions": 0,
         "scope_games": game_count,
     }
@@ -379,6 +410,15 @@ def _first_registration(voting: dict[str, Any]) -> dict[str, Any] | None:
     # The first record in the source order is the original first registration.
     # day/id are tie-breakers for stable snapshots whose records are unsorted.
     return min(registrations, key=lambda row: (row.get("day", 2**31), row.get("id", "")))
+
+
+def _off_police_metric(registration: dict[str, Any]) -> dict[str, Any]:
+    return _metric_result({
+        **registration,
+        "numerator": registration["denominator"] - registration["numerator"],
+        "samples_by_game": {game_id: {"positive": counts["negative"], "negative": counts["positive"]}
+                            for game_id, counts in registration["samples_by_game"].items()},
+    })
 
 
 def _self_explosion_actors(game: dict[str, Any]) -> set[int]:
@@ -458,21 +498,9 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
                     acc["werewolf_appearances"] += 1
                     _add_denominator(acc["werewolf_self_explosion"], game_id,
                                      success=(seat.get("seat") in explosion_actors))
-                    if first is not None:
-                        on_police = set(first.get("on_police") or [])
-                        off_police = set(first.get("off_police") or [])
-                        if seat.get("seat") in on_police:
-                            _add_denominator(acc["werewolf_registration"], game_id, success=True)
-                        elif seat.get("seat") in off_police:
-                            _add_denominator(acc["werewolf_registration"], game_id)
-                        else:
-                            _add_excluded(acc["werewolf_registration"])
-                    else:
-                        _add_excluded(acc["werewolf_registration"])
             else:
                 _add_excluded(acc["werewolf_draw"])
                 _add_excluded(acc["werewolf_self_explosion"])
-                _add_excluded(acc["werewolf_registration"])
             result = _result(faction, game.get("winner"))
             if result == "win":
                 acc["wins"] += 1
@@ -516,20 +544,24 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
                                      success=(game.get("winner") == faction))
 
         # Attendance and first sheriff registration have explicit denominators.
-        if first is not None:
-            on_police = set(first.get("on_police") or [])
-            off_police = set(first.get("off_police") or [])
-            for player_id, (seat, acc) in game_players.items():
-                seat_number = seat.get("seat")
+        on_police = set(first.get("on_police") or []) if first else set()
+        off_police = set(first.get("off_police") or []) if first else set()
+        for seat, acc in game_players.values():
+            seat_number = seat.get("seat")
+            faction = effective_faction(game, seat)
+            metrics = [acc["registration"]]
+            if faction in DECIDED_WINNERS:
+                metrics.append(acc[f"{faction}_registration"])
+            else:
+                _add_excluded(acc["good_registration"])
+                _add_excluded(acc["werewolf_registration"])
+            for metric in metrics:
                 if seat_number in on_police:
-                    _add_denominator(acc["registration"], game_id, success=True)
+                    _add_denominator(metric, game_id, success=True)
                 elif seat_number in off_police:
-                    _add_denominator(acc["registration"], game_id)
+                    _add_denominator(metric, game_id)
                 else:
-                    _add_excluded(acc["registration"])
-        else:
-            for _, acc in game_players.values():
-                _add_excluded(acc["registration"])
+                    _add_excluded(metric)
 
         for ballot in (game.get("voting") or {}).get("ballots", []):
             kind = ballot.get("kind")
@@ -655,7 +687,7 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
     if has_unknown_faction:
         notes.append("无法由唯一榜样及一致阵营记录确定的个人阵营按待定计，不作为败场或零分。")
     if has_inferred_faction:
-        notes.append("已登记的个人胜利阵营优先；缺失的混血儿阵营只按唯一明确榜样及一致的阵营说明推导。")
+        notes.append("明确被选为傀儡的玩家跟随狼人阵营；混血儿阵营缺失时按唯一明确榜样及一致的阵营说明推导。")
     notes.extend(_methodology_notes(scoped))
     return players, notes
 
@@ -673,7 +705,7 @@ def _methodology_notes(games: list[dict[str, Any]]) -> list[str]:
         "每项比例附带对应对局列表，方便回查分母；无法判定的战绩保留为待定，不按败场或零分处理。",
         "混血儿阵营缺失时依据本局唯一榜样的个人胜利阵营推导；已记录的阵营说明必须一致。",
         "投狼率计算有票权的好人放逐票，包含预言家和通灵师；PK及技能复投逐轮计入，明确弃票算失败，缺失选票及目标阵营未知时排除。放逐弃票次数只计好人放逐票中的明确弃票，包括规则默认弃票。",
-        "拿狼率以已知个人阵营出场为分母，未知阵营排除；狼人自爆率只按明确的主动自爆事件计数并按选手每局去重；狼人上警率按每局首次报名及已知警上/警下名单统计。",
+        "拿狼率以已知个人阵营出场为分母，未知阵营排除；狼人自爆率只按明确的主动自爆事件计数并按选手每局去重；好人、狼人上警率和警下率按每局首次报名及已知警上/警下名单统计，阵营或名单未知时排除。",
     ]
     if unknown_candidates or not_applicable:
         notes.append(
@@ -770,6 +802,9 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
             "numerator": attendance_appearances, "denominator": len(attendance_games),
             "rate": attendance_appearances / len(attendance_games) if attendance_games else None,
             "excluded": 0, "game_ids": [str(game.get("id", "")) for game in attendance_games],
+            "samples": [{"game_id": game["id"], "positive": int(present), "negative": int(not present)}
+                        for game in attendance_games
+                        for present in [any(_seat_person_id(seat) == player_id for seat in game.get("seats", []))]],
         },
         "total_win_rate": metric_overall,
         "werewolf_win_rate": faction_metrics["werewolf"],
@@ -783,6 +818,9 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
         "werewolf_draw_rate": _metric_result(acc["werewolf_draw"]),
         "werewolf_self_explosion_rate": _metric_result(acc["werewolf_self_explosion"]),
         "werewolf_sheriff_registration_rate": _metric_result(acc["werewolf_registration"]),
+        "good_sheriff_registration_rate": _metric_result(acc["good_registration"]),
+        "good_off_police_rate": _off_police_metric(acc["good_registration"]),
+        "werewolf_off_police_rate": _off_police_metric(acc["werewolf_registration"]),
         "roles": roles,
         "ledger": ledger,
         "notes": notes,
@@ -797,23 +835,31 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
 
 def compute_player_stats(player_id: str, games: list[dict[str, Any]], *, season: str = "S22",
                          phase: str = "all", name: str | None = None,
-                         seasons: list[str] | None = None) -> dict[str, Any]:
+                         seasons: list[str] | None = None,
+                         minimum_appearances: int = 0,
+                         bluff_stats: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     """Compute one player's metrics and scoring ledger across selected seasons.
 
     `phase` is accepted for API compatibility; player analytics always describe
     the full selected scope, including attendance and the chronological cumulative ledger.
+    `minimum_appearances` restricts ranking cohorts by total scope appearances only.
     """
     selected_seasons: str | list[str] = seasons if seasons is not None else season
     season_games = scope_games(games, selected_seasons, "all")
     players, notes = _accumulate(season_games, selected_seasons, "all", include_boards=True)
+    if bluff_stats is not None:
+        for pid, player_acc in players.items():
+            player_acc["bluffs"] = bluff_stats.get(pid)
     player_id = str(player_id)
     if player_id not in players:
         acc = _new_player_acc({"person_id": player_id, "name": name or ""}, len(season_games))
     else:
         acc = players[player_id]
-    rankings_by_player, ranking_boards = _player_rankings(players)
-    role_rankings_by_player, role_ranking_boards = _role_rankings(players)
-    board_rankings_by_player, board_ranking_boards = _board_rankings(players)
+    ranking_players = {pid: player for pid, player in players.items()
+                       if player["appearances"] >= minimum_appearances}
+    rankings_by_player, ranking_boards = _player_rankings(ranking_players)
+    role_rankings_by_player, role_ranking_boards = _role_rankings(ranking_players)
+    board_rankings_by_player, board_ranking_boards = _board_rankings(ranking_players)
     ranking = rankings_by_player.get(
         player_id, {key: None for key in PLAYER_RANKING_KEYS},
     )
@@ -823,6 +869,8 @@ def compute_player_stats(player_id: str, games: list[dict[str, Any]], *, season:
                                rankings=ranking, role_rankings=role_ranking,
                                ranking_boards=ranking_boards, role_ranking_boards=role_ranking_boards,
                                board_rankings=board_ranking, board_ranking_boards=board_ranking_boards)
+    if bluff_stats is not None:
+        result.update(bluff_stats.get(player_id, {}))
     return result
 
 
@@ -860,15 +908,18 @@ def build_leaderboard(games: list[dict[str, Any]], *, season: str = "S22",
     scoring_games = (scope_games(season_games, season, "finals_week")
                      if phase == "finals_week" else season_games)
     all_players, all_notes = _accumulate(season_games, season, "all")
-    scoring_players, _ = _accumulate(scoring_games, season, scoring_phase)
+    if scoring_phase == "all":
+        scoring_players, scoring_notes = all_players, all_notes
+    else:
+        scoring_players, scoring_notes = _accumulate(scoring_games, season, scoring_phase)
     rows = []
     for player_id, scoring_acc in scoring_players.items():
         overall_acc = all_players[player_id]
         stats = _serialize_player(overall_acc, season_games, "all", all_notes,
                                   attendance_games=season_games)
-        scoring_stats = _serialize_player(scoring_acc, scoring_games, scoring_phase,
-                                          _methodology_notes(scoring_games),
-                                          attendance_games=season_games)
+        scoring_stats = (stats if scoring_phase == "all" else
+                         _serialize_player(scoring_acc, scoring_games, scoring_phase,
+                                           scoring_notes, attendance_games=season_games))
         rows.append({
             "id": player_id, "name": overall_acc["name"], "appearances": stats["appearances"],
             "wins": stats["wins"], "losses": stats["losses"],
@@ -891,6 +942,9 @@ def build_leaderboard(games: list[dict[str, Any]], *, season: str = "S22",
             "werewolf_draw_rate": stats["werewolf_draw_rate"],
             "werewolf_self_explosion_rate": stats["werewolf_self_explosion_rate"],
             "werewolf_sheriff_registration_rate": stats["werewolf_sheriff_registration_rate"],
+            "good_sheriff_registration_rate": stats["good_sheriff_registration_rate"],
+            "good_off_police_rate": stats["good_off_police_rate"],
+            "werewolf_off_police_rate": stats["werewolf_off_police_rate"],
         })
     rows.sort(key=lambda item: (-item["_points_half"], item["name"], item["id"]))
     last_points: int | None = None
@@ -915,7 +969,7 @@ def analytics_notes(games: list[dict[str, Any]], *, season: str = "S22", phase: 
     if has_unknown:
         notes.insert(0, "无法由唯一榜样及一致阵营记录确定的个人阵营按待定计，不作为败场或零分。")
     if has_inferred:
-        notes.insert(0, "已登记的个人胜利阵营优先；缺失的混血儿阵营只按唯一明确榜样及一致的阵营说明推导。")
+        notes.insert(0, "明确被选为傀儡的玩家跟随狼人阵营；混血儿阵营缺失时按唯一明确榜样及一致的阵营说明推导。")
     # The full S22 coverage audit is helpful context on the separately scoped
     # regular/finals boards as well as the all-season player view.
     if season == "S22" and phase != "all":

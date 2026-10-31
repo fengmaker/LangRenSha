@@ -31,9 +31,8 @@
 .tableWrap { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
 .boardTable, .releaseTable { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .boardTable { min-width: 680px; }
-.boardTable th, .boardTable td { padding: 18px 22px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-size: 15px; }
+.boardTable th, .boardTable td { padding: 18px 22px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; font-size: 15px; }
 .boardTable thead th { padding-block: 15px; color: var(--stats-muted); background: rgba(255, 255, 255, .025); font-size: 14px; font-weight: 400; }
-.boardTable th:first-child { text-align: left; }
 .boardTable tbody th { font-weight: 500; }
 .boardTable td { color: var(--stats-copy); font-family: var(--mono); }
 .boardTable tbody tr:last-child > *, .releaseTable tbody tr:last-child > * { border-bottom: 0; }
@@ -61,7 +60,7 @@
 .stateLegend dd { margin: 0; color: var(--stats-muted); }
 .releaseWrap { margin: 0 22px 20px; }
 .releaseTable { min-width: 640px; color: var(--stats-copy); font-size: 14px; }
-.releaseTable th, .releaseTable td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+.releaseTable th, .releaseTable td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: center; }
 .releaseTable thead th { color: var(--stats-muted); font-weight: 400; }
 .releaseTable tbody th { font-weight: 500; }
 .activeRelease { color: var(--mint); }

@@ -822,6 +822,11 @@
         {
           "type": "user_confirmation",
           "confirmed_on": "2026-10-24"
+        },
+        {
+          "type": "user_confirmation",
+          "confirmed_on": "2026-10-31",
+          "note": "傀儡归狼人胜利阵营，不带刀；好人须使傀儡出局；傀儡不计入原神职或平民屠边。傀儡神三神或五民，傀儡平民四神或四民。"
         }
       ],
       "board_rules": {
@@ -836,7 +841,21 @@
           "猎人": "skill_disabled",
           "守卫": "skill_disabled"
         },
-        "puppet_hunter_eligibility": "record separately; not determined by poison status alone"
+        "puppet_hunter_eligibility": "record separately; not determined by poison status alone",
+        "puppet_victory_faction": "werewolf",
+        "puppet_has_wolf_knife": false,
+        "puppet_counts_in_original_elimination_side": false,
+        "victory_condition": {
+          "good_win_when": "三张原狼人牌与傀儡全部出局；傀儡存活时不能判好人胜",
+          "wolf_win_when": "只统计非傀儡的神职边与平民边，任一边清空",
+          "puppet_god": "击杀其余三神或五民",
+          "puppet_civilian": "击杀四神或其余四民"
+        },
+        "presentation": {
+          "civilian_puppet_skill_slot": "hidden",
+          "god_puppet_skill_effect": "attach_to_actual_skill_event",
+          "first_night_order": "preserve_observed_timing; unknown wake order remains unknown"
+        }
       },
       "evidence_records": [
         {

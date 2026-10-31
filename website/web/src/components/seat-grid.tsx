@@ -62,7 +62,7 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
   const cardStyle = group === "werewolf" ? styles.wolfCard : group === "special" ? styles.specialCard : group === "civilian" ? styles.civilianCard : styles.reviewCard;
   const target = seat ? hybridTarget(seat, rounds) : null;
   const name = seat?.name || "姓名未知";
-  const note = seat?.role === "混血儿"
+  const note = seat?.is_puppet ? "傀儡 · 不带刀" : seat?.role === "混血儿"
     ? `榜样：${target == null ? "待核" : `${target}号`} · 个人阵营：${personalFaction(seat)}。`
     : seat?.role === "机械狼"
       ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
@@ -70,19 +70,17 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
         ? [seat.learning_target != null ? `记录目标：${seat.learning_target}号` : "", seat.learned_role ? `学习身份：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
         : "";
 
-  return <article className={`${styles.seatCard} ${cardStyle} ${note ? styles.hasNote : ""}`} data-seat={number} data-faction={seat?.faction ?? "unknown"} data-role={seat?.role ?? "unknown"}>
-    <div className={styles.seatTop}>
-      <span className={styles.seatNumber}>{String(number).padStart(2, "0")}</span>
-      <span className={styles.seatFaction}>{seat ? factionLabel(seat.faction) : "座位记录缺失"}</span>
-    </div>
+  return <article className={`${styles.seatCard} ${cardStyle}`} data-seat={number} data-faction={seat?.faction ?? "unknown"} data-role={seat?.role ?? "unknown"}>
+    <span className={styles.seatNumber}>{String(number).padStart(2, "0")}</span>
     <div className={styles.seatIdentity}>
-      <h3 className={styles.seatName}>
+      <h4 className={styles.seatName}>
         {seat?.person_id
           ? <Link href={`/players/${encodeURIComponent(seat.person_id)}${season ? `?season=${encodeURIComponent(season)}` : ""}`}>{name}</Link>
           : name}
-      </h3>
+      </h4>
       <p className={styles.seatRole}>{seat?.role || "身份未知"}</p>
     </div>
+    <span className={styles.seatFaction}>{seat ? factionLabel(seat.faction) : "座位记录缺失"}</span>
     {note ? <p className={styles.seatNote}>{note}</p> : null}
   </article>;
 }
@@ -112,7 +110,7 @@ export function SeatGrid({ seats, rounds, season }: { seats: Seat[]; rounds?: Ga
     <div className={styles.columns}>
       {columns.map((column) => <section className={`${styles.column} ${column.className}`} key={column.key} data-seat-group={column.key}>
         <header className={styles.columnHeader}>
-          <h2 className={styles.columnTitle}>{column.title}</h2>
+          <h3 className={styles.columnTitle}>{column.title}</h3>
           <span className={styles.columnCount}>{groups[column.key].length} 席</span>
         </header>
         {groups[column.key].length
@@ -123,7 +121,7 @@ export function SeatGrid({ seats, rounds, season }: { seats: Seat[]; rounds?: Ga
 
     {groups.review.length ? <section className={styles.reviewSection} aria-labelledby="seat-review-heading" data-seat-group="review">
       <header className={styles.columnHeader}>
-        <h2 className={styles.columnTitle} id="seat-review-heading">待核身份</h2>
+        <h3 className={styles.columnTitle} id="seat-review-heading">待核身份</h3>
         <span className={styles.columnCount}>{groups.review.length} 席</span>
       </header>
       {groups.review.length

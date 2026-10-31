@@ -54,6 +54,16 @@ def test_points_use_half_units_and_mixed_blood_uses_personal_faction():
     assert mixed["wins"] == 1 and mixed["points"] == 1.5
 
 
+def test_attendance_samples_include_both_appearances_and_absences():
+    games = [game('present', seats=[seat(1, 'p', '平民', 'good')]),
+             game('absent', seats=[seat(1, 'other', '平民', 'good')])]
+    metric = compute_player_stats('p', games)['attendance']
+    assert metric['numerator'] == 1 and metric['denominator'] == 2
+    assert {s['game_id']: (s['positive'], s['negative']) for s in metric['samples']} == {
+        'present': (1, 0), 'absent': (0, 1),
+    }
+
+
 def test_unknown_faction_is_pending_not_a_loss_or_zero_point_result():
     games = [game("unknown", winner="good", seats=[seat(1, "mixed", "混血儿", None)])]
     stats = compute_player_stats("mixed", games)
@@ -246,6 +256,27 @@ def test_werewolf_appearance_explosion_and_sheriff_rates_use_confirmed_personal_
     assert registration["excluded"] == 1
 
 
+def test_faction_registration_and_off_police_rates_exclude_unknown_lists_and_factions():
+    games = [
+        game(f'{faction}-{where}', seats=[seat(1, 'p', '平民' if faction == 'good' else '狼人', faction)],
+             registrations=[{'day': 1, 'on_police': [1] if where == 'on' else [],
+                             'off_police': [1] if where == 'off' else []}])
+        for faction in ('good', 'werewolf') for where in ('on', 'off', 'missing')
+    ]
+    games.append(game('unknown', seats=[seat(1, 'p', '混血儿', None)],
+                      registrations=[{'day': 1, 'on_police': [], 'off_police': [1]}]))
+    stats = compute_player_stats('p', games)
+
+    for faction in ('good', 'werewolf'):
+        on = stats[f'{faction}_sheriff_registration_rate']
+        off = stats[f'{faction}_off_police_rate']
+        assert (on['numerator'], on['denominator'], on['excluded'], on['rate']) == (1, 2, 2, 0.5)
+        assert (off['numerator'], off['denominator'], off['excluded'], off['rate']) == (1, 2, 2, 0.5)
+        assert set(off['game_ids']) == {f'{faction}-on', f'{faction}-off'}
+        assert {sample['game_id']: (sample['positive'], sample['negative'])
+                for sample in off['samples']} == {f'{faction}-on': (0, 1), f'{faction}-off': (1, 0)}
+
+
 def test_leaderboard_exposes_new_and_existing_vote_metrics_as_full_season_values():
     seats = [seat(1, "seer", "预言家", "good"), seat(2, "p", "村民", "good"),
              seat(3, "wolf", "狼人", "werewolf")]
@@ -265,7 +296,8 @@ def test_leaderboard_exposes_new_and_existing_vote_metrics_as_full_season_values
     fields = (
         "seer_follow_rate", "sheriff_seer_vote_rate", "wolf_vote_rate", "exile_abstentions",
         "werewolf_appearances", "werewolf_draw_rate", "werewolf_self_explosion_rate",
-        "werewolf_sheriff_registration_rate",
+        "werewolf_sheriff_registration_rate", "good_sheriff_registration_rate",
+        "good_off_police_rate", "werewolf_off_police_rate",
     )
     for field in fields:
         assert season_board["p"][field] == p_stats[field]
@@ -552,6 +584,77 @@ def test_finals_board_ranks_only_finals_points_but_shows_season_metrics():
     assert finals_board["c"]["points_complete"] is False
     assert finals_board["c"]["pending_games"] == 1
     assert finals_board["c"]["scoring_appearances"] == 1
+
+
+def test_profile_minimum_appearances_filters_all_rank_cohorts_and_preserves_metrics():
+    games = [
+        game('g1', seats=[seat(1, 'a', '平民', 'good'), seat(2, 'b', '平民', 'good'),
+                          seat(3, 'guest', '平民', 'good'), seat(4, 'c', '预言家', 'good')]),
+        game('g2', winner='werewolf', seats=[seat(1, 'a', '平民', 'good'),
+             seat(2, 'b', '平民', 'good'), seat(4, 'c', '狼人', 'werewolf')]),
+        game('g3', seats=[seat(1, 'a', '平民', 'good'), seat(2, 'b', '平民', 'good'),
+                          seat(4, 'c', '狼人', 'werewolf')]),
+    ]
+    games[0]['board'] = {'code': 'special', 'name': '特殊版型'}
+    baseline = compute_player_stats('a', games)
+    filtered = compute_player_stats('a', games, minimum_appearances=3)
+    assert baseline['rankings']['total_win_rate']['rank'] == 2
+    assert filtered['rankings']['total_win_rate'] == {'rank': 1, 'total': 3, 'tied': True}
+    for key in ('appearances', 'wins', 'losses', 'points', 'total_win_rate', 'ledger'):
+        assert filtered[key] == baseline[key]
+    assert all(row['id'] != 'guest' for rows in filtered['ranking_boards'].values() for row in rows)
+    specialist = compute_player_stats('c', games, minimum_appearances=3)
+    seer = next(row for row in specialist['roles'] if row['role'] == '预言家')
+    assert seer['appearances'] == 1 and seer['ranking']['rank'] == 1
+    special = next(row for row in specialist['boards'] if row['code'] == 'special')
+    assert special['appearances'] == 1 and special['ranking'] is not None
+    assert all(row['id'] != 'guest' for row in special['ranking_board'])
+    excluded = compute_player_stats('guest', games, minimum_appearances=3)
+    assert excluded['appearances'] == 1 and excluded['wins'] == 1
+    assert all(rank is None for rank in excluded['rankings'].values())
+    assert all(role['ranking'] is None for role in excluded['roles'])
+    assert all(board['ranking'] is None for board in excluded['boards'])
+
+
+def test_profile_new_metrics_have_rankings_and_obey_the_global_appearance_filter():
+    games = [
+        game('g1', seats=[seat(1, 'p', '平民', 'good'), seat(2, 'q', '平民', 'good'),
+                         seat(3, 'wolf', '狼人', 'werewolf')],
+             registrations=[{'day': 1, 'on_police': [1, 3], 'off_police': [2]}],
+             ballots=[{'kind': 'exile', 'eligible_voters': [1, 2], 'votes': [vote(1, 3), vote(2, 1)]}]),
+        game('g2', winner='werewolf', seats=[seat(1, 'p', '狼人', 'werewolf')],
+             registrations=[{'day': 1, 'on_police': [1], 'off_police': []}]),
+        game('g3', seats=[seat(1, 'p', '平民', 'good'), seat(2, 'q', '狼人', 'werewolf')]),
+    ]
+    games[1]['rounds'] = [{'number': 1, 'day': [{'actor': 1, 'action': 'self_destruct'}]}]
+    review_stats = {'p': {
+        'bluff_count': 1, 'bluff_count_complete': True,
+        'bluff_rate': {'numerator': 1, 'denominator': 1},
+        'bluff_success_rate': {'numerator': 1, 'denominator': 1},
+    }, 'q': {
+        'bluff_count': 0, 'bluff_count_complete': False,
+        'bluff_rate': {'numerator': 0, 'denominator': 0},
+        'bluff_success_rate': {'numerator': 0, 'denominator': 0},
+    }}
+    stats = compute_player_stats('p', games, minimum_appearances=3, bluff_stats=review_stats)
+    for key in ['good_wins', 'wolf_vote_rate', 'good_sheriff_registration_rate',
+                'werewolf_appearances', 'werewolf_wins', 'werewolf_draw_rate',
+                'werewolf_self_explosion_rate', 'werewolf_sheriff_registration_rate',
+                'bluff_count', 'bluff_rate', 'bluff_success_rate']:
+        assert stats['rankings'][key] == {'rank': 1, 'total': 1, 'tied': False}, key
+        assert [row['id'] for row in stats['ranking_boards'][key]] == ['p']
+    unconfirmed = compute_player_stats('q', games, bluff_stats=review_stats)
+    assert unconfirmed['rankings']['bluff_count'] is None
+
+
+def test_profile_minimum_appearances_uses_the_entire_selected_season_range():
+    games = [game('s22', seats=[seat(1, 'p', '平民', 'good')]),
+             {**game('s23', seats=[seat(1, 'p', '平民', 'good')]), 'season': 'S23'}]
+    single = compute_player_stats('p', games, season='S22', minimum_appearances=2)
+    combined = compute_player_stats('p', games, seasons=['S22', 'S23'], minimum_appearances=2)
+    assert single['rankings']['total_win_rate'] is None
+    assert combined['appearances'] == 2
+    assert combined['rankings']['total_win_rate'] == {'rank': 1, 'total': 1, 'tied': False}
 
 
 def test_scope_filters_season_and_phase():

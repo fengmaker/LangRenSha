@@ -2618,7 +2618,7 @@
           "first_day_claim": null,
           "confidence": "high",
           "verification_status": "user_confirmed",
-          "decision_note": "狼王起跳被推出局能开枪算不算悍跳成功，这里你标注一下，暂定成功",
+          "decision_note": "狼王起跳被推出局能开枪算不算悍跳成功，这里你标注一下，暂定成功；用户成功复核：用户正式确认本局悍跳成功，取消暂定与待复核标记。",
           "evidence": [
             {
               "kind": "transcript",
@@ -2657,17 +2657,16 @@
               "interpretation": "主审已目视原帧；以正式底牌定位座位，并与本人原文和前后流程交叉判断。"
             }
           ],
-          "review_questions": [
-            "狼王起跳被推出局能开枪算不算悍跳成功，这里你标注一下，暂定成功"
-          ],
-          "requires_user_review": true,
-          "review_stage": "user_pending",
+          "review_questions": [],
+          "requires_user_review": false,
+          "review_stage": "reviewed",
           "manual_included": false,
           "manual_source_sha256": "a53921fcae87948fb4ff6bb757f0958defc873ce822647f8379a5e72bb03da78",
           "manual_review_id": "S23:BV17xpA6aE7N:p1",
           "manual_game_note": "",
-          "manual_note": "狼王起跳被推出局能开枪算不算悍跳成功，这里你标注一下，暂定成功",
-          "manual_success": true
+          "manual_note": "用户正式确认本局悍跳成功，取消暂定与待复核标记。",
+          "manual_success": true,
+          "success_fingerprint": "030629876b080b20619d72211a6258aa9606ab4ee99691d2fad3032b4bed4947"
         }
       ],
       "source_fingerprint": "f704110de52de3b9e52bb06cf3ee2764a8e0e8a1efa228b9087420ec29daeacc"
@@ -3557,7 +3556,7 @@
         },
         {
           "seat": 2,
-          "name": "天天的星_",
+          "name": "天星",
           "physical_role": "狼人",
           "decision": "yes",
           "claimed_role": null,
@@ -3713,7 +3712,7 @@
           "manual_note": ""
         }
       ],
-      "source_fingerprint": "c769331019a450958c8565bc12436a6f0abc51c4b83596ee4bba5879f9cc5084"
+      "source_fingerprint": "af21e7073bdc1ed3a405804a3ea3ffe1d620dd7b39f111dcbb9326aa10e060c4"
     },
     {
       "bvid": "BV1D2ak6XEji",
@@ -3916,7 +3915,7 @@
           "manual_note": ""
         }
       ],
-      "source_fingerprint": "128acf1a98011fa538455e7337908c6a28fd61b3f842b457ef5e813df4fce4e7"
+      "source_fingerprint": "508df0c2ca6c99ef79a45a05bef94072cb34d58f64f15ea97219bdfd451eab6c"
     },
     {
       "bvid": "BV1D2ak6XExH",
@@ -4134,7 +4133,7 @@
           "manual_note": ""
         }
       ],
-      "source_fingerprint": "68c7f9b51f193151d7d641169793eb7ce853e3f7fb0230aa27351b18da46ddcb"
+      "source_fingerprint": "65f621dfe808c01ced230c23f544d05b21715fe6ac67dbbdc910b74aeb6be395"
     },
     {
       "bvid": "BV1EspA6AENf",
@@ -4370,88 +4369,125 @@
           "seat": 1,
           "name": "郭小炜",
           "physical_role": "假面",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "ece598c30fb63e635d1df72d35483e6db23312e47109d27a14c3a8bd80f7c63f",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1FJxc6zEzg:43157818773:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "1d7210504f488264c1a043d64969f305081f4db8e856cb447edc386f84df9f78",
           "success_fingerprint": "707d9f637428bad0428984f0a760ce2f48c2b5741e92c298e0b80cb1add46195"
         },
         {
           "seat": 2,
           "name": "李大花",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "2号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "2号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "e762389b0d609868db48796346a6f3cd9c3a20dfda046739f8e2693e5234d90e",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1FJxc6zEzg:43157818773:p01",
+          "manual_game_note": "",
+          "manual_note": "2号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "66a7acb171bbb6150a44c33123646dc4bce642e92a4c2192833492ed3fa96f41",
+          "claim_fingerprint": "946e90d36b3ea78253f6758cd28d5e7432e26796697838b79583b000870e61c6",
           "success_fingerprint": "46b3a10528985300a2f50a795bd75b51744d3983f6bfda113f63e81cf241ef58"
         },
         {
           "seat": 4,
           "name": "小乖",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "2848bd2682ac91603e8b8603a370c302eef375f4eaca868fc77f7c6acf13c4c5",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1FJxc6zEzg:43157818773:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "8f6e401bb7e67b450b7ffeebb4d6b57267d2b1e2b1ad0137352a09472609c8c5",
           "success_fingerprint": "7f9a95abd3b8a80e05a13f10a61275df4ee0595763f1f0c16783376d53fa23af"
         },
         {
           "seat": 5,
           "name": "彭彭",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "684b85c6e7d3fd91defce387897a0431c4119b72d9b5f4d0a848ed6275377d3d",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1FJxc6zEzg:43157818773:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "906dc7951394ca2fb298a8784df642952aaac7b5a98af4d11c978fdf2679714d",
           "success_fingerprint": "e80cecf2ab56cbfac4c1c81e37992d32a765841d25db62930dd56fde4f414ed5"
         }
       ]
@@ -4466,88 +4502,125 @@
           "seat": 2,
           "name": "夏夏",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "7192674ae4a716773a90669cf562f1fd0df5258e1459876439c6c537210d0511",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1HksX6QEr5:43131208365:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "1f11047c1100a39177d6de61ee7fc23742763d2cb4531c9b2ed927b76a9b7b0f",
           "success_fingerprint": "fb9ef6c86d8e96a0564c3cf4964bff97d794c01db895dc44bca10f22c9c712ea"
         },
         {
           "seat": 3,
           "name": "天策",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "3号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "3号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "e416d91277aed324157ac5b344368a707716503fc21d0d2c412b8346b42ab883",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1HksX6QEr5:43131208365:p01",
+          "manual_game_note": "",
+          "manual_note": "3号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "33794d9ece0bc50ed59e14503d07c93a067e2175aafcf7fa99d9a4ee560750ab",
+          "claim_fingerprint": "0dbd2bbabe832983deaf0c8d7cb58317259a6e2f64fa79d29c3989a490b08327",
           "success_fingerprint": "1f97e247d57586c68ae87140dd7b0b83174f145f20cb15df96abc3e71bdb0367"
         },
         {
           "seat": 4,
           "name": "果冻",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "5ef9afb0e8129440a67fd83ddb2baf78140a168deb6ec0976ace34a4645b128a",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1HksX6QEr5:43131208365:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "ee59762f43ee284f1145cbab88f39c5ca67f7614e49041b381960f42a981b22d",
           "success_fingerprint": "85f0beda5a5804e967fba39502bb9802b838c93cf0f107d7f2e0a7e7571147e8"
         },
         {
           "seat": 11,
           "name": "小肥",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "0483c361b0b2fe6d629c3255ca848f1f11fbb72afc927c9d09db36821ebc3c43",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1HksX6QEr5:43131208365:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "8d574b1295e9a3318ab4b76a0bca3d1920bae512ab120fb6fa57112033f6c212",
           "success_fingerprint": "e1e612e99309ebc8375c193d3cdd29a66eb01d106b0df262eadb2a5906b01651"
         }
       ]
@@ -6701,88 +6774,125 @@
           "seat": 1,
           "name": "焦阳",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "4364bc0ea3f03e4ca1c8c37043fcfb6103264cd8948f98ec82b2181fde8ab5ae",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EVx:43105321908:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "0f82e30d64d9194a64e0e63f4825cd78c11ff0a366d8d253e21d61f4eced03a8",
           "success_fingerprint": "33577368aa0b1d15561055913c3ef9ef3de706ca2e316cb3cb933111359565aa"
         },
         {
           "seat": 2,
           "name": "智贤",
           "physical_role": "诡术师",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "0fbdd24d0d16c7b0d0686e1a69443bbc5685f5d4d4a00e9ee515a199d42a379c",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EVx:43105321908:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "abe0d9553e31876e676f035802a87c993dfce85486ce01a8634e930d22c78171",
           "success_fingerprint": "e3a7f67e54c8dbfa50b42937d6811838425e8cd9b4006230ae4fc7ce8adb70d0"
         },
         {
           "seat": 5,
           "name": "耿许儿",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "5号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "5号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "63f11b76b43c27a71623d32236bce552786f8b75472874cb47464cc649382f95",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1RQx364EVx:43105321908:p01",
+          "manual_game_note": "",
+          "manual_note": "5号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "bedfd29743516c468cbd59466d5f9eea51870ca0ea7531ce556f1504f6137bdb",
+          "claim_fingerprint": "1d3bcc4cb3df9442684061490b3950951c086f169bd25da49292a333cd8e4b2f",
           "success_fingerprint": "16e1a53aaf20ed3c7f7cd39ecf213439fbdee50a0a913b3cadd62f0512430971"
         },
         {
           "seat": 12,
           "name": "牛肉干",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "4b4c8e3a45927f8e3130e364346c1126b63d50184c40640b9d03f8122753f263",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EVx:43105321908:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "cd661952e0afa53926eaaadce9bdc615f64241f47ade4c2f8531be55487024d1",
           "success_fingerprint": "ad8339dc83d8462eccc79396023757667249dc8bfce4abb378d63507f168bba7"
         }
       ]
@@ -6797,88 +6907,125 @@
           "seat": 1,
           "name": "焦阳",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "a46757302d19080e91a95100c1f903dee1c5983397d4bf6ddfe255d06f2859c5",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EaF:43105127019:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "a456ce36499146f629e45c91ebaa46110d13c862d38e23478130d07513277a61",
           "success_fingerprint": "e881677fb3bc957c5a8088fa5258dcc25b2e4a58b9fe7703067f4356f09d79aa"
         },
         {
           "seat": 3,
           "name": "小张",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "2dfb2a1f071e585afe71c1728abd05b1670589e5e92b19df6746e8d29e8ef709",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EaF:43105127019:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "5cdbeaf8dca072a1787fdc43e49245cd698deb7fc89b87e1c3c857eaca979007",
           "success_fingerprint": "bd8d9736edfd0b1fdb44c745ff9c7eafab8d20ed1d2b34e7bedcff8cd9eee3a9"
         },
         {
           "seat": 10,
           "name": "老狼",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "10号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "10号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "92c6173e8207baf949684fc9cc47b2322c92b82723b078068bf6ea1520342bbe",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1RQx364EaF:43105127019:p01",
+          "manual_game_note": "",
+          "manual_note": "10号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "00fac481da4710262452875097fe5136d4110cc59f4831683308aee4585009ad",
+          "claim_fingerprint": "79caa56f9f1b6b9b59dbf7d5de257d653f7077f0eb706a482a83ed7116de9f58",
           "success_fingerprint": "c4601f7e4fd53a8177b2dd90b294f6d6dd88611849020cea5ebe84727bf71d20"
         },
         {
           "seat": 11,
           "name": "宝玉妹妹",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "ed208dd37cbc9409d03f05fef1b43a8cae6d873dc15cc5253194ad397d1bf6e9",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364EaF:43105127019:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "9a1222bd67ff782fbb44a71e922eacd326e10b64773149d24f5afe2a7688f091",
           "success_fingerprint": "27c37f246ffd95f671685ffbd7142efae69b694d5987fd1b1c8c8a638393eeb5"
         }
       ]
@@ -6893,88 +7040,125 @@
           "seat": 1,
           "name": "焦阳",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "cef334f51d6a5e2247b2df280cf74456efd865166b4e332f0e3f9e77fba61acb",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364Eit:43105389215:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "ca7822534ae0be5f286c7fa69acb01eb7a51ac344fa2ded1f5d0d904f2803b8d",
           "success_fingerprint": "217c50d8aafd5850675946c952504abc1f696b98ee04c82d90ab5edff28ff4c2"
         },
         {
           "seat": 9,
           "name": "小苍",
           "physical_role": "机械狼",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "0cab83e884d0189170245ad518eb89f00bf892eaf5d656facaf939ae4c6c1810",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364Eit:43105389215:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "3fa6cc7138b16694cd3f5f62b4f2bb800ac92f3aab4834d65e18ef80f3531fb6",
           "success_fingerprint": "0585610f398cb18eec3c728500b2591b33cc17f257aca41b8f83a0d0c04012a4"
         },
         {
           "seat": 10,
           "name": "老狼",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "c16fb58053efb2345e7d262b56f13fc14f7bcbb01f47e477dab66cf3ab6d7098",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1RQx364Eit:43105389215:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "72a0f876449d64f453380f1ffa702606477ff167c3aaa5919dfc01f3ef183a27",
           "success_fingerprint": "1cc2b22cdfed25e5dd3801179d3acb46f9440739fed92ef817e52314f73c9ec2"
         },
         {
           "seat": 12,
           "name": "牛肉干",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "12号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "12号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "0bee7c748bd73bc2756bb209d518c0fd0829e6aad71ac7525d801d411cdbed2c",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1RQx364Eit:43105389215:p01",
+          "manual_game_note": "",
+          "manual_note": "12号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "bbe5be34f9586e7d20dfbb0ae6b06a3add60bd3afad993eb38de038c1a9fef13",
+          "claim_fingerprint": "2d7465d795bca7961f6e52934b079e8ac4fe2c21bb15e970c657f2c1fede1a6b",
           "success_fingerprint": "4c80e85a5bf4a3a087d72d95bab0ce05565b4fbb91d849e9885c1d5933e3b658"
         }
       ]
@@ -9614,88 +9798,124 @@
           "seat": 1,
           "name": "郭小炜",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "本局没有悍跳",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "本局没有悍跳",
+              "interpretation": "直接摘自增量人工复核备注。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "57075f1621192e964ad88dc42ed5e4713127fe736998907a779d580766787271",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1cJxc6zEbr:43158077626:p01",
+          "manual_game_note": "本局没有悍跳",
+          "manual_note": "本局没有悍跳",
+          "evidence_source_fingerprint": "10aa15a1c68d8cfd1ae81f9c84393145be2acec3d460ff22d57733f6869df118",
+          "claim_fingerprint": "c692d20dd08b90cea8c80ac97d21b12456d452b07a2828af0875210b99859df1",
           "success_fingerprint": "707d9f637428bad0428984f0a760ce2f48c2b5741e92c298e0b80cb1add46195"
         },
         {
           "seat": 6,
           "name": "KS",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "本局没有悍跳",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "本局没有悍跳",
+              "interpretation": "直接摘自增量人工复核备注。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "dbcd55413fdb2923e9db8ea6ad3f41234ca815d6bc7655be776ed610a4133a83",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1cJxc6zEbr:43158077626:p01",
+          "manual_game_note": "本局没有悍跳",
+          "manual_note": "本局没有悍跳",
+          "evidence_source_fingerprint": "10aa15a1c68d8cfd1ae81f9c84393145be2acec3d460ff22d57733f6869df118",
+          "claim_fingerprint": "96ea43f50c5f82f9ed24f02b5c6d8e50cb6afe5d5492cd9e73db437c1d7c14b0",
           "success_fingerprint": "b5f38f549d21e0138052ac2689d67eaa57a33c8b83a55dc9373b99528ccc3a68"
         },
         {
           "seat": 10,
           "name": "陈明峻",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "本局没有悍跳",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "本局没有悍跳",
+              "interpretation": "直接摘自增量人工复核备注。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "5c988f7992f3b2a92b80df42b32358083febbf58f802d543a091aad4df98d8bb",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1cJxc6zEbr:43158077626:p01",
+          "manual_game_note": "本局没有悍跳",
+          "manual_note": "本局没有悍跳",
+          "evidence_source_fingerprint": "10aa15a1c68d8cfd1ae81f9c84393145be2acec3d460ff22d57733f6869df118",
+          "claim_fingerprint": "324e9764ba4079be2496f5cf5697ea27b70055a87fb9bfd2eee7fc46b0efa112",
           "success_fingerprint": "25c59000b65418e6dab56e3695410271b68827f8bd582ea6812e71538d15af67"
         },
         {
           "seat": 11,
           "name": "小白",
           "physical_role": "机械狼",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "本局没有悍跳",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "本局没有悍跳",
+              "interpretation": "直接摘自增量人工复核备注。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "f82d416cc9a94d3de4cfd86557059ee923d954698f455b31d7e867dbf9ea721e",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1cJxc6zEbr:43158077626:p01",
+          "manual_game_note": "本局没有悍跳",
+          "manual_note": "本局没有悍跳",
+          "evidence_source_fingerprint": "10aa15a1c68d8cfd1ae81f9c84393145be2acec3d460ff22d57733f6869df118",
+          "claim_fingerprint": "8fc0af3f98bac7a55986609bbee763c93094b4dc28d93b0a22498d8457c04dde",
           "success_fingerprint": "4fa4b3766a460fa36a02447cab9986188c4b2655cd3cebf2708fdc57d52609ae"
         }
       ]
@@ -9710,88 +9930,125 @@
           "seat": 2,
           "name": "李大花",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "142fb4327119f84d9fb2b4f76fde60dcb63d18c65ff3e06e1305b54ce05dcc51",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1cJxc6zEgf:43157749877:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "05aa9953c81828790274086450fa4c28727394f7a0aad32ce196b4c4571cfda4",
           "success_fingerprint": "73dd0c27fa698b4fa0b2926cd1ac006c56216241db1fd34505cc5d311cd53e01"
         },
         {
           "seat": 3,
           "name": "园长",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "2ec7f8d6bb0f71fea917b2afa5c4878db7feecde89fb4ce0c39840ee0fa1c2f9",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1cJxc6zEgf:43157749877:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "39e4b2c093fcc95de5848f992633cf5a5365ec0e2d6d48708b8384c8bbdc7d79",
           "success_fingerprint": "aba222336537eab471f026364912ece3b9e4f7cf0906858cba76436a4859ded3"
         },
         {
           "seat": 9,
           "name": "董鲸鱼",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "62904f48f45a01474376de61f189525b7cf941771ab821d2837139b2b9e07363",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1cJxc6zEgf:43157749877:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "2072cf1cc717c519e423abdfbc8000292af3a97eea55241f113631dca37f18a7",
           "success_fingerprint": "f8396bcf79462e2471c2f8e06e65f7c4079bc1ed362f046514057bf319274515"
         },
         {
           "seat": 11,
           "name": "小白",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "11号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "11号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "5a31c17ced4449b61f8f2b388a7613fde121b2c77cf9b0a82788ed518e5449c1",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1cJxc6zEgf:43157749877:p01",
+          "manual_game_note": "",
+          "manual_note": "11号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "8f000953ef8f3f5b6879bf12ad2e02e24e0d18e1f5416e41d77f802f21fcaae4",
+          "claim_fingerprint": "c24ae08487e209c814521a8a3f9b76c87a97549e37b3d03d5f4baa2cd5e66573",
           "success_fingerprint": "0bdee91ee9ffa54f18031b59290174c8c87334e62a57faf3f958ec7601df848a"
         }
       ]
@@ -12101,88 +12358,125 @@
           "seat": 4,
           "name": "果冻",
           "physical_role": "狼王",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "4号：是否悍跳=是；是否成功=成功。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "4号：是否悍跳=是；是否成功=成功。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "00001a4e6de1ffc8949f2f4d22daa3ad677f1327767d75b10aa0088e335261be",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1kksX6DEK8:43131339020:p01",
+          "manual_game_note": "",
+          "manual_note": "4号：是否悍跳=是；是否成功=成功。",
+          "manual_success": true,
+          "evidence_source_fingerprint": "7bcf9f94ab8727e5420e2c6e75b6deff218471988c4738954ac7d2557530bc2e",
+          "claim_fingerprint": "95f2a0c328ff73c12f9196e3e0259370a848ef5a4439e3222c24d625cd2c05b6",
           "success_fingerprint": "4fb5e8e8d193e7a6ec3a041922252c834313df09582432580f0b977c50c394c6"
         },
         {
           "seat": 7,
           "name": "小苍",
           "physical_role": "盗宝大师",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "4d4d4a400cd5ab06eaac7ec5b7553b71a4f524ab8b1a81c3dfc8607447155f5c",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEK8:43131339020:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "3fc6afb07a2fbf013a54566e8354013c7b4b429f95ebc83e4c2f7a889fe76133",
           "success_fingerprint": "adc7edfafb76cc75007105db39faf2748635ba976d7fcfe704a25b87d2ac6b16"
         },
         {
           "seat": 8,
           "name": "荣耀",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "cfb4c1fd9b47904bfa88913de9b080c907fd88541c84b506b3d062eb04b5dde8",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEK8:43131339020:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "405934c5450834747a2fa0238653d2423a5f32318fb95a7b727c8e573d1fe67e",
           "success_fingerprint": "fb3684e0f1b3592b572f105eea9e41af68d4f49a76e4847dffa04bf5f242e268"
         },
         {
           "seat": 10,
           "name": "陈明峻",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "073f774ddd9c247b6abb33dffc0299c23d6429a117aaa663f02dfd04d5abfd18",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEK8:43131339020:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "54c5aae4df5b781d9ab62e2da28acc435092467c9f8ca8eca9228b237d910764",
           "success_fingerprint": "f8175ad7a5648470a9a0bfc92c3560ef92b9ffc71d2c9a722dccb141920dae8e"
         }
       ]
@@ -12197,88 +12491,125 @@
           "seat": 4,
           "name": "果冻",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "yes",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "4号：是否悍跳=是；是否成功=失败。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "4号：是否悍跳=是；是否成功=失败。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "79430d32f3574a8706acfd6e5247001d5f2d4b597eb9e8ec2e22deca0d118777",
+          "manual_source_sha256": "2e384c765b1706c23c371ac8fc0a7fb72b82106e6ca681e2a903163e5072460f",
+          "manual_review_id": "BV1kksX6DEbH:43131407038:p01",
+          "manual_game_note": "",
+          "manual_note": "4号：是否悍跳=是；是否成功=失败。",
+          "manual_success": false,
+          "evidence_source_fingerprint": "44470d6eac0403783dcf1aaba435cfc173a876f6ccc97a9d8491952f8e4557ec",
+          "claim_fingerprint": "2f025ecb4bd3e8c46fb6eca6ca8e01ad84d3fee7ad1b895d58b72e98877716ea",
           "success_fingerprint": "482dd95dfa332a3aaf9466c88ef9748ca6be5af889a9b25f824de62c9a6cb2df"
         },
         {
           "seat": 5,
           "name": "耿许儿",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "d9a7d67cd21be4b6c5c372f7ea56296dc3e6e25a4750d49826f4cbb2c9709340",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEbH:43131407038:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "db8c6940a2cd9a07f4fa7002d8057b18bdc8abe9b75339dc184bf7946b09863e",
           "success_fingerprint": "633c19d5cdc8c4599d391965d2864d1f577bd68b968db06ad454a79fd1ae8eb2"
         },
         {
           "seat": 8,
           "name": "荣耀",
           "physical_role": "机械狼",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "4595b94783767b46770b6bb093edef29303b3513843d6ff27c992e45436eff90",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEbH:43131407038:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "50b5144c02892996326d57b57e8f5c27340165485d7050a39a4453ec946f0193",
           "success_fingerprint": "e89353c05696afa53d0d897af5af0f5d85552a9adc9b762229759a827225810a"
         },
         {
           "seat": 11,
           "name": "小肥",
           "physical_role": "狼人",
-          "decision": "uncertain",
+          "decision": "no",
           "claimed_role": null,
-          "confidence": "low",
+          "confidence": "high",
           "claim_day": null,
           "actual_claim_day": null,
           "first_day_claim": null,
-          "decision_note": "本次增量复核没有对该座位作出悍跳判断，保留未知。",
-          "verification_status": "assistant_inferred",
-          "review_questions": [
-            "本次增量复核没有对该座位作出悍跳判断，保留未知。"
+          "decision_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "verification_status": "user_confirmed",
+          "review_questions": [],
+          "evidence": [
+            {
+              "kind": "user_confirmation",
+              "text": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+              "interpretation": "来自人工悍跳选择。",
+              "source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
+            }
           ],
-          "evidence": [],
-          "review_stage": "assistant_pending",
+          "review_stage": "reviewed",
           "requires_user_review": false,
-          "evidence_source_fingerprint": "67f05b4db1bbb6e464f4fbd397ee4ca49ea8f579f6a3eb40d621fd86a1f57836",
-          "claim_fingerprint": "d99db8237e676b07d71510464e672ac3bee88e88c43f8c4580f12b1337480da9",
+          "manual_source_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1",
+          "manual_review_id": "BV1kksX6DEbH:43131407038:p01",
+          "manual_game_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "manual_note": "用户确认本批新增9局中已选悍跳人为完整名单，其余未选中的座位均未悍跳。",
+          "evidence_source_fingerprint": "d25c0bbc87a1ca2ca01bbc4e5d17ebcb67efc57ac0a009e4e4e50f20a17fcfa1",
+          "claim_fingerprint": "4ede4ad54ccb1c8f50833d91fdc0965f336bfc4ca1ef78f7539d4123f77bd47e",
           "success_fingerprint": "994ed2d5891765a633c6a6648330f7fd0b994d82bfe5d0d7dcbe0631869ccc45"
         }
       ]
@@ -15444,26 +15775,26 @@
   "season": "S23",
   "status": "reviewed_with_user_confirmed_fields_and_pending_items",
   "summary": {
-    "pending": 1,
+    "pending": 0,
     "decisions": {
-      "yes": 67,
-      "no": 235,
+      "yes": 75,
+      "no": 263,
       "uncertain": 0
     },
-    "games_total": 75,
-    "games_pending": 1,
-    "games_assessed": 75,
+    "games_total": 84,
+    "games_pending": 0,
+    "games_assessed": 84,
     "first_day_frames": 75,
-    "wolf_appearances": 300,
+    "wolf_appearances": 336,
     "assistant_pending": 0,
-    "successful_bluffs": 10,
+    "successful_bluffs": 11,
     "statistics_pending": 0,
-    "user_confirmed_records": 302,
+    "user_confirmed_records": 338,
     "separate_identity_claims": 2,
-    "audited_identified_bluffs": 67,
+    "audited_identified_bluffs": 75,
     "evidence_validation_issues": 0,
     "independently_rechecked_games": 75,
-    "manual_reviewed_games": 75,
+    "manual_reviewed_games": 84,
     "manual_included_appearances": 2
   },
   "methodology": [
@@ -15478,11 +15809,12 @@
     "正式对局未记录、但法官和终局复盘均明确宣布的警徽流失，可由带定位证据的专项复核补充；与正式当选结果冲突时拒绝采用。"
   ],
   "schema_version": 1,
-  "inference_version": "S23-manual-20261029-a53921fcae87",
+  "inference_version": "S23-manual-20261029-a53921fcae87-bobby-final-20261031-complete-list-tianxing",
   "manual_review": {
     "source_sha256": "a53921fcae87948fb4ff6bb757f0958defc873ce822647f8379a5e72bb03da78",
-    "reviewed_games": 75,
-    "covered_games": 75,
-    "total_games": 75
+    "reviewed_games": 84,
+    "covered_games": 84,
+    "total_games": 84,
+    "complete_list_confirmation_sha256": "64cc1c40ef803ad010ffbe660fb4bab2c7aead49fbebaa819f152de86e4260c1"
   }
 }

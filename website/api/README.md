@@ -18,3 +18,5 @@
 选手详情与stats支持`season_start/season_end=latest`；旧`season=S22`保持单季兼容。榜单仍按季，`phase=all|finals_week`只改变积分榜范围，其他个人指标按整季。未知阵营／胜负不当成负场，零有效样本比例为null。
 
 发布与回退使用[网站README](../README.md)或`workflow.py`，不要用早期`database.py publish`。一个活动game release代表完整数据集，悍跳按每个保留季分别同步。
+
+唯邻是从的复核页与发布页验收顺序、傀儡规则及局部裁定见[对局信息呈现规范](../../docs/10_对局信息呈现规范.md#neighbor-puppet-display)。
