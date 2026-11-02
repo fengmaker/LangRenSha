@@ -1,0 +1,52 @@
+{
+  "schema": "masters-manual-slot-review-sidecar-v1",
+  "season": "S22",
+  "bvid": "BV1tj8p6RE1V",
+  "game_slug": "bili-BV1tj8p6RE1V-p01-g03",
+  "source_path": "data/reports/shared/剩余46项规则复核_20261102.json",
+  "source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+  "archive_path": "data/extractions/shared/manual_slot_reviews/18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8.json",
+  "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+  "source_format": "masters-scoped-rule-review-v1",
+  "source_game": {
+    "bvid": "BV1tj8p6RE1V",
+    "id": "bili-BV1tj8p6RE1V-p01-g03",
+    "season": "S22",
+    "accepted_review_ids": [
+      "DN-064"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "DN-064",
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "classification": "accepted_rule_review",
+      "before": {
+        "action": "unknown",
+        "actor": null,
+        "targets": [],
+        "result": null
+      },
+      "typed": {
+        "action": "die",
+        "actor": null,
+        "targets": [
+          7
+        ],
+        "result": null
+      },
+      "note": "原定位错落在后一夜。向前读相邻复盘后明确：女巫9号首夜毒3且3/9双死；目标第三夜守1、狼刀7，机械女巫继续空过，且其唯一毒药留到下一夜才用。7号是普通平民，既无保护也无其他本夜致死源，因此本夜唯一夜死7号。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-064"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    }
+  ]
+}

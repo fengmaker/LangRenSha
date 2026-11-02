@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.game_derivations import apply_precomputed
+from scripts.game_derivations import apply_precomputed, derive_game
 from scripts.game_timeline import build_game_timeline
 from website.api import publisher
 
@@ -17,7 +17,9 @@ api = importlib.import_module('website.api.app')
 def test_game_detail_api_uses_the_same_sequence_as_the_review_page(bvid, monkeypatch):
     folder = next((ROOT / 'data/extractions/S23/incremental').glob(bvid + '_*'))
     candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
-    report = json.loads((folder / 'rule_derivations.json').read_text(encoding='utf-8'))
+    # Historical incremental sidecars bind older rule hashes. This parity test
+    # needs a current, in-memory report; stale-report rejection is tested apart.
+    report = derive_game(candidate['dossier'], candidate['voting'])['derivations']
     records = apply_precomputed(candidate['dossier'], candidate['voting'], report)
     dossier, voting = records['dossier'], records['voting']
     _, rules = publisher._logical_rules(ROOT, 'S23')

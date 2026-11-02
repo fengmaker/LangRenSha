@@ -1,0 +1,101 @@
+{
+  "database_write": true,
+  "completed_at_utc": "2026-11-02T10:11:15.506960+00:00",
+  "transaction": "one transaction for both selected games, votes, derivations and source annotations",
+  "backup_receipt": "data/backups/workflow-20261102T100311/receipt.json",
+  "formal_counts_before": [
+    {
+      "season": "S21",
+      "games": 27
+    },
+    {
+      "season": "S22",
+      "games": 148
+    },
+    {
+      "season": "S23",
+      "games": 87
+    }
+  ],
+  "formal_counts_after": [
+    {
+      "season": "S21",
+      "games": 27
+    },
+    {
+      "season": "S22",
+      "games": 148
+    },
+    {
+      "season": "S23",
+      "games": 87
+    }
+  ],
+  "readback_verified": true,
+  "receipts": [
+    {
+      "game_id": "8b00eed1-0399-4b78-9310-987cf5c40704",
+      "slug": "bili-BV1KuMG6NEez-p01-g02",
+      "people": 16,
+      "seats": 12,
+      "rounds": 3,
+      "night_slots": 9,
+      "day_slots": 12,
+      "event_records": 63,
+      "source_files": 4,
+      "voting": {
+        "ballots": 1,
+        "choices": 12
+      },
+      "bvid": "BV1KuMG6NEez",
+      "events_readback_verified": true,
+      "votes_readback_verified": true,
+      "annotations_readback_verified": true,
+      "source_binding_preserved": true,
+      "previous_annotations_preserved": true,
+      "db_normalization": [],
+      "terminal": {
+        "round": 3,
+        "phase": "day",
+        "basis": "observed_surrender"
+      }
+    },
+    {
+      "game_id": "e0d3f1af-54b9-481a-8b3d-0276201bb967",
+      "slug": "bili-BV1yKJ56PEak-p01-gunknown",
+      "people": 16,
+      "seats": 12,
+      "rounds": 3,
+      "night_slots": 9,
+      "day_slots": 12,
+      "event_records": 63,
+      "source_files": 4,
+      "voting": {
+        "ballots": 3,
+        "choices": 26
+      },
+      "bvid": "BV1yKJ56PEak",
+      "events_readback_verified": true,
+      "votes_readback_verified": true,
+      "annotations_readback_verified": true,
+      "source_binding_preserved": true,
+      "previous_annotations_preserved": true,
+      "db_normalization": [
+        {
+          "round": 1,
+          "phase": "night",
+          "slot": "puppet_skill_effect",
+          "before_targets": [],
+          "db_targets": [
+            7
+          ],
+          "basis": "本局已核puppet_select；仅补数据库所需的傀儡效果作用座位，原人工档案保留"
+        }
+      ],
+      "terminal": {
+        "round": 3,
+        "phase": "night"
+      }
+    }
+  ]
+}

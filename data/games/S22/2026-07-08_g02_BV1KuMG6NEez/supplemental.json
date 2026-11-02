@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1KuMG6NEez-p01-g02",
+  "season": "S22",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S22",
+    "bvid": "BV1KuMG6NEez",
+    "game_slug": "bili-BV1KuMG6NEez-p01-g02",
+    "source_path": "data/reports/shared/剩余46项规则复核_20261102.json",
+    "source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8.json",
+    "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+    "source_format": "masters-scoped-rule-review-v1",
+    "source_game": {
+      "bvid": "BV1KuMG6NEez",
+      "id": "bili-BV1KuMG6NEez-p01-g02",
+      "season": "S22",
+      "accepted_review_ids": [
+        "DN-170"
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-170",
+        "round": 1,
+        "phase": "night",
+        "slot": "puppet_skill_effect",
+        "classification": "accepted_rule_review",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "reverse_check",
+          "actor": null,
+          "targets": [
+            8
+          ],
+          "result": "首夜8号傀儡预言家查验7号平民，实际反馈狼人，本次查验已反转。"
+        },
+        "note": "首夜8号已被选为傀儡预言家；7号底牌平民，实际查验7号却得到狼人反馈，唯一符合傀儡预言家反转。可确定这次查验已受影响，无须再核其是否当夜生效；不推广完整夜序。",
+        "accepted_rule_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-170"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+  "events": [
+    {
+      "round": 3,
+      "phase": "day",
+      "event": {
+        "slot": "werewolf_surrender",
+        "action": "surrender",
+        "actor": 1,
+        "targets": [],
+        "result": "第三天白天最后一狼1号交牌，游戏结束，好人阵营获胜。"
+      },
+      "source": {
+        "type": "transcript_segment",
+        "review_id": "R11",
+        "path": "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/复盘原文.txt",
+        "sha256": "1cbd47c99373e3ea4d2ad5df842515a2303bf85e1653fb73b90724a76831dba0",
+        "start_ms": 3528570,
+        "end_ms": 3533279,
+        "quote": "白天最后一张狼人一号交牌游戏结束；好人正义获胜"
+      }
+    }
+  ]
+}

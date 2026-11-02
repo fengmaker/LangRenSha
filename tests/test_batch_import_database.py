@@ -3,6 +3,7 @@ import copy
 import importlib.util
 import json
 import os
+from contextlib import ExitStack
 from pathlib import Path
 import sys
 import unittest
@@ -32,15 +33,17 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
         )
         cls.audio = copy.deepcopy(next(file for file in cls.sample["files"] if file["role"] == "audio"))
         cls.audio_path = ROOT / cls.audio["path"]
-        if not cls.audio_path.is_file():
-            raise RuntimeError(f"样例音频必须是真实文件：{cls.audio_path}")
         with database.connect(cls.schema) as conn:
             conn.execute("INSERT INTO seasons(code,name) VALUES('S22','isolated batch integration test')")
             conn.execute("INSERT INTO seasons(code,name) VALUES('S21','isolated archived-board test')")
-            conn.execute(
-                "INSERT INTO sources(platform,external_key,title) VALUES(%s,%s,%s)",
+            source = conn.execute(
+                "INSERT INTO sources(platform,external_key,title) VALUES(%s,%s,%s) RETURNING id",
                 (cls.audio["platform"], cls.audio["external_key"], "isolated test source from existing sample"),
-            )
+            ).fetchone()
+            if not cls.audio_path.is_file():
+                conn.execute("INSERT INTO artifacts(source_id,kind,relative_path,sha256,byte_size,metadata) "
+                             "VALUES(%s,'audio',%s,%s,0,jsonb_build_object('ingested_from',%s::text))",
+                             (source["id"], cls.audio["path"], "f" * 64, cls.audio["path"]))
 
     @classmethod
     def tearDownClass(cls):
@@ -60,6 +63,52 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
         # existing audio file is registered; text artifacts are unnecessary.
         value["files"] = [copy.deepcopy(self.audio)]
         return value
+
+    def record_with_unique_audio_source(self):
+        value = self.record()
+        external_key = "batch-test-audio-" + uuid.uuid4().hex
+        value["files"][0]["external_key"] = external_key
+        with database.connect(self.schema) as conn:
+            conn.execute("INSERT INTO sources(platform,external_key,title) VALUES(%s,%s,%s)",
+                         (value["files"][0]["platform"], external_key, "isolated missing audio test source"))
+        return value
+
+    def register_audio_artifact(self, value, digest=None, path=None):
+        file = next(file for file in value["files"] if file["role"] == "audio")
+        digest = digest or "f" * 64
+        path = path or file["path"]
+        with database.connect(self.schema) as conn:
+            source = conn.execute("SELECT id FROM sources WHERE platform=%s AND external_key=%s",
+                                  (file["platform"], file["external_key"])).fetchone()
+            self.assertIsNotNone(source)
+            row = conn.execute("INSERT INTO artifacts(source_id,kind,relative_path,sha256,byte_size,metadata) "
+                               "VALUES(%s,'audio',%s,%s,0,jsonb_build_object('ingested_from',%s::text)) "
+                               "ON CONFLICT(source_id,kind,sha256) DO NOTHING RETURNING id",
+                               (source["id"], path, digest, path)).fetchone()
+            if row is None:
+                row = conn.execute("SELECT id FROM artifacts WHERE source_id=%s AND kind='audio' AND sha256=%s",
+                                   (source["id"], digest)).fetchone()
+            return str(row["id"])
+
+    def with_missing_paths(self, paths):
+        real_is_file = Path.is_file
+        real_exists = Path.exists
+        missing = {Path(path).resolve() for path in paths}
+
+        def is_file(path):
+            if path.resolve() in missing:
+                return False
+            return real_is_file(path)
+
+        def exists(path):
+            if path.resolve() in missing:
+                return False
+            return real_exists(path)
+
+        stack = ExitStack()
+        stack.enter_context(patch.object(Path, "is_file", is_file))
+        stack.enter_context(patch.object(Path, "exists", exists))
+        return stack
 
     def incomplete_record(self):
         value = self.record()
@@ -182,6 +231,7 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
                     before = conn.execute("SELECT primary_source_id FROM games WHERE id=%s", (first["game_id"],)).fetchone()
                 self.assertEqual([row["file_role"] for row in files], [role])
                 value["files"].append(copy.deepcopy(self.audio))
+                self.register_audio_artifact(value)
                 with_audio = import_game(value, allow_incomplete=True)
                 self.assertEqual(first["game_id"], with_audio["game_id"])
                 with database.connect(self.schema) as conn:
@@ -200,6 +250,111 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ReviewError, "其他赛季或源文件"):
             import_game(value, allow_incomplete=True)
         self.assertEqual(self.game_snapshot(value["slug"]), before)
+
+    def test_missing_audio_reuses_only_the_registered_source_artifact(self):
+        for matched_by in ("relative_path", "ingested_from"):
+            with self.subTest(matched_by=matched_by):
+                value = self.record_with_unique_audio_source()
+                expected_artifact_id = self.register_audio_artifact(value)
+                with database.connect(self.schema) as conn:
+                    if matched_by == "relative_path":
+                        conn.execute("UPDATE artifacts SET metadata='{}'::jsonb WHERE id=%s",
+                                     (expected_artifact_id,))
+                    else:
+                        conn.execute("UPDATE artifacts SET relative_path='data/archive/other-audio.m4a' WHERE id=%s",
+                                     (expected_artifact_id,))
+
+                with self.with_missing_paths([self.audio_path]):
+                    first = import_game(copy.deepcopy(value), allow_incomplete=True)
+                before = self.game_snapshot(value["slug"])
+                artifact_id = before["files"][0]["artifact_id"]
+
+                with database.connect(self.schema) as conn, self.with_missing_paths([self.audio_path]):
+                    with patch.object(game_records, "connect", side_effect=AssertionError("conn must be reused")):
+                        replacement = import_game(copy.deepcopy(value), allow_incomplete=True, conn=conn)
+                after = self.game_snapshot(value["slug"])
+
+                self.assertEqual(first["game_id"], replacement["game_id"])
+                self.assertEqual(len(after["files"]), 1)
+                self.assertEqual(after["files"][0]["file_role"], "audio")
+                self.assertEqual(after["files"][0]["artifact_id"], artifact_id)
+                self.assertEqual(str(artifact_id), expected_artifact_id)
+
+    def test_missing_audio_without_registered_artifact_is_rejected(self):
+        value = self.record_with_unique_audio_source()
+
+        with self.with_missing_paths([self.audio_path]):
+            with self.assertRaisesRegex(ReviewError, "缺失.*audio.*artifact"):
+                import_game(value, allow_incomplete=True)
+
+        with database.connect(self.schema) as conn:
+            self.assertEqual(conn.execute("SELECT count(*) AS n FROM artifacts a JOIN sources s ON s.id=a.source_id "
+                                          "WHERE s.external_key=%s AND a.kind='audio'",
+                                          (value["files"][0]["external_key"],)).fetchone()["n"], 0)
+            self.assertIsNone(conn.execute("SELECT id FROM games WHERE slug=%s", (value["slug"],)).fetchone())
+
+    def test_missing_audio_with_ambiguous_registered_artifacts_is_rejected(self):
+        value = self.record_with_unique_audio_source()
+        self.register_audio_artifact(value, "a" * 64)
+        with self.with_missing_paths([self.audio_path]):
+            import_game(copy.deepcopy(value), allow_incomplete=True)
+        before = self.game_snapshot(value["slug"])
+        with database.connect(self.schema) as conn:
+            source = conn.execute("SELECT id FROM sources WHERE platform=%s AND external_key=%s",
+                                  (value["files"][0]["platform"], value["files"][0]["external_key"])).fetchone()
+            conn.execute("INSERT INTO artifacts(source_id,kind,relative_path,sha256,byte_size) "
+                         "VALUES(%s,'audio',%s,%s,0)",
+                         (source["id"], value["files"][0]["path"], "b" * 64))
+
+        with self.with_missing_paths([self.audio_path]):
+            with self.assertRaisesRegex(ReviewError, "ambiguous|歧义|多个"):
+                import_game(copy.deepcopy(value), allow_incomplete=True)
+
+        self.assertEqual(self.game_snapshot(value["slug"]), before)
+
+    def test_missing_non_audio_source_remains_strict_with_registered_audio(self):
+        value = self.record_with_unique_audio_source()
+        self.register_audio_artifact(value)
+        with self.with_missing_paths([self.audio_path]):
+            import_game(copy.deepcopy(value), allow_incomplete=True)
+        before = self.game_snapshot(value["slug"])
+        transcript = copy.deepcopy(next(f for f in self.sample["files"] if f["role"] == "transcript"))
+        transcript["external_key"] = value["files"][0]["external_key"]
+        value["files"].append(transcript)
+        transcript_path = ROOT / transcript["path"]
+
+        with self.with_missing_paths([self.audio_path, transcript_path]):
+            with self.assertRaisesRegex(ReviewError, "源文件必须位于data目录"):
+                import_game(copy.deepcopy(value), allow_incomplete=True)
+
+        self.assertEqual(self.game_snapshot(value["slug"]), before)
+
+    def test_validate_keeps_default_strict_file_check_for_missing_audio(self):
+        value = self.record()
+
+        with self.with_missing_paths([self.audio_path]):
+            with self.assertRaisesRegex(ReviewError, "源文件必须位于data目录"):
+                validate(copy.deepcopy(value), check_files=True)
+
+    def test_puppet_skill_effect_actions_keep_their_single_target(self):
+        value = json.loads(
+            (ROOT / "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/dossier.json").read_text(encoding="utf-8")
+        )
+        for action, target in (("reverse_check", 8), ("skill_disabled", 6)):
+            with self.subTest(action=action):
+                candidate = copy.deepcopy(value)
+                puppet_select = next(event for round_ in candidate["rounds"] for event in round_["night"]
+                                     if round_["number"] == 1 and event["slot"] == "puppet_select")
+                if action == "skill_disabled":
+                    puppet_select["targets"] = [target]
+                    candidate["seats"][target - 1]["faction"] = "werewolf"
+                    candidate["seats"][7]["faction"] = "good"
+                else:
+                    candidate["seats"][target - 1]["faction"] = "werewolf"
+                event = next(event for round_ in candidate["rounds"] for event in round_["night"]
+                             if round_["number"] == 2 and event["slot"] == "puppet_skill_effect")
+                event.update(action=action, targets=[target])
+                game_records.validate_batch(candidate, check_files=False, check_rules=False)
 
     def test_failure_after_delete_rolls_back_the_old_game_record(self):
         value = self.record()
@@ -228,7 +383,9 @@ class BatchGameImportDatabaseTests(unittest.TestCase):
         self.assertEqual(self.counts_for_game(value["slug"])["game_id"], original["game_id"])
 
     def test_confirmed_sample_still_passes_the_default_strict_path(self):
-        board = validate(copy.deepcopy(self.sample), check_files=True)
+        value = copy.deepcopy(self.sample)
+        value["files"] = [copy.deepcopy(next(f for f in self.sample["files"] if f["role"] == "transcript"))]
+        board = validate(value, check_files=True)
         self.assertEqual(board["code"], self.sample["board"])
         with self.assertRaises(ReviewError):
             validate(self.incomplete_record(), check_files=False)

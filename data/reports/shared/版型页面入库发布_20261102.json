@@ -1,0 +1,97 @@
+{
+  "state": "passed",
+  "completed_at": "2026-11-02T18:16:59.586777+08:00",
+  "mode": "partial",
+  "authorization": "用户明确要求恢复三个阵营按列排列、学习/混血儿等信息放框右下角，并入库发布",
+  "layout": {
+    "columns": [
+      "狼人阵营",
+      "神职阵营",
+      "平民阵营"
+    ],
+    "group_direction": "三列并排，组内按座位号单列",
+    "middle_width_fix": "移除600–960px把阵营改成单列、座位改成双列的覆盖规则",
+    "note_position": "座位框右下角，与左下的姓名/底牌共用下方区域",
+    "note_content_preserved": [
+      "机械狼学习目标及学习结果",
+      "混血儿榜样及个人阵营",
+      "傀儡不带刀状态",
+      "其他已记录学习信息"
+    ],
+    "card_min_height_px": 128,
+    "narrow_width": "保留三列，宽度不足时横向滚动；文字完整显示",
+    "production_build": "passed",
+    "typecheck": "passed",
+    "mechanical_scan": "no findings"
+  },
+  "database": {
+    "write": true,
+    "games_updated": 2,
+    "receipt": "data/reports/shared/版型发布修订入库_20261102.json",
+    "readback_verified": true,
+    "existing_annotations_and_source_links_preserved": true,
+    "normalization_note": "6/12首夜傀儡效果空目标仅在DB映射中按已核puppet_select补为7号；原人工档案与来源SHA保留，独立annotation记录映射"
+  },
+  "publication": {
+    "before_release": "S21_S22_S23-3d59f81291d6f1d5-af68d320-p12-s2",
+    "active_release": "S21_S22_S23-c9590ad63c658631-af68d320-p13-s2",
+    "game_count": 357,
+    "retained_seasons": [
+      {
+        "id": "S21",
+        "name": "傀趣奇谭",
+        "games": 122,
+        "days": 42
+      },
+      {
+        "id": "S22",
+        "name": "曙光航纪",
+        "games": 148,
+        "days": 47
+      },
+      {
+        "id": "S23",
+        "name": "昆仑归墟",
+        "games": 87,
+        "days": 27
+      }
+    ],
+    "workflow": "scripts/workflow.py run --season S23 --stage publish",
+    "log": "outputs/column_layout_publish_20261102/publish.log",
+    "S22_S23_bluffs": {
+      "release_id": "S21_S22_S23-c9590ad63c658631-af68d320-p13-s2",
+      "S22_payload_unchanged": true,
+      "S23_payload_unchanged": true,
+      "input_files_unchanged": true
+    },
+    "source_rule_preparation": "统一发布入口对357局执行必要推导准备，typed_files_written=0；原有待核/缺口保留，本轮未另行审定这些事实"
+  },
+  "verification": {
+    "pytest_passed": 88,
+    "source_api_acceptance": "data/reports/shared/版型发布API验收_20261102.json",
+    "accepted_games": 23,
+    "api_details_requested": 23,
+    "page_api_phase_and_slot_order_matches": 23,
+    "page_api_event_text_matches": 23,
+    "api_ballots": 48,
+    "page_ballots": 48,
+    "layout_markup_examples": [
+      "mechanical_wolf_seer",
+      "mixed_blood",
+      "neighbor_puppet"
+    ],
+    "published_css": "确认三列样式及右下角grid-area规则已由生产服务返回",
+    "browser_visual_verified": false,
+    "browser_limit": "浏览器访问主机不可用；未声称像素高度或桌面/手机截图验收通过"
+  },
+  "backup": "data/backups/workflow-20261102T100311/receipt.json",
+  "website": "http://127.0.0.1:3000",
+  "example_page": "http://127.0.0.1:3000/games/bili-BV17ox662EYG-p01-g03",
+  "pending_facts_preserved": [
+    "青丘三局终局仍待核",
+    "唯邻5/15拍刀结算仍unknown",
+    "完整夜序待核不按复盘叙述强排"
+  ],
+  "git_commit": false,
+  "git_push": false
+}

@@ -411,9 +411,18 @@ def derive_formal_records(value, folder):
         restored = restore_source_records(value, voting, previous)
         value, voting = restored["dossier"], restored["voting"]
     supplemental = optional("supplemental.json")
+    from import_manual_slot_review import apply_manual_slot_review, validate_terminal_reviews
+    bvid = folder.name.rsplit('_', 1)[-1]
+    manual = apply_manual_slot_review(bvid, value["rounds"], root=ROOT, season="S22")
+    if manual:
+        supplemental = {"schema_version": 1, "game_slug": value["slug"], "season": "S22",
+                        **(supplemental or {}), "manual_slot_review": manual,
+                        "manual_slot_review_source_sha256": manual["source_sha256"]}
+        atomic_json(folder / "supplemental.json", supplemental)
     result = derive_game(value, voting, supplemental=supplemental,
                          endgame=optional("endgame.json"),
                          speech_evidence=load_bound_sheriff_speeches(supplemental, root=ROOT, voting=voting))
+    validate_terminal_reviews(manual, result["derivations"], bvid)
     return result["dossier"], result["voting"], result["derivations"]
 
 
@@ -586,7 +595,7 @@ def process_entry(entry, state, *, dry_run=False):
     if entry.get("catalog_issues"):
         issues.append("来源目录待核：" + entry["catalog_issues"])
     value, derived_voting, derivations = derive_formal_records(value, out)
-    validate(value, allow_incomplete=True)
+    validate(value, check_files=False, allow_incomplete=True)
     if derived_voting is not None:
         from voting_records import validate as validate_voting
         validate_voting(derived_voting)
@@ -692,7 +701,7 @@ def main(argv=None):
                 dot_audit_applied = apply_dossier(value, args.bvid, patchset=patchset)
                 value, derived_voting, derivations = derive_formal_records(value, out)
                 from game_records import validate
-                validate(value, allow_incomplete=True)
+                validate(value, check_files=False, allow_incomplete=True)
                 previous_slug = entry.get("db_receipt", {}).get("slug")
                 if value.get("season") != "S22" or (previous_slug and value.get("slug") != previous_slug):
                     raise ValueError("人工修正不得改变赛季或已登记的对局标识；仅修改本局内容。")

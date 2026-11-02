@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1GmTc61EMA-p01-g02",
+  "season": "S22",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S22",
+    "bvid": "BV1GmTc61EMA",
+    "game_slug": "bili-BV1GmTc61EMA-p01-g02",
+    "source_path": "data/reports/shared/剩余46项规则复核_20261102.json",
+    "source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8.json",
+    "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+    "source_format": "masters-scoped-rule-review-v1",
+    "source_game": {
+      "bvid": "BV1GmTc61EMA",
+      "id": "bili-BV1GmTc61EMA-p01-g02",
+      "season": "S22",
+      "accepted_review_ids": [
+        "DN-160",
+        "DN-161",
+        "DN-238",
+        "DN-239"
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-160",
+        "round": 1,
+        "phase": "night",
+        "slot": "puppet_skill_effect",
+        "classification": "no_skill_opportunity",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": null,
+        "note": "傀儡是6号猎人；首夜平安，首日放逐5号狼人，均没有6号出局触发。无需为了没有发动窗口的猎人技能追问首夜选择先后；并未推定全版型叫醒顺序。",
+        "accepted_rule_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-160"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      },
+      {
+        "id": "DN-238",
+        "round": 1,
+        "phase": "night",
+        "slot": "hunter_state",
+        "classification": "no_skill_opportunity",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": null,
+        "note": "首夜已用解药且平安，猎人未中毒也未死亡；不需要再人工填一个无死亡触发的例行猎人资格槽。傀儡禁枪与未中毒分开处理。",
+        "accepted_rule_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-238"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      },
+      {
+        "id": "DN-239",
+        "round": 1,
+        "phase": "day",
+        "slot": "puppet_hunter_eligibility",
+        "classification": "no_skill_opportunity",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": null,
+        "note": "首日6号傀儡猎人未出局；实际放逐的是5号狼人，没有本次猎人死亡技能窗口。傀儡猎人技能禁用已由既有规则确定，不能由未中毒反推可开枪。",
+        "accepted_rule_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-239"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      },
+      {
+        "id": "DN-161",
+        "round": 3,
+        "phase": "night",
+        "slot": "seer_check",
+        "classification": "accepted_rule_review",
+        "before": {
+          "action": "unknown",
+          "actor": 4,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "unavailable",
+          "actor": 4,
+          "targets": [],
+          "result": null
+        },
+        "note": "第二夜7号守卫、12号女巫已死；6号猎人为傀儡，不计原神职边。第三夜4号预言家被刀，复盘明确称“场上最后一神”并立即宣布屠神，后续未执行的查验无窗口。",
+        "accepted_rule_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-161"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8"
+}

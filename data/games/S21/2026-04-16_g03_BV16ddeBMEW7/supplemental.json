@@ -2112,5 +2112,152 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV16ddeBMEW7",
+    "game_slug": "bili-BV16ddeBMEW7-p01-cid37560977298",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550",
+    "source_fingerprint": "e43509a8f95723bf2fc8b2ee31efb80e3d1705553fb588a8cdec425195c58ef8",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550.json",
+    "source_game": {
+      "bvid": "BV16ddeBMEW7",
+      "id": "bili-BV16ddeBMEW7-p01-cid37560977298",
+      "season": "S21",
+      "date": "2026-04-16",
+      "game_number": 3,
+      "dossier_sha256": "1f2a21760f48876387424f617067536f39e1cae395f2ca21afb29b6a631151b0",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "囚徒",
+          "role": "机械狼"
+        },
+        {
+          "seat": 2,
+          "name": "郭小炜",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "通灵师"
+        },
+        {
+          "seat": 4,
+          "name": "果冻",
+          "role": "猎人"
+        },
+        {
+          "seat": 5,
+          "name": "耿许儿",
+          "role": "狼人"
+        },
+        {
+          "seat": 6,
+          "name": "小苍",
+          "role": "平民"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "平民"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "女巫"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "狼人"
+        },
+        {
+          "seat": 10,
+          "name": "蛋黄派",
+          "role": "平民"
+        },
+        {
+          "seat": 11,
+          "name": "Bobby",
+          "role": "守卫"
+        },
+        {
+          "seat": 12,
+          "name": "李舒服",
+          "role": "狼人"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-129",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-129",
+        "round": 1,
+        "phase": "night",
+        "slot": "guard",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "pass",
+          "actor": 11,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-129",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550"
 }

@@ -1,0 +1,132 @@
+{
+  "state": "passed",
+  "checked_at_utc": "2026-11-02T07:16:39.892851+00:00",
+  "page": "data/manual_review/日夜待核槽位人工复核_20261030.html",
+  "page_sha256": "f8694549149ee2a89816286a20c80b4ee92f89cbbf9b32ca230886086fca46d2",
+  "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+  "games": 30,
+  "questions": 46,
+  "draft_migration": {
+    "compatible_questions": 46,
+    "current_and_older_drafts_checked": true,
+    "resolved_answers_not_migrated": true
+  },
+  "desktop_checks": {
+    "dates": 23,
+    "games": 30,
+    "questions": 46,
+    "seats_per_game": 12,
+    "reload_and_export": "passed",
+    "horizontal_overflow": false
+  },
+  "published_pages": [
+    {
+      "bvid": "BV1DFM26MEWR",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    },
+    {
+      "bvid": "BV1RQx364Eit",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    },
+    {
+      "bvid": "BV1DMRmB9Evw",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    },
+    {
+      "bvid": "BV1W8DiBKE66",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    },
+    {
+      "bvid": "BV117EA6AEcV",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    },
+    {
+      "bvid": "BV1jaE26kELR",
+      "release_id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "state": "passed"
+    }
+  ],
+  "page_errors": [],
+  "screenshot": "outputs/slot_review_20261102/pending-review-updated.png",
+  "completed_at_utc": "2026-11-02T07:17:30.662100+00:00",
+  "previous_scope": {
+    "games": 53,
+    "questions": 75,
+    "source_fingerprint": "e43509a8f95723bf2fc8b2ee31efb80e3d1705553fb588a8cdec425195c58ef8"
+  },
+  "resolved": {
+    "count": 29,
+    "manual_feedback": 22,
+    "opening_guard_pass": 7,
+    "ids": [
+      "DN-111",
+      "DN-116",
+      "DN-118",
+      "DN-119",
+      "DN-120",
+      "DN-122",
+      "DN-126",
+      "DN-127",
+      "DN-129",
+      "DN-131",
+      "DN-132",
+      "DN-137",
+      "DN-138",
+      "DN-140",
+      "DN-142",
+      "DN-143",
+      "DN-035",
+      "DN-144",
+      "DN-036",
+      "DN-146",
+      "DN-147",
+      "DN-037",
+      "DN-156",
+      "DN-166",
+      "DN-171",
+      "DN-172",
+      "DN-177",
+      "DN-189",
+      "DN-196"
+    ],
+    "archive": "data/manual_review/feedback/待核槽位已结清_20261102.json",
+    "archive_sha256": "f651d7297ab4c1ad4efc8da183f739be2a12bd74c771742493f4fe96fc0c5304"
+  },
+  "pytest": {
+    "passed": 144,
+    "command": ".venv/Scripts/python.exe -B -X utf8 -m pytest tests/test_pending_slot_review.py tests/test_import_manual_slot_review.py tests/test_game_review_page.py tests/test_game_timeline.py tests/test_game_derivations.py tests/test_role_constraints.py website/tests/test_terminal_game_publication.py -q -p no:cacheprovider --basetemp tmp/pytest-pending-refresh-20261102"
+  },
+  "rebuild_idempotence": "second rebuild byte-identical",
+  "feedback_validation": {
+    "previous_22_reviews_idempotent": true,
+    "new_browser_export_source_binding": "passed",
+    "test_answers_applied": false
+  },
+  "publication": {
+    "environment": "local",
+    "active_release": {
+      "id": "S21_S22_S23-0f0d55688fe1c759-af68d320-p12-s2",
+      "published_at": "2026-11-02T14:01:45.394727+08:00",
+      "game_count": 357,
+      "source_hash": "0f0d55688fe1c759bd8261906003db697069c7227265345f5291dc87a8af268f",
+      "active": true
+    },
+    "source_and_rules_preflight": "passed",
+    "current_source_hash": "0f0d55688fe1c759bd8261906003db697069c7227265345f5291dc87a8af268f",
+    "current_rules_hash": "af68d32040b6aed9754e9f5f30ed50824639099b4e275d4a64666d1a86e49c9b",
+    "games": 357,
+    "already_matches_current_source_and_rules": true
+  },
+  "retained_evidence_questions": {
+    "DN-072": "The original record still asks whether the hunter responded after the final wolf rush; a generic unavailable projection is not a new per-game adjudication.",
+    "DN-160_and_DN-170": "Unresolved puppet timing evidence remains in the review form even though a standalone effect item is hidden on the published timeline."
+  },
+  "git_diff_check": "passed",
+  "commit": false,
+  "push": false
+}

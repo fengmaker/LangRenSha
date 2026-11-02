@@ -62,7 +62,7 @@ class BatchS22Tests(unittest.TestCase):
         import game_derivations
         with tempfile.TemporaryDirectory() as temporary:
             folder = Path(temporary)
-            dossier = {"slug": "fixture"}
+            dossier = {"slug": "fixture", "rounds": []}
             with patch.object(game_derivations, "derive_game", return_value={
                     "dossier": {"slug": "fixture", "derived": True},
                     "voting": None, "derivations": {"version": 1}}) as derive:

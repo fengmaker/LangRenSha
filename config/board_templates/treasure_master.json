@@ -4,7 +4,7 @@
   "seat_count": 12,
   "role_counts": {},
   "wake_order": [],
-  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。15 张候选牌中发出 12 张、余 3 张供盗宝大师使用；首夜狼队禁刀。",
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。15 张候选牌中发出 12 张、余 3 张；物理余牌与可切换身份分开，盗宝大师只能在平民与本局另一张身份间切换；首夜狼队禁刀。",
   "night_slots": [
     {
       "code": "treasure_remainder",
@@ -43,7 +43,7 @@
     },
     {
       "code": "treasure_choice",
-      "label": "盗宝大师选择余牌技能",
+      "label": "盗宝大师选择身份（平民或本局另一牌）",
       "actor_role": "盗宝大师",
       "actions": [
         "choose",
@@ -351,6 +351,8 @@
             "actor_role": null,
             "actions": [
               "attack",
+              "forbidden",
+              "unavailable",
               "pass",
               "unknown"
             ]

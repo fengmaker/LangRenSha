@@ -1,0 +1,157 @@
+{
+  "scope": {
+    "board": "neighbor_puppet / 唯邻是从",
+    "manifest_games_reviewed": 11,
+    "artifacts": "manifest 指定的同名 API JSON、SSR HTML/文本快照，以及对应 data/games 的 rule_derivations.json 和直接相关事实/票型记录",
+    "read_only": true
+  },
+  "findings": [
+    {
+      "id": "NP-01",
+      "game": "BV1roX7BQE1n",
+      "phase": "第二天白天",
+      "severity": "high",
+      "trigger": "本日确有已记录的放逐票轮 ballot-03；该对局固定事件槽 exile_vote 缺失。",
+      "published": "API timeline 和 SSR 页面均没有第二天放逐投票卡，只显示 12号被放逐（6票）及后续狼人交牌。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV1roX7BQE1n-p01-cid36979281762.json: voting.ballots 含 BV1roX7BQE1n-ballot-03，day=2、kind=exile、status=complete、9 张票；timeline 第二天白天无该 ballot。",
+        "outputs/board_display_audit_20261102/bili-BV1roX7BQE1n-p01-cid36979281762.txt: 第二天白天仅列夜间出局、猎人技能、放逐结果、狼人交牌，无“放逐投票”。",
+        "data/games/S21/2026-03-25_g02_BV1roX7BQE1n/voting.json: ballot-03 含完整票型；rule_derivations.json 的 vote_review_tasks 只涉及第一天警长 ballot-01。",
+        "docs/10_对局信息呈现规范.md：独立票型档案中的真实票轮，即使固定事件槽缺失，也应按相应竞选或放逐结果定位展示。"
+      ],
+      "impact": "读者看不到本轮 9 张选票和投票者，无法复核 12号获6票的计票过程；页面结果与 API 的独立票型数据不一致。"
+    },
+    {
+      "id": "NP-02",
+      "game": "BV1KuMG6NEez",
+      "phase": "第三天白天（终局位置）",
+      "severity": "high",
+      "trigger": "原始复盘确认最后一狼1号在当日交牌结束游戏。",
+      "published": "API 最后阶段 terminal=false、terminal_observation=null；timeline/SSR 只到“昨夜出局：7号JY”，没有交牌或流程终局项。页面头部仍标“好人胜”。",
+      "evidence": [
+        "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/复盘原文.txt: 3528.570–3531.670 为“白天最后一张狼人一号交牌游戏结束”，3531.670–3533.279 为“好人正义获胜”。",
+        "outputs/board_display_audit_20261102/bili-BV1KuMG6NEez-p01-g02.json: winner=good；terminal_observation=null；timeline 最后一阶段“第三天白天” terminal=false，仅含夜间出局。",
+        "outputs/board_display_audit_20261102/bili-BV1KuMG6NEez-p01-g02.txt: 逐轮复盘在第三天白天的夜间出局后结束，没有狼人交牌。",
+        "docs/10_对局信息呈现规范.md（唯邻是从：交牌与局部案例）：已确认交牌须在实际位置显式显示，并作为终局事项结束流程。"
+      ],
+      "impact": "胜负标题存在，但用户看不到实际结束原因，且流程被标成非终局；违反交牌事件和终局停止呈现要求。"
+    },
+    {
+      "id": "NP-03",
+      "game": "BV18n5z6AEAt",
+      "phase": "第二天白天",
+      "severity": "medium",
+      "trigger": "终局记录有狼人拍刀，行动者4号，声明目标9号猎人；该记录的结算仍标 unknown。",
+      "published": "整页并未漏显：SSR 的 id=game-endgame 独立“拍刀与终局”section 显示“狼人拍刀 / 4号行动 / 明确提及目标9号 / 结果未知”。但第二天白天 timeline 不含该项，且在更早的逐轮流程中以“狼人阵营获胜”结束；拍刀声明与当日事件、结果分置，无法从共用流程读取动作→结算顺序。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV18n5z6AEAt-p01-cid38361631693.html：<section id=\"game-endgame\">显示拍刀与终局卡，文本为“狼人拍刀 / 第二天白天 / 4号行动 / 明确提及目标9号 / 结果未知”。",
+        "outputs/board_display_audit_20261102/bili-BV18n5z6AEAt-p01-cid38361631693.json：timeline 第二天白天顺序含 night_deaths(11)、放逐票/放逐7、wolf_king_shot(8)、game_result；无 wolf_rush。API endgame.phases 则保留 day=2、actor=4、target=9、result=unknown。",
+        "data/games/S21/2026-05-15_g02_BV18n5z6AEAt/endgame.json：wolf_rush 结算标 unknown，故本结论只指出其与 timeline 分置，不断言9号被击杀。",
+        "docs/10_对局信息呈现规范.md：拍刀应在实际发生的游戏日单列为“狼人拍刀”，终局流程按现场结束时点停止。"
+      ],
+      "impact": "动作和结果信息在独立 section 可见，因此不是整页漏显；但它没有进入当天共用 timeline，timeline 的胜方结果与拍刀动作脱节，用户无法在统一流程中核对目标和终局顺序。结算未知仍须保留。",
+      "category": "timeline_sequence"
+    },
+    {
+      "id": "NP-04",
+      "game": "BV1SMPqzjEe6",
+      "phase": "第四天白天",
+      "severity": "medium",
+      "trigger": "终局记录有狼人拍刀，行动者未知，声明目标3号猎人，结果标为狼人阵营胜。",
+      "published": "整页并未漏显：SSR 的 id=game-endgame 独立“拍刀与终局”section 显示“狼人拍刀 / 行动者未知 / 明确提及目标3号 / 狼人阵营胜”。但第四天白天 timeline 不含该项，且在逐轮流程中于放逐结果7号后直接以“狼人阵营获胜”结束；拍刀声明与当日事件、结果分置，无法从共用流程读取动作→结算顺序。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV1SMPqzjEe6-p01-cid36455777732.html：<section id=\"game-endgame\">显示拍刀与终局卡，文本为“狼人拍刀 / 第四天白天 / 行动者未知 / 明确提及目标3号 / 狼人阵营胜”。",
+        "outputs/board_display_audit_20261102/bili-BV1SMPqzjEe6-p01-cid36455777732.json：timeline 第四天白天顺序含 night_deaths(11)、放逐票/放逐7、game_result；无 wolf_rush。API endgame.phases 则保留 day=4、target=3、result=werewolf_win。",
+        "data/games/S21/2026-03-04_g02_BV1SMPqzjEe6/endgame.json：记载 target=3、result=werewolf_win，actor=null；不推断发起者身份。",
+        "docs/10_对局信息呈现规范.md：拍刀应在实际发生的游戏日单列为“狼人拍刀”，终局流程按现场结束时点停止。"
+      ],
+      "impact": "动作、目标和胜方在独立 section 可见，因此不是整页漏显；但拍刀未并入第四天 timeline，放逐结果和胜方结算之间缺少同一流程中的拍刀事项，降低了终局顺序的可核查性。",
+      "category": "timeline_sequence"
+    },
+    {
+      "id": "NP-05",
+      "game": "BV1yKJ56PEak",
+      "phase": "第二天夜晚（终局夜）",
+      "severity": "medium",
+      "trigger": "夜间普通狼刀击杀6号桃子（预言家）即为最后一神，现场当夜宣布狼方屠神胜。",
+      "published": "终局夜列“狼队选择击杀6号桃子（预言家）”后直接列狼人获胜，没有“本夜出局：6号”事项。",
+      "evidence": [
+        "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/复盘原文.txt: 4492.809–4498.480 依次记载“狼队击杀场上最后一神 / 6号预言家 / 游戏结束 / 狼队阵营屠神获胜”。",
+        "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/supplemental.json：接受的 DN-148 记载第3夜普通狼刀击杀最后一神6号、现场立即结束，后续查验窗口未进入。",
+        "outputs/board_display_audit_20261102/bili-BV1yKJ56PEak-p01-gunknown.json: terminal 夜相位只有 wolf_attack 目标6与 game_result；night_deaths 未出现在 timeline，terminal_events=[]。"
+      ],
+      "impact": "缺少实际夜死事项，流程没有明确呈现触发屠神终局的死亡结算。"
+    },
+    {
+      "id": "NP-07",
+      "games": "manifest 中全部11局",
+      "phase": "身份与座位（全页）",
+      "severity": "low",
+      "trigger": "每局座位信息按个人胜利阵营分组，而非全局按座位号排列。",
+      "published": "SSR 均采用狼人阵营→神职阵营→平民阵营分组，组内才按座位号排序。例如 BV1pSuN62Ekr 顺序为 02、04、05、10，06、09、11、12，01、03、07、08。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV1pSuN62Ekr-p01-g02.html：SSR 身份与座位 subtree 直接包含 data-seat-group=werewolf、special、civilian 三组 section；各组分别有座位卡，组间不是 01–12 的座位顺序。",
+        "docs/10_对局信息呈现规范.md：座位表按座位号排列。"
+      ],
+      "impact": "现行页面排序与规范不一致；跨座位查找需要在阵营组之间跳转。"
+    },
+    {
+      "id": "NP-08",
+      "game": "BV1KuMG6NEez",
+      "phase": "第一天白天（警长候选）",
+      "severity": "low",
+      "trigger": "来源记录12人全部上警，警下集合为空。",
+      "published": "候选文本尾部渲染为“警下：。”。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV1KuMG6NEez-p01-g02.json：sheriff_candidates 有12名上警、off_police=[]。",
+        "outputs/board_display_audit_20261102/bili-BV1KuMG6NEez-p01-g02.txt：可见“警下：。”。"
+      ],
+      "impact": "空名单显示成残缺标点；应以明确空值或省略该行表达。"
+    },
+    {
+      "id": "NP-09",
+      "game": "BV1iMgq6ZEtz",
+      "phase": "首夜（守卫守护）",
+      "severity": "medium",
+      "trigger": "5号守卫守护1号，记录明确注明该傀儡守卫守护技能失效。",
+      "published": "首夜只写5号守护1号，没有说明技能失效；同局第一天夜晚同一傀儡守卫的守护7号也失效，SSR 已正确附注技能失效，造成同一角色同一版型前后展示不一致。",
+      "evidence": [
+        "data/games/S22/2026-07-24_g02_BV1iMgq6ZEtz/dossier.json：第1轮夜间 puppet_skill_effect action=skill_disabled，result=“5号傀儡守卫守护1号的技能失效”；同轮 guard 为5号守护1号。",
+        "data/games/S22/2026-07-24_g02_BV1iMgq6ZEtz/复核.md：首夜技能效果条目及 01:19:44.010–01:19:46.930 “所以5号守卫守护一号平民的技能失效”；第1天夜晚同样明确技能失效。",
+        "outputs/board_display_audit_20261102/bili-BV1iMgq6ZEtz-p01-g02.json：首夜守卫事项文本仅“5号小苍（守卫）守护1号Duu（平民）”；第一天夜晚文本则附“为傀儡，本次技能失效”。",
+        "docs/10_对局信息呈现规范.md（唯邻是从：傀儡技能）：傀儡神职只在实际发动相应技能时于该技能事项下说明影响，不另列通用傀儡效果。"
+      ],
+      "impact": "首夜页面把明确失效的守护显示成未注明效果的正常守护；读者无法分辨1号是否受保护，削弱对当夜平安结算的复核。"
+    },
+    {
+      "id": "NP-10",
+      "games": [
+        "BV12pNo6HEuV",
+        "BV1roX7BQE1n"
+      ],
+      "phase": "分别为第四天白天、第二天白天",
+      "severity": "medium",
+      "trigger": "猎人技能事项说明“本次出局不能开枪”，分别对应同日放逐的6号KS、12号笑笑；两局天亮夜死名单均不含该猎人。",
+      "published": "BV12pNo6HEuV 顺序为夜间出局2号→6号猎人不能开枪→放逐投票→6号被放逐；BV1roX7BQE1n 顺序为夜间出局8、9号→12号猎人不能开枪→12号被放逐。",
+      "evidence": [
+        "outputs/board_display_audit_20261102/bili-BV12pNo6HEuV-p01-g02.json：timeline 第四天白天 items 顺序为 night_deaths(2)、hunter_shot(6)、exile_vote、exile_result(6)。",
+        "outputs/board_display_audit_20261102/bili-BV1roX7BQE1n-p01-cid36979281762.json：timeline 第二天白天 items 顺序为 night_deaths(8、9)、hunter_shot(12)、exile_result(12)；当日 API 另有 ballot-03（见 NP-01）。",
+        "docs/10_对局信息呈现规范.md：天亮及白天顺序为公布夜间出局→相应死亡技能/警徽处理→白天事件→放逐票→放逐结果→相应死亡技能/警徽处理；持徽者放逐后顺序亦明确将死亡技能放在放逐结果之后。"
+      ],
+      "impact": "两个猎人技能都由当日放逐触发，却在页面上先于投票/放逐结果出现，造成死亡技能时点倒置；应置于对应放逐结果之后。"
+    }
+  ],
+  "consistent_or_reasonable": [
+    "11局SSR可见文本未发现英文动作码或原始字段码泄漏；API的结构化 events.action 等字段保留枚举值属于接口数据，不是页面文本泄漏。",
+    "首夜狼队指定傀儡每局仅出现一次；展示保留物理底牌并将傀儡个人阵营放在狼人阵营，标注不带刀。",
+    "已出现的傀儡守卫/预言家/女巫技能影响均附在对应技能事项中；女巫行动统一归入“女巫用药”。",
+    "BV18n5z6AEAt自动当选结果有直接复盘记录；没有足够证据要求补造其上警候选名单。",
+    "BV1Ey9wBzEEV首夜守卫事件未显示属于合理省略：supplemental 接受的 DN-110 将7号傀儡守卫技能记为 unavailable（“7号这把是傀儡，技能失效”），不是空守或漏显示的可执行动作。",
+    "BV1oGwAzZEyW 无独立 sheriff_candidates timeline 项不构成漏候选：警长 ballot-01 的票表已展示“候选：2号、4号、11号、12号”，SSR HTML 和提取文本均可查；候选信息已由票表承载。",
+    "BV12pNo6HEuV 与 BV1roX7BQE1n 的猎人技能项存在 NP-10 所述时点倒置，因此不再概括为全部死亡技能均位于触发事件之后；其余已核的警徽位置及阶段标签符合呈现映射。"
+  ],
+  "unresolved": [
+    "BV18n5z6AEAt 的独立拍刀卡与 endgame.json 均将4号拍刀9号猎人的结算标为 unknown；保留此缺口，不断言目标已被成功击杀。"
+  ],
+  "unreviewed": "只覆盖 manifest 中 neighbor_puppet 的11局页面及其直接相关推导/来源；未检查其它版型、网站代码或数据库发布过程。"
+}

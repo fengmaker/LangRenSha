@@ -1234,5 +1234,222 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1cEQ3BhEpC",
+    "game_slug": "bili-BV1cEQ3BhEpC-p01-cid37508287939",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550",
+    "source_fingerprint": "e43509a8f95723bf2fc8b2ee31efb80e3d1705553fb588a8cdec425195c58ef8",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550.json",
+    "source_game": {
+      "bvid": "BV1cEQ3BhEpC",
+      "id": "bili-BV1cEQ3BhEpC-p01-cid37508287939",
+      "season": "S21",
+      "date": "2026-04-14",
+      "game_number": 3,
+      "dossier_sha256": "b25b62689fe5f97f63025d29f54a62e56bdcfa4aa034c2b58cc9e33aed6b84e5",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "陈俊洁",
+          "role": "守卫"
+        },
+        {
+          "seat": 2,
+          "name": "彭彭",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "李斯",
+          "role": "平民"
+        },
+        {
+          "seat": 4,
+          "name": "翼风",
+          "role": "狼人"
+        },
+        {
+          "seat": 5,
+          "name": "小苍",
+          "role": "狼人"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "女巫"
+        },
+        {
+          "seat": 7,
+          "name": "JY",
+          "role": "猎人"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "通灵师"
+        },
+        {
+          "seat": 9,
+          "name": "董鲸鱼",
+          "role": "机械狼"
+        },
+        {
+          "seat": 10,
+          "name": "陈明峻",
+          "role": "狼人"
+        },
+        {
+          "seat": 11,
+          "name": "鬼鬼",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "章亿阳",
+          "role": "平民"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-126",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        },
+        {
+          "id": "DN-127",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  11
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-126",
+        "round": 1,
+        "phase": "night",
+        "slot": "guard",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "pass",
+          "actor": 1,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-126",
+          "round": 1,
+          "phase": "night",
+          "phase_label": "首夜",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "pass"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "DN-127",
+        "round": 3,
+        "phase": "night",
+        "slot": "guard",
+        "classification": "confirmed",
+        "note": "",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "guard",
+          "actor": 1,
+          "targets": [
+            11
+          ],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-127",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "",
+          "slots": [
+            {
+              "slot": "guard",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "guard",
+                "targets": [
+                  11
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550"
 }

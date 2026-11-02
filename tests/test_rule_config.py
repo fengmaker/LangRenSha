@@ -20,6 +20,25 @@ def original(name):
 def test_s22_shared_rules_and_board_semantics_survive_consolidation():
     previous = original("S22_formal_rules.json")
     previous["rotation"]["source"]["scope_policy"] = "config/seasons.json"
+    previous["boards"]["treasure_master"]["board_rules"]["switchable_identities"] = (
+        "civilian_plus_one_game_specific_other_identity")
+    # These confirmed additions postdate the 2026-10-29 historical snapshot.
+    previous["boards"]["neighbor_puppet"]["board_rules"].update({
+        "puppet_victory_faction": "werewolf",
+        "puppet_has_wolf_knife": False,
+        "puppet_counts_in_original_elimination_side": False,
+        "victory_condition": {
+            "good_win_when": "三张原狼人牌与傀儡全部出局；傀儡存活时不能判好人胜",
+            "wolf_win_when": "只统计非傀儡的神职边与平民边，任一边清空",
+            "puppet_god": "击杀其余三神或五民",
+            "puppet_civilian": "击杀四神或其余四民",
+        },
+        "presentation": {
+            "civilian_puppet_skill_slot": "hidden",
+            "god_puppet_skill_effect": "attach_to_actual_skill_event",
+            "first_night_order": "preserve_observed_timing; unknown wake order remains unknown",
+        },
+    })
     current = load_formal_rules("S22")
     assert {key: value for key, value in current["shared_rules"].items()
             if key not in {"wolf_king", "nine_tail"}} == previous["shared_rules"]
@@ -28,7 +47,7 @@ def test_s22_shared_rules_and_board_semantics_survive_consolidation():
     assert set(current["boards"]) == set(previous["boards"])
     for code, board in previous["boards"].items():
         for field in ("board_rules", "role_composition", "role_pool", "scored_count", "wake_order"):
-            assert current["boards"][code].get(field) == board.get(field)
+            assert current["boards"][code].get(field) == board.get(field), (code, field)
 
 
 def test_wolf_king_rules_include_the_user_confirmed_departure_and_terminal_boundaries():

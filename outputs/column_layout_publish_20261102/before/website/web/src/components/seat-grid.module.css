@@ -1,0 +1,37 @@
+.roster { display: grid; gap: 20px; }
+.columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 24px; }
+.column, .reviewSection { min-width: 0; padding: 18px 0 0; border-top: 1px solid var(--line-strong); }
+.column { display: flex; flex-direction: column; padding: 18px; border-inline: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+.wolfColumn { border-top-color: var(--rose); }
+.specialColumn { border-top-color: var(--mint); }
+.civilianColumn { border-top-color: var(--gold); }
+.columnHeader { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; margin-bottom: 12px; }
+.columnTitle { margin: 0; font-size: 1rem; line-height: 1.5; font-weight: 600; }
+.columnCount { flex: none; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+.seatList { display: grid; }
+.seatCard { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 0 12px; min-height: 88px; min-width: 0; padding: 14px 0; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.seatNumber { align-self: start; display: inline-grid; place-items: center; min-height: 32px; margin-top: 3px; color: var(--mint); background: var(--ink-soft); border-radius: 4px; font: 500 .875rem/1 var(--mono); font-variant-numeric: tabular-nums; }
+.wolfCard .seatNumber { color: var(--rose); }
+.civilianCard .seatNumber { color: var(--gold); }
+.reviewCard .seatNumber { color: var(--muted); }
+.seatIdentity { min-width: 0; }
+.seatName { margin: 0; color: var(--text); font-size: 1rem; line-height: 1.5; font-weight: 600; }
+.seatName a { display: inline-flex; align-items: center; min-height: 32px; max-width: 100%; color: inherit; text-decoration-color: transparent; text-underline-offset: 4px; transition: color .16s ease, text-decoration-color .16s ease; }
+.seatName a:hover { color: var(--mint-strong); text-decoration: underline; }
+.seatRole { margin: 0; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+.seatFaction { align-self: start; margin-top: 9px; color: var(--muted); font-size: .75rem; line-height: 1.6; text-align: right; }
+.seatNote { grid-column: 2 / -1; margin: 6px 0 0; color: var(--muted); font-size: .8125rem; line-height: 1.7; }
+.emptyGroup { margin: 14px 0 0; color: var(--muted); font-size: .875rem; }
+.reviewList { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; }
+
+@media (min-width: 600px) and (max-width: 960px) {
+  .columns { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .seatList, .reviewList { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+}
+
+@media (max-width: 599px) {
+  .columns, .reviewList { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .seatCard { min-height: 82px; padding-block: 11px; }
+  .seatName a { min-height: 36px; }
+  .columnHeader { margin-bottom: 6px; }
+}

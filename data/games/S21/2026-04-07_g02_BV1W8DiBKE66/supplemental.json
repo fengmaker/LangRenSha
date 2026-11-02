@@ -889,5 +889,152 @@
       "gaps_retained": 0
     }
   },
-  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。"
+  "note": "正式轮次只映射能被固定slot表达且由直接文字/画面确认的事件；原phase全部细节、唯一推断、未知项与slot冲突均留在phase_reviewed及unmapped。投票只写voting.json，不复制到game_rounds。",
+  "manual_slot_review": {
+    "schema": "masters-manual-slot-review-sidecar-v1",
+    "season": "S21",
+    "bvid": "BV1W8DiBKE66",
+    "game_slug": "bili-BV1W8DiBKE66-p01-cid37319608238",
+    "source_path": "日夜槽位复核结果_20261030.json",
+    "source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550",
+    "source_fingerprint": "e43509a8f95723bf2fc8b2ee31efb80e3d1705553fb588a8cdec425195c58ef8",
+    "archive_path": "data/extractions/shared/manual_slot_reviews/fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550.json",
+    "source_game": {
+      "bvid": "BV1W8DiBKE66",
+      "id": "bili-BV1W8DiBKE66-p01-cid37319608238",
+      "season": "S21",
+      "date": "2026-04-07",
+      "game_number": 2,
+      "dossier_sha256": "be9a205694a1c4cc894abbf6bac6f29bd2d6fd48199687f0c5e5a2a9cb69284a",
+      "seats": [
+        {
+          "seat": 1,
+          "name": "囚徒",
+          "role": "诡术师"
+        },
+        {
+          "seat": 2,
+          "name": "小樱",
+          "role": "平民"
+        },
+        {
+          "seat": 3,
+          "name": "狼行",
+          "role": "狼人"
+        },
+        {
+          "seat": 4,
+          "name": "果冻",
+          "role": "预言家"
+        },
+        {
+          "seat": 5,
+          "name": "李斯",
+          "role": "平民"
+        },
+        {
+          "seat": 6,
+          "name": "KS",
+          "role": "魔术师"
+        },
+        {
+          "seat": 7,
+          "name": "董鲸鱼",
+          "role": "狼人"
+        },
+        {
+          "seat": 8,
+          "name": "牛肉干",
+          "role": "狼人"
+        },
+        {
+          "seat": 9,
+          "name": "荣耀",
+          "role": "定序王子"
+        },
+        {
+          "seat": 10,
+          "name": "徐言雨",
+          "role": "平民"
+        },
+        {
+          "seat": 11,
+          "name": "花生",
+          "role": "平民"
+        },
+        {
+          "seat": 12,
+          "name": "彭彭",
+          "role": "女巫"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "DN-116",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "第二天夜晚女巫毒杀了最后一狼，所以预言家的查验跳过了",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "unavailable"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "reviews": [
+      {
+        "id": "DN-116",
+        "round": 3,
+        "phase": "night",
+        "slot": "seer_check",
+        "classification": "game_ended_before_action",
+        "note": "第二天夜晚女巫毒杀了最后一狼，所以预言家的查验跳过了",
+        "before": {
+          "action": "unknown",
+          "actor": null,
+          "targets": [],
+          "result": null
+        },
+        "typed": {
+          "action": "unavailable",
+          "actor": 4,
+          "targets": [],
+          "result": null
+        },
+        "raw_review": {
+          "id": "DN-116",
+          "round": 3,
+          "phase": "night",
+          "phase_label": "第二天夜晚",
+          "note": "第二天夜晚女巫毒杀了最后一狼，所以预言家的查验跳过了",
+          "slots": [
+            {
+              "slot": "seer_check",
+              "before": {
+                "action": "unknown",
+                "actor": null,
+                "targets": [],
+                "result": null
+              },
+              "changes": {
+                "action": "unavailable"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "manual_slot_review_source_sha256": "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550"
 }

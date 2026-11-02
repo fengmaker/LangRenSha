@@ -1,0 +1,483 @@
+{
+  "scope": {
+    "release": "S21_S22_S23-3d59f81291d6f1d5-af68d320-p12-s2",
+    "boards": {
+      "qingqiu_night": [
+        "bili-BV1VPaW66EZz-p01-g02",
+        "bili-BV1saaT6jEyK-p01-g02",
+        "bili-BV1nJer63EDh-p01-g02",
+        "bili-BV1g1YU6kERd-p01-g02"
+      ],
+      "all_in": [
+        "bili-BV1yigN6JE5Y-p01-g02",
+        "bili-BV178XkB7EXx-p01-cid37131193005",
+        "bili-BV1MMPxzmEWJ-p01-cid36505847004"
+      ]
+    },
+    "inspection": "以API timeline顺序核对事项先后；用SSR HTML及同名.txt核对可见文字。React流式SSR的.txt只用于确认文字存在，不用于推断DOM顺序。"
+  },
+  "confirmed_findings": [
+    {
+      "id": "qingqiu_whiteze_clear_results_hide_targets_and_leak_status",
+      "trigger": "白泽清除或尝试清除九尾狐标记时，API事件记录targets；SSR事项文本只输出result/display_result，不输出所选目标。成功、失败和无事发生结果均出现。",
+      "instances": [
+        {
+          "game": "bili-BV1nJer63EDh-p01-g02",
+          "stage": "第一天夜晚",
+          "published": "2号圈圈（白泽）：cleared。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 2,
+            "action": "clear_mark",
+            "targets": [
+              4
+            ],
+            "result": "cleared"
+          },
+          "source_text": {
+            "path": "data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json",
+            "time": "3762.409–3766.289秒",
+            "quote": "选择清除4号女巫的标记；成功清除掉"
+          }
+        },
+        {
+          "game": "bili-BV1g1YU6kERd-p01-g02",
+          "stage": "第一天夜晚",
+          "published": "6号荣耀（白泽）：cleared。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 6,
+            "action": "clear_mark",
+            "targets": [
+              10
+            ],
+            "result": "cleared"
+          },
+          "source_text": {
+            "path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "time": "4472.300–4476.450秒",
+            "quote": "清除了前天夜间标记的10号玩家身上的标记"
+          }
+        },
+        {
+          "game": "bili-BV1saaT6jEyK-p01-g02",
+          "stage": "第一天夜晚",
+          "published": "10号陈明峻（白泽）：无事发生。",
+          "api_event": {
+            "slot": "whiteze_clear",
+            "actor": 10,
+            "action": "clear",
+            "targets": [
+              3
+            ],
+            "result": "无事发生"
+          },
+          "ssr_text_path": "outputs/board_display_audit_20261102/bili-BV1saaT6jEyK-p01-g02.txt"
+        },
+        {
+          "game": "bili-BV1nJer63EDh-p01-g02",
+          "stage": "第二天夜晚",
+          "published": "2号圈圈（白泽）：清标尝试未生效；法官播报无事发生。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 2,
+            "action": "clear_mark",
+            "targets": [
+              8
+            ],
+            "result": "清标尝试未生效；法官播报无事发生。"
+          },
+          "ssr_text_path": "outputs/board_display_audit_20261102/bili-BV1nJer63EDh-p01-g02.txt"
+        },
+        {
+          "game": "bili-BV1nJer63EDh-p01-g02",
+          "stage": "第三天夜晚",
+          "published": "2号圈圈（白泽）：清标尝试未生效；法官播报无事发生。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 2,
+            "action": "clear_mark",
+            "targets": [
+              12
+            ],
+            "result": "清标尝试未生效；法官播报无事发生。"
+          },
+          "ssr_text_path": "outputs/board_display_audit_20261102/bili-BV1nJer63EDh-p01-g02.txt"
+        },
+        {
+          "game": "bili-BV1g1YU6kERd-p01-g02",
+          "stage": "第二天夜晚",
+          "published": "6号荣耀（白泽）：清标尝试未生效；法官播报无事发生。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 6,
+            "action": "clear_mark",
+            "targets": [
+              2
+            ],
+            "result": "清标尝试未生效；法官播报无事发生。"
+          },
+          "ssr_text_path": "outputs/board_display_audit_20261102/bili-BV1g1YU6kERd-p01-g02.txt"
+        },
+        {
+          "game": "bili-BV1g1YU6kERd-p01-g02",
+          "stage": "第三天夜晚",
+          "published": "6号荣耀（白泽）：清标尝试未生效；法官播报无事发生。",
+          "api_event": {
+            "slot": "whiteze_clear_mark",
+            "actor": 6,
+            "action": "clear_mark",
+            "targets": [
+              3
+            ],
+            "result": "清标尝试未生效；法官播报无事发生。"
+          },
+          "ssr_text_path": "outputs/board_display_audit_20261102/bili-BV1g1YU6kERd-p01-g02.txt"
+        }
+      ],
+      "expected": "每条白泽清除事项展示API已记录的目标座位，并以中文表达清除成功、失败或无事发生。",
+      "impact": "观众看不到白泽清除/尝试清除的是谁的标记，无法核对行动对象与标记状态；其中两局还将成功状态码cleared直接显示为英文。",
+      "basis": [
+        "docs/10_对局信息呈现规范.md §一份展示序列",
+        "docs/10_对局信息呈现规范.md §青丘夜影",
+        "API timeline 与发布SSR文字"
+      ]
+    },
+    {
+      "id": "qingqiu_hunt_status_leaks_english_and_hides_targets",
+      "game": "bili-BV1nJer63EDh-p01-g02",
+      "stage": "第四天白天 · 游戏结束候选",
+      "trigger": "九尾狐猎杀结果记录为成功，API保留两名目标。",
+      "published": "11号宝玉妹妹（九尾狐）：successful。",
+      "api_event": {
+        "slot": "nine_tail_hunt",
+        "actor": 11,
+        "action": "hunt",
+        "targets": [
+          2,
+          4
+        ],
+        "result": "successful"
+      },
+      "source_text": {
+        "path": "data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json",
+        "time": "3822.930–3848.640秒",
+        "quote": "九尾狐选择发动猎杀时刻技能……2号白泽以及4号女巫……技能发动成功，2号四号出局，游戏结束，狼队阵营屠神获胜"
+      },
+      "impact": "可见事项既未中文化成功状态，也没有展示已记录的2、4号目标或出局结果；读者无法核对该次猎杀结算。",
+      "basis": [
+        "docs/10_对局信息呈现规范.md §常规角色与公共事项",
+        "docs/10_对局信息呈现规范.md §青丘夜影",
+        "API timeline 与发布SSR文字"
+      ]
+    },
+    {
+      "id": "all_in_trade_event_text_exposes_internal_codes",
+      "game": "bili-BV1yigN6JE5Y-p01-g02",
+      "stages": [
+        "第一天夜晚",
+        "第二天夜晚"
+      ],
+      "trigger": "典狱长已选择交易对象并记录双方选择。",
+      "published_examples": [
+        "第一天夜晚，典狱长选择交易双方（第二夜起）：记录动作 select_pair；行动者 8 号；目标 1 号、7 号",
+        "按交易双方目标顺序记录两人选择：trade双交易、betray双背叛、trade_betray前交易后背叛、betray_trade前背叛后交易"
+      ],
+      "source_text": {
+        "path": "data/games/S22/2026-08-14_g02_BV1yigN6JE5Y/复盘原文.txt",
+        "time": "3598.240–3608.470秒；3626.540–3644.590秒",
+        "quote": "典狱长选择一号狼人及7号狼人进行交易；双方均选择交易；所以二位一号7号在夜间免疫任何伤害。第二次为典狱长选择2号摄梦人以及8号典狱长进行交易；双方选择交易；典狱长特殊结算下典狱长出局。"
+      },
+      "api_event_values": [
+        {
+          "stage": "第一天夜晚",
+          "slot": "warden_trade_targets",
+          "targets": [
+            1,
+            7
+          ]
+        },
+        {
+          "stage": "第一天夜晚",
+          "slot": "trade_decisions",
+          "action": "trade",
+          "targets": [
+            1,
+            7
+          ],
+          "result": "双方均选择交易"
+        },
+        {
+          "stage": "第二天夜晚",
+          "slot": "warden_trade_targets",
+          "targets": [
+            2,
+            8
+          ]
+        },
+        {
+          "stage": "第二天夜晚",
+          "slot": "trade_decisions",
+          "action": "trade",
+          "targets": [
+            2,
+            8
+          ],
+          "result": "双方选择交易"
+        }
+      ],
+      "impact": "用户页面暴露内部动作码和英文枚举说明；对象选择结果虽然有记载，但被模板字段说明式标题包裹，难以直接阅读。",
+      "basis": [
+        "docs/10_对局信息呈现规范.md §孤注一掷",
+        "config/board_templates/all_in.json"
+      ]
+    },
+    {
+      "id": "all_in_s21_performed_trades_missing_from_published_timeline",
+      "status": "已核特殊行动未映射到发布槽位",
+      "trigger": "S21两局supplemental.phase_reviewed.events中有text_explicit且state=performed的典狱长交易；supplemental.unmapped逐项标注因无season-neutral formal slot而留在补充档案。对应发布API timeline的全部夜晚均没有trade/warden交易槽位。",
+      "instances": [
+        {
+          "game": "bili-BV178XkB7EXx-p01-cid37131193005",
+          "review_status": "assistant_reviewed_with_explicit_limits",
+          "events": [
+            {
+              "event_id": "BV178XkB7EXx-event-008",
+              "phase": "night",
+              "round": 2,
+              "actor": 12,
+              "actor_physical_role": "典狱长",
+              "targets": [
+                4,
+                8
+              ],
+              "state": "performed",
+              "status": "text_explicit",
+              "result": "典狱长交易4号平民与8号狼人，4号交易出局。",
+              "evidence": {
+                "path": "data/extractions/S21/media_evidence/BV178XkB7EXx/transcript.selected.json",
+                "source_segments": [
+                  1336,
+                  1337,
+                  1338
+                ],
+                "time_locator_ms": [
+                  2953380,
+                  2959700
+                ],
+                "quote": "由12号典狱长；典狱长选择的交易目标为4号平民和8号狼人；4号交易出局"
+              },
+              "unmapped_reason": "no season-neutral formal slot; retained in supplemental"
+            },
+            {
+              "event_id": "BV178XkB7EXx-event-016",
+              "phase": "night",
+              "round": 3,
+              "actor": 12,
+              "actor_physical_role": "典狱长",
+              "targets": [
+                5,
+                12
+              ],
+              "state": "performed",
+              "status": "text_explicit",
+              "result": "典狱长交易5号猎人与12号典狱长，5号交易出局。",
+              "evidence": {
+                "path": "data/extractions/S21/media_evidence/BV178XkB7EXx/transcript.selected.json",
+                "source_segments": [
+                  1347,
+                  1348,
+                  1349
+                ],
+                "time_locator_ms": [
+                  2972790,
+                  2978540
+                ],
+                "quote": "典狱长选择交易目标为5号猎人和12号典狱长；5号交易出局"
+              },
+              "unmapped_reason": "no season-neutral formal slot; retained in supplemental"
+            }
+          ],
+          "published_api_phases": [
+            "第一天夜晚",
+            "第二天夜晚"
+          ],
+          "published_api_slots": {
+            "第一天夜晚": [
+              "wolf_attack",
+              "witch_medicine",
+              "seer_check",
+              "dreamer_action"
+            ],
+            "第二天夜晚": [
+              "wolf_attack",
+              "dreamer_action"
+            ]
+          },
+          "published_trade_or_warden_slots": []
+        },
+        {
+          "game": "bili-BV1MMPxzmEWJ-p01-cid36505847004",
+          "review_status": "assistant_reviewed_with_explicit_limits",
+          "events": [
+            {
+              "event_id": "BV1MMPxzmEWJ-event-013",
+              "phase": "night",
+              "round": 2,
+              "actor": 2,
+              "actor_physical_role": "典狱长",
+              "targets": [
+                3,
+                11
+              ],
+              "actual_targets": null,
+              "state": "performed",
+              "status": "text_explicit",
+              "result": "典狱长选择3号与11号交易；双方认可；当夜交易池无事发生",
+              "details": {
+                "action_kind": "warden_trade",
+                "accepted_by": [
+                  3,
+                  11
+                ]
+              },
+              "evidence": {
+                "path": "data/extractions/S21/media_evidence/BV1MMPxzmEWJ/transcript.selected.json",
+                "source_segments": [
+                  1790,
+                  1791,
+                  1792
+                ],
+                "time_locator_ms": [
+                  3687380,
+                  3700220
+                ],
+                "quote": "典狱长选择3号平民与11号平民进行交易；两名平民均选择认可交易；所以我们当夜的这个交易池中无事发生"
+              },
+              "unmapped_reason": "no season-neutral formal slot; retained in supplemental"
+            }
+          ],
+          "published_api_phases": [
+            "第一天夜晚"
+          ],
+          "published_api_slots": {
+            "第一天夜晚": [
+              "wolf_attack",
+              "seer_check"
+            ]
+          },
+          "published_trade_or_warden_slots": []
+        }
+      ],
+      "impact": "已核交易行动、交易对象及出局/结算均未进入公开对局流程；观众无法从页面解释相关交易死亡，或看到双方认可后交易池无事发生。S21 supplemental明确限制事件时间为证据定位而非实际行动时点，因此这里只报告阶段事件未映射，不推断夜内行动顺序。",
+      "basis": [
+        "data/games/S21/2026-03-31_g02_BV178XkB7EXx/supplemental.json phase_reviewed/unmapped",
+        "data/games/S21/2026-03-06_g02_BV1MMPxzmEWJ/supplemental.json phase_reviewed/unmapped",
+        "docs/10_对局信息呈现规范.md §孤注一掷",
+        "对应manifest API timeline"
+      ]
+    }
+  ],
+  "unresolved_terminal_differences": [
+    {
+      "reason": "发布API的第四天白天仍为terminal=false；源字幕明确说猎杀后游戏结束，但规则推导的game_end仍unknown且review_required=true。对应endgame记录处于ai_candidate_awaiting_user或无已采纳phase；按局部复核边界，不把候选字幕当成已确认入库事实。建议人工核实后再决定是否补终局事件。",
+      "cases": [
+        {
+          "game": "bili-BV1nJer63EDh-p01-g02",
+          "page_last_event": "11号宝玉妹妹（九尾狐）：successful。",
+          "source_text": {
+            "path": "data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json",
+            "time": "3840.110–3848.640秒",
+            "quote": "2号四号出局，游戏结束，狼队阵营屠神获胜"
+          },
+          "record_state": {
+            "endgame.json": "ai_candidate_awaiting_user，phases=[]",
+            "rule_derivations.game_end_round4": "unknown / review_required=true"
+          }
+        },
+        {
+          "game": "bili-BV1g1YU6kERd-p01-g02",
+          "page_last_event": "4号华仔仔（九尾狐）：九尾狐猎杀时刻技能成功，导致3号预言家和6号白泽出局。",
+          "source_text": {
+            "path": "data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json",
+            "time": "4564.140–4584.240秒",
+            "quote": "狼队最后一狼九尾狐选择拍刀12号女巫拍刀成功，游戏结束，狼队阵营屠城获胜"
+          },
+          "record_state": {
+            "endgame.json": "ai_candidate_awaiting_user，存在待核wolf_rush候选",
+            "rule_derivations.game_end_round4": "unknown / review_required=true"
+          }
+        },
+        {
+          "game": "bili-BV1VPaW66EZz-p01-g02",
+          "page_last_event": "8号牛肉干（九尾狐）：九尾猎杀成功，6号平民出局。",
+          "source_text": {
+            "path": "data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json",
+            "time": "4102.680–4111.960秒",
+            "quote": "第四天白天九尾发动猎杀时刻猎杀成功，6号平民出局，然后九尾拍刀，最后一神5号预言家游戏结束，狼人阵营屠神获胜"
+          },
+          "record_state": {
+            "endgame.json": "ai_candidate_awaiting_user，phases=[]",
+            "rule_derivations.game_end_round4": "unknown / review_required=true"
+          }
+        }
+      ]
+    }
+  ],
+  "reasonable_differences_and_checked_cases": [
+    {
+      "game": "bili-BV1yigN6JE5Y-p01-g02",
+      "item": "第二夜起的交易窗口",
+      "finding": "展示从第一天夜晚开始交易，即本局首夜后的第二夜；rule_derivations明确round1 night unavailable、round2 night available，与模板条件一致，不是过早显示。"
+    },
+    {
+      "game": "bili-BV1yigN6JE5Y-p01-g02",
+      "item": "典狱长对象与双方选择配对",
+      "finding": "展示的1、7号与双方交易，以及2、8号与双方交易，均与复盘原文对应；第二次结算典狱长出局，页面终局在夜间死亡后结束。已发现的问题是事件文字和交易相对梦游的顺序，不是对象/选择配对错误。"
+    },
+    {
+      "game": "bili-BV1saaT6jEyK-p01-g02",
+      "item": "终局",
+      "finding": "API timeline以狼人交牌和好人胜利作为最后事项，终局phase标记为true；未见后续槽位或显示越界。"
+    }
+  ],
+  "scope_note": "仅复核指定七局的manifest快照、对应rule_derivations、对局档案与直接原始字幕/复盘文本；未改动代码、数据或部署。",
+  "unresolved_order_differences": [
+    {
+      "reason": "典狱长交易事项与摄梦人事项的实际行动先后无法由当前复盘叙述确认。模板明确完整睁眼顺序未核，因此不将复盘行文顺序等同实际行动时序；保留API当前排序作为待核的展示一致性问题。",
+      "cases": [
+        {
+          "game": "bili-BV1yigN6JE5Y-p01-g02",
+          "api_order": {
+            "第一天夜晚": [
+              "dreamer_action",
+              "warden_trade_targets",
+              "trade_decisions",
+              "trade_resolution"
+            ],
+            "第二天夜晚": [
+              "dreamer_action",
+              "warden_trade_targets",
+              "trade_decisions",
+              "trade_resolution",
+              "night_deaths"
+            ]
+          },
+          "source_text_path": "data/games/S22/2026-08-14_g02_BV1yigN6JE5Y/复盘原文.txt",
+          "source_time": "3598.240–3610.650秒；3626.540–3648.490秒",
+          "conclusion": "复盘先叙述典狱长交易/结算，再叙述当夜梦游；没有明确先后时点，不能据此判定API顺序错误。",
+          "source_narration": [
+            {
+              "time": "3598.240–3610.650秒",
+              "quote": "典狱长选择一号狼人及7号狼人进行交易；双方均选择交易；所以二位一号7号在夜间免疫任何伤害。当夜摄梦人梦游7号狼人。"
+            },
+            {
+              "time": "3626.540–3648.490秒",
+              "quote": "典狱长选择2号摄梦人以及8号典狱长进行交易；双方选择交易；典狱长特殊结算下典狱长出局。当夜摄梦人梦游7号狼人。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

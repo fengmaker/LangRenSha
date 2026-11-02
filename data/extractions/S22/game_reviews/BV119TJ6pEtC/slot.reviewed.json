@@ -1,0 +1,75 @@
+{
+  "schema": "masters-manual-slot-review-sidecar-v1",
+  "season": "S22",
+  "bvid": "BV119TJ6pEtC",
+  "game_slug": "bili-BV119TJ6pEtC-p01-g02",
+  "source_path": "data/reports/shared/剩余46项规则复核_20261102.json",
+  "source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+  "archive_path": "data/extractions/shared/manual_slot_reviews/18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8.json",
+  "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+  "source_format": "masters-scoped-rule-review-v1",
+  "source_game": {
+    "bvid": "BV119TJ6pEtC",
+    "id": "bili-BV119TJ6pEtC-p01-g02",
+    "season": "S22",
+    "accepted_review_ids": [
+      "DN-163",
+      "DN-241"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "DN-163",
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_poison",
+      "classification": "accepted_rule_review",
+      "before": {
+        "action": "unknown",
+        "actor": 6,
+        "targets": [],
+        "result": null
+      },
+      "typed": {
+        "action": "pass",
+        "actor": 6,
+        "targets": [],
+        "result": null
+      },
+      "note": "首夜平安且首日1至12号均有真实放逐票；毒师6号在首日投票后才被狼王枪杀。首夜若毒普通身份会产生夜死；唯一延迟离场的12号蒙面人也实际完成白天发言后参加放逐票，并存活至后续被刀。已排除有毒却无人离场的合法解释，因此首夜毒药未用，记主动空过，而非因禁刀直接推出平安。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-163"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    },
+    {
+      "id": "DN-241",
+      "round": 1,
+      "phase": "night",
+      "slot": "hunter_state",
+      "classification": "no_skill_opportunity",
+      "before": {
+        "action": "unknown",
+        "actor": 8,
+        "targets": [],
+        "result": null
+      },
+      "typed": null,
+      "note": "猎人8号本夜没有实际出局或毒杀事件，无死亡技能触发窗口。仅结束例行资格复核，归档unknown保留，不建资格/开枪事件；毒师实际用药由DN-163单独待核。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-241"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    }
+  ]
+}

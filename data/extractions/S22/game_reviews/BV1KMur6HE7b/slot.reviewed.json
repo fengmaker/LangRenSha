@@ -1,0 +1,183 @@
+{
+  "schema": "masters-manual-slot-review-sidecar-v1",
+  "season": "S22",
+  "bvid": "BV1KMur6HE7b",
+  "game_slug": "bili-BV1KMur6HE7b-p01-g02",
+  "source_path": "data/manual_review/feedback/日夜槽位复核结果_20261102_最终.json",
+  "source_sha256": "ba8bf4cf93c9c5e111c2a7f6c01b9259406158cca090db34d7f83ee4f11d72e1",
+  "source_fingerprint": "da14c4f01fbcc55098e90b88f9d88c48165f53b8d6838b2b411542c14089459a",
+  "archive_path": "data/extractions/shared/manual_slot_reviews/ba8bf4cf93c9c5e111c2a7f6c01b9259406158cca090db34d7f83ee4f11d72e1.json",
+  "source_game": {
+    "bvid": "BV1KMur6HE7b",
+    "id": "bili-BV1KMur6HE7b-p01-g02",
+    "season": "S22",
+    "date": "2026-08-11",
+    "game_number": 2,
+    "dossier_sha256": "0b5fdeca90695c27eb87a33a1b7074c1aa5606273bc58f46618042e13e8ddbef",
+    "seats": [
+      {
+        "seat": 1,
+        "name": "海王慕",
+        "role": "假面"
+      },
+      {
+        "seat": 2,
+        "name": "小张",
+        "role": "狼人"
+      },
+      {
+        "seat": 3,
+        "name": "李斯",
+        "role": "女巫"
+      },
+      {
+        "seat": 4,
+        "name": "彭彭",
+        "role": "平民"
+      },
+      {
+        "seat": 5,
+        "name": "耿许儿",
+        "role": "白痴"
+      },
+      {
+        "seat": 6,
+        "name": "翼风",
+        "role": "平民"
+      },
+      {
+        "seat": 7,
+        "name": "JY",
+        "role": "狼人"
+      },
+      {
+        "seat": 8,
+        "name": "牛肉干",
+        "role": "预言家"
+      },
+      {
+        "seat": 9,
+        "name": "荣耀",
+        "role": "狼人"
+      },
+      {
+        "seat": 10,
+        "name": "苏打",
+        "role": "舞者"
+      },
+      {
+        "seat": 11,
+        "name": "宝玉妹妹",
+        "role": "平民"
+      },
+      {
+        "seat": 12,
+        "name": "李舒服",
+        "role": "平民"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "DN-200",
+        "round": 2,
+        "phase": "night",
+        "phase_label": "第一天夜晚",
+        "note": "",
+        "slots": [
+          {
+            "slot": "wolf_attack",
+            "before": {
+              "action": "unknown",
+              "actor": null,
+              "targets": [],
+              "result": null
+            },
+            "changes": {
+              "action": "attack",
+              "targets": [
+                8
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "reviews": [
+    {
+      "id": "DN-200",
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "classification": "confirmed",
+      "note": "",
+      "before": {
+        "action": "unknown",
+        "actor": null,
+        "targets": [],
+        "result": null
+      },
+      "typed": {
+        "action": "attack",
+        "actor": null,
+        "targets": [
+          8
+        ],
+        "result": null
+      },
+      "raw_review": {
+        "id": "DN-200",
+        "round": 2,
+        "phase": "night",
+        "phase_label": "第一天夜晚",
+        "note": "",
+        "slots": [
+          {
+            "slot": "wolf_attack",
+            "before": {
+              "action": "unknown",
+              "actor": null,
+              "targets": [],
+              "result": null
+            },
+            "changes": {
+              "action": "attack",
+              "targets": [
+                8
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "DN-201",
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "classification": "accepted_rule_review",
+      "before": {
+        "action": "unknown",
+        "actor": 8,
+        "targets": [],
+        "result": null
+      },
+      "typed": {
+        "action": "unavailable",
+        "actor": 8,
+        "targets": [],
+        "result": null
+      },
+      "note": "末狼7号在共舞中出局，现场立即终局；按已确认规则，后续未执行查验不可用。保留本夜已经记录的狼刀10号及舞者受保护结算；不因未核完整夜序重开这条已确认终局政策。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-201"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    }
+  ]
+}

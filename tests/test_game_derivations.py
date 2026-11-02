@@ -56,6 +56,39 @@ def test_usually_saving_on_first_night_never_becomes_a_fact():
     assert get(result["dossier"], 2, "witch_save")["action"] == "unknown"
 
 
+def test_user_confirmed_unknown_opening_guard_is_pass_only_on_first_night():
+    game = fixture("s21_mechanical_wolf_seer", rounds=2)
+    game["seats"][0]["role"] = "守卫"
+    result = derive_game(game)
+    assert get(result["dossier"], 1, "guard")["action"] == "pass"
+    assert get(result["dossier"], 1, "guard")["actor"] == 1
+    assert get(result["dossier"], 2, "guard")["action"] == "unknown"
+    assert get(game, 1, "guard")["action"] == "unknown"
+    get(game, 1, "guard").update(action="guard", actor=1, targets=[1])
+    assert get(derive_game(game)["dossier"], 1, "guard")["targets"] == [1]
+
+
+def test_last_wolf_dance_terminal_skips_unplayed_attack_and_check():
+    game = fixture("masquerade", rounds=3)
+    roles = ["舞者", "女巫", "预言家", "狼人", "狼人", "平民",
+             "平民", "平民", "白神", "狼人", "平民", "假面"]
+    for seat, role in zip(game["seats"], roles):
+        seat["role"] = role
+    get(game, 1, "exile_result").update(action="exile", targets=[4])
+    get(game, 2, "night_deaths").update(action="die", targets=[5])
+    get(game, 2, "self_destruct").update(action="self_destruct", actor=10)
+    get(game, 3, "dancer_dance").update(action="dance", actor=1, targets=[1, 7, 12])
+    get(game, 3, "dance_resolution").update(action="minority_dies", targets=[12])
+    get(game, 3, "night_deaths").update(action="die", targets=[12])
+    terminal = {"round": 3, "phase": "night"}
+    result = derive_game(game, terminal_observation=terminal)
+    assert get(result["dossier"], 3, "wolf_attack")["action"] == "unavailable"
+    assert get(result["dossier"], 3, "seer_check")["action"] == "unavailable"
+    # A knife actually recorded before that settlement remains an observation.
+    get(game, 3, "wolf_attack").update(action="attack", targets=[3])
+    assert get(derive_game(game, terminal_observation=terminal)["dossier"], 3, "wolf_attack")["action"] == "attack"
+
+
 def test_new_boards_self_destruct_keep_a_valid_unheld_exile_action():
     for board in ("s23_magic_duel", "s23_qingqiu_night"):
         game = fixture(board, rounds=1)

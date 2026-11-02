@@ -1,0 +1,100 @@
+{
+  "schema": "masters-manual-slot-review-sidecar-v1",
+  "season": "S22",
+  "bvid": "BV1yKJ56PEak",
+  "game_slug": "bili-BV1yKJ56PEak-p01-gunknown",
+  "source_path": "data/reports/shared/剩余46项规则复核_20261102.json",
+  "source_sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+  "archive_path": "data/extractions/shared/manual_slot_reviews/18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8.json",
+  "source_fingerprint": "ce6444fac5ea83e5b05f639c4978035e6a0d3676fc82178e9732585b06cbc548",
+  "source_format": "masters-scoped-rule-review-v1",
+  "source_game": {
+    "bvid": "BV1yKJ56PEak",
+    "id": "bili-BV1yKJ56PEak-p01-gunknown",
+    "season": "S22",
+    "accepted_review_ids": [
+      "DN-148",
+      "DN-230",
+      "DN-231"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "DN-230",
+      "round": 1,
+      "phase": "night",
+      "slot": "hunter_state",
+      "classification": "no_skill_opportunity",
+      "before": {
+        "action": "unknown",
+        "actor": 7,
+        "targets": [],
+        "result": null
+      },
+      "typed": null,
+      "note": "该题所问的傀儡猎人资格在第1夜没有触发：正式档案记录平安夜，7号未出局。结论限于“无需生成/复核开枪资格事项”，不据傀儡技能失效规则推断毒药目标或允许开枪。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-230"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    },
+    {
+      "id": "DN-231",
+      "round": 1,
+      "phase": "day",
+      "slot": "puppet_hunter_eligibility",
+      "classification": "no_skill_opportunity",
+      "before": {
+        "action": "unknown",
+        "actor": 7,
+        "targets": [],
+        "result": null
+      },
+      "typed": null,
+      "note": "第1天傀儡猎人7号没有出局；当天出局并开枪的是10号狼王，档案给出的实际带走目标为12号女巫。7号没有死亡触发，不需要例行核资格。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-231"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    },
+    {
+      "id": "DN-148",
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "classification": "accepted_rule_review",
+      "before": {
+        "action": "unknown",
+        "actor": 6,
+        "targets": [],
+        "result": null
+      },
+      "typed": {
+        "action": "unavailable",
+        "actor": 6,
+        "targets": [],
+        "result": null
+      },
+      "note": "第3夜普通狼刀击杀最后一神6号预言家，现场立即宣布游戏结束；其后的预言家查验窗口未进入。标记unavailable，不记pass。",
+      "accepted_rule_report": {
+        "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+        "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+        "id": "DN-148"
+      },
+      "authorization": {
+        "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+        "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+      }
+    }
+  ]
+}

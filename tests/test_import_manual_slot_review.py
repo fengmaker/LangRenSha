@@ -22,7 +22,7 @@ def _dump(path: Path, value) -> bytes:
 def _fixture(root: Path, *, review_id="DN-fixture", bvid="BVfixture", number=1,
              slot="mechanical_action", action="guard", targets=None, result=None,
              note="", raw_slots=True, board="s21_mechanical_wolf_seer",
-             typed_action="unknown", terminal_round=None) -> tuple[dict, dict, Path]:
+             typed_action="unknown", terminal_round=None, season="S21") -> tuple[dict, dict, Path]:
     roles = ["平民"] * 12
     roles[6], roles[8] = ("通灵师" if board == "s21_mechanical_wolf_seer" else "平民"), "机械狼"
     roles[11] = "平民" if board == "s21_mechanical_wolf_seer" else "预言家"
@@ -43,12 +43,12 @@ def _fixture(root: Path, *, review_id="DN-fixture", bvid="BVfixture", number=1,
         rounds[0]["night"] = [{"slot": slot, "action": "learn", "actor": 9,
                                "targets": [10], "result": "mechanical_guard"}]
     dossier = {"slug": game_id, "board": board, "seats": seats, "rounds": rounds}
-    dossier_rel = Path("data/games/S21") / bvid / "dossier.json"
+    dossier_rel = Path(f"data/games/{season}") / bvid / "dossier.json"
     dossier_path = root / dossier_rel
     dossier_sha = hashlib.sha256(_dump(dossier_path, dossier)).hexdigest()
     review = {"id": review_id, "round": number, "phase": "night", "note": note,
               "slots": ([{"slot": slot, "before": before, "changes": changes}] if raw_slots else [])}
-    source_game = {"bvid": bvid, "id": game_id, "season": "S21", "date": "2026-03-03",
+    source_game = {"bvid": bvid, "id": game_id, "season": season, "date": "2026-03-03",
                    "game_number": 1, "dossier_sha256": dossier_sha, "seats": seats,
                    "reviews": [review]}
     page_game = {key: source_game[key] for key in
@@ -84,6 +84,63 @@ def test_normal_review_uses_input_changes_and_page_bound_actor():
         assert review["typed"] == {"action": "check", "actor": 12, "targets": [9], "result": "werewolf"}
         assert review["note"] == ""
         assert review["raw_review"]["slots"][0]["changes"]["result"] == "狼人"
+
+
+def test_final_hunter_note_suppresses_the_slot_without_creating_a_shot(monkeypatch):
+    before = {'action': 'unknown', 'actor': None, 'targets': [], 'result': None}
+    seats = [{'seat': 9, 'role': '猎人'}]
+    game = {'bvid': 'BV11uMG6PEkr'}
+    question = {'round': 3, 'phase': 'day', 'slots': [{'code': 'hunter_shot', 'before': before}]}
+    review = {'id': 'DN-047', 'round': 3, 'phase': 'day',
+              'note': '已经绑票获胜，不显示猎枪',
+              'slots': [{'slot': 'hunter_shot', 'before': before, 'changes': {'action': 'unavailable'}}]}
+    dossier = {'rounds': [{'number': 3, 'day': [{'slot': 'hunter_shot', **before}]}]}
+    normalized = manual._review_slot(game, question, review, manual.FINAL_RAW_SHA256, seats, dossier)
+    assert normalized[0]['typed'] == {'action': 'unavailable', 'actor': 9, 'targets': [], 'result': None}
+    assert normalized[0]['classification'] == 'game_ended_before_shot'
+    monkeypatch.setattr(manual, 'load_manual_slot_review', lambda *args, **kwargs: {'reviews': normalized})
+    manual.apply_manual_slot_review(game['bvid'], dossier['rounds'])
+    assert dossier['rounds'][0]['day'][0]['blocked_by_game_end'] is True
+
+
+def test_final_terminal_poison_is_unavailable_and_not_an_active_pass():
+    before = {'action': 'unknown', 'actor': 11, 'targets': [], 'result': None}
+    question = {'round': 3, 'phase': 'night', 'slots': [{'code': 'witch_poison', 'before': before}]}
+    review = {'id': 'DN-202', 'round': 3, 'phase': 'night', 'note': '夜间已结束，没有女巫环节',
+              'slots': [{'slot': 'witch_poison', 'before': before, 'changes': {'action': 'unavailable'}}]}
+    dossier = {'rounds': [{'number': 3, 'night': [{'slot': 'witch_poison', **before}]}]}
+    result = manual._review_slot({'bvid': 'BV1yigN6JE5Y'}, question, review,
+                                 manual.FINAL_RAW_SHA256, [], dossier)
+    assert result[0]['classification'] == 'game_ended_before_action'
+    assert result[0]['typed'] == {'action': 'unavailable', 'actor': 11, 'targets': [], 'result': None}
+
+
+def test_s22_review_keeps_source_binding_and_normalizes_good_feedback(tmp_path):
+    _fixture(tmp_path, season="S22", board="masquerade", slot="seer_check",
+             action="check", targets=[2], result="好人")
+    plan, summary, raw = manual.build_plan(root=tmp_path)
+    assert plan[0]["sidecar_path"].startswith("data/extractions/S22/")
+    assert plan[0]["sidecar"]["reviews"][0]["typed"] == {
+        "action": "check", "actor": 12, "targets": [2], "result": "good"}
+    manual.apply_plan(plan, summary, raw, root=tmp_path)
+    changed = json.loads((tmp_path / manual.INPUT).read_text(encoding="utf-8"))
+    changed["games"][0]["reviews"][0]["slots"][0]["before"]["targets"] = [3]
+    _dump(tmp_path / manual.INPUT, changed)
+    with pytest.raises(manual.ReviewError, match="slot/before"):
+        manual.build_plan(root=tmp_path)
+
+
+def test_current_authorized_terminal_note_keeps_raw_pass_but_stages_unavailable(tmp_path, monkeypatch):
+    _fixture(tmp_path, review_id="DN-140", bvid="BV1DMRmB9Evw", number=3,
+             board="s21_masquerade", slot="wolf_attack", action="pass",
+             note="最后一狼被舞者舞出局了，游戏结束，后面环节就跳过了")
+    raw = (tmp_path / manual.INPUT).read_bytes()
+    monkeypatch.setattr(manual, "CURRENT_RAW_SHA256", hashlib.sha256(raw).hexdigest())
+    plan, _, _ = manual.build_plan(root=tmp_path)
+    review = plan[0]["sidecar"]["reviews"][0]
+    assert review["classification"] == "game_ended_before_action"
+    assert review["typed"]["action"] == "unavailable"
+    assert review["raw_review"]["slots"][0]["changes"]["action"] == "pass"
 
 
 def test_changed_before_is_rejected_against_page_and_typed_dossier():

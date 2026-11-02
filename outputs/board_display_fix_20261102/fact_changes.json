@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-02",
+  "scope": {
+    "season": "S22",
+    "bvids": [
+      "BV1KuMG6NEez",
+      "BV1yKJ56PEak"
+    ],
+    "before_backup_6_12": "outputs/board_display_fix_20261102/before/data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/",
+    "existing_before_backups_reused": [
+      "outputs/board_display_fix_20261102/before/data/games/S22/2026-07-08_g02_BV1KuMG6NEez/",
+      "outputs/board_display_fix_20261102/before/docs/10_对局信息呈现规范.md"
+    ]
+  },
+  "changes": [
+    {
+      "review": "R11",
+      "game": "bili-BV1KuMG6NEez-p01-g02",
+      "path": "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/supplemental.json#events",
+      "before": {
+        "events": []
+      },
+      "after": {
+        "round": 3,
+        "phase": "day",
+        "slot": "werewolf_surrender",
+        "action": "surrender",
+        "actor": 1,
+        "result": "第三天白天最后一狼1号交牌，游戏结束，好人阵营获胜。",
+        "terminal": {
+          "round": 3,
+          "phase": "day",
+          "basis": "observed_surrender"
+        }
+      },
+      "evidence": {
+        "path": "data/games/S22/2026-07-08_g02_BV1KuMG6NEez/复盘原文.txt",
+        "sha256": "1cbd47c99373e3ea4d2ad5df842515a2303bf85e1653fb73b90724a76831dba0",
+        "interval_ms": [
+          3528570,
+          3533279
+        ],
+        "quote": "白天最后一张狼人一号交牌游戏结束；好人正义获胜"
+      }
+    },
+    {
+      "review": "R12; accepted slot DN-148",
+      "game": "bili-BV1yKJ56PEak-p01-gunknown",
+      "path": "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/dossier.json#rounds[3].day.night_deaths",
+      "before": {
+        "action": "unknown",
+        "targets": [],
+        "result": null
+      },
+      "after": {
+        "action": "die",
+        "targets": [
+          6
+        ],
+        "result": "第三夜狼队击杀场上最后一神6号预言家，游戏当夜结束，狼队阵营屠神获胜。",
+        "terminal": {
+          "round": 3,
+          "phase": "night"
+        }
+      },
+      "evidence": {
+        "path": "data/games/S22/2026-06-12_局次待核_BV1yKJ56PEak/复盘原文.txt",
+        "sha256": "78bd53e6f4356e05c5fa115cd4fbe7157daaea8922ef064568bc3c5198afa526",
+        "interval_ms": [
+          4492809,
+          4498480
+        ],
+        "quote": "狼队击杀场上最后一神6号预言家；游戏结束；狼队阵营屠神获胜",
+        "accepted_report": {
+          "path": "data/reports/shared/剩余46项规则复核_20261102.json",
+          "sha256": "18031e98fda7dfa4d5b0ec40010a9f4ff256d1ead6fa4d937f9012938a2868a8",
+          "id": "DN-148"
+        },
+        "authorization": {
+          "path": "data/extractions/shared/用户确认_20261102_最终槽位与规则结论.json",
+          "sha256": "5914762394abecab7ae67448fcfad6ab3521cede85556e4b51ecd3c38e561a33"
+        }
+      },
+      "preserved": {
+        "seer_check": "unavailable",
+        "manual_slot_review_ids": [
+          "DN-230",
+          "DN-231",
+          "DN-148"
+        ],
+        "round_count": 3
+      }
+    },
+    {
+      "path": "docs/10_对局信息呈现规范.md#座位区规则",
+      "before": "按座位号排列",
+      "after": "网站分为狼人阵营、神职阵营、平民阵营，待核身份另列；组内按座位号升序。物理底牌与个人胜利阵营分别展示；桌面三列等高，少人组留白按用户选择，窄屏单列。",
+      "ui_inspection": "website/web/src/components/seat-grid.tsx 显示组名为狼人阵营、神职阵营、平民阵营和待核身份；website/web/src/components/seat-grid.module.css 使用等高伸展列。"
+    }
+  ],
+  "commands": [
+    ".\\.venv\\Scripts\\python.exe scripts/prepare_game_rules.py --season S22 --bvid BV1KuMG6NEez --bvid BV1yKJ56PEak --report outputs/board_display_fix_20261102/facts_rules_preview.json",
+    ".\\.venv\\Scripts\\python.exe scripts/prepare_game_rules.py --season S22 --bvid BV1KuMG6NEez --bvid BV1yKJ56PEak --apply --report outputs/board_display_fix_20261102/facts_rules_applied.json"
+  ],
+  "verification": {
+    "preview": {
+      "games": 2,
+      "issues": 0,
+      "gaps": 0,
+      "database_write": false,
+      "publication": false
+    },
+    "apply": {
+      "games": 2,
+      "issues": 0,
+      "gaps": 0,
+      "typed_files_written": 0,
+      "voting_audits_written": 1
+    },
+    "refresh_scope": "仅BV1KuMG6NEez与BV1yKJ56PEak；按源记录恢复后，两个推导的dossier/voting/supplemental/endgame输入指纹均匹配，输出指纹与当前typed记录匹配。",
+    "slot_review_bindings": "两局manual_slot_review仍加载；DN-170、DN-148等review ID保留，accepted report SHA与人工slot sidecar一致。6/12授权SHA有效；6/12现有投票旁证的dossier SHA已同步到当前档案。",
+    "terminal": "7/8推导终局为第3天白天；6/12终局为第3夜，终局死亡事项由现有发布机制提取至终局夜，档案仍3轮。",
+    "documentation": "相对已有before副本，docs/10仅替换座位区规则段。",
+    "tests": "未运行；本次验证使用局部规则刷新与来源/指纹核对。"
+  }
+}

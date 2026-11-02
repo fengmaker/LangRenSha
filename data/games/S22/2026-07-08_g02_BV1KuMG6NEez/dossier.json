@@ -88,7 +88,7 @@
       "seat": 8,
       "name": "牛肉干",
       "role": "预言家",
-      "faction": "good",
+      "faction": "werewolf",
       "learning_target": null,
       "learned_role": null
     },
@@ -131,8 +131,8 @@
       "night": [
         {
           "slot": "guard",
-          "action": "unknown",
-          "actor": null,
+          "action": "pass",
+          "actor": 6,
           "targets": [],
           "result": null,
           "start_seat": null,
@@ -193,8 +193,8 @@
         },
         {
           "slot": "witch_poison",
-          "action": "unknown",
-          "actor": null,
+          "action": "pass",
+          "actor": 3,
           "targets": [],
           "result": null,
           "start_seat": null,
@@ -223,7 +223,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": null,
           "targets": [],
           "result": null,
@@ -237,10 +237,12 @@
         },
         {
           "slot": "puppet_skill_effect",
-          "action": "unknown",
+          "action": "reverse_check",
           "actor": null,
-          "targets": [],
-          "result": null,
+          "targets": [
+            8
+          ],
+          "result": "首夜8号傀儡预言家查验7号平民，实际反馈狼人，本次查验已反转。",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -323,7 +325,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -425,7 +427,7 @@
         },
         {
           "slot": "puppet_hunter_eligibility",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -444,7 +446,7 @@
       "night": [
         {
           "slot": "guard",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -474,7 +476,7 @@
         },
         {
           "slot": "puppet_select",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -488,7 +490,7 @@
         },
         {
           "slot": "witch_save",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -534,7 +536,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": null,
           "targets": [],
           "result": null,
@@ -548,9 +550,11 @@
         },
         {
           "slot": "puppet_skill_effect",
-          "action": "unknown",
+          "action": "reverse_check",
           "actor": null,
-          "targets": [],
+          "targets": [
+            8
+          ],
           "result": null,
           "start_seat": null,
           "direction": null,
@@ -562,7 +566,7 @@
         },
         {
           "slot": "wolf_king_state",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -637,7 +641,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -651,7 +655,7 @@
         },
         {
           "slot": "wolf_king_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -707,10 +711,10 @@
         },
         {
           "slot": "exile_result",
-          "action": "unknown",
+          "action": "none",
           "actor": null,
           "targets": [],
-          "result": null,
+          "result": "interrupted_self_destruct",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -735,7 +739,7 @@
         },
         {
           "slot": "puppet_hunter_eligibility",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -754,7 +758,7 @@
       "night": [
         {
           "slot": "guard",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -784,7 +788,7 @@
         },
         {
           "slot": "puppet_select",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -798,7 +802,7 @@
         },
         {
           "slot": "witch_save",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -812,7 +816,7 @@
         },
         {
           "slot": "witch_poison",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -826,7 +830,7 @@
         },
         {
           "slot": "seer_check",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -840,7 +844,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": null,
           "targets": [],
           "result": null,
@@ -854,9 +858,11 @@
         },
         {
           "slot": "puppet_skill_effect",
-          "action": "unknown",
+          "action": "reverse_check",
           "actor": null,
-          "targets": [],
+          "targets": [
+            8
+          ],
           "result": null,
           "start_seat": null,
           "direction": null,
@@ -868,7 +874,7 @@
         },
         {
           "slot": "wolf_king_state",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -942,7 +948,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -956,7 +962,7 @@
         },
         {
           "slot": "wolf_king_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
@@ -1040,7 +1046,7 @@
         },
         {
           "slot": "puppet_hunter_eligibility",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": null,
           "targets": [],
           "result": null,
