@@ -70,3 +70,14 @@ def test_terminal_night_publication_preserves_an_explicit_seer_check():
 
     assert any(event["slot"] == "seer_check" and event["action"] == "check"
                for round_ in doc["presentation"]["rounds"] for event in round_["night"])
+def test_s21_confirmed_endgame_concession_is_exposed_once():
+    from website.api.publisher import _public_supplemental_events
+    supplemental = {"phase_reviewed": {"events": [
+        {"round": 4, "phase": "endgame", "action": "concede", "actor": 1,
+         "state": "performed", "status": "text_explicit"},
+        {"round": 4, "phase": "endgame", "action": "game_end", "state": "performed"}]}}
+    events = _public_supplemental_events(supplemental)
+    assert len(events) == 1
+    assert (events[0]["round"], events[0]["phase"]) == (4, "day")
+    assert events[0]["event"]["actor"] == 1
+    assert events[0]["event"]["action"] == "surrender"

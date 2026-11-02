@@ -73,8 +73,8 @@
       "name": "桃子",
       "role": "机械狼",
       "faction": "werewolf",
-      "learning_target": null,
-      "learned_role": null
+      "learning_target": 10,
+      "learned_role": "机械平民"
     },
     {
       "seat": 7,
@@ -163,10 +163,12 @@
         },
         {
           "slot": "mechanical_action",
-          "action": "unknown",
-          "actor": null,
-          "targets": [],
-          "result": null,
+          "action": "learn",
+          "actor": 6,
+          "targets": [
+            10
+          ],
+          "result": "机械平民",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -396,8 +398,8 @@
         },
         {
           "slot": "mechanical_action",
-          "action": "unknown",
-          "actor": null,
+          "action": "unavailable",
+          "actor": 6,
           "targets": [],
           "result": null,
           "start_seat": null,

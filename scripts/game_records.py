@@ -51,6 +51,21 @@ def data_file(relative):
     return path
 
 
+def registered_audio_artifact(conn, source_id, relative_path):
+    path = (ROOT / relative_path).resolve()
+    if not path.is_relative_to((ROOT / "data").resolve()):
+        raise ReviewError(f"源文件必须位于data目录：{relative_path}")
+    registered_path = path.relative_to(ROOT).as_posix()
+    rows = conn.execute("""SELECT id FROM artifacts WHERE source_id=%s AND kind='audio'
+        AND (relative_path=%s OR metadata->>'ingested_from'=%s)""",
+        (source_id, registered_path, registered_path)).fetchall()
+    if not rows:
+        raise ReviewError(f"缺失音频文件，来源未登记对应audio artifact：{relative_path}")
+    if len(rows) != 1:
+        raise ReviewError(f"缺失音频文件，来源存在多个匹配audio artifact，无法确定复用项：{relative_path}")
+    return rows[0]["id"]
+
+
 def primary_source_file(files):
     for role in ("audio", "subtitle", "transcript"):
         for file in files:
@@ -425,6 +440,8 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
         ("dance_resolution", "minority_dies"): 1,
         ("masked_delayed_death", "die_after_speech"): 1,
         ("puppet_select", "select"): 1,
+        ("puppet_skill_effect", "reverse_check"): 1,
+        ("puppet_skill_effect", "skill_disabled"): 1,
         ("bullet_chat_hunter", "select"): 1,
         ("wolf_arrest", "arrest"): 1,
         ("knight_duel", "duel"): 1,
@@ -926,21 +943,32 @@ def import_game(value, *, allow_incomplete=False, conn=None, derivations=None, s
         from game_derivations import derive_game
         prepared = derive_game(value)
         value, derivations = prepared["dossier"], prepared["derivations"]
-    board = validate(value, allow_incomplete=allow_incomplete)
+    # Database-backed imports still require every non-audio source file and
+    # preserve the default strict file checks on validate()/validate_batch().
+    # A removed audio file can only pass below by reusing its registered
+    # artifact from the same source.
+    board = validate(value, check_files=False, allow_incomplete=allow_incomplete)
     primary_file = primary_source_file(value["files"])
     transaction = connect() if conn is None else nullcontext(conn)
     with transaction as conn:
         conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-"+value["slug"],))
-        if sync_template:
-            sync_board_template(conn, board)
-        season = conn.execute("SELECT id FROM seasons WHERE code=%s", (value["season"],)).fetchone()
-        if not season: raise ReviewError("赛季尚未登记")
         file_records=[]
         for file in value["files"]:
             source = conn.execute("SELECT id FROM sources WHERE platform=%s AND external_key=%s", (file["platform"],file["external_key"])).fetchone()
             if not source: raise ReviewError("先登记源资料，再导入游戏内容")
-            file_records.append((file,source["id"],artifact(conn,source["id"],data_file(file["path"]),file["kind"])))
+            path = (ROOT / file["path"]).resolve()
+            if not path.is_relative_to((ROOT / "data").resolve()):
+                data_file(file["path"])
+            if file.get("role") == "audio" and file.get("kind") == "audio" and not path.exists():
+                artifact_id = registered_audio_artifact(conn, source["id"], file["path"])
+            else:
+                artifact_id = artifact(conn,source["id"],data_file(file["path"]),file["kind"])
+            file_records.append((file,source["id"],artifact_id))
         source_id=next(s for f,s,_ in file_records if f["role"]==primary_file["role"])
+        if sync_template:
+            sync_board_template(conn, board)
+        season = conn.execute("SELECT id FROM seasons WHERE code=%s", (value["season"],)).fetchone()
+        if not season: raise ReviewError("赛季尚未登记")
         game=conn.execute("""INSERT INTO games(slug,season_id,primary_source_id) VALUES(%s,%s,%s)
             ON CONFLICT(slug) DO NOTHING RETURNING id""", (value["slug"],season["id"],source_id)).fetchone()
         if not game:

@@ -1001,6 +1001,17 @@ def _treasure_choice_in_round(game, number: int, actor: int) -> dict | None:
     return None
 
 
+def _treasure_choices(game, actor: int, physical_remainder: set[str]) -> set[str]:
+    """The three unused cards do not grant three switchable identities."""
+    for round_ in sorted(game.get("rounds", []), key=lambda row: row["number"]):
+        choice = _treasure_choice_in_round(game, round_["number"], actor)
+        if (choice and choice.get("action") == "choose"
+                and choice.get("result") in physical_remainder - {"平民"}):
+            return {"平民", choice["result"]}
+    other = physical_remainder - {"平民"}
+    return {"平民"} | other if len(other) == 1 else {"平民"}
+
+
 def _treasure_choice_constraint(game, number, phase, event, *, actor, previous):
     slot = event.get("slot")
     if slot not in {"treasure_remainder", "treasure_choice", "treasure_card_skill"}:
@@ -1026,6 +1037,11 @@ def _treasure_choice_constraint(game, number, phase, event, *, actor, previous):
                 return _result("unknown", "treasure_choice_unknown")
             if choice not in pool:
                 return _result("unavailable", "treasure_choice_not_in_remainder")
+            options = _treasure_choices(game, actor, pool)
+            if choice not in options:
+                if len(options) == 1:
+                    return _result("unknown", "treasure_other_card_unknown")
+                return _result("unavailable", "treasure_choice_outside_confirmed_pair")
         else:
             choice = None
         prior = _previous(previous, actor, slot)
@@ -1052,9 +1068,15 @@ def _treasure_choice_constraint(game, number, phase, event, *, actor, previous):
         return _result("unknown", "treasure_remainder_pool_unknown")
     if role not in pool:
         return _result("unavailable", "treasure_choice_not_in_remainder")
+    if role not in _treasure_choices(game, actor, pool):
+        return _result("unavailable", "treasure_choice_outside_confirmed_pair")
     required_action = _TREASURE_CARD_ACTION.get(role)
     if required_action is None:
         return _result("unknown", "treasure_skill_form_unknown")
+    if required_action == "no_skill":
+        return _result("unavailable", "treasure_civilian_has_no_skill")
+    if number == 1 and required_action == "attack":
+        return _result("unavailable", "treasure_first_night_attack_forbidden")
     action = event.get("action")
     if action not in _INACTIVE_ACTIONS and action != required_action:
         return _result("unavailable", "treasure_skill_does_not_match_choice")

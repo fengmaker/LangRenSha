@@ -78,6 +78,14 @@ def _self_destruct_ends_unvoted_day(round_, ballots):
 
 
 def _observed_terminal(game, supplemental):
+    manual = (supplemental or {}).get("manual_slot_review") or {}
+    boundaries = {(row["round"], row["phase"]) for row in manual.get("reviews", [])
+                  if row.get("classification") == "game_ended_before_action"}
+    if len(boundaries) > 1:
+        raise ValueError("人工槽位复核指向不同终局阶段")
+    if boundaries:
+        number, phase = next(iter(boundaries))
+        return {"round": number, "phase": phase, "basis": "manual_slot_review"}
     explicit = (game.get("_publication_context") or {}).get("terminal_observation")
     if explicit:
         return deepcopy(explicit)
@@ -235,6 +243,14 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
         for ei, e in enumerate(r.get("night", [])):
             actor = _role_owner(e, roles, templates["night"].get(e["slot"], {}))
             targets = e.get("targets", [])
+            if (r["number"] == 1 and e["slot"] == "guard" and actor is not None
+                    and inference._is_empty_unknown(e)
+                    and event_constraint(game, 1, "night", e, actor=actor, dead_before=set(),
+                                         uses=Counter(), used_targets={}, previous={}, learning={}).get("status") != "unavailable"):
+                # User confirmed on 2026-11-02: unknown opening guards are passes.
+                path = ["dossier", "rounds", ri, "night", ei]
+                change(e, "action", "pass", path, "user_confirmed_opening_guard_pass", ["2026-11-02"])
+                change(e, "actor", actor, path, "unique_role_owner", [actor])
             if e.get("slot") == "mixed_blood_model" and e.get("action") == "choose" and len(targets) == 1:
                 model = by_seat.get(targets[0], {})
                 if actor in by_seat and by_seat[actor].get("faction") is None and model.get("faction") in {"good", "werewolf"}:
@@ -292,6 +308,7 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
         wolf_killed_last_god = inference.terminal_wolf_attack_kills_last_god(
             game, n, before, round_events, terminal,
         )
+        ended_slots = inference.terminal_wolf_elimination_skipped_slots(game, n, before, round_events, terminal)
         night_dead, night_known = _night_deaths(r)
         if not night_known:
             settled = _ordinary_settlement(game, r, before, uses, roles)
@@ -423,8 +440,9 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                     else None
                 )
                 terminal_check_skipped = (
-                    phase == "night" and wolf_killed_last_god
-                    and inference.night_slot_after_wolf_attack(game, slot)
+                    phase == "night" and (
+                        (wolf_killed_last_god and inference.night_slot_after_wolf_attack(game, slot))
+                        or (slot in ended_slots and e.get("action") in {None, "unknown", "unavailable"}))
                 )
                 terminal_hunter_shot_skipped = (
                     phase == "day" and slot == "hunter_shot"

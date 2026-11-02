@@ -540,6 +540,27 @@ def test_dynamic_treasure_choice_uses_remainder_and_cannot_repeat_consecutively(
     assert repeated_after_gap["status"] == "available"
 
 
+def test_treasure_switches_only_between_civilian_and_the_observed_other_card():
+    seats = [(1, "盗宝大师"), (2, "狼王"), (3, "狼人"), (4, "狼人"),
+             (5, "平民"), (6, "通灵师"), (7, "猎人"), (8, "摄梦人"),
+             (9, "蒙面人"), (10, "平民"), (11, "平民"), (12, "平民")]
+    rounds = [{"number": 1, "night": [{"slot": "treasure_choice", "actor": 1,
+                                       "action": "choose", "result": "平民"}]},
+              {"number": 2, "night": [{"slot": "treasure_choice", "actor": 1,
+                                       "action": "choose", "result": "毒师"}]}]
+    source = game("treasure_master", seats, season="S22", rounds=rounds)
+    assert check(source, 2, "night", "treasure_choice", actor=1,
+                 action="choose", result="毒师")["status"] == "available"
+    assert check(source, 3, "night", "treasure_choice", actor=1,
+                 action="choose", result="狼人")["reason"] == "treasure_choice_outside_confirmed_pair"
+    assert check(source, 1, "night", "treasure_card_skill", actor=1)["reason"] == "treasure_civilian_has_no_skill"
+    source["rounds"] = rounds[:1]
+    assert check(source, 2, "night", "treasure_choice", actor=1,
+                 action="choose", result="平民")["status"] == "available"
+    assert check(source, 2, "night", "treasure_choice", actor=1,
+                 action="choose", result="毒师")["status"] == "unknown"
+
+
 def test_treasure_card_skill_matches_choice_and_master_knife_waits_for_all_wolves():
     seats = [(1, "盗宝大师"), (2, "狼王"), (3, "狼人"), (4, "狼人"), (5, "狼人"),
              (6, "通灵师"), (7, "猎人"), (8, "摄梦人"), (9, "蒙面人"),

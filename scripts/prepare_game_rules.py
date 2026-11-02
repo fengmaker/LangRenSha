@@ -10,6 +10,7 @@ from pathlib import Path
 from batch_s22 import atomic_json
 from game_derivations import ROOT, derive_game, fingerprint, restore_source_records
 from sheriff_speech_evidence import load_bound_sheriff_speeches
+from import_manual_slot_review import apply_manual_slot_review, validate_terminal_reviews
 
 
 def read(path):
@@ -55,12 +56,21 @@ def prepare(seasons, *, bvids=(), apply=False, materialize=False):
                 original = restore_source_records(dossier, voting, prior)
                 dossier, voting = original["dossier"], original["voting"]
             supplemental = read(folder / "supplemental.json")
+            manual = apply_manual_slot_review(folder.name.rsplit('_', 1)[-1], dossier["rounds"],
+                                             root=ROOT, season=season)
+            if manual:
+                supplemental = {"schema_version": 1, "game_slug": dossier["slug"], "season": season,
+                                **(supplemental or {}), "manual_slot_review": manual,
+                                "manual_slot_review_source_sha256": manual["source_sha256"]}
+                if apply:
+                    atomic_json(folder / "supplemental.json", supplemental)
             # S23 already persists observed terminal boundaries here.
             context = read(folder / "formal_context.json")
             result = derive_game(dossier, voting, supplemental=supplemental, endgame=read(folder / "endgame.json"),
                                  terminal_observation=(context or {}).get("terminal_observation"),
                                  speech_evidence=load_bound_sheriff_speeches(supplemental, root=ROOT, voting=voting))
             report = result["derivations"]
+            validate_terminal_reviews(manual, report, folder.name.rsplit('_', 1)[-1])
             totals.update(games=1, slots=len(report["slot_states"]), review_tasks=len(report["review_tasks"]),
                           unavailable=sum(s["status"] == "unavailable" for s in report["slot_states"]),
                           changes=len(report["changes"]), issues=len(report["issues"]), gaps=len(report.get("gaps", [])),

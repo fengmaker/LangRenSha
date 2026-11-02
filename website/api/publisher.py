@@ -25,7 +25,7 @@ from website.api.game_presentation import (
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
 PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
-PUBLICATION_FORMAT_VERSION = 12
+PUBLICATION_FORMAT_VERSION = 13
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
 EVENT_FIELDS = (
@@ -223,16 +223,31 @@ def _terminal_from_dossier(dossier: dict) -> dict | None:
 
 
 def _public_supplemental_events(supplemental: dict) -> list[dict]:
-    """Expose only the confirmed DQ and surrender actions needed by the timeline."""
+    """Expose confirmed actions retained outside the formal event slots."""
     public = []
-    for row in supplemental.get("events", []):
+    rows = list(supplemental.get("events", []))
+    for source in (supplemental.get("phase_reviewed") or {}).get("events", []):
+        if (source.get("action") == "trade" and source.get("state") == "performed"
+                and source.get("status") == "text_explicit"):
+            rows.append({"round": source.get("round"), "phase": source.get("phase"),
+                         "event": {"slot": "warden_trade_targets", "action": "select_pair",
+                                   "actor": source.get("actor"), "targets": source.get("targets", []),
+                                   "result": source.get("result")}})
+            continue
+        if source.get("action") not in {"concede", "surrender"} or source.get("state") != "performed":
+            continue
+        phase = "day" if source.get("phase") == "endgame" else source.get("phase")
+        rows.append({"round": source.get("round"), "phase": phase,
+                     "event": {"slot": "werewolf_surrender", "action": "surrender", "actor": source.get("actor")}})
+    seen = set()
+    for row in rows:
         if not isinstance(row, dict) or type(row.get("round")) is not int:
             continue
         phase, source = row.get("phase"), row.get("event")
         if phase not in {"night", "day"} or not isinstance(source, dict):
             continue
         action = source.get("action")
-        if action not in {"disqualify", "surrender"}:
+        if action not in {"disqualify", "surrender", "select_pair"}:
             continue
         event = _pick(source, EVENT_FIELDS)
         event["supplemental"] = True
@@ -244,7 +259,7 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
             event["result"] = "DQ裁定；与普通死亡结算分开记录。"
             event["description"] = f"{subject}被DQ出局；此裁定与普通死亡结算分开记录。"
             event["slot_label"] = "DQ出局"
-        else:
+        elif action == "surrender":
             slot = event.get("slot")
             if slot is None:
                 continue
@@ -253,7 +268,12 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
             event["result"] = "交牌，对局结束。"
             event["description"] = f"{subject}选择交牌，对局结束。"
             event["slot_label"] = "狼人交牌"
-        public.append({"round": row["round"], "phase": phase, "event": event})
+        else:
+            event["slot_label"] = "典狱长选择交易对象"
+        identity = (row["round"], phase, action, event.get("actor"), tuple(event.get("targets", [])))
+        if identity not in seen:
+            public.append({"round": row["round"], "phase": phase, "event": event})
+            seen.add(identity)
     return public
 
 
@@ -279,7 +299,7 @@ def _public_endgame(endgame: dict) -> dict:
         if isinstance(public.get("note"), str):
             public["note"] = display_time_text(public["note"])
         phases.append(public)
-    return {"phases": phases}
+    return {"phases": phases, "review_status": endgame.get("review_status", "recorded")}
 
 
 def _public_rules_state(report: dict) -> dict:
@@ -568,8 +588,14 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
             from scripts.game_derivations import restore_source_records
 
             source_records = restore_source_records(dossier, voting, derivations)
+        # The incoming audit has already matched either the current voting or
+        # its bound source above. Build the private source fingerprint against
+        # that same restored version when the audit itself was materialized.
+        source_audit = audit
+        if audit is not None and audit.get('facts') != source_records['voting']:
+            source_audit = {**audit, 'facts': source_records['voting']}
         source_view = _public_game(
-            source_records["dossier"], source_records["voting"], endgame, audit, board, person_ids,
+            source_records["dossier"], source_records["voting"], endgame, source_audit, board, person_ids,
             source_voting=source_records["voting"],
         )
         details["bluff_source_binding"] = {

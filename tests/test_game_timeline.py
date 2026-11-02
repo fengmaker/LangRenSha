@@ -10,6 +10,22 @@ from scripts.game_timeline import build_game_timeline
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_treasure_opening_and_first_day_night_show_the_chosen_identities():
+    source = {'board': 'treasure_master',
+              'seats': [{'seat': 2, 'name': '甲', 'role': '盗宝大师', 'faction': 'werewolf'}],
+              'rounds': [
+                  {'number': 1, 'night': [
+                      {'slot': 'wolf_attack', 'action': 'forbidden'},
+                      {'slot': 'treasure_choice', 'action': 'choose', 'actor': 2, 'result': '平民'}], 'day': []},
+                  {'number': 2, 'night': [
+                      {'slot': 'treasure_choice', 'action': 'choose', 'actor': 2, 'result': '毒师'}], 'day': []}]}
+    phases = build_game_timeline(source)['phases']
+    assert '选择平民身份' in phases[0]['items'][0]['text']
+    assert phases[1]['label'] == '第一天夜晚'
+    assert '选择毒师身份' in phases[1]['items'][0]['text']
+    assert not any(item['slot'] == 'wolf_attack' for item in phases[0]['items'])
+
+
 def test_confirmed_empty_guard_and_supplemental_day_surrender_share_the_timeline():
     source = {'board': 'neighbor_puppet', 'winner': 'good',
               'seats': [{'seat': 12, 'name': '大卫', 'role': '守卫', 'faction': 'good'}],

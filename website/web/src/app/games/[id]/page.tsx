@@ -54,7 +54,15 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
   try {
     const game = await getGame(id);
     const sourceUrl = safeHttpUrl(game.source?.url);
-    const endgamePhases = game.endgame?.phases ?? [];
+    const endgamePhases = (game.endgame?.phases ?? []).filter((endgamePhase) =>
+      !(endgamePhase.kind === "wolf_rush"
+        && endgamePhase.day != null
+        && game.timeline.phases.some((timelinePhase) =>
+          timelinePhase.phase === "day"
+          && timelinePhase.number === endgamePhase.day
+          && timelinePhase.items.some((item) => item.slot === "wolf_rush")
+        ))
+    );
     return <div className={"page-wrap detail-page " + styles.page}>
       <nav className="breadcrumb" aria-label="面包屑"><Link href="/games">对局档案</Link><span aria-hidden="true">/</span><span aria-current="page">{game.season} · {formatDate(game.date)}</span></nav>
       <header className="match-hero">

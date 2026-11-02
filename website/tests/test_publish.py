@@ -253,7 +253,8 @@ def test_publication_consumes_precomputed_rules_without_rerunning(monkeypatch, t
     assert doc["presentation"]
 
 
-def test_materialized_derived_voting_still_binds_audit_to_original_input(tmp_path):
+@pytest.mark.parametrize('materialized_audit', [False, True])
+def test_materialized_derived_voting_still_binds_audit_to_original_input(tmp_path, materialized_audit):
     folder, _ = _publication_fixture(tmp_path)
     dossier_path, voting_path = folder / "dossier.json", folder / "voting.json"
     dossier = json.loads(dossier_path.read_text(encoding="utf-8"))
@@ -267,12 +268,27 @@ def test_materialized_derived_voting_still_binds_audit_to_original_input(tmp_pat
     item = entries[0]
     assert item["source_voting"] == item["voting"]
     assert item["audit"]["facts"]["ballots"][0]["votes"][0]["basis"] == "recorded"
+    if materialized_audit:
+        item['audit']['facts'] = deepcopy(item['voting'])
+    audit_before = deepcopy(item['audit'])
     doc = publisher._public_game(
         item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"], {},
         source_voting=item["source_voting"], derivations=item["derivations"],
     )
     assert doc["winner"] == "good"
     assert doc["voting"]["ballots"][0]["votes"][0]["basis"] == "rule_default"
+    assert item['audit'] == audit_before
+
+
+def test_unrelated_audit_mismatch_is_rejected_even_with_bound_derivations(tmp_path):
+    _publication_fixture(tmp_path)
+    entries, _, _ = publisher.load_publication(tmp_path, 'S22', SAMPLE)
+    item = entries[0]
+    audit = deepcopy(item['audit'])
+    audit['facts']['game_slug'] = 'unrelated-game'
+    with pytest.raises(publisher.PublishError, match='投票旁证'):
+        publisher._public_game(item['dossier'], item['voting'], item['endgame'], audit, item['board'], {},
+                               source_voting=item['source_voting'], derivations=item['derivations'])
 
 
 def test_audit_voting_mismatch_stays_strict_without_a_precomputed_report(tmp_path):

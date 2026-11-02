@@ -63,11 +63,11 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
   const target = seat ? hybridTarget(seat, rounds) : null;
   const name = seat?.name || "姓名未知";
   const note = seat?.is_puppet ? "傀儡 · 不带刀" : seat?.role === "混血儿"
-    ? `榜样：${target == null ? "待核" : `${target}号`} · 个人阵营：${personalFaction(seat)}。`
+    ? `榜样：${target == null ? "待核" : `${target}号`}\n个人阵营：${personalFaction(seat)}`
     : seat?.role === "机械狼"
-      ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
+      ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join("\n")
       : seat?.learning_target != null || seat?.learned_role
-        ? [seat.learning_target != null ? `记录目标：${seat.learning_target}号` : "", seat.learned_role ? `学习身份：${seat.learned_role}` : ""].filter(Boolean).join(" · ")
+        ? [seat.learning_target != null ? `记录目标：${seat.learning_target}号` : "", seat.learned_role ? `学习身份：${seat.learned_role}` : ""].filter(Boolean).join("\n")
         : "";
 
   return <article className={`${styles.seatCard} ${cardStyle}`} data-seat={number} data-faction={seat?.faction ?? "unknown"} data-role={seat?.role ?? "unknown"}>

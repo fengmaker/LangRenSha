@@ -20,7 +20,7 @@ except ImportError:
 
 
 _EMPTY_ACTIONS = {None, "unknown"}
-PRESENTATION_VERSION = 12
+PRESENTATION_VERSION = 13
 _KEEP_UNKNOWN_SLOTS = {
     # Unknown actions that can change survival, information, or skill access.
     "guard", "wolf_attack", "witch_save", "witch_poison", "seer_check",
@@ -196,6 +196,35 @@ def night_slot_after_wolf_attack(game: dict, slot: str) -> bool:
     if seer_role not in wake_order:
         return False
     return wake_order.index(seer_role) > wake_order.index("狼人")
+
+
+def terminal_wolf_elimination_skipped_slots(game: dict, number: int, previously_eliminated: set[int],
+                                           events: list[dict], terminal: dict | None) -> set[str]:
+    """Close unplayed actions after a confirmed final-wolf night settlement."""
+    if not terminal or (terminal.get("round"), terminal.get("phase")) != (number, "night"):
+        return set()
+    if family(_board_code(game)) == "ghost_bride":
+        return set()
+    seats = _seat_rows(game)
+    if len(seats) != 12 or any(row.get("role") in {None, "", "unknown", "未知", "身份未知"}
+                               or row.get("faction") not in {"good", "werewolf"} for row in seats):
+        return set()
+    wolves = {row["seat"] for row in seats if row.get("faction") == "werewolf"
+              and row.get("role") not in {"混血儿", "平民"}}
+    sides = neighbor_puppet_sides(game)
+    if sides is not None:
+        wolves = sides["werewolf"]
+    remaining = wolves - previously_eliminated
+    if not remaining or not remaining <= _actual_deaths(events):
+        return set()
+    danced = {seat for event in events if event.get("slot") == "dance_resolution"
+              and event.get("action") in {"minority_dies", "all_die"}
+              for seat in event.get("targets", [])}
+    if remaining <= danced:
+        return {"wolf_attack", "seer_check"}
+    if remaining <= _known_poison_victims(events, events, game):
+        return {"seer_check"}
+    return set()
 
 
 def _board_code(game: dict) -> str | None:
@@ -1413,6 +1442,8 @@ def build_game_presentation(game: dict) -> dict:
                 game, number, eliminated_before_round, night + day, terminal,
             )
         )
+        ended_slots = terminal_wolf_elimination_skipped_slots(
+            game, number, eliminated_before_round, night + day, terminal)
         # Storage variants may lack an unavailable action enum. The prepared
         # rule state still proves that their empty slot cannot be played.
         for phase, events in (("night", night), ("day", day)):
@@ -1428,6 +1459,10 @@ def build_game_presentation(game: dict) -> dict:
                         and night_slot_after_wolf_attack(game, event.get("slot"))
                         and event.get("action") in {None, "unknown", "unavailable"}
                         and not _has_recorded_seer_check(event)):
+                    omitted += 1
+                    continue
+                if (phase == "night" and event.get("slot") in ended_slots
+                        and event.get("action") in {None, "unknown", "unavailable"}):
                     omitted += 1
                     continue
                 state = rule_states.get((number, phase, event.get("slot")), {})

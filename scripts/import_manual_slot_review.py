@@ -1,4 +1,4 @@
-"""Validate and stage source-bound S21/S23 manual slot-review exports."""
+"""Validate and stage source-bound manual slot-review exports."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +22,22 @@ SIDECAR_SCHEMA = "masters-manual-slot-review-sidecar-v1"
 # interpretation must not silently carry over to a later export.
 AUTHORIZED_RAW_SHA256 = "bd5682e7b865695a12aab10fff80d9a418b63baab69cf0fbe45e4a89ffb521c7"
 FOLLOWUP_RAW_SHA256 = "664c727a5613a7b451e3c9f5b9f385fa217835d111d75e1cbb21b3cb9951037f"
+CURRENT_RAW_SHA256 = "fd9a9352ba69122157c73d50660338f7f99553aad842e82ad33e8fe180e89550"
+FINAL_RAW_SHA256 = "ba8bf4cf93c9c5e111c2a7f6c01b9259406158cca090db34d7f83ee4f11d72e1"
+FINAL_TERMINAL = {
+    "DN-202": ("BV1yigN6JE5Y", 3, "witch_poison"),
+    "DN-203": ("BV1yigN6JE5Y", 3, "wolf_attack"),
+}
+FINAL_SHOTS = {
+    "DN-047": ("BV11uMG6PEkr", 3, "hunter_shot"),
+    "DN-072": ("BV1V8af6zE56", 2, "hunter_shot"),
+}
+CURRENT_TERMINAL = {
+    "DN-116": ("BV1W8DiBKE66", 3, "seer_check"),
+    "DN-140": ("BV1DMRmB9Evw", 3, "wolf_attack"),
+    "DN-146": ("BV1xYEo6QE3E", 3, "seer_check"),
+    "DN-147": ("BV1sYEo6QEyS", 3, "seer_check"),
+}
 TERMINAL_BEFORE_ACTION = {
     "DN-086": ("BV1UMPqzjEvH", 4, "mechanical_action"),
     "DN-087": ("BV1UMPqzjEvH", 4, "seer_check"),
@@ -135,10 +151,11 @@ def _view(event: dict) -> dict:
 def _actor(seats: list[dict], slot: str, before: dict, review_id: str) -> int | None:
     if before.get("actor") is not None:
         return before["actor"]
-    if slot == "wolf_attack":
-        return None  # A team action does not identify a unique ordinary wolf.
+    if slot in {"wolf_attack", "night_deaths"}:
+        return None  # Team actions and result announcements have no unique actor.
     roles = {"mechanical_action": ["机械狼"], "mechanical_day_skill": ["机械狼"],
-             "seer_check": ["预言家", "通灵师"], "guard": ["守卫"]}.get(slot, [])
+             "seer_check": ["预言家", "通灵师"], "guard": ["守卫"],
+             "hunter_shot": ["猎人"]}.get(slot, [])
     matches = [seat["seat"] for seat in seats if seat.get("role") in roles]
     if len(matches) != 1:
         raise ReviewError(f"{review_id}: {slot}行动者不能从已核身份唯一确定")
@@ -153,7 +170,7 @@ def _result(dossier: dict, slot: str, result, *, action: str | None = None):
         if len(matches) == 1:
             return matches[0]
     if slot == "seer_check" and dossier.get("board") != "s21_mechanical_wolf_seer":
-        return {"狼人": "werewolf", "平民": "good"}.get(result, result)
+        return {"狼人": "werewolf", "平民": "good", "好人": "good"}.get(result, result)
     return result
 
 
@@ -168,9 +185,12 @@ def _review_slot(game: dict, question: dict, review: dict, raw_hash: str,
         raise ReviewError(f"{review_id}: slots必须为数组")
     normalized = []
     followup = raw_hash == FOLLOWUP_RAW_SHA256
-    special_terminal = (FOLLOWUP_TERMINAL if followup else TERMINAL_BEFORE_ACTION).get(review_id)
+    terminal_cases = (FINAL_TERMINAL if raw_hash == FINAL_RAW_SHA256 else
+                      CURRENT_TERMINAL if raw_hash == CURRENT_RAW_SHA256 else
+                      FOLLOWUP_TERMINAL if followup else TERMINAL_BEFORE_ACTION)
+    special_terminal = terminal_cases.get(review_id)
     withdrawn = WITHDRAWN.get(review_id) if not followup else None
-    if (special_terminal or withdrawn) and raw_hash not in {AUTHORIZED_RAW_SHA256, FOLLOWUP_RAW_SHA256}:
+    if (special_terminal or withdrawn) and raw_hash not in {AUTHORIZED_RAW_SHA256, FOLLOWUP_RAW_SHA256, CURRENT_RAW_SHA256, FINAL_RAW_SHA256}:
         raise ReviewError(f"{review_id}: 本次特例仅适用于已授权的原始JSON SHA")
     expected_coordinate = special_terminal or withdrawn
     if expected_coordinate and (game["bvid"], number, question.get("phase")) != (
@@ -239,6 +259,11 @@ def _review_slot(game: dict, question: dict, review: dict, raw_hash: str,
         normalized.append({"id": review_id, "round": number, "phase": phase, "slot": code,
                            "classification": classification, "note": review.get("note", ""),
                            "before": before, "typed": typed, "raw_review": review})
+        if raw_hash == FINAL_RAW_SHA256 and review_id in FINAL_SHOTS:
+            if ((game['bvid'], number, code) != FINAL_SHOTS[review_id]
+                    or phase != 'day' or typed is None or typed['action'] != 'unavailable'):
+                raise ReviewError(f"{review_id}: 终局猎枪确认坐标或动作不匹配")
+            normalized[-1].update(classification='game_ended_before_shot', blocked_by_game_end=True)
 
     # DN-087 has no exported slot change; its preserved, explicitly supplied
     # end-of-game note is the authorized basis for this unavailable outcome.
@@ -291,8 +316,8 @@ def build_plan(input_path: Path | None = None, *, root: Path = ROOT) -> tuple[li
         for key in ("id", "season", "date", "game_number", "dossier_sha256"):
             if game.get(key) != page_game.get(key):
                 raise ReviewError(f"{bvid}: {key}与原复核页不匹配")
-        if game.get("season") not in {"S21", "S23"} or not isinstance(game.get("dossier_sha256"), str):
-            raise ReviewError(f"{bvid}: 仅支持绑定完整dossier_sha256的S21/S23复核")
+        if game.get("season") not in {"S21", "S22", "S23"} or not isinstance(game.get("dossier_sha256"), str):
+            raise ReviewError(f"{bvid}: 仅支持绑定完整dossier_sha256的S21/S22/S23复核")
         seats = game.get("seats")
         if (not isinstance(seats, list) or len(seats) != 12 or any(not isinstance(row, dict) for row in seats)
                 or sorted(row.get("seat") for row in seats) != list(range(1, 13))):
@@ -323,7 +348,8 @@ def build_plan(input_path: Path | None = None, *, root: Path = ROOT) -> tuple[li
         if special:
             derivations = json.loads((path.parent / "rule_derivations.json").read_text(encoding="utf-8"))
             terminal = derivations.get("terminal")
-            if any(not terminal or (terminal.get("round"), terminal.get("phase")) != (row["round"], "night")
+            if any((not terminal and _sha(raw) not in {CURRENT_RAW_SHA256, FINAL_RAW_SHA256})
+                   or (terminal and (terminal.get("round"), terminal.get("phase")) != (row["round"], "night"))
                    for row in special):
                 raise ReviewError(f"{bvid}: game_ended_before_action与rule_derivations.terminal不同轮")
         grouped.append({"bvid": bvid, "game": game, "normalized": normalized})
@@ -388,6 +414,10 @@ def apply_manual_slot_review(bvid: str, rounds: list[dict], *, root: Path = ROOT
         if set(typed) != {"action", "actor", "targets", "result"}:
             raise ReviewError(f"{bvid}/{review.get('id')}: typed slot字段错误")
         event.update(typed)
+        if review.get('blocked_by_game_end'):
+            if slot not in {'hunter_shot', 'wolf_king_shot'} or typed['action'] != 'unavailable':
+                raise ReviewError(f"{bvid}/{review.get('id')}: 终局阻止开枪的记录不合法")
+            event['blocked_by_game_end'] = True
     return sidecar
 
 
