@@ -253,7 +253,7 @@ def test_load_inputs_allows_a_targeted_candidate_without_a_full_75_game_snapshot
         rules_path: {"season": "S23", "authoritative_snapshot_id": "snapshot",
                             "board_code_map": {name: name for name in (
                                 "mechanical_wolf_seer", "mixed_blood", "guile_realm", "masquerade",
-                                "treasure_master", "qingqiu_night", "magic_duel")}},
+                                "treasure_master", "qingqiu_night", "magic_duel", "wolf_girl", "troublemaker")}},
         report_path: progress,
         daily_path: {"snapshot_id": "snapshot"},
         audit_path: {"season": "S23", "planned": 75, "errors": []},

@@ -27,7 +27,7 @@ if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 # Reuse the website's pure display projection, without publishing a release.
 from website.api.game_presentation import build_game_presentation
 EXPORT=ROOT/'data/exports'
-WOLVES={'狼人','机械狼','狼王','黑狼王','假面','诡术师','典狱长','盗宝大师','九尾狐','狼术师'}
+WOLVES={'狼人','机械狼','狼王','黑狼王','假面','诡术师','典狱长','盗宝大师','九尾狐','狼术师','狼女孩','捣蛋鬼'}
 KNOWN_HANDLES={'JY戴士':'JY','Ksssssss陈彬':'KS','BobbyJ波比儿':'Bobby','Qqqquan圈':'圈圈',
                '困困不六':'圈圈','小鲸鱼Whale-':'董鲸鱼','赵鑫华_HZz':'华仔仔',
                '其人的心事':'其人','陸慧霖_陆元箐小桃子':'桃子','pointy豆儿啵':'豆儿啵','萧亚辉':'辉少',

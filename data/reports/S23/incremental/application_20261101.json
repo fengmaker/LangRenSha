@@ -1,0 +1,233 @@
+{
+  "state": "completed",
+  "checked_at_utc": "2026-11-01T09:27:19.777504+00:00",
+  "season": "S23",
+  "review_source": "data/manual_review/feedback/S23_逐局复核意见_20261101_20261030.json",
+  "review_sha256": "a76b193954f05ddb539bceca60e7f7616f14a19b9fcf78a90bf8852cd22f3fe5",
+  "reviewed_games": 3,
+  "text_patches": 0,
+  "release_id": "S21_S22_S23-2974201d67a2ff4e-ea6232a5-p12-s2",
+  "published_counts": {
+    "S21": 122,
+    "S22": 148,
+    "S23": 87,
+    "total": 357
+  },
+  "database_backup_receipt": "data/backups/workflow-20261101T091158/receipt.json",
+  "backup_catalog_valid": true,
+  "restore_test_performed": false,
+  "manual_bluffs": [
+    {
+      "game_id": "bili-BV1Eox662EE8-p01-g01",
+      "seat": 1,
+      "name": "陈俊洁",
+      "success": true,
+      "other_wolves": "no"
+    },
+    {
+      "game_id": "bili-BV1Eox662EVZ-p01-g02",
+      "seat": 2,
+      "name": "小鱼丸",
+      "success": true,
+      "other_wolves": "no"
+    },
+    {
+      "game_id": "bili-BV17ox662EYG-p01-g03",
+      "seat": 8,
+      "name": "牛肉干",
+      "success": false,
+      "other_wolves": "no"
+    }
+  ],
+  "new_players": [
+    "小鱼丸",
+    "阿铖"
+  ],
+  "acceptance": {
+    "scope": "three_new_games_and_affected_player_stats",
+    "report": "data/reports/S23/incremental/publication_acceptance_20261101.json",
+    "old_games_compared": 354,
+    "old_game_differences": [],
+    "retained_report": "data/reports/S23/incremental/retained_release_check_20261101.json",
+    "specific_site_report": "data/reports/S23/incremental/new_games_site_check_20261101.json",
+    "browser_pages": 44,
+    "detail_requests": 3
+  },
+  "regressions": {
+    "bluffs_and_incremental_apply": "64 passed",
+    "incremental_scope_v2": "5 passed",
+    "terminal_scope_timeline_derivations": "113 passed"
+  },
+  "implementation_fixes": [
+    "Standalone apply CLI imports project website modules",
+    "Publication scope accepts source-bound v2 review exports",
+    "Wolf-girl and troublemaker remain physical wolf roles in bluff statistics",
+    "New game_end interpretation stays scoped to the two new board families"
+  ],
+  "games": [
+    {
+      "bvid": "BV1Eox662EE8",
+      "formal_dir": "data/games/S23/2026-10-30_g01_BV1Eox662EE8",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "database_receipt": {
+        "media": {
+          "source_id": "899e2b4f-22ff-46d9-8241-1ffaf74de618",
+          "artifact_ids": [
+            "ed15f80c-747f-4862-835f-88bd574ec5f3",
+            "3e8fec61-8d0c-436d-acaa-b67f21e041d6",
+            "549af88d-a577-42ff-8b8c-2f37e064a6c7"
+          ],
+          "validation": {
+            "status": "raw_subtitles_ready",
+            "checked_at_utc": "2026-11-01T09:12:31.624216+00:00",
+            "bvid": "BV1Eox662EE8",
+            "cid": 43188553558,
+            "page": 1,
+            "owner_mid": "19106800",
+            "official_owner_matches": true,
+            "audio_available": false,
+            "audio_bytes": null,
+            "audio_sha256": null,
+            "probe": null,
+            "subtitle_status": "visible_tracks",
+            "subtitle_available": true,
+            "game_facts_verified": false
+          },
+          "transcription_started": false,
+          "game_facts_changed": false
+        },
+        "game": {
+          "game_id": "b51a755d-7e37-4daa-b8d5-fa1183101549",
+          "slug": "bili-BV1Eox662EE8-p01-g01",
+          "people": 16,
+          "seats": 12,
+          "rounds": 4,
+          "night_slots": 5,
+          "day_slots": 11,
+          "event_records": 64,
+          "source_files": 1
+        },
+        "voting": {
+          "ballots": 3,
+          "choices": 22
+        }
+      }
+    },
+    {
+      "bvid": "BV1Eox662EVZ",
+      "formal_dir": "data/games/S23/2026-10-30_g02_BV1Eox662EVZ",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "database_receipt": {
+        "media": {
+          "source_id": "a60d0439-0b24-44d9-a59a-0c75f46a839d",
+          "artifact_ids": [
+            "fe866970-1d79-495c-b1b0-655bfc60ad14",
+            "0180fb43-d94f-46fe-a50e-707187e6d987",
+            "b71c349c-386f-4bc3-ba34-45414e47d95e"
+          ],
+          "validation": {
+            "status": "raw_subtitles_ready",
+            "checked_at_utc": "2026-11-01T09:12:32.262752+00:00",
+            "bvid": "BV1Eox662EVZ",
+            "cid": 43188686568,
+            "page": 1,
+            "owner_mid": "19106800",
+            "official_owner_matches": true,
+            "audio_available": false,
+            "audio_bytes": null,
+            "audio_sha256": null,
+            "probe": null,
+            "subtitle_status": "visible_tracks",
+            "subtitle_available": true,
+            "game_facts_verified": false
+          },
+          "transcription_started": false,
+          "game_facts_changed": false
+        },
+        "game": {
+          "game_id": "bbdd01e1-b467-46f0-ad9b-7ba5cb253554",
+          "slug": "bili-BV1Eox662EVZ-p01-g02",
+          "people": 16,
+          "seats": 12,
+          "rounds": 4,
+          "night_slots": 7,
+          "day_slots": 10,
+          "event_records": 68,
+          "source_files": 1
+        },
+        "voting": {
+          "ballots": 2,
+          "choices": 15
+        }
+      }
+    },
+    {
+      "bvid": "BV17ox662EYG",
+      "formal_dir": "data/games/S23/2026-10-30_g03_BV17ox662EYG",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "database_receipt": {
+        "media": {
+          "source_id": "0d620cbc-216c-4aa3-94b7-3faa2864a447",
+          "artifact_ids": [
+            "8612b9b3-e5d9-49de-aa79-c895e4f3847a",
+            "5b468aa6-c67c-4188-9413-7f434b06e8cb",
+            "6b0bf932-7636-4978-96ea-89d4911e0292"
+          ],
+          "validation": {
+            "status": "raw_subtitles_ready",
+            "checked_at_utc": "2026-11-01T09:12:32.576491+00:00",
+            "bvid": "BV17ox662EYG",
+            "cid": 43188881227,
+            "page": 1,
+            "owner_mid": "19106800",
+            "official_owner_matches": true,
+            "audio_available": false,
+            "audio_bytes": null,
+            "audio_sha256": null,
+            "probe": null,
+            "subtitle_status": "visible_tracks",
+            "subtitle_available": true,
+            "game_facts_verified": false
+          },
+          "transcription_started": false,
+          "game_facts_changed": false
+        },
+        "game": {
+          "game_id": "ef3d724c-7667-4153-8250-763fc739a239",
+          "slug": "bili-BV17ox662EYG-p01-g03",
+          "people": 16,
+          "seats": 12,
+          "rounds": 5,
+          "night_slots": 8,
+          "day_slots": 11,
+          "event_records": 95,
+          "source_files": 1
+        },
+        "voting": {
+          "ballots": 4,
+          "choices": 24
+        }
+      }
+    }
+  ],
+  "commit": false,
+  "push": false
+}

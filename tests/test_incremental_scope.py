@@ -25,7 +25,7 @@ class IncrementalScopeTests(unittest.TestCase):
         path.write_text(json.dumps(value), encoding="utf-8")
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
-    def fixture(self, reviewed=True):
+    def fixture(self, reviewed=True, review_format="masters-incremental-review-v1"):
         row = {"review_id": "BVnew1234567:123:p01", "bvid": "BVnew1234567", "cid": 123,
                "page": 1, "reviewed": reviewed, "note": "", "candidate_sha256": "a" * 64,
                "source_sha256": "b" * 64}
@@ -34,7 +34,7 @@ class IncrementalScopeTests(unittest.TestCase):
                   **{k: row[k] for k in ("review_id", "bvid", "cid", "page")},
                   "manual_source_path": manual}
         self.save("data/reports/S23/S23_逐局复核计划.json", {"entries": [{"bvid": "BVold1234567", "phase": "regular"}]})
-        marker["manual_sha256"] = self.save(manual, {"format": "masters-incremental-review-v1", "season": "S23", "games": [row]})
+        marker["manual_sha256"] = self.save(manual, {"format": review_format, "season": "S23", "games": [row]})
         marker["dossier_sha256"] = self.save("data/games/S23/new/dossier.json", {
             "season": "S23", "files": [{"external_key": "BVnew1234567:123"}]})
         marker["voting_sha256"] = self.save("data/games/S23/new/voting.json", {})
@@ -48,6 +48,13 @@ class IncrementalScopeTests(unittest.TestCase):
     def test_confirmed_new_game_extends_count(self):
         self.fixture()
         self.assertEqual(approved_incremental_count(self.root, "S23"), 1)
+
+    def test_v2_confirmation_extends_scope_and_still_requires_checked_game(self):
+        self.fixture(review_format="masters-incremental-review-v2")
+        self.assertEqual(approved_incremental_count(self.root, "S23"), 1)
+        self.fixture(reviewed=False, review_format="masters-incremental-review-v2")
+        with self.assertRaisesRegex(ValueError, "勾选"):
+            approved_incremental_count(self.root, "S23")
 
     def test_unchecked_or_edited_formal_record_cannot_extend_scope(self):
         self.fixture(reviewed=False)

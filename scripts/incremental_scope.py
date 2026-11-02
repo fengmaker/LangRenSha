@@ -40,7 +40,8 @@ def approved_incremental_count(root: Path, season: str) -> int:
         if not manual_path.is_relative_to(root / "data") or _hash(manual_path) != approval.get("manual_sha256"):
             raise ValueError("新增对局人工复核原件缺失或哈希不匹配")
         manual = _read(manual_path)
-        if manual.get("format") != "masters-incremental-review-v1" or manual.get("season") != season:
+        if (manual.get("format") not in {"masters-incremental-review-v1", "masters-incremental-review-v2"}
+                or manual.get("season") != season):
             raise ValueError("新增对局人工复核原件格式或赛季错误")
         matches = [row for row in manual["games"] if row.get("review_id") == approval.get("review_id")]
         if len(matches) != 1 or matches[0].get("reviewed") is not True:

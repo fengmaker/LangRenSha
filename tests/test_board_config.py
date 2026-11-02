@@ -41,3 +41,17 @@ def test_archived_config_hashes_remain_exact():
     manifest = json.loads((HISTORY / "manifest.json").read_text(encoding="utf-8"))
     for item in manifest["files"]:
         assert hashlib.sha256((ROOT / item["archive_path"]).read_bytes()).hexdigest() == item["sha256"]
+
+
+@pytest.mark.parametrize("code, storage", [
+    ("wolf_girl", "s23_wolf_girl"),
+    ("troublemaker", "s23_troublemaker"),
+])
+def test_new_s23_templates_keep_unconfirmed_wake_order_and_storage_code(code, storage):
+    canonical = load_template(code)
+    stored = load_template(storage)
+    assert canonical["wake_order"] == []
+    assert stored["code"] == storage
+    assert {slot["code"] for slot in canonical["night_slots"]} <= {
+        slot["code"] for slot in stored["night_slots"]
+    }

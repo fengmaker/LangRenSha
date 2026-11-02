@@ -3,7 +3,7 @@ import pytest
 
 from website.api.bluffs import (
     aggregate_bluffs, claim_fingerprint, evaluate_success, review_items, source_fingerprint,
-    success_fingerprint,
+    success_fingerprint, physical_wolf,
 )
 
 
@@ -43,6 +43,21 @@ def sign_assessments(game, payload):
             result_review=record.get("result_review"),
         )
     return payload
+
+
+@pytest.mark.parametrize('role', ['狼女孩', '捣蛋鬼'])
+def test_special_wolf_physical_identity_counts_without_manual_inclusion(role):
+    game = sample()
+    game['seats'][0]['role'] = role
+    assert physical_wolf(game, game['seats'][0])
+    payload = review(game)
+    payload['games'][0]['assessments'][0]['physical_role'] = role
+    sign_assessments(game, payload)
+    item = next(row for row in review_items([game], payload) if row['seat'] == 1)
+    assert item['decision'] == 'yes'
+    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 1
+    partner = {**game['seats'][0], 'role': '平民'}
+    assert not physical_wolf(game, partner)
 
 
 @pytest.mark.parametrize('manual_result', [True, False, None])

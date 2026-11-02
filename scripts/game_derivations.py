@@ -33,8 +33,9 @@ EVENT_FIELDS = {"slot", "action", "actor", "targets", "result", "start_seat", "d
 INACTIVE = {None, "unknown", "unavailable", "forbidden", "not_applicable", "not_held", "none"}
 TRIGGERED = {"hunter_shot", "wolf_king_shot", "mechanical_day_skill"}
 ACTIVE_ACTIONS = {"attack", "guard", "save", "poison", "check", "learn", "dream", "dance",
-                  "give_mask", "verify", "exchange", "select_pair", "choose", "speak", "duel", "shoot", "self_destruct"}
-WOLF_ROLES = {"狼人", "机械狼", "狼王", "黑狼王", "白狼王", "诡术师", "假面", "典狱长", "狼术师", "九尾狐", "盗宝大师"}
+                  "give_mask", "verify", "exchange", "select_pair", "choose", "speak", "duel", "shoot", "self_destruct",
+                  "confess", "trouble"}
+WOLF_ROLES = {"狼人", "机械狼", "狼王", "黑狼王", "白狼王", "诡术师", "假面", "典狱长", "狼术师", "九尾狐", "盗宝大师", "狼女孩", "捣蛋鬼"}
 GOOD_ROLES = {"预言家", "通灵师", "女巫", "毒师", "猎人", "守卫", "骑士", "摄梦人", "平民", "魔术师",
               "定序王子", "舞者", "白痴", "白神", "蒙面人", "白泽"}
 

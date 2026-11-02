@@ -28,6 +28,7 @@ _KEEP_UNKNOWN_SLOTS = {
     "puppet_select", "puppet_skill_effect", "wolf_king_state",
     "mixed_blood_model", "night_deaths", "wolf_king_shot", "exile_result",
     "mechanical_day_skill", "puppet_hunter_eligibility", "nine_tail_kill",
+    "wolf_girl_confession", "troublemaker_action",
 }
 _DEATH_ACTIONS = {"die", "die_after_speech", "suicide", "exile", "disqualify"}
 _TERMINAL_GOD_ROLES = {
@@ -37,7 +38,7 @@ _TERMINAL_GOD_ROLES = {
 
 def terminal_from_events(game: dict) -> dict | None:
     """Read an explicit unplayed-day boundary from existing event notes."""
-    boundaries: set[int] = set()
+    boundaries: set[tuple[int, str]] = set()
     patterns = (
         r"D\s*(\d+)\s*未开始(?!放逐|投票)",
         r"未进入\s*D\s*(\d+)(?!\s*(?:放逐|投票))",
@@ -46,13 +47,20 @@ def terminal_from_events(game: dict) -> dict | None:
     for round_ in game.get('rounds', []):
         for phase in ('night', 'day'):
             for event in round_.get(phase, []):
+                if (family(_board_code(game)) in {'wolf_girl', 'troublemaker'}
+                        and type(round_.get('number')) is int and event.get('slot') == 'game_end'
+                        and event.get('action') in {'end', 'surrender'}):
+                    boundaries.add((round_['number'], phase))
                 result = event.get('result')
                 if isinstance(result, str):
                     for pattern in patterns:
-                        boundaries.update(int(match.group(1)) for match in re.finditer(pattern, result))
+                        boundaries.update((int(match.group(1)), 'night') for match in re.finditer(pattern, result))
     if len(boundaries) > 1:
         raise ValueError('正式事件记录互相指向不同终局白天，需核对终局边界')
-    return {'round': next(iter(boundaries)), 'phase': 'night'} if boundaries else None
+    if not boundaries:
+        return None
+    number, phase = next(iter(boundaries))
+    return {'round': number, 'phase': phase}
 
 
 def terminal_day_events(events: list[dict]) -> list[dict]:

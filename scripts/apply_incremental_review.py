@@ -17,6 +17,9 @@ import uuid
 from incremental_common import (ROOT, entry_key, load_state, save_state, work_dir,
                                 write_json)
 
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 
 class ReviewApplyError(ValueError):
     """A review, source, ownership, or release contract is not satisfied."""

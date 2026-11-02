@@ -982,6 +982,75 @@
           "source-unverified": "unknown"
         }
       ]
+    },
+    "wolf_girl": {
+      "name": "狼女孩",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {"physical_identity": "预言家", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "毒师", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "猎人", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "守卫", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "平民", "count": 4, "elimination_side": "civilian", "victory_faction": "good"},
+        {"physical_identity": "狼人", "count": 3, "elimination_side": "werewolf", "victory_faction": "werewolf"},
+        {"physical_identity": "狼女孩", "count": 1, "elimination_side": "werewolf", "victory_faction": "werewolf"}
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "board_rules": {
+        "first_night_wolf_attack": "forbidden",
+        "poisoner_has_antidote": false,
+        "wolf_girl_confession": {
+          "first_night_only": true,
+          "target_must_not_be_werewolf": true,
+          "civilian_target": "becomes_wolf_partner; personal_victory_faction_follows_wolves; physical_identity_unchanged; no_wolf_knife",
+          "god_target": "confession_fails; target_knows_being_confessed_to_but_not_wolf_girl_identity"
+        },
+        "wolf_girl_self_destruct": "may_take_confessed_target; post-vote self-destruct voids that vote round",
+        "win_conditions": {
+          "good": "eliminate_all_four_wolf_side_identities; wolf_partner need not be eliminated",
+          "werewolf": "eliminate_all_gods_or_all_civilians_including_any_wolf_partner"
+        }
+      },
+      "sources": [
+        {"type": "primary_video_review", "reviewed_on": "2026-11-01", "bvid": "BV1Eox662EE8", "subtitle_range_seconds": [1264.2, 1356.9]},
+        {"type": "official_weibo_post", "post_id": "5359741557277067"},
+        {"type": "referee_recap", "bvid": "BV1Eox662EE8", "subtitle_range_seconds": [8238, 8316.5]}
+      ]
+    },
+    "troublemaker": {
+      "name": "捣蛋鬼",
+      "seat_count": 12,
+      "setup_model": "fixed",
+      "role_composition": [
+        {"physical_identity": "预言家", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "女巫", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "猎人", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "守卫", "count": 1, "elimination_side": "god", "victory_faction": "good"},
+        {"physical_identity": "平民", "count": 4, "elimination_side": "civilian", "victory_faction": "good"},
+        {"physical_identity": "狼人", "count": 3, "elimination_side": "werewolf", "victory_faction": "werewolf"},
+        {"physical_identity": "捣蛋鬼", "count": 1, "elimination_side": "werewolf", "victory_faction": "werewolf"}
+      ],
+      "wake_order": [],
+      "wake_order_status": "not_proven",
+      "slot_order_is_wake_order": false,
+      "board_rules": {
+        "meets_ordinary_wolves": false,
+        "troublemaker_action_precedes_guard": true,
+        "may_pass": true,
+        "cannot_repeat_target_on_consecutive_nights": true,
+        "cannot_pass_on_consecutive_nights": true,
+        "targeted_player_skill_targets_self": true,
+        "original_target_remains_recorded": true,
+        "after_all_wolves_depart": "troublemaker_inherits_wolf_knife"
+      },
+      "sources": [
+        {"type": "primary_video_review", "reviewed_on": "2026-11-01", "bvid": "BV1Eox662EVZ", "subtitle_range_seconds": [350, 660]},
+        {"type": "referee_recap", "bvid": "BV1Eox662EVZ", "subtitle_range_seconds": [5877, 5903]},
+        {"type": "primary_video_review", "reviewed_on": "2026-11-01", "bvid": "BV17ox662EYG", "subtitle_range_seconds": [146, 174]}
+      ]
     }
   },
   "pending_rules": [

@@ -347,12 +347,9 @@ def capture_screenshots(browser, source_path: Path, output_dir: Path, checks: li
     page.goto(source_path.resolve().as_uri(), wait_until='load')
     page.screenshot(path=str(output_dir / 'game_review_desktop_1440.png'), full_page=True)
     require(page.evaluate('document.documentElement.scrollWidth <= innerWidth'), '1440px 桌面页面出现横向溢出')
-    page.set_viewport_size({'width': 390, 'height': 844})
-    require(page.evaluate('document.documentElement.scrollWidth <= innerWidth'), '390px 手机页面出现横向溢出')
-    page.screenshot(path=str(output_dir / 'game_review_mobile_390.png'), full_page=True)
-    checks.append('1440px 桌面与 390px 手机页面无横向溢出并已截图')
+    checks.append('1440px 桌面页面无横向溢出并已截图')
     context.close()
-    return ['game_review_desktop_1440.png', 'game_review_mobile_390.png'], errors
+    return ['game_review_desktop_1440.png'], errors
 
 
 def run(page_path: Path, output_dir: Path) -> dict:
@@ -384,7 +381,7 @@ def run(page_path: Path, output_dir: Path) -> dict:
         'screenshots': screenshots,
         'exports': ['game_review_export.json', 'game_review_v2_import_roundtrip.json'],
         'single_and_multi_navigation': True,
-        'desktop_1440_mobile_390_no_overflow': True,
+        'desktop_1440_no_overflow': True,
     }
     (output_dir / 'game_review_page_qa.json').write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

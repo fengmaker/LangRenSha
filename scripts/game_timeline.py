@@ -7,20 +7,22 @@ import re
 from .board_config import load_canonical_template
 from .game_inference import _actual_deaths, build_game_presentation, terminal_from_events
 from .game_time import phase_label
-from .role_constraints import puppet_target
+from .role_constraints import family, puppet_target
 
 
 _INACTIVE = {None, 'unavailable', 'not_applicable', 'not_held', 'forbidden', 'none'}
 _UNKNOWN_IMPORTANT = {'guard', 'wolf_attack', 'witch_save', 'witch_poison', 'seer_check',
                       'mechanical_action', 'mechanical_day_skill', 'nine_tail_kill',
                       'puppet_select', 'puppet_skill_effect', 'night_deaths', 'exile_result',
-                      'masquerade_attack'}
+                      'masquerade_attack', 'wolf_girl_confession', 'troublemaker_action'}
 _COMMON_TITLES = {
     'guard': '守卫守护', 'wolf_attack': '狼队击杀',
     'witch_save': '女巫解药', 'witch_poison': '女巫毒药', 'seer_check': '预言家查验',
     'sheriff_candidates': '上警名单', 'sheriff_vote': '警长投票',
     'sheriff_result': '警长结果', 'night_deaths': '夜间出局',
     'badge': '警徽', 'self_destruct': '狼人自爆',
+    'wolf_girl_confession': '狼女孩表白', 'troublemaker_action': '捣蛋鬼行动',
+    'game_end': '对局结束',
     'exile_vote': '放逐投票', 'exile_result': '放逐结果',
 }
 
@@ -61,6 +63,17 @@ def _text(event: dict, seats: dict, title: str) -> str:
     if slot == 'wolf_attack' and action == 'attack':
         subject = actor if seats.get(event.get('actor'), {}).get('role') == '机械狼' else '狼队'
         return f'{subject}选择击杀{targets}。' + effect
+    if slot == 'wolf_girl_confession' and action == 'confess':
+        outcome = f'；{str(result).rstrip("。；")}' if result else '；表白结算待核'
+        return f'{actor}向{targets}表白{outcome}。'
+    if slot == 'troublemaker_action':
+        if action == 'trouble':
+            outcome = f'；{str(result).rstrip("。；")}' if result else ''
+            return f'{actor}对{targets}发动捣蛋{outcome}。'
+        if action == 'pass':
+            return f'{actor}本夜空过。'
+        if action == 'unknown':
+            return f'{actor or title}本夜的捣蛋情况待核。'
     if slot == 'masquerade_attack':
         if event.get('invalidated'):
             return (f'{actor}原选择击杀{targets}，但因被判离，本夜狼刀失效。' if targets
@@ -177,6 +190,8 @@ def _masquerade_knife(events: list[dict], roles: dict, template: dict, departed:
 
 
 def _recorded_ending(game: dict) -> dict | None:
+    board = game.get('board')
+    board_family = family(board.get('code') if isinstance(board, dict) else board)
     explicit = game.get('terminal_observation') or terminal_from_events(game)
     if explicit:
         return explicit
@@ -184,10 +199,13 @@ def _recorded_ending(game: dict) -> dict | None:
     for row in game.get('rounds', []):
         for phase in ('night', 'day'):
             for event in row.get(phase, []):
+                action, slot = event.get('action'), event.get('slot')
+                if (board_family in {'wolf_girl', 'troublemaker'}
+                        and slot == 'game_end' and action in {'end', 'surrender'}):
+                    endings.add((row['number'], phase))
                 result = event.get('result')
                 if not isinstance(result, str) or not re.search(r'游戏结束|对局结束|结算终局', result):
                     continue
-                action, slot = event.get('action'), event.get('slot')
                 if slot == 'night_deaths' and action in {'die', 'no_death', 'peaceful'}:
                     endings.add((row['number'], 'night'))
                 elif phase == 'night' and (action not in {None, 'unknown', 'unavailable', 'not_applicable'} or '交牌' in result):
@@ -275,6 +293,10 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
             events = deepcopy(row[phase])
             if is_terminal and not surrender:
                 events += deepcopy((presentation.get('terminal') or {}).get('events', []))
+            if is_terminal and phase == 'night':
+                end_markers = [e for e in events if e.get('slot') == 'game_end' and e.get('action') == 'end']
+                if end_markers:
+                    events = [e for e in events if e not in end_markers] + end_markers
             if phase == 'night':
                 carrying = [e for e in events if e['slot'] == 'mechanical_knife_status' and e.get('action') == 'carrying']
                 if carrying:
@@ -310,6 +332,17 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                     events = [e for e in events if e not in deferred]
                     at = next(i + 1 for i, e in enumerate(events) if e.get('action') == 'self_destruct')
                     events[at:at] = deferred
+                # The fixed morning slot can precede the actual announcement.
+                # Move it only when this game's source explicitly records that timing.
+                for death in [e for e in events if e['slot'] == 'night_deaths'
+                              and re.search(r'自爆后公布', str(e.get('result') or ''))]:
+                    boom = next((e for e in events if e.get('action') == 'self_destruct'), None)
+                    if boom is not None:
+                        events.remove(death)
+                        at = events.index(boom) + 1
+                        while at < len(events) and events[at]['slot'] in {'badge', 'sheriff_result'}:
+                            at += 1
+                        events.insert(at, death)
             if surrender:
                 stop_index, _ = surrender
                 allowed = {e['slot'] for e in original[:stop_index]}
@@ -408,7 +441,9 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                     continue
                 item = {'kind': 'event', 'slot': slot, 'title': title,
                         'text': _text(event, seats, title), 'events': [event]}
-                if slot in {'witch_save', 'witch_poison'}:
+                if slot == 'witch_poison' and seats.get(actor, {}).get('role') == '毒师':
+                    item['title'] = '毒师毒药'
+                elif slot in {'witch_save', 'witch_poison'}:
                     prior = next((i for i in items if i['slot'] == 'witch_medicine'
                                   and i['events'][0].get('actor') == actor), None)
                     if prior is not None:

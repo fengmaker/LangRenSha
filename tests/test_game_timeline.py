@@ -27,6 +27,86 @@ def test_confirmed_empty_guard_and_supplemental_day_surrender_share_the_timeline
     assert source == before
 
 
+def test_wolf_girl_confession_poisoner_and_surrender_share_the_timeline():
+    source = {
+        'board': 's23_wolf_girl', 'winner': 'good',
+        'seats': [
+            {'seat': 1, 'name': '狼女孩', 'role': '狼女孩', 'faction': 'werewolf'},
+            {'seat': 2, 'name': '毒师', 'role': '毒师', 'faction': 'good'},
+            {'seat': 3, 'name': '预言家', 'role': '预言家', 'faction': 'good'},
+            {'seat': 4, 'name': '平民', 'role': '平民', 'faction': 'good'},
+        ],
+        'rounds': [{
+            'number': 1,
+            'night': [
+                {'slot': 'wolf_girl_confession', 'action': 'confess', 'actor': 1,
+                 'targets': [2], 'result': '表白失败；对方知道被表白但不知道表白者身份'},
+                {'slot': 'witch_poison', 'action': 'poison', 'actor': 2,
+                 'targets': [4], 'result': '使用毒药'},
+            ],
+            'day': [{'slot': 'game_end', 'action': 'surrender', 'actor': 1, 'targets': []}],
+        }],
+    }
+    timeline = build_game_timeline(source)
+    night = timeline['phases'][0]['items']
+    confession = next(item for item in night if item['slot'] == 'wolf_girl_confession')
+    assert '1号狼女孩' in confession['text'] and '2号毒师' in confession['text']
+    poison = next(item for item in night if item['slot'] == 'witch_poison')
+    assert poison['title'] == '毒师毒药'
+    assert all(item['slot'] != 'witch_medicine' for item in night)
+    assert timeline['phases'][-1]['items'][-1]['slot'] == 'werewolf_surrender'
+
+
+def test_troublemaker_terminal_deaths_precede_night_game_end_and_result():
+    source = {
+        'board': 's23_troublemaker', 'winner': 'werewolf',
+        'seats': [
+            {'seat': 3, 'name': '守卫', 'role': '守卫', 'faction': 'good'},
+            {'seat': 6, 'name': '猎人', 'role': '猎人', 'faction': 'good'},
+            {'seat': 11, 'name': '捣蛋鬼', 'role': '捣蛋鬼', 'faction': 'werewolf'},
+        ],
+        'rounds': [{
+            'number': 4,
+            'night': [
+                {'slot': 'troublemaker_action', 'action': 'trouble', 'actor': 11,
+                 'targets': [6], 'result': '原目标6号猎人；该猎人的技能实际作用于6号自身'},
+                {'slot': 'guard', 'action': 'guard', 'actor': 3, 'targets': [3],
+                 'result': '原守3号；受捣蛋后实际自守'},
+                {'slot': 'game_end', 'action': 'end', 'actor': None, 'targets': [],
+                 'result': '本夜3号守卫与6号猎人双死；末神猎人无后续开枪窗口'},
+            ],
+            'day': [{'slot': 'night_deaths', 'action': 'die', 'actor': None,
+                     'targets': [3, 6]}],
+        }],
+    }
+    phase = build_game_timeline(source)['phases'][0]
+    slots = [item['slot'] for item in phase['items']]
+    assert slots[-3:] == ['night_deaths', 'game_end', 'game_result']
+    assert phase['terminal'] is True
+
+
+def test_observed_death_announcement_after_self_destruct_stays_after_lost_badge():
+    source = {
+        'board': 's23_mechanical_wolf_seer',
+        'seats': [{'seat': 8, 'name': '牛肉干', 'role': '狼人', 'faction': 'werewolf'},
+                  {'seat': 5, 'name': '耿许儿', 'role': '通灵师', 'faction': 'good'}],
+        'rounds': [{'number': 2, 'night': [], 'day': [
+            {'slot': 'sheriff_candidates', 'action': 'continued'},
+            {'slot': 'night_deaths', 'action': 'die', 'targets': [5],
+             'result': '现场在8号自爆后公布'},
+            {'slot': 'self_destruct', 'action': 'self_destruct', 'actor': 8},
+            {'slot': 'badge', 'action': 'badge_lost'},
+        ]}],
+    }
+    items = build_game_timeline(source)['phases'][0]['items']
+    assert [item['slot'] for item in items] == [
+        'sheriff_candidates', 'self_destruct', 'badge', 'night_deaths']
+    # Without the observed timing, keep the ordinary morning announcement.
+    source['rounds'][0]['day'][1]['result'] = '夜间出局'
+    ordinary = build_game_timeline(source)['phases'][0]['items']
+    assert [item['slot'] for item in ordinary].index('night_deaths') < [item['slot'] for item in ordinary].index('self_destruct')
+
+
 @pytest.mark.parametrize('folder', [
     '2026-09-11_g02_BV1g1YU6kERd',
     '2026-09-17_g02_BV1nJer63EDh',

@@ -50,18 +50,36 @@ services:
       DATABASE_URL: postgresql://masters:${POSTGRES_PASSWORD}@db:5432/masters
       MASTERS_SOURCE_ROOT: /source
     volumes:
+      - ../data/games/S21:/source/data/games/S21:ro
       - ../data/games/S22:/source/data/games/S22:ro
       - ../data/games/S23:/source/data/games/S23:ro
       - ../config:/source/config:ro
+      - ../data/extractions/S21/media_evidence:/source/data/extractions/S21/media_evidence:ro
+      - ../data/extractions/S21/voting:/source/data/extractions/S21/voting:ro
       - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro
       - ../data/extractions/S23/voting:/source/data/extractions/S23/voting:ro
+      # Preserve source-bound approvals when counting incremental games.
+      - ../data/reports/S23/S23_逐局复核计划.json:/source/data/reports/S23/S23_逐局复核计划.json:ro
+      - ../data/reports/S23/incremental/reviews:/source/data/reports/S23/incremental/reviews:ro
       # Include sources needed to reproduce the evidence fingerprints.
+      - ../data/seasons/S21:/source/data/seasons/S21:ro
       - ../data/seasons/S22:/source/data/seasons/S22:ro
       - ../data/seasons/S23:/source/data/seasons/S23:ro
       - ../data/raw/bilibili/BV17QJh6qEid/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV17QJh6qEid/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV17ox662EYG/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV17ox662EYG/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1Eox662EE8/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1Eox662EE8/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1Eox662EVZ/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1Eox662EVZ/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1FJxc6zEzg/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1FJxc6zEzg/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1HksX6QEr5/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1HksX6QEr5/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1RQx364EVx/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1RQx364EVx/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1RQx364EaF/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1RQx364EaF/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1RQx364Eit/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1RQx364Eit/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1cJxc6zEbr/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1cJxc6zEbr/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1cJxc6zEgf/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1cJxc6zEgf/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json:ro
+      - ../data/raw/bilibili/BV1kksX6DEK8/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1kksX6DEK8/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1saaT6jEyK/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1saaT6jEyK/p01/subtitle.01.raw.json:ro
       - ../data/raw/bilibili/BV1yt7v6QE3Q/p01/subtitle.01.raw.json:/source/data/raw/bilibili/BV1yt7v6QE3Q/p01/subtitle.01.raw.json:ro
@@ -69,12 +87,13 @@ services:
       - ../data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json:ro
       - ../data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json:ro
       - ../data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json:/source/data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json:ro
+      - ../data/transcripts/S23/BV1kksX6DEbH_p01_cid43131407038_funasr/transcript.json:/source/data/transcripts/S23/BV1kksX6DEbH_p01_cid43131407038_funasr/transcript.json:ro
     depends_on:
       db:
         condition: service_healthy
     entrypoint: ["python", "-m", "website.api.publish"]
     # A publication replaces the complete active set; never append one season.
-    command: ["--seasons", "S22", "S23"]
+    command: ["--seasons", "S21", "S22", "S23"]
   publish-bluffs:
     profiles: ["tools"]
     build:
@@ -85,6 +104,9 @@ services:
     volumes:
       # The bluff completeness guard reads PACKAGE_ROOT/config, not /source.
       - ../config:/app/config:ro
+      - ../data/games/S23:/app/data/games/S23:ro
+      - ../data/reports/S23/S23_逐局复核计划.json:/app/data/reports/S23/S23_逐局复核计划.json:ro
+      - ../data/reports/S23/incremental/reviews:/app/data/reports/S23/incremental/reviews:ro
     depends_on:
       db:
         condition: service_healthy

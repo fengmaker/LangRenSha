@@ -95,9 +95,12 @@ def prepare_text(entry: dict, season: str, *, root: Path = ROOT, device="cuda") 
 
 def board_for(entry: dict, season: str, root: Path) -> str:
     name = entry["labels"].get("board_candidate")
-    code = BOARD_CODES.get(name) or {"青丘夜影": "qingqiu_night", "魔幻对决": "magic_duel"}.get(name)
     config = load_season(season, root)
-    mapping = config.get("formal_import", {}).get("board_code_map", {})
+    formal = config.get("formal_import", {})
+    mapping = formal.get("board_code_map", {})
+    code = formal.get("board_overrides", {}).get(entry.get("bvid"))
+    if code is None:
+        code = BOARD_CODES.get(name) or {"青丘夜影": "qingqiu_night", "魔幻对决": "magic_duel"}.get(name)
     if not code or code not in mapping:
         raise ValueError(f"新增版型尚未确认正式模板：{name}；需先核规则，不能套用其他版型")
     return mapping[code]

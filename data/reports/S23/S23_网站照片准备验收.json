@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-10-30T14:24:25.430453+00:00",
+  "generated_at_utc": "2026-11-01T09:23:02.717164+00:00",
   "season": "S23",
   "target_source": "data/games/S23/*/dossier.json canonical seat names",
-  "formal_dossier_count": 84,
+  "formal_dossier_count": 87,
   "formal_dossiers": [
     "data/games/S23/2026-09-08_g01_BV1KfYE6HEDv/dossier.json",
     "data/games/S23/2026-09-08_g02_BV1sAYJ6UEoF/dossier.json",
@@ -88,9 +88,12 @@
     "data/games/S23/2026-10-28_g03_BV1kksX6DEbH/dossier.json",
     "data/games/S23/2026-10-29_g01_BV1cJxc6zEgf/dossier.json",
     "data/games/S23/2026-10-29_g02_BV1FJxc6zEzg/dossier.json",
-    "data/games/S23/2026-10-29_g03_BV1cJxc6zEbr/dossier.json"
+    "data/games/S23/2026-10-29_g03_BV1cJxc6zEbr/dossier.json",
+    "data/games/S23/2026-10-30_g01_BV1Eox662EE8/dossier.json",
+    "data/games/S23/2026-10-30_g02_BV1Eox662EVZ/dossier.json",
+    "data/games/S23/2026-10-30_g03_BV17ox662EYG/dossier.json"
   ],
-  "target_player_count": 61,
+  "target_player_count": 63,
   "target_player_names": [
     "AA",
     "Bobby",
@@ -113,7 +116,7 @@
     "圈圈",
     "夏夏",
     "大卫",
-    "天天的星_",
+    "天星",
     "天策",
     "宝玉妹妹",
     "小乖",
@@ -123,6 +126,7 @@
     "小白",
     "小肥",
     "小苍",
+    "小鱼丸",
     "彭彭",
     "徐言雨",
     "智贤",
@@ -150,13 +154,14 @@
     "谢朵儿",
     "蹄蹄",
     "郭小炜",
+    "阿铖",
     "陈俊洁",
     "陈明峻",
     "鬼鬼"
   ],
-  "directly_matched_count": 60,
-  "alias_matched_count": 1,
-  "covered_player_count": 61,
+  "directly_matched_count": 63,
+  "alias_matched_count": 0,
+  "covered_player_count": 63,
   "covered_player_names": [
     "AA",
     "Bobby",
@@ -179,7 +184,7 @@
     "圈圈",
     "夏夏",
     "大卫",
-    "天天的星_",
+    "天星",
     "天策",
     "宝玉妹妹",
     "小乖",
@@ -189,6 +194,7 @@
     "小白",
     "小肥",
     "小苍",
+    "小鱼丸",
     "彭彭",
     "徐言雨",
     "智贤",
@@ -216,37 +222,28 @@
     "谢朵儿",
     "蹄蹄",
     "郭小炜",
+    "阿铖",
     "陈俊洁",
     "陈明峻",
     "鬼鬼"
   ],
   "coverage_rate": 1.0,
   "missing": [],
-  "aliases_used": [
-    {
-      "canonical_name": "天天的星_",
-      "photo_name": "天星",
-      "photo_id": "P0205",
-      "sha256": "3ba62f3cff82292a3b2973a9e20618961f355fc8cfe1720731607c291a0cdac4",
-      "source_url": "https://m.weibo.cn/detail/5349233155638005",
-      "source_date": "2026-10-01",
-      "evidence": "S23第4期官方阵容排班与人工确认照片P0205来自同一官方微博帖；P0205原图名牌经人工确认是‘天星’，该帖正文与同日排班均列canonical handle‘天天的星_’。",
-      "asset": "S23/3ba62f3cff82292a3b2973a9e20618961f355fc8cfe1720731607c291a0cdac4.jpg"
-    }
-  ],
+  "aliases_used": [],
   "manifest": "website/api/player_photos.json",
   "assets": "website/assets/player-photos",
   "retained_manifest_player_counts": {
     "S22": 62,
-    "S21": 59,
-    "S23": 67
+    "S23": 69,
+    "S21": 59
   },
   "inputs": [
     "data/weibo/2026-05-26_2026-10-20/参赛名单/人名去重_照片映射.csv",
     "data/weibo/2026-05-26_2026-10-20/人名复核/S22-S23_照片人名_人工复核.csv",
     "data/weibo/2026-05-26_2026-10-20/人名复核/照片人名_来源索引.json",
     "data/weibo/2026-05-26_2026-10-20/比赛排班.csv",
-    "data/weibo/2026-10-20_2026-10-30/S23_增量照片名牌核对.json"
+    "data/weibo/2026-10-20_2026-10-30/S23_增量照片名牌核对.json",
+    "data/weibo/2026-10-30_2026-11-01/S23_增量照片名牌核对.json"
   ],
   "incremental_nameplate_sources": [
     {
@@ -320,6 +317,16 @@
       "source_index": "data/weibo/2026-10-20_2026-10-30/S23_增量照片名牌核对.json"
     },
     {
+      "name": "小鱼丸",
+      "photo_id": "WB5359741557277067_03",
+      "sha256": "2e4123077cf2d21bbefd57764312248d22e06c63d46dd95c310baf6bd0e00a64",
+      "source_image": "data/raw/weibo/2026-10-30_2026-11-01_京城大师赛_UID7525583841/images/2026-10/2026-10-30_15-30-29_S23_第07期_阵容公告__WB5359741557277067_图03.jpg",
+      "source_url": "https://m.weibo.cn/detail/5359741557277067",
+      "source_date": "2026-10-30",
+      "nameplate_text": "小鱼丸",
+      "source_index": "data/weibo/2026-10-30_2026-11-01/S23_增量照片名牌核对.json"
+    },
+    {
       "name": "智贤",
       "photo_id": "WB5358654468915627_03",
       "sha256": "eb7619f6e5d28551222133841cad95c9a7b5634e4191d8cc0273b66cb994d8d8",
@@ -348,6 +355,16 @@
       "source_date": "2026-10-27",
       "nameplate_text": "老狼",
       "source_index": "data/weibo/2026-10-20_2026-10-30/S23_增量照片名牌核对.json"
+    },
+    {
+      "name": "阿铖",
+      "photo_id": "WB5359741557277067_02",
+      "sha256": "294f3bb2a3ac7d0dc12a9fba985d63301424d192c1d54127aab136113fda6ac6",
+      "source_image": "data/raw/weibo/2026-10-30_2026-11-01_京城大师赛_UID7525583841/images/2026-10/2026-10-30_15-30-29_S23_第07期_阵容公告__WB5359741557277067_图02.jpg",
+      "source_url": "https://m.weibo.cn/detail/5359741557277067",
+      "source_date": "2026-10-30",
+      "nameplate_text": "阿铖",
+      "source_index": "data/weibo/2026-10-30_2026-11-01/S23_增量照片名牌核对.json"
     }
   ]
 }
