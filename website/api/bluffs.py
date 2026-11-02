@@ -13,7 +13,7 @@ from website.api.analytics import _add_denominator, _add_excluded, _metric_resul
 from website.api.bluff_frames import public_image_url
 
 ASSET_ROOT = Path(__file__).resolve().parents[1] / "assets" / "bluffs"
-WOLF_ROLES = {"狼人", "狼王", "机械狼", "盗宝大师", "假面", "诡术师", "典狱长", "黑狼王", "白狼王", "九尾狐", "狼术师"}
+WOLF_ROLES = {"狼人", "狼王", "机械狼", "盗宝大师", "假面", "诡术师", "典狱长", "黑狼王", "白狼王", "九尾狐", "狼术师", "狼女孩", "捣蛋鬼"}
 METHODOLOGY = [
     "悍跳必须同时满足狼人底牌和公开自称预言家或通灵师；同一选手同一局只计一次，好人诈身份、狼混及仅说自己取得某技能不直接计入。",
     "主要核查第一天的警上、PK及警下发言，直到实际入夜或自爆结束白天；竞选延期到次日单独标注。晚期复盘可佐证首日，但不能把后日发言直接当作首日自称。",

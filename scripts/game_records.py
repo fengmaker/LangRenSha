@@ -30,7 +30,7 @@ ALIASES = {
     "天星": ["天天的星_"],
 }
 
-WOLF_ROLES = frozenset({"狼人", "机械狼", "狼王", "黑狼王", "诡术师", "假面", "典狱长", "白狼王", "九尾狐", "狼术师"})
+WOLF_ROLES = frozenset({"狼人", "机械狼", "狼王", "黑狼王", "诡术师", "假面", "典狱长", "白狼王", "九尾狐", "狼术师", "狼女孩", "捣蛋鬼"})
 ROLE_FACTIONS = {
     **{role: "werewolf" for role in WOLF_ROLES},
     "盗宝大师": "werewolf",
@@ -412,6 +412,8 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
         ("badge", "transfer"): 1,
         ("badge", "hold"): 1,
         ("mixed_blood_model", "choose"): 1,
+        ("wolf_girl_confession", "confess"): 1,
+        ("troublemaker_action", "trouble"): 1,
         ("ghost_bride_select_groom", "choose"): 1,
         ("couple_select_witness", "choose"): 1,
         ("magician_exchange", "exchange"): 2,
@@ -478,6 +480,13 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
                     raise ReviewError("事件必须使用固定字段，不能附加自由描述")
                 if event["action"] not in slot["actions"]:
                     raise ReviewError("事件动作不属于槽位")
+                if (board.get("code") in {"wolf_girl", "s23_wolf_girl"}
+                        and round_["number"] == 1 and event["slot"] == "wolf_attack"
+                        and event["action"] in {"attack", "pass"}):
+                    raise ReviewError("狼女孩版型首夜禁止狼刀")
+                if (event["slot"] == "wolf_girl_confession" and event["action"] == "confess"
+                        and round_["number"] != 1):
+                    raise ReviewError("狼女孩只能在首夜表白")
                 actor = event["actor"]
                 if actor is not None:
                     if type(actor) is not int or actor not in by_seat:
@@ -561,6 +570,9 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
                         raise ReviewError("该槽位动作缺少操作目标")
                 elif targets:
                     raise ReviewError("未发生或未知的动作不能填写操作目标")
+                if event["slot"] == "wolf_girl_confession" and event["action"] == "confess":
+                    if by_seat[targets[0]].get("role") in WOLF_ROLES:
+                        raise ReviewError("狼女孩不能向狼人阵营身份表白")
                 if event["slot"] == "treasure_choice" and event["action"] == "choose":
                     role_pool = board.get("role_pool")
                     if not isinstance(role_pool, dict) or not isinstance(event["result"], str) or event["result"] not in role_pool:

@@ -1,0 +1,43 @@
+{
+  "code": "wolf_girl",
+  "name": "狼女孩",
+  "seat_count": 12,
+  "role_counts": {
+    "预言家": 1,
+    "毒师": 1,
+    "猎人": 1,
+    "守卫": 1,
+    "平民": 4,
+    "狼人": 3,
+    "狼女孩": 1
+  },
+  "wake_order": [],
+  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。",
+  "night_slots": [
+    {"code": "wolf_girl_confession", "label": "狼女孩表白", "actor_role": "狼女孩", "actions": ["confess", "unavailable", "unknown"]},
+    {"code": "guard", "label": "守卫守护", "actor_role": "守卫", "actions": ["guard", "pass", "unavailable", "unknown"]},
+    {"code": "wolf_attack", "label": "狼队击杀", "actor_role": "狼队", "actions": ["attack", "pass", "forbidden", "unavailable", "unknown"]},
+    {"code": "witch_poison", "label": "毒师毒药", "actor_role": "毒师", "actions": ["poison", "pass", "unavailable", "unknown"]},
+    {"code": "seer_check", "label": "预言家查验", "actor_role": "预言家", "actions": ["check", "pass", "unavailable", "unknown"]}
+  ],
+  "day_slots": [
+    {"code": "sheriff_candidates", "label": "上警名单", "actor_role": null, "actions": ["register", "continued", "unavailable", "unknown"]},
+    {"code": "sheriff_vote", "label": "警长投票", "actor_role": null, "actions": ["vote", "not_held", "unavailable", "unknown"]},
+    {"code": "sheriff_result", "label": "警长结果", "actor_role": null, "actions": ["elected", "deferred", "none", "unavailable", "unknown"]},
+    {"code": "night_deaths", "label": "夜间出局", "actor_role": null, "actions": ["die", "peaceful", "unknown"]},
+    {"code": "hunter_shot", "label": "猎人开枪", "actor_role": "猎人", "actions": ["shoot", "pass", "unavailable", "unknown"]},
+    {"code": "badge", "label": "警徽", "actor_role": null, "actions": ["transfer", "hold", "none", "unknown"]},
+    {"code": "speech_order", "label": "白天发言顺序", "actor_role": null, "actions": ["order", "not_held", "unknown"]},
+    {"code": "exile_vote", "label": "放逐投票", "actor_role": null, "actions": ["vote", "not_held", "unknown"]},
+    {"code": "exile_result", "label": "放逐结果", "actor_role": null, "actions": ["exile", "none", "unknown"]},
+    {"code": "self_destruct", "label": "狼人自爆", "actor_role": "狼队", "actions": ["self_destruct", "none", "unknown"]},
+    {"code": "game_end", "label": "对局结束", "actor_role": "狼队", "actions": ["surrender", "none", "unknown"]}
+  ],
+  "storage_variants": {
+    "s23_wolf_girl": {
+      "code": "s23_wolf_girl",
+      "name": "S23 狼女孩",
+      "wake_order_note": "S23逐局档案未确认完整睁眼顺序；槽位次序仅表示归档顺序。"
+    }
+  }
+}

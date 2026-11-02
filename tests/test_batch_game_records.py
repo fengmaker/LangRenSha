@@ -156,6 +156,34 @@ class BatchGameRecordTests(unittest.TestCase):
                     event.update(action=action, targets=targets)
                 self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["code"], board_code)
 
+    def test_wolf_girl_confession_and_first_night_knife_structure(self):
+        value = self.template_record("wolf_girl")
+        self.assertNotIn("witch_save", {slot["code"] for slot in load_template("wolf_girl", ROOT)["night_slots"]})
+        value["seats"][0].update(role="狼女孩", faction="werewolf")
+        value["seats"][1].update(role="毒师", faction="good")
+        value["seats"][2].update(role="狼人", faction="werewolf")
+        confession = self.event(value, "wolf_girl_confession")
+        confession.update(action="confess", actor=1, targets=[2], result="失败；目标为神职")
+        self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["code"], "wolf_girl")
+
+        confession["targets"] = [3]
+        with self.assertRaisesRegex(ReviewError, "不能向狼人阵营身份表白"):
+            validate(value, check_files=False, allow_incomplete=True)
+
+        confession.update(targets=[2])
+        attack = self.event(value, "wolf_attack")
+        attack.update(action="attack", actor=3, targets=[2])
+        with self.assertRaisesRegex(ReviewError, "首夜禁止狼刀"):
+            validate(value, check_files=False, allow_incomplete=True)
+
+    def test_troublemaker_action_keeps_wolf_faction_and_one_target(self):
+        value = self.template_record("troublemaker")
+        value["seats"][0].update(role="捣蛋鬼", faction="werewolf")
+        action = self.event(value, "troublemaker_action")
+        action.update(action="trouble", actor=1, targets=[6],
+                      result="目标6号猎人；受捣蛋的猎人技能实际作用于6号自身")
+        self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["code"], "troublemaker")
+
     def test_masquerade_minority_resolution_preserves_the_departing_seat(self):
         value = self.template_record("masquerade")
         self.event(value, "dancer_dance").update(action="dance", targets=[1, 7, 12])

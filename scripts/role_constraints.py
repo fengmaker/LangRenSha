@@ -77,7 +77,8 @@ _SEER_CHECK_ROLE_BY_FAMILY = {
     "wolf_king_knight": "预言家",
 }
 _WOLF_KNIFE_ACTORS = frozenset({"狼人", "狼王", "黑狼王", "白狼王"})
-_WOLF_SIDE_SPECIAL_ROLES = frozenset({"诡术师", "假面", "狼术师", "九尾狐", "典狱长"})
+_WOLF_SIDE_SPECIAL_ROLES = frozenset({"诡术师", "假面", "狼术师", "九尾狐", "典狱长", "狼女孩", "捣蛋鬼"})
+_WOLF_TEAM_ROLES = _WOLF_KNIFE_ACTORS | _WOLF_SIDE_SPECIAL_ROLES | frozenset({"机械狼", "盗宝大师"})
 _INACTIVE_ACTIONS = {
     None, "unknown", "pass", "unavailable", "not_held", "not_triggered",
     "forbidden",
@@ -283,6 +284,8 @@ def _seer_check_constraint(game, phase, event, *, actor, dead_before):
 
 
 def _wolf_attack_constraint(game, number, event, *, actor, dead_before):
+    if family(_board_code(game)) == "wolf_girl" and number == 1:
+        return _result("unavailable", "wolf_girl_first_night_attack_forbidden", legal_targets=None)
     puppet = puppet_target(game)
     if puppet is not None and actor == puppet:
         return _result('unavailable', 'puppet_has_no_wolf_knife', legal_targets=None)
@@ -320,6 +323,15 @@ def _wolf_attack_constraint(game, number, event, *, actor, dead_before):
             return _result("unknown", "ordinary_wolf_departure_unknown", legal_targets=legal)
         return _result("available" if wolves == "available" else "unavailable",
                        "ordinary_wolves_departed" if wolves == "available" else "ordinary_wolves_alive",
+                       legal_targets=legal)
+    if role == "捣蛋鬼" and family(_board_code(game)) == "troublemaker":
+        if actor in set(dead_before):
+            return _result("unavailable", "wolf_attack_actor_departed", legal_targets=legal)
+        wolves = _ordinary_wolves_state(game, number, dead_before)
+        if wolves == "unknown":
+            return _result("unknown", "ordinary_wolf_departure_unknown", legal_targets=legal)
+        return _result("available" if wolves == "available" else "unavailable",
+                       "troublemaker_inherited_wolf_knife" if wolves == "available" else "ordinary_wolves_alive",
                        legal_targets=legal)
     if role in _WOLF_SIDE_SPECIAL_ROLES:
         return _result("unknown", "wolf_attack_special_role_rule_unknown", legal_targets=legal)
@@ -754,6 +766,56 @@ def _same_target_rule(
     return _result("available", f"{rule}_targets_available", legal_targets=legal)
 
 
+def _wolf_girl_confession_constraint(game, number, phase, event, *, actor, uses):
+    unknown_actor = _role_known(game, actor, "狼女孩", "wolf_girl_actor_unknown")
+    if unknown_actor is not None:
+        return unknown_actor
+    if phase != "night":
+        return _result("unavailable", "wolf_girl_confession_wrong_phase")
+    if number != 1:
+        return _result("unavailable", "wolf_girl_confession_first_night_only")
+    count = _use_count(uses, actor, "wolf_girl_confession")
+    if count is None:
+        return _result("unknown", "wolf_girl_confession_history_unknown")
+    if count:
+        return _result("unavailable", "wolf_girl_confession_spent")
+    targets = _targets(event)
+    if _has_action(event):
+        if len(targets) != 1:
+            return _result("unavailable", "wolf_girl_confession_target_count_invalid")
+        target_role = (_seat_roles(game) or {}).get(targets[0])
+        if target_role is None:
+            return _result("unknown", "wolf_girl_confession_target_role_unknown")
+        if target_role in _WOLF_TEAM_ROLES:
+            return _result("unavailable", "wolf_girl_confession_target_werewolf")
+    return _result("available", "wolf_girl_confession_available")
+
+
+def _troublemaker_constraint(game, number, phase, event, *, actor, previous):
+    unknown_actor = _role_known(game, actor, "捣蛋鬼", "troublemaker_actor_unknown")
+    if unknown_actor is not None:
+        return unknown_actor
+    if phase != "night":
+        return _result("unavailable", "troublemaker_wrong_phase")
+    prior = _previous(previous, actor, "troublemaker_action")
+    if prior and prior.get("round") == number - 1:
+        if prior.get("action") == "unknown":
+            return _result("unknown", "troublemaker_history_unknown", legal_targets=None)
+        if event.get("action") == "pass" and prior.get("action") == "pass":
+            return _result("unavailable", "troublemaker_consecutive_pass")
+    seats = _all_seats(game)
+    if seats is None:
+        return _result("unknown", "troublemaker_targets_unknown", legal_targets=None)
+    blocked = set(prior.get("targets") or []) if prior and prior.get("round") == number - 1 and prior.get("action") == "trouble" else set()
+    legal = [seat for seat in seats if seat not in blocked]
+    targets = _targets(event)
+    if event.get("action") == "trouble":
+        if len(targets) != 1 or targets[0] not in legal:
+            reason = "troublemaker_target_repeat" if set(targets).intersection(blocked) else "troublemaker_target_invalid"
+            return _result("unavailable", reason, legal_targets=legal)
+    return _result("available", "troublemaker_action_available", legal_targets=legal)
+
+
 def _confirmed_night_deaths(game, number: int) -> set[int]:
     round_ = next((row for row in game.get("rounds") or []
                    if isinstance(row, dict) and row.get("number") == number), None)
@@ -1115,9 +1177,22 @@ def event_constraint(
     board_family = family(code)
     slot = event.get("slot")
 
+    if slot == "game_end" and board_family in {"wolf_girl", "troublemaker"}:
+        if event.get("action") in {"none", "end", "surrender"}:
+            return _result("available", "game_end_state_recorded")
+        return _result("unknown", "game_end_state_unknown")
+
     if slot in {"witch_save", "witch_poison"}:
         return _medicine_constraint(game, number, phase, event, actor=actor,
                                     uses=uses, previous=previous)
+
+    if board_family == "wolf_girl" and slot == "wolf_girl_confession":
+        return _wolf_girl_confession_constraint(game, number, phase, event,
+                                                actor=actor, uses=uses)
+
+    if board_family == "troublemaker" and slot == "troublemaker_action":
+        return _troublemaker_constraint(game, number, phase, event,
+                                        actor=actor, previous=previous)
 
     if board_family == "mixed_blood" and slot == "mixed_blood_model":
         unknown_actor = _role_known(game, actor, "混血儿", "mixed_blood_actor_unknown")

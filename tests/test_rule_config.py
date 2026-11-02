@@ -67,7 +67,12 @@ def test_cases_keep_evidence_status_and_single_game_scope():
     current = load_formal_rules("S23")
     old = original("S23_formal_rules.json")
     for field in ("board_code_map", "role_profiles", "confirmed_rule_handling", "separate_review_context"):
-        assert current[field] == old[field]
+        if field == "board_code_map":
+            assert {key: current[field][key] for key in old[field]} == old[field]
+            assert current[field]["wolf_girl"] == "s23_wolf_girl"
+            assert current[field]["troublemaker"] == "s23_troublemaker"
+        else:
+            assert current[field] == old[field]
 
 
 def test_scoring_keeps_points_and_user_reported_provenance():

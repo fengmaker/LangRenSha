@@ -1,6 +1,6 @@
 # 大师赛档案网站
 
-当前发布S21 122条媒体档案、S22 148局、S23 84局，共354条档案。S21正式计分总局数与现有缺口留待后续复核，未复核悍跳的次数与成功率显示为空。完整数据加工见[全流程手册](../docs/01_赛季数据全流程.md)；本站负责公开快照、只读查询与页面。
+当前发布S21 122条媒体档案、S22 148局、S23 87局，共357条档案。S21正式计分总局数与现有缺口留待后续复核，未复核悍跳的次数与成功率显示为空。完整数据加工见[全流程手册](../docs/01_赛季数据全流程.md)；本站负责公开快照、只读查询与页面。
 
 网站版型名称和筛选使用共用模板的统一代码与名称，同版型跨赛季合并统计。赛季存储代码继续用于已核事实和规则适配。
 
@@ -66,11 +66,15 @@ API仅导出白名单公开字段，不含本地路径、凭据或全文转写�
 
 历史交付、接入与验收状态见[dot-handoff索引](../dot-handoff/README.md)及[接续记录](../dot-handoff/INTEGRATION.md)；下文按目标环境执行并记录实际结果。
 
-以下为独立目标环境的操作交接，不代表已经部署成功。基线 `dfd2f94aaa24a71db7e61e627985f0437db353ba` 的审计发现：Compose只挂载／发布S22，API镜像漏掉悍跳证据截图。本配置补齐S22/S23与 `assets/bluff-frames`；没有修改正式数据、数据库schema或JCMS迁移。
+以下为独立目标环境的操作交接，不代表已经部署成功。Compose默认一次发布S21/S22/S23完整活动集；API镜像包含当前照片、悍跳输入、证据截图及发布所需规则模块。当前准备基线为357条档案，没有修改正式数据、数据库schema或JCMS迁移。
 
 ### 配置与边界
 
-在 `website` 目录运行以下命令。目标机器需有Docker Compose、完整S22/S23正式JSON、档案引用的字幕／转写、投票旁证（源中存在时）、配置／网站资产；字幕／转写用于绑定发言证据和生成一致的来源哈希，无旁证的赛季挂载目录可为空。数据不打进镜像，发布服务只读挂载指定赛季目录；API镜像包含照片、悍跳输入和截图。API运行时不挂载原始数据，不使用管理员账号。
+在 `website` 目录运行以下命令。目标机器需有Docker Compose、完整S21/S22/S23正式JSON、档案引用的字幕／转写、投票旁证（源中存在时）、配置／网站资产；字幕／转写用于绑定发言证据和生成一致的来源哈希，无旁证的赛季挂载目录可为空。数据不打进镜像，发布服务只读挂载指定目录；API运行时不挂载原始数据，不使用管理员账号。
+
+部署文件应来自同一份当前工作目录，保留项目相对路径及原始字节。源文件范围以 `compose.yaml` 的只读挂载为准：包含S21的 `data/extractions/S21/media_evidence` 警上发言旁证，以及S23新增对局对应的 `incremental_review.json`、`data/reports/S23/S23_逐局复核计划.json` 和 `data/reports/S23/incremental/reviews` 人工确认原件。悍跳发布工具也挂载S23正式档案和这两处复核来源，用于校验新增局数；S21目前没有悍跳发布输入，保留未复核状态。
+
+上传 `data/seasons` 和S21旁证目录时只需保留文本资料，音频／视频无需上传；`.dockerignore` 也将原始数据排除在镜像构建上下文之外。API镜像从 `website/api` 复制照片／截图清单，并复制 `website/assets/player-photos`、`bluffs` 和 `bluff-frames` 整目录，包括最新两名选手照片。若使用Git拉取部署，必须先确保当前代码、正式档案、复核原件和清单内资产均已纳入目标版本，不能用旧提交替代当前工作目录。
 
 在目标环境的私有 `website/.env` 或受控环境变量中设置 `POSTGRES_PASSWORD`、`POSTGRES_READER_PASSWORD`（后者至少20字符），不要提交或粘贴凭据。密码用于连接URI，应使用高熵URI安全字符，或按目标环境正确处理URI编码；不要将示例值用于实际部署。`SITE_PORT` 默认3000，前端仅绑定127.0.0.1；公网反向代理／TLS与访问策略需另外审查。不要把 `docker compose config` 展开的凭据保存到公开日志，校验时使用 `--quiet`。
 
@@ -84,9 +88,9 @@ docker compose build api web publish publish-bluffs reader-setup
 docker compose up -d db
 
 # 只检查磁盘源，不连接／写数据库；必须保留全部目标赛季。
-docker compose run --rm publish --seasons S22 S23 --check
+docker compose run --rm publish --seasons S21 S22 S23 --check
 # 写入完整活动game release；自动执行 website/api/schema.sql。
-docker compose run --rm publish --seasons S22 S23
+docker compose run --rm publish --seasons S21 S22 S23
 
 # 悍跳预检读取真实活动数据库；不同于上面的离线源预检。
 docker compose run --rm publish-bluffs --season S22 --check
@@ -101,7 +105,7 @@ docker compose run --rm reader-setup
 docker compose up -d api web
 ```
 
-发布器和悍跳发布器使用同一个 `website/api/schema.sql`，无需运行JCMS业务迁移。`publish-bluffs`只读挂载 `/app/config`，因为完整对局数校验读取包根目录配置，不读取 `MASTERS_SOURCE_ROOT`。正式发布会替换整个活动集，单季或 `--sample` 不是追加操作；悍跳两个发布各自事务化，**不是跨两季原子事务**。任一失败则停止上线，排查后重跑并确认两季绑定；更新已有站点时需在获准维护窗口完成，不要让访客看到中间状态。game release变化或回退后，两季悍跳均需重新预检／同步。
+发布器和悍跳发布器使用同一个 `website/api/schema.sql`，无需运行JCMS业务迁移。`publish-bluffs`从包根目录 `/app` 读取配置及新增对局确认来源，不读取 `MASTERS_SOURCE_ROOT`。正式发布会替换整个活动集，单季或 `--sample` 不是追加操作；S22/S23悍跳两个发布各自事务化，**不是跨两季原子事务**。任一失败则停止上线，排查后重跑并确认两季绑定；更新已有站点时需在获准维护窗口完成，不要让访客看到中间状态。game release变化或回退后，两季悍跳均需重新预检／同步。
 
 ### 只读账号与验收
 
@@ -109,6 +113,6 @@ docker compose up -d api web
 
 此脚本不是通用角色清理器，不撤销历史授权或角色成员关系，默认事务只读也不能替代权限隔离。对于既有数据库，同名角色的成员关系、继承权限、PUBLIC授权和跨schema写权限必须先由管理员审计；未确认最小权限时不要用于运行时。本文只描述已有授权流程，本次准备没有创建角色、设置密码或修改数据库安全配置。
 
-目标环境上线前核对：API `/health`、`/api/v1/releases`、S22/S23各148／75局、两季悍跳的game release绑定、照片和清单内102张S23截图可访问，再运行本README的通用验收（通过环境变量 `MASTERS_API_URL`、`MASTERS_WEB_URL` 指定目标地址）及桌面／手机浏览器检查。Compose没有向宿主机发布API端口，验收程序必须在获准且可达API服务的目标网络中运行，不能默认宿主机 `localhost:8000` 可用；不要为验收擅自开放公网API端口。源数据更新时以当前正式范围为准，不把这些基线数量当成永久规则。正式备份与恢复验证仍按上节执行；不要删除持久卷来排障。
+目标环境上线前核对：API `/health`、`/api/v1/releases`、S21/S22/S23各122／148／87条档案（当前共357条）、S22/S23悍跳的game release绑定、三季照片和清单内102张S23截图可访问，再运行本README的通用验收（通过环境变量 `MASTERS_API_URL`、`MASTERS_WEB_URL` 指定目标地址）及桌面／手机浏览器检查。Compose没有向宿主机发布API端口，验收程序必须在获准且可达API服务的目标网络中运行，不能默认宿主机 `localhost:8000` 可用；不要为验收擅自开放公网API端口。源数据更新时以当前正式范围为准，不把这些基线数量当成永久规则。正式备份与恢复验证仍按上节执行；不要删除持久卷来排障。
 
-本次仅完成静态Compose配置检查、离线223局源预检及纯／mock测试；Docker构建／容器运行、PostgreSQL实际发布／授权、完整API集成与浏览器验收未运行（当前云环境相关能力受限）。这些检查通过前，不应宣称已复现有数据的完整网站或已可上线。
+本地部署回归使用 `python -m pytest website/tests/test_deployment_contract.py -q`：只复制Compose声明的发布源和API镜像的COPY输入，在独立Python进程中执行三季离线预检，与完整工作目录的计数、来源哈希及release逐项比较，并核对新增对局计数和图片字节哈希。该检查不连接或修改数据库。本次环境未安装Docker，未执行Docker构建、Compose运行或云端上线；目标服务器仍须完成上述运行与验收。

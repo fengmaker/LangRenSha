@@ -143,7 +143,7 @@ def load_inputs(bvids: list[str] | None = None) -> tuple[dict, dict, dict, dict,
     if not EULOGY_POLICY_PATH.is_file():
         raise ReviewError("缺少10号遗言诈身份的单独统计口径记录")
     mapping = rules.get("board_code_map", {})
-    if set(mapping) != {"mechanical_wolf_seer", "mixed_blood", "guile_realm", "masquerade", "treasure_master", "qingqiu_night", "magic_duel"}:
+    if set(mapping) != {"mechanical_wolf_seer", "mixed_blood", "guile_realm", "masquerade", "treasure_master", "qingqiu_night", "magic_duel", "wolf_girl", "troublemaker"}:
         raise ReviewError("S23 board_code_map覆盖范围不完整")
     return scope, rules, progress, daily, audit
 

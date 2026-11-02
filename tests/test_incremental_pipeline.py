@@ -24,6 +24,10 @@ from raw_media_fixture import make_subtitle_media
 
 
 class IncrementalPipelineTests(unittest.TestCase):
+    def test_s23_confirmed_board_override_wins_over_misleading_title(self):
+        entry = {"bvid": "BV1Eox662EE8", "labels": {"board_candidate": "预女猎白混"}}
+        self.assertEqual(analyze.board_for(entry, "S23", ROOT), "s23_wolf_girl")
+
     def test_subtitle_to_ai_to_notes_acceptance_preserves_formal_database_contract(self):
         with tempfile.TemporaryDirectory(dir=ROOT / "tmp") as temporary:
             root = Path(temporary)

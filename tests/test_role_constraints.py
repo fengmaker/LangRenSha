@@ -36,6 +36,50 @@ def test_family_normalizes_cross_season_aliases_without_merging_distinct_boards(
     assert family("s21_treasure_master") == "treasure_master"
 
 
+def test_wolf_girl_confession_and_opening_knife_constraints():
+    source = game("s23_wolf_girl", [(1, "狼女孩"), (2, "毒师"), (3, "狼人")], season="S23")
+    assert check(source, 1, "night", "wolf_girl_confession", actor=1,
+                 action="confess", targets=[2])["status"] == "available"
+    assert check(source, 1, "night", "wolf_girl_confession", actor=1,
+                 action="confess", targets=[3])["reason"] == "wolf_girl_confession_target_werewolf"
+    assert check(source, 2, "night", "wolf_girl_confession", actor=1)["reason"] == "wolf_girl_confession_first_night_only"
+    assert check(source, 1, "night", "wolf_attack", actor=3,
+                 action="forbidden")["reason"] == "wolf_girl_first_night_attack_forbidden"
+
+
+def test_new_game_end_rules_do_not_reinterpret_existing_qingqiu_records():
+    from scripts.game_inference import terminal_from_events
+    source = game('s23_qingqiu_night', [(1, '九尾狐')], season='S23')
+    source['rounds'] = [{'number': 3, 'night': [],
+                         'day': [{'slot': 'game_end', 'action': 'end'}]}]
+    assert terminal_from_events(source) is None
+    assert check(source, 3, 'day', 'game_end', actor=None, action='end')['reason'] == 'no_applicable_rule'
+
+
+def test_troublemaker_cannot_repeat_target_or_pass_on_consecutive_nights():
+    source = game("s23_troublemaker", [(1, "捣蛋鬼"), (2, "守卫"), (3, "狼人")], season="S23")
+    previous = {(1, "troublemaker_action"): {"round": 2, "action": "trouble", "targets": [2]}}
+    assert check(source, 3, "night", "troublemaker_action", actor=1,
+                 action="trouble", targets=[2], previous=previous)["reason"] == "troublemaker_target_repeat"
+    assert check(source, 3, "night", "troublemaker_action", actor=1,
+                 action="trouble", targets=[3], previous=previous)["status"] == "available"
+    assert check(source, 3, "night", "troublemaker_action", actor=1,
+                 action="trouble", targets=[1], previous={})["status"] == "available"
+    previous[(1, "troublemaker_action")] = {"round": 2, "action": "pass", "targets": []}
+    assert check(source, 3, "night", "troublemaker_action", actor=1,
+                 action="pass", previous=previous)["reason"] == "troublemaker_consecutive_pass"
+
+
+def test_troublemaker_inherits_wolf_knife_only_after_all_ordinary_wolves_depart():
+    source = game("s23_troublemaker", [(1, "捣蛋鬼"), (2, "狼人"), (3, "狼人"), (4, "平民")], season="S23")
+    alive = check(source, 3, "night", "wolf_attack", actor=1,
+                  action="attack", targets=[4], dead_before={2})
+    assert alive["status"] == "unavailable" and alive["reason"] == "ordinary_wolves_alive"
+    inherited = check(source, 3, "night", "wolf_attack", actor=1,
+                      action="attack", targets=[4], dead_before={2, 3})
+    assert inherited["status"] == "available" and inherited["reason"] == "troublemaker_inherited_wolf_knife"
+
+
 def test_nine_tail_knife_requires_prior_departures_of_all_ordinary_wolves():
     source = game('qingqiu_night', [(2, '狼人'), (4, '狼人'), (6, '狼人'), (9, '九尾狐')], rounds=[
         {'number': 2, 'night': [], 'day': [

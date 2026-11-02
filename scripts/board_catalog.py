@@ -16,6 +16,8 @@ _CANONICAL_BOARD_CODES: dict[str, str] = {
     "黑狼王骑士": "black_wolf_king_knight",
     "四狼八猎": "four_wolves_eight_hunters",
     "鬼魂新娘": "ghost_bride",
+    "狼女孩": "wolf_girl",
+    "捣蛋鬼": "troublemaker",
 }
 
 # The season catalogue has one documented alternate title for this board.
