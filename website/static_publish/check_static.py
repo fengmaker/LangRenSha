@@ -360,6 +360,22 @@ def _snapshot_media_references(snapshot: dict[str, Any]) -> set[str]:
     return references
 
 
+def _media_references_for_check(snapshot: dict[str, Any],
+                                media_cache: dict[str, Any] | None) -> set[str]:
+    if media_cache is None:
+        return _snapshot_media_references(snapshot)
+    if "references" not in media_cache:
+        media_cache["references"] = _snapshot_media_references(snapshot)
+    return media_cache["references"]
+
+
+def _media_sha256(path: Path, reference: str, hashes: dict[str, str]) -> str:
+    if reference not in hashes:
+        with path.open("rb") as stream:
+            hashes[reference] = hashlib.file_digest(stream, "sha256").hexdigest()
+    return hashes[reference]
+
+
 _STATIC_ASSET_EXTENSIONS = {".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jpeg", ".webp",
                            ".svg", ".ico", ".woff", ".woff2", ".ttf", ".otf", ".map", ".webmanifest",
                            ".avif"}
@@ -367,7 +383,9 @@ _STATIC_ASSET_EXTENSIONS = {".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jp
 
 def _check_local_assets(snapshot: dict[str, Any]) -> int:
     out, base = snapshot["out"], snapshot["manifest"]["base_path"]
+    resolved_out = out.resolve()
     checked: set[str] = set()
+    checked_references: set[tuple[str, str, str]] = set()
 
     def check_reference(reference: str, origin: Path):
         parsed = urlsplit(reference.strip())
@@ -378,14 +396,20 @@ def _check_local_assets(snapshot: dict[str, Any]) -> int:
             return
         if path.startswith(base + "/"):
             relative = path[len(base) + 1:]
+            reference_key = ("root", "", PurePosixPath(relative).as_posix())
         elif path.startswith("/"):
             raise StaticAcceptanceError(f"Static asset omits the configured base path: {reference}")
         else:
             relative = str(origin.parent.relative_to(out) / Path(path))
+            reference_key = ("relative", origin.parent.relative_to(out).as_posix(),
+                             PurePosixPath(path).as_posix())
+        if reference_key in checked_references:
+            return
         target = (out / relative).resolve()
-        if not target.is_relative_to(out.resolve()) or not target.is_file():
+        if not target.is_relative_to(resolved_out) or not target.is_file():
             raise StaticAcceptanceError(f"Static asset reference is missing: {reference}")
-        checked.add(target.relative_to(out.resolve()).as_posix())
+        checked_references.add(reference_key)
+        checked.add(target.relative_to(resolved_out).as_posix())
 
     for html_file in out.rglob("*.html"):
         source = html_file.read_text(encoding="utf-8")
@@ -398,7 +422,9 @@ def _check_local_assets(snapshot: dict[str, Any]) -> int:
     return len(checked)
 
 
-def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any]) -> dict[str, Any]:
+def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
+                     media_cache: dict[str, Any] | None = None,
+                     basic: bool = False) -> dict[str, Any]:
     manifest, data, out = snapshot["manifest"], snapshot["data"], snapshot["out"]
     counts = manifest["counts"]
     games = docs["games_index"].get("items", [])
@@ -504,32 +530,34 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any]) -> dict[str
         release_id = document.get("release_id") if isinstance(document, dict) else None
         if release_id is not None and release_id != manifest["release_id"]:
             raise StaticAcceptanceError(f"Stale release binding in {path.relative_to(out)}")
-    media_references = _snapshot_media_references(snapshot)
-    for reference in sorted(media_references):
-        relative = Path(reference)
-        if relative.is_absolute() or ".." in relative.parts:
-            raise StaticAcceptanceError(f"Invalid media reference {reference}")
-        path = out / relative
-        if not path.is_file():
-            raise StaticAcceptanceError(f"Referenced media file is missing: {reference}")
-        if not re.fullmatch(r"[0-9a-fA-F]{64}", path.stem):
-            raise StaticAcceptanceError(f"Media filename is not content-addressed: {reference}")
-        with path.open("rb") as stream:
-            digest = hashlib.file_digest(stream, "sha256").hexdigest()
-        if digest.casefold() != path.stem.casefold():
-            raise StaticAcceptanceError(f"Media content hash differs from filename: {reference}")
+    if not basic:
+        media_references = _media_references_for_check(snapshot, media_cache)
+        media_hashes = media_cache.setdefault("hashes", {}) if media_cache is not None else {}
+        for reference in sorted(media_references):
+            relative = Path(reference)
+            if relative.is_absolute() or ".." in relative.parts:
+                raise StaticAcceptanceError(f"Invalid media reference {reference}")
+            path = out / relative
+            if not path.is_file():
+                raise StaticAcceptanceError(f"Referenced media file is missing: {reference}")
+            if not re.fullmatch(r"[0-9a-fA-F]{64}", path.stem):
+                raise StaticAcceptanceError(f"Media filename is not content-addressed: {reference}")
+            digest = _media_sha256(path, reference, media_hashes)
+            if digest.casefold() != path.stem.casefold():
+                raise StaticAcceptanceError(f"Media content hash differs from filename: {reference}")
     all_files = [path for path in out.rglob("*") if path.is_file()]
     sizes = {"total_bytes": sum(path.stat().st_size for path in all_files),
              "json_bytes": sum(path.stat().st_size for path in json_files),
              "media_bytes": sum(path.stat().st_size for path in media_files),
              "files": len(all_files), "json_files": len(json_files),
-             "media_files": len(media_files), "media_references": len(media_references)}
+             "media_files": len(media_files), "media_references": None if basic else len(media_references)}
     _check_site_size(sizes["total_bytes"])
     routes = _record_routes(snapshot, docs)
     return {"state": "passed", "files": sizes, "routes_checked": len(routes),
             "media_references_checked": len(media_references),
             "static_assets_checked": _check_local_assets(snapshot),
-            "hash_algorithm": "sha256", "hashes_checked": len(media_files)}
+            "hash_algorithm": None if basic else "sha256",
+            "hashes_checked": 0 if basic else len(media_files)}
 
 
 def _all_api_games(api_url: str, release_id: str, expected_total: int) -> list[dict[str, Any]]:
@@ -751,7 +779,8 @@ def _check_threshold_projection(base: dict[str, Any], actual: dict[str, Any],
 
 
 def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
-               export_index: dict[str, Any] | None = None) -> dict[str, Any]:
+               export_index: dict[str, Any] | None = None, *,
+               media_cache: dict[str, Any] | None = None) -> dict[str, Any]:
     manifest, data = snapshot["manifest"], snapshot["data"]
     release_id = manifest["release_id"]
     binding = _get_json(api_url, "/api/v1/export-manifest")
@@ -785,13 +814,13 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
             raise StaticAcceptanceError(f"Invalid media manifest hash: {name}")
     allowed_assets = {item.get("url", "").lstrip("/"): item.get("sha256")
                       for item in binding.get("media_assets", [])}
-    media_references = _snapshot_media_references(snapshot)
+    media_references = _media_references_for_check(snapshot, media_cache)
+    media_hashes = media_cache.setdefault("hashes", {}) if media_cache is not None else {}
     for reference in media_references:
         if reference not in allowed_assets:
             raise StaticAcceptanceError(f"Referenced media is not allowed by export-manifest: /{reference}")
         media_path = snapshot["out"] / Path(reference)
-        with media_path.open("rb") as stream:
-            actual_hash = hashlib.file_digest(stream, "sha256").hexdigest()
+        actual_hash = _media_sha256(media_path, reference, media_hashes)
         if actual_hash.casefold() != str(allowed_assets[reference]).casefold():
             raise StaticAcceptanceError(f"Referenced media hash differs from export-manifest: /{reference}")
     api_releases = _get_json(api_url, "/api/v1/releases")
@@ -1268,7 +1297,8 @@ def _browser_routes(snapshot: dict[str, Any], docs: dict[str, Any],
 def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
                    channel: str, output: Path | None,
                    export_index: dict[str, Any] | None = None,
-                   previous_export_index: dict[str, Any] | None = None) -> dict[str, Any]:
+                   previous_export_index: dict[str, Any] | None = None, *,
+                   media_cache: dict[str, Any] | None = None) -> dict[str, Any]:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as error:
@@ -1290,7 +1320,7 @@ def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
     screenshot_dir.mkdir(parents=True, exist_ok=True)
     screenshot_paths: list[str] = []
     loaded_image_paths: set[str] = set()
-    expected_references = _snapshot_media_references(snapshot)
+    expected_references = _media_references_for_check(snapshot, media_cache)
     player_photos_expected = any(reference.startswith("media/player-photos/")
                                  for reference in expected_references)
     bluff_frames_expected = any(reference.startswith("media/bluff-frames/")
@@ -1737,23 +1767,34 @@ def check(out: Path | str, base_path: str, api_url: str, *, browser_channel: str
           output: Path | str | None = None) -> dict[str, Any]:
     """Check structure/API and selected browser routes unless explicitly skipped."""
     started = perf_counter()
+    load_started = perf_counter()
     base = _base_path(base_path)
     out_path = Path(out)
     snapshot = _load_snapshot(out_path, base)
     docs = _read_documents(snapshot)
-    structure = _structure_check(snapshot, docs)
-    api = _api_check(snapshot, docs, api_url, export_index)
+    stage_durations = {"load": round(perf_counter() - load_started, 3)}
+    media_cache: dict[str, Any] = {}
+    structure_started = perf_counter()
+    structure = _structure_check(snapshot, docs, media_cache=media_cache)
+    stage_durations["structure"] = round(perf_counter() - structure_started, 3)
+    api_started = perf_counter()
+    api = _api_check(snapshot, docs, api_url, export_index, media_cache=media_cache)
+    stage_durations["api"] = round(perf_counter() - api_started, 3)
     report_path = Path(output) if output is not None else None
     if skip_browser_check:
         browser = {"state": "skipped", "reason": "explicit --skip-browser-check",
                    "scope": "key_entries_and_affected_routes", "routes_checked": 0,
                    "representative_routes_checked": 0, "routes": [], "viewports": []}
+        stage_durations["browser"] = 0.0
     else:
+        browser_started = perf_counter()
         browser = _browser_check(snapshot, docs, api_url, browser_channel, report_path,
-                                 export_index, previous_export_index)
+                                 export_index, previous_export_index, media_cache=media_cache)
+        stage_durations["browser"] = round(perf_counter() - browser_started, 3)
     manifest = snapshot["manifest"]
     report = {
         "state": "partial" if manifest["partial"]["enabled"] else "passed",
+        "check_scope": "full",
         "mode": "partial" if manifest["partial"]["enabled"] else "full",
         "complete": manifest["complete"], "snapshot_id": manifest["snapshot_id"],
         "build_id": manifest["build_id"], "release_id": manifest["release_id"],
@@ -1761,8 +1802,55 @@ def check(out: Path | str, base_path: str, api_url: str, *, browser_channel: str
         "partial_scope": manifest["partial"] if manifest["partial"]["enabled"] else None,
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "duration_seconds": round(perf_counter() - started, 3),
+        "stage_durations_seconds": stage_durations,
         "layers": {"structure": structure, "api": api, "browser": browser},
     }
+    print("Acceptance stage seconds: " + json.dumps(stage_durations, ensure_ascii=False), flush=True)
+    if report_path is not None:
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def check_basic(out: Path | str, base_path: str, *,
+                output: Path | str | None = None) -> dict[str, Any]:
+    """Check local static snapshot structure without source API or browser checks."""
+    started = perf_counter()
+    load_started = perf_counter()
+    base = _base_path(base_path)
+    out_path = Path(out)
+    snapshot = _load_snapshot(out_path, base)
+    docs = _read_documents(snapshot)
+    stage_durations = {"load": round(perf_counter() - load_started, 3)}
+
+    structure_started = perf_counter()
+    structure = _structure_check(snapshot, docs, media_cache={}, basic=True)
+    stage_durations["structure"] = round(perf_counter() - structure_started, 3)
+    stage_durations["api"] = 0.0
+    stage_durations["browser"] = 0.0
+
+    manifest = snapshot["manifest"]
+    report_path = Path(output) if output is not None else None
+    report = {
+        "state": "basic",
+        "check_scope": "basic",
+        "mode": "partial" if manifest["partial"]["enabled"] else "full",
+        "complete": manifest["complete"], "snapshot_id": manifest["snapshot_id"],
+        "build_id": manifest["build_id"], "release_id": manifest["release_id"],
+        "seasons": snapshot["seasons"], "ranges": manifest["ranges"],
+        "partial_scope": manifest["partial"] if manifest["partial"]["enabled"] else None,
+        "checked_at_utc": datetime.now(timezone.utc).isoformat(),
+        "duration_seconds": round(perf_counter() - started, 3),
+        "stage_durations_seconds": stage_durations,
+        "layers": {
+            "structure": structure,
+            "api": {"state": "skipped", "reason": "basic scope does not call the source API"},
+            "browser": {"state": "skipped", "reason": "basic scope does not launch a browser",
+                        "scope": "none", "routes_checked": 0,
+                        "representative_routes_checked": 0, "routes": [], "viewports": []},
+        },
+    }
+    print("Acceptance stage seconds: " + json.dumps(stage_durations, ensure_ascii=False), flush=True)
     if report_path is not None:
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -1797,7 +1885,9 @@ def main(argv: list[str] | None = None) -> int:
                       "complete": report["complete"], "snapshot_id": report["snapshot_id"],
                       "output": str(args.output) if args.output else None,
                       "browser_routes": report["layers"]["browser"]["routes_checked"],
-                      "duration_seconds": report["duration_seconds"]}, ensure_ascii=False, indent=2))
+                      "duration_seconds": report["duration_seconds"],
+                      "stage_durations_seconds": report.get("stage_durations_seconds", {})},
+                     ensure_ascii=False, indent=2))
     return 0
 
 

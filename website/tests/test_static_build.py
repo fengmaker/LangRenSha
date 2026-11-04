@@ -119,12 +119,15 @@ def test_export_failure_does_not_replace_previous_ready_site(tmp_path, monkeypat
         raise RuntimeError("Published API unavailable")
 
     monkeypatch.setattr(export_static, "export_snapshot", unavailable)
+    timings = {}
     with pytest.raises(RuntimeError, match="Published API unavailable"):
-        build_static.build("http://127.0.0.1:1", "/langrensha-site", target)
+        build_static.build("http://127.0.0.1:1", "/langrensha-site", target, stage_seconds=timings)
     assert (target / "index.html").read_text() == "previous accepted site"
     assert json.loads(receipt_path.read_text())["build_id"] == "old"
     failure, = (tmp_path / "tmp/pages-build").glob("*/receipt.json")
     assert json.loads(failure.read_text())["failed_step"] == "export"
+    assert json.loads(failure.read_text())["stage_seconds"] == timings
+    assert "export" in timings and timings["export"] >= 0
 
 
 def accepted_baseline(tmp_path, monkeypatch):
@@ -148,6 +151,8 @@ def accepted_baseline(tmp_path, monkeypatch):
 def test_unchanged_update_skips_export_and_next_but_checks_release_history(tmp_path, monkeypatch):
     from website.static_publish import export_static
     site, previous = accepted_baseline(tmp_path, monkeypatch)
+    previous["stage_seconds"] = {"export": 99, "frontend_build": 123}
+    build_static.write_json(site.parent / "acceptance.json", previous)
     monkeypatch.setattr(build_static, "source_receipt", lambda: {"build_input_hash": "source-1"})
     requests = []
 
@@ -158,10 +163,13 @@ def test_unchanged_update_skips_export_and_next_but_checks_release_history(tmp_p
 
     monkeypatch.setattr(export_static, "_request_json", api)
     monkeypatch.setattr(export_static, "export_snapshot", lambda *args, **kwargs: pytest.fail("Unchanged export ran"))
-    result = build_static.build("http://api", "/site", site)
+    timings = {}
+    result = build_static.build("http://api", "/site", site, stage_seconds=timings)
     assert result["build_id"] == "old" and result["update_status"] == "unchanged"
     assert requests == ["/health", "/api/v1/export-manifest", "/api/v1/releases"]
     assert json.loads((site.parent / "acceptance.json").read_text()) == previous
+    assert result["stage_seconds"] is timings
+    assert "source_consistency" in timings and "export" not in timings and "frontend_build" not in timings
 
 
 def test_damaged_accepted_artifact_cannot_be_reused(tmp_path, monkeypatch):
@@ -210,7 +218,7 @@ def test_edit_during_build_prevents_promotion_even_after_acceptance(tmp_path, mo
     compiler_shells(web / "out")
     monkeypatch.setattr(build_static, "WEB", web)
     monkeypatch.setattr(build_static, "prepare_static_workspace", lambda snapshot: web)
-    inputs = iter(["before", "after"])
+    inputs = iter(["before", "before", "after"])
     monkeypatch.setattr(build_static, "source_receipt", lambda: {"build_input_hash": next(inputs)})
     def export(_url, output, **kwargs):
         snapshot_files(output, kwargs["build_id"])
@@ -220,7 +228,7 @@ def test_edit_during_build_prevents_promotion_even_after_acceptance(tmp_path, mo
     monkeypatch.setattr(build_static.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(returncode=0))
     monkeypatch.setattr(check_static, "check", lambda *args, **kwargs: {"state": "passed"})
     with pytest.raises(RuntimeError, match="Source inputs changed"):
-        build_static.build("http://api", "/site", target)
+        build_static.build("http://api", "/site", target, full_check=True)
     assert (target / "index.html").read_text() == "previous accepted site"
     assert json.loads(receipt_path.read_text())["build_id"] == "old"
     failure, = (tmp_path / "tmp/pages-build").glob("*/receipt.json")
@@ -296,7 +304,7 @@ def reusable_baseline(tmp_path, monkeypatch):
                 "export_index": {"metadata": {"release_id": "release-1"}},
                 "acceptance": {"layers": {"browser": {"state": "passed"}}}}
     build_static.write_json(site.parent / "acceptance.json", previous)
-    calls = {"export": [], "check": []}
+    calls = {"export": [], "check": [], "basic_check": []}
 
     def export(_url, output, **kwargs):
         calls["export"].append(kwargs)
@@ -308,8 +316,13 @@ def reusable_baseline(tmp_path, monkeypatch):
         calls["check"].append(kwargs)
         return {"layers": {"browser": {"state": "skipped" if kwargs["skip_browser_check"] else "passed"}}}
 
+    def check_basic(*args, **kwargs):
+        calls["basic_check"].append(kwargs)
+        return {"check_scope": "basic", "layers": {"browser": {"state": "skipped"}}}
+
     monkeypatch.setattr(export_static, "export_snapshot", export)
     monkeypatch.setattr(check_static, "check", check)
+    monkeypatch.setattr(check_static, "check_basic", check_basic, raising=False)
     return site, previous, calls
 
 
@@ -340,8 +353,8 @@ def test_data_only_update_reuses_assets_and_materializes_new_and_removed_ids(tmp
     assert not (site / "data/releases/snapshot-1").exists()
     assert not (site / "media/snapshot-1.png").exists()
     assert calls["export"][0]["reuse_from"] == site
-    assert calls["check"][0]["previous_export_index"] == previous["export_index"]
-    assert calls["check"][0]["skip_browser_check"] is True
+    assert calls["check"] == [] and len(calls["basic_check"]) == 1
+    assert result["check_scope"] == "basic"
     assert {"export", "frontend_reuse", "materialize", "acceptance"} <= result["stage_seconds"].keys()
 
 
@@ -373,30 +386,44 @@ def test_frontend_changes_or_legacy_artifacts_force_build_and_typecheck(tmp_path
 def test_full_refetch_can_reuse_frontend_and_keeps_previous_browser_scope(tmp_path, monkeypatch):
     site, previous, calls = reusable_baseline(tmp_path, monkeypatch)
     monkeypatch.setattr(build_static, "node_binary", lambda: pytest.fail("Full data refetch requested Node"))
-    result = build_static.build("http://api", "/site", site, incremental=False)
+    result = build_static.build("http://api", "/site", site, incremental=False, full_check=True)
     assert result["frontend_build"] == "reused"
     assert calls["export"][0]["reuse_from"] is None and calls["export"][0]["reuse_index"] is None
     assert calls["check"][0]["previous_export_index"] == previous["export_index"]
 
 
-def test_failed_reused_candidate_keeps_previous_site_and_receipt(tmp_path, monkeypatch):
+@pytest.mark.parametrize("full_check", [False, True])
+def test_failed_reused_candidate_keeps_previous_site_and_receipt(tmp_path, monkeypatch, full_check):
     from website.static_publish import check_static
     site, previous, _ = reusable_baseline(tmp_path, monkeypatch)
 
     def fail(*args, **kwargs):
         raise RuntimeError("candidate acceptance failed")
 
-    monkeypatch.setattr(check_static, "check", fail)
+    monkeypatch.setattr(check_static, "check" if full_check else "check_basic", fail)
     with pytest.raises(RuntimeError, match="candidate acceptance failed"):
-        build_static.build("http://api", "/site", site)
+        build_static.build("http://api", "/site", site, full_check=full_check)
     assert build_static.tree_hash(site) == previous["artifact_hash"]
     assert json.loads((site.parent / "acceptance.json").read_text()) == previous
 
 
-def test_unchanged_previous_browser_skip_does_not_skip_a_requested_browser_check(tmp_path, monkeypatch):
+def test_source_edit_is_rejected_before_expensive_acceptance(tmp_path, monkeypatch):
+    site, previous, calls = reusable_baseline(tmp_path, monkeypatch)
+    inputs = iter(["source-2", "edited-during-export"])
+    monkeypatch.setattr(build_static, "source_receipt", lambda: {"build_input_hash": next(inputs)})
+    with pytest.raises(RuntimeError, match="Source inputs changed"):
+        build_static.build("http://api", "/site", site)
+    assert calls["check"] == [] and calls["basic_check"] == []
+    assert build_static.tree_hash(site) == previous["artifact_hash"]
+    failure, = (tmp_path / "tmp/pages-build").glob("*/receipt.json")
+    assert json.loads(failure.read_text())["failed_step"] == "source_consistency_before_acceptance"
+
+
+@pytest.mark.parametrize("browser_state", ["passed", "skipped"])
+def test_explicit_full_check_runs_even_on_an_unchanged_previously_checked_site(tmp_path, monkeypatch, browser_state):
     from website.static_publish import check_static, export_static
     site, previous = accepted_baseline(tmp_path, monkeypatch)
-    previous["acceptance"]["layers"]["browser"]["state"] = "skipped"
+    previous["acceptance"]["layers"]["browser"]["state"] = browser_state
     build_static.write_json(site.parent / "acceptance.json", previous)
     monkeypatch.setattr(build_static, "source_receipt", lambda: {"build_input_hash": "source-1"})
     monkeypatch.setattr(export_static, "_request_json", lambda _url, path:
@@ -406,13 +433,13 @@ def test_unchanged_previous_browser_skip_does_not_skip_a_requested_browser_check
     checks = []
     monkeypatch.setattr(check_static, "check", lambda *args, **kwargs:
                         checks.append(kwargs) or {"layers": {"browser": {"state": "passed"}}})
-    result = build_static.build("http://api", "/site", site)
+    result = build_static.build("http://api", "/site", site, full_check=True)
     assert result["update_status"] == "unchanged" and result["browser_check"] == "passed"
     assert len(checks) == 1 and checks[0]["skip_browser_check"] is False
     assert json.loads((site.parent / "acceptance.json").read_text())["acceptance"]["layers"]["browser"]["state"] == "passed"
 
 
-def test_unchanged_current_browser_skip_reports_prior_acceptance_as_reused(tmp_path, monkeypatch):
+def test_default_unchanged_update_reuses_prior_acceptance_without_full_checks(tmp_path, monkeypatch):
     from website.static_publish import check_static, export_static
     site, previous = accepted_baseline(tmp_path, monkeypatch)
     monkeypatch.setattr(build_static, "source_receipt", lambda: {"build_input_hash": "source-1"})
@@ -420,7 +447,7 @@ def test_unchanged_current_browser_skip_reports_prior_acceptance_as_reused(tmp_p
         {"/health": {"status": "ok"}, "/api/v1/export-manifest": previous["export_index"]["metadata"],
          "/api/v1/releases": {"items": []}}[path])
     monkeypatch.setattr(check_static, "check", lambda *args, **kwargs: pytest.fail("Skipped unchanged acceptance ran"))
-    result = build_static.build("http://api", "/site", site, skip_browser_check=True)
+    result = build_static.build("http://api", "/site", site)
     assert result["browser_check"] == "skipped" and result["acceptance_reused"] is True
     assert result["acceptance"]["layers"]["browser"]["state"] == "passed"
     assert json.loads((site.parent / "acceptance.json").read_text()) == previous
@@ -428,10 +455,20 @@ def test_unchanged_current_browser_skip_reports_prior_acceptance_as_reused(tmp_p
     assert json.loads(audit.read_text())["browser_check"] == "skipped"
 
 
+def test_default_build_does_not_run_api_or_browser_acceptance(tmp_path, monkeypatch):
+    from website.static_publish import check_static
+    site, _, calls = reusable_baseline(tmp_path, monkeypatch)
+    monkeypatch.setattr(check_static, "check", lambda *args, **kwargs: pytest.fail("Full acceptance ran by default"))
+    result = build_static.build("http://api", "/site", site)
+    assert result["check_scope"] == "basic" and result["browser_check"] == "skipped"
+    assert len(calls["basic_check"]) == 1
+
+
 def test_build_cli_propagates_browser_skip_and_full(monkeypatch, tmp_path):
     calls = []
     monkeypatch.setattr(build_static.sys, "argv", ["build_static.py", "--api-url", "http://api",
-        "--output", str(tmp_path / "site"), "--skip-browser-check", "--full"])
+        "--output", str(tmp_path / "site"), "--skip-browser-check", "--full", "--full-check"])
     monkeypatch.setattr(build_static, "build", lambda *args, **kwargs: calls.append(kwargs))
     assert build_static.main() == 0
     assert calls[0]["skip_browser_check"] is True and calls[0]["incremental"] is False
+    assert calls[0]["full_check"] is True

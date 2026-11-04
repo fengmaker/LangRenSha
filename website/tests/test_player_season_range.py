@@ -23,6 +23,7 @@ def _snapshot(game_id: str, season: str, date: str, person_id: str | None) -> di
 
 @pytest.fixture
 def client(monkeypatch):
+    api._PLAYER_SCOPES.clear()
     snapshots = {
         "S22": [
             _snapshot("s22-player", "S22", "2026-06-01", "p"),
@@ -67,12 +68,15 @@ def client(monkeypatch):
     monkeypatch.setattr(api, "photo_for", lambda name, season: {"season": season})
 
     class Cursor:
+        def __init__(self, player_id):
+            self.player_id = player_id
+
         def fetchone(self):
-            return {"id": "p", "name": "Player"}
+            return {"id": self.player_id, "name": "Player"}
 
     class Connection:
         def execute(self, query, params=None):
-            return Cursor()
+            return Cursor(params[1])
 
     api.app.dependency_overrides[api.connection_dependency] = lambda: Connection()
     try:
@@ -80,6 +84,86 @@ def client(monkeypatch):
             yield test_client
     finally:
         api.app.dependency_overrides.pop(api.connection_dependency, None)
+        api._PLAYER_SCOPES.clear()
+
+
+def test_player_requests_share_scope_computation_and_keep_thresholds_separate(client, monkeypatch):
+    from website.api import analytics
+
+    loads, accumulations = [], []
+    original_load = api._scope_snapshots
+    original_accumulate = analytics._accumulate
+
+    def load(*args, **kwargs):
+        loads.append(args[2])
+        return original_load(*args, **kwargs)
+
+    def accumulate(*args, **kwargs):
+        accumulations.append(1)
+        return original_accumulate(*args, **kwargs)
+
+    monkeypatch.setattr(api, "_scope_snapshots", load)
+    monkeypatch.setattr(analytics, "_accumulate", accumulate)
+    path = "/api/v1/players/p?season_start=S22&season_end=S23"
+    first = client.get(path).json()
+    absent = client.get(path.replace("/p?", "/absent?")).json()
+    excluded = client.get(path + "&minimum_appearances=3").json()
+    again = client.get(path).json()
+    assert first == again
+    assert absent["id"] == "absent" and absent["appearances"] == 0
+    assert excluded["stats"]["rankings"]["total_win_rate"] is None
+    assert excluded["stats"]["ledger"] == first["stats"]["ledger"]
+    assert loads == ["S22", "S23"]
+    assert len(accumulations) == 1
+
+
+def test_player_scope_changes_with_review_publication_release_and_season_range(client, monkeypatch):
+    loads = []
+    original_load = api._scope_snapshots
+    original_review = api.read_review_publication
+    version = ["1"]
+
+    def load(*args, **kwargs):
+        loads.append((args[1], args[2]))
+        return original_load(*args, **kwargs)
+
+    def review(*args):
+        return {**original_review(*args), "publication_id": "review-" + version[0],
+                "payload_hash": "hash-" + version[0]}
+
+    monkeypatch.setattr(api, "_scope_snapshots", load)
+    monkeypatch.setattr(api, "read_review_publication", review)
+    path = "/api/v1/players/p?season_start=S22&season_end=S23"
+    first = client.get(path).json()
+    version[0] = "2"
+    second = client.get(path).json()
+    assert first["bluff_publications"] != second["bluff_publications"]
+    monkeypatch.setattr(api, "_release", lambda conn: {"id": "new-release"})
+    third = client.get(path).json()
+    assert third["release_id"] == "new-release"
+    single = client.get("/api/v1/players/p?season=S23").json()
+    assert single["appearances"] == 1
+    assert len(loads) == 7
+
+
+def test_concurrent_player_requests_build_the_shared_scope_once(client, monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from time import sleep
+
+    loads = []
+    original_load = api._scope_snapshots
+
+    def load(*args, **kwargs):
+        loads.append(args[2])
+        sleep(0.01)
+        return original_load(*args, **kwargs)
+
+    monkeypatch.setattr(api, "_scope_snapshots", load)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        responses = list(pool.map(lambda _: client.get("/api/v1/players/p?season=S23"), range(4)))
+    assert all(response.status_code == 200 for response in responses)
+    assert all(response.json() == responses[0].json() for response in responses)
+    assert loads == ["S23"]
 
 
 def test_player_games_are_newest_first_with_unknown_game_numbers_last(client, monkeypatch):

@@ -160,9 +160,9 @@ def test_partial_snapshot_is_reported_as_partial_and_still_runs_browser(monkeypa
     manifest["partial"] = {"enabled": True, "season": "S21", "game_id": "game-1", "player_id": "player-1"}
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     browser_calls = []
-    monkeypatch.setattr(checker, "_structure_check", lambda *_: {"state": "passed"})
-    monkeypatch.setattr(checker, "_api_check", lambda *_: {"state": "passed"})
-    monkeypatch.setattr(checker, "_browser_check", lambda *args: browser_calls.append(args) or {"state": "passed"})
+    monkeypatch.setattr(checker, "_structure_check", lambda *_, **__: {"state": "passed"})
+    monkeypatch.setattr(checker, "_api_check", lambda *_, **__: {"state": "passed"})
+    monkeypatch.setattr(checker, "_browser_check", lambda *args, **__: browser_calls.append(args) or {"state": "passed"})
 
     report = checker.check(out, "/example-site", "http://127.0.0.1:8000")
 
@@ -172,11 +172,44 @@ def test_partial_snapshot_is_reported_as_partial_and_still_runs_browser(monkeypa
     assert len(browser_calls) == 1
 
 
+@pytest.mark.parametrize(
+    ("skip_browser", "ticks", "expected"),
+    [
+        (True, [0, 1, 3, 4, 7, 8, 12, 20],
+         {"load": 2.0, "structure": 3.0, "api": 4.0, "browser": 0.0}),
+        (False, [0, 1, 3, 4, 7, 8, 12, 13, 18, 20],
+         {"load": 2.0, "structure": 3.0, "api": 4.0, "browser": 5.0}),
+    ],
+)
+def test_check_reports_elapsed_time_for_each_acceptance_stage(
+        monkeypatch, tmp_path, skip_browser, ticks, expected):
+    out = _snapshot(tmp_path)
+    monkeypatch.setattr(checker, "_structure_check", lambda *_, **__: {"state": "passed"})
+    monkeypatch.setattr(checker, "_api_check", lambda *_, **__: {"state": "passed"})
+    browser_calls = []
+    monkeypatch.setattr(
+        checker, "_browser_check",
+        lambda *args, **kwargs: browser_calls.append(args) or {"state": "passed"})
+    timer = iter(ticks)
+    monkeypatch.setattr(checker, "perf_counter", lambda: next(timer))
+
+    report = checker.check(out, "/example-site", "http://127.0.0.1:8000",
+                           skip_browser_check=skip_browser)
+
+    assert report["duration_seconds"] == 20.0
+    assert report["stage_durations_seconds"] == expected
+    assert report["layers"]["browser"]["state"] == ("skipped" if skip_browser else "passed")
+    assert len(browser_calls) == (0 if skip_browser else 1)
+
+
 @pytest.mark.parametrize("channel", [None, "chromium"])
-def test_cli_accepts_builder_arguments_and_defaults_local_browser_to_chrome(monkeypatch, tmp_path, channel):
+def test_cli_accepts_builder_arguments_and_defaults_local_browser_to_chrome(monkeypatch, tmp_path, channel, capsys):
     calls = []
     report = {"state": "passed", "mode": "full", "complete": True, "snapshot_id": "s",
-              "duration_seconds": 0.1, "layers": {"browser": {"routes_checked": 3}}}
+              "duration_seconds": 0.1,
+              "stage_durations_seconds": {"load": 0.01, "structure": 0.02,
+                                          "api": 0.03, "browser": 0.04},
+              "layers": {"browser": {"routes_checked": 3}}}
     monkeypatch.setattr(checker, "check", lambda *args, **kwargs: calls.append((args, kwargs)) or report)
     args = ["--out", str(tmp_path), "--base-path", "/example-site", "--api-url", "http://127.0.0.1:8000"]
     if channel:
@@ -185,6 +218,7 @@ def test_cli_accepts_builder_arguments_and_defaults_local_browser_to_chrome(monk
     assert checker.main(args) == 0
     assert calls[0][0][0] == tmp_path
     assert calls[0][1]["browser_channel"] == (channel or "chrome")
+    assert json.loads(capsys.readouterr().out)["stage_durations_seconds"] == report["stage_durations_seconds"]
 
 
 def test_static_server_serves_only_the_configured_subpath(tmp_path):
