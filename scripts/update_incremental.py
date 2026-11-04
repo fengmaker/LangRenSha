@@ -194,8 +194,49 @@ def raw_cid_conflict(root: Path, entry: dict) -> int | None:
     return cid if cid != int(entry["cid"]) else None
 
 
+def formal_transcript_present(entry: dict, root: Path) -> bool:
+    """Check for a complete, non-empty transcript tied to this exact source."""
+    labels = entry.get("labels") or {}
+    season = labels.get("season")
+    if not isinstance(season, str) or not season:
+        return False
+    try:
+        page_number = int(entry.get("page") or 1)
+        cid = int(entry["cid"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    transcript_root = Path(root) / "data" / "transcripts" / season
+    if not transcript_root.is_dir():
+        return False
+    for transcript_path in transcript_root.glob(
+            f"{entry['bvid']}_p{page_number:02d}*/transcript.json"):
+        try:
+            transcript = json.loads(transcript_path.read_text(encoding="utf-8"))
+            if not isinstance(transcript, dict):
+                continue
+            source = transcript.get("source") or {}
+            segments = transcript.get("segments")
+            duration_ms = transcript.get("audio_duration_ms")
+            if (transcript.get("full_audio_processed") is not True
+                    or not isinstance(source, dict)
+                    or source.get("bvid") != entry["bvid"]
+                    or str(source.get("cid")) != str(cid)
+                    or str(source.get("page")) != str(page_number)
+                    or type(duration_ms) is not int or duration_ms <= 0
+                    or not isinstance(segments, list)
+                    or not any(isinstance(segment, dict)
+                               and isinstance(segment.get("text"), str)
+                               and segment["text"].strip()
+                               for segment in segments)):
+                continue
+            return True
+        except (OSError, ValueError, TypeError, json.JSONDecodeError):
+            continue
+    return False
+
+
 def formal_media_present(entry: dict, root: Path) -> bool:
-    """Cheaply report whether a formal source's matching raw files are present."""
+    """Report whether matching raw media or a complete transcript is present."""
     folder = (Path(root) / "data" / "raw" / "bilibili" / entry["bvid"] /
               f"p{int(entry.get('page') or 1):02d}")
     try:
@@ -209,7 +250,7 @@ def formal_media_present(entry: dict, root: Path) -> bool:
                 or raw.get("bvid") != entry["bvid"]
                 or str((raw.get("owner") or {}).get("mid")) != BILIBILI_MID
                 or page is None or int(page.get("cid") or 0) != int(entry["cid"])):
-            return False
+            return formal_transcript_present(entry, root)
         for track in (manifest.get("subtitles") or {}).get("tracks", []):
             language = str(track.get("language") or "").lower().replace("_", "-")
             if language == "zh" or language == "ai-zh" or language.startswith(("zh-", "ai-zh-")):
@@ -218,11 +259,13 @@ def formal_media_present(entry: dict, root: Path) -> bool:
                     return True
         audio = manifest.get("audio") or {}
         media_path = (folder / str(audio.get("file") or "")).resolve()
-        return (media_path.is_relative_to(folder.resolve()) and media_path.is_file()
+        if (media_path.is_relative_to(folder.resolve()) and media_path.is_file()
                 and int(audio.get("bytes") or 0) > 0
-                and media_path.stat().st_size == int(audio["bytes"]))
+                and media_path.stat().st_size == int(audio["bytes"])):
+            return True
     except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
-        return False
+        pass
+    return formal_transcript_present(entry, root)
 
 
 def _archive_paths(root: Path, uid: str) -> list[Path]:
@@ -786,7 +829,7 @@ def _print_summary(live_plan: dict, candidates: list[dict], formal_missing: list
     print(f"Bilibili 官方合集更新范围：在线 {len(live_plan['entries'])} 条；可进入增量状态 {len(candidates)} 条；"
           f"增量来源媒体有效 {ready_count} 条；正式来源文件在位 {formal_present_count} 条；"
           f"待采集 {len(acquisition_candidates)} 条；"
-          f"已正式归档但媒体缺失 {len(formal_missing)} 条")
+          f"已正式归档但来源文件缺失 {len(formal_missing)} 条")
     print(f"Bilibili 本地有效来源最新标题日期：{local_latest or '无'}；"
           f"官方合集最新标题日期：{live_latest or '无'}")
     print(f"本次首次发现的官方来源：{len(first_discovered)} 条")
@@ -818,7 +861,7 @@ def _print_summary(live_plan: dict, candidates: list[dict], formal_missing: list
                      "已跟踪" if entry_key(item) in tracked_keys else "已知来源")
         print(f"  增量来源：{entry_key(item)} {_phase(item)} {status} {discovery} {item.get('title', '')}")
     for item in formal_missing:
-        print(f"  正式来源媒体缺失：{entry_key(item)} {item.get('title', '')}")
+        print(f"  正式来源文件缺失：{entry_key(item)} {item.get('title', '')}")
     for item in frozen_missing:
         print(f"  冻结计划来源未见于在线合集：{entry_key(item)} {item.get('title', '')}")
     for item in scope_gaps:

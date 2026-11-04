@@ -171,6 +171,10 @@ class BatchGameRecordTests(unittest.TestCase):
             validate(value, check_files=False, allow_incomplete=True)
 
         confession.update(targets=[2])
+        value["seats"][1].update(role="平民", faction="werewolf")
+        confession.update(result="表白成功")
+        self.assertEqual(validate(value, check_files=False, allow_incomplete=True)["code"], "wolf_girl")
+
         attack = self.event(value, "wolf_attack")
         attack.update(action="attack", actor=3, targets=[2])
         with self.assertRaisesRegex(ReviewError, "首夜禁止狼刀"):

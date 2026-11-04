@@ -10,6 +10,24 @@ from scripts.game_timeline import build_game_timeline
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_masquerade_verification_keeps_the_observed_pool_feedback():
+    source = {
+        'board': 's23_masquerade',
+        'seats': [
+            {'seat': 1, 'name': '假面', 'role': '假面', 'faction': 'werewolf'},
+            {'seat': 3, 'name': '预言家', 'role': '预言家', 'faction': 'good'},
+        ],
+        'rounds': [{'number': 2, 'night': [
+            {'slot': 'masquerade_verify', 'action': 'verify', 'actor': 1,
+             'targets': [3], 'result': '3号不在舞池内'},
+        ], 'day': []}],
+    }
+    item = next(item for phase in build_game_timeline(source)['phases']
+                for item in phase['items'] if item['slot'] == 'masquerade_verify')
+    assert '验证3号' in item['text']
+    assert '3号不在舞池内' in item['text']
+
+
 def test_treasure_opening_and_first_day_night_show_the_chosen_identities():
     source = {'board': 'treasure_master',
               'seats': [{'seat': 2, 'name': '甲', 'role': '盗宝大师', 'faction': 'werewolf'}],

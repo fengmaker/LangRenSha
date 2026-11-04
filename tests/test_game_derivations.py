@@ -56,6 +56,27 @@ def test_usually_saving_on_first_night_never_becomes_a_fact():
     assert get(result["dossier"], 2, "witch_save")["action"] == "unknown"
 
 
+def test_wolf_girl_confessed_civilian_follows_wolves_without_changing_physical_role():
+    game = fixture("s23_wolf_girl", rounds=1)
+    roles = ["预言家", "毒师", "猎人", "守卫", "平民", "平民",
+             "平民", "平民", "狼人", "狼人", "狼人", "狼女孩"]
+    for seat, role in zip(game["seats"], roles):
+        seat["role"] = role
+        seat["faction"] = "werewolf" if role in {"狼人", "狼女孩"} else "good"
+    get(game, 1, "wolf_girl_confession").update(
+        action="confess", actor=12, targets=[8], result="表白成功")
+    get(game, 1, "seer_check").update(action="check", actor=1, targets=[8], result="good")
+
+    result = derive_game(game)
+    partner = result["dossier"]["seats"][7]
+    assert partner["role"] == "平民"
+    assert partner["faction"] == "werewolf"
+    assert get(result["dossier"], 1, "seer_check")["result"] == "good"
+    assert result["dossier"].get("winner") is None
+    assert any(change["rule"] == "wolf_girl_civilian_partner_follows_wolves"
+               for change in result["derivations"]["changes"])
+
+
 def test_user_confirmed_unknown_opening_guard_is_pass_only_on_first_night():
     game = fixture("s21_mechanical_wolf_seer", rounds=2)
     game["seats"][0]["role"] = "守卫"

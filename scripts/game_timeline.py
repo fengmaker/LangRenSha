@@ -177,6 +177,8 @@ def _text(event: dict, seats: dict, title: str) -> str:
              'die': '出局', 'reveal': '翻牌', 'flip': '翻牌', 'carrying': '接过狼刀',
              'mark': '标记', 'swap': '交换'}
     if action in verbs:
+        if slot == 'masquerade_verify' and action == 'verify' and result:
+            return f'{actor or title}验证{targets}；{str(result).rstrip("。；")}。' + effect
         return f'{actor or title}{verbs[action]}{targets}。' + effect
     if result:
         return f'{actor or title}：{str(result).rstrip("。；")}。'
