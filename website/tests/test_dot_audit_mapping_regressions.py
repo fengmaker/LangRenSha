@@ -7,7 +7,9 @@ from pathlib import Path
 import pytest
 
 from website.api import publisher
+from website.api.app import _search_text
 from website.api.game_presentation import build_game_presentation
+from scripts.game_timeline import build_game_timeline
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -235,6 +237,9 @@ def test_api_response_model_keeps_the_public_terminal_fields():
     from website.api.app import GameDetail, _resolved_snapshot
     _, public = published_game("S22", "BV1iaE26kE1w")
     public["release_id"] = "terminal-response-fixture"
-    response = GameDetail.model_validate(_resolved_snapshot(public)).model_dump()
+    response_data = _resolved_snapshot(public)
+    response_data["search_text"] = _search_text(public)
+    response_data["timeline"] = build_game_timeline(response_data)
+    response = GameDetail.model_validate(response_data).model_dump()
     assert response.get("terminal_observation") == public["terminal_observation"]
     assert response.get("terminal_events") == public["terminal_events"]

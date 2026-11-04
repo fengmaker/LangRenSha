@@ -66,8 +66,12 @@ def test_s23_manifest_covers_canonical_names_from_all_75_candidate_dossiers():
     assert report["covered_player_count"] == len(formal_names)
     assert report["coverage_rate"] == 1.0
     assert report["missing"] == []
-    assert report["alias_matched_count"] == 1
-    assert report["aliases_used"][0]["photo_id"] == "P0205"
+    formal_aliases = {name for name in formal_names if s23_players[name].get("name_mapping", {}).get("type")
+                      == "confirmed_same_post_alias"}
+    assert report["alias_matched_count"] == len(formal_aliases)
+    assert {row["canonical_name"] for row in report["aliases_used"]} == formal_aliases
+    for row in report["aliases_used"]:
+        assert row["photo_id"] == s23_players[row["canonical_name"]]["photo_id"]
 
 
 def test_s23_photos_cover_players_in_the_current_formal_archive():

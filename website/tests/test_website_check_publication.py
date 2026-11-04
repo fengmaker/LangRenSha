@@ -11,6 +11,7 @@ def test_snapshot_bindings_are_not_part_of_the_public_response_comparison():
         players=[], ballot_count=0, round_count=0, release_id="fixture-release",
         commentators=[], referee=None, seats=[], rounds=[], timeline={"phases": []}, voting={}, endgame={},
         source={"bvid": "BVfixture"}, data_notes=[],
+        search_text="fixture BVfixture 2026-03-24 预女猎白混",
     ).model_dump()
     snapshot = {**public, "bluff_evidence_sources": {"a" * 64: "b" * 64},
                 "bluff_source_binding": {"source_fingerprint": "c" * 64}}

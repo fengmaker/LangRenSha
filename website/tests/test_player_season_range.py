@@ -36,8 +36,9 @@ def client(monkeypatch):
     monkeypatch.setattr(api, "_release", lambda conn: {"id": "release"})
     monkeypatch.setattr(api, "_available_seasons", lambda conn, release_id: ["S22", "S23"])
     monkeypatch.setattr(api, "_scope_snapshots", lambda conn, release_id, season, phase="all": snapshots[season])
-    monkeypatch.setattr(api, "read_review", lambda conn, release_id, season: {
-        "season": season, "inference_version": f"review-{season}",
+    monkeypatch.setattr(api, "read_review_publication", lambda conn, release_id, season: {
+        "payload": {"season": season, "inference_version": f"review-{season}"},
+        "publication_id": f"publication-{season}", "payload_hash": f"hash-{season}",
     })
 
     def fake_aggregate_bluffs(games, payload):
@@ -153,6 +154,10 @@ def test_player_range_resolves_latest_and_aggregates_season_local_bluff_metrics(
         {"game_id": "S23-bluff", "positive": 1, "negative": 1},
     ]
     assert detail["bluff_inference_version"] == "S22: review-S22, S23: review-S23"
+    assert detail["bluff_publications"] == [
+        {"season": "S22", "publication_id": "publication-S22", "payload_hash": "hash-S22"},
+        {"season": "S23", "publication_id": "publication-S23", "payload_hash": "hash-S23"},
+    ]
     assert detail["photo"]["season"] == "S23"
 
 

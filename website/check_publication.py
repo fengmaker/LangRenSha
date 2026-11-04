@@ -155,6 +155,7 @@ def projection(game: dict, source: bool = False) -> dict:
     # omits them from the public API. Their integrity is checked by bluff publish.
     value = {key: field for key, field in game.items() if key not in {
         "presentation", "timeline", "analytics_version", "bluff_evidence_sources", "bluff_source_binding",
+        "search_text",
     }}
     if source:
         value["players"] = [{k: v for k, v in player.items() if k != "id"} for player in value["players"]]

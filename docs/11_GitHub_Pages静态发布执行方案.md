@@ -4,7 +4,7 @@
 
 本文确定首版的实现与操作顺序：本地完成数据整理、正式发布、静态导出和构建；GitHub Pages 只部署已经验收的网页成品。沿用现有 Python、PostgreSQL、Next.js 和人工复核流程。
 
-**当前状态：执行文档已整理，仓库内静态化代码尚未实现；本次未创建发布仓库或上线。** 下文标为“拟新增”“拟修改”的脚本、参数和配置属于开发任务，完成对应里程碑后才能执行。本文不代表已经完成数据入库、正式发布、commit、push 或部署。
+**当前状态：阶段 A–D 已完成，阶段 E 已将合格成品提交、推送并部署至 [GitHub Pages](https://fengmaker.github.io/langrensha-site/)。线上自动化功能验收通过，照片慢加载及默认图标缺失已记录；实体手机与用户日常网络的人工体验检查待完成。** 源码收尾提交与成品上线分别进行；本次未进行数据入库或新的正式发布。实际范围见文末执行记录。
 
 数据准备继续按[赛季数据全流程](01_赛季数据全流程.md)和[增量更新流程](08_增量更新流程.md)执行；本地现有运行方式见[网站手册](../website/README.md)。
 
@@ -13,9 +13,9 @@
 | 项目 | 本方案采用的方式 |
 | --- | --- |
 | 开发与数据仓库 | 现有 `fengmaker/LangRenSha`，只使用 `main` |
-| 发布仓库 | 拟新建公开仓库 `fengmaker/langrensha-site`，只使用 `main` |
+| 发布仓库 | 已创建公开仓库 `fengmaker/langrensha-site`，只使用 `main` |
 | 发布仓库内容 | `site/` 静态成品、Pages 工作流、必要说明 |
-| 预计网址 | `https://fengmaker.github.io/langrensha-site/`，以实际 Pages 设置为准 |
+| 实际网址 | `https://fengmaker.github.io/langrensha-site/` |
 | 数据与统计 | 从本地已发布 API 导出最终公开响应，复用现有 Python 计算 |
 | 前端 | 同一套 Next.js 页面和组件，保留本地维护模式，增加静态构建模式 |
 | 首版上线触发 | 推送成品后手动运行工作流；源码仓库推送不触发公开站部署 |
@@ -57,21 +57,21 @@
 | A：最小完整样例 | 版本元数据、单季导出、首页、列表筛选、一局详情、一位选手页、图片与子路径 | 样例静态产物可直接打开和刷新；浏览器阻断 API 后仍可操作 |
 | B：全部已发布数据 | 全部分页、全部详情、选手、区间、榜单、统计、证据 | 数量、唯一 ID、区间和引用完整；与本地 API 对照一致 |
 | C：完整静态前端 | 全部路由、URL 状态、排名筛选、公开只读与本地维护模式 | 静态构建通过，关键浏览器流程通过，本地草稿流程仍正常 |
-| D：构建与验收入口 | 三个拟新增脚本、失败保留机制、现有 CI 扩展 | 单命令生成通过验收的完整成品，失败不覆盖上一份合格产物 |
+| D：构建与验收入口 | 三个构建脚本、失败保留机制、现有 CI 扩展 | 单命令生成通过验收的完整成品，失败不覆盖上一份合格产物 |
 | E：Pages 上线 | 发布仓库、工作流、成品推送、手动部署、线上检查 | 正式子路径下的首页、详情、筛选、统计、图片与手机访问正常 |
 
 阶段 A 的样例必须在清单和报告中标为 `partial`，开发阶段样例不能进入正式发布仓库。完整发布要求覆盖当前活动发布的全部赛季和全部对局。
 
 ## 四、导出器与版本一致性
 
-### 4.1 拟新增文件与接口
+### 4.1 已实现文件与接口
 
 | 位置 | 职责 |
 | --- | --- |
-| `website/export_static.py`（拟新增） | 从已发布 API 导出完整公开 JSON、检索索引和引用图片 |
-| `website/check_static.py`（拟新增） | 结构检查、API 对照、静态产物浏览器验收；复用现有验收代码 |
-| `website/build_static.py`（拟新增） | 顺序调用导出、构建和验收，只在全部成功后更新待发布目录 |
-| `/api/v1/export-manifest`（拟新增只读接口） | 返回有效 game release、各季悍跳发布标识、有效媒体清单指纹与统计版本 |
+| `website/export_static.py` | 从已发布 API 导出完整公开 JSON、检索索引和引用图片 |
+| `website/check_static.py` | 结构检查、API 对照、静态产物浏览器验收；复用现有验收代码 |
+| `website/build_static.py` | 顺序调用导出、构建和验收，只在全部成功后更新待发布目录 |
+| `/api/v1/export-manifest`（只读接口） | 返回有效 game release、各季悍跳发布标识、有效媒体清单指纹与统计版本 |
 
 API 只读元数据从现有发布表和有效清单读取，无需另建发布数据库。各季悍跳直接使用现有 `publication_id`、`payload_hash`；未发布的季明确返回空值。已有发布数据存在但读取失败时必须报错，不按“尚未发布”处理。
 
@@ -120,6 +120,7 @@ snapshot/
     manifest.json
     releases/<snapshot_id>/
       overview.json
+      releases.json
       games/index.json
       games/<game_id>.json
       players/index.json
@@ -139,7 +140,7 @@ snapshot/
 
 ### 5.1 保留一个明确的构建模式开关
 
-拟修改 `website/web/next.config.ts`，参考配置如下。`NEXT_PUBLIC_SITE_MODE` 默认走本地维护模式；由构建入口仅在子进程中设置静态模式，避免污染日常运行环境。
+`website/web/next.config.ts` 已采用以下模式配置。`NEXT_PUBLIC_SITE_MODE` 默认走本地维护模式；由构建入口仅在子进程中设置静态模式，避免污染日常运行环境。
 
 ```typescript
 import type { NextConfig } from "next";
@@ -195,9 +196,9 @@ basePath 在构建时写入产物，修改后需重新构建。[Next.js basePath
 
 ## 六、构建入口、验收与现有 CI
 
-### 6.1 拟新增统一命令
+### 6.1 统一命令
 
-以下命令仅在阶段 D 完成后可用，退出码非 0 表示本次失败：
+阶段 D 已完成，以下命令可用，退出码非 0 表示本次失败：
 
 ```powershell
 Set-Location D:\langrensha
@@ -219,7 +220,7 @@ if ($LASTEXITCODE -ne 0) { throw "静态构建或验收失败，本次成品不�
 
 ### 6.2 验收职责与通过条件
 
-`check_static.py` 拟定接口：`--out <静态目录> --base-path /langrensha-site --api-url http://127.0.0.1:8000`。统一构建入口必须提供 API 地址并完成以下三层检查，不能用结构检查替代浏览器操作。
+`check_static.py` 接口：`--out <静态目录> --base-path /langrensha-site --api-url http://127.0.0.1:8000`。统一构建入口必须提供 API 地址并完成以下三层检查，不能用结构检查替代浏览器操作。
 
 | 层次 | 必须检查的内容 |
 | --- | --- |
@@ -274,7 +275,7 @@ if ($LASTEXITCODE -ne 0) { throw "PostgreSQL 启动失败" }
 
 ### 7.3 完整构建
 
-阶段 A–D 完成后，在另一个 PowerShell 窗口执行：
+在另一个 PowerShell 窗口执行：
 
 ```powershell
 Set-Location D:\langrensha
@@ -299,15 +300,15 @@ Set-Location D:\langrensha
 
 ## 八、首次配置 GitHub Pages
 
-仅在完整静态成品和本地验收通过后进行本节。以下为实施时的操作步骤，本文交付时没有执行。
+仅在完整静态成品和本地验收通过后进行本节。本次首次配置已完成，以下保留操作步骤，实际部署提交与验收范围见第十一节。
 
 ### 8.1 创建并克隆发布仓库
 
-在 GitHub 的 `fengmaker` 账号创建公开仓库 `langrensha-site`，添加 README，默认分支为 `main`。已存在同名专用仓库时直接复用；若换名，先同步修改构建 basePath。
+由用户在 GitHub 的 `fengmaker` 账号创建公开仓库 `langrensha-site`，先不添加 README、`.gitignore` 或 License；后续成品首个提交使用 `main`。已存在同名专用仓库时直接复用；若换名，先同步修改构建 basePath。
 
 ```powershell
 Set-Location D:\
-git clone https://github.com/fengmaker/langrensha-site.git
+git -c init.defaultBranch=main clone https://github.com/fengmaker/langrensha-site.git
 if ($LASTEXITCODE -ne 0) { throw "发布仓库克隆失败" }
 ```
 
@@ -432,6 +433,16 @@ GitHub 仓库进入 **Settings → Pages → Build and deployment → Source →
 
 ### 日常更新
 
+本地文件修改、源码仓库推送、公开站点更新是三个独立步骤。当前不会自动监听本地文件，也不会在源码仓库 push 后更新 Pages；已发布的网页持续使用上一次合格快照。
+
+| 本地修改 | 构建网页前需要做什么 |
+| --- | --- |
+| 页面布局、样式、交互 | 使用当前已发布 API 重新执行静态构建与验收；无需再次发布数据库 |
+| 正式对局 JSON、规则、统计逻辑或悍跳结论 | 按既有复核、入库及本地发布流程准备，再核对 API 已体现本次预期；需要切换哪些发布由本次实际修改决定 |
+| 照片或截图清单、媒体代码 | 准备并核对对应实体媒体，重启 API 使有效清单更新，再重新构建 |
+
+静态导出读取当前已发布 API；单独修改磁盘文件不会自动变成公开数据。后续统一步骤为：
+
 1. 按既有流程整理和人工确认新增数据，在另行明确范围内完成入库及本地正式发布；纯网页改动无需再次发布数据库。
 2. 重启有代码或清单更新的 API；暂停发布切换，执行第七节的统一构建命令。
 3. 查看本次验收结果，预览受影响页面；覆盖相应统计、区间和证据依赖。
@@ -439,6 +450,8 @@ GitHub 仓库进入 **Settings → Pages → Build and deployment → Source →
 5. 核对线上 build ID 和受影响路径，记录发布仓库提交及实际站点地址。
 
 首版统一命令每次从当前已发布 API 导出，保证行为一致。只有实际构建耗时需要优化时，才增加经过版本核对的快照复用选项；无需一开始增加缓存失效或增量构建机制。
+
+日常可直接给本地 Codex 下达：**“把当前已发布数据和网页同步更新到 GitHub Pages，提交并推送相关改动，部署后核对线上版本。”** 这包含重新构建与验收、同步合格成品到 `D:\langrensha-site\site`、两个仓库相关改动的提交与推送、手动运行 Pages 工作流及线上检查。若数据尚未完成入库或正式发布，需要另行明确授权相应范围；“已发布数据”不会自动包含尚未发布的磁盘修改。
 
 ### 公开网页回退
 
@@ -461,13 +474,65 @@ GitHub 仓库进入 **Settings → Pages → Build and deployment → Source →
 
 完成时逐项记录实际结果：
 
-- [ ] 全部活动发布赛季、对局、选手、连续区间及媒体完整，来源绑定一致。
-- [ ] 核心筛选、分页、直达、刷新、排名及证据状态保持现有语义。
-- [ ] 静态产物在实际子路径独立运行，浏览器没有动态 API 请求。
-- [ ] 本地开发、standalone 与维护者草稿流程正常。
-- [ ] 新增相关回归与现有必要检查通过，CI 报告说明实际覆盖范围。
-- [ ] 合格成品与回执关联，失败保留上一份合格成品。
-- [ ] 发布仓库只含公开成品和配置，线上 build ID 与部署提交可对应。
-- [ ] 正式网址、桌面／手机、日常网络下的线上检查完成；实际未执行项明确列出。
+- [x] 全部活动发布赛季、对局、选手、连续区间及媒体完整，来源绑定一致。
+- [x] 核心筛选、分页、直达、刷新、排名及证据状态保持现有语义。
+- [x] 静态产物在实际子路径独立运行，浏览器没有动态 API 请求。
+- [x] 本地开发、standalone 与维护者草稿流程正常。
+- [x] 新增相关回归与现有必要检查通过，CI 报告说明实际覆盖范围。
+- [x] 合格成品与回执关联，失败保留上一份合格成品。
+- [x] 发布仓库只含公开成品和配置，线上 build ID 与部署提交可对应。
+- [ ] 正式网址、桌面／手机、日常网络下的线上检查完成；线上桌面与手机视口自动化已完成，实体手机及用户日常网络体验待人工确认。
 
-当前起点是阶段 A。先完成可独立运行的完整样例，再扩展全部数据与验收；阶段 D 完成后，第七至九节才成为可重复执行的运行手册。
+## 十一、本次执行记录（2026-11-04）
+
+阶段 A–D 已完成，第七至九节现可作为运行手册。用户新建公开发布仓库 `fengmaker/langrensha-site` 后，已完成阶段 E 的成品同步、提交、推送、Pages 配置、手动部署和线上自动化检查。首次上线时源码改动尚未提交；用户随后明确要求提交并推送源码，按现有 `origin/main` 完成收尾，具体提交以 Git 历史为准。该源码提交不会重新部署 Pages；正式事实 JSON、数据库活动发布未改动。
+
+### 合格成品
+
+| 项目 | 实际结果 |
+| --- | --- |
+| 待发布目录 | `tmp/pages-preview/langrensha-site/` |
+| 构建回执 | `tmp/pages-preview/acceptance.json`，`state=passed`、`mode=complete` |
+| build ID | `20261104T022334Z-24a7956b` |
+| game release | `S21_S22_S23-dff4f1efc050a5d0-af68d320-p13-s2` |
+| 数据范围 | S21 122 局、S22 148 局、S23 90 局，共 360 局；90 位选手、6 个连续区间、540 份个人区间统计 |
+| 公开内容 | 5 份积分榜、3 季悍跳证据、63 条发布历史、287 个实际引用媒体文件 |
+| 成品规模 | 3,541 个文件、463 个 HTML；总计 666,069,558 字节，其中 JSON 240,209,339 字节、媒体 233,682,431 字节 |
+| 发布草案 | `tmp/pages-publish-draft/`；正式发布检出位于 `D:\langrensha-site`，提交与线上记录见下文 |
+
+导出前后及逐响应版本绑定检查通过，360 份对局详情、540 份个人统计和全部区间统计均与 API 对照通过。287 个引用媒体文件内容哈希通过，未把本地日志、回执、数据库或加工资料放入公开成品。
+
+### 实际验证
+
+- `website/tests`：388 项通过；日志 `tmp/pages-build/website-tests-final.log`。静态查询 Node 回归通过，覆盖排序、筛选边界、并列及两个排名门槛。
+- 完整静态验收：460 条业务路由桌面直达及刷新、19 条代表路由手机视口检查通过；1440/390 宽度下完成筛选、分页、前进后退、区间与排名弹窗、照片和截图解码。浏览器阻断 API 时仍正常，动态 API 请求、控制台错误、请求错误均为 0。
+- 本地 standalone：完整 360 局来源/API 对照及 52 条浏览器路径通过，见 `tmp/pages-build/local-acceptance.json`。本地开发模式三条关键路由通过，见 `tmp/pages-build/development-acceptance.log`。
+- 本地维护端：隔离浏览器完成草稿保存、重载、导出、清空测试存储及导入恢复，见 `tmp/pages-build/local-feedback-acceptance.json`；未操作用户日常浏览器草稿。
+- 完整验收后修正本地动态路由注册，随后重新构建静态版并核对结构、数据、媒体及客户端 JS/CSS 一致，关键交互复验通过；补充证据见 `tmp/pages-preview/mode-regression.json`，原构建回执保留实际输入指纹。
+- CI 稀疏检出重建通过：S22/S23 238 局、239 份引用证据文本齐全，完整检出与稀疏检出的发布来源哈希一致；相关回归通过。源码仓库远程 `full-acceptance` 未运行，Docker 镜像未实际构建，不记为已通过。发布仓库 Pages 工作流的实际成功记录见下文。
+
+Windows 下已复现并处理当前 Next 静态导出的 RSC 文件路径问题，构建入口归一化 460 条路由载荷路径；静态链接关闭预取。本地模式按请求动态读取查询参数，`latest` 别名和维护者反馈格式保留。一个合法的未知终局日数曾阻断全量 API，已修正为保留未知值，不推测日数，并通过对应时间线回归。
+
+### 实际上线与线上检查
+
+| 项目 | 实际结果 |
+| --- | --- |
+| 公开站点 | <https://fengmaker.github.io/langrensha-site/> |
+| 发布仓库 | <https://github.com/fengmaker/langrensha-site>，`main` |
+| 发布提交 | [`c877726635ae4bf1419ff2a93ec81d6c1c355fb0`](https://github.com/fengmaker/langrensha-site/commit/c877726635ae4bf1419ff2a93ec81d6c1c355fb0)，`Publish verified static archive` |
+| 提交范围 | 3,541 个公开成品文件、README、Pages 工作流，共 3,543 个文件；发布仓库工作区干净 |
+| Pages 发布源 | `workflow`（GitHub Actions），仅手动触发 |
+| 首次部署 | [工作流 41766016129](https://github.com/fengmaker/langrensha-site/actions/runs/41766016129)，`success`，对应上述发布提交 |
+| 线上版本 | manifest 与本地合格成品完全一致，build ID `20261104T022334Z-24a7956b` |
+| 发布关联记录 | `tmp/pages-preview/publication.json` |
+| 线上验收 | `tmp/pages-preview/online-acceptance.json`，`passed_with_limitations` |
+
+发布前重新核对待发布目录、工作副本和验收回执的完整树哈希，均为 `566944fed1a409778ae39e4020e25d81ff5793b32d373393546ac9008e45f6ea`。发布仓库只提交合格成品与配置；成品构建时源码基线 HEAD 为 `4d81f8d5ff655ed453a0c786315b6c725ffd001e`，回执同时保留未提交输入指纹，后续源码收尾提交不改变这份成品的构建来源记录。
+
+线上使用实际公开网址完成 25 条代表路径在 1440/390 两种宽度下的检查，共 50 次路径检查，覆盖三季详情直达及刷新、赛季页、全季和决赛周榜、悍跳证据、筛选、分页及后退、个人区间切换、两个排名门槛和空边界。照片与证据截图在浏览器中实际解码通过；另外各取一份媒体完整下载，与本地 SHA-256 对照一致。本次专用的本地 API 和 Next 验收服务已停止；线上动态 API 请求、页面脚本错误、请求错误及项目资源 HTTP 错误均为 0。桌面及手机视口首页截图已人工查看，截图位于 `tmp/pages-preview/online-screenshots/`。
+
+本次功能检查共耗时 91.802 秒，单路径检查中位数约 1.0 秒、最长 14.59 秒，包含相应的刷新、DOM 检查或截图，不能当作纯页面加载测速。另有以下实际限制，保留原始失败报告，不把它们记成全量资源瞬时加载通过：
+
+- 冷访问选手目录会请求多张原尺寸照片。S21 目录加载事件约 3.5 秒完成，48 张卡片已呈现，但等待全部图片网络空闲曾超过 90 秒；去掉验收请求拦截后仍可复现。S21/S22/S23 照片平均约 0.56/1.23/0.88 MB，页面初始化还可能请求默认赛季照片。单独测得一张 595,699 字节照片下载约 4.3 秒、一张 811,289 字节证据截图约 4.5 秒，均为 HTTP 200 且哈希一致。当前保留原媒体及其内容哈希；照片缩略图和加载性能优化未在本次实施。证据见 `online-player-probe-native.json`、`online-media-probe.json` 和 `online-networkidle-first-attempt.json`。
+- 原生浏览器会自动请求项目目录外的 `https://fengmaker.github.io/favicon.ico`，该图标不存在，产生一条 404 控制台消息；项目没有声明图标链接。已在独立首页复测中按消息 location 确认来源，记录于 `online-favicon-probe.json`，原始功能检查报告保存在 `online-functional-attempt.json`。它与项目页面、JSON、照片及截图请求区分记录。
+- 手机检查采用浏览器视口，尚无实体手机及用户日常网络的人工体验结论；用户可直接打开正式网址进行检查。

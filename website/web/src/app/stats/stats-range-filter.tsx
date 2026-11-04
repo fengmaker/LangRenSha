@@ -1,19 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import styles from "./stats.module.css";
+import { publicPath } from "@/lib/site-mode";
 
-export function StatsRangeFilter({ seasons, start, end }: { seasons: string[]; start: string; end: string }) {
+export function StatsRangeFilter({ seasons, start, end, onApply }: { seasons: string[]; start: string; end: string; onApply?: (start: string, end: string) => void }) {
   const [from, setFrom] = useState(start);
   const [to, setTo] = useState(end);
+
+  useEffect(() => { setFrom(start); setTo(end); }, [start, end]);
 
   function changeStart(value: string) {
     setFrom(value);
     if (to !== "latest" && seasons.indexOf(to) < seasons.indexOf(value)) setTo(value);
   }
 
+  function submit(event: FormEvent<HTMLFormElement>) {
+    if (!onApply) return;
+    event.preventDefault();
+    onApply(from, to);
+  }
+
   return (
-    <form method="get" action="/stats" className={styles.rangeForm} aria-label="筛选统计范围">
+    <form method="get" action={publicPath("/stats")} className={styles.rangeForm} aria-label="筛选统计范围" onSubmit={submit}>
       <label className="filter-field">
         <span>起始赛季</span>
         <select name="season_start" value={from} onChange={(event) => changeStart(event.target.value)}>

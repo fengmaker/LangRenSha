@@ -297,21 +297,27 @@ def _load_payload(season: str, path: Path | None) -> dict:
     return value
 
 
-def read_review(conn, release_id: str, season: str) -> dict:
-    """Read the active DB review for this release; an unpublished review is empty."""
+def read_review_publication(conn, release_id: str, season: str) -> dict[str, Any]:
+    """Return the active review and the publication identity that supplied it."""
     row = conn.execute(
-        "SELECT p.payload FROM active_bluff_reviews a "
+        "SELECT p.payload, p.id AS publication_id, p.payload_hash FROM active_bluff_reviews a "
         "JOIN bluff_review_publications p "
         "ON p.id = a.publication_id AND p.release_id = a.release_id AND p.season = a.season "
         "WHERE a.release_id = %s AND a.season = %s",
         (release_id, season),
     ).fetchone()
     if not row:
-        return {"games": []}
+        return {"payload": {"games": []}, "publication_id": None, "payload_hash": None}
     payload = _as_object(row["payload"], "已发布悍跳复核")
     if payload.get("season") != season:
         raise BluffReviewError("已发布悍跳复核的赛季与查询条件不一致")
-    return payload
+    return {"payload": payload, "publication_id": row.get("publication_id"),
+            "payload_hash": row.get("payload_hash")}
+
+
+def read_review(conn, release_id: str, season: str) -> dict:
+    """Read the active DB review for this release; an unpublished review is empty."""
+    return read_review_publication(conn, release_id, season)["payload"]
 
 
 def publish_review(season: str = "S22", path: Path | None = None, check: bool = False) -> dict:

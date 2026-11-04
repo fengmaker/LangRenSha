@@ -1,12 +1,16 @@
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { getGames, getOverview } from "@/lib/api";
+import { isStaticSite, publicPath } from "@/lib/site-mode";
+import { getSnapshotGames } from "@/lib/snapshot-data";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { GameArchiveList } from "@/components/game-archive-list";
 import { Pagination } from "@/components/pagination";
 import styles from "./games.module.css";
+import { StaticGamesBrowser } from "./static-games-browser";
 
 const PAGE_SIZE = 24;
 export const metadata: Metadata = { title: "对局档案", description: "检索大师赛各赛季的对局、票型和选手记录。" };
@@ -18,6 +22,14 @@ function ArchiveIntro() {
 }
 
 export default async function GamesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  if (isStaticSite) {
+    try {
+      const [games, overview] = await Promise.all([getSnapshotGames(), getOverview()]);
+      return <div className={"page-wrap " + styles.page}><ArchiveIntro /><Suspense fallback={<p>正在载入筛选条件…</p>}><StaticGamesBrowser games={games} overview={overview} /></Suspense></div>;
+    } catch (error) {
+      return <div className={"page-wrap " + styles.page}><ArchiveIntro /><DataProblem error={error} /></div>;
+    }
+  }
   const query = await searchParams;
   const filters = {
     season: first(query.season),
@@ -52,7 +64,7 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
   return <div className={"page-wrap " + styles.page}>
     <ArchiveIntro />
     <section className={styles.filters} aria-label="对局筛选">
-      <form method="get" action="/games" className={styles.form}>
+      <form method="get" action={publicPath("/games")} className={styles.form}>
         <label className={styles.search}><span>关键词</span><input name="q" type="search" placeholder="选手名、日期或对局编号" defaultValue={filters.q} /></label>
         <label><span>赛季</span><select name="season" aria-label="赛季" defaultValue={filters.season}><option value="">全部赛季</option>{overview.seasons.map((season) => <option key={season.id} value={season.id}>{season.id} · {season.name}</option>)}</select></label>
         <label><span>比赛阶段</span><select name="phase" aria-label="比赛阶段" defaultValue={filters.phase}><option value="">全部阶段</option><option value="regular">正赛</option><option value="finals_week">决赛周</option></select></label>
@@ -60,7 +72,7 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
         <label><span>选手</span><input name="player" type="search" placeholder="输入选手姓名" defaultValue={filters.player} /></label>
         <label><span>开始日期</span><input name="date_from" type="date" defaultValue={filters.date_from} /></label>
         <label><span>截止日期</span><input name="date_to" type="date" defaultValue={filters.date_to} min={filters.date_from || undefined} /></label>
-        <div className={styles.actions}><button className="button button-primary" type="submit">检索对局</button><Link href="/games">清除条件</Link></div>
+        <div className={styles.actions}><button className="button button-primary" type="submit">检索对局</button><ArchiveLink href="/games">清除条件</ArchiveLink></div>
       </form>
     </section>
     <section className={styles.results} aria-labelledby="games-heading">

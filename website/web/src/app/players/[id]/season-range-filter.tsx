@@ -1,20 +1,28 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
 
-export function SeasonRangeFilter({ action, seasons, start, end, minimumAppearances }: {
+export function SeasonRangeFilter({ action, seasons, start, end, minimumAppearances, onApply }: {
   action: string; seasons: string[]; start: string; end: string; minimumAppearances: number;
+  onApply?: (start: string, end: string, minimumAppearances: number) => void;
 }) {
   const [from, setFrom] = useState(start);
   const [to, setTo] = useState(end);
   const [filterOpen, setFilterOpen] = useState(false);
   const [minimum, setMinimum] = useState(String(minimumAppearances));
   const filterId = useId();
+  useEffect(() => { setFrom(start); setTo(end); setMinimum(String(minimumAppearances)); }, [start, end, minimumAppearances]);
   function changeStart(value: string) {
     setFrom(value);
     if (to !== "latest" && seasons.indexOf(to) < seasons.indexOf(value)) setTo(value);
   }
-  return <form method="get" action={action} className="profile-range-controls" aria-label="筛选赛季范围与排名出场次数">
+  function submit(event: FormEvent<HTMLFormElement>) {
+    if (!onApply) return;
+    event.preventDefault();
+    const parsed = Number(minimum);
+    if (Number.isSafeInteger(parsed) && parsed >= 0) onApply(from, to, parsed);
+  }
+  return <form method="get" action={action} className="profile-range-controls" aria-label="筛选赛季范围与排名出场次数" onSubmit={submit}>
     <div className="profile-filter-form">
     <label className="filter-field"><span>起始赛季</span><select name="season_start" value={from} onChange={(event) => changeStart(event.target.value)}>{seasons.map((season) => <option key={season} value={season}>{season}</option>)}</select></label>
     <span className="range-divider" aria-hidden="true">—</span>

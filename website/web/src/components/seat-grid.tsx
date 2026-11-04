@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import type { GameRound, Seat } from "@/lib/types";
 import { factionLabel } from "@/lib/format";
 import styles from "./seat-grid.module.css";
@@ -78,7 +78,7 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
     <div className={styles.seatIdentity}>
       <h4 className={styles.seatName}>
         {seat?.person_id
-          ? <Link href={`/players/${encodeURIComponent(seat.person_id)}${season ? `?season=${encodeURIComponent(season)}` : ""}`}>{name}</Link>
+          ? <ArchiveLink href={`/players/${encodeURIComponent(seat.person_id)}${season ? `?season=${encodeURIComponent(season)}` : ""}`}>{name}</ArchiveLink>
           : name}
       </h4>
       <p className={styles.seatRole}>{seat?.role || "身份未知"}</p>

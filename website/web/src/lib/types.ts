@@ -80,11 +80,11 @@ export type PlayerStats = {
   werewolf_self_explosion_rate: Metric;
   werewolf_sheriff_registration_rate: Metric;
   werewolf_off_police_rate: Metric;
-  bluff_count: number;
-  bluff_count_complete: boolean;
-  bluff_pending_games: number;
-  bluff_rate: Metric;
-  bluff_success_rate: Metric;
+  bluff_count?: number;
+  bluff_count_complete?: boolean;
+  bluff_pending_games?: number;
+  bluff_rate?: Metric;
+  bluff_success_rate?: Metric;
   seer_follow_rate: Metric;
   sheriff_seer_vote_rate: Metric;
   rankings?: Partial<Record<PlayerRankingKey, MetricRanking | null>>;

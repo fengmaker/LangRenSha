@@ -20,6 +20,9 @@
 | `check_publication.py` | 唯一通用端到端验收，按当前源动态核对，不写固定赛季局数 |
 | `backup.py` | 网站schema备份与临时库恢复验证；全库备份用根scripts/backup_database.py |
 | `prepare_photos.py` | S21/S22/S23照片来源适配，生成API清单和静态资产；S21复用已识读的同季名牌及当前档案姓名 |
+| `export_static.py` | 从已发布API导出绑定版本的公开快照及白名单实体媒体 |
+| `build_static.py` | 导出、Next静态构建、类型检查和验收通过后更新合格目录 |
+| `check_static.py` | 文件与覆盖检查、API对照、真实子路径桌面／手机浏览器验收 |
 | `积分榜字段说明.txt` | 现行指标的分子分母、未知及悍跳口径 |
 
 ## 启动
@@ -62,9 +65,25 @@ game release变化后，已有悍跳发布输入必须逐季重新预检／同�
 
 API仅导出白名单公开字段，不含本地路径、凭据或全文转写。原始资源、JCMS业务库与`masters_web`网站库分开。整库备份在`scripts/backup_database.py`，`website.backup`只覆盖网站schema。
 
+## 静态成品
+
+先启动已发布API，停止占用 `.next` 的本项目Next前端；数据、复核发布或媒体清单代码变更后先重启API。从导出开始到API对照结束，暂停活动发布及媒体清单切换。构建命令不执行数据入库、正式发布、Git操作或上线：
+
+```powershell
+.\.venv\Scripts\python.exe website/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
+```
+
+退出码为0后，合格成品位于 `tmp/pages-preview/langrensha-site/`，回执位于同级 `acceptance.json`，二者以 `build_id` 关联。候选快照、日志和失败步骤保留在 `tmp/pages-build/<build_id>/`；失败保留上一份合格成品和回执。回执记录源码版本、未提交状态、构建输入／依赖／产物指纹与验收结果，不含凭据，不放进公开站点。CI增加 `--browser-channel chromium`；本机默认使用已安装Chrome。
+
+预览时在另一个终端运行 `python -m http.server 4173 --bind 127.0.0.1 --directory tmp/pages-preview`，打开 <http://127.0.0.1:4173/langrensha-site/>。单独复验可用 `website/check_static.py --out tmp/pages-preview/langrensha-site --base-path /langrensha-site --api-url http://127.0.0.1:8000`。
+
+开发样例加 `--partial-season S23 --output tmp/pages-sample/langrensha-site`，始终标记为partial，不能用作正式发布。生成的 `.static-snapshot/`、`public/data/`、`public/media/` 和 `out/` 均忽略，不提交到源码仓库。日常 `website/run.py` 默认仍启动本地维护模式并准备实体媒体；静态构建后如需本地 `--production`，先用默认模式重新构建standalone。独立成品仓库及手动Pages上线顺序见[执行方案](../docs/11_GitHub_Pages静态发布执行方案.md)。
+
+统一入口在验收前修正[Next 16 Windows导出载荷分隔符问题](https://github.com/vercel/next.js/issues/92339)，将嵌套文件移到浏览器请求的标准文件名；不复制别名文件，Linux正常输出无需修改。静态模式的站内Link关闭自动预取，点击时继续使用Next导航，避免榜单默认下载大量个人页；本地维护模式沿用原预取行为。
+
 ## 部署
 
-GitHub Pages 静态发布按[执行方案](../docs/11_GitHub_Pages静态发布执行方案.md)实施，包含本地维护保留、静态导出、构建、验收和独立成品仓库。该方案目前待开发和上线；下文继续描述现有全栈部署方式。
+GitHub Pages 使用上节的合格静态成品和独立发布仓库，部署状态以[执行方案](../docs/11_GitHub_Pages静态发布执行方案.md)的实际执行记录为准。下文继续描述全栈部署方式。
 
 历史交付、接入与验收状态见[dot-handoff索引](../dot-handoff/README.md)及[接续记录](../dot-handoff/INTEGRATION.md)；下文按目标环境执行并记录实际结果。
 

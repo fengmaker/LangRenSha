@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 
 export function Pagination({ page, pageSize, total, params }: { page: number; pageSize: number; total: number; params: URLSearchParams }) {
   const pages = Math.max(1, Math.ceil(total / pageSize));
@@ -12,7 +12,7 @@ export function Pagination({ page, pageSize, total, params }: { page: number; pa
   return (
     <nav className="pagination" aria-label="结果分页">
       <span>第 <b>{page}</b> / {pages} 页 · 共 {total} 条</span>
-      <div>{page > 1 ? <Link href={hrefFor(page - 1)}>← 上一页</Link> : <span className="disabled">← 上一页</span>}{page < pages ? <Link href={hrefFor(page + 1)}>下一页 →</Link> : <span className="disabled">下一页 →</span>}</div>
+      <div>{page > 1 ? <ArchiveLink href={hrefFor(page - 1)}>← 上一页</ArchiveLink> : <span className="disabled">← 上一页</span>}{page < pages ? <ArchiveLink href={hrefFor(page + 1)}>下一页 →</ArchiveLink> : <span className="disabled">下一页 →</span>}</div>
     </nav>
   );
 }

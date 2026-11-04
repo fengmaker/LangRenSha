@@ -1,7 +1,9 @@
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ApiError, getGame } from "@/lib/api";
+import { isStaticSite } from "@/lib/site-mode";
+import { getSnapshotGames } from "@/lib/snapshot-data";
 import { formatDate, gamePhaseLabel, gameTimeText, phaseLabel, winnerLabel } from "@/lib/format";
 import { DataProblem } from "@/components/data-state";
 import { EventBoard } from "@/components/event-board";
@@ -11,6 +13,11 @@ import styles from "./detail.module.css";
 function safeMetadataId(id: string): string {
   return id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 14) || "档案";
 }
+
+export const generateStaticParams = isStaticSite ? async () => {
+  const games = await getSnapshotGames();
+  return games.items.map((game) => ({ id: game.id }));
+} : undefined;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -64,7 +71,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
         ))
     );
     return <div className={"page-wrap detail-page " + styles.page}>
-      <nav className="breadcrumb" aria-label="面包屑"><Link href="/games">对局档案</Link><span aria-hidden="true">/</span><span aria-current="page">{game.season} · {formatDate(game.date)}</span></nav>
+      <nav className="breadcrumb" aria-label="面包屑"><ArchiveLink href="/games">对局档案</ArchiveLink><span aria-hidden="true">/</span><span aria-current="page">{game.season} · {formatDate(game.date)}</span></nav>
       <header className="match-hero">
         <div className="match-hero-main"><h1>{game.board?.name ?? "版型未知"}</h1><p className="match-date"><span>{game.season} · {phaseLabel(game.phase)}</span><time dateTime={game.date}>{formatDate(game.date)}</time><span>{game.game_number ? `第 ${game.game_number} 局` : "局次待核"}</span></p></div>
         <div className="match-outcome" data-winner={game.winner ?? "unknown"}><span>本局结果</span><strong>{winnerLabel(game.winner)}</strong></div>
