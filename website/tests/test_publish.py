@@ -292,7 +292,7 @@ def test_unrelated_audit_mismatch_is_rejected_even_with_bound_derivations(tmp_pa
 
 
 def test_audit_voting_mismatch_stays_strict_without_a_precomputed_report(tmp_path):
-    _publication_fixture(tmp_path, with_derivations=False)
+    _publication_fixture(tmp_path)
     entries, _, _ = publisher.load_publication(tmp_path, "S22", SAMPLE)
     item = entries[0]
     audit = deepcopy(item["audit"])
@@ -315,8 +315,9 @@ def test_stale_precomputed_rules_are_rejected(tmp_path):
 
 
 def test_rule_derivation_sidecar_bytes_change_publication_source_hash(tmp_path):
-    folder, report = _publication_fixture(tmp_path, with_derivations=False)
+    folder, report = _publication_fixture(tmp_path)
     _, source_without, _ = publisher.load_publication(tmp_path, "S22", SAMPLE)
+    report["review_tasks"].append({"detail": "additional private review note"})
     _write_json(folder / "rule_derivations.json", report)
     entries, source_with, _ = publisher.load_publication(tmp_path, "S22", SAMPLE)
     assert source_with != source_without
@@ -324,13 +325,18 @@ def test_rule_derivation_sidecar_bytes_change_publication_source_hash(tmp_path):
 
 
 def test_bluff_evidence_source_hashes_ignore_candidate_and_receipt_json(tmp_path):
-    folder, _ = _publication_fixture(tmp_path, with_derivations=False)
+    from scripts.game_derivations import fingerprint
+
+    folder, report = _publication_fixture(tmp_path)
     transcript = folder / "evidence.txt"
     transcript.write_text("第一版发言证据", encoding="utf-8")
     dossier_path = folder / "dossier.json"
     dossier = json.loads(dossier_path.read_text(encoding="utf-8"))
     dossier["files"] = [{"role": "transcript", "path": transcript.relative_to(tmp_path).as_posix()}]
     _write_json(dossier_path, dossier)
+    report["input_hashes"]["dossier"] = fingerprint(dossier)
+    report["output_hashes"]["dossier"] = fingerprint({**dossier, "winner": "good"})
+    _write_json(folder / "rule_derivations.json", report)
     _, source_before, _ = publisher.load_publication(tmp_path, "S22", SAMPLE)
 
     for name in ("dossier.candidate.json", "voting.candidate.json",
@@ -342,6 +348,12 @@ def test_bluff_evidence_source_hashes_ignore_candidate_and_receipt_json(tmp_path
     transcript.write_text("第二版发言证据", encoding="utf-8")
     _, source_after_evidence_change, _ = publisher.load_publication(tmp_path, "S22", SAMPLE)
     assert source_after_evidence_change != source_with_candidates
+
+
+def test_missing_precomputed_rules_identifies_the_game(tmp_path):
+    folder, _ = _publication_fixture(tmp_path, with_derivations=False)
+    with pytest.raises(publisher.PublishError, match=f"{folder.name}.*缺少规则推导"):
+        publisher.load_publication(tmp_path, "S22", SAMPLE)
 
 
 def test_bound_sheriff_evidence_is_checked_without_rerunning_parser(tmp_path, monkeypatch):
@@ -448,7 +460,7 @@ def test_publish_failure_does_not_change_active_release(monkeypatch):
             return getattr(self._conn, name)
 
         def execute(self, query, *args, **kwargs):
-            if str(query).startswith("INSERT INTO active_release"):
+            if str(query).startswith("LOCK TABLE active_release"):
                 raise RuntimeError("forced activation failure")
             return self._conn.execute(query, *args, **kwargs)
 

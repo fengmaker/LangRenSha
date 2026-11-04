@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getBluffReview } from "@/lib/api";
 import { isStaticSite } from "@/lib/site-mode";
-import { getSnapshotManifest } from "@/lib/snapshot-data";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
 import type { BluffReview, SearchParams } from "@/lib/types";
@@ -14,17 +13,8 @@ function first(value: string | string[] | undefined) { return Array.isArray(valu
 
 export default async function BluffReviewPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   if (isStaticSite) {
-    try {
-      const manifest = await getSnapshotManifest();
-      const seasons = manifest.seasons.map((season) => season.id);
-      const initialSeason = seasons.includes("S22") ? "S22" : seasons[0] ?? "";
-      const initialData = await getBluffReview(initialSeason, "all", "");
-      return <Suspense fallback={<div className="page-wrap"><PageIntro title="悍跳推断与复核" /></div>}><StaticBluffReviewBrowser initialSeason={initialSeason} initialData={initialData} seasons={seasons} /></Suspense>;
-    } catch (error) {
-      return <div className="page-wrap"><PageIntro title="悍跳推断与复核" description="按逐局原文证据回查悍跳归属与成功结果。" /><DataProblem error={error} /></div>;
-    }
+    return <Suspense fallback={<div className="page-wrap" role="status">正在读取悍跳复核资料…</div>}><StaticBluffReviewBrowser /></Suspense>;
   }
-
   const query = await searchParams;
   const rawSeason = first(query.season) || "S22";
   const season = /^[A-Za-z0-9_-]{1,20}$/.test(rawSeason) ? rawSeason : "S22";

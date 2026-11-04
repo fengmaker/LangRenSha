@@ -44,8 +44,9 @@ def _as_object(value: Any, label: str) -> dict:
     return value
 
 
-def _expected_game_count(season: str) -> int | None:
-    path = publisher.PACKAGE_ROOT / "config/seasons.json"
+def _expected_game_count(season: str, root: Path | None = None) -> int | None:
+    root = root or publisher.PACKAGE_ROOT
+    path = root / "config/seasons.json"
     if not path.is_file():
         return None
     try:
@@ -57,7 +58,7 @@ def _expected_game_count(season: str) -> int | None:
     if type(count) is int and count >= 0:
         from scripts.incremental_scope import approved_incremental_count
         try:
-            return count + approved_incremental_count(publisher.PACKAGE_ROOT, season)
+            return count + approved_incremental_count(root, season)
         except (OSError, ValueError, KeyError, TypeError) as error:
             raise BluffReviewError(f"新增对局人工确认范围无效：{error}") from error
     return None
@@ -253,14 +254,21 @@ def _validate_review(games: list[dict], payload: dict, season: str,
     return items, summary
 
 
-def _active_release(conn, season: str, *, lock: bool) -> dict:
-    suffix = " FOR UPDATE OF ar" if lock else ""
-    row = conn.execute(
-        "SELECT r.id, r.season, r.game_count FROM active_release ar "
-        "JOIN releases r ON r.id = ar.release_id WHERE ar.singleton = true" + suffix
-    ).fetchone()
+def _active_release(conn, season: str, *, lock: bool, release_id: str | None = None) -> dict:
+    if release_id is None:
+        suffix = " FOR UPDATE OF ar" if lock else ""
+        row = conn.execute(
+            "SELECT r.id, r.season, r.game_count FROM active_release ar "
+            "JOIN releases r ON r.id = ar.release_id WHERE ar.singleton = true" + suffix
+        ).fetchone()
+    else:
+        suffix = " FOR UPDATE OF r" if lock else ""
+        row = conn.execute(
+            "SELECT r.id, r.season, r.game_count FROM releases r WHERE r.id = %s" + suffix,
+            (release_id,),
+        ).fetchone()
     if not row:
-        raise BluffReviewError("网站数据库尚无活动游戏发布批次")
+        raise BluffReviewError("网站数据库没有指定的游戏发布批次")
     count = conn.execute(
         "SELECT count(*) AS count FROM games WHERE release_id = %s AND season = %s",
         (row["id"], season),
@@ -320,20 +328,21 @@ def read_review(conn, release_id: str, season: str) -> dict:
     return read_review_publication(conn, release_id, season)["payload"]
 
 
-def publish_review(season: str = "S22", path: Path | None = None, check: bool = False) -> dict:
-    """Validate and atomically publish a review against the current active release."""
+def publish_review(season: str = "S22", path: Path | None = None, check: bool = False,
+                   *, release_id: str | None = None, connection=None, root: Path | None = None) -> dict:
+    """Publish against active or candidate games, optionally in the caller's transaction."""
     if not re.fullmatch(r"[A-Za-z0-9_-]{1,20}", season):
         raise BluffReviewError("赛季参数格式不合法")
     payload = _load_payload(season, path)
     payload_hash = _sha256(_canonical_json(payload))
     inference_version = payload.get("inference_version")
-    conn = publisher._connect("masters_web")
+    conn = connection if connection is not None else publisher._connect("masters_web")
     try:
         with conn.transaction():
-            if not check:
+            if not check and connection is None:
                 publisher._create_schema(conn)
-            release = _active_release(conn, season, lock=not check)
-            expected_count = _expected_game_count(season)
+            release = _active_release(conn, season, lock=not check, release_id=release_id)
+            expected_count = _expected_game_count(season, root)
             if expected_count is not None and release["game_count"] != expected_count:
                 raise BluffReviewError("活动发布批次未完整覆盖赛季正式范围")
             games = _published_games(conn, release, season)
@@ -403,4 +412,5 @@ def publish_review(season: str = "S22", path: Path | None = None, check: bool = 
                                          and previous["publication_id"] == publication_id)
             return result
     finally:
-        conn.close()
+        if connection is None:
+            conn.close()

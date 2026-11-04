@@ -1,6 +1,6 @@
 from pathlib import Path
+import json
 
-from scripts import build_bluff_inference
 from website.api import bluffs, publisher
 
 
@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_s22_bluff_fingerprints_match_the_published_terminal_projection():
-    payload, _, _ = build_bluff_inference.build()
+    payload = json.loads((bluffs.ASSET_ROOT / "S22.json").read_text(encoding="utf-8"))
     records = {row["game_id"]: row for row in payload["games"]}
     entries, _, _ = publisher.load_publication(ROOT, "S22")
     for item in entries:

@@ -22,10 +22,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--season", default="S22")
     parser.add_argument("--path", type=Path, help="review JSON; defaults to website/assets/bluffs/<season>.json")
     parser.add_argument("--check", action="store_true", help="validate against active DB snapshots without writes")
+    parser.add_argument("--release", help="validate or write against this candidate release instead of the active one")
     parser.add_argument("--debug", action="store_true", help="print a local traceback on command failure")
     args = parser.parse_args(argv)
     try:
-        result = bluff_store.publish_review(args.season, args.path, check=args.check)
+        options = {"release_id": args.release} if args.release else {}
+        result = bluff_store.publish_review(args.season, args.path, check=args.check, **options)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except bluff_store.BluffReviewError as exc:

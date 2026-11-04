@@ -404,6 +404,8 @@ def main() -> None:
     parser.add_argument("--allow-partial", action="store_true")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if PUBLIC.is_file() and json.loads(PUBLIC.read_text(encoding="utf-8")).get("confirmed_baseline"):
+        parser.error("S22已固定人工确认基准；请用 website.api.publish_bluffs 发布，不再重建历史推断")
     payload, items, summary = build(allow_partial=args.allow_partial)
     if not args.check:
         if summary["unrechecked_candidates"]:

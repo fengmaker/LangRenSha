@@ -77,7 +77,7 @@ def test_current_s22_payload_retains_accepted_scope_and_totals():
     assert summary["decisions"]["yes"] == 121
     assert summary["successful_bluffs"] == 46
     assert summary["pending"] == 0
-    assert summary["user_confirmed_records"] == 46
+    assert summary["user_confirmed_records"] == 586
 
 
 @pytest.mark.parametrize("mutation", ["missing_game", "duplicate_game", "stale_fingerprint", "changed_name",

@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from fractions import Fraction
+
+import pytest
 
 from website.api.analytics import (
     build_leaderboard,
     compute_player_stats,
     compute_player_summaries,
     effective_faction,
+    role_label,
     _rank_values,
     scope_games,
 )
@@ -219,6 +223,73 @@ def test_abstention_record_cannot_override_explicitly_missing_vote_rights():
     stats = compute_player_stats("p", [game("rights", seats=seats, ballots=ballots)])
     assert stats["exile_abstentions"] == 1
     assert stats["wolf_vote_rate"]["denominator"] == 0
+
+
+@pytest.mark.parametrize("recorded_faction", ["good", None, "werewolf"])
+@pytest.mark.parametrize("treasure_role", ["盗宝大师", "盗宝毒师", "盗宝蒙面", "盗宝摄梦", "盗宝通灵", "盗宝猎人"])
+def test_treasure_master_stays_wolf_in_all_good_metrics(recorded_faction, treasure_role):
+    snapshot = game("treasure", winner="werewolf", seats=[
+        seat(1, "treasure", treasure_role, recorded_faction),
+        seat(2, "good", "平民", "good"),
+        seat(3, "seer", "通灵师", "good"),
+        seat(4, "wolf", "狼人", "werewolf"),
+    ], registrations=[{"day": 1, "id": "registration", "on_police": [1, 3], "off_police": [2, 4]}],
+        ballots=[
+            {"kind": "exile", "stage": "initial", "eligible_voters": [1, 2, 3, 4],
+             "votes": [vote(1, 4), vote(2, 1), vote(3, 1)]},
+            {"kind": "exile", "stage": "pk", "eligible_voters": [1, 2, 3, 4],
+             "votes": [vote(1, None, "abstained"), vote(2, 1), vote(3, 1)]},
+            {"kind": "sheriff", "candidates": [1, 3], "eligible_voters": [1, 2, 4],
+             "votes": [vote(1, 3), vote(2, 3)]},
+        ])
+    before = deepcopy(snapshot)
+    stats = compute_player_stats("treasure", [snapshot])
+
+    assert effective_faction(snapshot, snapshot["seats"][0]) == "werewolf"
+    for key in ("wolf_vote_rate", "good_win_rate", "good_sheriff_registration_rate",
+                "good_off_police_rate", "seer_follow_rate", "sheriff_seer_vote_rate"):
+        assert stats[key]["denominator"] == 0
+        assert stats[key]["samples"] == []
+    assert stats["exile_abstentions"] == 0
+    assert stats["werewolf_appearances"] == 1
+    assert stats["werewolf_win_rate"]["numerator"] == 1
+    assert stats["werewolf_sheriff_registration_rate"]["numerator"] == 1
+    assert stats["points"] == 1.5
+    assert stats["ledger"][0]["faction"] == "werewolf"
+    assert stats["ledger"][0]["faction_inferred"] is False
+
+    good_stats = compute_player_stats("good", [snapshot])
+    assert good_stats["wolf_vote_rate"]["numerator"] == 2
+    assert good_stats["wolf_vote_rate"]["denominator"] == 2
+    board = build_leaderboard([snapshot], season="S22")
+    row = next(row for row in board if row["id"] == "treasure")
+    assert row["wolf_vote_rate"]["samples"] == []
+    assert row["werewolf_appearances"] == 1
+    assert snapshot == before
+
+
+@pytest.mark.parametrize(("choice", "expected"), [
+    ("毒师", "盗宝毒师"), ("蒙面人", "盗宝蒙面"), ("摄梦人", "盗宝摄梦"),
+    ("通灵师", "盗宝通灵"), ("盗宝大师7号从平民/猎人中选择猎人身份。", "盗宝猎人"),
+    ("平民", "盗宝大师"), (None, "盗宝大师"),
+])
+def test_treasure_role_label_uses_its_god_card_even_while_switching_to_civilian(choice, expected):
+    snapshot = game("treasure-label", seats=[seat(1, "treasure", "盗宝大师", "werewolf")])
+    snapshot["players"] = [{"id": "treasure", "seat": 1, "role": "盗宝大师", "faction": "werewolf"}]
+    snapshot["rounds"] = [
+        {"number": 1, "night": [{"slot": "s21_treasure_action", "action": "choose",
+                                 "actor": 1, "result": choice}], "day": []},
+        {"number": 2, "night": [{"slot": "treasure_choice", "action": "choose",
+                                 "actor": 1, "result": "平民"}], "day": []},
+    ]
+    before = deepcopy(snapshot)
+    assert role_label(snapshot, snapshot["seats"][0]) == expected
+    ledger = compute_player_stats("treasure", [snapshot])["ledger"][0]
+    assert ledger["role_label"] == expected
+    assert ledger["role"] == "盗宝大师" and ledger["faction"] == "werewolf"
+    from website.api.app import _resolved_snapshot
+    assert _resolved_snapshot(snapshot)["seats"][0]["role_label"] == expected
+    assert snapshot == before
 
 
 def test_werewolf_appearance_explosion_and_sheriff_rates_use_confirmed_personal_faction():

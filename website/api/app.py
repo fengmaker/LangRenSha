@@ -23,6 +23,7 @@ from website.api.analytics import (
     compute_player_stats,
     compute_player_summaries,
     effective_faction,
+    role_label,
     scope_games,
 )
 from website.api import photos, bluff_frames
@@ -37,8 +38,45 @@ from scripts.role_constraints import puppet_target
 
 
 app = FastAPI(title="Masters archive API", version="1.0.0", debug=False)
-ANALYTICS_VERSION = 15
+ANALYTICS_VERSION = 16
 SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+LOCAL_READER_CONFIG = PROJECT_ROOT / ".secrets" / "masters_web_reader.json"
+
+
+def _canonical_sha256(value: object) -> str:
+    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                         separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _implementation_source_files(root: Path = PROJECT_ROOT) -> list[Path]:
+    """Return the Python and runtime data files used to build API responses."""
+    api_sources = (root / "website" / "api").rglob("*.py")
+    script_sources = (
+        root / "scripts" / name for name in (
+            "board_config.py", "game_inference.py", "game_time.py", "game_timeline.py",
+            "role_constraints.py", "rule_config.py", "season_config.py",
+        )
+    )
+    config_sources = [root / "config" / "seasons.json", root / "config" / "game_rules.json"]
+    config_sources.extend((root / "config" / "board_templates").glob("*.json"))
+    requirements = [root / "requirements" / "web.txt", root / "requirements" / "base.txt"]
+    schema = [root / "website" / "api" / "schema.sql"]
+    files = [*api_sources, *script_sources, *config_sources, *requirements, *schema]
+    return sorted((path for path in files if path.is_file()),
+                  key=lambda path: path.relative_to(root).as_posix())
+
+
+def _implementation_fingerprint() -> str:
+    files = _implementation_source_files()
+    entries = [{"path": path.relative_to(PROJECT_ROOT).as_posix(),
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+               for path in files]
+    return _canonical_sha256(entries)
+
+
+IMPLEMENTATION_FINGERPRINT = _implementation_fingerprint()
 
 
 class Count(BaseModel):
@@ -62,6 +100,7 @@ class PlayerInGame(BaseModel):
     name: str
     seat: int
     role: str | None
+    role_label: str | None = None
     faction: str | None
 
 
@@ -205,6 +244,12 @@ class MediaManifestHashes(BaseModel):
     bluff_frames: str
 
 
+class ContentFingerprints(BaseModel):
+    implementation: str
+    games: dict[str, str]
+    seasons: dict[str, str]
+
+
 class ExportManifest(BaseModel):
     release_id: str
     release: ExportRelease
@@ -213,23 +258,25 @@ class ExportManifest(BaseModel):
     media_manifest_hashes: MediaManifestHashes
     media_assets: list[MediaAsset]
     analytics_version: int
+    content_fingerprints: ContentFingerprints
 
 
 def _connect_readonly():
-    database_url = os.environ.get("DATABASE_URL")
-    if database_url:
-        conn = psycopg.connect(database_url, row_factory=dict_row)
+    if LOCAL_READER_CONFIG.is_file():
+        config = json.loads(LOCAL_READER_CONFIG.read_text(encoding="utf-8"))
+        if config.get("user") != "masters_web_reader":
+            raise RuntimeError("本机网站数据库凭据必须使用 masters_web_reader。")
+        conn = psycopg.connect(
+            **{key: config[key] for key in ("host", "port", "dbname", "user", "password") if key in config},
+            row_factory=dict_row,
+        )
+    elif (PROJECT_ROOT / ".secrets" / "database.json").is_file():
+        raise RuntimeError("本机只读数据库凭据未配置；请运行 python -m website.grant_reader --local。")
     else:
-        # Local development fallback; deployed API works with only this package
-        # and DATABASE_URL and never imports source ingestion modules.
-        import sys
-        from pathlib import Path
-        scripts = str(Path(__file__).resolve().parents[2] / "scripts")
-        if scripts not in sys.path:
-            sys.path.insert(0, scripts)
-        import database
-        conn = database.connect("masters_web")
-        conn.commit()
+        database_url = os.environ.get("DATABASE_URL")
+        if not database_url:
+            raise RuntimeError("请配置 masters_web_reader 或 DATABASE_URL 数据库连接。")
+        conn = psycopg.connect(database_url, row_factory=dict_row)
     conn.execute("BEGIN READ ONLY")
     conn.execute(sql.SQL("SET LOCAL search_path TO {}, public").format(sql.Identifier("masters_web")))
     return conn
@@ -261,10 +308,13 @@ def _release(conn) -> dict:
 
 
 def _resolved_snapshot(snapshot: dict) -> dict:
-    """Resolve derived factions for display without changing persisted source facts."""
+    """Resolve factions and role labels without changing persisted source facts."""
     puppet = puppet_target(snapshot)
-    seats = [{**seat, "faction": effective_faction(snapshot, seat), "is_puppet": seat['seat'] == puppet,
-              "faction_inferred": seat.get("faction") is None and effective_faction(snapshot, seat) is not None}
+    seats = [{**seat, "role_label": role_label(snapshot, seat),
+              "faction": effective_faction(snapshot, seat), "is_puppet": seat['seat'] == puppet,
+              "faction_inferred": seat.get("faction") is None
+              and not (seat.get("role") or "").startswith("盗宝")
+              and effective_faction(snapshot, seat) is not None}
              for seat in snapshot["seats"]]
     by_number = {seat["seat"]: seat for seat in seats}
     notes = list(snapshot.get("data_notes", []))
@@ -274,7 +324,8 @@ def _resolved_snapshot(snapshot: dict) -> dict:
         if seat["faction_inferred"]:
             notes.append(f"{seat['seat']}号 {seat['name']}为混血儿，个人阵营按已记录榜样确定。")
     return {**snapshot, "seats": seats, "data_notes": notes,
-            "players": [{**player, "faction": by_number[player["seat"]]["faction"]}
+            "players": [{**player, "faction": by_number[player["seat"]]["faction"],
+                         "role_label": by_number[player["seat"]]["role_label"]}
                         for player in snapshot["players"]]}
 
 
@@ -633,7 +684,7 @@ def leaderboard(season: str = Query(default="S22", max_length=32),
         "items": items,
         "sample_games": [{"game_id": game["id"], "season": game["season"], "date": game["date"],
                           "game_number": game.get("game_number"), "board_name": game["board"]["name"],
-                          "roles": {seat["person_id"]: seat.get("role") for seat in game.get("seats", [])
+                          "roles": {seat["person_id"]: role_label(game, seat) for seat in game.get("seats", [])
                                     if seat.get("person_id") is not None}}
                          for game in season_snapshots],
         "notes": analytics_notes(season_snapshots, season=season, phase=phase) + BLUFF_METHODOLOGY
@@ -784,12 +835,6 @@ def releases(conn=Depends(connection_dependency)):
     return {"items": rows}
 
 
-def _canonical_sha256(value: object) -> str:
-    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True,
-                         separators=(",", ":")).encode("utf-8")
-    return hashlib.sha256(encoded).hexdigest()
-
-
 def _effective_media_assets() -> tuple[dict[str, str], list[dict[str, str]]]:
     """Fingerprint the loaded allowlists and list assets currently served by them."""
     photo_manifest = photos.manifest()
@@ -851,7 +896,7 @@ def export_manifest(conn=Depends(connection_dependency)):
         ).fetchall()
         publications = conn.execute(
             "SELECT seasons.season, active.publication_id AS active_publication_id, "
-            "published.id AS publication_id, published.payload_hash "
+            "published.id AS publication_id, published.payload_hash, published.payload "
             "FROM (SELECT DISTINCT season FROM games WHERE release_id=%s) seasons "
             "LEFT JOIN active_bluff_reviews active "
             "ON active.release_id=%s AND active.season=seasons.season "
@@ -860,13 +905,30 @@ def export_manifest(conn=Depends(connection_dependency)):
             "AND published.season=active.season ORDER BY seasons.season",
             (release["id"], release["id"]),
         ).fetchall()
+        game_rows = conn.execute(
+            "SELECT id, season, event_date, phase, game_number, board_code, board_name, winner, bvid, "
+            "search_text, ballot_count, vote_count, round_count, snapshot FROM games "
+            "WHERE release_id=%s ORDER BY event_date, game_number NULLS LAST, id", (release["id"],),
+        ).fetchall()
+        game_player_rows = conn.execute(
+            "SELECT game_id, person_id, name, seat, role, faction FROM game_players "
+            "WHERE release_id=%s ORDER BY game_id, seat, person_id", (release["id"],),
+        ).fetchall()
+        player_rows = conn.execute(
+            "SELECT id, name FROM players WHERE release_id=%s ORDER BY id", (release["id"],),
+        ).fetchall()
     except psycopg.Error as exc:
         raise HTTPException(status_code=503, detail="Export metadata unavailable") from exc
 
     bluff_publications = []
     for row in publications:
+        if (SEASON_CATALOG.get(row["season"], {}).get("bluff_entry")
+                and row["active_publication_id"] is None):
+            raise HTTPException(status_code=503, detail=(
+                f"{row['season']} 人工悍跳尚未绑定当前 release；先完成悍跳发布再导出 Pages"
+            ))
         if row["active_publication_id"] is not None and (
-            row["publication_id"] is None or row["payload_hash"] is None
+            row["publication_id"] is None or row["payload_hash"] is None or row.get("payload") is None
         ):
             raise HTTPException(status_code=503, detail="Bluff publication metadata unavailable")
         bluff_publications.append({
@@ -874,14 +936,122 @@ def export_manifest(conn=Depends(connection_dependency)):
             "payload_hash": row["payload_hash"],
         })
 
+    game_players_by_id: dict[str, list[dict[str, Any]]] = {}
+    for row in game_player_rows:
+        game_players_by_id.setdefault(row["game_id"], []).append({
+            "person_id": row["person_id"], "name": row["name"], "seat": row["seat"],
+            "role": row["role"], "faction": row["faction"],
+        })
+
+    games_by_season: dict[str, list[dict[str, Any]]] = {}
+    game_fingerprints: dict[str, str] = {}
+    for row in game_rows:
+        snapshot = row["snapshot"]
+        if isinstance(snapshot, str):
+            try:
+                snapshot = json.loads(snapshot)
+            except json.JSONDecodeError as exc:
+                raise HTTPException(status_code=503, detail="Game snapshot metadata unavailable") from exc
+        if not isinstance(snapshot, dict):
+            raise HTTPException(status_code=503, detail="Game snapshot metadata unavailable")
+        # publisher.publish binds this top-level field to its release. GameDetail
+        # exposes it for rebinding, so it is not part of stable game content.
+        fingerprint_snapshot = {key: value for key, value in snapshot.items() if key != "release_id"}
+        event_date = row["event_date"]
+        game_input = {
+            "id": row["id"], "season": row["season"],
+            "event_date": event_date.isoformat() if hasattr(event_date, "isoformat") else str(event_date),
+            "phase": row["phase"], "game_number": row["game_number"],
+            "board_code": row["board_code"], "board_name": row["board_name"],
+            "winner": row["winner"], "bvid": row["bvid"], "search_text": row["search_text"],
+            "ballot_count": row["ballot_count"], "vote_count": row["vote_count"],
+            "round_count": row["round_count"], "snapshot": fingerprint_snapshot,
+            "game_players": game_players_by_id.get(row["id"], []),
+        }
+        game_fingerprints[row["id"]] = _canonical_sha256(game_input)
+        games_by_season.setdefault(row["season"], []).append(game_input)
+
+    publication_by_season: dict[str, dict[str, Any] | None] = {}
+    for row in publications:
+        payload = row.get("payload")
+        if row["active_publication_id"] is None:
+            publication_by_season[row["season"]] = None
+            continue
+        if isinstance(payload, str):
+            try:
+                payload = json.loads(payload)
+            except json.JSONDecodeError as exc:
+                raise HTTPException(status_code=503, detail="Bluff publication metadata unavailable") from exc
+        if not isinstance(payload, dict) or payload.get("season") != row["season"]:
+            raise HTTPException(status_code=503, detail="Bluff publication metadata unavailable")
+        # bluff_store persists this validated payload unchanged. Release and publication
+        # bindings live in separate columns, so retaining the full payload keeps every
+        # business field while remaining stable when only a release ID changes.
+        publication_by_season[row["season"]] = payload
+
     try:
         media_hashes, media_assets = _effective_media_assets()
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         raise HTTPException(status_code=503, detail="Media manifest unavailable") from exc
+
+    try:
+        photo_players = photos.manifest().get("players")
+        frame_seasons = bluff_frames.manifest().get("frames")
+        if not isinstance(photo_players, dict) or not isinstance(frame_seasons, dict):
+            raise ValueError("media manifest root is invalid")
+        effective_media_by_season: dict[str, list[dict[str, str]]] = {}
+        for asset in media_assets:
+            parts = asset["url"].strip("/").split("/")
+            if (len(parts) == 4 and parts[0] == "media"
+                    and parts[1] in {"player-photos", "bluff-frames"}):
+                effective_media_by_season.setdefault(parts[2], []).append(asset)
+        available_seasons = [row["season"] for row in seasons]
+        db_player_names = {row["id"]: row["name"] for row in player_rows}
+        seasons_fingerprints: dict[str, str] = {}
+        seasons_by_code = {row["season"]: row for row in seasons}
+        for season in available_seasons:
+            ordered_game_inputs = games_by_season.get(season, [])
+            player_ids = {
+                str(seat.get("person_id"))
+                for game in ordered_game_inputs for seat in game["snapshot"].get("seats", [])
+                if seat.get("person_id") is not None
+            }
+            season_inputs = {
+                "season": season,
+                # The season list affects response range resolution and is unchanged
+                # when content is appended to an already available season.
+                "available_seasons": available_seasons,
+                "season_metadata": seasons_by_code[season],
+                "season_config": {
+                    "name": SEASON_CATALOG.get(season, {}).get("name", season),
+                    "status": SEASON_CATALOG.get(season, {}).get("status", "unknown"),
+                },
+                "games": ordered_game_inputs,
+                "player_names": {player_id: db_player_names[player_id]
+                                 for player_id in sorted(player_ids) if player_id in db_player_names},
+                "bluff_payload": publication_by_season.get(season),
+                "media": {
+                    "player_photos": photo_players.get(season, {}),
+                    "bluff_frames": frame_seasons.get(season, {}),
+                    "effective_assets": effective_media_by_season.get(season, []),
+                },
+            }
+            if not isinstance(season_inputs["media"]["player_photos"], dict) or not isinstance(
+                season_inputs["media"]["bluff_frames"], (dict, list)
+            ):
+                raise ValueError(f"media manifest entry is invalid for {season}")
+            seasons_fingerprints[season] = _canonical_sha256(season_inputs)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        raise HTTPException(status_code=503, detail="Export metadata unavailable") from exc
 
     return {
         "release_id": release["id"], "release": release,
         "seasons": seasons, "bluff_publications": bluff_publications,
         "media_manifest_hashes": media_hashes, "media_assets": media_assets,
         "analytics_version": ANALYTICS_VERSION,
+        "content_fingerprints": {
+            "implementation": IMPLEMENTATION_FINGERPRINT,
+            "games": game_fingerprints,
+            "seasons": seasons_fingerprints,
+        },
     }

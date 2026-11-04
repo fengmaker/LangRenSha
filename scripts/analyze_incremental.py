@@ -158,6 +158,12 @@ def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root:
     date.fromisoformat(game["date"])
     if votes.get("game_slug") != game["slug"]:
         raise ValueError("票型与对局slug不一致")
+    if "endgame" in value:
+        from endgame_records import validate as validate_endgame
+        endgame = value["endgame"]
+        if not isinstance(endgame, dict) or endgame.get("game_slug") != game["slug"]:
+            raise ValueError("终局与对局slug不一致")
+        validate_endgame(endgame)
     try:
         validate_batch(game)
         validate_voting(votes)

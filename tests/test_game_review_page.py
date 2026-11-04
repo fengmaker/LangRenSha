@@ -97,6 +97,27 @@ def test_absent_display_selection_does_not_overwrite_an_existing_page(tmp_path):
     assert output.read_text(encoding='utf-8') == 'existing page'
 
 
+def test_review_page_shows_independent_candidate_endgame_in_the_shared_flow(tmp_path):
+    game = sample(tmp_path)
+    dossier = game['candidate']['dossier']
+    dossier['rounds'] = [{'number': 1, 'night': [], 'day': []}]
+    dossier['winner'] = 'werewolf'
+    game['candidate']['voting'] = {}
+    game['candidate']['endgame'] = {'schema_version': 1, 'game_slug': dossier['slug'], 'phases': [
+        {'kind': 'wolf_rush', 'day': 1, 'actor': None,
+         'declared_targets': [9], 'result': 'werewolf_win'}]}
+    before = deepcopy(game)
+    output = tmp_path / 'page.html'
+
+    render_review_page([game], output, root=tmp_path)
+
+    text = output.read_text(encoding='utf-8')
+    assert text.count('data-slot="wolf_rush"') == 1
+    assert '目标集合为9号小苍（女巫）' in text
+    assert '法官确认本次拍刀后游戏结束' in text
+    assert game == before
+
+
 def test_inline_images_cannot_read_a_file_outside_the_workspace(tmp_path):
     game = sample(tmp_path)
     game['review_display']['identity_frames'][0]['source_path'] = '../not-in-project.png'

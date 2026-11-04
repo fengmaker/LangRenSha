@@ -1,15 +1,14 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { StaticData } from "@/components/static-data";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Release, Stats } from "@/lib/types";
 import type { SnapshotManifest } from "@/lib/snapshot-data";
-import { fetchStatsRange } from "@/lib/static-browser";
+import { fetchStatsRange, fetchSnapshotManifest, fetchReleases, updateStaticQuery } from "@/lib/static-browser";
 import { StatsView } from "./stats-view";
 
-export function StaticStatsBrowser({ manifest, initialStart, initialStats, releases }: { manifest: SnapshotManifest; initialStart: string; initialStats: Stats; releases: { items: Release[] } }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function LoadedStatsBrowser({ manifest, initialStart, initialStats, releases }: { manifest: SnapshotManifest; initialStart: string; initialStats: Stats; releases: { items: Release[] } }) {
   const search = useSearchParams();
   const available = manifest.seasons.map((item) => item.id);
   const latest = available.at(-1) ?? initialStart;
@@ -28,11 +27,14 @@ export function StaticStatsBrowser({ manifest, initialStart, initialStats, relea
     let changed = false;
     if (rawStart !== start) { next.set("season_start", start); changed = true; }
     if (rawEnd !== "latest" && rawEnd !== end) { next.set("season_end", end); changed = true; }
-    if (changed) router.replace(`${pathname}?${next.toString()}`, { scroll: false });
-  }, [rawStart, start, rawEnd, end, search, router, pathname]);
+    if (changed) updateStaticQuery(next, true);
+  }, [rawStart, start, rawEnd, end, search]);
 
   useEffect(() => {
-    if (stats.scope.season_start === start && stats.scope.season_end === end) return;
+    if (stats.scope.season_start === start && stats.scope.season_end === end) {
+      setLoading(false); setError("");
+      return;
+    }
     let active = true;
     setLoading(true); setError("");
     fetchStatsRange(start, end).then((data) => { if (active) setStats(data); })
@@ -44,12 +46,22 @@ export function StaticStatsBrowser({ manifest, initialStart, initialStats, relea
   function applyRange(nextStart: string, nextEnd: string) {
     const query = new URLSearchParams(search.toString());
     query.delete("season"); query.set("season_start", nextStart); query.set("season_end", nextEnd);
-    router.push(`${pathname}?${query.toString()}`, { scroll: false });
+    updateStaticQuery(query);
   }
 
-  return <>
-    {error ? <div className="page-wrap" role="alert"><p>{error}</p></div> : null}
-    {loading ? <p className="page-wrap" role="status">正在载入统计范围…</p> : null}
-    <StatsView stats={stats} releases={releases} start={start} end={rawEnd} onRangeChange={applyRange} />
-  </>;
+  if (error) return <div className="page-wrap" role="alert"><p>{error}</p><a href="">刷新页面</a></div>;
+  if (loading || stats.scope.season_start !== start || stats.scope.season_end !== end) return <p className="page-wrap" role="status">正在载入统计范围…</p>;
+  return <StatsView stats={stats} releases={releases} start={start} end={rawEnd === "latest" ? "latest" : end} onRangeChange={applyRange} />;
+}
+
+async function loadStats() {
+  const manifest = await fetchSnapshotManifest();
+  const available = manifest.seasons.map((season) => season.id);
+  const initialStart = available.includes("S22") ? "S22" : available[0];
+  const [initialStats, releases] = await Promise.all([fetchStatsRange(initialStart, available.at(-1)!), fetchReleases()]);
+  return { manifest, initialStart, initialStats, releases };
+}
+
+export function StaticStatsBrowser() {
+  return <StaticData load={loadStats}>{(data) => <LoadedStatsBrowser {...data} />}</StaticData>;
 }

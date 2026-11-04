@@ -5,7 +5,8 @@ import { BallotPanel } from "@/components/ballot-panel";
 
 function seatText(number: number, seats: Seat[]): string {
   const seat = seats.find((item) => item.seat === number);
-  return `${number}号${seat?.name ?? ""}${seat?.role ? `（${seat.role}）` : ""}`;
+  const role = seat?.role_label || seat?.role;
+  return `${number}号${seat?.name ?? ""}${role ? `（${role}）` : ""}`;
 }
 
 function effectText(effect: NonNullable<GameEvent["effects"]>[number], seats: Seat[]): string {

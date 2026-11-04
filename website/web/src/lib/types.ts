@@ -34,6 +34,7 @@ export type PlayerLedgerEntry = {
   phase: string;
   board_name: string;
   role: string | null;
+  role_label?: string | null;
   faction: string | null;
   faction_inferred?: boolean;
   result: "win" | "loss" | "unknown";
@@ -99,6 +100,7 @@ export type GamePlayer = {
   name: string;
   seat: number;
   role: string | null;
+  role_label?: string | null;
   faction: string | null;
 };
 export type GameSummary = {
@@ -167,6 +169,7 @@ export type Seat = {
   person_id: string | null;
   name: string | null;
   role: string | null;
+  role_label?: string | null;
   faction: string | null;
   learning_target: number | null;
   learned_role: string | null;

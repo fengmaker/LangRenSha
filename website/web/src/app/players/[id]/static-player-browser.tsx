@@ -1,10 +1,11 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { StaticData } from "@/components/static-data";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { PlayerDetail } from "@/lib/types";
 import type { SnapshotManifest } from "@/lib/snapshot-data";
-import { fetchPlayerRange } from "@/lib/static-browser";
+import { fetchPlayerRange, fetchSnapshotManifest, staticRouteId, updateStaticQuery } from "@/lib/static-browser";
 import { PlayerProfileView } from "./player-profile-view";
 
 function nonNegativeInteger(value: string | null): number {
@@ -13,9 +14,7 @@ function nonNegativeInteger(value: string | null): number {
   return Number.isSafeInteger(number) && number >= 0 ? number : 0;
 }
 
-export function StaticPlayerBrowser({ id, defaultStart, manifest, initialPlayer }: { id: string; defaultStart: string; manifest: SnapshotManifest; initialPlayer: PlayerDetail }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function LoadedPlayerBrowser({ id, defaultStart, manifest, initialPlayer }: { id: string; defaultStart: string; manifest: SnapshotManifest; initialPlayer: PlayerDetail }) {
   const search = useSearchParams();
   const seasons = manifest.seasons.map((item) => item.id);
   const latest = seasons.at(-1) ?? defaultStart;
@@ -39,12 +38,15 @@ export function StaticPlayerBrowser({ id, defaultStart, manifest, initialPlayer 
       if (minimum) next.set("minimum_appearances", String(minimum)); else next.delete("minimum_appearances");
       changed = true;
     }
-    if (changed) router.replace(`${pathname}?${next.toString()}`, { scroll: false });
-  }, [rawStart, start, rawEnd, end, minimum, search, router, pathname]);
+    if (changed) updateStaticQuery(next, true);
+  }, [rawStart, start, rawEnd, end, minimum, search]);
 
   useEffect(() => {
     const resolvedEnd = end === "latest" ? latest : end;
-    if (player.scope?.season_start === start && player.scope?.season_end === resolvedEnd) return;
+    if (player.scope?.season_start === start && player.scope?.season_end === resolvedEnd) {
+      setLoading(false); setError("");
+      return;
+    }
     let active = true;
     setLoading(true); setError("");
     fetchPlayerRange(id, start, resolvedEnd).then((data) => { if (active) setPlayer(data); })
@@ -60,12 +62,23 @@ export function StaticPlayerBrowser({ id, defaultStart, manifest, initialPlayer 
     query.set("season_end", nextEnd);
     if (nextMinimum > 0) query.set("minimum_appearances", String(nextMinimum));
     else query.delete("minimum_appearances");
-    router.push(`${pathname}?${query.toString()}`, { scroll: false });
+    updateStaticQuery(query);
   }
 
-  return <>
-    {error ? <div className="page-wrap" role="alert"><p>{error}</p></div> : null}
-    {loading ? <p className="page-wrap" role="status">正在载入选手统计范围…</p> : null}
-    <PlayerProfileView player={player} start={start} end={rawEnd} minimumAppearances={minimum} onRangeChange={applyRange} />
-  </>;
+  if (error) return <div className="page-wrap" role="alert"><p>{error}</p><a href="">刷新页面</a></div>;
+  if (loading || player.scope?.season_start !== start || player.scope?.season_end !== end) return <p className="page-wrap" role="status">正在载入选手统计范围…</p>;
+  return <PlayerProfileView player={player} start={start} end={rawEnd === "latest" ? "latest" : end} minimumAppearances={minimum} onRangeChange={applyRange} />;
+}
+
+async function loadPlayer() {
+  const id = staticRouteId("players");
+  const manifest = await fetchSnapshotManifest();
+  const defaultStart = manifest.seasons.at(-1)!.id;
+  const initialPlayer = await fetchPlayerRange(id, defaultStart, defaultStart);
+  document.title = `${initialPlayer.name} · 选手档案 · 大师赛档案`;
+  return { id, defaultStart, manifest, initialPlayer };
+}
+
+export function StaticPlayerBrowser() {
+  return <StaticData load={loadPlayer}>{(data) => <LoadedPlayerBrowser {...data} />}</StaticData>;
 }

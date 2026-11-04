@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 
 def prepare_media(api_url: str) -> None:
-    from website.export_static import sync_media
+    from website.static_publish.export_static import sync_media
     sync_media(api_url, WEB / "public/media")
 
 

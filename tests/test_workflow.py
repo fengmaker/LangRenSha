@@ -15,8 +15,7 @@ class WorkflowTests(unittest.TestCase):
         (root / "config").mkdir()
         (root / "config/seasons.json").write_text(json.dumps({"seasons": {
             code: {"name": code, "scope_file": "config/seasons.json",
-                   "formal_rules_file": "config/game_rules.json",
-                   "bluff_entry": "scripts/build_bluff_inference.py"}
+                   "formal_rules_file": "config/game_rules.json"}
             for code in ("S01", "S02")
         }}), encoding="utf-8")
 
@@ -86,7 +85,7 @@ class WorkflowTests(unittest.TestCase):
             self.registry(root)
             registry_path = root / "config/seasons.json"
             registry = json.loads(registry_path.read_text(encoding="utf-8"))
-            del registry["seasons"]["S01"]["bluff_entry"]
+            registry["seasons"]["S02"]["bluff_entry"] = "scripts/build_bluff_inference.py"
             registry_path.write_text(json.dumps(registry), encoding="utf-8")
             for code in ("S01", "S02"):
                 folder = root / "data/games" / code / "example"
@@ -97,12 +96,24 @@ class WorkflowTests(unittest.TestCase):
             asset.write_text('{"manual_review": true}', encoding="utf-8")
 
             jobs = workflow.stage_commands("publish", "S01", root=root)
-            self.assertEqual(jobs[0][1:], ["scripts/prepare_game_rules.py", "--season", "S01", "S02", "--apply"])
-            self.assertEqual([job[1:3] for job in jobs[1:]], [["-m", "website.api.publish"]] * 2
-                             + [["-m", "website.api.publish_bluffs"]] * 2)
-            self.assertTrue(all(job[job.index("--season") + 1] == "S02"
-                                for job in jobs if "website.api.publish_bluffs" in job))
+            self.assertEqual([job[1:3] for job in jobs], [["-m", "website.api.publish"]])
+            self.assertFalse(any("--check" in job or "--apply" in job for job in jobs))
+            self.assertEqual(jobs[0][jobs[0].index("--seasons") + 1:], ["S01", "S02"])
             self.assertEqual(asset.read_text(encoding="utf-8"), '{"manual_review": true}')
+
+    def test_publication_refuses_to_rebuild_missing_reviewed_input(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.registry(root)
+            path = root / "config/seasons.json"
+            registry = json.loads(path.read_text(encoding="utf-8"))
+            registry["seasons"]["S01"]["bluff_entry"] = "scripts/build_bluff_inference.py"
+            path.write_text(json.dumps(registry), encoding="utf-8")
+            folder = root / "data/games/S01/example"
+            folder.mkdir(parents=True)
+            (folder / "dossier.json").write_text("{}", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "缺少已确认悍跳发布输入"):
+                workflow.stage_commands("publish", "S01", root=root)
 
     def test_s23_import_prepares_then_uses_the_validated_transaction_entry(self):
         jobs = workflow.stage_commands("import", "S23")

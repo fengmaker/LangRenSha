@@ -6,6 +6,10 @@
 
 **当前状态：阶段 A–D 已完成，阶段 E 已将合格成品提交、推送并部署至 [GitHub Pages](https://fengmaker.github.io/langrensha-site/)。线上自动化功能验收通过，照片慢加载及默认图标缺失已记录；实体手机与用户日常网络的人工体验检查待完成。** 源码收尾提交与成品上线分别进行；本次未进行数据入库或新的正式发布。实际范围见文末执行记录。
 
+静态发布脚本与模板已集中到 `website/static_publish/`，日常操作以[静态发布说明](../website/static_publish/README.md)为入口。
+
+后续增量同步改造已实现。当前进一步将网页程序与静态数据分离：数据更新复用网页程序，浏览器默认只验收关键入口和变化相关页面，并提供 `--skip-browser-check`。本地实现、验证与线上部署分别记录；文末早期的全站验收数量是当时执行结果，不代表当前每次发布要求。
+
 数据准备继续按[赛季数据全流程](01_赛季数据全流程.md)和[增量更新流程](08_增量更新流程.md)执行；本地现有运行方式见[网站手册](../website/README.md)。
 
 ## 一、固定首版选择
@@ -18,24 +22,24 @@
 | 实际网址 | `https://fengmaker.github.io/langrensha-site/` |
 | 数据与统计 | 从本地已发布 API 导出最终公开响应，复用现有 Python 计算 |
 | 前端 | 同一套 Next.js 页面和组件，保留本地维护模式，增加静态构建模式 |
-| 首版上线触发 | 推送成品后手动运行工作流；源码仓库推送不触发公开站部署 |
-| 日常构建 | 一个本地命令完成导出、构建和自动验收，成功后生成待发布目录 |
-| 回退 | 在发布仓库撤销有问题的成品提交，再手动部署 |
+| 上线触发 | 合格成品推送到发布仓库 `main` 后自动部署；源码仓库推送只触发源码验收 |
+| 日常更新 | `sync_pages.py` 完成增量导出、构建、验收、成品提交推送、等待部署及线上核对 |
+| 回退 | 在发布仓库撤销有问题的成品提交并推送，自动部署回退版本 |
 
 独立发布仓库是工程选择，便于区分网页成品与加工资料；GitHub Pages 本身不要求另建仓库。项目站点的仓库名构成网址路径前缀，改名时必须同步修改 `basePath` 并重新构建。[GitHub Pages 站点类型](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
 
-首版保留手动上线，避免同时改变本地维护、成品提交和上线触发三个环节。后续如需“推送发布仓库即上线”，只调整发布工作流触发方式。
+首次上线采用手动触发。按后续日常增量更新要求，新工作流模板增加发布仓库 `main` 的 `site/**` 和工作流变更触发；同步上线时才应用到发布仓库，保留手动入口用于重部署已有成品。本地文件保存不会直接发布未完成的内容，只有同步命令验收成功后才推送。
 
 ## 二、功能范围与数据处理
 
 | 功能 | 静态版实现与验收要求 |
 | --- | --- |
-| 首页、赛季页 | 构建时生成 HTML，数量与赛季从本次快照读取 |
+| 首页、赛季页 | 编译不含比赛数据的页面模板，浏览器从当前快照读取数量与赛季 |
 | 对局列表 | 轻量索引；浏览器筛选、排序和分页 |
 | 关键词、赛季、阶段、版型、选手、日期筛选 | 保留现有语义、默认值和 URL 参数 |
 | 对局详情 | 逐局生成 HTML，保留座位、日夜、票型、终局、来源与待核说明 |
 | 选手索引 | 每季导出完整索引，浏览器搜索和分页 |
-| 选手个人页 | 构建基本资料；按所选赛季区间读取预计算统计 |
+| 选手个人页 | 浏览器读取基本资料及所选赛季区间的预计算统计 |
 | 全季积分榜、决赛周榜 | 按各季实际支持的阶段预计算，保留既有计分规则 |
 | 单季及跨季统计 | 导出全部已发布赛季的连续区间 |
 | 最低出场次数 | 保留任意非负整数输入，在完整排名数据上筛选并更新名次 |
@@ -68,9 +72,11 @@
 
 | 位置 | 职责 |
 | --- | --- |
-| `website/export_static.py` | 从已发布 API 导出完整公开 JSON、检索索引和引用图片 |
-| `website/check_static.py` | 结构检查、API 对照、静态产物浏览器验收；复用现有验收代码 |
-| `website/build_static.py` | 顺序调用导出、构建和验收，只在全部成功后更新待发布目录 |
+| `website/static_publish/export_static.py` | 从已发布 API 导出完整公开 JSON、检索索引和引用图片 |
+| `website/static_publish/check_static.py` | 结构检查、API 对照、静态产物浏览器验收；复用现有验收代码 |
+| `website/static_publish/build_static.py` | 顺序调用导出、构建和验收，只在全部成功后更新待发布目录 |
+| `website/static_publish/sync_pages.py` | 在构建通过后同步独立发布仓库、提交推送、等待自动部署及核对线上版本 |
+| `website/static_publish/templates/deploy-pages.yml`、`website/static_publish/templates/published-README.md` | 发布仓库工作流和说明模板；同步命令只维护这两份配置与 `site/` |
 | `/api/v1/export-manifest`（只读接口） | 返回有效 game release、各季悍跳发布标识、有效媒体清单指纹与统计版本 |
 
 API 只读元数据从现有发布表和有效清单读取，无需另建发布数据库。各季悍跳直接使用现有 `publication_id`、`payload_hash`；未发布的季明确返回空值。已有发布数据存在但读取失败时必须报错，不按“尚未发布”处理。
@@ -164,9 +170,9 @@ export default nextConfig;
 
 ### 5.2 数据、路由与查询参数
 
-- 本地维护模式继续通过现有 `src/lib/api.ts` 请求 API；静态构建的服务端读取模块从导出文件取数据，浏览器模块只 fetch 本站静态 JSON。文件系统读取模块不进入客户端包。
-- 首页、赛季页、对局详情、选手基本资料构建为 HTML。查询参数控制的筛选、分页、区间统计由局部 Client Components 处理，保留静态外壳。
-- `games/[id]`、`players/[id]`、`seasons/[id]` 用实际清单提供 `generateStaticParams()`。S23 专属悍跳路由只枚举当前确实支持的季；保留既有 `/leaderboard/bluff-review` 入口与链接。
+- 本地维护模式继续通过现有 `src/lib/api.ts` 请求 API；公开浏览器只 fetch 本站静态 JSON，文件系统读取模块不进入客户端包。每次文档加载读取最新 manifest，并在本次文档内固定同一 snapshot，避免混用版本。
+- 首页、赛季页、对局详情及选手资料均复用不含比赛快照的 HTML／JS 模板，浏览器加载数据后显示内容与动态标题。首次打开可能短暂显示加载状态，初始 HTML 不再包含完整比赛正文。
+- `games/[id]`、`players/[id]`、`seasons/[id]` 在静态编译时用 `__static__` 生成模板，构建器按当前快照清单生成实际地址；模板保留在成品 `.static-shells/`，数据新增或删除不要求重新编译 Next。保留既有详情网址与 `/leaderboard/bluff-review` 入口，赛季专属悍跳入口仍遵守现有支持范围。
 - 静态分支及其 `generateMetadata()` 不读取请求时的服务端 `searchParams`；客户端 `useSearchParams()` 配置必要的 `Suspense`，并用生产构建验收。[useSearchParams](https://nextjs.org/docs/app/api-reference/functions/use-search-params)
 - 查询变化后 URL 与显示同步；前进、后退能恢复筛选；筛选改变时按现有规则复位页码，超范围页码在客户端归一化。
 - 对局排序保持日期降序、局号降序且未知局号最后、ID 稳定排序；保留 API 的筛选边界与关键词语义。
@@ -187,6 +193,7 @@ export default nextConfig;
 | 使用位置 | 路径要求 |
 | --- | --- |
 | Next `<Link>` 与框架导航 | 保持站内路径，由框架添加 basePath |
+| 公开模式 `ArchiveLink` | 使用带 basePath 的原生链接，避免模板路由与运行时 RSC 不一致；同页查询用 history 更新 |
 | 原生 `fetch`、`img`、媒体原图链接 | 使用公共路径函数添加一次 basePath |
 | `next/image` | src 也需要带 basePath；静态模式关闭运行时优化 |
 | 原生表单 action、站内 `<a>`、CSS `url()`、图标与 metadata URL | 逐项核对前缀 |
@@ -202,31 +209,31 @@ basePath 在构建时写入产物，修改后需重新构建。[Next.js basePath
 
 ```powershell
 Set-Location D:\langrensha
-.\.venv\Scripts\python.exe website/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
+.\.venv\Scripts\python.exe website/static_publish/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
 if ($LASTEXITCODE -ne 0) { throw "静态构建或验收失败，本次成品不得发布" }
 ```
 
 实现顺序：
 
 1. 在 `tmp/pages-build/` 新建本次候选目录，导出并核对来源。
-2. 同步候选数据和媒体到前端专用生成目录，只操作明确归属本流程的目录，不清理其他 public 文件。
-3. 给前端子进程设置静态模式和 basePath，构建后完成类型检查；复用项目已有 Node 定位方式，Windows 使用 `npm.cmd`。
-4. 对 `out/` 执行结构检查、API 对照和自动浏览器验收。
+2. 网页输入未变且有合格模板时，复用前端程序；否则同步源码到独立编译目录，设置静态模式和 basePath，执行构建及类型检查。复用项目已有 Node 定位方式，Windows 使用 `npm.cmd`。
+3. 按当前快照生成详情地址，替换数据和媒体；失效地址不进入本次成品。仅操作本流程拥有的生成目录。
+4. 对候选成品执行结构检查、API 对照及小范围自动浏览器验收。显式加 `--skip-browser-check` 时只跳过浏览器层。
 5. 全部通过后更新 `tmp/pages-preview/langrensha-site/`，将对应构建回执写入 `tmp/pages-preview/acceptance.json`；失败保留上一份合格目录及其回执，并在本次候选目录记录失败步骤与 build ID。
 
-候选输出、合格成品和回执按 build ID 关联。`website/web/out/` 是中间产物；公开同步始终从合格目录读取。构建入口不自动执行数据发布、Git 操作或 GitHub 部署。Windows 执行构建前先结束本项目的 Next 前端，避免共享 `.next` 被占用；已经运行的本地 API 可继续用于导出。
+候选输出、合格成品和回执按 build ID 关联。`website/web/.static-build/out/` 是中间产物；公开同步始终从合格目录读取。`build_static.py` 不执行数据发布或 Git 操作；需要上线时使用第九节 `sync_pages.py`。静态构建在 `website/web/.static-build/` 子项目中执行，默认 `.next` 和 `out` 都位于该子目录，与本地服务的 `website/web/.next` 分开。
 
-静态构建会复用 `.next` 工作目录。之后启动本地开发模式可直接使用 `website/run.py`；若要运行本地 `--production`，先按默认本地模式重新执行 `npm.cmd run build --prefix website/web`，生成对应 standalone，不能将静态构建当成本地生产构建。
+需要编译时，构建入口将同一份源码和配置复制到子项目，依赖通过父级 `node_modules` 正常解析，类型检查也在子项目中执行；不维护第二套页面。合格回执记录前端输入指纹和模板模式，旧版嵌入数据的成品不会被误当作可复用模板。Next 的静态导出将自定义 `distDir` 视为导出目录，编译仍会使用 `.next`，因此此处通过独立工作目录隔离。源码或前端输入在构建中途发生变化时，本次候选失败，不更新合格目录。运行本地 `--production` 仍需按默认模式生成相应 standalone。
 
 ### 6.2 验收职责与通过条件
 
-`check_static.py` 接口：`--out <静态目录> --base-path /langrensha-site --api-url http://127.0.0.1:8000`。统一构建入口必须提供 API 地址并完成以下三层检查，不能用结构检查替代浏览器操作。
+`check_static.py` 接口：`--out <静态目录> --base-path /langrensha-site --api-url http://127.0.0.1:8000`。统一构建入口必须提供 API 地址。文件与 API 检查始终保留；默认浏览器只检查关键入口和本次变化相关页面，不遍历全站。`check_static.py`、`build_static.py`、`sync_pages.py` 均支持 `--skip-browser-check`，回执将浏览器层明确记为 `skipped`，而非已通过。
 
 | 层次 | 必须检查的内容 |
 | --- | --- |
 | 文件与数据 | 清单完整标记、全量分页数量、唯一 ID、路由覆盖、全部区间、JSON 和媒体引用、内容哈希、产物大小 |
 | API 对照 | 原始导出响应与绑定版本；代表性筛选的有序 ID、总数和分页；各区间统计；榜单全季／决赛周语义；门槛 0、非零门槛及边界排名 |
-| 浏览器 | 在真实子路径挂载候选目录；详情直达及刷新；筛选和前进后退；个人页区间及排名弹窗；照片和截图；桌面与手机；阻断 API 后重载并操作 |
+| 浏览器（可显式跳过） | 在真实子路径挂载候选目录；关键入口、变化详情及受影响赛季／统计／选手代表页；直达与刷新、筛选和前进后退、区间及排名弹窗、照片和截图、桌面与手机；阻断 API 后重载并操作 |
 
 浏览器层复用现有 Playwright 验收逻辑，新增检查静态 JSON 和媒体请求失败、控制台异常、动态 API 请求；API 对照由 Python 进程完成，不依赖浏览器访问 API。结果与缺口写入本地回执，不将日志、截图或数据库备份复制到公开目录。
 
@@ -237,9 +244,9 @@ GitHub Pages 发布站点最大 1 GB，月带宽有 100 GB 软限制；验收测
 ### 6.3 现有流程适配
 
 - `website/run.py` 保留本地 API、开发前端和 standalone；只补实体媒体准备与 public 复制，不改成静态预览服务器。
-- `.github/workflows/full-acceptance.yml` 与 `website/ci_acceptance.py` 保留现有数据库发布、只读权限、语义测试和本地站验收；在同一临时数据库上增加静态构建与子路径验收。
-- 现有 CI 稀疏检出只覆盖 S22/S23，新增静态验收必须明确这一范围，不能声称覆盖三季。首次实际发布另外验收当前活动发布的全部赛季；只有扩展 CI 目标范围时才补 S21 及直接依赖资料。
-- 新增 CLI 和 CI 命令兼容 Windows 与 Linux；CI 证据继续沿用现有受限上传目录。首轮迁移完成后跑一次网站语义回归及两个模式的完整验收，日常按改动范围验证。
+- 源码仓库的全量CI已按用户要求移除，不再提供自动或手动触发入口。日常使用现有本地测试、发布验收和静态成品验收，按实际改动范围验证。
+- 发布验收覆盖当前活动发布的全部赛季；局部验收明确记录所选范围，不冒充三季全量通过。
+- 新增CLI兼容Windows与Linux。首轮迁移完成后跑一次网站语义回归及两个模式的完整验收，日常按改动范围验证。
 - 更新 `website/README.md`、前端手册、脚本说明及生成文件 ignore，清楚区分本地维护、静态构建和公开部署。
 
 ## 七、开发完成后的本地执行
@@ -281,11 +288,11 @@ if ($LASTEXITCODE -ne 0) { throw "PostgreSQL 启动失败" }
 Set-Location D:\langrensha
 Invoke-RestMethod http://127.0.0.1:8000/health -ErrorAction Stop
 Invoke-RestMethod http://127.0.0.1:8000/api/v1/export-manifest -ErrorAction Stop
-.\.venv\Scripts\python.exe website/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
+.\.venv\Scripts\python.exe website/static_publish/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
 if ($LASTEXITCODE -ne 0) { throw "静态构建或验收失败" }
 ```
 
-成功后读取 `tmp/pages-preview/acceptance.json`，确认 `complete=true`、全部验收通过、赛季与范围正确；核对回执的 build ID 与成品 manifest 一致。
+成功后读取 `tmp/pages-preview/acceptance.json`，确认完整成品、文件及 API 检查通过、赛季与范围正确；浏览器层应为通过或本次显式指定的跳过状态。核对回执的 build ID 与成品 manifest 一致。
 
 ### 7.4 人工预览
 
@@ -322,6 +329,11 @@ if ($LASTEXITCODE -ne 0) { throw "发布仓库克隆失败" }
 name: Deploy static site to Pages
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -404,7 +416,7 @@ if ($LASTEXITCODE -ge 8) { throw "成品同步失败" }
 
 正确位置是 `site/index.html`、`site/_next/`、`site/data/manifest.json`、`site/media/`、`site/games/<id>/index.html`。**不再加一层 `site/langrensha-site/`**；网址中的前缀由 Pages 挂载。
 
-### 8.4 提交、推送与手动上线
+### 8.4 提交、推送与自动上线
 
 在实际获准提交、推送本次成品的范围内执行，每条成功后继续：
 
@@ -425,7 +437,7 @@ git push origin main
 if ($LASTEXITCODE -ne 0) { throw "推送失败" }
 ```
 
-GitHub 仓库进入 **Settings → Pages → Build and deployment → Source → GitHub Actions**。随后进入 **Actions → Deploy static site to Pages → Run workflow → main → Run workflow**。手动工作流需存在于默认分支，执行者需要仓库写权限。[发布源设置](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)、[手动工作流](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
+GitHub 仓库进入 **Settings → Pages → Build and deployment → Source → GitHub Actions**。上述工作流存在于默认 `main` 后，成品推送自动触发部署。需要重新部署已有提交时，仍可进入 **Actions → Deploy static site to Pages → Run workflow → main → Run workflow**。[发布源设置](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)、[手动工作流](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)
 
 工作流成功后，从 Pages 设置或部署输出打开实际网址，复查首页、各季详情直达与刷新、筛选、跨季选手页、榜单、照片／截图及手机访问。核对线上 manifest build ID 与本地成品一致，并用日常使用的网络实测加载体验，再分享链接。
 
@@ -446,16 +458,36 @@ GitHub 仓库进入 **Settings → Pages → Build and deployment → Source →
 1. 按既有流程整理和人工确认新增数据，在另行明确范围内完成入库及本地正式发布；纯网页改动无需再次发布数据库。
 2. 重启有代码或清单更新的 API；暂停发布切换，执行第七节的统一构建命令。
 3. 查看本次验收结果，预览受影响页面；覆盖相应统计、区间和证据依赖。
-4. 按第八节将合格成品同步到发布仓库，核对后提交、推送并手动运行工作流。
+4. 将合格成品同步到发布仓库，提交、推送，发布工作流自动部署。
 5. 核对线上 build ID 和受影响路径，记录发布仓库提交及实际站点地址。
 
-首版统一命令每次从当前已发布 API 导出，保证行为一致。只有实际构建耗时需要优化时，才增加经过版本核对的快照复用选项；无需一开始增加缓存失效或增量构建机制。
+本地正式发布已体现本次预期结果、PostgreSQL 可用后，日常同步使用一条命令：
 
-日常可直接给本地 Codex 下达：**“把当前已发布数据和网页同步更新到 GitHub Pages，提交并推送相关改动，部署后核对线上版本。”** 这包含重新构建与验收、同步合格成品到 `D:\langrensha-site\site`、两个仓库相关改动的提交与推送、手动运行 Pages 工作流及线上检查。若数据尚未完成入库或正式发布，需要另行明确授权相应范围；“已发布数据”不会自动包含尚未发布的磁盘修改。
+```powershell
+Set-Location D:\langrensha
+.\.venv\Scripts\python.exe website/static_publish/sync_pages.py
+if ($LASTEXITCODE -ne 0) { throw "同步未完成，请查看本次构建或发布回执" }
+```
+
+命令默认启动自己管理的只读 API，使用随机本地端口，构建结束后关闭；与正在运行的本地生产服务分开。确需复用指定服务时，加 `--api-url http://127.0.0.1:8000`。构建前后都会核对源码输入，另一窗口仍在修改时应先完成修改，再进行统一同步。
+
+默认复用 `tmp/pages-preview/acceptance.json` 对应的合格站点，先校验其完整树哈希。导出器比较 API 的实现、逐局和逐季输入指纹，只重新请求发生变化的详情、区间统计、榜单或悍跳响应；未变响应验证旧文件哈希后复用，并重新绑定当前 release 和复核 publication。每个区间的个人详情包含全体排名，因此涉及某季变更时，该区间内所有选手都需更新，不能只重算参赛者。内容寻址图片按 SHA-256 复用，只下载新增或缺失实体。首页、发布历史与检索索引等轻量响应继续读取最新 API。
+
+候选快照根的 `export-index.json` 记录每个 JSON 的输入指纹、内容哈希及是否复用，随合格回执保存在本地，不进入公开 `site/`。结构、JSON 和媒体完整性检查仍覆盖完整成品；复用响应按当前元数据、输入指纹、文件 SHA 和版本绑定验证，新增或失效响应逐个与 API 对照，排名门槛等代表检查保留。浏览器只访问关键入口、内容实际变化的对局及受影响季的选手／统计代表页，不因 release 重新绑定就访问全站。回执分别报告新取及复用数量、实际浏览器范围。
+
+网页程序与数据分离后，前端输入未变时复用合格成品的程序和详情模板，仅替换数据、媒体及实际地址，不再执行 `next build` 或类型检查。模板模式及输入指纹不匹配时重新编译，避免复用旧版嵌入数据的页面。源码输入、API 元数据及发布历史均未变化时保留旧 build ID，跳过导出和编译；若旧回执跳过了浏览器、本次要求检查，则补做验收。`--full` 重新取得全部响应，仍可复用未变网页程序，浏览器仍为小范围。
+
+显式跳过浏览器时运行 `.\.venv\Scripts\python.exe website/static_publish/sync_pages.py --skip-browser-check`；只生成本地成品则将同名选项加到 `build_static.py`。该选项保留文件、API 及版本检查，回执记录浏览器层为 `skipped`；不将未执行的浏览器验收记成已通过。
+
+持续增量更新需保留最新合格目录及同级 `acceptance.json`。清理这份基线后，下一次会恢复完整导出建立新基线，现网和发布仓库不受影响；旧候选构建不必全部保留。
+
+`sync_pages.py` 只管理 `D:\langrensha-site` 的 `site/`、Pages 工作流和 README，按文件内容比较写入差异，再提交推送 `main`、等待自动部署并比对线上 manifest 和各季代表详情。源码仓库提交仍按本次授权另行执行；数据入库和本地正式发布也由原流程负责。若只想生成预览，继续使用 `build_static.py`，它不操作 Git 或远端。Git 推送复用远端已有对象，Pages 最终仍部署完整站点 artifact。
+
+日常可直接给本地 Codex 下达：**“把当前已发布数据和网页增量同步到 GitHub Pages，上线后核对版本。”** 默认执行上述同步命令；如还需要提交源码，可同时说明“提交并推送相关源码改动”。若数据尚未完成入库或正式发布，需要明确相应范围；“已发布数据”不包含尚未发布的磁盘修改。
 
 ### 公开网页回退
 
-先在发布仓库 `git log --oneline -5` 找到有问题的成品提交，确认它是独立的发布提交。在 `main` 对该提交执行 `git revert 实际SHA`，处理必要冲突后推送，再手动运行同一个部署工作流。回退后核对线上 manifest 与目标旧版本。
+先在发布仓库 `git log --oneline -5` 找到有问题的成品提交，确认它是独立的发布提交。在 `main` 对该提交执行 `git revert 实际SHA`，处理必要冲突后推送，工作流自动部署回退结果。回退后核对线上 manifest 与目标旧版本；手动入口仍可用于重新部署。
 
 公开网页回退只恢复发布仓库成品，不回退正式 JSON、JCMS、game release 或悍跳发布。数据确需纠正时按原数据流程修正，再生成新的完整静态成品。
 
@@ -509,7 +541,7 @@ GitHub 仓库进入 **Settings → Pages → Build and deployment → Source →
 - 本地 standalone：完整 360 局来源/API 对照及 52 条浏览器路径通过，见 `tmp/pages-build/local-acceptance.json`。本地开发模式三条关键路由通过，见 `tmp/pages-build/development-acceptance.log`。
 - 本地维护端：隔离浏览器完成草稿保存、重载、导出、清空测试存储及导入恢复，见 `tmp/pages-build/local-feedback-acceptance.json`；未操作用户日常浏览器草稿。
 - 完整验收后修正本地动态路由注册，随后重新构建静态版并核对结构、数据、媒体及客户端 JS/CSS 一致，关键交互复验通过；补充证据见 `tmp/pages-preview/mode-regression.json`，原构建回执保留实际输入指纹。
-- CI 稀疏检出重建通过：S22/S23 238 局、239 份引用证据文本齐全，完整检出与稀疏检出的发布来源哈希一致；相关回归通过。源码仓库远程 `full-acceptance` 未运行，Docker 镜像未实际构建，不记为已通过。发布仓库 Pages 工作流的实际成功记录见下文。
+- 当时稀疏检出重建通过：S22/S23 238 局、239 份引用证据文本齐全，完整检出与稀疏检出的发布来源哈希一致；相关回归通过。源码全量CI未在远程运行，现已移除；Docker镜像未实际构建，不记为已通过。发布仓库Pages工作流的实际成功记录见下文。
 
 Windows 下已复现并处理当前 Next 静态导出的 RSC 文件路径问题，构建入口归一化 460 条路由载荷路径；静态链接关闭预取。本地模式按请求动态读取查询参数，`latest` 别名和维护者反馈格式保留。一个合法的未知终局日数曾阻断全量 API，已修正为保留未知值，不推测日数，并通过对应时间线回归。
 
@@ -536,3 +568,36 @@ Windows 下已复现并处理当前 Next 静态导出的 RSC 文件路径问题�
 - 冷访问选手目录会请求多张原尺寸照片。S21 目录加载事件约 3.5 秒完成，48 张卡片已呈现，但等待全部图片网络空闲曾超过 90 秒；去掉验收请求拦截后仍可复现。S21/S22/S23 照片平均约 0.56/1.23/0.88 MB，页面初始化还可能请求默认赛季照片。单独测得一张 595,699 字节照片下载约 4.3 秒、一张 811,289 字节证据截图约 4.5 秒，均为 HTTP 200 且哈希一致。当前保留原媒体及其内容哈希；照片缩略图和加载性能优化未在本次实施。证据见 `online-player-probe-native.json`、`online-media-probe.json` 和 `online-networkidle-first-attempt.json`。
 - 原生浏览器会自动请求项目目录外的 `https://fengmaker.github.io/favicon.ico`，该图标不存在，产生一条 404 控制台消息；项目没有声明图标链接。已在独立首页复测中按消息 location 确认来源，记录于 `online-favicon-probe.json`，原始功能检查报告保存在 `online-functional-attempt.json`。它与项目页面、JSON、照片及截图请求区分记录。
 - 手机检查采用浏览器视口，尚无实体手机及用户日常网络的人工体验结论；用户可直接打开正式网址进行检查。
+
+### 增量同步改造收尾
+
+增量导出、未变响应及媒体复用、无变化跳过构建、一键同步与自动部署模板均已实现。静态构建使用独立子目录，临时 API 独立启动和关闭，不占用正在运行的本地生产服务。数据变更仍需 Next 完整静态导出；Git 只推送差异，Pages 部署完整站点。
+
+- 统一回归：454 项通过；最终本地成品切换相关回归 11 项通过。
+- 当前本地合格成品：`tmp/pages-preview/langrensha-site/`，build ID `20261104T050214Z-4be1b15a`，同级 `acceptance.json` 为 `passed`。
+- 真实静态构建、类型检查、360 份对局及 540 份个人区间统计 API 对照、460 条桌面路由及 19 条手机视口路由验收通过；287 份媒体复用，无需重新下载。
+- 本轮代码及文档尚未提交，自动部署模板尚未推送到发布仓库；线上仍为前述首次上线版本。正式数据发布完成后，运行第九节 `sync_pages.py` 即可构建并同步上线。
+
+### 网页程序与数据分离、小范围验收（2026-11-04）
+
+本轮实现已完成，尚未提交、推送或部署。覆盖前述“数据变更仍需 Next 完整静态导出”的旧实现：当前数据更新复用已验收程序与详情模板，新增或删除地址按快照清单生成；默认浏览器验收关键入口、特殊入口及变化相关页面。`--skip-browser-check` 只跳过浏览器层，文件、API 与版本检查继续运行。
+
+- 相关 Python 回归共 **96 项通过**，覆盖新／旧地址、源码变化重编译、模板复用、失败保留、跳过浏览器仍拒绝缺失数据或版本错误、影响范围选择及同步命令参数。静态筛选与排名的 `check_static_queries.cjs` 通过。
+- 真实静态编译及类型检查通过。首份快照包含 360 局、90 位选手、540 份个人区间统计和 287 份媒体，文件和 API 对照完成。首次浏览器检查将 Next 自带的空 `role="alert"` 播报节点误判为加载错误，已将检查限定在 `main`；原失败回执保留，随后复核通过。
+- 最终真实浏览器检查为 **13 条桌面路由、13 条手机视口路由**，包含 S23 专属复核入口；详情直达及刷新、筛选、分页和后退、个人区间与门槛、排名弹窗、照片及证据截图均通过。动态 API 请求、脚本／控制台错误和请求错误均为 0；桌面与手机首页截图已查看。报告：`tmp/final-scoped-browser.json`。
+- 实际刷新快照时，360 份对局、540 份个人区间统计及 287 份媒体均复用；前端程序和模板哈希不变，未执行 Next 或类型检查。显式跳过浏览器的报告为 `skipped`；下一次无变化默认运行补做浏览器检查并保留 build ID。演练报告：`tmp/data-separation-validation.json`。这次数据内容没有变化，新增／删除 ID 由上述回归覆盖，未写入或切换数据库发布。
+- 该次快照刷新阶段耗时：导出 34.692 秒、前端复用 1.938 秒、地址及数据生成 4.431 秒、保留的文件／API 检查 84.629 秒，合计约 126 秒；未包含 Git 推送和 Pages 部署。首次全量导出为 238.448 秒，Next 编译 11.104 秒、类型检查 4.624 秒，首轮结构／API 对照及进入浏览器前检查约 286 秒。前端编译并非本次实测的主要耗时，不能将这些演练数字当作新增一局的固定用时。
+- 本地维护模式隔离构建通过。默认生产目录构建曾因 `standalone` 被锁中断，已用隔离构建补齐生成文件；恢复后的生产首页与对局页 HTTP 200，原有开发站 HTTP 200，验证进程已关闭。未停止原有开发服务。记录：`tmp/maintenance-restored.log`。
+- 额外运行的既有 `check_web_semantics.cjs` 仍失败：HEAD 中的夹具传入旧 `rounds/voting/terminal` 参数，而 HEAD 中的 `EventBoard` 已要求 `timeline`；该问题在本轮改动前存在。本轮未修改这份过期夹具，不能将其记为已通过。
+
+本地成品仍位于 `tmp/pages-preview/langrensha-site/`，build ID 为 `20261104T062055Z-1fdbf62f`，约 491 MB；最新小范围浏览器复测另存上述报告。GitHub Actions 仍上传和部署完整站点，模板已允许上传隐藏文件以保留 `.static-shells/`。这些本地改动不代表线上已更新。
+
+### 2026-11-04 发布链路减量（本地修改）
+
+- 新增对局发布验收一次传入本批全部BV，变化详情仍逐局对照，公共页面和受影响选手复用验收器的并集逻辑；同批各局共享报告路径、SHA和release记录。
+- 规则推导在正式稿生成／修订时保存。正式发布只验证已有`rule_derivations.json`的输入、规则和输出指纹，缺失或过期时定位到具体对局；不再默认执行全部历史`prepare_game_rules --apply`。目前公共模板仍按既有完整依赖指纹处理。
+- 正式发布不再先后运行同一工具的`--check`及写入：对局和各季悍跳命令各准备一次，沿用现有事务和悍跳活动版本锁。独立`--check`保留给预览和排障；完整快照继续保留全部旧季。
+- S22/S23当前人工结果固定为正式输入，旧推断器拒绝覆盖；日后新增局仅合并本次人工意见。悍跳与对局均在`masters_web`内按release管理；对局快照在写入时带版本，悍跳单独发布后关联同版。S22/S23若尚未完成当前release的悍跳发布，`export-manifest`返回阻塞，防止中间状态导出为Pages成品。
+- 源码全量CI及其专用脚本、测试和说明已按用户要求删除；本地测试、发布验收及独立成品仓库Pages部署保留。
+
+实际验证：相关回归151项、部署挂载与发布契约7项通过；两项会操作真实数据库的既有发布集成测试未纳入本轮最终回归。360份正式档案只读预检通过，来源哈希`dff4f1efc050a5d02b821317fbb73ddc7b26d18514035077236c44b96994abf8`及规则哈希均未改变。固定前后对照当前数据库，S22的121次悍跳／46次成功、S23的81次悍跳／13次成功及逐席结论、汇总统计完全一致。已删除191份旧推断、加工文件和历史工作副本；300张中间截图及16份报告／旧验收文件因自动审批拒绝扩大删除而保留，清单见本机`tmp/bluff-history-retained-20261104.json`。当前人工意见原件和102张实际发布证据截图均保留。本轮没有发布新成品、切换网站活动版本、提交或推送。

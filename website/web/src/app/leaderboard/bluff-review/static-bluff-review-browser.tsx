@@ -1,15 +1,14 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { StaticData } from "@/components/static-data";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { BluffReview } from "@/lib/types";
-import { fetchBluffReview } from "@/lib/static-browser";
+import { fetchBluffReview, fetchSnapshotManifest, staticRouteId, updateStaticQuery } from "@/lib/static-browser";
 import { filterBluffReview } from "@/lib/bluff-filter";
 import { BluffReviewView } from "./bluff-review-view";
 
-export function StaticBluffReviewBrowser({ initialSeason, initialData, seasons, forcedSeason }: { initialSeason: string; initialData: BluffReview; seasons: string[]; forcedSeason?: string }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function LoadedBluffReviewBrowser({ initialSeason, initialData, seasons, forcedSeason }: { initialSeason: string; initialData: BluffReview; seasons: string[]; forcedSeason?: string }) {
   const search = useSearchParams();
   const requestedSeason = forcedSeason ?? search.get("season") ?? initialSeason;
   const rawSeason = search.get("season") ?? "";
@@ -23,7 +22,7 @@ export function StaticBluffReviewBrowser({ initialSeason, initialData, seasons, 
 
   useEffect(() => {
     let active = true;
-    if (season === data.season) return;
+    if (season === data.season) { setError(""); return; }
     setError("");
     fetchBluffReview(season).then((result) => { if (active) setData(result); })
       .catch((reason: unknown) => { if (active) setError(reason instanceof Error ? reason.message : "无法读取悍跳复核资料。"); });
@@ -37,11 +36,27 @@ export function StaticBluffReviewBrowser({ initialSeason, initialData, seasons, 
     next.set("season", season);
     if (player) next.set("player", player); else next.delete("player");
     if (!validStatus && rawStatus !== null) next.set("status", "pending");
-    router.replace(pathname + "?" + next.toString(), { scroll: false });
-  }, [requestedSeason, season, player, rawPlayer, rawStatus, forcedSeason, rawSeason, search, router, pathname]);
+    updateStaticQuery(next, true);
+  }, [requestedSeason, season, player, rawPlayer, rawStatus, forcedSeason, rawSeason, search]);
 
-  return <>
-    {error ? <div className="page-wrap" role="alert"><p>{error}</p></div> : null}
-    <BluffReviewView data={filterBluffReview(data, status, player)} season={season} status={status} player={player} publicReadOnly />
-  </>;
+  if (error) return <div className="page-wrap" role="alert"><p>{error}</p><a href="">刷新页面</a></div>;
+  if (data.season !== season) return <p className="page-wrap" role="status">正在读取悍跳复核资料…</p>;
+  return <BluffReviewView data={filterBluffReview(data, status, player)} season={season} status={status} player={player} publicReadOnly />;
+}
+
+async function loadBluffReview(seasonRoute: boolean) {
+  const manifest = await fetchSnapshotManifest();
+  const seasons = manifest.seasons.map((season) => season.id);
+  const forcedSeason = seasonRoute ? staticRouteId("seasons") : undefined;
+  const initialSeason = forcedSeason ?? (seasons.includes("S22") ? "S22" : seasons[0]);
+  const initialData = await fetchBluffReview(initialSeason);
+  document.title = `${initialSeason} 悍跳推断与复核 · 大师赛档案`;
+  return { initialSeason, initialData, seasons, forcedSeason };
+}
+
+const loadGeneralReview = () => loadBluffReview(false);
+const loadSeasonReview = () => loadBluffReview(true);
+
+export function StaticBluffReviewBrowser({ seasonRoute = false }: { seasonRoute?: boolean }) {
+  return <StaticData load={seasonRoute ? loadSeasonReview : loadGeneralReview}>{(data) => <LoadedBluffReviewBrowser {...data} />}</StaticData>;
 }

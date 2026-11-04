@@ -91,22 +91,14 @@ def stage_commands(stage: str, season: str, *, root: Path = ROOT,
             raise ValueError(f"{season}还没有正式dossier.json，不能发布候选文件")
         # Published review inputs can contain user decisions. Reuse those files
         # rather than replacing them with a fresh inference during publication.
-        reviews = []
-        jobs = [command("scripts/prepare_game_rules.py", "--season", *seasons, "--apply")]
+        jobs = []
         for code in seasons:
             asset = root / f"website/assets/bluffs/{code}.json"
-            builder = None if asset.is_file() else load_season(code, root).get("bluff_entry")
-            if asset.is_file() or builder:
-                reviews.append((code, builder))
-            if builder:
-                jobs.append(command(builder, "--check"))
-        jobs += [[str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons, "--check"],
-                 [str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons]]
-        for code, builder in reviews:
-            if builder:
-                jobs.append(command(builder))
-            jobs += [[str(PYTHON), "-m", "website.api.publish_bluffs", "--season", code, "--check"],
-                     [str(PYTHON), "-m", "website.api.publish_bluffs", "--season", code]]
+            if not asset.is_file() and load_season(code, root).get("bluff_entry"):
+                raise ValueError(f"{code}缺少已确认悍跳发布输入：{asset}；先准备并人工确认，发布时不重建推断")
+        # Each write command validates and writes the same prepared data. Keep
+        # standalone --check for previews, rather than preparing every source twice.
+        jobs.append([str(PYTHON), "-m", "website.api.publish", "--seasons", *seasons])
         if photos:
             jobs.append(command("website/prepare_photos.py"))
         return jobs
@@ -145,15 +137,6 @@ def status(season: str, root: Path = ROOT) -> dict:
     return {"season": season, "name": config["name"], "formal_games": len(list((root / "data/games" / season).glob("*/dossier.json"))),
             "scope": config["scope_file"], "rules": config["formal_rules_file"], "reports": reports,
             "note": "文件存在和进度数量不等于逐字段人工确认；证据、未知和用户意见分别核对。"}
-
-
-def ensure_retained_seasons(seasons: list[str]) -> None:
-    from website.api.publisher import _connect
-    with _connect() as conn:
-        rows = conn.execute("SELECT DISTINCT g.season FROM games g JOIN active_release a ON a.release_id=g.release_id").fetchall()
-    missing = {row["season"] for row in rows} - set(seasons)
-    if missing:
-        raise ValueError("当前活动批次的赛季缺少本地正式档案，停止替换：" + ", ".join(sorted(missing)))
 
 
 def main() -> int:
@@ -202,8 +185,6 @@ def main() -> int:
                 print("& " + subprocess.list2cmdline(job))
         return 0
     os.chdir(ROOT)
-    if args.stage == "publish":
-        ensure_retained_seasons(formal_seasons())
     for job in plans[0]["commands"]:
         print("& " + subprocess.list2cmdline(job), flush=True)
         subprocess.run(job, cwd=ROOT, check=True)

@@ -7,8 +7,8 @@ from urllib.request import urlopen
 
 import pytest
 
-import website.check_static as checker
-from website.check_static import (
+import website.static_publish.check_static as checker
+from website.static_publish.check_static import (
     StaticAcceptanceError,
     _check_player_rankings,
     _check_site_size,
@@ -122,25 +122,23 @@ def test_structure_rejects_media_content_that_does_not_match_filename_hash(tmp_p
         _structure_check(snapshot, docs)
 
 
-def test_structure_requires_player_profile_name_in_server_rendered_heading(tmp_path):
+def test_structure_accepts_reusable_player_shell_without_baked_profile_name(tmp_path):
     out = _snapshot(tmp_path)
     player_page = out / "players" / "player-1" / "index.html"
     player_page.write_text("<html><main><h1>选手档案</h1></main></html>", encoding="utf-8")
     snapshot = _load_snapshot(out, "/example-site")
 
-    with pytest.raises(StaticAcceptanceError, match="rendered <h1>"):
-        _structure_check(snapshot, _read_documents(snapshot))
+    assert _structure_check(snapshot, _read_documents(snapshot))["state"] == "passed"
 
 
-def test_structure_reads_player_heading_from_next_stream_segment(tmp_path):
+def test_structure_requires_player_shell_even_when_profile_data_is_present(tmp_path):
     out = _snapshot(tmp_path)
     player_page = out / "players" / "player-1" / "index.html"
-    player_page.write_text(
-        "<main><div role='status'>正在加载页面…</div></main>"
-        "<div id='S:0' style='display:none'><h1>选手甲</h1></div>", encoding="utf-8")
+    player_page.unlink()
     snapshot = _load_snapshot(out, "/example-site")
 
-    assert _structure_check(snapshot, _read_documents(snapshot))["state"] == "passed"
+    with pytest.raises(StaticAcceptanceError, match="Static HTML routes are missing: players/player-1"):
+        _structure_check(snapshot, _read_documents(snapshot))
 
 
 def test_manifest_rejects_contradictory_full_and_partial_flags(tmp_path):
