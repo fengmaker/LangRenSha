@@ -260,9 +260,10 @@ def promote(site: Path, target: Path, receipt: dict) -> None:
 
 def build(api_url: str, base_path: str, output: Path, *, browser_channel: str = "chrome",
           partial_season: str | None = None, incremental: bool = True,
-          skip_browser_check: bool = False) -> dict:
+          skip_browser_check: bool = False, full_check: bool = False,
+          stage_seconds: dict | None = None) -> dict:
     from website.static_publish.export_static import export_snapshot
-    from website.static_publish.check_static import check
+    from website.static_publish.check_static import check, check_basic
     if base_path and (not base_path.startswith("/") or base_path.endswith("/") or ".." in base_path):
         raise ValueError("base_path must be empty or a leading-slash path without a trailing slash")
     output = output.resolve()
@@ -274,11 +275,15 @@ def build(api_url: str, base_path: str, output: Path, *, browser_channel: str = 
     build_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:8]
     candidate = ROOT / "tmp/pages-build" / build_id
     candidate.mkdir(parents=True)
+    input_started = perf_counter()
     receipt = {"build_id": build_id, "generated_at": datetime.now(timezone.utc).isoformat(),
                "base_path": base_path, "mode": "partial" if partial_season else "complete",
+               "check_scope": "full" if full_check else "basic",
                "state": "building", "frontend_input_hash": frontend_input_hash(),
                "frontend_mode": FRONTEND_MODE, **source_receipt()}
-    receipt["stage_seconds"] = {}
+    # Share the current attempt's timings with the publisher, including failures.
+    receipt["stage_seconds"] = stage_seconds if stage_seconds is not None else {}
+    receipt["stage_seconds"]["inputs"] = round(perf_counter() - input_started, 3)
 
     @contextmanager
     def stage(name: str):
@@ -291,7 +296,8 @@ def build(api_url: str, base_path: str, output: Path, *, browser_channel: str = 
     step = "export"
     try:
         try:
-            previous = accepted_previous(output, base_path) if not partial_season else None
+            with stage("baseline_check"):
+                previous = accepted_previous(output, base_path) if not partial_season else None
         except RuntimeError:
             if incremental:
                 raise
@@ -308,21 +314,20 @@ def build(api_url: str, base_path: str, output: Path, *, browser_channel: str = 
                     and _request_json(api_url, "/api/v1/export-manifest") == previous_index["metadata"]
                     and _request_json(api_url, "/api/v1/releases") == json.loads(
                         (output / "data/releases" / previous["snapshot_id"] / "releases.json").read_text(encoding="utf-8"))):
-                browser_state = previous.get("acceptance", {}).get("layers", {}).get("browser", {}).get("state")
-                updated = dict(previous)
-                if not skip_browser_check and browser_state != "passed":
+                updated = {**previous, "check_scope": receipt["check_scope"]}
+                if full_check:
                     step = "acceptance"
-                    print(f"[{build_id}] Unchanged; completing requested browser acceptance", flush=True)
+                    print(f"[{build_id}] Unchanged; running requested full acceptance", flush=True)
                     with stage("acceptance"):
                         updated["acceptance"] = check(output, base_path, api_url, browser_channel=browser_channel,
                             output=candidate / "acceptance.json", export_index=previous_index,
-                            previous_export_index=previous_index, skip_browser_check=False)
+                            previous_export_index=previous_index, skip_browser_check=skip_browser_check)
                     if tree_hash(output) != previous["artifact_hash"]:
                         raise RuntimeError("Accepted artifact changed during acceptance")
-                    updated["browser_check"] = "passed"
+                    updated["browser_check"] = "skipped" if skip_browser_check else "passed"
                 else:
-                    updated["browser_check"] = "skipped" if skip_browser_check else "reused"
-                updated["acceptance_reused"] = updated.get("acceptance") == previous.get("acceptance")
+                    updated["browser_check"] = "skipped"
+                updated["acceptance_reused"] = not full_check
                 step = "source_consistency"
                 with stage("source_consistency"):
                     assert_source_unchanged(receipt)
@@ -387,15 +392,23 @@ def build(api_url: str, base_path: str, output: Path, *, browser_channel: str = 
         step = "materialize"
         with stage(step):
             receipt["materialized_routes"] = materialize_snapshot(candidate / "site", candidate / "snapshot")
-        step = "acceptance"
-        print(f"[{build_id}] Static/API/browser acceptance", flush=True)
+        step = "source_consistency_before_acceptance"
         with stage(step):
-            acceptance = check(candidate / "site", base_path, api_url, browser_channel=browser_channel,
-                               output=candidate / "acceptance.json", export_index=export_index,
-                               previous_export_index=previous_index, skip_browser_check=skip_browser_check)
+            assert_source_unchanged(receipt)
+        step = "acceptance"
+        print(f"[{build_id}] {'Full API/browser acceptance' if full_check else 'Basic file/version checks'}", flush=True)
+        with stage(step):
+            if full_check:
+                acceptance = check(candidate / "site", base_path, api_url, browser_channel=browser_channel,
+                                   output=candidate / "acceptance.json", export_index=export_index,
+                                   previous_export_index=previous_index, skip_browser_check=skip_browser_check)
+            else:
+                acceptance = check_basic(candidate / "site", base_path, output=candidate / "acceptance.json")
         receipt.update(state="partial" if not manifest["complete"] else "passed", acceptance=acceptance,
-                       browser_check="skipped" if skip_browser_check else "passed",
-                       artifact_hash=tree_hash(candidate / "site"))
+                       browser_check="passed" if full_check and not skip_browser_check else "skipped")
+        step = "artifact_hash"
+        with stage(step):
+            receipt["artifact_hash"] = tree_hash(candidate / "site")
         step = "source_consistency"
         with stage(step):
             assert_source_unchanged(receipt)
@@ -418,13 +431,14 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=ROOT / "tmp/pages-preview/langrensha-site")
     parser.add_argument("--browser-channel", default="chrome")
     parser.add_argument("--partial-season", help="Development sample only; never a complete release")
-    parser.add_argument("--full", action="store_true", help="Fetch and verify every API response; unchanged frontend assets can still be reused")
-    parser.add_argument("--skip-browser-check", action="store_true", help="Skip only browser acceptance; structure and API checks still run")
+    parser.add_argument("--full", action="store_true", help="Fetch every API response instead of reusing unchanged JSON")
+    parser.add_argument("--full-check", action="store_true", help="Run full API/browser acceptance instead of basic file/version checks")
+    parser.add_argument("--skip-browser-check", action="store_true", help="Skip browser checks during --full-check; default builds already use basic checks")
     args = parser.parse_args()
     try:
         build(args.api_url, args.base_path, args.output, browser_channel=args.browser_channel,
               partial_season=args.partial_season, incremental=not args.full,
-              skip_browser_check=args.skip_browser_check)
+              skip_browser_check=args.skip_browser_check, full_check=args.full_check)
         return 0
     except Exception as error:
         print(str(error), file=sys.stderr)

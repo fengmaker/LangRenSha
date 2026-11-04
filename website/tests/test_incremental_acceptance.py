@@ -234,3 +234,54 @@ def test_missing_incremental_index_keeps_full_file_api_comparisons(monkeypatch, 
     assert any(path == "/api/v1/games/game-1" for path, _query in calls)
     assert any(path == "/api/v1/stats" for path, _query in calls)
 
+
+@pytest.mark.parametrize("media_failure", [None, "manifest_hash", "allowlist"])
+def test_check_shares_media_references_and_hashes_across_acceptance_layers(
+        monkeypatch, tmp_path, media_failure):
+    out = _snapshot(tmp_path)
+    fixture = _api_fixture(out, reused=False)
+    snapshot, docs, binding, _index, _calls, get_json = fixture
+    media_reference = next(iter(checker._snapshot_media_references(snapshot)))
+    if media_failure == "manifest_hash":
+        binding["media_assets"][0]["sha256"] = "0" * 64
+    elif media_failure == "allowlist":
+        binding["media_assets"] = []
+
+    references = []
+    original_references = checker._snapshot_media_references
+    monkeypatch.setattr(
+        checker, "_snapshot_media_references",
+        lambda value: references.append(value) or original_references(value))
+    media_hashes = []
+    original_file_digest = checker.hashlib.file_digest
+
+    def count_media_hashes(stream, algorithm):
+        if Path(stream.name).is_relative_to(out / "media"):
+            media_hashes.append(stream.name)
+        return original_file_digest(stream, algorithm)
+
+    monkeypatch.setattr(checker.hashlib, "file_digest", count_media_hashes)
+    monkeypatch.setattr(checker, "_get_json", get_json)
+    browser_caches = []
+
+    def browser_check(*_args, media_cache=None):
+        browser_caches.append(media_cache)
+        return {"state": "passed", "routes_checked": 0}
+
+    monkeypatch.setattr(checker, "_browser_check", browser_check)
+
+    if media_failure:
+        expected = ("Referenced media hash differs" if media_failure == "manifest_hash"
+                    else "Referenced media is not allowed")
+        with pytest.raises(checker.StaticAcceptanceError, match=expected):
+            checker.check(out, "/example-site", "http://api.test")
+        assert browser_caches == []
+    else:
+        report = checker.check(out, "/example-site", "http://api.test")
+        assert report["layers"]["api"]["state"] == "passed"
+        assert len(browser_caches) == 1
+        assert browser_caches[0]["references"] == {media_reference}
+
+    assert len(references) == 1
+    assert len(media_hashes) == 1
+

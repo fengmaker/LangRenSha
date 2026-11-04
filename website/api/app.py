@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, OrderedDict
 from datetime import date, datetime
 import hashlib
 import json
 import os
 from pathlib import Path
+from threading import Lock
 from typing import Any, Literal
 
 import psycopg
@@ -20,7 +21,7 @@ from pydantic import BaseModel, Field
 from website.api.analytics import (
     analytics_notes,
     build_leaderboard,
-    compute_player_stats,
+    PlayerStatsScope,
     compute_player_summaries,
     effective_faction,
     role_label,
@@ -42,6 +43,8 @@ ANALYTICS_VERSION = 16
 SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 LOCAL_READER_CONFIG = PROJECT_ROOT / ".secrets" / "masters_web_reader.json"
+_PLAYER_SCOPES: OrderedDict[tuple, dict[str, Any]] = OrderedDict()
+_PLAYER_SCOPES_LOCK = Lock()
 
 
 def _canonical_sha256(value: object) -> str:
@@ -429,7 +432,7 @@ def _player_season_range(available: list[str], season: str, season_start: str | 
 
 
 def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[str, Any]]]],
-                                release_id: str, conn) -> tuple[
+                                reviews: dict[str, dict[str, Any]]) -> tuple[
                                     dict[str, dict[str, Any]], str | None, list[dict[str, Any]]
                                 ]:
     """Combine season-local bluff results, always pairing games with their own review."""
@@ -437,7 +440,7 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
     inference_versions: list[tuple[str, str | None]] = []
     publications: list[dict[str, Any]] = []
     for season, snapshots in snapshots_by_season:
-        review = read_review_publication(conn, release_id, season)
+        review = reviews[season]
         payload = review["payload"]
         publications.append({"season": season, "publication_id": review["publication_id"],
                              "payload_hash": review["payload_hash"]})
@@ -478,6 +481,30 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
         inference_version = ", ".join(f"{season}: {version or 'unpublished'}"
                                        for season, version in inference_versions)
     return combined, inference_version, publications
+
+
+def _player_scope(conn, release_id: str, seasons: list[str]) -> dict[str, Any]:
+    # Reviews can change without replacing the game release. Read their active
+    # identities on every request before reusing the corresponding computation.
+    reviews = {season: read_review_publication(conn, release_id, season) for season in seasons}
+    key = (release_id, tuple((season, reviews[season]["publication_id"], reviews[season]["payload_hash"])
+                             for season in seasons))
+    # The exporter requests multiple players concurrently. Build each shared
+    # scope once, including the initial cache miss, rather than once per worker.
+    with _PLAYER_SCOPES_LOCK:
+        if key not in _PLAYER_SCOPES:
+            by_season = [(season, _scope_snapshots(conn, release_id, season)) for season in seasons]
+            snapshots = [game for _, games in by_season for game in games]
+            bluffs, version, publications = _combine_player_bluff_stats(by_season, reviews)
+            _PLAYER_SCOPES[key] = {
+                "snapshots": snapshots,
+                "stats": PlayerStatsScope(snapshots, seasons=seasons, bluff_stats=bluffs),
+                "bluff_inference_version": version, "bluff_publications": publications,
+            }
+            if len(_PLAYER_SCOPES) > 8:
+                _PLAYER_SCOPES.popitem(last=False)
+        _PLAYER_SCOPES.move_to_end(key)
+        return _PLAYER_SCOPES[key]
 
 
 @app.get("/health")
@@ -617,11 +644,8 @@ def player_detail(player_id: str,
     resolved_start, resolved_end, selected_seasons = _player_season_range(
         available_seasons, season, season_start, season_end,
     )
-    snapshots_by_season = [
-        (selected_season, _scope_snapshots(conn, release["id"], selected_season))
-        for selected_season in selected_seasons
-    ]
-    snapshots = [snapshot for _, season_snapshots in snapshots_by_season for snapshot in season_snapshots]
+    scope = _player_scope(conn, release["id"], selected_seasons)
+    snapshots = scope["snapshots"]
     player_games = [snapshot for snapshot in snapshots
                     if any(seat.get("person_id") == player_id for seat in snapshot.get("seats", []))]
     player_games.sort(key=lambda snapshot: (
@@ -636,24 +660,19 @@ def player_detail(player_id: str,
     )
     boards = [{"code": code, "name": name, "count": count}
               for (code, name), count in sorted(board_counts.items(), key=lambda row: (-row[1], row[0][1]))]
-    bluff_stats, bluff_inference_version, bluff_publications = _combine_player_bluff_stats(
-        snapshots_by_season, release["id"], conn,
-    )
-    stats = compute_player_stats(player_id, snapshots, season=resolved_start, seasons=selected_seasons,
-                                 name=player["name"], minimum_appearances=minimum_appearances,
-                                 bluff_stats=bluff_stats)
+    stats = scope["stats"].for_player(player_id, name=player["name"], minimum_appearances=minimum_appearances)
     roles = [{"role": role["role"], "count": role["appearances"]} for role in stats["roles"]]
     return {**player, "appearances": stats["appearances"], "roles": roles,
             "photo": photo_for(player["name"], resolved_end),
             "boards": boards, "games": [_summary(snapshot) for snapshot in player_games],
             "release_id": release["id"], "stats": stats,
-            "bluff_data_source": "database", "bluff_inference_version": bluff_inference_version,
+            "bluff_data_source": "database", "bluff_inference_version": scope["bluff_inference_version"],
             "scope": {"season": resolved_end, "season_start": resolved_start,
                       "season_end": resolved_end, "seasons": selected_seasons,
                       "minimum_appearances": minimum_appearances,
                       "phase": "all", "games": len(snapshots)},
             "available_seasons": available_seasons,
-            "bluff_publications": bluff_publications}
+            "bluff_publications": scope["bluff_publications"]}
 
 
 @app.get("/api/v1/leaderboard")

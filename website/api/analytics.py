@@ -853,45 +853,55 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
     return result
 
 
+class PlayerStatsScope:
+    """Accumulate a season range once and project individual player statistics."""
+
+    def __init__(self, games: list[dict[str, Any]], *, season: str = "S22",
+                 seasons: list[str] | None = None,
+                 bluff_stats: dict[str, dict[str, Any]] | None = None):
+        selected_seasons = seasons if seasons is not None else season
+        self.games = scope_games(games, selected_seasons, "all")
+        self.players, self.notes = _accumulate(self.games, selected_seasons, "all", include_boards=True)
+        self.bluff_stats = bluff_stats
+        if bluff_stats is not None:
+            for pid, player_acc in self.players.items():
+                player_acc["bluffs"] = bluff_stats.get(pid)
+        self.default_rankings = self._rankings(0)
+
+    def _rankings(self, minimum_appearances: int):
+        players = {pid: player for pid, player in self.players.items()
+                   if player["appearances"] >= minimum_appearances}
+        return _player_rankings(players), _role_rankings(players), _board_rankings(players)
+
+    def for_player(self, player_id: str, *, name: str | None = None,
+                   minimum_appearances: int = 0) -> dict[str, Any]:
+        player_id = str(player_id)
+        acc = self.players.get(player_id)
+        if acc is None:
+            acc = _new_player_acc({"person_id": player_id, "name": name or ""}, len(self.games))
+        rankings = self.default_rankings if minimum_appearances == 0 else self._rankings(minimum_appearances)
+        (overall, overall_boards), (roles, role_boards), (boards, board_boards) = rankings
+        result = _serialize_player(
+            acc, self.games, "all", self.notes, attendance_games=self.games,
+            rankings=overall.get(player_id, {key: None for key in PLAYER_RANKING_KEYS}),
+            role_rankings=roles.get(player_id, {}), ranking_boards=overall_boards,
+            role_ranking_boards=role_boards, board_rankings=boards.get(player_id, {}),
+            board_ranking_boards=board_boards,
+        )
+        if self.bluff_stats is not None:
+            result.update(self.bluff_stats.get(player_id, {}))
+        return result
+
+
 def compute_player_stats(player_id: str, games: list[dict[str, Any]], *, season: str = "S22",
                          phase: str = "all", name: str | None = None,
                          seasons: list[str] | None = None,
                          minimum_appearances: int = 0,
                          bluff_stats: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
-    """Compute one player's metrics and scoring ledger across selected seasons.
-
-    `phase` is accepted for API compatibility; player analytics always describe
-    the full selected scope, including attendance and the chronological cumulative ledger.
-    `minimum_appearances` restricts ranking cohorts by total scope appearances only.
-    """
-    selected_seasons: str | list[str] = seasons if seasons is not None else season
-    season_games = scope_games(games, selected_seasons, "all")
-    players, notes = _accumulate(season_games, selected_seasons, "all", include_boards=True)
-    if bluff_stats is not None:
-        for pid, player_acc in players.items():
-            player_acc["bluffs"] = bluff_stats.get(pid)
-    player_id = str(player_id)
-    if player_id not in players:
-        acc = _new_player_acc({"person_id": player_id, "name": name or ""}, len(season_games))
-    else:
-        acc = players[player_id]
-    ranking_players = {pid: player for pid, player in players.items()
-                       if player["appearances"] >= minimum_appearances}
-    rankings_by_player, ranking_boards = _player_rankings(ranking_players)
-    role_rankings_by_player, role_ranking_boards = _role_rankings(ranking_players)
-    board_rankings_by_player, board_ranking_boards = _board_rankings(ranking_players)
-    ranking = rankings_by_player.get(
-        player_id, {key: None for key in PLAYER_RANKING_KEYS},
+    """Compute one player's full-range statistics; phase remains an API compatibility argument."""
+    return PlayerStatsScope(games, season=season, seasons=seasons, bluff_stats=bluff_stats).for_player(
+        player_id, name=name, minimum_appearances=minimum_appearances,
     )
-    role_ranking = role_rankings_by_player.get(player_id, {})
-    board_ranking = board_rankings_by_player.get(player_id, {})
-    result = _serialize_player(acc, season_games, "all", notes, attendance_games=season_games,
-                               rankings=ranking, role_rankings=role_ranking,
-                               ranking_boards=ranking_boards, role_ranking_boards=role_ranking_boards,
-                               board_rankings=board_ranking, board_ranking_boards=board_ranking_boards)
-    if bluff_stats is not None:
-        result.update(bluff_stats.get(player_id, {}))
-    return result
 
 
 def compute_player_summaries(games: list[dict[str, Any]], *, season: str = "S22",
