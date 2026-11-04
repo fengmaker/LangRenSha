@@ -47,6 +47,14 @@ def test_wolf_girl_confession_and_opening_knife_constraints():
                  action="forbidden")["reason"] == "wolf_girl_first_night_attack_forbidden"
 
 
+def test_confessed_civilian_still_cannot_carry_the_wolf_knife():
+    source = game("s23_wolf_girl", [(8, "平民"), (12, "狼女孩")], season="S23")
+    source["seats"][0]["faction"] = "werewolf"
+    result = check(source, 2, "night", "wolf_attack", actor=8, action="attack", targets=[12])
+    assert result["status"] == "unavailable"
+    assert result["reason"] == "wolf_attack_actor_not_in_wolf_team"
+
+
 def test_new_game_end_rules_do_not_reinterpret_existing_qingqiu_records():
     from scripts.game_inference import terminal_from_events
     source = game('s23_qingqiu_night', [(1, '九尾狐')], season='S23')

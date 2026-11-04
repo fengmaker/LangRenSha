@@ -30,6 +30,22 @@ def test_neighbor_review_keeps_base_role_with_wolf_faction_and_chronological_sur
     assert dossier == before
 
 
+def test_wolf_girl_review_marks_confessed_civilian_as_wolf_partner_without_replacing_base_role():
+    dossier = {
+        'board': 's23_wolf_girl',
+        'seats': [
+            {'seat': 8, 'name': '目标', 'role': '平民', 'faction': 'good'},
+            {'seat': 12, 'name': '狼女孩', 'role': '狼女孩', 'faction': 'werewolf'},
+        ],
+        'rounds': [{'number': 1, 'night': [
+            {'slot': 'wolf_girl_confession', 'action': 'confess', 'targets': [8]},
+        ]}],
+    }
+    row = re.search(r'<tr data-seat="8">(.*?)</tr>', seat_html(dossier)).group(1)
+    assert '<td>平民<small>狼伴侣 · 不带刀</small></td>' in row
+    assert '<span class="faction wolf">狼人</span>' in row
+
+
 def sample(root):
     folder = ROOT / 'data/extractions/S23/incremental/BV1RQx364EaF_p01_cid43105127019'
     candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))

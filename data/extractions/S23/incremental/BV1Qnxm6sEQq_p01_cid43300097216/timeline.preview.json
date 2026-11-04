@@ -1,0 +1,780 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀4号亚亚（白神）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                4
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "7号小苍（女巫）使用解药，救起4号亚亚（白神）。",
+          "events": [
+            {
+              "slot": "witch_save",
+              "action": "save",
+              "actor": 7,
+              "targets": [
+                4
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫解药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "3号苏打（预言家）查验11号申屠（平民），结果为好人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 3,
+              "targets": [
+                11
+              ],
+              "result": "good",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "good"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "上警名单",
+          "text": "上警：2号徐言雨（狼人）、3号苏打（预言家）、4号亚亚（白神）、5号彭彭（平民）、7号小苍（女巫）、10号章亿阳（狼人）、11号申屠（平民）、12号大卫（舞者）。\n警下：1号二妖（假面）、6号KS（狼人）、8号牛肉干（平民）、9号果冻（平民）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": null,
+              "targets": [
+                2,
+                3,
+                4,
+                5,
+                7,
+                10,
+                11,
+                12
+              ],
+              "off_police": [
+                1,
+                6,
+                8,
+                9
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票",
+          "ballot": {
+            "id": "sheriff-1-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              2,
+              3,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              6,
+              8,
+              9
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              2,
+              3
+            ],
+            "winner": null,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票 · PK复投",
+          "ballot": {
+            "id": "sheriff-1-2",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 2,
+            "stage": "pk",
+            "status": "complete",
+            "candidates": [
+              2,
+              3
+            ],
+            "eligible_voters": [
+              1,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 4,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 3,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "3号苏打（预言家）当选警长。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "elected",
+              "actor": null,
+              "targets": [
+                3
+              ],
+              "result": "首轮2号、3号各两票平票，PK复投后3号六票当选",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": "4号白神被女巫救起",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-1-1",
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": null,
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 2,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 2,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "2号徐言雨（狼人）被放逐（8.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                2
+              ],
+              "result": "2号8.5票出局（8张原始票，3号警长另有半票）",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀11号申屠（平民）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "7号小苍（女巫）使用毒药，目标为6号KS（狼人）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 7,
+              "targets": [
+                6
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "3号苏打（预言家）查验12号大卫（舞者），结果为好人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 3,
+              "targets": [
+                12
+              ],
+              "result": "good",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "good"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "masquerade_verify",
+          "title": "假面验证舞池成员",
+          "text": "1号二妖（假面）验证3号苏打（预言家）；3号不在舞池内。",
+          "events": [
+            {
+              "slot": "masquerade_verify",
+              "action": "verify",
+              "actor": 1,
+              "targets": [
+                3
+              ],
+              "result": "3号不在舞池内",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "假面验证舞池成员",
+              "display_result": "3号不在舞池内"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "masquerade_mask",
+          "title": "假面赐予面具",
+          "text": "1号二妖（假面）给予面具8号牛肉干（平民）。",
+          "events": [
+            {
+              "slot": "masquerade_mask",
+              "action": "give_mask",
+              "actor": 1,
+              "targets": [
+                8
+              ],
+              "result": "给8号平民面具，8号不在舞池内",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "假面赐予面具",
+              "display_result": "给8号平民面具，8号不在舞池内"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dancer_dance",
+          "title": "舞者共舞",
+          "text": "12号大卫（舞者）邀请共舞1号二妖（假面）、6号KS（狼人）、10号章亿阳（狼人）。",
+          "events": [
+            {
+              "slot": "dancer_dance",
+              "action": "dance",
+              "actor": 12,
+              "targets": [
+                1,
+                6,
+                10
+              ],
+              "result": "1号假面、6号狼人、10号狼人共舞",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "舞者选择共舞（第二夜起）",
+              "display_result": "1号假面、6号狼人、10号狼人共舞"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dance_resolution",
+          "title": "共舞结算",
+          "text": "共舞结算：舞池内三人均为狼人阵营，无人因共舞出局。",
+          "events": [
+            {
+              "slot": "dance_resolution",
+              "action": "no_death",
+              "actor": null,
+              "targets": [],
+              "result": "舞池内三人均为狼人阵营，无人因共舞出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "共舞结算",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": false,
+      "label": "第二天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：6号KS（狼人）、11号申屠（平民）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                6,
+                11
+              ],
+              "result": "6号狼人毒死、11号平民刀死",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-2-1",
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": null,
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              5,
+              7,
+              8,
+              9,
+              10,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 10,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 10,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 10,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "10号章亿阳（狼人）被放逐（4.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                10
+              ],
+              "result": "10号4.5票出局（4张原始票，3号警长另有半票）",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "night",
+      "terminal": true,
+      "label": "第二天夜晚 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "werewolf_surrender",
+          "title": "狼人交牌",
+          "text": "1号二妖（假面）选择交牌，游戏结束。好人阵营获胜。",
+          "events": [
+            {
+              "slot": "werewolf_surrender",
+              "action": "surrender",
+              "actor": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

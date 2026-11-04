@@ -1,0 +1,734 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "1号二妖（守卫）守护4号亚亚（平民）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 1,
+              "targets": [
+                4
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀12号大卫（女巫）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                12
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "12号大卫（女巫）使用毒药，目标为5号彭彭（狼人）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 12,
+              "targets": [
+                5
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "8号牛肉干（机械狼）学习12号大卫（女巫），学习结果为机械女巫。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "learn",
+              "actor": 8,
+              "targets": [
+                12
+              ],
+              "result": "机械女巫",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": "机械女巫"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "2号徐言雨（通灵师）查验3号苏打（平民），结果为平民。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 2,
+              "targets": [
+                3
+              ],
+              "result": "平民",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "通灵师查验",
+              "display_result": "平民"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "上警名单",
+          "text": "上警：1号二妖（守卫）、2号徐言雨（通灵师）、3号苏打（平民）、5号彭彭（狼人）、6号KS（狼人）、7号小苍（平民）、10号章亿阳（猎人）、11号申屠（狼人）、12号大卫（女巫）。\n警下：4号亚亚（平民）、8号牛肉干（机械狼）、9号果冻（平民）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": null,
+              "targets": [
+                1,
+                2,
+                3,
+                5,
+                6,
+                7,
+                10,
+                11,
+                12
+              ],
+              "off_police": [
+                4,
+                8,
+                9
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "5号彭彭（狼人）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 5,
+              "targets": [],
+              "result": "自爆中断当日流程",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "警长竞选中断，延期至次日继续。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "deferred",
+              "actor": null,
+              "targets": [],
+              "result": "首日竞选被5号自爆中断，延期次日",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：5号彭彭（狼人）、12号大卫（女巫）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                5,
+                12
+              ],
+              "result": "5号吞毒自爆后公布5号、12号倒牌；12号刀死，5号毒口与自爆为同一座位",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "1号二妖（守卫）守护1号二妖（守卫）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 1,
+              "targets": [
+                1
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀2号徐言雨（通灵师）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                2
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "8号牛肉干（机械狼）本轮未发动。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "pass",
+              "actor": 8,
+              "targets": [],
+              "result": "机械女巫本夜空过",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "2号徐言雨（通灵师）查验6号KS（狼人），结果为狼人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 2,
+              "targets": [
+                6
+              ],
+              "result": "狼人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "通灵师查验",
+              "display_result": "狼人"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": false,
+      "label": "第二天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "继续警长竞选",
+          "text": "继续上一天中断的警长竞选。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "continued",
+              "actor": null,
+              "targets": [],
+              "result": "继续首日未完成的警长竞选",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "上警名单",
+              "display_result": "继续首日未完成的警长竞选"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "11号申屠（狼人）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 11,
+              "targets": [],
+              "result": "自爆中断当日流程",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "badge",
+          "title": "警徽",
+          "text": "警徽流失，本局不再进行警长竞选。",
+          "events": [
+            {
+              "slot": "badge",
+              "action": "badge_lost",
+              "actor": null,
+              "targets": [],
+              "result": "badge_lost",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "inferred": true,
+              "inference_note": "逐日竞选记录确认警徽流失；具体原因未据此推断。",
+              "description": "警徽流失，本局不再进行警长竞选。",
+              "slot_label": "警徽",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：2号徐言雨（通灵师）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                2
+              ],
+              "result": "11号自爆后公布昨夜2号通灵师刀死",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "night",
+      "terminal": false,
+      "label": "第二天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "1号二妖（守卫）守护3号苏打（平民）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 1,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀1号二妖（守卫）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                1
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "8号牛肉干（机械狼）本轮未发动。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "pass",
+              "actor": 8,
+              "targets": [],
+              "result": "机械女巫本夜空过",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "day",
+      "terminal": false,
+      "label": "第三天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：1号二妖（守卫）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                1
+              ],
+              "result": "1号守卫刀死",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "6号KS（狼人）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 6,
+              "targets": [],
+              "result": "自爆中断当日流程",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "night",
+      "terminal": true,
+      "label": "第三天夜晚 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "mechanical_knife_status",
+          "title": "机械狼带刀确认",
+          "text": "8号牛肉干（机械狼）接过狼刀。",
+          "events": [
+            {
+              "slot": "mechanical_knife_status",
+              "action": "carrying",
+              "actor": 8,
+              "targets": [],
+              "result": "普通狼人全部出局，8号机械狼接刀",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼带刀确认",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "机械狼击杀",
+          "text": "8号牛肉干（机械狼）选择击杀4号亚亚（平民）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": 8,
+              "targets": [
+                4
+              ],
+              "result": "普通狼人5号、11号、6号均已出局，8号机械女巫接刀，击杀4号平民",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "8号牛肉干（机械狼）使用毒药，目标为10号章亿阳（猎人）。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "poison",
+              "actor": 8,
+              "targets": [
+                10
+              ],
+              "result": "机械女巫毒杀最后一神10号猎人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": "机械女巫毒杀最后一神10号猎人"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "本夜出局：4号亚亚（平民）、10号章亿阳（猎人）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                4,
+                10
+              ],
+              "result": "4号平民刀死、10号猎人中机械女巫毒；本夜屠神终局，D4未开始",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "display_result": null,
+              "terminal": true
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "狼人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

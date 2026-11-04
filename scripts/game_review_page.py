@@ -16,7 +16,7 @@ if str(ROOT / 'scripts') not in sys.path:
 
 from scripts.board_config import load_canonical_template
 from scripts.game_timeline import build_game_timeline
-from scripts.role_constraints import puppet_target
+from scripts.role_constraints import puppet_target, wolf_girl_partner_target
 from scripts.game_derivations import apply_precomputed
 from scripts.incremental_common import load_state, work_dir
 from scripts.prepare_s23_review import segments
@@ -81,13 +81,17 @@ def timeline_html(dossier: dict, voting: dict) -> str:
 def seat_html(dossier: dict) -> str:
     rows = []
     puppet = puppet_target(dossier)
+    wolf_partner = wolf_girl_partner_target(dossier)
     for row in sorted(dossier['seats'], key=lambda item: item['seat']):
         number, name = row['seat'], row.get('name') or '姓名未知'
         is_puppet = number == puppet
-        side = 'werewolf' if is_puppet else row.get('faction')
+        is_wolf_partner = number == wolf_partner
+        side = 'werewolf' if is_puppet or is_wolf_partner else row.get('faction')
         faction = {'good': '好人', 'werewolf': '狼人', 'third_party': '第三方'}.get(side, '未知')
         css = 'wolf' if side == 'werewolf' else 'good'
-        identity = esc(row.get('role') or '未知') + ('<small>傀儡 · 不带刀</small>' if is_puppet else '')
+        note = ('<small>傀儡 · 不带刀</small>' if is_puppet else
+                '<small>狼伴侣 · 不带刀</small>' if is_wolf_partner else '')
+        identity = esc(row.get('role') or '未知') + note
         rows.append(f'<tr data-seat="{number}"><td class="seat-number">{number}</td><td>{esc(name)}</td>'
                     f'<td>{identity}</td><td><span class="faction {css}">{faction}</span></td></tr>')
     return ''.join(rows)

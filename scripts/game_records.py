@@ -17,10 +17,10 @@ except ImportError:
 from database import ROOT, ReviewError, artifact, connect
 try:
     from .board_config import load_template
-    from .role_constraints import puppet_target
+    from .role_constraints import puppet_target, wolf_girl_partner_target
 except ImportError:
     from board_config import load_template
-    from role_constraints import puppet_target
+    from role_constraints import puppet_target, wolf_girl_partner_target
 
 ALIASES = {
     "其人": ["其人的心事"],
@@ -329,6 +329,7 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
 
     known_role_counts = Counter()
     known_names = []
+    wolf_partner = wolf_girl_partner_target(value)
     for p in seats:
         role, faction, name = p.get("role"), p.get("faction"), p.get("name")
         if role is not None:
@@ -337,7 +338,7 @@ def validate_batch(value, check_files=True, *, check_rules=True, allow_legacy_tr
             if role_counts is not None and role not in role_counts:
                 raise ReviewError("身份不属于版型")
             known_role_counts[role] += 1
-            expected_faction = ('werewolf' if p['seat'] == puppet_target(value) else
+            expected_faction = ('werewolf' if p['seat'] in {puppet_target(value), wolf_partner} else
                                 None if role == "混血儿" else ROLE_FACTIONS.get(role))
             explicit_ghost_third_party = board["code"] == "ghost_bride" and faction == "third_party"
             legacy_treasure_good = (allow_legacy_treasure_faction and board["code"] == "treasure_master"

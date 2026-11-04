@@ -165,6 +165,28 @@ def _seat_roles(game: dict) -> dict[int, str | None] | None:
     return result
 
 
+def wolf_girl_partner_target(game: dict) -> int | None:
+    """Return a civilian explicitly confessed to on the wolf girl's first night."""
+    if family(_board_code(game)) != "wolf_girl":
+        return None
+    rounds = game.get("rounds")
+    if not isinstance(rounds, list):
+        return None
+    confessions = [event for round_ in rounds if isinstance(round_, dict) and round_.get("number") == 1
+                   for event in (round_.get("night") if isinstance(round_.get("night"), list) else [])
+                   if isinstance(event, dict) and event.get("slot") == "wolf_girl_confession"
+                   and event.get("action") == "confess"]
+    if len(confessions) != 1:
+        return None
+    targets = confessions[0].get("targets")
+    if not isinstance(targets, list) or len(targets) != 1 or type(targets[0]) is not int:
+        return None
+    target = targets[0]
+    if (_seat_roles(game) or {}).get(target) != "平民":
+        return None
+    return target
+
+
 def _actor_role(game: dict, actor: int | None) -> str | None:
     if type(actor) is not int:
         return None

@@ -62,7 +62,10 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
   const cardStyle = group === "werewolf" ? styles.wolfCard : group === "special" ? styles.specialCard : group === "civilian" ? styles.civilianCard : styles.reviewCard;
   const target = seat ? hybridTarget(seat, rounds) : null;
   const name = seat?.name || "姓名未知";
-  const note = seat?.is_puppet ? "傀儡 · 不带刀" : seat?.role === "混血儿"
+  const isWolfPartner = seat?.role === "平民" && (rounds ?? []).some((round) => round.number === 1 &&
+    (round.night ?? []).some((event) => event.slot === "wolf_girl_confession" && event.action === "confess" &&
+      event.targets?.length === 1 && event.targets[0] === seat.seat));
+  const note = seat?.is_puppet ? "傀儡 · 不带刀" : isWolfPartner ? "狼伴侣 · 不带刀" : seat?.role === "混血儿"
     ? `榜样：${target == null ? "待核" : `${target}号`}\n个人阵营：${personalFaction(seat)}`
     : seat?.role === "机械狼"
       ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join("\n")

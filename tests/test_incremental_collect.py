@@ -159,6 +159,93 @@ class IncrementalCollectTests(unittest.TestCase):
             (folder / "audio.m4a").write_bytes(payload + b"partial")
             self.assertFalse(ready_media(entry, self.root))
 
+    def test_formal_source_accepts_matching_complete_transcript_without_raw_media(self):
+        entry = self.entry()
+        transcript_path = (self.root / "data" / "transcripts" / "S23" /
+                           f"{entry['bvid']}_p01_cid{entry['cid']}_funasr" / "transcript.json")
+        transcript_path.parent.mkdir(parents=True)
+        transcript = {
+            "full_audio_processed": True,
+            "audio_duration_ms": 1000,
+            "source": {"bvid": entry["bvid"], "cid": entry["cid"], "page": 1},
+            "segments": [{"start_ms": 100, "end_ms": 900, "text": "完整转写内容"}],
+        }
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+
+        self.assertTrue(incremental.formal_media_present(entry, self.root))
+
+        transcript["source"]["cid"] += 1
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+        self.assertFalse(incremental.formal_media_present(entry, self.root))
+
+        transcript["source"]["cid"] = entry["cid"]
+        transcript["source"]["bvid"] = "BV0AbCdeFgHi"
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+        self.assertFalse(incremental.formal_media_present(entry, self.root))
+
+        transcript["source"]["bvid"] = entry["bvid"]
+        transcript["source"]["page"] = 2
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+        self.assertFalse(incremental.formal_media_present(entry, self.root))
+
+        transcript["source"]["page"] = 1
+        transcript["full_audio_processed"] = False
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+        self.assertFalse(incremental.formal_media_present(entry, self.root))
+
+        transcript["full_audio_processed"] = True
+        transcript["segments"] = []
+        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
+        self.assertFalse(incremental.formal_media_present(entry, self.root))
+
+    def test_check_only_reports_complete_transcript_as_formal_source_file(self):
+        entry = self.entry()
+        transcript_path = (self.root / "data" / "transcripts" / "S23" /
+                           f"{entry['bvid']}_p01_funasr_full" / "transcript.json")
+        transcript_path.parent.mkdir(parents=True)
+        transcript_path.write_text(json.dumps({
+            "full_audio_processed": True,
+            "audio_duration_ms": 1000,
+            "source": {"bvid": entry["bvid"], "cid": entry["cid"], "page": 1},
+            "segments": [{"start_ms": 100, "end_ms": 900, "text": "完整转写内容"}],
+        }), encoding="utf-8")
+        dossier = self.root / "data" / "games" / "S23" / "formal" / "dossier.json"
+        dossier.parent.mkdir(parents=True)
+        dossier.write_text(json.dumps({
+            "season": "S23", "slug": f"bili-{entry['bvid']}-p01-g01",
+            "files": [{"external_key": f"{entry['bvid']}:{entry['cid']}"}],
+        }), encoding="utf-8")
+        plan_path = self.root / "data" / "indexes" / "S23_采集计划.json"
+        plan_path.parent.mkdir(parents=True)
+        plan_path.write_text(json.dumps({"entries": [entry]}), encoding="utf-8")
+        args = type("Args", (), {
+            "season": "S23", "cookies_file": None, "weibo_cookies_file": None,
+            "auth": "none", "since": date(2026, 9, 1), "until": date(2026, 9, 2),
+            "check_only": True, "yes": False,
+        })()
+        output = io.StringIO()
+        with patch.object(collect_season, "configure_season"), \
+                patch.object(incremental, "discover_live_plan", return_value={
+                    "season": "S23", "entries": [entry]}), \
+                patch.object(incremental, "weibo_local_snapshot", return_value={
+                    "local_latest": None, "earliest_collection": None,
+                    "archives": [], "complete_intervals": []}), \
+                patch.object(incremental, "plan_weibo_windows", return_value={
+                    "windows": [], "scan_windows": [], "known_ids": set(),
+                    "contiguous_complete": None, "missing_ranges": []}), \
+                patch.object(incremental, "scan_weibo",
+                             side_effect=AssertionError("check-only must not scan timeline")), \
+                patch.object(incremental, "save_state") as save, \
+                patch.object(collect_season, "Collector"), \
+                patch("sys.stdout", output):
+            result = incremental.run(args, self.root)
+
+        self.assertEqual(result, 0)
+        self.assertIn("正式来源文件在位 1 条", output.getvalue())
+        self.assertIn("已正式归档但来源文件缺失 0 条", output.getvalue())
+        self.assertNotIn("正式来源文件缺失：", output.getvalue())
+        save.assert_not_called()
+
     def test_weibo_cli_completion_predicate_ignores_partial_summary_label(self):
         manifest = {"status": "partial", "window_scan_status": "completed",
                     "counts": {"unparseable_dates_skipped": 0,
