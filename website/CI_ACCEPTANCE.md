@@ -10,15 +10,14 @@
 官方 `actions/*`、GitHub-hosted Ubuntu runner、Docker Hub、PyPI、npm、Playwright 下载。
 可能消耗 Actions 分钟／存储额度；仓库策略或依赖下载失败不能当作应用验收通过。
 
-在本机 Codex／有写权限的环境审阅并应用补丁后，可推送到专用分支 **`ci/full-acceptance`**，
-该分支的 push 会自动运行（不需要先合并到默认分支）。或者工作流已在默认分支时，
-进入 Actions → Full S22 S23 acceptance → Run workflow，选择要验收的提交分支。
-不要为了运行而直接推送默认分支。此交付本身没有推送、触发、合并或部署。
+按项目约定只使用 **`main`**。获准推送的main提交会触发工作流；也可在默认分支进入
+Actions → Full S22 S23 acceptance → Run workflow → main。此文档不代表已经推送或触发远端运行。
 
 ## 实际检查顺序
 
-1. 稀疏检出正式 S22/S23 JSON、投票旁证、config、scripts、website、测试报告夹。
-   包含网站照片、悍跳图片与两季悍跳发布 JSON；排除多 GB 的 S21 帧、原始媒体及备份。
+1. 稀疏检出正式 S22/S23 JSON、投票旁证及其引用文本、config、scripts、website、测试报告夹。
+   为保留既有语义测试，另取S21正式JSON、必要证据文本和姓名照片索引作为离线测试输入，
+   不把S21加入API／静态发布目标。保留三个S23时间线候选fixture；排除多GB的帧、音视频和备份。
 2. Python 3.12 + Node 22；`npm ci` 使用原锁文件；安装固定 Playwright 1.61.0 及 Chromium。
    网站 Python runtime 沿用原依赖范围，只增加 pytest/httpx；不引入采集／ASR 大依赖。
 3. 正式发布预检，然后用现有发布器应用 **website/api/schema.sql** 并发布两季。
@@ -26,14 +25,18 @@
 4. S22/S23 悍跳各自预检并发布。任一命令非零即停止。
 5. 执行全部 `website/tests`，JUnit 必须非空、零 skip/failure/error，且包含四个指定的
    数据库发布／API集成测试。不接受“数据库不可用所以跳过”的假绿。
-6. 用现有 `grant_reader` 创建只读账号。核对 148 + 75 = 223 局、两季悍跳活动绑定、
+6. 用现有 `grant_reader` 创建只读账号。按本次S22/S23正式源动态核对局数、两季悍跳活动绑定、
    角色非管理员及表授权；将事务切成 READ WRITE 后仍须拒绝 UPDATE，避免仅测到只读默认值。
 7. 启动只读账号 API、生产 build、前端 typecheck、启动前端。API 和页面各有 90 秒就绪期限；
    子进程及整作业也有期限，结束时清理进程。
-8. 现有验收器逐一比较全部 223 局源文件与真实 API，检查 stats、两季悍跳绑定、照片哈希。
+8. 现有验收器逐一比较本次S22/S23全部源文件与真实 API，检查 stats、两季悍跳绑定、照片哈希。
    Chromium 1440×1000 / 390×844 各检查 18 条页面路径；检查真实积分榜赛季／选手／局数、
    页面错误、不可用状态、横向溢出、统计范围，并等待照片实际解码。
    此为两种 viewport 布局检查，不声称真实手机／WebKit／Firefox 验收。
+9. 停止共享 `.next` 的本地前端，保留同一只读API，执行完整静态导出、构建和
+   `/langrensha-site` 子路径验收。核对完整快照、API响应和静态浏览器行为；
+   浏览器阻断动态API后重载和操作。实际范围仍为 **S22/S23**，不能据此声称覆盖S21。
+   回执另存 `static-acceptance.json`，正式三季发布须在本机另外验收全部活动数据。
 
 ## 证据与隐私
 
@@ -44,7 +47,7 @@ Actions artifact `acceptance-<run>-<attempt>` 保留 7 天。只有指定目录�
 截图含网站公开比赛数据和选手海报；悍跳页面可含已获准公开的复核文字。
 首次运行后仍应人工打开 artifact 审阅失败截图及内容再转发。
 
-成功必须同时有绿色 job、`result.json` 的 passed、223 games、零跳过测试数、
+成功必须同时有绿色 job、`result.json` 的 passed、本次源统计的games数量、零跳过测试数、
 `acceptance.json` 中 36 页面及两季照片覆盖。只看到日志文件或截图不代表通过。
 失败时查看对应阶段 `.log` 和可能的 `screenshots/failure.png`。
 依赖安装失败发生在生成证据之前时，查看 Actions 安装步骤日志。

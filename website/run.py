@@ -14,6 +14,12 @@ from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "website" / "web"
+sys.path.insert(0, str(ROOT))
+
+
+def prepare_media(api_url: str) -> None:
+    from website.export_static import sync_media
+    sync_media(api_url, WEB / "public/media")
 
 
 def node_binary() -> str:
@@ -78,11 +84,13 @@ def main() -> int:
                 time.sleep(.25)
         else:
             raise RuntimeError("API 未就绪，请检查 PostgreSQL 和发布数据。")
+        prepare_media(env["API_BASE_URL"])
         if args.production:
             standalone = WEB / ".next" / "standalone"
             if not (standalone / "server.js").is_file():
                 raise RuntimeError("请先在 website/web 执行 npm run build。")
             shutil.copytree(WEB / ".next" / "static", standalone / ".next" / "static", dirs_exist_ok=True)
+            shutil.copytree(WEB / "public", standalone / "public", dirs_exist_ok=True)
             env.update(PORT=str(args.port), HOSTNAME="127.0.0.1")
             frontend_command = [node, str(standalone / "server.js")]
             frontend_cwd = standalone

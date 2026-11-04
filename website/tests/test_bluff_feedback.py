@@ -153,8 +153,11 @@ def test_s23_feedback_is_season_bound_and_preserves_unknown_fields():
 
 
 def test_s23_feedback_uses_the_same_terminal_boundary_as_the_published_game():
+    from pathlib import Path
+    from website.api import publisher
     games=source_games('S23')
-    assert len(games)==75
+    formal = publisher.list_games(Path(__file__).resolve().parents[2], 'S23')
+    assert {game['id'] for game in games} == {game['id'] for game in formal}
     terminal=next(g for g in games if g['bvid']=='BV17xpA6aE7N')
     assert next(r for r in terminal['rounds'] if r['number']==4)['day']==[]
 

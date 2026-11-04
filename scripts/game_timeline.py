@@ -318,9 +318,18 @@ def _recorded_ending(game: dict) -> dict | None:
     endgame = game.get('endgame', {})
     if (endgame.get('review_status') != 'ai_candidate_awaiting_user'
             and ('release_id' not in game or 'review_status' in endgame)):
-        endings.update((p['day'], 'day') for p in endgame.get('phases', [])
-                       if p.get('kind') == 'wolf_rush'
-                       and p.get('result') in {'werewolf_win', 'good_win', 'draw'})
+        for phase in endgame.get('phases', []):
+            if (phase.get('kind') != 'wolf_rush'
+                    or phase.get('result') not in {'werewolf_win', 'good_win', 'draw'}):
+                continue
+            day = phase.get('day')
+            # A recorded endgame may establish the winner without locating the
+            # exact day. Preserve that unknown instead of inventing a boundary.
+            if day is None:
+                continue
+            if type(day) is not int or day < 1:
+                raise ValueError('记录的拍刀游戏日不合法')
+            endings.add((day, 'day'))
     if len(endings) > 1:
         raise ValueError('事件记录指向不同终局时点，需核对终局边界')
     if endings:

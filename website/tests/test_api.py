@@ -72,6 +72,7 @@ def test_read_only_contract_filtering_pagination_and_details(client):
     assert detail_response.status_code == 200
     detail = detail_response.json()
     assert detail["release_id"] == release_id
+    assert detail["search_text"] == sample["search_text"]
     assert detail["source"]["bvid"]
     assert all("slot_label" in event and "description" in event
                for round_ in detail["rounds"] for phase in ("night", "day") for event in round_[phase])
@@ -90,6 +91,23 @@ def test_read_only_contract_filtering_pagination_and_details(client):
     assert any("个人胜率" in note for note in stats.json()["methodology"])
     releases = client.get("/api/v1/releases").json()["items"]
     assert any(item["id"] == release_id and item["active"] for item in releases)
+
+
+def test_export_manifest_binds_active_release_bluff_publications_and_media(client):
+    response = client.get("/api/v1/export-manifest")
+    assert response.status_code == 200
+    manifest = response.json()
+    assert manifest["release_id"] == manifest["release"]["id"]
+    assert manifest["analytics_version"] >= 1
+    assert sum(season["game_count"] for season in manifest["seasons"]) == manifest["release"]["game_count"]
+    assert [row["season"] for row in manifest["bluff_publications"]] == [
+        season["season"] for season in manifest["seasons"]
+    ]
+    for row in manifest["bluff_publications"]:
+        assert (row["publication_id"] is None) == (row["payload_hash"] is None)
+    assert all(len(value) == 64 for value in manifest["media_manifest_hashes"].values())
+    assert all(asset["url"].startswith(("/media/player-photos/", "/media/bluff-frames/"))
+               and len(asset["sha256"]) == 64 for asset in manifest["media_assets"])
 
 
 def test_invalid_inputs_and_missing_ids_use_http_errors(client):

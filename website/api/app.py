@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import date, datetime
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -24,10 +25,11 @@ from website.api.analytics import (
     effective_faction,
     scope_games,
 )
+from website.api import photos, bluff_frames
 from website.api.photos import photo_for, photo_path
 from website.api.bluff_frames import frame_path as bluff_frame_path
 from website.api.bluffs import METHODOLOGY as BLUFF_METHODOLOGY, S23_VIDEO_METHODOLOGY, aggregate_bluffs, review_items
-from website.api.bluff_store import read_review
+from website.api.bluff_store import read_review_publication
 from website.api.game_presentation import build_game_presentation
 from scripts.season_config import load_season, season_codes
 from scripts.game_timeline import build_game_timeline
@@ -49,6 +51,12 @@ class Board(BaseModel):
     name: str
 
 
+class BluffPublicationBinding(BaseModel):
+    season: str
+    publication_id: str | None
+    payload_hash: str | None
+
+
 class PlayerInGame(BaseModel):
     id: str
     name: str
@@ -68,6 +76,7 @@ class GameSummary(BaseModel):
     players: list[PlayerInGame]
     ballot_count: int
     round_count: int
+    search_text: str
 
 
 class GameDetail(GameSummary):
@@ -137,6 +146,7 @@ class PlayerDetail(BaseModel):
     stats: dict[str, Any]
     scope: dict[str, Any]
     available_seasons: list[str]
+    bluff_publications: list[BluffPublicationBinding]
 
 
 class BoardStats(BaseModel):
@@ -170,6 +180,39 @@ class ReleaseSummary(BaseModel):
 
 class Releases(BaseModel):
     items: list[ReleaseSummary]
+
+
+class ExportRelease(BaseModel):
+    id: str
+    published_at: datetime
+    game_count: int
+    source_hash: str
+
+
+class ExportSeason(BaseModel):
+    season: str
+    game_count: int
+    phases: list[str]
+
+
+class MediaAsset(BaseModel):
+    url: str
+    sha256: str
+
+
+class MediaManifestHashes(BaseModel):
+    player_photos: str
+    bluff_frames: str
+
+
+class ExportManifest(BaseModel):
+    release_id: str
+    release: ExportRelease
+    seasons: list[ExportSeason]
+    bluff_publications: list[BluffPublicationBinding]
+    media_manifest_hashes: MediaManifestHashes
+    media_assets: list[MediaAsset]
+    analytics_version: int
 
 
 def _connect_readonly():
@@ -235,12 +278,23 @@ def _resolved_snapshot(snapshot: dict) -> dict:
                         for player in snapshot["players"]]}
 
 
-def _summary(snapshot: dict) -> dict:
+def _search_text(snapshot: dict) -> str:
+    """Mirror publisher._publish's stable game search field for API consumers."""
+    source = snapshot.get("source") or {}
+    board = snapshot.get("board") or {}
+    names = [seat.get("name", "") for seat in snapshot.get("seats", [])]
+    return " ".join([
+        snapshot.get("id", ""), source.get("bvid", ""), snapshot.get("date", ""),
+        board.get("name", ""), " ".join(names),
+    ])
+
+
+def _summary(snapshot: dict, search_text: str | None = None) -> dict:
     snapshot = _resolved_snapshot(snapshot)
-    return {key: snapshot[key] for key in (
+    return {**{key: snapshot[key] for key in (
         "id", "season", "date", "phase", "game_number", "board", "winner", "players",
         "ballot_count", "round_count",
-    )}
+    )}, "search_text": search_text if search_text is not None else _search_text(snapshot)}
 
 
 def _game_query(conn, release_id: str, *, season=None, phase=None, board=None, player=None, q=None,
@@ -275,11 +329,11 @@ def _game_query(conn, release_id: str, *, season=None, phase=None, board=None, p
     where = " AND ".join(conditions)
     total = conn.execute(f"SELECT count(*) AS total FROM games g WHERE {where}", values).fetchone()["total"]
     rows = conn.execute(
-        "SELECT snapshot FROM games g WHERE " + where +
+        "SELECT snapshot, search_text FROM games g WHERE " + where +
         " ORDER BY g.event_date DESC, g.game_number DESC NULLS LAST, g.id LIMIT %s OFFSET %s",
         [*values, page_size, (page - 1) * page_size],
     ).fetchall()
-    return [_summary(row["snapshot"]) for row in rows], total
+    return [_summary(row["snapshot"], row["search_text"]) for row in rows], total
 
 
 def _scope_snapshots(conn, release_id: str, season: str, phase: str = "all") -> list[dict[str, Any]]:
@@ -324,12 +378,18 @@ def _player_season_range(available: list[str], season: str, season_start: str | 
 
 
 def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[str, Any]]]],
-                                release_id: str, conn) -> tuple[dict[str, dict[str, Any]], str | None]:
+                                release_id: str, conn) -> tuple[
+                                    dict[str, dict[str, Any]], str | None, list[dict[str, Any]]
+                                ]:
     """Combine season-local bluff results, always pairing games with their own review."""
     combined: dict[str, dict[str, Any]] = {}
     inference_versions: list[tuple[str, str | None]] = []
+    publications: list[dict[str, Any]] = []
     for season, snapshots in snapshots_by_season:
-        payload = read_review(conn, release_id, season)
+        review = read_review_publication(conn, release_id, season)
+        payload = review["payload"]
+        publications.append({"season": season, "publication_id": review["publication_id"],
+                             "payload_hash": review["payload_hash"]})
         inference_versions.append((season, payload.get("inference_version")))
         season_stats = aggregate_bluffs(snapshots, payload)
         for player_id, season_row in season_stats.items():
@@ -366,7 +426,7 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
     else:
         inference_version = ", ".join(f"{season}: {version or 'unpublished'}"
                                        for season, version in inference_versions)
-    return combined, inference_version
+    return combined, inference_version, publications
 
 
 @app.get("/health")
@@ -431,14 +491,16 @@ def games(season: str | None = Query(default=None, max_length=32),
 @app.get("/api/v1/games/{game_id}", response_model=GameDetail)
 def game_detail(game_id: str, conn=Depends(connection_dependency)):
     release = _release(conn)
-    row = conn.execute("SELECT snapshot FROM games WHERE release_id=%s AND id=%s", (release["id"], game_id)).fetchone()
+    row = conn.execute("SELECT snapshot, search_text FROM games WHERE release_id=%s AND id=%s",
+                       (release["id"], game_id)).fetchone()
     if not row:
         raise HTTPException(status_code=404, detail="Game not found")
     snapshot = _resolved_snapshot(row["snapshot"])
     presentation = snapshot.get("presentation")
     if not isinstance(presentation, dict) or not presentation:
         presentation = build_game_presentation(snapshot)
-    return {**snapshot, "presentation": presentation, "timeline": build_game_timeline(snapshot)}
+    return {**snapshot, "search_text": row["search_text"], "presentation": presentation,
+            "timeline": build_game_timeline(snapshot)}
 
 
 @app.get("/api/v1/photos/{season}/{filename}")
@@ -523,7 +585,7 @@ def player_detail(player_id: str,
     )
     boards = [{"code": code, "name": name, "count": count}
               for (code, name), count in sorted(board_counts.items(), key=lambda row: (-row[1], row[0][1]))]
-    bluff_stats, bluff_inference_version = _combine_player_bluff_stats(
+    bluff_stats, bluff_inference_version, bluff_publications = _combine_player_bluff_stats(
         snapshots_by_season, release["id"], conn,
     )
     stats = compute_player_stats(player_id, snapshots, season=resolved_start, seasons=selected_seasons,
@@ -539,7 +601,8 @@ def player_detail(player_id: str,
                       "season_end": resolved_end, "seasons": selected_seasons,
                       "minimum_appearances": minimum_appearances,
                       "phase": "all", "games": len(snapshots)},
-            "available_seasons": available_seasons}
+            "available_seasons": available_seasons,
+            "bluff_publications": bluff_publications}
 
 
 @app.get("/api/v1/leaderboard")
@@ -551,13 +614,16 @@ def leaderboard(season: str = Query(default="S22", max_length=32),
     season_snapshots = _scope_snapshots(conn, release["id"], season, "all")
     snapshots = scope_games(season_snapshots, season, phase)
     items = build_leaderboard(season_snapshots, season=season, phase=phase)
-    bluff_payload = read_review(conn, release["id"], season)
+    review = read_review_publication(conn, release["id"], season)
+    bluff_payload = review["payload"]
     bluff_stats = aggregate_bluffs(season_snapshots, bluff_payload)
     for item in items:
         item["photo"] = photo_for(item["name"], season)
         item.update(bluff_stats.get(item["id"], {}))
     return {
         "release_id": release["id"], "analytics_version": ANALYTICS_VERSION,
+        "bluff_publication_id": review["publication_id"],
+        "bluff_payload_hash": review["payload_hash"],
         "season": season, "phase": phase,
         "season_status": SEASON_CATALOG.get(season, {}).get("status", "unknown"),
         "bluff_data_source": "database", "bluff_inference_version": bluff_payload.get("inference_version"),
@@ -583,7 +649,8 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
                  conn=Depends(connection_dependency)):
     release = _release(conn)
     snapshots = _scope_snapshots(conn, release["id"], season, "all")
-    payload = read_review(conn, release["id"], season)
+    review = read_review_publication(conn, release["id"], season)
+    payload = review["payload"]
     rows = review_items(snapshots, payload)
     if player:
         rows = [row for row in rows if row["player_id"] == player]
@@ -597,6 +664,8 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
     ] if manual else BLUFF_METHODOLOGY + (S23_VIDEO_METHODOLOGY if season == 'S23' else []))
     return {
         "release_id": release["id"], "analytics_version": ANALYTICS_VERSION,
+        "bluff_publication_id": review["publication_id"],
+        "bluff_payload_hash": review["payload_hash"],
         "season": season, "status": status, "player": player,
         "manual_review": manual,
         "summary": {"games": len(snapshots), "wolf_appearances": sum(not row['manual_included'] for row in rows),
@@ -713,3 +782,106 @@ def releases(conn=Depends(connection_dependency)):
         "ORDER BY r.published_at DESC,r.id"
     ).fetchall()
     return {"items": rows}
+
+
+def _canonical_sha256(value: object) -> str:
+    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                         separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _effective_media_assets() -> tuple[dict[str, str], list[dict[str, str]]]:
+    """Fingerprint the loaded allowlists and list assets currently served by them."""
+    photo_manifest = photos.manifest()
+    frame_manifest = bluff_frames.manifest()
+    photo_players = photo_manifest.get("players")
+    frame_seasons = frame_manifest.get("frames")
+    if not isinstance(photo_players, dict) or not isinstance(frame_seasons, dict):
+        raise ValueError("media manifest root is invalid")
+
+    assets: dict[str, str] = {}
+    for season, people in photo_players.items():
+        if not isinstance(season, str) or not isinstance(people, dict):
+            raise ValueError("photo season entry is invalid")
+        for record in people.values():
+            if not isinstance(record, dict):
+                continue
+            asset = record.get("asset")
+            if not isinstance(asset, str):
+                continue
+            parts = asset.split("/")
+            if len(parts) != 2 or parts[0] != season:
+                continue
+            path = photo_path(season, parts[1])
+            if path is not None:
+                assets[f"/media/player-photos/{asset}"] = parts[1].split(".", 1)[0]
+
+    for season, filenames in frame_seasons.items():
+        if not isinstance(season, str) or not isinstance(filenames, (dict, list)):
+            raise ValueError("frame season entry is invalid")
+        for filename in filenames:
+            if not isinstance(filename, str):
+                continue
+            if bluff_frame_path(season, filename) is not None:
+                assets[f"/media/bluff-frames/{season}/{filename}"] = filename[:-4]
+
+    return ({"player_photos": _canonical_sha256(photo_manifest),
+             "bluff_frames": _canonical_sha256(frame_manifest)},
+            [{"url": url, "sha256": assets[url]} for url in sorted(assets)])
+
+
+@app.get("/api/v1/export-manifest", response_model=ExportManifest)
+def export_manifest(conn=Depends(connection_dependency)):
+    """Return read-only release, review-publication and media-list identities."""
+    try:
+        release = conn.execute(
+            "SELECT r.id, r.published_at, r.game_count, r.source_hash "
+            "FROM active_release a JOIN releases r ON r.id = a.release_id WHERE a.singleton = true"
+        ).fetchone()
+    except psycopg.Error as exc:
+        raise HTTPException(status_code=503, detail="Export metadata unavailable") from exc
+    if not release:
+        raise HTTPException(status_code=503, detail="No published release")
+
+    try:
+        seasons = conn.execute(
+            "SELECT season, count(*) AS game_count, "
+            "array_agg(DISTINCT phase ORDER BY phase) AS phases FROM games "
+            "WHERE release_id=%s GROUP BY season ORDER BY season", (release["id"],),
+        ).fetchall()
+        publications = conn.execute(
+            "SELECT seasons.season, active.publication_id AS active_publication_id, "
+            "published.id AS publication_id, published.payload_hash "
+            "FROM (SELECT DISTINCT season FROM games WHERE release_id=%s) seasons "
+            "LEFT JOIN active_bluff_reviews active "
+            "ON active.release_id=%s AND active.season=seasons.season "
+            "LEFT JOIN bluff_review_publications published "
+            "ON published.id=active.publication_id AND published.release_id=active.release_id "
+            "AND published.season=active.season ORDER BY seasons.season",
+            (release["id"], release["id"]),
+        ).fetchall()
+    except psycopg.Error as exc:
+        raise HTTPException(status_code=503, detail="Export metadata unavailable") from exc
+
+    bluff_publications = []
+    for row in publications:
+        if row["active_publication_id"] is not None and (
+            row["publication_id"] is None or row["payload_hash"] is None
+        ):
+            raise HTTPException(status_code=503, detail="Bluff publication metadata unavailable")
+        bluff_publications.append({
+            "season": row["season"], "publication_id": row["publication_id"],
+            "payload_hash": row["payload_hash"],
+        })
+
+    try:
+        media_hashes, media_assets = _effective_media_assets()
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        raise HTTPException(status_code=503, detail="Media manifest unavailable") from exc
+
+    return {
+        "release_id": release["id"], "release": release,
+        "seasons": seasons, "bluff_publications": bluff_publications,
+        "media_manifest_hashes": media_hashes, "media_assets": media_assets,
+        "analytics_version": ANALYTICS_VERSION,
+    }

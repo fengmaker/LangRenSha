@@ -390,7 +390,7 @@ def test_game_detail_uses_persisted_presentation_and_keeps_legacy_fallback(monke
 
             class Cursor:
                 def fetchone(self):
-                    return {"snapshot": snapshot}
+                    return {"snapshot": snapshot, "search_text": app._search_text(snapshot)}
 
             return Cursor()
 

@@ -11,7 +11,7 @@ concurrency:
 jobs:
   acceptance:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 55
     services:
       postgres:
         image: postgres:18-alpine
@@ -36,17 +36,58 @@ jobs:
           persist-credentials: false
           fetch-depth: 1
           # Sparse checkout also enables partial clone: do not add filter, which overrides it.
+          # S21 paths below are offline test fixtures; API/static targets stay S22/S23.
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .github
-            config
-            scripts
-            requirements
-            website
-            data/games/S22
-            data/games/S23
-            data/extractions/S22/voting
-            data/extractions/S23/voting
-            data/reports
+            /.github/**
+            /config/**
+            /scripts/**
+            /requirements/**
+            /website/**
+            /data/games/S21/**/*.json
+            /data/games/S22/**
+            /data/games/S23/**
+            /data/extractions/S21/media_evidence/**/*.json
+            /data/extractions/S22/voting/**
+            /data/extractions/S23/voting/**
+            /data/extractions/S23/incremental/BV1cJxc6zEgf_*/candidate.json
+            /data/extractions/S23/incremental/BV1FJxc6zEzg_*/candidate.json
+            /data/extractions/S23/incremental/BV1RQx364EVx_*/candidate.json
+            /data/reports/**
+            /data/seasons/S21/**/*.json
+            /data/seasons/S21/**/*.srt
+            /data/seasons/S21/**/*.txt
+            /data/seasons/S21/**/*.csv
+            /data/seasons/S21/**/*.md
+            /data/seasons/S22/**/*.json
+            /data/seasons/S23/**/*.json
+            /data/raw/bilibili/BV17QJh6qEid/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV17ox662EYG/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1Eox662EE8/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1Eox662EVZ/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1FJxc6zEzg/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1Gnxm6sEjQ/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1HksX6QEr5/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1Qnxm6sEQq/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1RQx364EVx/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1RQx364EaF/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1RQx364Eit/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1U3p86dEYR/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1VPaW66EZz/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1anxm6sEWy/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1cJxc6zEbr/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1cJxc6zEgf/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1g1YU6kERd/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1kksX6DEK8/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1nJer63EDh/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1saaT6jEyK/p01/subtitle.01.raw.json
+            /data/raw/bilibili/BV1yt7v6QE3Q/p01/subtitle.01.raw.json
+            /data/transcripts/S22/BV1yt7v6QE3Q_p01_funasr_hotwords343_20261022/transcript.json
+            /data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json
+            /data/transcripts/S23/BV1U3p86dEHL_p01_funasr_full/transcript.json
+            /data/transcripts/S23/BV1UNaQ6kEWR_p01_funasr_full/transcript.json
+            /data/transcripts/S23/BV1kksX6DEbH_p01_cid43131407038_funasr/transcript.json
+            /data/weibo/2026-02-24_2026-05-26/S21_姓名照片来源索引.json
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
@@ -58,7 +99,7 @@ jobs:
           python -m pip install -r requirements/web.txt 'pytest>=8,<9' 'httpx>=0.28,<1' 'playwright==1.61.0'
           python -m playwright install --with-deps chromium
           npm ci --prefix website/web
-      - name: Publish, test, serve and verify real data
+      - name: Publish and verify local and static modes (S22 S23 only)
         run: python -m website.ci_acceptance
       - name: Upload bounded acceptance evidence (no sources, DB dumps, env or traces)
         if: ${{ always() }}

@@ -15,6 +15,25 @@ ROOT = Path(__file__).resolve().parents[2]
 WEBSITE = ROOT / "website"
 
 
+def test_web_container_prepares_allowlisted_entity_media(tmp_path):
+    dockerfile = (WEBSITE / "Dockerfile.web").read_text(encoding="utf-8")
+    match = re.search(r"RUN python - <<'PY'\n(.*?)\nPY", dockerfile, re.DOTALL)
+    assert match
+    output = tmp_path / "public/media"
+    code = match.group(1).replace("Path('/public/media')", "Path(sys.argv[1])")
+    result = subprocess.run([sys.executable, "-c", "import sys\n" + code, str(output)],
+                            cwd=ROOT, capture_output=True, text=True, encoding="utf-8", timeout=60)
+    assert result.returncode == 0, result.stderr
+    from website.api import photos, bluff_frames
+    expected = {"player-photos/" + row["asset"]
+                for records in photos.manifest()["players"].values() for row in records.values()}
+    expected.update(f"bluff-frames/{season}/{name}"
+                    for season, records in bluff_frames.manifest()["frames"].items() for name in records)
+    actual = {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file()}
+    assert actual == expected
+    assert 'COPY --from=build --chown=node:node /app/public ./public' in dockerfile
+
+
 def _service(name: str) -> str:
     # Inspect this file's two-space service blocks without adding a YAML dependency.
     # Docker Compose's own `config --quiet` is the separate schema validation step.

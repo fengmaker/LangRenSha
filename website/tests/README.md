@@ -4,3 +4,5 @@
 
 前端票卡与时间线组件的离线React SSR回归：`node website/tests/check_web_semantics.cjs website/web/node_modules website/web/src`。
 
+静态列表排序／筛选和排名并列、两种场次门槛叠加：`node website/tests/check_static_queries.cjs website/web/node_modules website/web/src`。静态快照完整性、版本切换、图片缺失与失败保留在对应 `test_static_*.py`；真实API、HTML和子路径浏览器流程由 `website/check_static.py` 一并验收。
+

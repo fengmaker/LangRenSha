@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getGames, getOverview, getStats } from "@/lib/api";
+import { isStaticSite } from "@/lib/site-mode";
 import { DataProblem } from "@/components/data-state";
 import { GameArchiveList } from "@/components/game-archive-list";
 import { PageIntro } from "@/components/page-intro";
@@ -16,6 +17,11 @@ function gamesParams(season: string, pageSize: number, phase?: string): URLSearc
 function safeSeasonId(id: string): string {
   return id.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 16) || "档案";
 }
+
+export const generateStaticParams = isStaticSite ? async () => {
+  const overview = await getOverview();
+  return overview.seasons.map(({ id }) => ({ id }));
+} : undefined;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -56,7 +62,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
   ];
 
   return <div className="page-wrap season-page">
-    <div className="breadcrumb"><Link href="/">档案首页</Link><span>/</span><span>赛季索引</span></div>
+    <div className="breadcrumb"><ArchiveLink href="/">档案首页</ArchiveLink><span>/</span><span>赛季索引</span></div>
     <PageIntro title={season.name} description="查看本季对局、版型分布与阶段积分。" action={<span className="season-hero-code">{season.id}</span>} />
     <section className="season-summary-metrics">
       <article><span>对局</span><strong>{formatNumber(season.games)}</strong></article>
@@ -66,11 +72,11 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
 
     <section className="season-phase-section">
       <div className="section-heading"><h2>比赛阶段</h2></div>
-      <div className="season-phase-grid">{phaseLinks.map((item) => <Link key={item.phase} href={"/games?season=" + encodeURIComponent(id) + "&phase=" + encodeURIComponent(item.phase)} className="season-phase-card">
+      <div className="season-phase-grid">{phaseLinks.map((item) => <ArchiveLink key={item.phase} href={"/games?season=" + encodeURIComponent(id) + "&phase=" + encodeURIComponent(item.phase)} className="season-phase-card">
         <strong>{item.label}</strong><b>{formatNumber(item.count)} <span>局</span></b>
-      </Link>)}</div>
-      <div className="season-leaderboard-links"><span>赛季积分与冠军</span><Link href={`/leaderboard?season=${encodeURIComponent(id)}&phase=all`}>整季积分榜 <b>→</b></Link><Link href={`/leaderboard?season=${encodeURIComponent(id)}&phase=finals_week`}>决赛周冠军榜 <b>→</b></Link></div>
-      {id === "S23" ? <p><Link className="button button-outline" href="/seasons/S23/bluff-review">S23 悍跳推断与复核 <span>→</span></Link></p> : null}
+      </ArchiveLink>)}</div>
+      <div className="season-leaderboard-links"><span>赛季积分与冠军</span><ArchiveLink href={`/leaderboard?season=${encodeURIComponent(id)}&phase=all`}>整季积分榜 <b>→</b></ArchiveLink><ArchiveLink href={`/leaderboard?season=${encodeURIComponent(id)}&phase=finals_week`}>决赛周冠军榜 <b>→</b></ArchiveLink></div>
+      {id === "S23" ? <p><ArchiveLink className="button button-outline" href="/seasons/S23/bluff-review">S23 悍跳推断与复核 <span>→</span></ArchiveLink></p> : null}
     </section>
 
     <section className="season-board-section">
@@ -81,7 +87,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
     </section>
 
     <section className="season-recent-section">
-      <div className="section-heading"><h2>本季近期比赛</h2><Link className="button button-outline" href={"/games?season=" + encodeURIComponent(id)}>全部对局 <span>→</span></Link></div>
+      <div className="section-heading"><h2>本季近期比赛</h2><ArchiveLink className="button button-outline" href={"/games?season=" + encodeURIComponent(id)}>全部对局 <span>→</span></ArchiveLink></div>
       <GameArchiveList games={recent.items} empty="当前赛季没有可展示的对局。" />
     </section>
     <details className="release-details"><summary>数据版本</summary><div className="release-detail-content"><span>{stats.release_id}</span></div></details>

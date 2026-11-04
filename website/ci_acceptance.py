@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "website/artifacts/ci"
-EXPECTED = {"S22": 148, "S23": 75}
+SEASONS = ("S22", "S23")
 
 
 def require_disposable_database() -> None:
@@ -59,7 +59,7 @@ def ready(url: str, process: subprocess.Popen, timeout: int = 90) -> None:
     raise RuntimeError("Server readiness deadline exceeded")
 
 
-def verify_reader(reader_url: str) -> None:
+def verify_reader(reader_url: str, expected: dict[str, int]) -> None:
     import psycopg
     with psycopg.connect(reader_url) as conn:
         assert conn.execute("SELECT current_user").fetchone()[0] == "masters_web_reader"
@@ -69,10 +69,10 @@ def verify_reader(reader_url: str) -> None:
         rows = conn.execute("SELECT g.season,count(*) FROM masters_web.games g "
                             "JOIN masters_web.active_release a ON a.release_id=g.release_id "
                             "GROUP BY g.season").fetchall()
-        assert dict(rows) == EXPECTED
+        assert dict(rows) == expected
         rows = conn.execute("SELECT b.season FROM masters_web.active_bluff_reviews b "
                             "JOIN masters_web.active_release a ON a.release_id=b.release_id").fetchall()
-        assert sorted(row[0] for row in rows) == sorted(EXPECTED)
+        assert sorted(row[0] for row in rows) == sorted(expected)
         # Read-only defaults can be overridden. Verify actual grants, not just that setting.
         conn.rollback()
         conn.execute("SET TRANSACTION READ WRITE")
@@ -122,13 +122,18 @@ def main() -> None:
     processes, logs = [], []
     try:
         command("preflight", [py, "-m", "website.api.publish", "--seasons", "S22", "S23", "--check"])
+        from website.api import publisher
+        expected = {season: len(publisher.list_games(ROOT, season)) for season in SEASONS}
+        expected_games = sum(expected.values())
         # The existing publisher applies website/api/schema.sql; no JCMS migrations are used.
         command("publish", [py, "-m", "website.api.publish", "--seasons", "S22", "S23"])
-        for season in EXPECTED:
+        for season in SEASONS:
             command(f"bluffs-check-{season}", [py, "-m", "website.api.publish_bluffs", "--season", season, "--check"])
             command(f"bluffs-{season}", [py, "-m", "website.api.publish_bluffs", "--season", season])
         junit = OUT / "tests.xml"
         command("tests", [py, "-m", "pytest", "website/tests", "-q", "--tb=short", f"--junitxml={junit}"])
+        command("static-query-semantics", ["node", "website/tests/check_static_queries.cjs",
+                                           "website/web/node_modules", "website/web/src"])
         executed = require_test_execution(junit, {
             "test_publish_failure_does_not_change_active_release",
             "test_publish_is_idempotent_and_can_leave_active_pointer_unchanged",
@@ -137,13 +142,15 @@ def main() -> None:
         })
         command("reader-setup", [py, "-m", "website.grant_reader"])
         reader_url = "postgresql://masters_web_reader:" + os.environ["MASTERS_READER_PASSWORD"] + "@127.0.0.1:5432/masters_ci"
-        verify_reader(reader_url)
+        verify_reader(reader_url, expected)
         reader_env = {**os.environ, "DATABASE_URL": reader_url}
         for label, args, url in (
             ("api", [py, "-m", "uvicorn", "website.api.app:app", "--host", "127.0.0.1", "--port", "8000"], "http://127.0.0.1:8000/health"),
             ("web", ["npm", "run", "start", "--prefix", "website/web", "--", "--hostname", "127.0.0.1"], "http://127.0.0.1:3000"),
         ):
             if label == "web":
+                from website.run import prepare_media
+                prepare_media(reader_env["API_BASE_URL"])
                 command("build", ["npm", "run", "build", "--prefix", "website/web"], env=reader_env)
                 command("typecheck", ["npm", "run", "typecheck", "--prefix", "website/web"])
             log = (OUT / f"{label}.log").open("w", encoding="utf-8")
@@ -155,16 +162,29 @@ def main() -> None:
                               "--browser-channel", "chromium", "--screenshots", str(OUT / "screenshots"),
                               "--output", str(OUT / "acceptance.json")], env=reader_env, timeout=900)
         report = json.loads((OUT / "acceptance.json").read_text())
-        assert report["api"]["paginated_games"] == report["api"]["source_games_matched"] == 223
+        assert report["api"]["paginated_games"] == report["api"]["source_games_matched"] == expected_games
         assert report["browser"]["page_count"] >= 36
         assert report["api"]["photos"]["api_assets_checked"] > 0
-        for season in EXPECTED:
+        for season in SEASONS:
             assert report["api"]["photos"]["leaderboard_photos"][season] > 0
             assert report["api"]["bluff_bindings"][season]["inference_version"]
-        (OUT / "result.json").write_text(json.dumps({"state": "passed", "games": 223,
+        # Static builds share .next with the local site. Stop the frontend first;
+        # the same read-only API and disposable S22/S23 release remain available.
+        frontend = processes.pop()
+        os.killpg(frontend.pid, signal.SIGTERM)
+        frontend.wait(timeout=10)
+        command("static-build", [py, "website/build_static.py", "--api-url", reader_env["API_BASE_URL"],
+                               "--base-path", "/langrensha-site", "--browser-channel", "chromium",
+                               "--output", str(ROOT / "tmp/ci-pages/langrensha-site")],
+                env=reader_env, timeout=1200)
+        static_report = json.loads((ROOT / "tmp/ci-pages/acceptance.json").read_text(encoding="utf-8"))
+        assert static_report["state"] == "passed"
+        shutil.copyfile(ROOT / "tmp/ci-pages/acceptance.json", OUT / "static-acceptance.json")
+        (OUT / "result.json").write_text(json.dumps({"state": "passed", "games": expected_games,
             "tests_executed_without_skips": executed, "reader_permissions_verified": True,
-            "browser_pages": report["browser"]["page_count"]}, indent=2) + "\n")
-        print("223-game database/API/browser acceptance passed", flush=True)
+            "browser_pages": report["browser"]["page_count"], "static_seasons": list(SEASONS),
+            "static_build_id": static_report["build_id"]}, indent=2) + "\n")
+        print(f"{expected_games}-game database/API/browser/static acceptance passed", flush=True)
     finally:
         for process in reversed(processes):
             if process.poll() is not None:

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import { useId, useRef, useState, type ReactNode } from "react";
 import type { Metric, PlayerLedgerEntry } from "@/lib/types";
 import { formatDate, formatNumber } from "@/lib/format";
@@ -43,10 +43,10 @@ export function MetricSamples({ label, metric, games, labels, trigger }: { label
       <p className="sample-count">{formatNumber(rows.length)} 局{labels.unit === "次" ? ` · ${formatNumber(counts[kind])} 次${resultLabel}` : ""} · 最新对局在前</p>
       {rows.length ? <ul className="sample-game-list">{rows.map((game) => {
         const sample = samples.get(game.game_id)!;
-        return <li key={game.game_id}><Link href={`/games/${encodeURIComponent(game.game_id)}`}>
+        return <li key={game.game_id}><ArchiveLink href={`/games/${encodeURIComponent(game.game_id)}`}>
           <div className="sample-game-main"><strong>{game.season ? `${game.season} · ` : ""}{formatDate(game.date)} · {game.game_number ? `第 ${game.game_number} 局` : game.game_id}</strong><span className={kind === "positive" ? "sample-positive" : "sample-negative"}>{resultLabel}{labels.unit === "次" ? ` ${sample[kind]} 次` : ""}</span></div>
           <div className="sample-game-meta"><span>{game.board_name || "版型待核"} · {game.role || "身份待核"}</span>{sample.positive > 0 && sample.negative > 0 ? <span>本局也有{kind === "positive" ? labels.negative : labels.positive}记录</span> : null}<span aria-hidden="true">查看对局 →</span></div>
-        </Link></li>;
+        </ArchiveLink></li>;
       })}</ul> : <p className="sample-empty">当前时间范围内暂无{kind === "positive" ? "正面" : "负面"}样本。</p>}
       {metric.excluded > 0 ? <p className="sample-excluded">另有 {formatNumber(metric.excluded)} 条记录无法判断，未列入正负样本。</p> : null}
       </> : null}

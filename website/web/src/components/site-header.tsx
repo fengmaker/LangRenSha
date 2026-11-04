@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ArchiveLink } from "@/components/archive-link";
 import { usePathname } from "next/navigation";
 
 const links = [
@@ -16,15 +16,15 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Link className="brand" href="/" aria-label="大师赛档案首页">
+        <ArchiveLink className="brand" href="/" aria-label="大师赛档案首页">
           <span className="brand-mark" aria-hidden="true">M<span>A</span></span>
           <span className="brand-copy"><strong>大师赛档案</strong></span>
-        </Link>
+        </ArchiveLink>
         <nav className="main-nav" aria-label="主导航">
           {links.map((link) => {
             const linkPath = link.href.split("?")[0];
             const current = linkPath === "/" ? pathname === "/" : pathname.startsWith(linkPath);
-            return <Link key={link.href} href={link.href} aria-current={current ? "page" : undefined}>{link.label}</Link>;
+            return <ArchiveLink key={link.href} href={link.href} aria-current={current ? "page" : undefined}>{link.label}</ArchiveLink>;
           })}
         </nav>
       </div>

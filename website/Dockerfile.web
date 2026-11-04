@@ -1,9 +1,40 @@
+FROM python:3.12-slim AS media
+WORKDIR /assets
+COPY website/api/photos.py website/api/bluff_frames.py website/api/player_photos.json website/api/bluff_frames.json ./website/api/
+COPY website/assets/player-photos ./website/assets/player-photos
+COPY website/assets/bluff-frames ./website/assets/bluff-frames
+# The local container also serves concrete files after removing media proxies.
+# Reuse API allowlist resolvers; never copy unlisted source assets into public/.
+RUN python - <<'PY'
+import hashlib
+from pathlib import Path
+import shutil
+from website.api import photos, bluff_frames
+for kind, manifest, resolver in (
+    ('player-photos', photos.manifest().get('players', {}), photos.photo_path),
+    ('bluff-frames', bluff_frames.manifest().get('frames', {}), bluff_frames.frame_path),
+):
+    for season, records in manifest.items():
+        filenames = ([Path(row['asset']).name for row in records.values()]
+                     if kind == 'player-photos' else records.keys())
+        for filename in filenames:
+            source = resolver(season, filename)
+            if source is None:
+                raise RuntimeError(f'Missing allowlisted media: {kind}/{season}/{filename}')
+            if hashlib.sha256(source.read_bytes()).hexdigest() != Path(filename).stem:
+                raise RuntimeError(f'Media hash mismatch: {filename}')
+            target = Path('/public/media') / kind / season / filename
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+PY
+
 FROM node:24-alpine AS build
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY website/web/package.json website/web/package-lock.json ./
 RUN npm ci
 COPY website/web/ ./
+COPY --from=media /public ./public
 RUN npm run build
 
 FROM node:24-alpine AS runtime
@@ -11,6 +42,7 @@ WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=3000
 COPY --from=build --chown=node:node /app/.next/standalone ./
 COPY --from=build --chown=node:node /app/.next/static ./.next/static
+COPY --from=build --chown=node:node /app/public ./public
 USER node
 EXPOSE 3000
 CMD ["node", "server.js"]
