@@ -1,4 +1,4 @@
-"""Export one version-bound snapshot from the published read-only website API."""
+"""Export a version-bound snapshot for static publishing from the read-only API."""
 
 from __future__ import annotations
 
@@ -70,6 +70,93 @@ def _sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _is_sha256(value: Any) -> bool:
+    return isinstance(value, str) and _HASH_RE.fullmatch(value) is not None
+
+
+def _input_hash(value: Any) -> str:
+    return _sha256(_canonical_json(value))
+
+
+def _season_window(metadata: dict[str, Any], start: str, end: str) -> list[str] | None:
+    rows = metadata.get("seasons")
+    if not isinstance(rows, list):
+        return None
+    seasons = [row.get("season") for row in rows if isinstance(row, dict)]
+    if len(seasons) != len(rows) or any(not isinstance(season, str) for season in seasons):
+        return None
+    try:
+        first, last = seasons.index(start), seasons.index(end)
+    except ValueError:
+        return None
+    return seasons[first:last + 1] if first <= last else None
+
+
+def input_hash_for_path(path: str, metadata: dict[str, Any], *, player_name: str | None = None,
+                        available_seasons: list[str] | None = None) -> str | None:
+    """Return the stable dependency key for a cacheable release JSON path.
+
+    Paths are relative to ``data/releases/<snapshot_id>``. A missing or invalid
+    content fingerprint makes the path non-cacheable and returns None.
+    """
+    fingerprints = metadata.get("content_fingerprints")
+    if not isinstance(fingerprints, dict):
+        return None
+    implementation = fingerprints.get("implementation")
+    if not _is_sha256(implementation):
+        return None
+    parts = PurePosixPath(path).parts
+    if len(parts) == 2 and parts[0] == "games" and parts[1].endswith(".json"):
+        game_id = parts[1][:-5]
+        games = fingerprints.get("games")
+        game_hash = games.get(game_id) if isinstance(games, dict) else None
+        if not _is_sha256(game_hash):
+            return None
+        return _input_hash({"kind": "game-detail", "implementation": implementation,
+                            "game": game_hash})
+    if (len(parts) == 3 and parts[0] == "players" and parts[2].endswith(".json")
+            and "--" in parts[2]):
+        player_id = parts[1]
+        start, end = parts[2][:-5].split("--", 1)
+        seasons = _season_window(metadata, start, end)
+        season_hashes = fingerprints.get("seasons")
+        if (seasons is None or not isinstance(season_hashes, dict)
+                or any(not _is_sha256(season_hashes.get(season)) for season in seasons)
+                or not isinstance(player_name, str) or not isinstance(available_seasons, list)
+                or any(not isinstance(season, str) for season in available_seasons)):
+            return None
+        return _input_hash({"kind": "player-range", "implementation": implementation,
+                            "seasons": [(season, season_hashes[season]) for season in seasons],
+                            "player_id": player_id, "player_name": player_name,
+                            "available_seasons": available_seasons})
+    if len(parts) == 2 and parts[0] == "stats" and parts[1].endswith(".json") and "--" in parts[1]:
+        start, end = parts[1][:-5].split("--", 1)
+        seasons = _season_window(metadata, start, end)
+        season_hashes = fingerprints.get("seasons")
+        if (seasons is None or not isinstance(season_hashes, dict)
+                or any(not _is_sha256(season_hashes.get(season)) for season in seasons)):
+            return None
+        return _input_hash({"kind": "stats-range", "implementation": implementation,
+                            "seasons": [(season, season_hashes[season]) for season in seasons]})
+    if len(parts) == 3 and parts[0] == "leaderboards" and parts[2].endswith(".json"):
+        season, phase = parts[1], parts[2][:-5]
+        season_hashes = fingerprints.get("seasons")
+        season_hash = season_hashes.get(season) if isinstance(season_hashes, dict) else None
+        if not _is_sha256(season_hash):
+            return None
+        return _input_hash({"kind": "leaderboard", "implementation": implementation,
+                            "season": season_hash, "phase": phase})
+    if len(parts) == 2 and parts[0] == "bluff-review" and parts[1].endswith(".json"):
+        season = parts[1][:-5]
+        season_hashes = fingerprints.get("seasons")
+        season_hash = season_hashes.get(season) if isinstance(season_hashes, dict) else None
+        if not _is_sha256(season_hash):
+            return None
+        return _input_hash({"kind": "bluff-review", "implementation": implementation,
+                            "season": season_hash, "phase": "all"})
+    return None
+
+
 def _walk_media_values(value: Any) -> Iterable[tuple[str, str | None]]:
     if isinstance(value, dict):
         for key, child in value.items():
@@ -101,12 +188,9 @@ def _media_endpoint(url: str) -> tuple[str, str, str]:
     raise ExportError(f"Media reference is outside the public allowlist: {url}")
 
 
-def sync_media(api_url: str, destination: Path, values: list | dict | None = None) -> list[dict[str, str]]:
-    """Copy referenced allowlisted images, checking their content-addressed names."""
+def _media_references(values: list | dict | None) -> dict[str, tuple[str, str]]:
     if values is None:
-        values = _request_json(api_url, "/api/v1/export-manifest").get("media_assets")
-        if not isinstance(values, list):
-            raise ExportError("Export manifest is missing its media_assets list")
+        raise ExportError("Export manifest is missing its media_assets list")
 
     references: dict[str, tuple[str, str]] = {}
     for url, declared_hash in _walk_media_values(values):
@@ -120,6 +204,28 @@ def sync_media(api_url: str, destination: Path, values: list | dict | None = Non
         if previous is not None and previous[1] != expected:
             raise ExportError(f"Conflicting media hashes for {url}")
         references[url] = (endpoint, expected)
+    return references
+
+
+def _media_target(root: Path, relative: str, url: str) -> Path:
+    parts = PurePosixPath(relative).parts
+    if not parts or any(part in {"", ".", ".."} for part in parts):
+        raise ExportError(f"Unsafe media path: {url}")
+    return root.joinpath(*parts)
+
+
+def _write_media_body(target: Path, body: bytes) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_name(f"{target.name}.{uuid.uuid4().hex}.tmp")
+    temporary.write_bytes(body)
+    os.replace(temporary, target)
+
+
+def sync_media(api_url: str, destination: Path, values: list | dict | None = None) -> list[dict[str, str]]:
+    """Copy referenced allowlisted images, checking their content-addressed names."""
+    if values is None:
+        values = _request_json(api_url, "/api/v1/export-manifest").get("media_assets")
+    references = _media_references(values)
 
     root = Path(destination)
     copied: list[dict[str, str]] = []
@@ -130,20 +236,51 @@ def sync_media(api_url: str, destination: Path, values: list | dict | None = Non
         if actual_hash != expected_hash:
             raise ExportError(f"Media content hash mismatch for {url}")
         _, relative, _ = _media_endpoint(url)
-        parts = PurePosixPath(relative).parts
-        if not parts or any(part in {"", ".", ".."} for part in parts):
-            raise ExportError(f"Unsafe media path: {url}")
-        target = root.joinpath(*parts)
-        target.parent.mkdir(parents=True, exist_ok=True)
+        target = _media_target(root, relative, url)
         if target.is_file():
             if _sha256(target.read_bytes()) != expected_hash:
                 raise ExportError(f"Existing media file has the wrong hash: {target}")
         else:
-            temporary = target.with_name(f"{target.name}.{uuid.uuid4().hex}.tmp")
-            temporary.write_bytes(body)
-            os.replace(temporary, target)
+            _write_media_body(target, body)
         copied.append({"url": url, "sha256": actual_hash, "path": relative})
     return copied
+
+
+def _sync_media_with_reuse(api_url: str, destination: Path, values: list | dict | None,
+                           reuse_from: Path | None) -> tuple[list[dict[str, str]], int, int]:
+    references = _media_references(values)
+    root = Path(destination)
+    copied: list[dict[str, str]] = []
+    reused = fetched = 0
+    for url in sorted(references):
+        endpoint, expected_hash = references[url]
+        _, relative, _ = _media_endpoint(url)
+        target = _media_target(root, relative, url)
+        if target.exists():
+            if target.is_symlink() or not target.is_file() or _sha256(target.read_bytes()) != expected_hash:
+                raise ExportError(f"Existing media file has the wrong hash: {target}")
+            actual_hash = expected_hash
+            reused += 1
+        else:
+            source = _media_target(reuse_from / "media", relative, url) if reuse_from is not None else None
+            if source is not None and source.exists():
+                if source.is_symlink() or not source.is_file():
+                    raise ExportError(f"Existing reused media file is not a regular file: {source}")
+                body = source.read_bytes()
+                actual_hash = _sha256(body)
+                if actual_hash != expected_hash:
+                    raise ExportError(f"Reused media content hash mismatch for {url}")
+                _write_media_body(target, body)
+                reused += 1
+            else:
+                body, _ = _request_bytes(api_url, endpoint)
+                actual_hash = _sha256(body)
+                if actual_hash != expected_hash:
+                    raise ExportError(f"Media content hash mismatch for {url}")
+                _write_media_body(target, body)
+                fetched += 1
+        copied.append({"url": url, "sha256": actual_hash, "path": relative})
+    return copied, reused, fetched
 
 
 def _safe_base_path(value: str) -> str:
@@ -354,9 +491,126 @@ def _fetch_one_player(api_url: str, player_id: str, interval: dict[str, Any], re
     return response
 
 
+def _load_reuse_context(reuse_from: Path | None, reuse_index: dict[str, Any] | None,
+                        partial_season: str | None) -> dict[str, Any] | None:
+    if reuse_from is None or partial_season is not None:
+        return None
+    root = Path(reuse_from)
+    manifest_path = root / "data" / "manifest.json"
+    try:
+        old_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ExportError(f"Reuse site is missing data/manifest.json: {manifest_path}") from exc
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ExportError(f"Cannot read reuse site manifest: {manifest_path}") from exc
+    if not isinstance(old_manifest, dict) or old_manifest.get("complete") is not True:
+        return None
+    snapshot_id = old_manifest.get("snapshot_id")
+    if not isinstance(snapshot_id, str) or not _SAFE_ID_RE.fullmatch(snapshot_id):
+        raise ExportError("Reuse site manifest has an invalid snapshot_id")
+    release_root = root / "data" / "releases" / snapshot_id
+    files: dict[str, Any] = {}
+    metadata: dict[str, Any] | None = None
+    if reuse_index is not None:
+        if not isinstance(reuse_index, dict):
+            raise ExportError("Reuse export index must be an object")
+        if reuse_index.get("schema_version") != 1:
+            raise ExportError("Reuse export index has an unsupported schema_version")
+        candidate_files = reuse_index.get("files")
+        if not isinstance(candidate_files, dict):
+            raise ExportError("Reuse export index is missing its files object")
+        files = candidate_files
+        candidate_metadata = reuse_index.get("metadata")
+        if isinstance(candidate_metadata, dict):
+            metadata = candidate_metadata
+    return {"root": root, "release_root": release_root, "files": files,
+            "metadata": metadata}
+
+
+def _load_cached_json(reuse_context: dict[str, Any] | None, relative: str,
+                      input_hash: str | None, release_id: str,
+                      publication_map: dict[str, dict[str, Any]], *,
+                      season: str | None = None, seasons: list[str] | None = None) -> dict[str, Any] | None:
+    if reuse_context is None or input_hash is None:
+        return None
+    previous_metadata = reuse_context.get("metadata")
+    if (not isinstance(previous_metadata, dict)
+            or input_hash_for_path(relative, previous_metadata, player_name="",
+                                  available_seasons=[]) is None):
+        return None
+    entry = reuse_context["files"].get(relative)
+    if entry is None:
+        return None
+    if not isinstance(entry, dict):
+        raise ExportError(f"Reuse export index has an invalid entry for {relative}")
+    if entry.get("input_hash") != input_hash:
+        return None
+    expected_hash = entry.get("sha256")
+    if not _is_sha256(expected_hash):
+        raise ExportError(f"Reuse export index has an invalid file hash for {relative}")
+    source_root: Path = reuse_context["release_root"]
+    source = source_root.joinpath(*PurePosixPath(relative).parts)
+    try:
+        if source.is_symlink() or not source.is_file() or not source.resolve().is_relative_to(source_root.resolve()):
+            raise ExportError(f"Reused snapshot file is missing or unsafe: {source}")
+        body = source.read_bytes()
+    except OSError as exc:
+        raise ExportError(f"Cannot read reused snapshot file: {source}") from exc
+    actual_hash = _sha256(body)
+    if actual_hash != expected_hash:
+        raise ExportError(f"Reused snapshot file hash mismatch: {source}")
+    try:
+        value = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ExportError(f"Reused snapshot file is invalid JSON: {source}") from exc
+    if not isinstance(value, dict):
+        raise ExportError(f"Reused snapshot file is not a JSON object: {source}")
+    result = dict(value)
+    result["release_id"] = release_id
+    if "bluff_publication_id" in result or "bluff_payload_hash" in result:
+        publication_season = season or result.get("season")
+        if isinstance(publication_season, str) and publication_season in publication_map:
+            binding = publication_map[publication_season]
+            if "bluff_publication_id" in result:
+                result["bluff_publication_id"] = binding["publication_id"]
+            if "bluff_payload_hash" in result:
+                result["bluff_payload_hash"] = binding["payload_hash"]
+    if "bluff_publications" in result:
+        selected_seasons = seasons
+        if selected_seasons is None and isinstance(result.get("scope"), dict):
+            possible = result["scope"].get("seasons")
+            selected_seasons = possible if isinstance(possible, list) else None
+        if selected_seasons is not None:
+            result["bluff_publications"] = [publication_map[item] for item in selected_seasons]
+    return result
+
+
+def _changed_fingerprints(current: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
+    current_fp = current.get("content_fingerprints")
+    previous_fp = previous.get("content_fingerprints") if isinstance(previous, dict) else None
+    if not isinstance(current_fp, dict) or not isinstance(previous_fp, dict):
+        games = current_fp.get("games") if isinstance(current_fp, dict) else {}
+        season_hashes = current_fp.get("seasons") if isinstance(current_fp, dict) else {}
+        return {"implementation": True,
+                "games": sorted(games) if isinstance(games, dict) else [],
+                "seasons": sorted(season_hashes) if isinstance(season_hashes, dict) else []}
+    current_games = current_fp.get("games") if isinstance(current_fp.get("games"), dict) else {}
+    previous_games = previous_fp.get("games") if isinstance(previous_fp.get("games"), dict) else {}
+    current_seasons = current_fp.get("seasons") if isinstance(current_fp.get("seasons"), dict) else {}
+    previous_seasons = previous_fp.get("seasons") if isinstance(previous_fp.get("seasons"), dict) else {}
+    return {
+        "implementation": current_fp.get("implementation") != previous_fp.get("implementation"),
+        "games": sorted(key for key in set(current_games) | set(previous_games)
+                         if current_games.get(key) != previous_games.get(key)),
+        "seasons": sorted(key for key in set(current_seasons) | set(previous_seasons)
+                          if current_seasons.get(key) != previous_seasons.get(key)),
+    }
+
+
 def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id: str | None = None,
                     partial_season: str | None = None, partial_game: str | None = None,
-                    partial_player: str | None = None) -> dict[str, Any]:
+                    partial_player: str | None = None, reuse_from: Path | None = None,
+                    reuse_index: dict[str, Any] | None = None) -> dict[str, Any]:
     """Export a full snapshot, or a marked one-season/one-game/one-player sample."""
     base_path = _safe_base_path(base_path)
     if any(value is not None for value in (partial_game, partial_player)) and partial_season is None:
@@ -375,6 +629,17 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         seasons = [partial_season]
     else:
         seasons = list(all_seasons)
+    reuse_context = _load_reuse_context(reuse_from, reuse_index, partial_season)
+    metrics = {
+        "game_details": {"reused": 0, "fetched": 0},
+        "player_ranges": {"reused": 0, "fetched": 0},
+        "stats_ranges": {"reused": 0, "fetched": 0},
+        "leaderboards": {"reused": 0, "fetched": 0},
+        "reviews": {"reused": 0, "fetched": 0},
+        "media": {"reused": 0, "fetched": 0},
+    }
+    reused_paths: set[str] = set()
+    file_input_hashes: dict[str, str | None] = {}
 
     overview = _request_json(api_url, "/api/v1/overview")
     if (overview.get("release", {}).get("id") != release_id
@@ -408,6 +673,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
 
     players_by_season: dict[str, dict[str, Any]] = {}
     all_player_ids: dict[str, str] = {}
+    player_available_seasons: dict[str, list[str]] = {}
     for season in seasons:
         page, items = _paged_items(api_url, "/api/v1/players", {"season": season},
                                    release_id=release_id, analytics_version=analytics_version)
@@ -415,6 +681,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         players_by_season[season] = page
         for item in items:
             all_player_ids[item["id"]] = item["name"]
+            player_available_seasons.setdefault(item["id"], []).append(season)
     if partial_season is None and len(all_player_ids) != overview.get("totals", {}).get("players"):
         raise ExportError("Season player union does not match overview player count")
 
@@ -451,46 +718,123 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         selected_player = None
 
     game_ids = [item["id"] for item in listed_games]
-    game_details = _parallel_map(
-        lambda game_id: _fetch_one_game(api_url, game_id, release_id, analytics_version), game_ids,
+    publication_map = _publication_map(initial_metadata)
+    game_details_by_id: dict[str, dict[str, Any]] = {}
+    game_misses: list[str] = []
+    for game_id in game_ids:
+        relative = f"games/{game_id}.json"
+        key = input_hash_for_path(relative, initial_metadata)
+        cached = _load_cached_json(reuse_context, relative, key, release_id, publication_map)
+        if cached is None:
+            game_misses.append(game_id)
+        else:
+            game_details_by_id[game_id] = cached
+            metrics["game_details"]["reused"] += 1
+            reused_paths.add(relative)
+        file_input_hashes[relative] = key
+    fetched_games = _parallel_map(
+        lambda game_id: _fetch_one_game(api_url, game_id, release_id, analytics_version), game_misses,
     )
+    metrics["game_details"]["fetched"] = len(fetched_games)
+    game_details_by_id.update({detail["id"]: detail for detail in fetched_games})
+    game_details = [game_details_by_id[game_id] for game_id in game_ids]
     detail_by_id = {detail["id"]: detail for detail in game_details}
     if set(detail_by_id) != set(game_ids) or len(detail_by_id) != len(game_ids):
         raise ExportError("Game details do not cover the game index exactly")
     summary_by_id = {item["id"]: item for item in listed_games}
     for game_id, detail in detail_by_id.items():
+        _check_release(detail, release_id, f"game {game_id}", analytics_version)
+        if detail.get("id") != game_id:
+            raise ExportError(f"Game detail ID does not match requested ID {game_id}")
+        if not isinstance(detail.get("search_text"), str):
+            raise ExportError(f"Game {game_id} is missing search_text")
         summary = summary_by_id[game_id]
         if detail.get("season") != summary.get("season") or detail.get("search_text") != summary.get("search_text"):
             raise ExportError(f"Game {game_id} detail does not match its index entry")
 
     ranges = _ranges(seasons)
     player_ids = list(all_player_ids)
-    publication_map = _publication_map(initial_metadata)
     player_jobs = [(player_id, interval) for interval in ranges for player_id in player_ids]
-    player_results = _parallel_map(
+    player_result_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    player_misses: list[tuple[str, dict[str, Any]]] = []
+    for player_id, interval in player_jobs:
+        relative = f"players/{player_id}/{interval['start']}--{interval['end']}.json"
+        key = input_hash_for_path(relative, initial_metadata,
+                                  player_name=all_player_ids[player_id],
+                                  available_seasons=player_available_seasons.get(player_id, []))
+        cached = _load_cached_json(reuse_context, relative, key, release_id, publication_map,
+                                   seasons=interval["seasons"])
+        if cached is None:
+            player_misses.append((player_id, interval))
+        else:
+            _check_release(cached, release_id, f"player {player_id} {interval['start']}--{interval['end']}",
+                           analytics_version)
+            if cached.get("id") != player_id:
+                raise ExportError(f"Player detail ID does not match requested ID {player_id}")
+            scope = cached.get("scope")
+            if (not isinstance(scope, dict) or scope.get("season_start") != interval["start"]
+                    or scope.get("season_end") != interval["end"] or scope.get("seasons") != interval["seasons"]
+                    or scope.get("minimum_appearances") != 0):
+                raise ExportError(f"Player detail {player_id} has the wrong season or appearance scope")
+            if cached.get("bluff_publications") != [publication_map[season] for season in interval["seasons"]]:
+                raise ExportError(f"Player detail {player_id} has a different cross-season bluff binding")
+            player_result_by_key[(player_id, interval["start"], interval["end"])] = cached
+            metrics["player_ranges"]["reused"] += 1
+            reused_paths.add(relative)
+        file_input_hashes[relative] = key
+    fetched_players = _parallel_map(
         lambda job: _fetch_one_player(api_url, job[0], job[1], release_id,
-                                      analytics_version, publication_map), player_jobs,
+                                      analytics_version, publication_map), player_misses,
     )
+    metrics["player_ranges"]["fetched"] = len(fetched_players)
+    player_result_by_key.update({(player_id, interval["start"], interval["end"]): detail
+                                 for (player_id, interval), detail in zip(player_misses, fetched_players)})
+    player_results = [player_result_by_key[(player_id, interval["start"], interval["end"])]
+                      for player_id, interval in player_jobs]
 
     stats_results = []
+    stats_reused = 0
+    stats_fetched = 0
     for interval in ranges:
-        response = _request_json(api_url, "/api/v1/stats", {
-            "season_start": interval["start"], "season_end": interval["end"],
-        })
+        relative = f"stats/{interval['start']}--{interval['end']}.json"
+        key = input_hash_for_path(relative, initial_metadata)
+        response = _load_cached_json(reuse_context, relative, key, release_id, publication_map)
+        if response is None:
+            response = _request_json(api_url, "/api/v1/stats", {
+                "season_start": interval["start"], "season_end": interval["end"],
+            })
+            stats_fetched += 1
+        else:
+            stats_reused += 1
+            reused_paths.add(relative)
+        file_input_hashes[relative] = key
         _check_release(response, release_id, f"stats {interval['start']}--{interval['end']}", analytics_version)
         scope = response.get("scope")
         if (not isinstance(scope, dict) or scope.get("seasons") != interval["seasons"]
                 or scope.get("season_start") != interval["start"] or scope.get("season_end") != interval["end"]):
             raise ExportError(f"Stats {interval['start']}--{interval['end']} returned the wrong scope")
         stats_results.append(response)
+    metrics["stats_ranges"] = {"reused": stats_reused, "fetched": stats_fetched}
 
     leaderboards: list[tuple[str, str, dict[str, Any]]] = []
     bluff_reviews: list[tuple[str, dict[str, Any]]] = []
+    leaderboard_reused = leaderboard_fetched = 0
+    review_reused = review_fetched = 0
     for season in seasons:
         season_phases = next(row["phases"] for row in initial_metadata["seasons"] if row["season"] == season)
         leaderboard_phases = ["all"] + (["finals_week"] if "finals_week" in season_phases else [])
         for phase in leaderboard_phases:
-            response = _request_json(api_url, "/api/v1/leaderboard", {"season": season, "phase": phase})
+            relative = f"leaderboards/{season}/{phase}.json"
+            key = input_hash_for_path(relative, initial_metadata)
+            response = _load_cached_json(reuse_context, relative, key, release_id, publication_map,
+                                         season=season)
+            if response is None:
+                response = _request_json(api_url, "/api/v1/leaderboard", {"season": season, "phase": phase})
+                leaderboard_fetched += 1
+            else:
+                leaderboard_reused += 1
+                reused_paths.add(relative)
+            file_input_hashes[relative] = key
             _check_release(response, release_id, f"leaderboard {season}/{phase}", analytics_version)
             _check_bluff_binding(response, season, publication_map, f"leaderboard {season}/{phase}")
             if response.get("season") != season or response.get("phase") != phase:
@@ -502,7 +846,17 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
                 raise ExportError(f"Leaderboard game count changed for {season}/{phase}")
             leaderboards.append((season, phase, response))
 
-        review = _request_json(api_url, "/api/v1/bluff-review", {"season": season, "status": "all"})
+        relative = f"bluff-review/{season}.json"
+        key = input_hash_for_path(relative, initial_metadata)
+        review = _load_cached_json(reuse_context, relative, key, release_id, publication_map,
+                                   season=season)
+        if review is None:
+            review = _request_json(api_url, "/api/v1/bluff-review", {"season": season, "status": "all"})
+            review_fetched += 1
+        else:
+            review_reused += 1
+            reused_paths.add(relative)
+        file_input_hashes[relative] = key
         _check_release(review, release_id, f"bluff review {season}", analytics_version)
         _check_bluff_binding(review, season, publication_map, f"bluff review {season}")
         if review.get("season") != season or review.get("status") != "all":
@@ -512,6 +866,9 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         if review.get("summary", {}).get("games") != season_game_count:
             raise ExportError(f"Bluff review game count changed for {season}")
         bluff_reviews.append((season, review))
+
+    metrics["leaderboards"] = {"reused": leaderboard_reused, "fetched": leaderboard_fetched}
+    metrics["reviews"] = {"reused": review_reused, "fetched": review_fetched}
 
     scoped_metadata = {
         **initial_metadata,
@@ -523,6 +880,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         "release_id": release_id, "source_hash": release["source_hash"],
         "seasons": scoped_metadata["seasons"], "bluff_publications": scoped_metadata["bluff_publications"],
         "media_manifest_hashes": initial_metadata["media_manifest_hashes"],
+        "content_fingerprints": initial_metadata.get("content_fingerprints"),
         "analytics_version": analytics_version, "partial": partial_info,
     }))
     snapshot_id = f"snapshot-{snapshot_fingerprint}"
@@ -534,37 +892,51 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
     try:
         data_root = stage / "data"
         release_root = data_root / "releases" / snapshot_id
-        _write_json(release_root / "overview.json", overview)
-        _write_json(release_root / "releases.json", releases)
-        _write_json(release_root / "games/index.json", {
+        def write_release_json(relative: str, value: Any) -> None:
+            _write_json(release_root / relative, value)
+            file_input_hashes.setdefault(relative, _input_hash({"fresh_path": relative, "value": value}))
+
+        write_release_json("overview.json", overview)
+        write_release_json("releases.json", releases)
+        write_release_json("games/index.json", {
             "release_id": release_id, "total": len(listed_games), "items": listed_games,
         })
         for game_id, detail in detail_by_id.items():
-            _write_json(release_root / f"games/{game_id}.json", detail)
+            write_release_json(f"games/{game_id}.json", detail)
 
         player_index = sorted(
             ({"id": player_id, "name": name} for player_id, name in all_player_ids.items()),
             key=lambda item: (item["name"].casefold(), item["name"], item["id"]),
         )
-        _write_json(release_root / "players/index.json", {
+        write_release_json("players/index.json", {
             "release_id": release_id, "seasons": seasons, "items": player_index,
         })
         for season, page in players_by_season.items():
-            _write_json(release_root / f"players/by-season/{season}.json", page)
+            write_release_json(f"players/by-season/{season}.json", page)
         for (player_id, interval), detail in zip(player_jobs, player_results):
             if not _SAFE_ID_RE.fullmatch(player_id):
                 raise ExportError(f"Unsafe player ID: {player_id}")
-            _write_json(release_root / f"players/{player_id}/{interval['start']}--{interval['end']}.json", detail)
+            write_release_json(f"players/{player_id}/{interval['start']}--{interval['end']}.json", detail)
         for interval, response in zip(ranges, stats_results):
-            _write_json(release_root / f"stats/{interval['start']}--{interval['end']}.json", response)
+            write_release_json(f"stats/{interval['start']}--{interval['end']}.json", response)
         for season, phase, response in leaderboards:
-            _write_json(release_root / f"leaderboards/{season}/{phase}.json", response)
+            write_release_json(f"leaderboards/{season}/{phase}.json", response)
         for season, response in bluff_reviews:
-            _write_json(release_root / f"bluff-review/{season}.json", response)
+            write_release_json(f"bluff-review/{season}.json", response)
 
         media_references = _response_media(data_root)
+        current_media_assets = {asset["url"]: asset["sha256"]
+                                for asset in initial_metadata["media_assets"]}
+        for reference in media_references:
+            if current_media_assets.get(reference["url"]) != reference["sha256"]:
+                raise ExportError(
+                    f"Snapshot media reference is absent from the current export-manifest allowlist: "
+                    f"{reference['url']}"
+                )
         if media_references:
-            media_files = sync_media(api_url, stage / "media", media_references)
+            media_files, metrics["media"]["reused"], metrics["media"]["fetched"] = \
+                _sync_media_with_reuse(api_url, stage / "media", media_references,
+                                       reuse_context["root"] if reuse_context is not None else None)
         else:
             media_files = []
 
@@ -617,6 +989,24 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
             "partial": partial_info,
         }
         _write_json(data_root / "manifest.json", manifest)
+        index_files = {}
+        for path in sorted(release_root.rglob("*.json")):
+            relative = path.relative_to(release_root).as_posix()
+            index_files[relative] = {
+                "sha256": _sha256(path.read_bytes()),
+                "input_hash": file_input_hashes.get(relative)
+                or _input_hash({"uncacheable_path": relative, "snapshot_id": snapshot_id}),
+                "reused": relative in reused_paths,
+            }
+        export_index = {
+            "schema_version": 1,
+            "metadata": initial_metadata,
+            "files": index_files,
+            "metrics": metrics,
+            "changed": _changed_fingerprints(
+                initial_metadata, reuse_context.get("metadata") if reuse_context is not None else None),
+        }
+        _write_json(stage / "export-index.json", export_index)
         os.replace(stage, final_output)
         return manifest
     except BaseException:

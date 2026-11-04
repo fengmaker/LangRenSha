@@ -92,6 +92,22 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(value["evidence"][0]["sha256"], analysis.sha256(self.source))
         self.assertFalse((self.root / "data/games").exists())
 
+    def test_independent_endgame_is_preserved_and_validated_at_candidate_boundary(self):
+        value = self.candidate()
+        value["endgame"] = {"schema_version": 1, "game_slug": value["dossier"]["slug"], "phases": [
+            {"kind": "wolf_rush", "day": 1, "actor": None,
+             "declared_targets": [9], "result": "werewolf_win"}]}
+        checked = analysis.validate_candidate(value, self.entry, self.source, root=self.root)
+        self.assertEqual(checked["endgame"], value["endgame"])
+        value["endgame"]["game_slug"] = "another-game"
+        with self.assertRaisesRegex(ValueError, "终局与对局slug"):
+            analysis.validate_candidate(value, self.entry, self.source, root=self.root)
+        value["endgame"]["game_slug"] = value["dossier"]["slug"]
+        value["endgame"]["phases"][0]["declared_targets"] = [13]
+        from database import ReviewError
+        with self.assertRaisesRegex(ReviewError, "拍刀目标座位"):
+            analysis.validate_candidate(value, self.entry, self.source, root=self.root)
+
     def test_wrong_source_and_fabricated_quote_rejected(self):
         value = self.candidate()
         value["dossier"]["files"][0]["external_key"] = "another:999"

@@ -85,11 +85,140 @@ def install_local_preflight_mocks(monkeypatch, state):
     import game_derivations
     monkeypatch.setattr(game_derivations, "derive_game", lambda dossier, voting, **kwargs: {
         "dossier": deepcopy(dossier), "voting": deepcopy(voting),
-        "derivations": {"gaps": [], "issues": [], "changes": []},
+        "derivations": {"gaps": [], "issues": [], "changes": [],
+                        "input_hashes": {"endgame": game_derivations.fingerprint(kwargs["endgame"])}},
     })
     monkeypatch.setattr(media_ingest, "validate_media", lambda path, bvid, page: {
         "manifest": {"bvid": bvid, "cid": 123, "page": page},
     })
+
+
+@pytest.mark.parametrize("with_rush", [True, False])
+def test_preview_keeps_confirmed_endgame_for_derivation_and_formal_output(tmp_path, monkeypatch, with_rush):
+    root, state, export, candidate_path = setup_review(tmp_path)
+    install_local_preflight_mocks(monkeypatch, state)
+    value = json.loads(candidate_path.read_text(encoding="utf-8"))
+    endgame = {"schema_version": 1, "game_slug": value["dossier"]["slug"], "phases": [
+        {"kind": "wolf_rush", "day": 1, "actor": 1,
+         "declared_targets": [9], "result": "werewolf_win"},
+    ] if with_rush else []}
+    value["endgame"] = endgame
+    candidate_path.write_text(json.dumps(value), encoding="utf-8")
+    state["items"]["BV1abc:123:p01"]["candidate_sha256"] = digest(candidate_path)
+    payload = json.loads(export.read_text(encoding="utf-8"))
+    payload["games"][0]["candidate_sha256"] = digest(candidate_path)
+    export.write_text(json.dumps(payload), encoding="utf-8")
+    import game_derivations
+    inputs = []
+    monkeypatch.setattr(game_derivations, "derive_game", lambda dossier, voting, **kwargs: (
+        inputs.append(kwargs["endgame"]) or {
+            "dossier": dossier, "voting": voting, "derivations": {}}))
+
+    _, plans = apply._prepare_export(export, "S23", root=root, run_ai=False)
+
+    assert inputs == [endgame]
+    assert plans[0]["prepared_formal"]["endgame"] == endgame
+    apply._persist_accepted(plans[0], state, "S23", root)
+    apply._write_formal(plans[0], state, "S23", root)
+    assert json.loads((plans[0]["formal_dir"] / "endgame.json").read_text(encoding="utf-8")) == endgame
+
+
+def note_revisions(export, path, **changes):
+    game = json.loads(export.read_text(encoding="utf-8"))["games"][0]
+    revision = {key: game[key] for key in ("review_id", "candidate_sha256", "source_sha256", "note")}
+    revision.update(patches=[{"path": "/dossier/winner", "value": "good",
+                             "note_quote": "确认好人胜", "reason": "备注明确胜方"}],
+                    unresolved=[], bluffs={"reviewed": False, "no_bluff": False, "items": []})
+    revision.update(changes)
+    path.write_text(json.dumps({"format": "masters-incremental-note-revisions-v1",
+                                "season": "S23", "games": [revision]}), encoding="utf-8")
+    return path
+
+
+def test_new_note_can_reach_preview_via_structured_revision_without_model(tmp_path, monkeypatch):
+    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
+    install_local_preflight_mocks(monkeypatch, state)
+    monkeypatch.setattr(apply, "_apply_note", lambda *a, **k: pytest.fail("model must not run"))
+    revision_path = note_revisions(export, tmp_path / "note_revisions.json")
+
+    report = apply.apply_review(export, season="S23", root=root, run_ai=False,
+                                note_revisions=revision_path)
+
+    assert report["state"] == "prepared_cached"
+    assert report["games"][0]["patches"][0]["value"] == "good"
+    folder = root / state["items"]["BV1abc:123:p01"]["accepted_candidate_path"]
+    assert json.loads(folder.read_text(encoding="utf-8"))["dossier"]["winner"] == "good"
+    assert state["items"]["BV1abc:123:p01"].get("phases", {}).get("database") is None
+
+    # The saved interpretation is sufficient for the later command without
+    # passing the handoff file again or invoking a model.
+    import game_derivations
+    monkeypatch.setattr(game_derivations, "apply_precomputed", lambda dossier, voting, _: {
+        "dossier": dossier, "voting": voting})
+    monkeypatch.setattr(game_derivations, "derive_game", lambda *a, **k: pytest.fail("must reuse cache"))
+    apply.apply_review(export, season="S23", root=root, run_ai=False)
+
+
+@pytest.mark.parametrize("changes, message", [
+    ({"review_id": "another-game"}, "已勾选对局"),
+    ({"candidate_sha256": "f" * 64}, "不匹配"),
+    ({"source_sha256": "f" * 64}, "不匹配"),
+    ({"note": "确认狼人胜"}, "不匹配"),
+    ({"patches": [{"path": "/dossier/slug", "value": "other", "note_quote": "确认好人胜"}]}, "不能修改"),
+    ({"patches": [{"path": "/dossier/winner", "value": "good", "note_quote": "不存在的引文"}]}, "范围引用"),
+])
+def test_note_handoff_rejects_unbound_or_out_of_scope_revisions(tmp_path, monkeypatch, changes, message):
+    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
+    install_local_preflight_mocks(monkeypatch, state)
+    revision_path = note_revisions(export, tmp_path / "revisions.json", **changes)
+    with pytest.raises(apply.ReviewApplyError, match=message):
+        apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=revision_path)
+    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
+
+
+def test_unresolved_structured_note_stays_in_preview_and_cannot_be_applied(tmp_path, monkeypatch):
+    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
+    install_local_preflight_mocks(monkeypatch, state)
+    revision_path = note_revisions(export, tmp_path / "revisions.json", unresolved=["胜方存在歧义"])
+    report = apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=revision_path)
+    assert report["state"] == "needs_resolution"
+    assert report["games"][0]["unresolved"] == ["胜方存在歧义"]
+    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
+    with pytest.raises(apply.ReviewApplyError, match="未解决内容"):
+        apply.apply_review(export, season="S23", root=root, apply=True,
+                           run_ai=False, note_revisions=revision_path)
+
+
+def test_changed_interpretation_replaces_only_unapplied_cache(tmp_path, monkeypatch):
+    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
+    install_local_preflight_mocks(monkeypatch, state)
+    path = note_revisions(export, tmp_path / "revisions.json")
+    apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
+    item = state["items"]["BV1abc:123:p01"]
+    path = note_revisions(export, path, patches=[{
+        "path": "/dossier/winner", "value": None, "note_quote": "确认好人胜",
+        "reason": "同一备注重新解释的待核示例"}])
+    apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
+    assert json.loads((root / item["accepted_candidate_path"]).read_text(encoding="utf-8"))["dossier"]["winner"] is None
+    item["phases"]["database"] = "done"
+    note_revisions(export, path)
+    with pytest.raises(apply.ReviewApplyError, match="正式修订流程"):
+        apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
+
+
+def test_cli_forwards_note_revisions_without_enabling_model(tmp_path, monkeypatch, capsys):
+    observed = {}
+
+    def prepare(path, **kwargs):
+        observed.update(kwargs)
+        return {"state": "prepared_cached"}
+
+    monkeypatch.setattr(apply, "apply_review", prepare)
+    revision_path = tmp_path / "revisions.json"
+    assert apply.main([str(tmp_path / "review.json"), "--note-revisions", str(revision_path)]) == 0
+    assert observed["note_revisions"] == revision_path
+    assert observed["run_ai"] is False
+    assert json.loads(capsys.readouterr().out)["state"] == "prepared_cached"
 
 
 def setup_v2_review(tmp_path):
@@ -508,7 +637,7 @@ def test_game_and_voting_imports_share_a_transaction_and_roll_back_together(monk
 def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(tmp_path, monkeypatch):
     root, state, export, _ = setup_review(tmp_path)
     install_local_preflight_mocks(monkeypatch, state)
-    import database, game_derivations, game_records, voting_records
+    import database, endgame_records, game_derivations, game_records, voting_records
 
     derived_inputs = []
 
@@ -540,6 +669,7 @@ def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(t
     monkeypatch.setattr(database, "connect", lambda: conn)
     monkeypatch.setattr(game_records, "import_game", lambda value, **kwargs: imported.append(("game", value, kwargs)))
     monkeypatch.setattr(voting_records, "import_voting", lambda value, **kwargs: imported.append(("voting", value, kwargs)))
+    monkeypatch.setattr(endgame_records, "import_endgame", lambda value, **kwargs: imported.append(("endgame", value, kwargs)))
     monkeypatch.setattr(apply, "save_state", lambda *a, **k: None)
 
     report = apply.apply_review(export, season="S23", root=root, apply=True,
@@ -548,11 +678,12 @@ def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(t
     formal = root / "data" / "games" / "S23" / "2026-10-01_g01_BV1abc"
     sidecar = json.loads((formal / "incremental_review.json").read_text(encoding="utf-8"))
     assert report["state"] == "completed"
-    assert [row[0] for row in imported] == ["game", "voting"]
+    assert [row[0] for row in imported] == ["game", "voting", "endgame"]
     assert imported[0][1] == json.loads((formal / "dossier.json").read_text(encoding="utf-8"))
     assert imported[1][1] == json.loads((formal / "voting.json").read_text(encoding="utf-8"))
+    assert imported[2][1] == json.loads((formal / "endgame.json").read_text(encoding="utf-8"))
     assert imported[0][1]["winner"] == "good"
-    assert imported[0][2]["conn"] is imported[1][2]["conn"] is conn
+    assert imported[0][2]["conn"] is imported[1][2]["conn"] is imported[2][2]["conn"] is conn
     assert imported[0][2]["derivations"]["derived_for_test"] is True
     assert derived_inputs[0][1] == candidate()["voting"]
     assert conn.committed
@@ -569,7 +700,7 @@ def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(t
     resumed = apply.apply_review(export, season="S23", root=root, apply=True,
                                  backup=True, run_ai=False)
     assert resumed["state"] == "completed"
-    assert len(imported) == 2
+    assert len(imported) == 3
 
 
 def test_publish_resume_skips_database_and_leaves_other_games_untouched(tmp_path, monkeypatch):
@@ -624,7 +755,6 @@ def test_publish_resume_skips_database_and_leaves_other_games_untouched(tmp_path
     monkeypatch.setattr(apply, "_merge_bluff_records", lambda *a, **k: None)
     import workflow
     monkeypatch.setattr(workflow, "formal_seasons", lambda root: ["S23"])
-    monkeypatch.setattr(workflow, "ensure_retained_seasons", lambda seasons: None)
     def stage_commands(stage, season, **kwargs):
         if stage == "publish":
             assert kwargs["photos"] is True
@@ -632,7 +762,21 @@ def test_publish_resume_skips_database_and_leaves_other_games_untouched(tmp_path
 
     monkeypatch.setattr(workflow, "stage_commands", stage_commands)
     jobs = []
-    monkeypatch.setattr(apply, "_run_jobs", lambda values, root: jobs.extend(values))
+
+    def run_jobs(values, root):
+        jobs.extend(values)
+        for command in values:
+            if "website/check_publication.py" not in command:
+                continue
+            bvid_index = command.index("--bvid") + 1
+            output_path = Path(command[command.index("--output") + 1])
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(json.dumps({
+                "state": "passed", "source": {"selected_bvids": [command[bvid_index]]},
+                "api": {"release_id": "release-1"},
+            }), encoding="utf-8")
+
+    monkeypatch.setattr(apply, "_run_jobs", run_jobs)
 
     report = apply.apply_review(export, season="S23", root=root, apply=True, publish=True,
                                 backup=True, run_ai=False)
@@ -640,6 +784,62 @@ def test_publish_resume_skips_database_and_leaves_other_games_untouched(tmp_path
     assert report["state"] == "completed"
     assert target["phases"]["publish"] == "done"
     assert target["phases"]["verify"] == "done"
+    assert target["publication_acceptance_path"] == apply._acceptance_report_path(
+        root, "S23", ["BV1abc"]).relative_to(root).as_posix()
+    assert target["published_release_id"] == report["publication_acceptance"]["release_id"] == "release-1"
     assert other["phases"]["publish"] == "done"
     assert formal_other.read_bytes() == other_before
-    assert jobs == [["publish", ""], ["verify", "BV1abc"]]
+    assert jobs[0] == ["publish", ""]
+    assert len(jobs) == 2
+    assert "website/check_publication.py" in jobs[1]
+    assert jobs[1][jobs[1].index("--seasons") + 1] == "S23"
+    assert jobs[1][jobs[1].index("--bvid") + 1] == "BV1abc"
+    assert jobs[1][jobs[1].index("--output") + 1] == str(
+        apply._acceptance_report_path(root, "S23", ["BV1abc"]))
+
+
+def test_verify_runs_one_acceptance_for_the_whole_batch_and_shares_its_receipt(
+        tmp_path, monkeypatch):
+    import workflow
+
+    root = tmp_path
+    monkeypatch.setattr(workflow, "formal_seasons", lambda root: ["S23"])
+    plans = [
+        {"game": {"bvid": "BV1abc"}, "item": {"phases": {"verify": "done"}}},
+        {"game": {"bvid": "BV1def"}, "item": {"phases": {"verify": "failed"}}},
+    ]
+    calls = []
+
+    def run_jobs(jobs, root):
+        calls.append(jobs)
+        assert len(jobs) == 1
+        command = jobs[0]
+        selected = command[command.index("--bvid") + 1:command.index("--output")]
+        output_path = Path(command[command.index("--output") + 1])
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(json.dumps({
+            "state": "passed", "source": {"selected_bvids": selected},
+            "api": {"release_id": "release-batch"},
+        }), encoding="utf-8")
+
+    monkeypatch.setattr(apply, "_run_jobs", run_jobs)
+
+    receipt = apply._verify(plans, {"season": "S23", "items": {}}, "S23", root)
+
+    assert len(calls) == 1
+    command = calls[0][0]
+    assert "website/check_publication.py" in command
+    assert command[command.index("--bvid") + 1:command.index("--output")] == ["BV1abc", "BV1def"]
+    expected_path = apply._acceptance_report_path(root, "S23", ["BV1abc", "BV1def"])
+    assert expected_path.name.startswith("publication_acceptance_batch_")
+    assert Path(command[command.index("--output") + 1]) == expected_path
+    assert receipt == {
+        "path": expected_path.relative_to(root).as_posix(),
+        "sha256": digest(expected_path),
+        "release_id": "release-batch",
+        "selected_bvids": ["BV1abc", "BV1def"],
+    }
+    assert all(plan["item"]["phases"]["verify"] == "done" for plan in plans)
+    assert all(plan["item"]["publication_acceptance_path"] == receipt["path"] for plan in plans)
+    assert all(plan["item"]["publication_acceptance_sha256"] == receipt["sha256"] for plan in plans)
+    assert all(plan["item"]["published_release_id"] == "release-batch" for plan in plans)

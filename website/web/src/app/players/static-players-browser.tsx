@@ -1,10 +1,11 @@
 "use client";
 
+import { StaticData } from "@/components/static-data";
 import { ArchiveLink } from "@/components/archive-link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type { Overview, PageResult, PlayerSummary } from "@/lib/types";
-import { fetchPlayersForSeason } from "@/lib/static-browser";
+import { fetchPlayersForSeason, fetchSnapshotManifest, fetchOverview, updateStaticQuery } from "@/lib/static-browser";
 import { publicPath } from "@/lib/site-mode";
 import { parsePositivePage } from "@/lib/query-state";
 import { Pagination } from "@/components/pagination";
@@ -14,9 +15,7 @@ import styles from "./players.module.css";
 
 const PAGE_SIZE = 48;
 
-export function StaticPlayersBrowser({ overview, initialSeason, initialPlayers }: { overview: Overview; initialSeason: string; initialPlayers: PageResult<PlayerSummary> }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { overview: Overview; initialSeason: string; initialPlayers: PageResult<PlayerSummary> }) {
   const search = useSearchParams();
   const season = search.get("season") || initialSeason;
   const q = search.get("q") ?? "";
@@ -28,10 +27,11 @@ export function StaticPlayersBrowser({ overview, initialSeason, initialPlayers }
   const [error, setError] = useState("");
   const [queryText, setQueryText] = useState(q);
   const [draftSeason, setDraftSeason] = useState(season);
+  const isCurrent = season === playersSeason;
 
   useEffect(() => { setQueryText(q); setDraftSeason(season); }, [q, season]);
   useEffect(() => {
-    if (season === playersSeason) return;
+    if (season === playersSeason) { setLoading(false); setError(""); return; }
     let active = true;
     setLoading(true);
     setError("");
@@ -47,13 +47,14 @@ export function StaticPlayersBrowser({ overview, initialSeason, initialPlayers }
   }, [players, q, page]);
 
   useEffect(() => {
+    if (!isCurrent || loading || error) return;
     const lastPage = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
     if ((pageValue !== null && String(page) !== pageValue) || page > lastPage) {
       const next = new URLSearchParams(search.toString()); next.set("page", String(lastPage));
       if (pageValue !== null && String(page) !== pageValue) next.delete("page");
-      router.replace(`${pathname}?${next.toString()}`, { scroll: false });
+      updateStaticQuery(next, true);
     }
-  }, [page, pageValue, result.total, search, router, pathname]);
+  }, [page, pageValue, result.total, search, isCurrent, loading, error]);
 
   function setQuery(values: { q?: string; season?: string; page?: number }) {
     const next = new URLSearchParams(search.toString());
@@ -61,7 +62,7 @@ export function StaticPlayersBrowser({ overview, initialSeason, initialPlayers }
     if (values.season !== undefined) values.season ? next.set("season", values.season) : next.delete("season");
     if (values.page !== undefined) next.set("page", String(values.page)); else next.set("page", "1");
     next.set("phase", "all");
-    router.push(`${pathname}?${next.toString()}`, { scroll: false });
+    updateStaticQuery(next);
   }
 
   function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setQuery({ q: queryText, season: draftSeason }); }
@@ -76,14 +77,25 @@ export function StaticPlayersBrowser({ overview, initialSeason, initialPlayers }
       <label className="filter-field"><span>赛季</span><select name="season" value={draftSeason} onChange={(event) => setDraftSeason(event.target.value)}>{seasons.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.id}</option>)}</select></label>
       <button className="button button-primary" type="submit">筛选选手 <span>→</span></button>{q || season !== initialSeason ? <ArchiveLink className="clear-link" href="/players">清除</ArchiveLink> : null}
     </form></section>
-    <section className="player-directory" aria-busy={loading || undefined}>
+    <section className="player-directory" aria-busy={loading || !isCurrent || undefined}>
       {error ? <div className="empty-state" role="alert"><p>{error}</p></div> : null}
-      {loading ? <p role="status">正在读取选手索引…</p> : null}
-      {!loading && !error ? result.items.length ? <div className="player-grid">{result.items.map((player) => <ArchiveLink href={`/players/${encodeURIComponent(player.id)}?season=${encodeURIComponent(season)}&phase=all`} className="player-card player-photo-card" key={player.id}>
+      {(loading || !isCurrent) && !error ? <p role="status">正在读取选手索引…</p> : null}
+      {isCurrent && !loading && !error ? result.items.length ? <div className="player-grid">{result.items.map((player) => <ArchiveLink href={`/players/${encodeURIComponent(player.id)}?season=${encodeURIComponent(season)}&phase=all`} className="player-card player-photo-card" key={player.id}>
         <div className="player-card-photo">{player.photo ? <img loading="lazy" decoding="async" src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season}`} /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>
         <div className="player-card-copy"><h3>{player.name}</h3><p>{formatNumber(player.stats?.appearances ?? player.appearances)} 场出场{player.stats ? ` · ${formatNumber(player.stats.wins)} 胜 ${formatNumber(player.stats.losses)} 负` : ""}</p>{player.stats ? <div className="player-card-rate"><span>总胜率</span><strong>{typeof player.stats.total_win_rate.rate === "number" ? `${(player.stats.total_win_rate.rate * 100).toFixed(1)}%` : "—"}</strong></div> : null}</div>
       </ArchiveLink>)}</div> : <div className="empty-state"><span className="empty-number">—</span><p>没有找到匹配的选手档案。</p></div> : null}
-      <Pagination page={page} pageSize={PAGE_SIZE} total={result.total} params={browserParams} />
+      {isCurrent && !loading && !error ? <Pagination page={page} pageSize={PAGE_SIZE} total={result.total} params={browserParams} /> : null}
     </section>
   </div>;
+}
+
+async function loadPlayers() {
+  const [manifest, overview] = await Promise.all([fetchSnapshotManifest(), fetchOverview()]);
+  const initialSeason = manifest.seasons.at(-1)!.id;
+  const initialPlayers = await fetchPlayersForSeason(initialSeason);
+  return { overview, initialSeason, initialPlayers };
+}
+
+export function StaticPlayersBrowser() {
+  return <StaticData load={loadPlayers}>{(data) => <LoadedPlayersBrowser {...data} />}</StaticData>;
 }

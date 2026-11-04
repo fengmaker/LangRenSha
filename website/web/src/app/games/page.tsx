@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { getGames, getOverview } from "@/lib/api";
 import { isStaticSite, publicPath } from "@/lib/site-mode";
-import { getSnapshotGames } from "@/lib/snapshot-data";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { GameArchiveList } from "@/components/game-archive-list";
@@ -23,12 +22,7 @@ function ArchiveIntro() {
 
 export default async function GamesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   if (isStaticSite) {
-    try {
-      const [games, overview] = await Promise.all([getSnapshotGames(), getOverview()]);
-      return <div className={"page-wrap " + styles.page}><ArchiveIntro /><Suspense fallback={<p>正在载入筛选条件…</p>}><StaticGamesBrowser games={games} overview={overview} /></Suspense></div>;
-    } catch (error) {
-      return <div className={"page-wrap " + styles.page}><ArchiveIntro /><DataProblem error={error} /></div>;
-    }
+    return <div className={"page-wrap " + styles.page}><ArchiveIntro /><Suspense fallback={<p>正在载入筛选条件…</p>}><StaticGamesBrowser /></Suspense></div>;
   }
   const query = await searchParams;
   const filters = {

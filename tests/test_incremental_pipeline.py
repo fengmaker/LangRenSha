@@ -15,6 +15,7 @@ import analyze_incremental as analyze
 import apply_incremental_review as application
 import capture_bilibili_frame
 import database
+import endgame_records
 import game_records
 import media_ingest
 import voting_records
@@ -52,6 +53,9 @@ class IncrementalPipelineTests(unittest.TestCase):
                 value["evidence"] = [{"kind": "text", "field": "dossier.rounds",
                     "source_path": source.relative_to(root).as_posix(),
                     "start_ms": 0, "end_ms": 1000, "quote": "合成中文测试字幕"}]
+                value["endgame"] = {"schema_version": 1, "game_slug": value["dossier"]["slug"], "phases": [
+                    {"kind": "wolf_rush", "day": 1, "actor": None,
+                     "declared_targets": [9], "result": "werewolf_win"}]}
                 return value
 
             def capture(bvid, cid, seconds, folder, *args):
@@ -85,7 +89,8 @@ class IncrementalPipelineTests(unittest.TestCase):
                     patch.object(database, "import_media", return_value={"registered": True}), \
                     patch.object(database, "connect", return_value=nullcontext(connection)), \
                     patch.object(game_records, "import_game", return_value={"game": "fixture"}) as game_import, \
-                    patch.object(voting_records, "import_voting", return_value={"votes": 0}) as vote_import:
+                    patch.object(voting_records, "import_voting", return_value={"votes": 0}) as vote_import, \
+                    patch.object(endgame_records, "import_endgame", return_value={"phases": 1}) as endgame_import:
                 prepared = application.apply_review(review, root=root, run_ai=False)
                 self.assertEqual(prepared["reviewed_games"], 1)
                 self.assertFalse((root / "data/games").exists())
@@ -95,10 +100,15 @@ class IncrementalPipelineTests(unittest.TestCase):
                 self.assertEqual(len(folders), 1)
                 dossier = json.loads(folders[0].read_text(encoding="utf-8"))
                 voting = json.loads((folders[0].parent / "voting.json").read_text(encoding="utf-8"))
+                endgame = json.loads((folders[0].parent / "endgame.json").read_text(encoding="utf-8"))
                 self.assertEqual(game_import.call_args.args[0], dossier)
                 self.assertEqual(vote_import.call_args.args[0], voting)
+                self.assertEqual(endgame_import.call_args.args[0], endgame)
+                self.assertEqual(endgame["phases"][0]["declared_targets"], [9])
+                self.assertEqual(endgame["phases"][0]["result"], "werewolf_win")
                 self.assertIs(game_import.call_args.kwargs["conn"], connection)
                 self.assertIs(vote_import.call_args.kwargs["conn"], connection)
+                self.assertIs(endgame_import.call_args.kwargs["conn"], connection)
                 self.assertEqual(approved_incremental_count(root, "S23"), 1)
                 # A synthetic zero-game historical baseline plus this approved
                 # addition must pass the real publication loader's count guard.
@@ -110,6 +120,7 @@ class IncrementalPipelineTests(unittest.TestCase):
                 from website.api import publisher
                 entries, _, _ = publisher.load_publication(root, "S23")
                 self.assertEqual(len(entries), 1)
+                self.assertEqual(entries[0]["endgame"], endgame)
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ from fastapi import HTTPException
 import psycopg
 
 from website.api import app as api_module
-from website.export_static import ExportError, _ranges, export_snapshot, sync_media
+from website.static_publish.export_static import ExportError, _ranges, export_snapshot, sync_media
 
 
 class _Cursor:
@@ -45,6 +45,18 @@ def test_export_manifest_binds_release_reviews_and_media_and_distinguishes_missi
                "game_count": 2, "source_hash": "a" * 64}
     media_hashes = {"player_photos": "b" * 64, "bluff_frames": "c" * 64}
     monkeypatch.setattr(api_module, "_effective_media_assets", lambda: (media_hashes, []))
+    game_rows = [
+        {"id": "game-22", "season": "S22", "event_date": "2026-01-01", "phase": "regular",
+         "game_number": 1, "board_code": "standard", "board_name": "标准版", "winner": "good",
+         "bvid": "BV0000000001", "search_text": "game-22 甲", "ballot_count": 1,
+         "vote_count": 2, "round_count": 2,
+         "snapshot": {"id": "game-22", "season": "S22", "seats": [{"person_id": "p1", "name": "甲"}]}},
+        {"id": "game-23", "season": "S23", "event_date": "2026-02-01", "phase": "regular",
+         "game_number": 1, "board_code": "standard", "board_name": "标准版", "winner": "werewolf",
+         "bvid": "BV0000000002", "search_text": "game-23 乙", "ballot_count": 1,
+         "vote_count": 2, "round_count": 2,
+         "snapshot": {"id": "game-23", "season": "S23", "seats": [{"person_id": "p2", "name": "乙"}]}},
+    ]
 
     class Connection:
         def execute(self, query, params=None):
@@ -57,22 +69,42 @@ def test_export_manifest_binds_release_reviews_and_media_and_distinguishes_missi
                                       "phases": ["finals_week", "regular"]}])
             if "active_publication_id" in text:
                 return _Cursor(rows=[
-                    {"season": "S22", "active_publication_id": None,
-                     "publication_id": None, "payload_hash": None},
+                    {"season": "S22", "active_publication_id": "pub-22",
+                     "publication_id": "pub-22", "payload_hash": "e" * 64,
+                     "payload": {"season": "S22", "inference_version": "v1", "games": []}},
                     {"season": "S23", "active_publication_id": "pub-23",
-                     "publication_id": "pub-23", "payload_hash": "d" * 64},
+                     "publication_id": "pub-23", "payload_hash": "d" * 64,
+                     "payload": {"season": "S23", "inference_version": "v1", "games": []}},
                 ])
+            if "FROM game_players" in text:
+                return _Cursor(rows=[
+                    {"game_id": "game-22", "person_id": "p1", "name": "甲", "seat": 1,
+                     "role": "平民", "faction": "good"},
+                    {"game_id": "game-23", "person_id": "p2", "name": "乙", "seat": 1,
+                     "role": "狼人", "faction": "werewolf"},
+                ])
+            if "FROM players" in text:
+                return _Cursor(rows=[{"id": "p1", "name": "甲"}, {"id": "p2", "name": "乙"}])
+            if "round_count, snapshot FROM games" in text:
+                return _Cursor(rows=game_rows)
             raise AssertionError(text)
 
     result = api_module.export_manifest(Connection())
     validated = api_module.ExportManifest.model_validate(result).model_dump()
     assert validated["release_id"] == "release-1"
     assert validated["bluff_publications"] == [
-        {"season": "S22", "publication_id": None, "payload_hash": None},
+        {"season": "S22", "publication_id": "pub-22", "payload_hash": "e" * 64},
         {"season": "S23", "publication_id": "pub-23", "payload_hash": "d" * 64},
     ]
     assert validated["media_manifest_hashes"] == media_hashes
     assert validated["analytics_version"] == api_module.ANALYTICS_VERSION
+    fingerprints = validated["content_fingerprints"]
+    assert fingerprints["implementation"] == api_module.IMPLEMENTATION_FINGERPRINT
+    assert set(fingerprints["games"]) == {"game-22", "game-23"}
+    assert set(fingerprints["seasons"]) == {"S22", "S23"}
+    assert all(len(value) == 64 for value in [fingerprints["implementation"],
+                                             *fingerprints["games"].values(),
+                                             *fingerprints["seasons"].values()])
 
     class NoRelease:
         def execute(self, query, params=None):
@@ -106,14 +138,14 @@ def test_sync_media_checks_content_addressed_hash_and_writes_allowlisted_asset(t
     content = b"sample image bytes"
     digest = hashlib.sha256(content).hexdigest()
     url = f"/media/player-photos/S23/{digest}.jpg"
-    monkeypatch.setattr("website.export_static._request_bytes", lambda api_url, path: (content, {}))
+    monkeypatch.setattr("website.static_publish.export_static._request_bytes", lambda api_url, path: (content, {}))
 
     copied = sync_media("http://127.0.0.1:8000", tmp_path, [{"url": url, "sha256": digest}])
     target = tmp_path / "player-photos" / "S23" / f"{digest}.jpg"
     assert target.read_bytes() == content
     assert copied == [{"url": url, "sha256": digest, "path": f"player-photos/S23/{digest}.jpg"}]
 
-    monkeypatch.setattr("website.export_static._request_bytes", lambda api_url, path: (b"changed", {}))
+    monkeypatch.setattr("website.static_publish.export_static._request_bytes", lambda api_url, path: (b"changed", {}))
     with pytest.raises(ExportError, match="content hash mismatch"):
         sync_media("http://127.0.0.1:8000", tmp_path / "bad", [{"url": url, "sha256": digest}])
 
@@ -177,7 +209,7 @@ def test_partial_snapshot_exports_one_season_game_player_and_is_marked_incomplet
                     "summary": {"games": 1}, "items": []}
         raise AssertionError((path, params))
 
-    monkeypatch.setattr("website.export_static._request_json", fake_json)
+    monkeypatch.setattr("website.static_publish.export_static._request_json", fake_json)
     result = export_snapshot("http://127.0.0.1:8000", tmp_path / "snapshot", base_path="/langrensha-site",
                              build_id="sample-build", partial_season="S23")
 

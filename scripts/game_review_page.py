@@ -60,10 +60,11 @@ def ballot_html(item: dict, seats: dict) -> str:
             f'<tbody><tr><th>投向</th>{"".join(cells)}</tr></tbody></table></div>{gap}</article>')
 
 
-def timeline_html(dossier: dict, voting: dict) -> str:
+def timeline_html(dossier: dict, voting: dict, endgame: dict | None = None) -> str:
     seats = {row['seat']: row for row in dossier['seats']}
     parts = []
-    for phase in build_game_timeline(dossier, voting)['phases']:
+    source = {**dossier, 'endgame': endgame} if endgame is not None else dossier
+    for phase in build_game_timeline(source, voting)['phases']:
         items = []
         for item in phase['items']:
             if item['kind'] == 'ballot':
@@ -154,7 +155,7 @@ def game_card(game: dict, *, season: str, root: Path, review_id: str) -> str:
 <section class="card game-heading"><div><p class="eyebrow">{esc(season)} · 逐局复核</p><h1>{esc(date)} 第{esc(number)}局 <span style="white-space:nowrap">· {esc(board)}</span></h1><p class="muted">解说：{esc('、'.join(dossier.get('commentators') or []) or '未知')} · 法官：{esc(dossier.get('referee') or '未知')} · <a href="{esc(video)}" target="_blank" rel="noopener">打开原视频 ↗</a></p></div><span class="winner">{winner}</span></section>
 <section class="card"><div class="section-head"><h2>身份截图</h2><span>点击图片可放大</span></div>{''.join(figures)}</section>
 <section class="card"><h2>座位身份与悍跳复核</h2><div class="table-wrap"><table class="seats"><thead><tr><th>座位</th><th>选手</th><th>真实身份</th><th>阵营</th></tr></thead><tbody>{seat_html(dossier)}</tbody></table></div>{bluff_controls_html(dossier)}</section>
-<section class="card game-flow"><h2>对局流程</h2>{timeline_html(dossier, candidate['voting'])}</section>
+<section class="card game-flow"><h2>对局流程</h2>{timeline_html(dossier, candidate['voting'], candidate.get('endgame'))}</section>
 <details class="card"><summary>复盘转写<span class="muted">{clock(recap['start_ms'])}—{clock(recap['end_ms'])}</span></summary><ul class="recap">{recap_html}</ul></details>
 <section class="card review-controls"><h2>我对本局的复核意见</h2><label class="reviewed"><input type="checkbox" data-reviewed>已复核此局</label><label class="muted">需要修正的座位、身份、日夜或票型，都写在这里。<textarea data-note placeholder="填写本局的修正意见……"></textarea></label><p class="muted">意见和选择会自动保存在此浏览器；填写后可导出交回。</p></section></main>'''
 

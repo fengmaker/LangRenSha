@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getLeaderboard, getOverview } from "@/lib/api";
 import { isStaticSite } from "@/lib/site-mode";
-import { getSnapshotManifest } from "@/lib/snapshot-data";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
 import type { SearchParams } from "@/lib/types";
@@ -16,16 +15,8 @@ function safePhase(value: string): "all" | "finals_week" { return value === "fin
 
 export default async function LeaderboardPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   if (isStaticSite) {
-    try {
-      const [manifest, overview] = await Promise.all([getSnapshotManifest(), getOverview()]);
-      const initialSeason = manifest.seasons.at(-1)?.id ?? overview.seasons.at(-1)?.id ?? "";
-      const initialData = await getLeaderboard(initialSeason, "all");
-      return <Suspense fallback={<div className="page-wrap"><PageIntro title="赛季积分榜" /></div>}><StaticLeaderboardBrowser initialSeason={initialSeason} initialData={initialData} overview={overview} seasons={manifest.seasons} /></Suspense>;
-    } catch (error) {
-      return <div className="page-wrap"><PageIntro title="赛季积分榜" /><DataProblem error={error} /></div>;
-    }
+    return <Suspense fallback={<div className="page-wrap" role="status">正在读取积分榜…</div>}><StaticLeaderboardBrowser /></Suspense>;
   }
-
   const query = await searchParams;
   let data: Awaited<ReturnType<typeof getLeaderboard>>;
   let overview: Awaited<ReturnType<typeof getOverview>>;

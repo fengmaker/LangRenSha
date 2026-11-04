@@ -120,7 +120,7 @@ export function mountBluffFeedback(root, options) {
     say(message);
   }
 
-  function capture(form) {
+  function capture(form, confirmedField = null) {
     const decision = form.elements.namedItem("decision").value;
     const notes = form.elements.namedItem("notes").value.slice(0, 4000);
     const role = form.elements.namedItem("claimed_role").value || null;
@@ -129,26 +129,32 @@ export function mountBluffFeedback(root, options) {
     const previous = records[form.dataset.reviewId];
     const manualSuccessField = form.elements.namedItem("manual_success");
     const successChoice = manualSuccessField ? manualSuccessField.value : null;
-    const hasManualSuccess = Boolean(manualSuccessField && successChoice !== "");
+    const hasPreviousManualSuccess = previous && Object.prototype.hasOwnProperty.call(previous, "manual_success");
+    const hasManualSuccess = manualSuccessField ? successChoice !== "" : Boolean(hasPreviousManualSuccess);
     const manualSuccess = successChoice === "yes" ? true : successChoice === "no" ? false
       : successChoice === "unknown" ? null : previous?.manual_success;
+    const claimConfirmed = ["decision", "claimed_role", "claim_day"].includes(confirmedField?.name);
+    const successConfirmed = confirmedField?.name === "manual_success" && hasManualSuccess;
     if (previous && previous.decision === decision && previous.notes === notes
         && previous.claimed_role === role && previous.claim_day === claimDay
         && (Object.prototype.hasOwnProperty.call(previous, "manual_success") === hasManualSuccess)
-        && (!hasManualSuccess || previous.manual_success === manualSuccess)) return;
+        && (!hasManualSuccess || previous.manual_success === manualSuccess)
+        && !claimConfirmed && !successConfirmed) return;
     if (!decision && !notes.trim() && !hasManualSuccess) delete records[form.dataset.reviewId];
     else {
       const record = {
-      review_id: form.dataset.reviewId, game_id: form.dataset.gameId,
-      bvid: form.dataset.bvid, seat: Number(form.dataset.seat), name: form.dataset.name,
-        physical_role: form.dataset.physicalRole, source_fingerprint: form.dataset.sourceFingerprint,
-        claim_fingerprint: form.dataset.fingerprint,
-        success_fingerprint: form.dataset.successFingerprint || null,
-      inference_version: options.inference_version || null, decision,
-      claimed_role: role,
-      claim_day: claimDay,
-      notes, updated_at: new Date().toISOString(),
-    };
+        review_id: form.dataset.reviewId, game_id: form.dataset.gameId,
+        bvid: form.dataset.bvid, seat: Number(form.dataset.seat), name: form.dataset.name,
+        physical_role: form.dataset.physicalRole,
+        source_fingerprint: !previous || claimConfirmed ? form.dataset.sourceFingerprint : previous.source_fingerprint,
+        claim_fingerprint: !previous || claimConfirmed ? form.dataset.fingerprint : previous.claim_fingerprint,
+        success_fingerprint: !previous || successConfirmed
+          ? form.dataset.successFingerprint || null : previous.success_fingerprint,
+        inference_version: options.inference_version || null, decision,
+        claimed_role: role,
+        claim_day: claimDay,
+        notes, updated_at: new Date().toISOString(),
+      };
       if (hasManualSuccess) record.manual_success = manualSuccess;
       records[form.dataset.reviewId] = record;
     }
@@ -196,7 +202,7 @@ export function mountBluffFeedback(root, options) {
   }
   for (const form of forms) {
     on(form, "submit", (event) => event.preventDefault());
-    const update = () => { capture(form); persist(); };
+    const update = (event) => { capture(form, event.target); persist(); };
     on(form, "input", update);
     on(form, "change", update);
   }

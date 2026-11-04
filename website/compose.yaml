@@ -54,6 +54,8 @@ services:
       - ../data/games/S22:/source/data/games/S22:ro
       - ../data/games/S23:/source/data/games/S23:ro
       - ../config:/source/config:ro
+      - ../website/assets/bluffs:/source/website/assets/bluffs:ro
+      - ../website/assets/people.json:/source/website/assets/people.json:ro
       - ../data/extractions/S21/media_evidence:/source/data/extractions/S21/media_evidence:ro
       - ../data/extractions/S21/voting:/source/data/extractions/S21/voting:ro
       - ../data/extractions/S22/voting:/source/data/extractions/S22/voting:ro

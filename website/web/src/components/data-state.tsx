@@ -1,5 +1,5 @@
 import { ArchiveLink } from "@/components/archive-link";
-import { ApiError } from "@/lib/api";
+import { ApiError } from "@/lib/api-error";
 
 export function DataProblem({ error }: { error: unknown }) {
   const message = error instanceof ApiError ? error.message : "暂时无法读取档案数据，请稍后刷新重试。";

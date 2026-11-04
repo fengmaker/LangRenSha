@@ -6,7 +6,7 @@ import type { Metric, PlayerLedgerEntry } from "@/lib/types";
 import { formatDate, formatNumber } from "@/lib/format";
 
 export type SampleLabels = { positive: string; negative: string; unit: "场" | "次"; description: string };
-export type MetricSampleGame = Pick<PlayerLedgerEntry, "game_id" | "season" | "date" | "game_number" | "board_name" | "role">;
+export type MetricSampleGame = Pick<PlayerLedgerEntry, "game_id" | "season" | "date" | "game_number" | "board_name" | "role" | "role_label">;
 export type SampleMetric = Pick<Metric, "numerator" | "denominator" | "excluded" | "samples">;
 
 export function MetricSamples({ label, metric, games, labels, trigger }: { label: string; metric: SampleMetric; games: MetricSampleGame[]; labels: SampleLabels; trigger?: ReactNode }) {
@@ -45,7 +45,7 @@ export function MetricSamples({ label, metric, games, labels, trigger }: { label
         const sample = samples.get(game.game_id)!;
         return <li key={game.game_id}><ArchiveLink href={`/games/${encodeURIComponent(game.game_id)}`}>
           <div className="sample-game-main"><strong>{game.season ? `${game.season} · ` : ""}{formatDate(game.date)} · {game.game_number ? `第 ${game.game_number} 局` : game.game_id}</strong><span className={kind === "positive" ? "sample-positive" : "sample-negative"}>{resultLabel}{labels.unit === "次" ? ` ${sample[kind]} 次` : ""}</span></div>
-          <div className="sample-game-meta"><span>{game.board_name || "版型待核"} · {game.role || "身份待核"}</span>{sample.positive > 0 && sample.negative > 0 ? <span>本局也有{kind === "positive" ? labels.negative : labels.positive}记录</span> : null}<span aria-hidden="true">查看对局 →</span></div>
+          <div className="sample-game-meta"><span>版型：{game.board_name || "待核"}</span><span>身份：{game.role_label || game.role || "待核"}</span>{sample.positive > 0 && sample.negative > 0 ? <span>本局也有{kind === "positive" ? labels.negative : labels.positive}记录</span> : null}<span aria-hidden="true">查看对局 →</span></div>
         </ArchiveLink></li>;
       })}</ul> : <p className="sample-empty">当前时间范围内暂无{kind === "positive" ? "正面" : "负面"}样本。</p>}
       {metric.excluded > 0 ? <p className="sample-excluded">另有 {formatNumber(metric.excluded)} 条记录无法判断，未列入正负样本。</p> : null}

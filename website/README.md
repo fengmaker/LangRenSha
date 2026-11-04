@@ -20,9 +20,7 @@
 | `check_publication.py` | 唯一通用端到端验收，按当前源动态核对，不写固定赛季局数 |
 | `backup.py` | 网站schema备份与临时库恢复验证；全库备份用根scripts/backup_database.py |
 | `prepare_photos.py` | S21/S22/S23照片来源适配，生成API清单和静态资产；S21复用已识读的同季名牌及当前档案姓名 |
-| `export_static.py` | 从已发布API导出绑定版本的公开快照及白名单实体媒体 |
-| `build_static.py` | 导出、Next静态构建、类型检查和验收通过后更新合格目录 |
-| `check_static.py` | 文件与覆盖检查、API对照、真实子路径桌面／手机浏览器验收 |
+| [static_publish](static_publish/README.md) | 静态导出、构建、验收、一键同步及 GitHub Pages 部署模板 |
 | `积分榜字段说明.txt` | 现行指标的分子分母、未知及悍跳口径 |
 
 ## 启动
@@ -30,12 +28,16 @@
 ```powershell
 # 项目根目录
 .\.venv\Scripts\python.exe scripts/local_postgres.py start
+# 首次使用本机网站／静态导出前，配置独立只读账号（数据库中须已有网站发布表）
+.\.venv\Scripts\python.exe -m website.grant_reader --local
 .\.venv\Scripts\python.exe website/run.py
 ```
 
 打开<http://127.0.0.1:3000>，API文档在<http://127.0.0.1:8000/docs>。依赖安装使用`requirements/web.txt`，前端在`website/web`运行`npm ci`；启动器会查PATH或`.tools/node/`。需要生产版本时先在前端目录`npm run typecheck`、`npm run build`，再从根运行`website/run.py --production`。
 
 端口可用`--port 3001 --api-port 8001`配对调整。API代码或照片清单更新后重启API；前端生产代码更新后重建。Windows运行中的standalone目录会锁住构建，先停止本站进程。Ctrl+C结束启动器不停止PG。
+
+本机只读账号凭据单独保存在 `.secrets/masters_web_reader.json`，由授权脚本生成；`database.json` 中的开发者凭据仍供发布等写入工具使用。本机API会优先使用只读凭据，即使进程继承了发布器的 `DATABASE_URL` 也不会改用它。静态发布器启动的临时API复用相同配置；部署容器未携带本机 `.secrets`，继续使用Compose中只读角色的 `DATABASE_URL`。
 
 ## 发布与回退
 
@@ -46,9 +48,11 @@
 .\.venv\Scripts\python.exe scripts/workflow.py run --season S23 --stage publish
 ```
 
-发布器从`data/games/{season}`正式JSON及规则／投票旁证生成不可变快照，在事务内切换活动release；不从JCMS正式对局表读取事实。底层命令示例为`python -m website.api.publish --seasons S22 S23 --check`，通过后去掉`--check`。单季`--season`或`--sample`会替换完整活动集，不能用于“追加一季”。
+发布器从`data/games/{season}`正式JSON及规则／投票旁证生成不可变快照；不从JCMS正式对局表读取事实。底层预检使用`python -m website.api.publish --seasons S21 S22 S23 --check`，去掉`--check`才完整发布。无参数和`--sample`只预检。所有活动指针切换共用同一个保护入口，候选缺少当前活动赛季或必需悍跳绑定时拒绝激活；单季发布不能用于“追加一季”。
 
-game release变化后，已有悍跳发布输入必须逐季重新预检／同步，数据库版本与对应game release绑定。统一入口优先复用`website/assets/bluffs/*.json`，避免重建推断覆盖人工结果；没有输入且没有悍跳适配的赛季可先发布档案，悍跳留空。这些JSON是发布输入，不是运行时绕过数据库的数据源。照片清单与图片在API侧，更新清单后重启API清缓存。
+完整发布先保存未激活的game release，再复用`website/assets/bluffs/*.json`中的人工结果，在同一事务内逐季校验、写入并最后激活。最后一季失败时，所有本次悍跳写入回滚，访客仍读取上一份完整版本；game release未变化时也遵守这个保证。独立`publish_bluffs --release <候选ID> --check`可预览候选绑定，去掉`--check`只准备该候选的悍跳。发布不重算历史规则、不重建悍跳推断；必需输入缺失时明确报错。S21尚未复核悍跳，可发布档案并留空。这些JSON是发布输入，网站查询读取数据库。照片清单与图片在API侧，更新清单后重启API清缓存。
+
+公开选手ID统一来自已纳入版本管理的`website/assets/people.json`，已固化当前90名选手的ID；发布不再根据JCMS是否存在切换人物来源。本批实际使用的姓名与ID进入发布来源哈希和manifest；预检、本机、容器及空网站库重建使用同一份文件。备份正式档案时同时保留此文件，已有姓名的ID保持不变，详见[人物映射说明](api/people.md)。
 
 `GET /api/v1/releases`查看版本，再用`python -m website.api.publish --activate <真实release-id>`回退。它不回退JCMS或磁盘JSON；回退后核对悍跳绑定。
 
@@ -67,19 +71,15 @@ API仅导出白名单公开字段，不含本地路径、凭据或全文转写�
 
 ## 静态成品
 
-先启动已发布API，停止占用 `.next` 的本项目Next前端；数据、复核发布或媒体清单代码变更后先重启API。从导出开始到API对照结束，暂停活动发布及媒体清单切换。构建命令不执行数据入库、正式发布、Git操作或上线：
+静态发布脚本和模板统一放在 [static_publish](static_publish/README.md)，修改位置、环境前提、预览、上线、失败处理及回退均见该目录说明。日常在项目根执行：
 
 ```powershell
-.\.venv\Scripts\python.exe website/build_static.py --api-url http://127.0.0.1:8000 --base-path /langrensha-site --output tmp/pages-preview/langrensha-site
+.\.venv\Scripts\python.exe website/static_publish/sync_pages.py
 ```
 
-退出码为0后，合格成品位于 `tmp/pages-preview/langrensha-site/`，回执位于同级 `acceptance.json`，二者以 `build_id` 关联。候选快照、日志和失败步骤保留在 `tmp/pages-build/<build_id>/`；失败保留上一份合格成品和回执。回执记录源码版本、未提交状态、构建输入／依赖／产物指纹与验收结果，不含凭据，不放进公开站点。CI增加 `--browser-channel chromium`；本机默认使用已安装Chrome。
+命令读取本地已正式发布的数据，增量复用响应和图片，通过检查后同步独立发布仓库、提交推送并等待部署，最后核对线上版本。它不负责数据入库、本地正式发布或源码仓库提交。仅数据变化时复用网页程序，首次或网页源码变化时才执行 Next 构建；默认浏览器检查关键入口和改动相关页面。加 `--skip-browser-check` 可跳过浏览器检查，文件、API 和版本检查仍保留，详见静态发布说明。
 
-预览时在另一个终端运行 `python -m http.server 4173 --bind 127.0.0.1 --directory tmp/pages-preview`，打开 <http://127.0.0.1:4173/langrensha-site/>。单独复验可用 `website/check_static.py --out tmp/pages-preview/langrensha-site --base-path /langrensha-site --api-url http://127.0.0.1:8000`。
-
-开发样例加 `--partial-season S23 --output tmp/pages-sample/langrensha-site`，始终标记为partial，不能用作正式发布。生成的 `.static-snapshot/`、`public/data/`、`public/media/` 和 `out/` 均忽略，不提交到源码仓库。日常 `website/run.py` 默认仍启动本地维护模式并准备实体媒体；静态构建后如需本地 `--production`，先用默认模式重新构建standalone。独立成品仓库及手动Pages上线顺序见[执行方案](../docs/11_GitHub_Pages静态发布执行方案.md)。
-
-统一入口在验收前修正[Next 16 Windows导出载荷分隔符问题](https://github.com/vercel/next.js/issues/92339)，将嵌套文件移到浏览器请求的标准文件名；不复制别名文件，Linux正常输出无需修改。静态模式的站内Link关闭自动预取，点击时继续使用Next导航，避免榜单默认下载大量个人页；本地维护模式沿用原预取行为。
+网页源码继续修改 `web/src`，API 与统计逻辑修改 `api`；`D:\langrensha-site\site` 是生成成品，由脚本维护。仅构建预览和运行目录说明见 [操作流程](static_publish/README.md#只构建与预览不上线)。
 
 ## 部署
 
@@ -110,15 +110,12 @@ docker compose up -d db
 
 # 只检查磁盘源，不连接／写数据库；必须保留全部目标赛季。
 docker compose run --rm publish --seasons S21 S22 S23 --check
-# 写入完整活动game release；自动执行 website/api/schema.sql。
+# 准备候选game release，所有悍跳校验、写入成功后一起激活。
 docker compose run --rm publish --seasons S21 S22 S23
 
-# 悍跳预检读取真实活动数据库；不同于上面的离线源预检。
+# 可选：核对刚发布版本的悍跳；完整发布已完成两季绑定。
 docker compose run --rm publish-bluffs --season S22 --check
 docker compose run --rm publish-bluffs --season S23 --check
-# 两季都预检成功后，分别绑定到刚发布的同一个game release。
-docker compose run --rm publish-bluffs --season S22
-docker compose run --rm publish-bluffs --season S23
 
 # 仅在上述发布全部成功后，由获授权管理员运行已有脚本。
 docker compose run --rm reader-setup
@@ -126,13 +123,13 @@ docker compose run --rm reader-setup
 docker compose up -d api web
 ```
 
-发布器和悍跳发布器使用同一个 `website/api/schema.sql`，无需运行JCMS业务迁移。`publish-bluffs`从包根目录 `/app` 读取配置及新增对局确认来源，不读取 `MASTERS_SOURCE_ROOT`。正式发布会替换整个活动集，单季或 `--sample` 不是追加操作；S22/S23悍跳两个发布各自事务化，**不是跨两季原子事务**。任一失败则停止上线，排查后重跑并确认两季绑定；更新已有站点时需在获准维护窗口完成，不要让访客看到中间状态。game release变化或回退后，两季悍跳均需重新预检／同步。
+发布器和悍跳发布器使用同一个 `website/api/schema.sql`，无需运行JCMS业务迁移。完整发布从`MASTERS_SOURCE_ROOT`读取正式档案、人物映射、配置、增量确认和悍跳输入，先保存候选，再将各季悍跳写入和激活合为一个事务。独立`publish-bluffs`默认从包根目录`/app`读取配置及新增对局确认来源。激活与回退均检查保留赛季及必需悍跳绑定；失败排查后可重跑，尚未完成的候选不会成为访客活动版本。
 
 ### 只读账号与验收
 
-沿用 `website/grant_reader.py`，不要手工猜测授权SQL：它要求已存在 `masters_web.releases`，创建或更新 `masters_web_reader`，设默认事务只读，仅显式授予 `masters_web` 的schema USAGE、现有表SELECT及当前建表者的未来表SELECT。首次正式及悍跳发布后再运行，可确保相关表已创建；后续必须由同一发布角色建表，否则需管理员重新审查默认权限。脚本会更新既有同名角色密码，拒绝已有superuser／createrole／createdb权限的同名角色。
+沿用 `website/grant_reader.py`，不要手工猜测授权SQL：它要求已存在 `masters_web.releases`，创建或更新 `masters_web_reader`，设 `NOINHERIT` 和默认事务只读，撤销该角色在 `masters_web` 的旧schema／表授权，再授予schema USAGE、现有表SELECT及当前建表者未来表SELECT。脚本拒绝带管理属性、角色成员关系或对象所有权的同名角色，并检查`masters_web`不存在有效写权限，使用独立登录实际读取活动快照，再在显式读写事务中确认对`active_release`的UPDATE被拒绝。首次正式及悍跳发布后再运行，可确保相关表已创建；后续必须由同一发布角色建表，否则需管理员重新审查默认权限。
 
-此脚本不是通用角色清理器，不撤销历史授权或角色成员关系，默认事务只读也不能替代权限隔离。对于既有数据库，同名角色的成员关系、继承权限、PUBLIC授权和跨schema写权限必须先由管理员审计；未确认最小权限时不要用于运行时。本文只描述已有授权流程，本次准备没有创建角色、设置密码或修改数据库安全配置。
+本机配置使用 `python -m website.grant_reader --local`，管理员凭据读取自 `.secrets/database.json`，读者密码独立保存在 `.secrets/masters_web_reader.json`。部署配置使用环境变量 `DATABASE_URL` 与 `MASTERS_READER_PASSWORD`。脚本不会修改业务数据或活动版本；显式写入探针带 `WHERE false`，并且角色权限检查先于探针。
 
 目标环境上线前核对：API `/health`、`/api/v1/releases`、S21/S22/S23各122／148／87条档案（当前共357条）、S22/S23悍跳的game release绑定、三季照片和清单内102张S23截图可访问，再运行本README的通用验收（通过环境变量 `MASTERS_API_URL`、`MASTERS_WEB_URL` 指定目标地址）及桌面／手机浏览器检查。Compose没有向宿主机发布API端口，验收程序必须在获准且可达API服务的目标网络中运行，不能默认宿主机 `localhost:8000` 可用；不要为验收擅自开放公网API端口。源数据更新时以当前正式范围为准，不把这些基线数量当成永久规则。正式备份与恢复验证仍按上节执行；不要删除持久卷来排障。
 

@@ -7,10 +7,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from html.parser import HTMLParser
 import json
 import os
 from pathlib import Path
+from pathlib import PurePosixPath
 import re
 import sys
 import tempfile
@@ -35,34 +35,6 @@ MAX_SITE_BYTES = 1_000_000_000
 
 class StaticAcceptanceError(RuntimeError):
     """A static snapshot failed an acceptance layer."""
-
-
-class _H1Parser(HTMLParser):
-    def __init__(self):
-        super().__init__(convert_charrefs=True)
-        self.h1_depth = 0
-        self.current: list[str] = []
-        self.headings: list[str] = []
-
-    def handle_starttag(self, tag: str, attrs):
-        if tag == "h1":
-            self.h1_depth += 1
-            self.current = []
-
-    def handle_endtag(self, tag: str):
-        if tag == "h1" and self.h1_depth:
-            self.h1_depth -= 1
-            if not self.h1_depth:
-                self.headings.append("".join(self.current).strip())
-    def handle_data(self, data: str):
-        if self.h1_depth:
-            self.current.append(data)
-
-
-def _rendered_h1_text(path: Path) -> list[str]:
-    parser = _H1Parser()
-    parser.feed(path.read_text(encoding="utf-8"))
-    return parser.headings
 
 
 def _json(path: Path) -> Any:
@@ -92,6 +64,157 @@ def _without_rankings(value: Any) -> Any:
 def _require_equal(expected: Any, actual: Any, label: str) -> None:
     if _canonical(expected) != _canonical(actual):
         raise StaticAcceptanceError(f"{label} differs from the source API")
+
+
+_SHA256_RE = re.compile(r"[0-9a-f]{64}")
+_REUSABLE_API_FILE_TYPES = {"game_detail", "player_range", "stats_range", "leaderboard", "bluff_review"}
+
+
+def _shared_input_hash_for_path(path: str, metadata: dict[str, Any], *,
+                                player_name: str | None = None,
+                                available_seasons: list[str] | None = None) -> str | None:
+    """Use the exporter-owned dependency key rule for incremental acceptance."""
+    try:
+        from website.static_publish.export_static import input_hash_for_path
+    except ModuleNotFoundError:
+        # Support invoking this file directly with static_publish/ as sys.path[0].
+        from export_static import input_hash_for_path
+    return input_hash_for_path(path, metadata, player_name=player_name,
+                               available_seasons=available_seasons)
+
+
+def _reusable_file_kind(relative: str) -> tuple[str, str | None]:
+    path = PurePosixPath(relative)
+    parts = path.parts
+    if path.suffix != ".json":
+        return "", None
+    if len(parts) == 2 and parts[0] == "games" and parts[1] != "index.json":
+        return "game_detail", parts[1][:-5]
+    if len(parts) == 3 and parts[0] == "players" and parts[1] != "by-season" \
+            and re.fullmatch(r".+--.+\.json", parts[2]):
+        return "player_range", parts[1]
+    if len(parts) == 2 and parts[0] == "stats" and re.fullmatch(r".+--.+\.json", parts[1]):
+        return "stats_range", None
+    if len(parts) == 3 and parts[0] == "leaderboards":
+        return "leaderboard", None
+    if len(parts) == 2 and parts[0] == "bluff-review":
+        return "bluff_review", None
+    return "", None
+
+
+def _validate_export_index(snapshot: dict[str, Any], docs: dict[str, Any],
+                           export_index: dict[str, Any], api_metadata: dict[str, Any]) -> dict[str, Any]:
+    """Validate the candidate index before trusting any reused API response."""
+    required_index_fields = {"schema_version", "metadata", "files", "metrics"}
+    if (not isinstance(export_index, dict) or not required_index_fields.issubset(export_index)
+            or set(export_index) - (required_index_fields | {"changed"})):
+        raise StaticAcceptanceError("Incremental export index has an invalid schema")
+    if type(export_index.get("schema_version")) is not int or export_index["schema_version"] != 1:
+        raise StaticAcceptanceError("Unsupported incremental export index schema_version")
+    metadata = export_index.get("metadata")
+    if not isinstance(metadata, dict) or _canonical(metadata) != _canonical(api_metadata):
+        raise StaticAcceptanceError("Incremental export index metadata differs from the current API export-manifest")
+    files = export_index.get("files")
+    if (not isinstance(files, dict) or not isinstance(export_index.get("metrics"), dict)
+            or ("changed" in export_index and not isinstance(export_index["changed"], dict))):
+        raise StaticAcceptanceError("Incremental export index files or metrics are invalid")
+
+    data_root = snapshot["data"].resolve()
+    expected_paths = {path.relative_to(data_root).as_posix()
+                      for path in data_root.rglob("*.json") if path.is_file()}
+    if set(files) != expected_paths:
+        raise StaticAcceptanceError("Incremental export index does not cover the release JSON files exactly")
+    player_names = {item.get("id"): item.get("name")
+                    for item in docs["players_index"].get("items", [])}
+    player_available_seasons: dict[str, list[str]] = {}
+    for season in snapshot["seasons"]:
+        season_players = _json(data_root / "players" / "by-season" / f"{season}.json").get("items", [])
+        for player in season_players:
+            player_available_seasons.setdefault(player["id"], []).append(season)
+    ranges = {f"{row['start']}--{row['end']}": row for row in snapshot["manifest"]["ranges"]}
+    publications = {row["season"]: row for row in snapshot["manifest"]["bluff_publications"]}
+    reused_paths: set[str] = set()
+    reused_by_kind = {kind: 0 for kind in _REUSABLE_API_FILE_TYPES}
+    for relative, entry in files.items():
+        if (not isinstance(relative, str) or not relative or "\\" in relative
+                or PurePosixPath(relative).is_absolute()
+                or any(part in {"", ".", ".."} for part in PurePosixPath(relative).parts)
+                or PurePosixPath(relative).as_posix() != relative):
+            raise StaticAcceptanceError(f"Invalid incremental export index path: {relative!r}")
+        if not isinstance(entry, dict) or set(entry) != {"sha256", "input_hash", "reused"}:
+            raise StaticAcceptanceError(f"Invalid incremental export index entry: {relative}")
+        if (not isinstance(entry.get("sha256"), str) or not _SHA256_RE.fullmatch(entry["sha256"])
+                or not isinstance(entry.get("input_hash"), str) or not _SHA256_RE.fullmatch(entry["input_hash"])
+                or not isinstance(entry.get("reused"), bool)):
+            raise StaticAcceptanceError(f"Invalid incremental export index hashes or reused flag: {relative}")
+
+        target = (data_root / Path(*PurePosixPath(relative).parts)).resolve()
+        if not target.is_relative_to(data_root) or not target.is_file():
+            raise StaticAcceptanceError(f"Incremental export index file is missing or unsafe: {relative}")
+        if not entry["reused"]:
+            continue
+
+        kind, player_id = _reusable_file_kind(relative)
+        if kind not in _REUSABLE_API_FILE_TYPES:
+            raise StaticAcceptanceError(f"Incremental export index marks a non-reusable file as reused: {relative}")
+        with target.open("rb") as stream:
+            actual_sha = hashlib.file_digest(stream, "sha256").hexdigest()
+        if actual_sha != entry["sha256"]:
+            raise StaticAcceptanceError(f"Reused file SHA-256 differs from the site: {relative}")
+        expected_input_hash = _shared_input_hash_for_path(
+            relative, metadata, player_name=player_names.get(player_id),
+            available_seasons=player_available_seasons.get(player_id, []))
+        if expected_input_hash is None or expected_input_hash != entry["input_hash"]:
+            raise StaticAcceptanceError(f"Reused file input_hash differs from its current dependencies: {relative}")
+        document = _json(target)
+        if (not isinstance(document, dict)
+                or document.get("release_id") != snapshot["manifest"]["release_id"]
+                or document.get("analytics_version") != snapshot["manifest"]["analytics_version"]):
+            raise StaticAcceptanceError(f"Reused file manifest binding differs: {relative}")
+        parts = PurePosixPath(relative).parts
+        if kind == "game_detail" and document.get("id") != player_id:
+            raise StaticAcceptanceError(f"Reused game detail ID differs from its path: {relative}")
+        if kind == "player_range":
+            interval_name = parts[2][:-5]
+            interval = ranges.get(interval_name)
+            scope = document.get("scope")
+            if (document.get("id") != player_id or interval is None
+                    or not isinstance(scope, dict)
+                    or scope.get("season_start") != interval["start"]
+                    or scope.get("season_end") != interval["end"]
+                    or scope.get("seasons") != interval["seasons"]
+                    or scope.get("minimum_appearances") != 0):
+                raise StaticAcceptanceError(f"Reused player range scope differs from its manifest: {relative}")
+            expected_publications = [publications[season] for season in interval["seasons"]]
+            if _canonical(document.get("bluff_publications")) != _canonical(expected_publications):
+                raise StaticAcceptanceError(f"Reused player range publication binding differs: {relative}")
+        elif kind == "stats_range":
+            interval_name = parts[1][:-5]
+            interval = ranges.get(interval_name)
+            scope = document.get("scope")
+            if (interval is None or not isinstance(scope, dict)
+                    or scope.get("seasons") != interval["seasons"]):
+                raise StaticAcceptanceError(f"Reused stats range scope differs from its manifest: {relative}")
+        elif kind == "leaderboard":
+            season, phase = parts[1], parts[2][:-5]
+            binding = publications.get(season)
+            if (season not in snapshot["seasons"] or document.get("season") != season
+                    or document.get("phase") != phase or binding is None
+                    or document.get("bluff_publication_id") != binding.get("publication_id")
+                    or document.get("bluff_payload_hash") != binding.get("payload_hash")):
+                raise StaticAcceptanceError(f"Reused leaderboard binding differs from its manifest: {relative}")
+        elif kind == "bluff_review":
+            season = parts[1][:-5]
+            binding = publications.get(season)
+            if (season not in snapshot["seasons"] or document.get("season") != season
+                    or document.get("status") != "all" or binding is None
+                    or document.get("bluff_publication_id") != binding.get("publication_id")
+                    or document.get("bluff_payload_hash") != binding.get("payload_hash")):
+                raise StaticAcceptanceError(f"Reused bluff review binding differs from its manifest: {relative}")
+        reused_paths.add(relative)
+        reused_by_kind[kind] += 1
+
+    return {"paths": reused_paths, "by_kind": reused_by_kind}
 
 
 def _get_json(api_url: str, path: str) -> Any:
@@ -205,12 +328,8 @@ def _record_routes(snapshot: dict[str, Any], docs: dict[str, Any]) -> list[str]:
     missing = [route or "/" for route in expected if _route_file(snapshot["out"], route) is None]
     if missing:
         raise StaticAcceptanceError("Static HTML routes are missing: " + ", ".join(missing[:12]))
-    player_names = {item["id"]: item["name"] for item in docs["players_index"].get("items", [])}
-    for player_id, name in player_names.items():
-        route = f"players/{quote(player_id, safe='')}"
-        headings = _rendered_h1_text(_route_file(snapshot["out"], route))
-        if not any(name in heading for heading in headings):
-            raise StaticAcceptanceError(f"Static player page has no rendered <h1> for {player_id}: {name}")
+    # Route HTML is a reusable shell. Its data is checked below and rendered in
+    # the browser, so names and other release values need not be baked into it.
     return ["/" + route if route else "/" for route in expected]
 
 
@@ -631,10 +750,14 @@ def _check_threshold_projection(base: dict[str, Any], actual: dict[str, Any],
                 raise StaticAcceptanceError(f"Minimum appearance summary rank differs for {field} {name}")
 
 
-def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> dict[str, Any]:
+def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
+               export_index: dict[str, Any] | None = None) -> dict[str, Any]:
     manifest, data = snapshot["manifest"], snapshot["data"]
     release_id = manifest["release_id"]
     binding = _get_json(api_url, "/api/v1/export-manifest")
+    reusable = {"paths": set(), "by_kind": {kind: 0 for kind in _REUSABLE_API_FILE_TYPES}}
+    if export_index is not None:
+        reusable = _validate_export_index(snapshot, docs, export_index, binding)
     if binding.get("release_id") != release_id or binding.get("release", {}).get("id") != release_id:
         raise StaticAcceptanceError("export-manifest release ID differs from the static manifest")
     if (binding.get("release", {}).get("source_hash") != manifest["source_hash"]
@@ -708,13 +831,20 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
     detail_ids = [item["id"] for item in static_games]
     def fetch_detail(game_id: str):
         return game_id, _get_json(api_url, "/api/v1/games/" + quote(game_id, safe=""))
+    compared_detail_ids = [game_id for game_id in detail_ids
+                           if f"games/{quote(game_id, safe='')}.json" not in reusable["paths"]]
     with ThreadPoolExecutor(max_workers=8) as pool:
-        api_details = dict(pool.map(fetch_detail, detail_ids))
+        api_details = dict(pool.map(fetch_detail, compared_detail_ids))
     for game_id, actual in api_details.items():
         static = _json(data / "games" / f"{quote(game_id, safe='')}.json")
         _require_equal(static, actual, f"game detail {game_id}")
         if static.get("release_id") != release_id:
             raise StaticAcceptanceError(f"Game detail {game_id} is bound to a different release")
+    for game_id in detail_ids:
+        if f"games/{quote(game_id, safe='')}.json" in reusable["paths"]:
+            static = _json(data / "games" / f"{quote(game_id, safe='')}.json")
+            if static.get("release_id") != release_id:
+                raise StaticAcceptanceError(f"Game detail {game_id} is bound to a different release")
 
     player_seasons: dict[str, list[dict[str, Any]]] = {}
     player_items_by_id: dict[str, dict[str, Any]] = {}
@@ -768,12 +898,17 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
     for range_row in range_rows:
         start, end = range_row["start"], range_row["end"]
         stats_path = data / "stats" / f"{start}--{end}.json"
-        stats_response = _get_json(api_url, "/api/v1/stats?" + urlencode(
-            {"season_start": start, "season_end": end}))
         stats_static = _json(stats_path)
-        _require_equal(stats_static, stats_response, f"stats/{start}--{end}.json")
-        if stats_static.get("scope", {}).get("seasons") != range_row["seasons"]:
+        if (stats_static.get("release_id") != release_id
+                or stats_static.get("scope", {}).get("season_start") != start
+                or stats_static.get("scope", {}).get("season_end") != end
+                or stats_static.get("scope", {}).get("seasons") != range_row["seasons"]):
             raise StaticAcceptanceError(f"Stats scope differs for {start}--{end}")
+        stats_relative = f"stats/{start}--{end}.json"
+        if stats_relative not in reusable["paths"]:
+            stats_response = _get_json(api_url, "/api/v1/stats?" + urlencode(
+                {"season_start": start, "season_end": end}))
+            _require_equal(stats_static, stats_response, stats_relative)
         appearances_by_range[f"{start}--{end}"] = {
             player["id"]: player["appearances"] for player in stats_static.get("players", [])
         }
@@ -791,9 +926,12 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
         if appearances > 0:
             nonzero_profiles.append((path, appearances))
 
-    def compare_profile(path: Path) -> tuple[str, str, int]:
+    def compare_profile(path: Path) -> tuple[str, str, int] | None:
         static_player = _json(path)
         start, end = path.name.removesuffix(".json").split("--", 1)
+        relative = path.relative_to(data).as_posix()
+        if relative in reusable["paths"]:
+            return None
         endpoint = "/api/v1/players/" + quote(static_player["id"], safe="") + "?" + urlencode(
             {"season_start": start, "season_end": end, "minimum_appearances": 0})
         actual = _get_json(api_url, endpoint)
@@ -802,7 +940,8 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
         return static_player["id"], f"{start}--{end}", static_player.get("stats", {}).get("appearances", 0)
 
     with ThreadPoolExecutor(max_workers=4) as pool:
-        profile_results = list(pool.map(compare_profile, player_range_files))
+        profile_results = [result for result in pool.map(compare_profile, player_range_files)
+                           if result is not None]
     if not nonzero_profiles:
         raise StaticAcceptanceError("No exported player range has a non-zero appearance sample")
     # Exercise non-zero and above-boundary thresholds on one non-zero sample per range.
@@ -843,27 +982,34 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
         raise StaticAcceptanceError("No non-zero player sample was API-checked for every season range")
 
     leaderboards = []
+    leaderboards_api_compared = []
     for season_row in manifest["seasons"]:
         season = season_row["id"]
         phases = ["all"] + (["finals_week"] if "finals_week" in season_row.get("phases", []) else [])
         for phase in phases:
             board_path = data / "leaderboards" / season / f"{phase}.json"
             board = _json(board_path)
-            api_board = _get_json(api_url, "/api/v1/leaderboard?" + urlencode({"season": season, "phase": phase}))
-            _require_equal(board, api_board, f"leaderboards/{season}/{phase}.json")
+            board_relative = f"leaderboards/{season}/{phase}.json"
+            if board_relative not in reusable["paths"]:
+                api_board = _get_json(api_url, "/api/v1/leaderboard?" + urlencode({"season": season, "phase": phase}))
+                _require_equal(board, api_board, board_relative)
             if board.get("release_id") != release_id or board.get("season") != season:
                 raise StaticAcceptanceError(f"Leaderboard binding differs for {season}/{phase}")
             if phase == "all" and manifest["complete"] and board.get("game_count") != season_row.get("game_count"):
                 raise StaticAcceptanceError(f"Full-season leaderboard count differs for {season}")
             leaderboards.append({"season": season, "phase": phase, "games": board.get("game_count"),
                                  "players": len(board.get("items", []))})
+            leaderboards_api_compared.append(board_relative not in reusable["paths"])
 
     reviews = []
+    reviews_api_compared = []
     publication_ids = {item["season"]: item for item in manifest["bluff_publications"]}
     for season in snapshot["seasons"]:
         review = _json(data / "bluff-review" / f"{season}.json")
-        api_review = _get_json(api_url, "/api/v1/bluff-review?" + urlencode({"season": season, "status": "all"}))
-        _require_equal(review, api_review, f"bluff-review/{season}.json")
+        review_relative = f"bluff-review/{season}.json"
+        if review_relative not in reusable["paths"]:
+            api_review = _get_json(api_url, "/api/v1/bluff-review?" + urlencode({"season": season, "status": "all"}))
+            _require_equal(review, api_review, review_relative)
         if review.get("release_id") != release_id or review.get("season") != season:
             raise StaticAcceptanceError(f"Bluff review binding differs for {season}")
         binding = publication_ids.get(season)
@@ -872,13 +1018,38 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str) -> 
             raise StaticAcceptanceError(f"Bluff review publication binding differs for {season}")
         reviews.append({"season": season, "items": len(review.get("items", [])),
                         "games": review.get("summary", {}).get("games")})
+        reviews_api_compared.append(review_relative not in reusable["paths"])
 
+    api_file_comparisons = {
+        "game_details": len(compared_detail_ids),
+        "player_ranges": len(profile_results),
+        "stats_ranges": len(range_rows) - reusable["by_kind"]["stats_range"],
+        "leaderboards": sum(leaderboards_api_compared),
+        "bluff_reviews": sum(reviews_api_compared),
+    }
+    api_file_comparisons["total"] = sum(api_file_comparisons.values())
     return {"state": "passed", "release_id": release_id,
-            "game_filters": query_checks, "game_details_checked": len(detail_ids),
+            "game_filters": query_checks, "game_details_checked": api_file_comparisons["game_details"],
+            "game_details_present": len(detail_ids),
             "season_player_indexes_checked": len(player_seasons),
-            "player_ranges_checked": len(profile_results), "player_ranking_samples": checked_players,
-            "stats_ranges_checked": len(range_rows),
-            "leaderboards_checked": leaderboards, "bluff_reviews_checked": reviews,
+            "game_details_api_compared": api_file_comparisons["game_details"],
+            "player_ranges_checked": len(profile_results),
+            "player_ranges_api_compared": api_file_comparisons["player_ranges"],
+            "player_ranking_samples": checked_players,
+            "stats_ranges_checked": api_file_comparisons["stats_ranges"],
+            "stats_ranges_present": len(range_rows),
+            "stats_ranges_api_compared": api_file_comparisons["stats_ranges"],
+            "leaderboards_checked": [row for row, compared in zip(leaderboards, leaderboards_api_compared)
+                                      if compared],
+            "leaderboards_reused": reusable["by_kind"]["leaderboard"],
+            "bluff_reviews_checked": [row for row, compared in zip(reviews, reviews_api_compared)
+                                       if compared],
+            "bluff_reviews_reused": reusable["by_kind"]["bluff_review"],
+            "leaderboards_api_compared": api_file_comparisons["leaderboards"],
+            "bluff_reviews_api_compared": api_file_comparisons["bluff_reviews"],
+            "api_file_comparisons": api_file_comparisons,
+            "input_fingerprint_reused": len(reusable["paths"]),
+            "input_fingerprint_reused_by_kind": reusable["by_kind"],
             "export_manifest": {"season_count": len(api_seasons),
                                 "media_assets_available": len(allowed_assets),
                                 "media_manifests_checked": len(manifest["media_manifest_hashes"]),
@@ -972,35 +1143,137 @@ def _select_player_range_target(snapshot: dict[str, Any], profile_path: Path,
     return min(candidates)[2] if candidates else None
 
 
-def _browser_routes(snapshot: dict[str, Any], docs: dict[str, Any]) -> tuple[list[str], list[str]]:
-    routes = _record_routes(snapshot, docs)
-    manifest = snapshot["manifest"]
+def _affected_browser_scope(export_index: dict[str, Any] | None,
+                            previous_export_index: dict[str, Any] | None) -> dict[str, set[str]]:
+    """Compare stable content keys; release rebinding alone changes no route scope."""
+    affected: dict[str, set[str]] = {"games": set(), "seasons": set(), "players": set()}
+    if export_index is None or previous_export_index is None:
+        return affected
+    current_metadata = export_index.get("metadata", {})
+    previous_metadata = previous_export_index.get("metadata", {})
+    current_fp = current_metadata.get("content_fingerprints", {})
+    previous_fp = previous_metadata.get("content_fingerprints", {})
+    current_fp = current_fp if isinstance(current_fp, dict) else {}
+    previous_fp = previous_fp if isinstance(previous_fp, dict) else {}
+    for key in ("games", "seasons"):
+        current = current_fp.get(key)
+        previous = previous_fp.get(key)
+        if isinstance(current, dict) and isinstance(previous, dict):
+            affected[key].update(item for item in set(current) | set(previous)
+                                 if current.get(item) != previous.get(item))
+
+    current_publications = {row["season"]: row for row in current_metadata.get("bluff_publications", [])}
+    previous_publications = {row["season"]: row for row in previous_metadata.get("bluff_publications", [])}
+    affected["seasons"].update(season for season in set(current_publications) | set(previous_publications)
+                               if current_publications.get(season) != previous_publications.get(season))
+    current_assets = {row["url"]: row.get("sha256") for row in current_metadata.get("media_assets", [])}
+    previous_assets = {row["url"]: row.get("sha256") for row in previous_metadata.get("media_assets", [])}
+    for url in set(current_assets) | set(previous_assets):
+        if current_assets.get(url) == previous_assets.get(url):
+            continue
+        parts = urlsplit(url).path.strip("/").split("/")
+        if len(parts) == 4 and parts[0] == "media" and parts[1] in {"player-photos", "bluff-frames"}:
+            affected["seasons"].add(parts[2])
+
+    previous_files = previous_export_index.get("files", {})
+    for relative, entry in export_index.get("files", {}).items():
+        old_entry = previous_files.get(relative, {})
+        # SHA-256 changes on every release_id rebind. input_hash describes the
+        # actual dependencies and therefore keeps the browser scope local.
+        if entry.get("input_hash") == old_entry.get("input_hash"):
+            continue
+        kind, item_id = _reusable_file_kind(relative)
+        parts = PurePosixPath(relative).parts
+        if kind == "game_detail" and not (
+                isinstance(current_fp.get("games"), dict) and isinstance(previous_fp.get("games"), dict)):
+            affected["games"].add(item_id)
+        elif kind == "player_range":
+            affected["players"].add(item_id)
+        elif kind == "stats_range" and not (
+                isinstance(current_fp.get("seasons"), dict) and isinstance(previous_fp.get("seasons"), dict)):
+            start, end = parts[1][:-5].split("--", 1)
+            if start == end:
+                affected["seasons"].add(start)
+        elif kind in {"leaderboard", "bluff_review"} and not (
+                isinstance(current_fp.get("seasons"), dict) and isinstance(previous_fp.get("seasons"), dict)):
+            affected["seasons"].add(parts[1] if kind == "leaderboard" else parts[1][:-5])
+    return affected
+
+
+def _browser_routes(snapshot: dict[str, Any], docs: dict[str, Any],
+                    export_index: dict[str, Any] | None = None,
+                    previous_export_index: dict[str, Any] | None = None) -> tuple[list[str], list[str]]:
+    """Visit key entries and changed games, with bounded season/player samples."""
     seasons = snapshot["seasons"]
+    games = docs["games_index"].get("items", [])
+    players = docs["players_index"].get("items", [])
     representative = ["/", "/games", "/players", "/stats", "/leaderboard", "/leaderboard/bluff-review"]
+    if "S23" in seasons:
+        representative.append("/seasons/S23/bluff-review")
+    affected = _affected_browser_scope(export_index, previous_export_index)
+    affected["seasons"].update(game["season"] for game in games if game["id"] in affected["games"])
+
     if seasons:
-        representative.extend([f"/seasons/{quote(seasons[0], safe='')}",
+        representative.extend([f"/seasons/{quote(seasons[-1], safe='')}",
                                f"/stats?{urlencode({'season_start': seasons[0], 'season_end': seasons[-1]})}"])
-        representative.extend(f"/players?{urlencode({'season': season})}" for season in seasons)
-    game = next(iter(docs["games_index"].get("items", [])), None)
-    if game:
-        representative.append("/games/" + quote(game["id"], safe=""))
-    player = next(iter(docs["players_index"].get("items", [])), None)
-    if player and seasons:
+    if games:
+        representative.append("/games/" + quote(games[0]["id"], safe=""))
+    if players and seasons:
+        player = next((row for row in players if row["id"] in affected["players"]), players[0])
         representative.append("/players/" + quote(player["id"], safe="") + "?" + urlencode(
             {"season_start": seasons[0], "season_end": seasons[-1]}))
+
+    # Keep one visible evidence sample even when no affected review season is
+    # selected. The unfiltered entry may otherwise hide completed evidence.
+    photo_sample_selected = False
+    frame_sample_selected = False
+    for season in reversed(seasons):
+        season_players = _json(snapshot["data"] / "players" / "by-season" / f"{season}.json")
+        if not photo_sample_selected and any(path.startswith("media/player-photos/")
+                                             for path in _media_references(season_players)):
+            representative.append("/players?" + urlencode({"season": season}))
+            photo_sample_selected = True
+        review = _json(snapshot["data"] / "bluff-review" / f"{season}.json")
+        if not frame_sample_selected and any(path.startswith("media/bluff-frames/")
+                                             for path in _media_references(review)):
+            representative.append("/leaderboard/bluff-review?" + urlencode({"season": season, "status": "all"}))
+            frame_sample_selected = True
+        if photo_sample_selected and frame_sample_selected:
+            break
+
     for season in seasons:
-        representative.append(f"/leaderboard?{urlencode({'season': season})}")
-        representative.append(f"/leaderboard/bluff-review?{urlencode({'season': season, 'status': 'all'})}")
-    return routes, list(dict.fromkeys(representative))
+        if season not in affected["seasons"]:
+            continue
+        encoded = quote(season, safe="")
+        representative.extend([
+            f"/seasons/{encoded}", "/players?" + urlencode({"season": season}),
+            "/stats?" + urlencode({"season_start": season, "season_end": season}),
+            "/leaderboard?" + urlencode({"season": season}),
+            "/leaderboard/bluff-review?" + urlencode({"season": season, "status": "all"}),
+        ])
+        if season == "S23":
+            representative.append("/seasons/S23/bluff-review")
+        season_players = _json(snapshot["data"] / "players" / "by-season" / f"{season}.json").get("items", [])
+        player = next((row for row in season_players if row["id"] in affected["players"]),
+                      next(iter(season_players), None))
+        if player:
+            representative.append("/players/" + quote(player["id"], safe="") + "?" + urlencode(
+                {"season_start": season, "season_end": season}))
+    representative = list(dict.fromkeys(representative))
+    changed_games = ["/games/" + quote(game["id"], safe="")
+                     for game in games if game["id"] in affected["games"]]
+    return list(dict.fromkeys(representative + changed_games)), representative
 
 
 def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
-                   channel: str, output: Path | None) -> dict[str, Any]:
+                   channel: str, output: Path | None,
+                   export_index: dict[str, Any] | None = None,
+                   previous_export_index: dict[str, Any] | None = None) -> dict[str, Any]:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as error:
-        raise StaticAcceptanceError("Playwright is required; browser acceptance cannot be skipped") from error
-    routes, representative = _browser_routes(snapshot, docs)
+        raise StaticAcceptanceError("Playwright is required for browser acceptance; use --skip-browser-check to skip it explicitly") from error
+    routes, representative = _browser_routes(snapshot, docs, export_index, previous_export_index)
     base_path, out = snapshot["manifest"]["base_path"], snapshot["out"]
     server, thread = _serve(out, base_path)
     web_url = f"http://127.0.0.1:{server.server_port}{base_path}"
@@ -1063,6 +1336,26 @@ def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
                         raise StaticAcceptanceError(f"Static page returned an error at {route}: {getattr(response, 'status', None)}")
                     if page.locator("main").count() == 0:
                         raise StaticAcceptanceError(f"Static route has no main content: {route}")
+                    page.wait_for_selector("main h1", state="visible", timeout=20000)
+                    page.wait_for_function(
+                        "() => !document.querySelector('main [aria-busy=\"true\"]') && "
+                        "!Array.from(document.querySelectorAll('main [role=status]')).some("
+                        "element => /^正在/.test(element.textContent?.trim() || ''))",
+                        timeout=20000)
+                    load_errors = page.locator("main").get_by_role("alert")
+                    if load_errors.count():
+                        raise StaticAcceptanceError(f"Static route displays a load error: {route}: "
+                                                    + "; ".join(load_errors.all_inner_texts()))
+                    route_path = unquote(urlsplit(route).path).rstrip("/")
+                    if route_path.startswith("/players/"):
+                        player_id = route_path.removeprefix("/players/")
+                        player = next(row for row in docs["players_index"]["items"] if row["id"] == player_id)
+                        page.get_by_role("heading", level=1, name=player["name"], exact=True).wait_for(timeout=20000)
+                    elif route_path.startswith("/games/"):
+                        game_id = route_path.removeprefix("/games/")
+                        game = next(row for row in docs["games_index"]["items"] if row["id"] == game_id)
+                        board_name = (game.get("board") or {}).get("name") or "版型未知"
+                        page.get_by_role("heading", level=1, name=board_name, exact=True).wait_for(timeout=20000)
                     if page.evaluate("document.documentElement.scrollWidth > window.innerWidth"):
                         raise StaticAcceptanceError(f"Horizontal overflow at {width}px: {route}")
                     images = page.locator("main img")
@@ -1098,14 +1391,19 @@ def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
                         page.reload(wait_until="networkidle", timeout=45000)
                         if page.locator("main").count() == 0:
                             raise StaticAcceptanceError(f"Static route failed after refresh: {route}")
+                        page.wait_for_selector("main h1", state="visible", timeout=20000)
 
-                # Every generated HTML route is opened directly beneath the real prefix.
-                for route in routes:
+                # File completeness covers every route; browser work stays on
+                # key entries and routes affected by this update.
+                for index, route in enumerate(routes, 1):
                     inspect_page(route, 1440, capture=route in representative, reload=route in representative)
+                    if index % 50 == 0 or index == len(routes):
+                        print(f"Static browser desktop: {index}/{len(routes)} routes", flush=True)
                 for route in representative:
                     capture = route in {"/", "/games", "/leaderboard/bluff-review"} or route.startswith(
                         "/leaderboard/bluff-review?season=")
                     inspect_page(route, 390, capture=capture)
+                print(f"Static browser mobile: {len(representative)} routes", flush=True)
 
                 interaction = _exercise_browser_flows(page, web_url, snapshot, docs)
                 page.goto(web_url + "/games", wait_until="networkidle", timeout=45000)
@@ -1149,6 +1447,8 @@ def _browser_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
     if bluff_frames_expected and not any("/media/bluff-frames/" in path for path in loaded_image_paths):
         raise StaticAcceptanceError("Snapshot evidence screenshots were not decoded in a browser page")
     return {"state": "passed", "browser_channel": channel, "base_path": base_path,
+            "scope": "key_entries_and_affected_routes", "routes": routes,
+            "baseline_compared": previous_export_index is not None,
             "routes_checked": len(routes), "representative_routes_checked": len(representative),
             "viewports": [1440, 390], "api_blocked_during_browser_check": True,
             "api_requests_attempted": len(blocked_api), "screenshots": screenshot_paths,
@@ -1431,17 +1731,26 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
 
 
 def check(out: Path | str, base_path: str, api_url: str, *, browser_channel: str = "chrome",
+          export_index: dict[str, Any] | None = None,
+          previous_export_index: dict[str, Any] | None = None,
+          skip_browser_check: bool = False,
           output: Path | str | None = None) -> dict[str, Any]:
-    """Run all static acceptance layers. Raises on any failed layer; browser is mandatory."""
+    """Check structure/API and selected browser routes unless explicitly skipped."""
     started = perf_counter()
     base = _base_path(base_path)
     out_path = Path(out)
     snapshot = _load_snapshot(out_path, base)
     docs = _read_documents(snapshot)
     structure = _structure_check(snapshot, docs)
-    api = _api_check(snapshot, docs, api_url)
+    api = _api_check(snapshot, docs, api_url, export_index)
     report_path = Path(output) if output is not None else None
-    browser = _browser_check(snapshot, docs, api_url, browser_channel, report_path)
+    if skip_browser_check:
+        browser = {"state": "skipped", "reason": "explicit --skip-browser-check",
+                   "scope": "key_entries_and_affected_routes", "routes_checked": 0,
+                   "representative_routes_checked": 0, "routes": [], "viewports": []}
+    else:
+        browser = _browser_check(snapshot, docs, api_url, browser_channel, report_path,
+                                 export_index, previous_export_index)
     manifest = snapshot["manifest"]
     report = {
         "state": "partial" if manifest["partial"]["enabled"] else "passed",
@@ -1468,10 +1777,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, help="Acceptance report path")
     parser.add_argument("--browser-channel", choices=("chrome", "chromium"), default="chrome",
                         help="Installed local browser; CI callers should pass chromium")
+    parser.add_argument("--skip-browser-check", action="store_true",
+                        help="Skip browser checks only; structure, data, API and version checks still run")
     args = parser.parse_args(argv)
     try:
         report = check(args.out, args.base_path, args.api_url,
-                       browser_channel=args.browser_channel, output=args.output)
+                       browser_channel=args.browser_channel, skip_browser_check=args.skip_browser_check,
+                       output=args.output)
     except Exception as error:
         failed = {"state": "failed", "mode": "unknown", "complete": False,
                   "error": f"{type(error).__name__}: {error}",

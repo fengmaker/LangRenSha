@@ -1,6 +1,6 @@
 # 只读API与发布
 
-运行时：`uvicorn website.api.app:app --host 127.0.0.1 --port 8000`。本机优先用`website/run.py`同时管理前端；部署配置`DATABASE_URL`并使用只读账号。
+运行时：`uvicorn website.api.app:app --host 127.0.0.1 --port 8000`。本机优先用`website/run.py`同时管理前端；部署配置`DATABASE_URL`并使用只读账号。本机先运行 `python -m website.grant_reader --local`，网站及静态发布的临时API共用 `.secrets/masters_web_reader.json`；本机只读凭据缺失时API明确报错，不回退到发布器连接。
 
 | 文件 | 职责 |
 | --- | --- |

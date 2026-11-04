@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { getOverview, getPlayers } from "@/lib/api";
 import { isStaticSite, publicPath } from "@/lib/site-mode";
-import { getSnapshotManifest, getSnapshotPlayers } from "@/lib/snapshot-data";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
@@ -20,14 +19,7 @@ function positiveInt(value: string): number { const n = Number(value); return Nu
 
 export default async function PlayersPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   if (isStaticSite) {
-    try {
-      const overview = await getOverview();
-      const initialSeason = (await getSnapshotManifest()).seasons.at(-1)?.id ?? overview.seasons.at(-1)?.id ?? "";
-      const initialPlayers = await getSnapshotPlayers(initialSeason);
-      return <Suspense fallback={<div className={`page-wrap ${styles.directory}`}><PageIntro title="选手索引" description="按赛季搜索选手并查看出场与胜率。" /></div>}><StaticPlayersBrowser overview={overview} initialSeason={initialSeason} initialPlayers={initialPlayers} /></Suspense>;
-    } catch (error) {
-      return <div className={`page-wrap ${styles.directory}`}><PageIntro title="选手索引" description="按赛季搜索选手并查看出场与胜率。" /><DataProblem error={error} /></div>;
-    }
+    return <Suspense fallback={<div className="page-wrap" role="status">正在读取选手索引…</div>}><StaticPlayersBrowser /></Suspense>;
   }
   const query = await searchParams;
   const q = first(query.q);

@@ -424,6 +424,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--allow-partial-audit",action="store_true",help="交付当前已核范围；未核项明确保留待助手继续")
     args = parser.parse_args(argv)
     try:
+        if (args.output.is_file()
+                and json.loads(args.output.read_text(encoding="utf-8")).get("confirmed_baseline")):
+            raise BuildError("S23已固定人工确认基准；请用 website.api.publish_bluffs 发布，不再重建历史推断")
         payload, items, validation = build_payload(args.root,allow_partial_audit=True) if args.allow_partial_audit else build_payload(args.root)
         if not args.check:
             frames=save_frames(args.root)

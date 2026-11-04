@@ -9,7 +9,6 @@ import json
 import os
 from pathlib import Path
 import re
-import uuid
 
 import psycopg
 from psycopg import sql
@@ -21,10 +20,10 @@ from scripts.role_constraints import puppet_target
 from website.api.game_presentation import (
     build_game_presentation, terminal_from_events, terminal_day_events,
 )
+from website.api.people import PERSON_NAMESPACE, PeopleRegistryError, load_people
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("MASTERS_SOURCE_ROOT", PACKAGE_ROOT))
-PERSON_NAMESPACE = uuid.UUID("5a1e9a41-663d-4dcc-9ce6-f5e75e9efb18")
 PUBLICATION_FORMAT_VERSION = 13
 STATISTICS_VERSION = 2
 BVID_RE = re.compile(r"BV[0-9A-Za-z]{10}")
@@ -664,55 +663,55 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
                     supplemental = sidecar
                     supplemental_input = sidecar
         derivation_path = folder / "rule_derivations.json"
-        derivations = None
-        if derivation_path.is_file():
-            derivations, derivation_digest = _read_json(derivation_path)
-            file_hashes["rule_derivations"] = derivation_digest
-            try:
-                from scripts.game_derivations import apply_precomputed, fingerprint
+        if not derivation_path.is_file():
+            raise PublishError(f"{season}/{folder.name} 缺少规则推导；请在正式档案生成阶段准备 rule_derivations.json")
+        derivations, derivation_digest = _read_json(derivation_path)
+        file_hashes["rule_derivations"] = derivation_digest
+        try:
+            from scripts.game_derivations import apply_precomputed, fingerprint
 
-                input_hashes = derivations.get("input_hashes")
-                if not isinstance(input_hashes, dict):
-                    raise ValueError("规则推导缺少来源指纹")
-                if ("terminal_observation" in input_hashes and input_hashes["terminal_observation"]
-                        != fingerprint(context.get("terminal_observation"))):
-                    raise ValueError("终局边界已变化，规则推导已过期，请重新生成")
-                if (input_hashes.get("supplemental") != fingerprint(supplemental_input)
-                        or input_hashes.get("endgame") != fingerprint(endgame)):
-                    raise ValueError("补充或终局档案已变化，规则推导已过期，请重新生成")
-                if "speech_evidence" in input_hashes:
-                    speech = derivations.get("sheriff_speech_evidence") or {}
-                    binding = speech.get("source_binding") or {}
-                    source_binding = (supplemental_input or {}).get("source_binding") or {}
-                    source = root / binding.get("path", "")
-                    if (fingerprint(speech) != input_hashes["speech_evidence"]
-                            or binding.get("path") != source_binding.get("selected_transcript_path")
-                            or binding.get("sha256") != source_binding.get("selected_transcript_sha256")
-                            or not source.is_file()
-                            or hashlib.sha256(source.read_bytes()).hexdigest() != binding.get("sha256")):
-                        raise ValueError("警上发言旁证的字幕来源已变化，请重新生成规则推导")
-                normalized = apply_precomputed(dossier, source_voting, derivations)
-            except (ValueError, KeyError, IndexError, TypeError) as exc:
-                raise PublishError(str(exc)) from exc
-            dossier, voting = normalized["dossier"], normalized["voting"]
-            report_terminal = derivations.get("terminal")
-            if report_terminal is not None:
-                if (not isinstance(report_terminal, dict)
-                        or type(report_terminal.get("round")) is not int
-                        or report_terminal.get("phase") not in {"night", "day"}):
-                    raise PublishError("规则推导终局缺少有效日夜边界")
-                terminal_boundary = {"round": report_terminal["round"],
-                                     "phase": report_terminal["phase"]}
-                existing_terminal = context.get("terminal_observation")
-                if existing_terminal is not None:
-                    if (not isinstance(existing_terminal, dict)
-                            or type(existing_terminal.get("round")) is not int
-                            or existing_terminal.get("phase") not in {"night", "day"}):
-                        raise PublishError("正式终局观察缺少有效日夜边界")
-                    if (existing_terminal["round"], existing_terminal["phase"]
-                            ) != (terminal_boundary["round"], terminal_boundary["phase"]):
-                        raise PublishError("规则推导与正式终局边界不一致")
-                context["terminal_observation"] = terminal_boundary
+            input_hashes = derivations.get("input_hashes")
+            if not isinstance(input_hashes, dict):
+                raise ValueError("规则推导缺少来源指纹")
+            if ("terminal_observation" in input_hashes and input_hashes["terminal_observation"]
+                    != fingerprint(context.get("terminal_observation"))):
+                raise ValueError("终局边界已变化，规则推导已过期，请重新生成")
+            if (input_hashes.get("supplemental") != fingerprint(supplemental_input)
+                    or input_hashes.get("endgame") != fingerprint(endgame)):
+                raise ValueError("补充或终局档案已变化，规则推导已过期，请重新生成")
+            if "speech_evidence" in input_hashes:
+                speech = derivations.get("sheriff_speech_evidence") or {}
+                binding = speech.get("source_binding") or {}
+                source_binding = (supplemental_input or {}).get("source_binding") or {}
+                source = root / binding.get("path", "")
+                if (fingerprint(speech) != input_hashes["speech_evidence"]
+                        or binding.get("path") != source_binding.get("selected_transcript_path")
+                        or binding.get("sha256") != source_binding.get("selected_transcript_sha256")
+                        or not source.is_file()
+                        or hashlib.sha256(source.read_bytes()).hexdigest() != binding.get("sha256")):
+                    raise ValueError("警上发言旁证的字幕来源已变化，请重新生成规则推导")
+            normalized = apply_precomputed(dossier, source_voting, derivations)
+        except (ValueError, KeyError, IndexError, TypeError) as exc:
+            raise PublishError(f"{season}/{folder.name}：{exc}") from exc
+        dossier, voting = normalized["dossier"], normalized["voting"]
+        report_terminal = derivations.get("terminal")
+        if report_terminal is not None:
+            if (not isinstance(report_terminal, dict)
+                    or type(report_terminal.get("round")) is not int
+                    or report_terminal.get("phase") not in {"night", "day"}):
+                raise PublishError("规则推导终局缺少有效日夜边界")
+            terminal_boundary = {"round": report_terminal["round"],
+                                 "phase": report_terminal["phase"]}
+            existing_terminal = context.get("terminal_observation")
+            if existing_terminal is not None:
+                if (not isinstance(existing_terminal, dict)
+                        or type(existing_terminal.get("round")) is not int
+                        or existing_terminal.get("phase") not in {"night", "day"}):
+                    raise PublishError("正式终局观察缺少有效日夜边界")
+                if (existing_terminal["round"], existing_terminal["phase"]
+                        ) != (terminal_boundary["round"], terminal_boundary["phase"]):
+                    raise PublishError("规则推导与正式终局边界不一致")
+            context["terminal_observation"] = terminal_boundary
         if not context.get("terminal_observation") and audit is not None:
             audited_terminal = (audit.get("game_flow") or {}).get("terminal")
             if (isinstance(audited_terminal, dict)
@@ -801,29 +800,20 @@ def _schema_sql() -> str:
     return (Path(__file__).with_name("schema.sql")).read_text(encoding="utf-8")
 
 
-def _person_ids(conn, names: set[str]) -> dict[str, str]:
-    result: dict[str, str] = {}
-    # A local jcms.people table is an optional identity source. The public
-    # schema deliberately has no FK or dependency on the source database.
-    conn.execute("SAVEPOINT person_lookup")
+def _person_ids(root: Path, names: set[str]) -> dict[str, str]:
     try:
-        cols = conn.execute(
-            "SELECT column_name FROM information_schema.columns "
-            "WHERE table_schema = %s AND table_name = %s AND column_name = ANY(%s)",
-            ("jcms", "people", ["id", "name"]),
-        ).fetchall()
-        if {row["column_name"] for row in cols} == {"id", "name"}:
-            rows = conn.execute(
-                "SELECT name, id::text AS id FROM jcms.people WHERE name = ANY(%s)", (list(names),)
-            ).fetchall()
-            result.update({row["name"]: row["id"] for row in rows})
-        conn.execute("RELEASE SAVEPOINT person_lookup")
-    except psycopg.Error:
-        # No jcms schema or permissions: use deterministic public UUIDs.
-        conn.execute("ROLLBACK TO SAVEPOINT person_lookup")
-    for name in names:
-        result.setdefault(name, str(uuid.uuid5(PERSON_NAMESPACE, name.strip().casefold())))
-    return result
+        return load_people(Path(root) / "website/assets/people.json").ids_for(names)
+    except PeopleRegistryError as exc:
+        raise PublishError(str(exc)) from exc
+
+
+def prepare_release(root: Path, season: str | list[str], sample: str | None = None
+                    ) -> tuple[list[dict], str, str, dict[str, str]]:
+    entries, games_hash, rules_hash = load_release(root, season, sample)
+    names = {seat["name"] for item in entries for seat in item["dossier"].get("seats", [])}
+    person_ids = _person_ids(root, names)
+    source_hash = digest_bytes(canonical_json({"games": games_hash, "people": person_ids}))
+    return entries, source_hash, rules_hash, person_ids
 
 
 def _create_schema(conn) -> None:
@@ -845,14 +835,12 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22", s
             *, activate: bool = True) -> dict:
     seasons = publication_seasons(season)
     season_label = "_".join(seasons)
-    entries, source_hash, rules_hash = load_release(root, seasons, sample)
+    entries, source_hash, rules_hash, person_ids = prepare_release(root, seasons, sample)
     release_id = _release_id(season_label, source_hash, rules_hash)
     conn = _connect("masters_web")
     try:
         with conn.transaction():
             _create_schema(conn)
-            names = {seat["name"] for item in entries for seat in item["dossier"].get("seats", [])}
-            person_ids = _person_ids(conn, names)
             existing = conn.execute("SELECT game_count FROM releases WHERE id = %s", (release_id,)).fetchone()
             if existing:
                 if existing["game_count"] != len(entries):
@@ -879,6 +867,7 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22", s
                         player["roles"][seat["role"] or "身份未知"] += 1
                 manifest = {"season": season_label, "seasons": seasons, "publication_format_version": PUBLICATION_FORMAT_VERSION,
                             "statistics_version": STATISTICS_VERSION, "games": manifest_games,
+                            "people": person_ids,
                             "rules": {s: sorted(_logical_rules(Path(root), s)[0].items()) for s in seasons}}
                 conn.execute(
                     "INSERT INTO releases(id, season, game_count, source_hash, rules_hash, manifest) "
@@ -914,13 +903,72 @@ def publish(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22", s
                              seat["role"], seat["faction"]),
                         )
             if activate:
-                conn.execute(
-                    "INSERT INTO active_release(singleton, release_id) VALUES(true,%s) "
-                    "ON CONFLICT(singleton) DO UPDATE SET release_id=EXCLUDED.release_id",
-                    (release_id,),
-                )
+                _activate_release(conn, release_id)
         return {"id": release_id, "seasons": seasons, "game_count": len(entries), "source_hash": source_hash,
                 "rules_hash": rules_hash, "activated": activate, "idempotent": bool(existing)}
+    finally:
+        conn.close()
+
+
+def _review_seasons(root: Path, seasons: list[str]) -> list[str]:
+    registry = json.loads((root / "config/seasons.json").read_text(encoding="utf-8-sig"))["seasons"]
+    return [season for season in seasons
+            if registry.get(season, {}).get("bluff_entry")
+            or (root / f"website/assets/bluffs/{season}.json").is_file()]
+
+
+def _activate_release(conn, release_id: str) -> dict:
+    """The only active-pointer writer; enforce scope and review readiness here."""
+    # Serialize the check and pointer update, including the first publication.
+    conn.execute("LOCK TABLE active_release IN SHARE ROW EXCLUSIVE MODE")
+    row = conn.execute("SELECT game_count FROM releases WHERE id = %s", (release_id,)).fetchone()
+    if not row:
+        raise PublishError("发布批次不存在")
+    retained = {item["season"] for item in conn.execute(
+        "SELECT DISTINCT g.season FROM games g JOIN active_release a ON a.release_id = g.release_id"
+    ).fetchall()}
+    seasons = {item["season"] for item in conn.execute(
+        "SELECT DISTINCT season FROM games WHERE release_id = %s", (release_id,)
+    ).fetchall()}
+    missing = retained - seasons
+    if missing:
+        raise PublishError("候选发布批次缺少当前活动赛季，停止替换：" + ", ".join(sorted(missing)))
+    required = set(_review_seasons(PACKAGE_ROOT, sorted(seasons)))
+    required.update(item["season"] for item in conn.execute(
+        "SELECT season FROM active_bluff_reviews b JOIN active_release a ON a.release_id = b.release_id"
+    ).fetchall())
+    ready = {item["season"] for item in conn.execute(
+        "SELECT season FROM active_bluff_reviews WHERE release_id = %s", (release_id,)
+    ).fetchall()}
+    if required - ready:
+        raise PublishError("候选发布批次缺少已校验的悍跳数据：" + ", ".join(sorted(required - ready)))
+    conn.execute(
+        "INSERT INTO active_release(singleton, release_id) VALUES(true,%s) "
+        "ON CONFLICT(singleton) DO UPDATE SET release_id=EXCLUDED.release_id", (release_id,)
+    )
+    return {"id": release_id, "game_count": row["game_count"], "activated": True}
+
+
+def publish_complete(root: Path = DEFAULT_SOURCE_ROOT, season: str | list[str] = "S22") -> dict:
+    """Prepare immutable games, then commit all reviews and activation together."""
+    from . import bluff_store
+
+    root = Path(root)
+    seasons = publication_seasons(season)
+    reviews = _review_seasons(root, seasons)
+    for code in reviews:
+        if not (root / f"website/assets/bluffs/{code}.json").is_file():
+            raise PublishError(f"{code}缺少已确认悍跳发布输入；先准备并人工确认")
+    result = publish(root, seasons, activate=False)
+    conn = _connect("masters_web")
+    try:
+        with conn.transaction():
+            publications = [bluff_store.publish_review(
+                code, root / f"website/assets/bluffs/{code}.json",
+                release_id=result["id"], connection=conn, root=root,
+            ) for code in reviews]
+            _activate_release(conn, result["id"])
+        return {**result, "activated": True, "bluff_publications": publications}
     finally:
         conn.close()
 
@@ -930,14 +978,8 @@ def activate(release_id: str) -> dict:
     try:
         with conn.transaction():
             _create_schema(conn)
-            row = conn.execute("SELECT game_count FROM releases WHERE id = %s", (release_id,)).fetchone()
-            if not row:
-                raise PublishError("发布批次不存在")
-            conn.execute(
-                "INSERT INTO active_release(singleton, release_id) VALUES(true,%s) "
-                "ON CONFLICT(singleton) DO UPDATE SET release_id=EXCLUDED.release_id", (release_id,)
-            )
-        return {"id": release_id, "game_count": row["game_count"], "activated": True}
+            result = _activate_release(conn, release_id)
+        return result
     finally:
         conn.close()
 

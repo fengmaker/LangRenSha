@@ -27,6 +27,7 @@ class ReviewApplyError(ValueError):
 
 REVIEW_FORMAT = "masters-incremental-review-v1"
 REVIEW_FORMAT_V2 = "masters-incremental-review-v2"
+NOTE_REVISIONS_FORMAT = "masters-incremental-note-revisions-v1"
 HASH_RE = re.compile(r"^[a-f0-9]{64}$")
 IMMUTABLE_DOSSIER_FIELDS = {"slug", "season", "board", "phase", "files"}
 
@@ -188,6 +189,12 @@ def _apply_note(candidate: dict, note: str, review_id: str, *, root: Path,
     with tempfile.TemporaryDirectory(prefix="incremental-note-", dir=root / "data") as temp:
         response_path = Path(temp) / "note_response.json"
         result = run_json(prompt, response_path, root=root, codex=codex)
+    return _apply_note_result(candidate, note, review_id, result)
+
+
+def _apply_note_result(candidate: dict, note: str, review_id: str,
+                       result: dict) -> tuple[dict, list[dict], dict, list[str]]:
+    """Validate a note interpretation through the same boundary as legacy output."""
     if (not isinstance(result, dict) or not isinstance(result.get("patches"), list)
             or not isinstance(result.get("unresolved"), list)
             or not isinstance(result.get("bluffs"), dict)):
@@ -234,6 +241,33 @@ def _apply_note(candidate: dict, note: str, review_id: str, *, root: Path,
     if unresolved:
         return deepcopy(candidate), deepcopy(result["patches"]), deepcopy(bluff_review), unresolved
     return updated, deepcopy(result["patches"]), deepcopy(bluff_review), []
+
+
+def _load_note_revisions(path: Path | None, payload: dict, season: str) -> dict[str, dict]:
+    if path is None:
+        return {}
+    document = _read_json(path)
+    if (not isinstance(document, dict) or document.get("format") != NOTE_REVISIONS_FORMAT
+            or document.get("season") != season or not isinstance(document.get("games"), list)):
+        raise ReviewApplyError(f"备注修订文件必须为 {NOTE_REVISIONS_FORMAT}，且赛季为 {season}")
+    selected = {game.get("review_id"): game for game in payload["games"]
+                if isinstance(game, dict) and game.get("reviewed") is True
+                and isinstance(game.get("review_id"), str)}
+    revisions = {}
+    for revision in document["games"]:
+        if not isinstance(revision, dict) or not isinstance(revision.get("review_id"), str):
+            raise ReviewApplyError("备注修订缺少复核ID")
+        review_id = revision["review_id"]
+        game = selected.get(review_id)
+        if game is None or review_id in revisions:
+            raise ReviewApplyError(f"备注修订必须唯一对应本次已勾选对局：{review_id}")
+        if any(field not in revision or revision[field] != game.get(field)
+               for field in ("candidate_sha256", "source_sha256", "note")):
+            raise ReviewApplyError(f"{review_id} 备注修订与候选版本、原文版本或备注原文不匹配")
+        if not isinstance(revision["note"], str) or not revision["note"].strip():
+            raise ReviewApplyError(f"{review_id} 备注修订必须绑定非空备注")
+        revisions[review_id] = revision
+    return revisions
 
 
 def _manifest_path(candidate: dict, entry: dict, root: Path, season: str) -> Path:
@@ -366,11 +400,13 @@ def _combine_bluff_reviews(note_review: dict, selections: dict) -> dict:
 
 
 def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
-                    run_ai: bool = True, codex: str = "codex") -> tuple[dict, list[dict]]:
+                    run_ai: bool = True, codex: str = "codex",
+                    note_revisions: Path | None = None) -> tuple[dict, list[dict]]:
     payload = _read_json(review_path)
     if (not isinstance(payload, dict) or payload.get("format") not in {REVIEW_FORMAT, REVIEW_FORMAT_V2}
             or payload.get("season") != season or not isinstance(payload.get("games"), list)):
         raise ReviewApplyError(f"复核文件必须为 {REVIEW_FORMAT} 或 {REVIEW_FORMAT_V2}，且赛季为 {season}")
+    revisions = _load_note_revisions(note_revisions, payload, season)
     state = load_state(root, season)
     manual_sha = sha256_file(review_path)
     archive_relative = f"data/reports/{season}/incremental/reviews/{manual_sha}.json"
@@ -411,6 +447,7 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
         saved_review = None
         unresolved: list[str] = []
         cached_formal = None
+        revision = revisions.get(game["review_id"])
         if accepted_path.is_file() and review_record_path.is_file():
             accepted_record = _read_json(review_record_path)
             if (not isinstance(accepted_record, dict)
@@ -421,6 +458,7 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
                 accepted_record = None
             if (accepted_record is not None and accepted_record.get("note", "") == game["note"]
                     and accepted_record.get("bluffs_input") == game.get("bluffs")
+                    and (revision is None or accepted_record.get("note_revision") == revision)
                     and accepted_formal_path.is_file()):
                 accepted = _read_json(accepted_path)
                 cached_formal = _read_json(accepted_formal_path)
@@ -434,23 +472,17 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
                 saved_review = accepted_record
             elif phases.get("database") == "done":
                 raise ReviewApplyError(f"{game['review_id']} 已入库备注或悍跳选择与当前导出不同；请走正式修订流程")
-            else:
-                note = game["note"]
-                if note.strip():
-                    if not run_ai:
-                        raise ReviewApplyError(f"{game['review_id']} 有备注；请由当前窗口模型准备结构化修订后再应用")
-                    candidate, patches, bluff_review, unresolved = _apply_note(
-                        candidate, note, game["review_id"], root=root, codex=codex)
-                    if not unresolved:
-                        candidate = validate_candidate(candidate, entry, source_path, root=root)
-                accepted = candidate
-        else:
+        if saved_review is None:
             note = game["note"]
             if note.strip():
-                if not run_ai:
-                    raise ReviewApplyError(f"{game['review_id']} 有备注；请由当前窗口模型准备结构化修订后再应用")
-                candidate, patches, bluff_review, unresolved = _apply_note(
-                    candidate, note, game["review_id"], root=root, codex=codex)
+                if revision is not None:
+                    candidate, patches, bluff_review, unresolved = _apply_note_result(
+                        candidate, note, game["review_id"], revision)
+                elif run_ai:
+                    candidate, patches, bluff_review, unresolved = _apply_note(
+                        candidate, note, game["review_id"], root=root, codex=codex)
+                else:
+                    raise ReviewApplyError(f"{game['review_id']} 有备注；请由当前窗口模型准备结构化修订并通过 --note-revisions 传入")
                 if not unresolved:
                     candidate = validate_candidate(candidate, entry, source_path, root=root)
             accepted = candidate
@@ -460,12 +492,17 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
         from voting_records import validate as validate_voting
         validate_game(accepted["dossier"], check_files=True, allow_incomplete=True)
         validate_voting(accepted["voting"])
-        endgame = {"schema_version": 1, "game_slug": accepted["dossier"]["slug"], "phases": []}
+        from endgame_records import validate as validate_endgame
+        endgame = deepcopy(accepted.get("endgame", {
+            "schema_version": 1, "game_slug": accepted["dossier"]["slug"], "phases": []}))
+        if not isinstance(endgame, dict) or endgame.get("game_slug") != accepted["dossier"]["slug"]:
+            raise ReviewApplyError(f"{game['review_id']} 终局与对局slug不一致")
+        validate_endgame(endgame)
         if cached_formal is not None and not unresolved:
             from game_derivations import apply_precomputed, fingerprint
             try:
                 if cached_formal.get("endgame") != endgame:
-                    raise ValueError("保存的终局占位档案已变化")
+                    raise ValueError("保存的终局档案已变化")
                 if (cached_formal["derivations"].get("input_hashes", {}).get("endgame")
                         != fingerprint(endgame)):
                     raise ValueError("保存的规则派生未绑定当前终局档案")
@@ -498,6 +535,10 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
         manual_sha_for_game = saved_review.get("manual_sha256") if saved_review else manual_sha
         review_record = _review_record(accepted, entry, game, note, patches,
                                        manual_source_path, manual_sha_for_game, bluff_review)
+        if revision is not None:
+            review_record["note_revision"] = deepcopy(revision)
+        elif saved_review and "note_revision" in saved_review:
+            review_record["note_revision"] = deepcopy(saved_review["note_revision"])
         if saved_review:
             # Retain exact original export provenance on retries; a later export
             # may contain unrelated games or formatting changes.
@@ -579,6 +620,7 @@ def _import_database(plan: dict, state: dict, season: str, root: Path) -> dict:
     from database import connect
     from game_records import import_game
     from voting_records import import_voting
+    from endgame_records import import_endgame
 
     if (sha256_file(plan["candidate_path"]) != plan["game"]["candidate_sha256"]
             or sha256_file(plan["source_path"]) != plan["game"]["source_sha256"]):
@@ -588,8 +630,9 @@ def _import_database(plan: dict, state: dict, season: str, root: Path) -> dict:
         game_receipt = import_game(plan["prepared_formal"]["dossier"], allow_incomplete=True,
                                    conn=conn, derivations=plan["prepared_formal"]["derivations"])
         voting_receipt = import_voting(plan["prepared_formal"]["voting"], conn=conn)
+        endgame_receipt = import_endgame(plan["prepared_formal"]["endgame"], conn=conn)
     item["database_receipt"] = {"media": media_receipt, "game": game_receipt,
-                                "voting": voting_receipt}
+                                "voting": voting_receipt, "endgame": endgame_receipt}
     phases["database"] = "done"
     item["applied"] = True
     save_state(root, season, state)
@@ -818,8 +861,6 @@ def _publish(plans: list[dict], state: dict, season: str, root: Path) -> None:
     import workflow
     _merge_bluff_records(root, season, pending, state)
     jobs = workflow.stage_commands("publish", season, root=root, photos=True)
-    seasons = workflow.formal_seasons(root)
-    workflow.ensure_retained_seasons(seasons)
     for plan in pending:
         plan["item"].setdefault("phases", {})["publish"] = "running"
     save_state(root, season, state)
@@ -835,32 +876,98 @@ def _publish(plans: list[dict], state: dict, season: str, root: Path) -> None:
     save_state(root, season, state)
 
 
-def _verify(plans: list[dict], state: dict, season: str, root: Path) -> None:
+def _acceptance_report_path(root: Path, season: str, bvids: list[str]) -> Path:
+    directory = root / "data" / "reports" / season / "incremental"
+    if len(bvids) == 1:
+        # Keep the previous per-BVID name usable by existing state receipts.
+        name = f"publication_acceptance_{bvids[0]}.json"
+    else:
+        identity = json.dumps([season, sorted(bvids)], ensure_ascii=False,
+                              separators=(",", ":")).encode("utf-8")
+        suffix = hashlib.sha256(identity).hexdigest()[:12]
+        name = f"publication_acceptance_batch_{suffix}.json"
+    return directory / name
+
+
+def _existing_acceptance_receipt(plans: list[dict]) -> dict | None:
+    references = [plan["item"].get("publication_acceptance_path") for plan in plans]
+    if not references or not references[0] or any(path != references[0] for path in references):
+        return None
+    receipt = {"path": references[0]}
+    for item_key, receipt_key in (("publication_acceptance_sha256", "sha256"),
+                                  ("published_release_id", "release_id"),
+                                  ("publication_acceptance_bvids", "selected_bvids")):
+        values = [plan["item"].get(item_key) for plan in plans]
+        if values[0] is not None and all(value == values[0] for value in values):
+            receipt[receipt_key] = deepcopy(values[0])
+    return receipt
+
+
+def _verify(plans: list[dict], state: dict, season: str, root: Path) -> dict | None:
     import workflow
-    unique = {}
+    if not any(plan["item"].get("phases", {}).get("verify") != "done" for plan in plans):
+        return _existing_acceptance_receipt(plans)
+
+    seasons = workflow.formal_seasons(root)
+    if season not in seasons:
+        raise ReviewApplyError(f"{season}还没有正式档案；采集与转写验收分别使用对应阶段报告")
+
+    # If one selected game still needs verification, issue one receipt for the
+    # complete application batch and attach that receipt to every selected game.
+    bvids = sorted({plan["game"]["bvid"] for plan in plans})
+    report_path = _acceptance_report_path(root, season, bvids)
     for plan in plans:
-        unique.setdefault(plan["game"]["bvid"], plan)
-    for bvid, plan in unique.items():
-        if plan["item"].get("phases", {}).get("verify") == "done":
-            continue
         plan["item"].setdefault("phases", {})["verify"] = "running"
-        save_state(root, season, state)
-        try:
-            _run_jobs(workflow.stage_commands("verify", season, root=root, bvid=bvid), root)
-        except Exception:
+    save_state(root, season, state)
+    try:
+        job = workflow.command(
+            "website/check_publication.py", "--seasons", season, "--bvid", *bvids,
+            "--output", str(report_path),
+        )
+        _run_jobs([job], root)
+        acceptance = _read_json(report_path)
+        selected_bvids = (acceptance.get("source", {}).get("selected_bvids")
+                          if isinstance(acceptance, dict) else None)
+        if (not isinstance(acceptance, dict) or acceptance.get("state") != "passed"
+                or not isinstance(selected_bvids, list)
+                or set(selected_bvids) != set(bvids)):
+            raise ReviewApplyError("发布验收回执未通过或BVID范围与本批不一致")
+        api = acceptance.get("api")
+        release_id = api.get("release_id") if isinstance(api, dict) else None
+        if not isinstance(release_id, str) or not release_id:
+            raise ReviewApplyError("发布验收回执缺少release_id")
+        receipt = {
+            "path": report_path.relative_to(root).as_posix(),
+            "sha256": sha256_file(report_path),
+            "release_id": release_id,
+            "selected_bvids": bvids,
+        }
+    except Exception:
+        for plan in plans:
             plan["item"].setdefault("phases", {})["verify"] = "failed"
-            save_state(root, season, state)
-            raise
-        plan["item"].setdefault("phases", {})["verify"] = "done"
         save_state(root, season, state)
+        raise
+    for plan in plans:
+        item = plan["item"]
+        item.setdefault("phases", {})["verify"] = "done"
+        item.update(
+            publication_acceptance_path=receipt["path"],
+            publication_acceptance_sha256=receipt["sha256"],
+            publication_acceptance_bvids=deepcopy(receipt["selected_bvids"]),
+            published_release_id=receipt["release_id"],
+        )
+    save_state(root, season, state)
+    return receipt
 
 
 def apply_review(review_path: Path, *, season: str = "S23", root: Path = ROOT,
                  apply: bool = False, publish: bool = False, codex: str = "codex",
-                 backup: bool = True, run_ai: bool = True) -> dict:
+                 backup: bool = True, run_ai: bool = True,
+                 note_revisions: Path | None = None) -> dict:
     if publish and not apply:
         raise ReviewApplyError("--publish 必须与 --apply 一起使用")
-    state, plans = _prepare_export(review_path, season, root=root, run_ai=run_ai, codex=codex)
+    state, plans = _prepare_export(review_path, season, root=root, run_ai=run_ai, codex=codex,
+                                   note_revisions=note_revisions)
     # A pending publication from an earlier successful DB/formal phase can be
     # resumed even if that review row was later removed from the export.
     if apply and publish:
@@ -959,14 +1066,21 @@ def apply_review(review_path: Path, *, season: str = "S23", root: Path = ROOT,
             _import_database(plan, state, season, root)
         if plan["item"].get("phases", {}).get("formal") != "done":
             _write_formal(plan, state, season, root)
+    acceptance_receipt = None
     if publish:
         _publish(plans, state, season, root)
-        _verify(plans, state, season, root)
+        acceptance_receipt = _verify(plans, state, season, root)
     report["state"] = "completed"
     report["games"] = [{"review_id": plan["game"]["review_id"],
                          "formal_dir": plan["formal_dir_relative"],
                          "phases": deepcopy(plan["item"].get("phases", {}))}
                         for plan in plans]
+    if acceptance_receipt is not None:
+        report["publication_acceptance"] = acceptance_receipt
+        for game, plan in zip(report["games"], plans):
+            item = plan["item"]
+            game["publication_acceptance_path"] = item.get("publication_acceptance_path")
+            game["published_release_id"] = item.get("published_release_id")
     return report
 
 
@@ -977,10 +1091,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--apply", action="store_true", help="写入数据库、正式档案和增量状态")
     parser.add_argument("--publish", action="store_true", help="完整发布并验收所选BVID；必须同时指定--apply")
     parser.add_argument("--codex", default="codex")
+    parser.add_argument("--note-revisions", type=Path, help="当前窗口解释自由备注后保存的结构化修订JSON")
     args = parser.parse_args(argv)
     try:
         report = apply_review(args.review_export, season=args.season, apply=args.apply,
-                              publish=args.publish, codex=args.codex, run_ai=False)
+                              publish=args.publish, codex=args.codex, run_ai=False,
+                              note_revisions=args.note_revisions)
     except (ReviewApplyError, ValueError, OSError, RuntimeError,
             subprocess.CalledProcessError) as exc:
         print(json.dumps({"state": "blocked", "error": str(exc)}, ensure_ascii=False, indent=2), file=sys.stderr)

@@ -3,6 +3,7 @@ from pathlib import Path
 import copy
 import hashlib
 import os
+import tempfile
 import sys
 import unittest
 from unittest.mock import patch
@@ -122,6 +123,79 @@ class EndgameDatabaseTests(unittest.TestCase):
                     raise RuntimeError("later import failed")
             with database.connect() as conn:
                 self.assertEqual(conn.execute("SELECT count(*) n FROM games WHERE slug=%s", (sidecar["game_slug"],)).fetchone()["n"], 0)
+
+    def test_incremental_import_preserves_rush_and_empty_endgames_and_rolls_back_on_failure(self):
+        import apply_incremental_review as apply
+        import game_records
+        import voting_records
+
+        def import_game(dossier, *, conn, **kwargs):
+            row = conn.execute("INSERT INTO games(slug) VALUES(%s) RETURNING id", (dossier["slug"],)).fetchone()
+            return {"id": row["id"]}
+
+        def import_voting(voting, *, conn):
+            game = conn.execute("SELECT id FROM games WHERE slug=%s", (voting["game_slug"],)).fetchone()
+            conn.execute("""INSERT INTO game_ballots(game_id,ballot_key,day_number,kind,ballot_number,stage,status)
+                VALUES(%s,'incremental-ballot',1,'exile',1,'initial','partial')""", (game["id"],))
+            return {"ballots": 1}
+
+        with tempfile.TemporaryDirectory(dir=ROOT / "tmp") as temp, \
+                patch.dict(os.environ, {"DATABASE_SCHEMA": self.schema}), \
+                patch.object(database, "import_media", return_value={}), \
+                patch.object(game_records, "import_game", side_effect=import_game), \
+                patch.object(voting_records, "import_voting", side_effect=import_voting), \
+                patch.object(apply, "save_state"):
+            root = Path(temp)
+            candidate_path, source_path = root / "candidate.json", root / "source.json"
+            candidate_path.write_text("{}")
+            source_path.write_text("{}")
+            for has_rush in (True, False):
+                with self.subTest(has_rush=has_rush):
+                    slug = "incremental-" + uuid.uuid4().hex
+                    sidecar = {"schema_version": 1, "game_slug": slug, "phases": [
+                        {"kind": "wolf_rush", "day": 2, "actor": None,
+                         "declared_targets": [9], "result": "werewolf_win"}] if has_rush else []}
+                    plan = {"item": {}, "game": {"review_id": slug, "bvid": "BVtest", "page": 1,
+                            "candidate_sha256": apply.sha256_file(candidate_path),
+                            "source_sha256": apply.sha256_file(source_path)},
+                            "candidate_path": candidate_path, "source_path": source_path,
+                            "manifest": root / "manifest.json", "prepared_formal": {
+                                "dossier": {"slug": slug}, "voting": {"game_slug": slug},
+                                "endgame": sidecar, "derivations": {}}}
+                    receipt = apply._import_database(plan, {}, "S23", root)
+                    self.assertEqual(receipt["endgame"], {"phases": int(has_rush)})
+                    with database.connect() as conn:
+                        rows = conn.execute("""SELECT p.day_number,p.actor_seat,p.declared_targets,p.result
+                            FROM game_endgame_phases p JOIN games g ON g.id=p.game_id
+                            WHERE g.slug=%s""", (slug,)).fetchall()
+                        self.assertEqual(rows, [{"day_number": 2, "actor_seat": None,
+                                               "declared_targets": [9], "result": "werewolf_win"}]
+                                         if has_rush else [])
+                        self.assertEqual(conn.execute("""SELECT count(*) n FROM game_ballots b
+                            JOIN games g ON g.id=b.game_id WHERE g.slug=%s""", (slug,)).fetchone()["n"], 1)
+                        conn.execute("DELETE FROM games WHERE slug=%s", (slug,))
+
+            # A failure after inserting the terminal phases rolls back the
+            # dossier and ballots as well, and never marks the state applied.
+            slug = "incremental-rollback-" + uuid.uuid4().hex
+            plan["item"] = {}
+            plan["prepared_formal"]["dossier"]["slug"] = slug
+            plan["prepared_formal"]["voting"]["game_slug"] = slug
+            plan["prepared_formal"]["endgame"] = {"schema_version": 1, "game_slug": slug, "phases": [
+                {"kind": "wolf_rush", "day": 2, "actor": None,
+                 "declared_targets": [9], "result": "werewolf_win"}]}
+            real_import = endgame_records.import_endgame
+
+            def fail_after_endgame(value, *, conn):
+                real_import(value, conn=conn)
+                raise RuntimeError("endgame import failed")
+
+            with patch.object(endgame_records, "import_endgame", side_effect=fail_after_endgame):
+                with self.assertRaisesRegex(RuntimeError, "endgame import failed"):
+                    apply._import_database(plan, {}, "S23", root)
+            self.assertEqual(plan["item"]["phases"], {})
+            with database.connect() as conn:
+                self.assertEqual(conn.execute("SELECT count(*) n FROM games WHERE slug=%s", (slug,)).fetchone()["n"], 0)
 
 
 if __name__ == "__main__":

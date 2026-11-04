@@ -65,7 +65,7 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
   const isWolfPartner = seat?.role === "平民" && (rounds ?? []).some((round) => round.number === 1 &&
     (round.night ?? []).some((event) => event.slot === "wolf_girl_confession" && event.action === "confess" &&
       event.targets?.length === 1 && event.targets[0] === seat.seat));
-  const note = seat?.is_puppet ? "傀儡 · 不带刀" : isWolfPartner ? "狼伴侣 · 不带刀" : seat?.role === "混血儿"
+  const note = seat?.role?.startsWith("盗宝") ? "底牌：盗宝大师\n平民与对应神牌二选一，始终为狼人阵营" : seat?.is_puppet ? "傀儡 · 不带刀" : isWolfPartner ? "狼伴侣 · 不带刀" : seat?.role === "混血儿"
     ? `榜样：${target == null ? "待核" : `${target}号`}\n个人阵营：${personalFaction(seat)}`
     : seat?.role === "机械狼"
       ? [target == null ? "学习目标待核" : `学习目标：${target}号`, seat.learned_role ? `学习结果：${seat.learned_role}` : ""].filter(Boolean).join("\n")
@@ -81,7 +81,7 @@ function SeatCard({ seat, number, rounds, season }: { seat?: Seat; number: numbe
           ? <ArchiveLink href={`/players/${encodeURIComponent(seat.person_id)}${season ? `?season=${encodeURIComponent(season)}` : ""}`}>{name}</ArchiveLink>
           : name}
       </h4>
-      <p className={styles.seatRole}>{seat?.role || "身份未知"}</p>
+      <p className={styles.seatRole}>{seat?.role_label || seat?.role || "身份未知"}</p>
     </div>
     <span className={styles.seatFaction}>{seat ? factionLabel(seat.faction) : "座位记录缺失"}</span>
     {note ? <p className={styles.seatNote}>{note}</p> : null}

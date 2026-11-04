@@ -15,7 +15,6 @@ from threading import Lock
 import time
 from urllib.parse import quote, urlencode
 from urllib.request import urlopen
-import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "scripts")]
@@ -56,7 +55,7 @@ def counts(games: list[dict]) -> dict[str, int]:
 def load_source(seasons: list[str], bvids_by_season: dict[str, list[str]] | None = None
                 ) -> tuple[dict[str, dict], dict[str, dict[str, int]], str, str]:
     if bvids_by_season is None:
-        entries, source_hash, rules_hash = publisher.load_release(publisher.DEFAULT_SOURCE_ROOT, seasons)
+        entries, source_hash, rules_hash, person_ids = publisher.prepare_release(publisher.DEFAULT_SOURCE_ROOT, seasons)
     else:
         entries, source_hashes, rule_hashes = [], [], {}
         for season in seasons:
@@ -69,8 +68,9 @@ def load_source(seasons: list[str], bvids_by_season: dict[str, list[str]] | None
                 rule_hashes[season] = rules_hash
         source_hash = hashlib.sha256("\n".join(sorted(source_hashes)).encode("utf-8")).hexdigest()
         rules_hash = hashlib.sha256(json.dumps(rule_hashes, sort_keys=True).encode("utf-8")).hexdigest()
-    names = {seat["name"] for item in entries for seat in item["dossier"]["seats"]}
-    person_ids = {name: str(uuid.uuid5(publisher.PERSON_NAMESPACE, name.strip().casefold())) for name in names}
+    if bvids_by_season is not None:
+        names = {seat["name"] for item in entries for seat in item["dossier"]["seats"]}
+        person_ids = publisher._person_ids(publisher.DEFAULT_SOURCE_ROOT, names)
     games = {}
     by_season = {season: [] for season in seasons}
     for item in entries:

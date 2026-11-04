@@ -9,7 +9,6 @@ from pathlib import Path
 import re
 import sys
 import traceback
-import uuid
 
 import psycopg
 
@@ -18,11 +17,7 @@ from . import publisher
 
 def _preflight(root: Path, season: str | list[str], sample: str | None) -> dict:
     seasons = publisher.publication_seasons(season)
-    entries, source_hash, rules_hash = publisher.load_release(root, seasons, sample)
-    names = {seat["name"] for item in entries for seat in item["dossier"].get("seats", [])}
-    identities = {
-        name: str(uuid.uuid5(publisher.PERSON_NAMESPACE, name.strip().casefold())) for name in names
-    }
+    entries, source_hash, rules_hash, identities = publisher.prepare_release(root, seasons, sample)
     rounds = ballots = votes = seats = 0
     for item in entries:
         doc = publisher._public_game(item["dossier"], item["voting"], item["endgame"], item["audit"],
@@ -50,26 +45,28 @@ def main(argv: list[str] | None = None) -> int:
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--season", default=None)
     selection.add_argument("--seasons", nargs="+", help="publish all selected seasons in one atomic release")
-    parser.add_argument("--sample", metavar="BVID", help="publish only the selected sample video")
+    parser.add_argument("--sample", metavar="BVID", help="preflight only the selected sample video")
     parser.add_argument("--list", action="store_true", help="list current in-scope game IDs")
     parser.add_argument("--activate", metavar="RELEASE", help="activate an existing immutable release")
     parser.add_argument("--check", action="store_true", help="validate source and publication data without writes")
     parser.add_argument("--debug", action="store_true", help="print a local traceback on command failure")
     args = parser.parse_args(argv)
+    explicit_seasons = args.seasons or args.season
+    preview = args.check or args.sample or not explicit_seasons
     args.season = args.seasons or args.season or "S22"
     if args.sample and not re.fullmatch(r"BV[0-9A-Za-z]{10}", args.sample):
         parser.error("--sample expects a valid BVID")
-    if args.activate and (args.sample or args.check or args.list):
+    if args.activate and (args.sample or args.check or args.list or explicit_seasons):
         parser.error("--activate cannot be combined with source selection options")
     try:
         if args.list:
             result = {"season": args.season, "items": publisher.list_games(args.root, args.season)}
         elif args.activate:
             result = publisher.activate(args.activate)
-        elif args.check:
+        elif preview:
             result = _preflight(args.root, args.season, args.sample)
         else:
-            result = publisher.publish(args.root, args.season, args.sample)
+            result = publisher.publish_complete(args.root, args.season)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except publisher.PublishError as exc:

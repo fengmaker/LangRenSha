@@ -1,7 +1,9 @@
 "use client";
 
+import { StaticData } from "@/components/static-data";
+import { fetchGamesIndex, fetchOverview, updateStaticQuery } from "@/lib/static-browser";
 import { ArchiveLink } from "@/components/archive-link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type { GameSummary, Overview, PageResult } from "@/lib/types";
 import { filterAndSortGames, validateGameFilters } from "@/lib/game-query";
@@ -14,9 +16,7 @@ import styles from "./games.module.css";
 type IndexedGame = GameSummary & { search_text?: string };
 const PAGE_SIZE = 24;
 
-export function StaticGamesBrowser({ games, overview }: { games: { release_id: string; items: IndexedGame[] }; overview: Overview }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function LoadedGamesBrowser({ games, overview }: { games: { release_id: string; items: IndexedGame[] }; overview: Overview }) {
   const search = useSearchParams();
   const [filters, setFilters] = useState({
     q: search.get("q") ?? "", season: search.get("season") ?? "", phase: search.get("phase") ?? "",
@@ -50,16 +50,15 @@ export function StaticGamesBrowser({ games, overview }: { games: { release_id: s
       const next = new URLSearchParams(search.toString());
       if (pageValue !== null && String(page) !== pageValue) next.delete("page");
       else next.set("page", String(lastPage));
-      router.replace(`${pathname}?${next.toString()}`, { scroll: false });
+      updateStaticQuery(next, true);
     }
-  }, [page, pageValue, result.total, result.page_size, validationError, search, router, pathname]);
+  }, [page, pageValue, result.total, result.page_size, validationError, search]);
 
   function updateUrl(nextValues: Record<string, string>, replace = false) {
     const next = new URLSearchParams(search.toString());
     for (const [key, value] of Object.entries(nextValues)) value ? next.set(key, value) : next.delete(key);
     next.set("page", "1");
-    const href = `${pathname}?${next.toString()}`;
-    replace ? router.replace(href, { scroll: false }) : router.push(href, { scroll: false });
+    updateStaticQuery(next, replace);
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -82,4 +81,13 @@ export function StaticGamesBrowser({ games, overview }: { games: { release_id: s
     </section>
     <section className={styles.results} aria-labelledby="games-heading"><h2 id="games-heading">对局列表</h2>{validationError ? <div className="empty-state" role="alert"><p>{validationError}</p><p>请修正筛选条件后再检索。</p></div> : <><GameArchiveList games={result.items} /><Pagination page={result.page} pageSize={result.page_size} total={result.total} params={new URLSearchParams(search.toString())} /></>}</section>
   </>;
+}
+
+async function loadGames() {
+  const [games, overview] = await Promise.all([fetchGamesIndex(), fetchOverview()]);
+  return { games, overview };
+}
+
+export function StaticGamesBrowser() {
+  return <StaticData load={loadGames}>{(data) => <LoadedGamesBrowser {...data} />}</StaticData>;
 }

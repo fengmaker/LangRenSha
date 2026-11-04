@@ -1,0 +1,58 @@
+name: Deploy static site to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout published files
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Check static entrypoints and manifest
+        run: |
+          test -f site/index.html
+          test -f site/404.html
+          test -d site/_next
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('site')
+          manifest = json.loads((root / 'data/manifest.json').read_text(encoding='utf-8'))
+          assert manifest['complete'] is True
+          assert manifest['base_path'] == '/langrensha-site'
+          assert manifest['snapshot_id'] and manifest['build_id']
+          assert sum(p.stat().st_size for p in root.rglob('*') if p.is_file()) < 1_000_000_000
+          PY
+      - name: Configure Pages
+        uses: actions/configure-pages@v6.0.0
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site
+          retention-days: 1
+          include-hidden-files: true
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1

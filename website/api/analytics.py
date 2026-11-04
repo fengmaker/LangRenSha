@@ -51,15 +51,17 @@ def _role(seat: dict[str, Any]) -> str:
 
 
 def _effective_faction_detail(game: dict[str, Any], seat: dict[str, Any]) -> tuple[str | None, bool]:
-    """Resolve a recorded puppet's victory faction or a missing mixed-blood side.
+    """Resolve fixed wolf roles, a puppet, or a missing mixed-blood side.
 
-    The source snapshot remains untouched. An explicit puppet follows wolves;
-    otherwise a recorded faction is authoritative.
+    The source snapshot remains untouched. Treasure masters and explicit
+    puppets follow wolves; otherwise a recorded faction is authoritative.
     a missing mixed-blood faction is inferred only from one unique `choose`
     event and a known exemplar faction, with a recorded alignment event used as
     a consistency check.
     """
     faction = seat.get("faction")
+    if (seat.get("role") or "").startswith("盗宝"):
+        return "werewolf", False
     if (puppet := puppet_target(game)) is not None and seat.get('seat') == puppet:
         return 'werewolf', faction != 'werewolf'
     if faction is not None or seat.get("role") != MIXED_BLOOD_ROLE:
@@ -97,6 +99,23 @@ def _effective_faction_detail(game: dict[str, Any], seat: dict[str, Any]) -> tup
 def effective_faction(game: dict[str, Any], seat: dict[str, Any]) -> str | None:
     """Return the effective personal victory faction without mutating a snapshot."""
     return _effective_faction_detail(game, seat)[0]
+
+
+def role_label(game: dict[str, Any], seat: dict[str, Any]) -> str | None:
+    """Name a treasure master by its evidenced god card, preserving its base role."""
+    role = seat.get("role")
+    if role != "盗宝大师":
+        return role
+    names = {"毒师": "盗宝毒师", "蒙面人": "盗宝蒙面", "摄梦人": "盗宝摄梦",
+             "通灵师": "盗宝通灵", "猎人": "盗宝猎人"}
+    choices = set()
+    for round_ in game.get("rounds", []):
+        for event in round_.get("night", []):
+            if (event.get("slot") in {"treasure_choice", "s21_treasure_action"}
+                    and event.get("action") == "choose" and event.get("actor") == seat.get("seat")):
+                text = str(event.get("result") or "")
+                choices.update(name for name in names if name in text)
+    return names[choices.pop()] if len(choices) == 1 else role
 
 
 def _unique_information_seat(seats: list[dict[str, Any]]) -> int | None:
@@ -704,7 +723,7 @@ def _methodology_notes(games: list[dict[str, Any]]) -> list[str]:
         "候选名单缺失时，仅用同轮实际投向该局唯一预言家或通灵师的选票作为其可参选证据；没有该证据的轮次按缺失排除，每位玩家只在其为好人且有票权时增加排除数。",
         "每项比例附带对应对局列表，方便回查分母；无法判定的战绩保留为待定，不按败场或零分处理。",
         "混血儿阵营缺失时依据本局唯一榜样的个人胜利阵营推导；已记录的阵营说明必须一致。",
-        "投狼率计算有票权的好人放逐票，包含预言家和通灵师；PK及技能复投逐轮计入，明确弃票算失败，缺失选票及目标阵营未知时排除。放逐弃票次数只计好人放逐票中的明确弃票，包括规则默认弃票。",
+        "投狼率计算有票权的好人放逐票，包含预言家和通灵师；盗宝大师（含盗宝毒师、盗宝蒙面等）始终属于狼人阵营，即使当夜选平民也不改变阵营。其选票不计入投狼次数、投狼率或其他好人指标，好人投向盗宝身份计为投中狼人。PK及技能复投逐轮计入，明确弃票算失败，缺失选票及目标阵营未知时排除。放逐弃票次数只计好人放逐票中的明确弃票，包括规则默认弃票。",
         "拿狼率以已知个人阵营出场为分母，未知阵营排除；狼人自爆率只按明确的主动自爆事件计数并按选手每局去重；好人、狼人上警率和警下率按每局首次报名及已知警上/警下名单统计，阵营或名单未知时排除。",
     ]
     if unknown_candidates or not_applicable:
@@ -786,7 +805,8 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
             "game_id": game.get("id"), "season": game.get("season"),
             "date": game.get("date"), "game_number": game.get("game_number"),
             "phase": game.get("phase"), "board_name": (game.get("board") or {}).get("name"),
-            "role": seat.get("role"), "faction": faction, "faction_inferred": faction_inferred,
+            "role": seat.get("role"), "role_label": role_label(game, seat),
+            "faction": faction, "faction_inferred": faction_inferred,
             "result": result,
             "points": ledger_points, "cumulative_points": cumulative_half_points / 2,
             "pending_count": cumulative_pending,

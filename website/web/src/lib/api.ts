@@ -17,6 +17,8 @@ import { filterRankingEntries } from "@/lib/ranking-filter";
 import { filterBluffReview } from "@/lib/bluff-filter";
 import { parsePositivePage } from "@/lib/query-state";
 import { isStaticSite } from "@/lib/site-mode";
+import { ApiError } from "@/lib/api-error";
+export { ApiError } from "@/lib/api-error";
 import {
   getSnapshotBluffReview, getSnapshotGame, getSnapshotGames, getSnapshotLeaderboard,
   getSnapshotManifest, getSnapshotOverview, getSnapshotPlayer, getSnapshotPlayers,
@@ -24,13 +26,6 @@ import {
 } from "@/lib/snapshot-data";
 
 const API_BASE_URL = (process.env.API_BASE_URL ?? "http://127.0.0.1:8000").replace(/\/$/, "");
-
-export class ApiError extends Error {
-  constructor(readonly kind: "unavailable" | "not-found" | "invalid", message: string) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
 
 async function request<T>(path: string): Promise<T> {
   let response: Response;
