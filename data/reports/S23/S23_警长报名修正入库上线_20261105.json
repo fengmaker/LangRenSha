@@ -1,0 +1,402 @@
+{
+  "checked_at": "2026-11-05T08:15:00.013585+00:00",
+  "state": "passed",
+  "scope": "六局警长首次报名、首轮票权及选票修正；范围外数据内容指纹核对不变。",
+  "backup": {
+    "created_at": "2026-11-05T07:57:09.585758+00:00",
+    "backup": "D:\\langrensha\\data\\backups\\workflow-20261105T075626\\database.dump",
+    "bytes": 75484187,
+    "sha256": "60692d18b84c9f71e055566ef1846564834ca09bf2d70415aefa34d8db468c9f",
+    "archive_catalog_valid": true,
+    "restore_verified": false,
+    "active_release": {
+      "release_id": "S21_S22_S23-32c304c8a408553f-af68d320-p13-s2"
+    },
+    "formal_counts": [
+      {
+        "season": "S21",
+        "games": 27
+      },
+      {
+        "season": "S22",
+        "games": 148
+      },
+      {
+        "season": "S23",
+        "games": 93
+      }
+    ],
+    "web_content_sha256": "92c9168985f3b19160610b02ad46b71c9b8ea4c5cd7cb99d98b66d0d18ed95d7",
+    "receipt": "data/backups/workflow-20261105T075626/receipt.json"
+  },
+  "database_import": {
+    "database_checked": true,
+    "database_write": true,
+    "games": 6,
+    "games_unchanged": 0,
+    "database_write_passes": 1,
+    "verified_idempotent": false,
+    "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
+    "s22_unchanged": true,
+    "s22_fingerprint": {
+      "season_exists": true,
+      "games": 148,
+      "details": 148,
+      "seats": 1776,
+      "rounds": 473,
+      "events": 9285,
+      "targets": 2476,
+      "event_votes": 0,
+      "effects": 1,
+      "ballots": 346,
+      "choices": 2507,
+      "voting_days": 436,
+      "sheriff_registrations": 1776,
+      "files": 595,
+      "formal_receipts": 0,
+      "formal_annotations": 181,
+      "formal_tables_present": {
+        "game_formal_import_receipts": true,
+        "game_formal_annotations": true
+      },
+      "content_sha256": "3a3cb4db381d13f14383eed227430c78d8c28657517fa6e749478d98fd125050",
+      "content_row_counts": {
+        "games": 148,
+        "details": 148,
+        "seats": 1776,
+        "staff": 444,
+        "rounds": 473,
+        "events": 9285,
+        "targets": 2476,
+        "event_votes": 0,
+        "effects": 1,
+        "ballots": 346,
+        "ballot_choices": 2507,
+        "voting_days": 436,
+        "sheriff_registrations": 1776,
+        "files": 595,
+        "formal_receipts": 0,
+        "formal_annotations": 181,
+        "legacy_templates": 326
+      }
+    },
+    "s23_before": null,
+    "s23_after": {
+      "bili-BV1D2ak6XEji-p01-g02": "bd9faa387a49d9e4721b919114433cac8e90934399a3232754213ec72fc06c11",
+      "bili-BV1D2ak6XExH-p01-g01": "b9cf06709fad238f40590b4362544c22566a11fc75f1ee41e066e3302276d7ec",
+      "bili-BV1VPaW66EZz-p01-g02": "14b816f338aa52f69494b6e772461c8673a19dafc77a0a749ad71e897cdf4651",
+      "bili-BV1D2ak6XEMa-p01-g03": "be8282d3f11f744f6bf33285b0e0fe9fe2718dce74c02aac0681c0fb2e7b2fdf",
+      "bili-BV1UNaQ6kEWR-p01-g02": "2266a5d9dc7b7a7aa6bb19abfc7eda19a893466d90e5f7f790e0fae0a92edbd2",
+      "bili-BV1zmpB6PEWL-p01-g01": "134f62617559dc52567f9b465c50d188934f1f6d076c3a6aefe62f460879ceaf"
+    },
+    "schema": "jcms"
+  },
+  "database_readback": {
+    "state": "passed",
+    "database_written": true,
+    "games": [
+      {
+        "slug": "bili-BV1D2ak6XEMa-p01-g03",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "be8282d3f11f744f6bf33285b0e0fe9fe2718dce74c02aac0681c0fb2e7b2fdf"
+      },
+      {
+        "slug": "bili-BV1D2ak6XEji-p01-g02",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "bd9faa387a49d9e4721b919114433cac8e90934399a3232754213ec72fc06c11"
+      },
+      {
+        "slug": "bili-BV1D2ak6XExH-p01-g01",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "b9cf06709fad238f40590b4362544c22566a11fc75f1ee41e066e3302276d7ec"
+      },
+      {
+        "slug": "bili-BV1UNaQ6kEWR-p01-g02",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "2266a5d9dc7b7a7aa6bb19abfc7eda19a893466d90e5f7f790e0fae0a92edbd2"
+      },
+      {
+        "slug": "bili-BV1VPaW66EZz-p01-g02",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "14b816f338aa52f69494b6e772461c8673a19dafc77a0a749ad71e897cdf4651"
+      },
+      {
+        "slug": "bili-BV1zmpB6PEWL-p01-g01",
+        "registrations_match": true,
+        "initial_ballot_matches": true,
+        "event_votes_match": true,
+        "database_content_sha256": "134f62617559dc52567f9b465c50d188934f1f6d076c3a6aefe62f460879ceaf"
+      }
+    ],
+    "protected_seasons_unchanged": [
+      "S21",
+      "S22"
+    ],
+    "unaffected_s23_games_unchanged": 87
+  },
+  "manual_bluff_bindings": {
+    "manual_decisions_and_notes_unchanged": true,
+    "claim_and_success_dependencies_unchanged": true,
+    "games": [
+      {
+        "bvid": "BV1D2ak6XEji",
+        "before": "508df0c2ca6c99ef79a45a05bef94072cb34d58f64f15ea97219bdfd451eab6c",
+        "after": "c0922f9402f311dd7a2429d6b7a6031a4038fca84b30d8f58541ae7b8831d0b3",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      },
+      {
+        "bvid": "BV1D2ak6XExH",
+        "before": "65f621dfe808c01ced230c23f544d05b21715fe6ac67dbbdc910b74aeb6be395",
+        "after": "c3f14283b161f655f7be6eaef5ad92dec4314ce27c407a869bb373ff4c80395f",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      },
+      {
+        "bvid": "BV1VPaW66EZz",
+        "before": "996834d9369dc68e64ef0e0e94a4b9a4ca1d56d4f280e8437a7acd5088ce910b",
+        "after": "996834d9369dc68e64ef0e0e94a4b9a4ca1d56d4f280e8437a7acd5088ce910b",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      },
+      {
+        "bvid": "BV1D2ak6XEMa",
+        "before": "af21e7073bdc1ed3a405804a3ea3ffe1d620dd7b39f111dcbb9326aa10e060c4",
+        "after": "8491f80e8b4057121fba9e6168b5f1abf370e35868d27c026ab08db8e350f419",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      },
+      {
+        "bvid": "BV1UNaQ6kEWR",
+        "before": "f65c53c1dfdbe174e1e8626780b57a4773aeec285833fb591a1fe8723f467367",
+        "after": "e589bed98a20151b19dbbabe5d07ddf62c17552d40e4068041dd1b488580d33c",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      },
+      {
+        "bvid": "BV1zmpB6PEWL",
+        "before": "59b99e7d59dc9ad5551b1807400f55a71e6fa8ae3e6937dee4304f11d6279da3",
+        "after": "e7958dd88f7dd5ead3a40d81ac694a2c5409527357b6e8c893c57986d6f45ceb",
+        "claim_dependencies_unchanged": true,
+        "success_dependencies_unchanged": true
+      }
+    ]
+  },
+  "api_acceptance": {
+    "state": "passed",
+    "scope": "six_changed_games_and_affected_player_stats",
+    "accepted_games": 6,
+    "source": "tmp/sheriff-api-acceptance-20261105.json"
+  },
+  "publication": {
+    "state": "passed",
+    "build_id": "20261105T080733Z-13f01015",
+    "release_id": "S21_S22_S23-8a2c740c670fedac-af68d320-p13-s2",
+    "commit": "aecf95e3afd7afcd4487f9b31dfb172f658fa6b8",
+    "workflow": {
+      "id": 41992591350,
+      "url": "https://github.com/fengmaker/langrensha-site/actions/runs/41992591350",
+      "conclusion": "success"
+    },
+    "web_url": "https://fengmaker.github.io/langrensha-site/",
+    "duration_seconds": 301.551,
+    "stage_seconds": {
+      "api_start": 0.0,
+      "build": 138.732,
+      "publication_check": 1.516,
+      "sync": 59.059,
+      "commit": 16.456,
+      "push": 25.59,
+      "deployment": 50.538,
+      "online_check": 9.657
+    },
+    "build_stage_seconds": {
+      "inputs": 3.806,
+      "baseline_check": 31.581,
+      "export": 34.593,
+      "sync": 2.105,
+      "frontend_build": 22.576,
+      "frontend_typecheck": 1.569,
+      "materialize": 2.986,
+      "source_consistency_before_acceptance": 0.581,
+      "acceptance": 30.95,
+      "artifact_hash": 5.568,
+      "source_consistency": 0.547
+    },
+    "sync_stage_seconds": {
+      "enumerate": 1.407,
+      "compare": 26.257,
+      "copy": 2.13,
+      "delete": 0.576,
+      "final_validation": 28.684
+    },
+    "commit_stage_seconds": {
+      "git_add": 4.478,
+      "diff_scope_check": 11.276,
+      "git_commit": 0.666,
+      "head_read": 0.036
+    },
+    "online": {
+      "state": "passed",
+      "manifest_matches": true,
+      "routes": [
+        "/",
+        "/games/bili-BV1un5z6AEKX-p01-cid38361697369/",
+        "/games/bili-BV18W8B6KE7C-p01-g03/",
+        "/games/bili-BV16zxR6sEKG-p01-g03/"
+      ]
+    }
+  },
+  "online_verification": {
+    "state": "passed",
+    "build_id": "20261105T080733Z-13f01015",
+    "release_id": "S21_S22_S23-8a2c740c670fedac-af68d320-p13-s2",
+    "games": [
+      {
+        "bvid": "BV1D2ak6XEji",
+        "game_id": "bili-BV1D2ak6XEji-p01-g02",
+        "off_police": [
+          3,
+          11
+        ],
+        "initial_votes": 2,
+        "json_matches_accepted": true
+      },
+      {
+        "bvid": "BV1D2ak6XExH",
+        "game_id": "bili-BV1D2ak6XExH-p01-g01",
+        "off_police": [
+          6,
+          10
+        ],
+        "initial_votes": 2,
+        "json_matches_accepted": true
+      },
+      {
+        "bvid": "BV1VPaW66EZz",
+        "game_id": "bili-BV1VPaW66EZz-p01-g02",
+        "off_police": [
+          4,
+          6,
+          8,
+          11,
+          12
+        ],
+        "initial_votes": 5,
+        "json_matches_accepted": true
+      },
+      {
+        "bvid": "BV1D2ak6XEMa",
+        "game_id": "bili-BV1D2ak6XEMa-p01-g03",
+        "off_police": [
+          3,
+          8,
+          12
+        ],
+        "initial_votes": 3,
+        "json_matches_accepted": true
+      },
+      {
+        "bvid": "BV1UNaQ6kEWR",
+        "game_id": "bili-BV1UNaQ6kEWR-p01-g02",
+        "off_police": [
+          4,
+          5,
+          9,
+          12
+        ],
+        "initial_votes": 4,
+        "json_matches_accepted": true
+      },
+      {
+        "bvid": "BV1zmpB6PEWL",
+        "game_id": "bili-BV1zmpB6PEWL-p01-g01",
+        "off_police": [
+          2,
+          5,
+          6,
+          9,
+          11
+        ],
+        "initial_votes": 5,
+        "json_matches_accepted": true
+      }
+    ],
+    "browser": [
+      {
+        "bvid": "BV1D2ak6XEji",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1D2ak6XExH",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1VPaW66EZz",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1D2ak6XEMa",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1UNaQ6kEWR",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1zmpB6PEWL",
+        "width": 1440,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1D2ak6XEji",
+        "width": 390,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1D2ak6XExH",
+        "width": 390,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1VPaW66EZz",
+        "width": 390,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1D2ak6XEMa",
+        "width": 390,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1UNaQ6kEWR",
+        "width": 390,
+        "state": "passed"
+      },
+      {
+        "bvid": "BV1zmpB6PEWL",
+        "width": 390,
+        "state": "passed"
+      }
+    ]
+  },
+  "regression_tests": {
+    "sheriff_voting_timeline_review": 90,
+    "formal_import_and_missing_audio": 22
+  }
+}

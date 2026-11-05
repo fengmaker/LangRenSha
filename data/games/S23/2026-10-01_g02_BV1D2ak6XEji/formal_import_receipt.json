@@ -4,34 +4,34 @@
   "batch_key": "S23_regular_75:4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54:8cb6f1fc8b3790cd3010bc6e3691a854474c09e821a34cc7d344575a9c07eff6",
   "snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
   "candidate_path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/dossier.candidate.json",
-  "candidate_sha256": "4b7535f3ea3a487a9d347bbd5972467a1e6e609988c2e66fa1f098543927600c",
+  "candidate_sha256": "2b45a1c88a6131788fc09cb36eed95a46536520603ea49d0ae9095f5318faafe",
   "canonical_board": "treasure_master",
   "storage_board": "s23_treasure_master",
   "formal_files": {
-    "dossier.json": "f3f87795d0ce9fb903b28988cee5a80ffc4c3ee2c008a3a4c7926bc3886c8b43",
-    "voting.json": "d81856b5954a6f97224487fb7ba72dd3abbd65e3fefa98ec88dd341f03bcc35e",
+    "dossier.json": "7ebc6034dc7875834f89b2783445a42aa207025d43c49a80ab6a6bee5a89cf3d",
+    "voting.json": "0fe9bd174ba6341f8f8ecbdd7d28732944557bb05a2a7af886400d7683083ae0",
     "endgame.json": "45c05152602e6cee17200caba053cbde5dcb646701fd9958b507ea3f4e2788ca",
     "supplemental.json": "c7cfc4f4693912a2256d1e16a6a8f561a306cf0512423981655963c186590558",
     "vote_control.json": "93850f51e39b4f27c3dfe09b190697cde9a6988e3a9342378580eaca62d1031e",
-    "formal_context.json": "a8a394e62ddf6dd8bec3d5b26635e7bbc61c0e0ecb4bffdbdc752e04a53a2e8c",
-    "rule_derivations.json": "15637e0a32c85853ac9d1fdb3bac277cc250fdfe51f3f1926bc24a0488100f2a"
+    "formal_context.json": "7cf36d34b4d2343bcbd155a1bd44a8f832137e35da9f3eb009dd5e646508c2a1",
+    "rule_derivations.json": "6381eb7662d50fa55a747ecf3e8f95d3f4645fa27f892472d2f88f1ce933640d"
   },
   "source_files": {
     "candidate": {
       "path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/dossier.candidate.json",
-      "sha256": "4b7535f3ea3a487a9d347bbd5972467a1e6e609988c2e66fa1f098543927600c"
+      "sha256": "2b45a1c88a6131788fc09cb36eed95a46536520603ea49d0ae9095f5318faafe"
     },
     "ai_review": {
       "path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/ai_review.json",
-      "sha256": "a9552da25d571cd863447028a00d0d1d750c07671aced4a1e09e548e60a131fa"
+      "sha256": "6a51bb95481ab1cd18d8a23f4aa7afca8d9ef299ac7e0fd7145f96c864c90332"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1D2ak6XEji/daily_audit.json",
-      "sha256": "e2dcabbbcaad64a8dcf8809ba8000b585e94a4910e4db3d6f0276a3bf1be0ca3"
+      "sha256": "5b02e8b0910f5f3d76ca8abb2c1bb06639d166ebff36324913abc879dba12f70"
     },
     "voting": {
       "path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/voting.candidate.json",
-      "sha256": "9677b8a1f71d4a80b5067a5a81b74208119fb6f3171ef9766f9ec4daf3e9dfdf"
+      "sha256": "73b2d36e524fd7e3b4eeb25970122a46cdd7ed3e300efe26eb8c844e21039f61"
     },
     "endgame": {
       "path": "data/games/S23/2026-10-01_g02_BV1D2ak6XEji/endgame.candidate.json",
@@ -83,15 +83,19 @@
     },
     "board_template:s23_treasure_master": {
       "path": "config/board_templates/treasure_master.json",
-      "sha256": "d7cdc835a5ad65820e112f0742acc99ddecbc335531ffe88a1f32ba247a9880a"
+      "sha256": "4ba1f65bccdd953adff8699b84667a16dbd59acce5a3737d785b2c10d41baba3"
     },
     "import_dependency:import_s23_formal.py": {
       "path": "scripts/import_s23_formal.py",
-      "sha256": "7c24034586f96f6665ef290e8d65620b8c10577f0a2632e95d055d193bc8507f"
+      "sha256": "a68e33aa06f7a0430eba9e151ebd42c46ce93610f60090297538304909c60e2a"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "482899ba31449461007969adafeb0ed06bc412d725aaa750f1970738363c8b7d"
     },
     "import_dependency:game_records.py": {
       "path": "scripts/game_records.py",
-      "sha256": "6a3a9979e0de765e86f20db38896942fcfa3121afd0316d0a4c511d6c301379c"
+      "sha256": "7f8df6ba72cb097822a62ebdfbe5bcad1918031ec989fc3870db4446758899a4"
     },
     "import_dependency:voting_records.py": {
       "path": "scripts/voting_records.py",
@@ -99,7 +103,7 @@
     },
     "import_dependency:game_derivations.py": {
       "path": "scripts/game_derivations.py",
-      "sha256": "2e7899310340bd7fb50724c2faeb8adcdb76e928d887ce9118f9a0d65435dd32"
+      "sha256": "d634505616f6ea3f8fa18c5b3625d56c2720fdf7ae77d5224155e413817d882d"
     },
     "import_dependency:sheriff_speech_evidence.py": {
       "path": "scripts/sheriff_speech_evidence.py",
@@ -119,7 +123,7 @@
     },
     "game_rules": {
       "path": "config/game_rules.json",
-      "sha256": "146032c4d1fe66acdda09685f71e6f4f488d50c80f0ad1273a28c1e420d92237"
+      "sha256": "020d3bced24295cd0cd4b44434f2f88e34eb04012008e91a333e771f6358f427"
     }
   },
   "normalization": {
@@ -141,7 +145,7 @@
     "unknown_count_before": 53,
     "unknown_count_after": 53,
     "unknown_count_after_normalization": 53,
-    "unknown_count_after_derivation": 30,
+    "unknown_count_after_derivation": 29,
     "round_numbers_before": [
       1,
       2,

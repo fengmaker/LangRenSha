@@ -4,7 +4,7 @@
   "game_slug": "bili-BV1VPaW66EZz-p01-g02",
   "input_hashes": {
     "dossier": "7cbae3a6b0271e62ebfef8e2d0d018f3ed0a7eb2497b2c31552556921b561bbb",
-    "voting": "40721f04eb74d50289761a6b15bf8d37fe5173fa8c68de583e723d0485b9ceee",
+    "voting": "cdb8f4709a300bc14ce0f81a70c2b61c4653f00f7bdce84ed79692595f53c5bf",
     "supplemental": "44671ba9034533f00e673396058de88686f5be6fd3c53ed73cdc89f1aa349dc1",
     "endgame": "e0b370f64f271f421d26b7bd6fe854a28ee75fcc2aa53ff84236bbb4a98f44ab"
   },
@@ -1203,60 +1203,7 @@
       "legal_targets": null
     }
   ],
-  "vote_review_tasks": [
-    {
-      "round": 1,
-      "phase": "day",
-      "ballot_id": "ballot-1",
-      "slot": "vote_choice",
-      "actor": 1,
-      "legal_targets": [
-        5,
-        7,
-        9
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    },
-    {
-      "round": 1,
-      "phase": "day",
-      "ballot_id": "ballot-1",
-      "slot": "vote_choice",
-      "actor": 2,
-      "legal_targets": [
-        5,
-        7,
-        9
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    },
-    {
-      "round": 1,
-      "phase": "day",
-      "ballot_id": "ballot-1",
-      "slot": "vote_choice",
-      "actor": 3,
-      "legal_targets": [
-        5,
-        7,
-        9
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    },
-    {
-      "round": 1,
-      "phase": "day",
-      "ballot_id": "ballot-1",
-      "slot": "vote_choice",
-      "actor": 10,
-      "legal_targets": [
-        5,
-        7,
-        9
-      ],
-      "reason": "unresolved_recorded_vote_gap"
-    }
-  ],
+  "vote_review_tasks": [],
   "changes": [
     {
       "path": [
@@ -1353,71 +1300,6 @@
       "dependencies": [
         3
       ]
-    },
-    {
-      "path": [
-        "voting",
-        "ballots",
-        0,
-        "eligible_voters"
-      ],
-      "before": [
-        4,
-        6,
-        8,
-        11,
-        12
-      ],
-      "after": [
-        1,
-        2,
-        3,
-        4,
-        6,
-        8,
-        10,
-        11,
-        12
-      ],
-      "rule": "survival_and_ballot_stage",
-      "dependencies": [
-        1,
-        "sheriff",
-        "initial"
-      ]
-    },
-    {
-      "path": [
-        "voting",
-        "ballots",
-        0,
-        "unrecorded_voters"
-      ],
-      "before": [],
-      "after": [
-        1,
-        2,
-        3,
-        10
-      ],
-      "rule": "electorate_minus_recorded_votes",
-      "dependencies": [
-        1
-      ]
-    },
-    {
-      "path": [
-        "voting",
-        "ballots",
-        0,
-        "status"
-      ],
-      "before": "complete",
-      "after": "partial",
-      "rule": "electorate_coverage",
-      "dependencies": [
-        1
-      ]
     }
   ],
   "consequences": [
@@ -1433,6 +1315,6 @@
   "gaps": [],
   "output_hashes": {
     "dossier": "1124e1899a3040b0a11c38382df287f4242fd64e62e3cdbcc0fd9ca98a3d1ad8",
-    "voting": "30ac7506ac357e427b7ac97e81e7fe2945c36f3d36352bb18dc5c5d496623b64"
+    "voting": "cdb8f4709a300bc14ce0f81a70c2b61c4653f00f7bdce84ed79692595f53c5bf"
   }
 }

@@ -478,7 +478,191 @@
           }
         ]
       },
-      "N4普通狼人已全部出局，九尾狐接刀；既有刀口[4]归入九尾狐击杀，普通狼刀槽不可用。"
+      "N4普通狼人已全部出局，九尾狐接刀；既有刀口[4]归入九尾狐击杀，普通狼刀槽不可用。",
+      {
+        "field": "voting",
+        "review_id": "sheriff_registration_20261105",
+        "reviewed_date": "2026-11-05",
+        "status": "confirmed",
+        "scope": "第一天首次报名、首轮警长票权及其实际选票；保留后续票轮及原已记录结果。",
+        "conclusion": "首次上警[1, 2, 3, 5, 7, 9, 10]，警下[4, 6, 8, 11, 12]；首轮只保留对应警下玩家的选票。",
+        "reasoning": "以首次报名原文确认警下票权；退水后最终候选保持原值，删除仅由错误票权产生的选票，后续票轮和当选结果不变。",
+        "before": {
+          "registration": {
+            "id": "registration-1",
+            "day": 1,
+            "on_police": [
+              5,
+              7,
+              9
+            ],
+            "off_police": [
+              1,
+              2,
+              3,
+              4,
+              6,
+              8,
+              10,
+              11,
+              12
+            ]
+          },
+          "initial_ballot": {
+            "id": "ballot-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "partial",
+            "candidates": [
+              5,
+              7,
+              9
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              6,
+              8,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 4,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 8,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 7,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              5,
+              7
+            ],
+            "winner": null,
+            "unrecorded_voters": [
+              1,
+              2,
+              3,
+              10
+            ]
+          }
+        },
+        "after": {
+          "registration": {
+            "id": "registration-1",
+            "day": 1,
+            "on_police": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              9,
+              10
+            ],
+            "off_police": [
+              4,
+              6,
+              8,
+              11,
+              12
+            ]
+          },
+          "initial_ballot": {
+            "id": "ballot-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              5,
+              7,
+              9
+            ],
+            "eligible_voters": [
+              4,
+              6,
+              8,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 4,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": null,
+                "state": "abstained"
+              },
+              {
+                "voter": 8,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 7,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              5,
+              7
+            ],
+            "winner": null,
+            "unrecorded_voters": []
+          }
+        },
+        "evidence": [
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 979560,
+            "end_ms": 989390,
+            "quote": "确实尽早了\n你看看上了本局游戏\n除4号六号八号11号12号外\n其他玩家上警上警\n玩家请亮红灯"
+          },
+          {
+            "source_path": "data/seasons/S23/第05周_正赛第04期/2026-09-29/2026-09-29_S23_第05周_正赛第04期_第02局_青丘夜影__BV1VPaW66EZz_P01_CID42315612579.平台AI字幕_ai-zh_01.原始.json",
+            "source_sha256": "c0011bf10a245b697287fb4d168c8c0ae2a6bd02ba42f0a5b78b143ebf52320c",
+            "start_ms": 1644660,
+            "end_ms": 1660420,
+            "quote": "请从579当中选出本局游戏警长\n321\n请出票\n4号投给7号\n6号弃票\n8号投给5号\n11号投给5号\n12号投给7号\n投票结束"
+          }
+        ]
+      }
     ],
     "event_patches": [
       {
@@ -595,6 +779,179 @@
         "effects": []
       },
       "basis": "本夜开始前普通狼人已全部出局，依据用户确认规则归一化既有狼刀；目标与结果沿用原已核行动。"
+    },
+    "voting_replacement": {
+      "schema_version": 1,
+      "game_slug": "bili-BV1VPaW66EZz-p01-g02",
+      "registrations": [
+        {
+          "id": "registration-1",
+          "day": 1,
+          "on_police": [
+            1,
+            2,
+            3,
+            5,
+            7,
+            9,
+            10
+          ],
+          "off_police": [
+            4,
+            6,
+            8,
+            11,
+            12
+          ]
+        }
+      ],
+      "ballots": [
+        {
+          "id": "ballot-1",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": [
+            5,
+            7,
+            9
+          ],
+          "eligible_voters": [
+            4,
+            6,
+            8,
+            11,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 4,
+              "target": 7,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 8,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 11,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 7,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [
+            5,
+            7
+          ],
+          "winner": null,
+          "unrecorded_voters": []
+        },
+        {
+          "id": "ballot-2",
+          "day": 2,
+          "kind": "sheriff",
+          "number": 2,
+          "stage": "pk",
+          "status": "complete",
+          "candidates": [
+            5,
+            7
+          ],
+          "eligible_voters": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            10
+          ],
+          "votes": [
+            {
+              "voter": 1,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 2,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 3,
+              "target": 7,
+              "state": "cast"
+            },
+            {
+              "voter": 4,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 6,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 5,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": 5,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 5,
+          "unrecorded_voters": []
+        }
+      ],
+      "interruptions": [
+        {
+          "id": "interruption-1",
+          "day": 2,
+          "actor": 7,
+          "reason": "self_destruct",
+          "ends_day": true
+        }
+      ],
+      "days": [
+        {
+          "day": 1,
+          "sheriff": "recorded",
+          "exile": "interrupted_self_destruct"
+        },
+        {
+          "day": 2,
+          "sheriff": "recorded",
+          "exile": "interrupted_self_destruct"
+        },
+        {
+          "day": 3,
+          "sheriff": "not_applicable",
+          "exile": "interrupted_self_destruct"
+        },
+        {
+          "day": 4,
+          "sheriff": "not_applicable",
+          "exile": "unknown"
+        }
+      ]
     }
   },
   "daily_audit_changes": [

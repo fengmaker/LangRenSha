@@ -22,9 +22,233 @@
           "quote": "好好下下来给各位代表老师们做一本本节角色。\n付盘本本版型。\n因为机械狼通律师，\n深圳影通律师，\n十号、女巫八号猎人五号首位七号狼人证言，\n一号二号六号。\n机械狼九号本局游戏为机械猎人阵营三号、四号、十一号十二号。\n首先说一首五号猎人狼队击杀九号机械狼牛要救起，\n形成平安夜机器来模仿。\n五号猎人本局游戏为机械猎人同意是查验了四号玩家为平民身份警上竞选环节。\n四号平民获得警徽。\n第一天白天六号，\n狼人选择自爆，\n入夜守卫守护七号自首狼队击杀。\n十号通灵师女巫毒杀，\n七号守卫道演为七号。\n十号双子同一师业界验证了七号玩家为首位身份。\n在第二天白天，\n二号狼人选择自爆，\n入夜，\n狼队击杀八号女巫八号牛单死。\n在此第三天的白天，\n九号机械猎人被公投出局，\n并开枪带走场上最后一张狼队友一号，\n游戏结束，\n好人阵营获胜。"
         }
       ]
+    },
+    {
+      "field": "voting",
+      "review_id": "sheriff_registration_20261105",
+      "reviewed_date": "2026-11-05",
+      "status": "confirmed",
+      "scope": "第一天首次报名、首轮警长票权及其实际选票；保留后续票轮及原已记录结果。",
+      "conclusion": "首次上警[1, 2, 4, 5, 6, 7, 9, 10, 11]，警下[3, 8, 12]；首轮只保留对应警下玩家的选票。",
+      "reasoning": "以首次报名原文确认警下票权；退水后最终候选保持原值，删除仅由错误票权产生的选票，后续票轮和当选结果不变。",
+      "before": {
+        "registration": {
+          "id": "registration-1",
+          "day": 1,
+          "on_police": [
+            1,
+            2,
+            4,
+            9
+          ],
+          "off_police": [
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12
+          ]
+        },
+        "initial_ballot": {
+          "id": "ballot-1",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": [
+            1,
+            2,
+            4,
+            9
+          ],
+          "eligible_voters": [
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 3,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 5,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 6,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 7,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 8,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 10,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 11,
+              "target": null,
+              "state": "abstained"
+            },
+            {
+              "voter": 12,
+              "target": 4,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 4,
+          "unrecorded_voters": []
+        }
+      },
+      "after": {
+        "registration": {
+          "id": "registration-1",
+          "day": 1,
+          "on_police": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11
+          ],
+          "off_police": [
+            3,
+            8,
+            12
+          ]
+        },
+        "initial_ballot": {
+          "id": "ballot-1",
+          "day": 1,
+          "kind": "sheriff",
+          "number": 1,
+          "stage": "initial",
+          "status": "complete",
+          "candidates": [
+            1,
+            2,
+            4,
+            9
+          ],
+          "eligible_voters": [
+            3,
+            8,
+            12
+          ],
+          "votes": [
+            {
+              "voter": 3,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 8,
+              "target": 4,
+              "state": "cast"
+            },
+            {
+              "voter": 12,
+              "target": 4,
+              "state": "cast"
+            }
+          ],
+          "tied_candidates": [],
+          "winner": 4,
+          "unrecorded_voters": []
+        }
+      },
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 703295,
+          "end_ms": 724725,
+          "quote": "上警玩家亮起面前红灯本游戏。\n除三号八号十二号玩家外，\n区玩家军上警根据随机点数十由十号玩家开始逆袭发言。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 1809315,
+          "end_ms": 1840780,
+          "quote": "五四三二一人，\n如警上玩家一号二号、四号九号请警下家带亏在一号二号。\n四号九号玩家中选出本九席警长三二一请出票，\n三号投给四号八号投给四号十二号投给四号投票结束。\n四号玩家三票当选上警玩家请亮蓝灯，"
+        }
+      ]
     }
   ],
-  "event_patches": [],
+  "event_patches": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_vote",
+      "changes": {
+        "action": "vote",
+        "votes": [
+          {
+            "round": 1,
+            "voter": 3,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 8,
+            "target": 4,
+            "abstained": false
+          },
+          {
+            "round": 1,
+            "voter": 12,
+            "target": 4,
+            "abstained": false
+          }
+        ]
+      },
+      "review_id": "sheriff_registration_20261105",
+      "reason": "以首次报名原文确认警下票权；退水后最终候选保持原值，删除仅由错误票权产生的选票，后续票轮和当选结果不变。",
+      "evidence": [
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 703295,
+          "end_ms": 724725,
+          "quote": "上警玩家亮起面前红灯本游戏。\n除三号八号十二号玩家外，\n区玩家军上警根据随机点数十由十号玩家开始逆袭发言。"
+        },
+        {
+          "source_path": "data/transcripts/S23/BV1D2ak6XEMa_p01_funasr_full/transcript.json",
+          "source_sha256": "2c7dd7c0b96a987453fad032e57813190924d1f7ce5fa19710453899313baebd",
+          "start_ms": 1809315,
+          "end_ms": 1840780,
+          "quote": "五四三二一人，\n如警上玩家一号二号、四号九号请警下家带亏在一号二号。\n四号九号玩家中选出本九席警长三二一请出票，\n三号投给四号八号投给四号十二号投给四号投票结束。\n四号玩家三票当选上警玩家请亮蓝灯，"
+        }
+      ]
+    }
+  ],
   "finding_resolutions": [
     {
       "id": "b56-r1-night-peaceful",
@@ -79,5 +303,163 @@
     }
   ],
   "extra_findings": [],
-  "human_questions": []
+  "human_questions": [],
+  "voting_replacement": {
+    "schema_version": 1,
+    "game_slug": "bili-BV1D2ak6XEMa-p01-g03",
+    "registrations": [
+      {
+        "id": "registration-1",
+        "day": 1,
+        "on_police": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11
+        ],
+        "off_police": [
+          3,
+          8,
+          12
+        ]
+      }
+    ],
+    "ballots": [
+      {
+        "id": "ballot-1",
+        "day": 1,
+        "kind": "sheriff",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": [
+          1,
+          2,
+          4,
+          9
+        ],
+        "eligible_voters": [
+          3,
+          8,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 3,
+            "target": 4,
+            "state": "cast"
+          },
+          {
+            "voter": 8,
+            "target": 4,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 4,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 4,
+        "unrecorded_voters": []
+      },
+      {
+        "id": "ballot-2",
+        "day": 3,
+        "kind": "exile",
+        "number": 1,
+        "stage": "initial",
+        "status": "complete",
+        "candidates": null,
+        "eligible_voters": [
+          1,
+          3,
+          4,
+          5,
+          9,
+          11,
+          12
+        ],
+        "votes": [
+          {
+            "voter": 1,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 3,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 4,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 5,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 9,
+            "target": 9,
+            "state": "cast"
+          },
+          {
+            "voter": 11,
+            "target": 1,
+            "state": "cast"
+          },
+          {
+            "voter": 12,
+            "target": 9,
+            "state": "cast"
+          }
+        ],
+        "tied_candidates": [],
+        "winner": 9,
+        "unrecorded_voters": []
+      }
+    ],
+    "interruptions": [
+      {
+        "id": "interruption-1",
+        "day": 1,
+        "actor": 6,
+        "reason": "self_destruct",
+        "ends_day": true
+      },
+      {
+        "id": "interruption-2",
+        "day": 2,
+        "actor": 2,
+        "reason": "self_destruct",
+        "ends_day": true
+      }
+    ],
+    "days": [
+      {
+        "day": 1,
+        "sheriff": "recorded",
+        "exile": "interrupted_self_destruct"
+      },
+      {
+        "day": 2,
+        "sheriff": "not_applicable",
+        "exile": "interrupted_self_destruct"
+      },
+      {
+        "day": 3,
+        "sheriff": "not_applicable",
+        "exile": "recorded"
+      }
+    ]
+  }
 }

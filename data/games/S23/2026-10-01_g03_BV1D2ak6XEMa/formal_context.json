@@ -11,19 +11,19 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-10-01_g03_BV1D2ak6XEMa/dossier.candidate.json",
-      "sha256": "71af42ee71779b506c4f3c0aa342e4b0a575e7beb3ac9441053202606d7c0bf9"
+      "sha256": "c83aec94f4c442cfee07592f71946aa84f54eb873c1ffe1e52662a299b156b89"
     },
     "ai_review": {
       "path": "data/games/S23/2026-10-01_g03_BV1D2ak6XEMa/ai_review.json",
-      "sha256": "65d7c913c58afad2d707ebd776d1a4e233c22f56d94e870f6cbf3c8073d53db8"
+      "sha256": "62edbd4ea41ccf1b8e0380593e9808ee41b9c398b0ca2c8d47f54042cfc49bde"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1D2ak6XEMa/daily_audit.json",
-      "sha256": "bbf6aee56183daaa1a46b707af335be10a2a9ef5161ff5efdba59f8911f557d3"
+      "sha256": "2b38f6a08a44dc7e61eec40c7cecda83dfaeb8c1ad0048f6c966c761c13fe585"
     },
     "voting": {
       "path": "data/games/S23/2026-10-01_g03_BV1D2ak6XEMa/voting.candidate.json",
-      "sha256": "ea1ec07b63ed30fd8390d1f6f69a870bb0c16d107df9736ac95b2e62d2b55b0d"
+      "sha256": "b858fd1e7009eaa59dcdb50b97015815dbdfb8ad4cd97b69d6f4ef2b1e7548d7"
     },
     "endgame": {
       "path": "data/games/S23/2026-10-01_g03_BV1D2ak6XEMa/endgame.candidate.json",
@@ -68,6 +68,58 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1D2ak6XEMa/p01/audio.m4a",
       "sha256": "9f5e5a231ff4be0be303b5816c0e8ee1693a3483454ec9e2cfe54ce89eb84ecc"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "4466e7e2a06c35413e4379ac1716f9bdd142500b9baf09dbba141ffb9991af4d"
+    },
+    "board_template:s23_mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "a68e33aa06f7a0430eba9e151ebd42c46ce93610f60090297538304909c60e2a"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "482899ba31449461007969adafeb0ed06bc412d725aaa750f1970738363c8b7d"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "7f8df6ba72cb097822a62ebdfbe5bcad1918031ec989fc3870db4446758899a4"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "d634505616f6ea3f8fa18c5b3625d56c2720fdf7ae77d5224155e413817d882d"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "020d3bced24295cd0cd4b44434f2f88e34eb04012008e91a333e771f6358f427"
+    },
+    "board_template:mechanical_wolf_seer": {
+      "path": "config/board_templates/mechanical_wolf_seer.json",
+      "sha256": "b29769c8a236d857ef2fb63b6ea65a6835928f421b6e4d831934e96228519d85"
     }
   },
   "normalization": {
@@ -79,6 +131,8 @@
     "explicit_transformations": [],
     "unknown_count_before": 36,
     "unknown_count_after": 36,
+    "unknown_count_after_normalization": 36,
+    "unknown_count_after_derivation": 16,
     "round_numbers_before": [
       1,
       2,

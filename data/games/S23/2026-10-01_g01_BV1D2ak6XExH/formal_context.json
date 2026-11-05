@@ -11,19 +11,19 @@
   "source_hashes": {
     "candidate": {
       "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/dossier.candidate.json",
-      "sha256": "19dbbbb5bdf0b1145c7f1c15f8e0b32ff38eaaaa6db3444e0b13eb141bd73279"
+      "sha256": "6e1799c3fd84245dc900f02a1447c42eebfd110e2a6977c033814ecd6e95386d"
     },
     "ai_review": {
       "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/ai_review.json",
-      "sha256": "3cbf00af934db0e7c7e99732620a09b188181c716136a85fa2df79f2e9466dd5"
+      "sha256": "61633f6e7a454e812bffae00785404ea79baacf3ded3c32b3834a69db96b06c1"
     },
     "daily_audit": {
       "path": "data/extractions/S23/game_reviews/BV1D2ak6XExH/daily_audit.json",
-      "sha256": "e3a5c057023f140de6f8a8c7a1e60875549ebd73188682d6bf1f186bfda083db"
+      "sha256": "59ccac64431a5186182386268b5ba852534fbaadfc54d71ff9333bb8c09f22ba"
     },
     "voting": {
       "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/voting.candidate.json",
-      "sha256": "1777a6d5b184e775b237bbd92e592ce3fe29887654ec0fb3553b35f224f566cb"
+      "sha256": "fc71852448b3dfff97c09d3d29409e106594d3e3ba57850a26f50a827d40beac"
     },
     "endgame": {
       "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/endgame.candidate.json",
@@ -35,7 +35,7 @@
     },
     "vote_control": {
       "path": "data/games/S23/2026-10-01_g01_BV1D2ak6XExH/vote_control.candidate.json",
-      "sha256": "abe479d818fa0f67a4ec37e88e413e19783573cdd701e9ff8bd007a368bf6195"
+      "sha256": "c72fed623cb01897bc299c3811c28dacfa768b523bb1cc478f1e5f5bde792014"
     },
     "source:audio:data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第01局_预女猎白混__BV1D2ak6XExH_P01_CID42376237020.音频.m4a": {
       "path": "data/seasons/S23/第05周_正赛第04期/2026-10-01/2026-10-01_S23_第05周_正赛第04期_第01局_预女猎白混__BV1D2ak6XExH_P01_CID42376237020.音频.m4a",
@@ -68,6 +68,54 @@
     "audio_manifest": {
       "path": "data/raw/bilibili/BV1D2ak6XExH/p01/audio.m4a",
       "sha256": "2ecb5f880acf951bcc9d2f65083a702fc9209f5b634c4248f9b4391c69a24898"
+    },
+    "effective_formal_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "4f3bee08b73a6bd15e0e4bcca44224e8cc27c042b2f9924223056e0def14d00d"
+    },
+    "board_template:s23_mixed_blood": {
+      "path": "config/board_templates/mixed_blood.json",
+      "sha256": "20535eb52ccd0cca0b366954f862f8d931e873805163864fca0a363e7fec6ad2"
+    },
+    "import_dependency:import_s23_formal.py": {
+      "path": "scripts/import_s23_formal.py",
+      "sha256": "a68e33aa06f7a0430eba9e151ebd42c46ce93610f60090297538304909c60e2a"
+    },
+    "import_dependency:import_manual_slot_review.py": {
+      "path": "scripts/import_manual_slot_review.py",
+      "sha256": "482899ba31449461007969adafeb0ed06bc412d725aaa750f1970738363c8b7d"
+    },
+    "import_dependency:game_records.py": {
+      "path": "scripts/game_records.py",
+      "sha256": "7f8df6ba72cb097822a62ebdfbe5bcad1918031ec989fc3870db4446758899a4"
+    },
+    "import_dependency:voting_records.py": {
+      "path": "scripts/voting_records.py",
+      "sha256": "0b18ede8a5d4ae369fc684f58b5f2f10faa3026a38fc1fd08a0c6d379d34b64f"
+    },
+    "import_dependency:game_derivations.py": {
+      "path": "scripts/game_derivations.py",
+      "sha256": "d634505616f6ea3f8fa18c5b3625d56c2720fdf7ae77d5224155e413817d882d"
+    },
+    "import_dependency:sheriff_speech_evidence.py": {
+      "path": "scripts/sheriff_speech_evidence.py",
+      "sha256": "65c51da05621ab774d73c489fb14236e2429bf349f5bba2f062812c702359c5a"
+    },
+    "import_dependency:board_config.py": {
+      "path": "scripts/board_config.py",
+      "sha256": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f"
+    },
+    "import_dependency:rule_config.py": {
+      "path": "scripts/rule_config.py",
+      "sha256": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f"
+    },
+    "import_dependency:season_config.py": {
+      "path": "scripts/season_config.py",
+      "sha256": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165"
+    },
+    "game_rules": {
+      "path": "config/game_rules.json",
+      "sha256": "020d3bced24295cd0cd4b44434f2f88e34eb04012008e91a333e771f6358f427"
     }
   },
   "normalization": {
@@ -79,6 +127,8 @@
     "explicit_transformations": [],
     "unknown_count_before": 22,
     "unknown_count_after": 22,
+    "unknown_count_after_normalization": 22,
+    "unknown_count_after_derivation": 15,
     "round_numbers_before": [
       1,
       2

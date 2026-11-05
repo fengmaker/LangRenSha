@@ -179,7 +179,7 @@
         },
         {
           "slot": "witch_poison",
-          "action": "unknown",
+          "action": "pass",
           "actor": 5,
           "targets": [],
           "result": null,
@@ -209,7 +209,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": 6,
           "targets": [],
           "result": null,
@@ -253,13 +253,44 @@
         },
         {
           "slot": "sheriff_vote",
-          "action": "unknown",
+          "action": "vote",
           "actor": null,
           "targets": [],
           "result": null,
           "start_seat": null,
           "direction": null,
-          "votes": [],
+          "votes": [
+            {
+              "round": 1,
+              "voter": 2,
+              "target": 4,
+              "abstained": false
+            },
+            {
+              "round": 1,
+              "voter": 5,
+              "target": 1,
+              "abstained": false
+            },
+            {
+              "round": 1,
+              "voter": 6,
+              "target": 4,
+              "abstained": false
+            },
+            {
+              "round": 1,
+              "voter": 9,
+              "target": 1,
+              "abstained": false
+            },
+            {
+              "round": 1,
+              "voter": 11,
+              "target": 4,
+              "abstained": false
+            }
+          ],
           "random_point": null,
           "speech_scope": null,
           "availability": null,
@@ -297,7 +328,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 6,
           "targets": [],
           "result": null,
@@ -416,7 +447,7 @@
       "night": [
         {
           "slot": "mixed_blood_model",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 11,
           "targets": [],
           "result": null,
@@ -446,7 +477,7 @@
         },
         {
           "slot": "witch_save",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 5,
           "targets": [],
           "result": null,
@@ -492,7 +523,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": 6,
           "targets": [],
           "result": null,
@@ -581,7 +612,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 6,
           "targets": [],
           "result": null,
@@ -639,10 +670,10 @@
         },
         {
           "slot": "exile_result",
-          "action": "unknown",
+          "action": "none",
           "actor": null,
           "targets": [],
-          "result": null,
+          "result": "interrupted_self_destruct",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -700,7 +731,7 @@
       "night": [
         {
           "slot": "mixed_blood_model",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 11,
           "targets": [],
           "result": null,
@@ -730,7 +761,7 @@
         },
         {
           "slot": "witch_save",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 5,
           "targets": [],
           "result": null,
@@ -744,7 +775,7 @@
         },
         {
           "slot": "witch_poison",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 5,
           "targets": [],
           "result": null,
@@ -758,7 +789,7 @@
         },
         {
           "slot": "seer_check",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 4,
           "targets": [],
           "result": null,
@@ -772,7 +803,7 @@
         },
         {
           "slot": "hunter_state",
-          "action": "unknown",
+          "action": "can_shoot",
           "actor": 6,
           "targets": [],
           "result": null,
@@ -860,7 +891,7 @@
         },
         {
           "slot": "hunter_shot",
-          "action": "unknown",
+          "action": "unavailable",
           "actor": 6,
           "targets": [],
           "result": null,
