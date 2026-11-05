@@ -92,6 +92,9 @@ def seat_html(dossier: dict) -> str:
         css = 'wolf' if side == 'werewolf' else 'good'
         note = ('<small>傀儡 · 不带刀</small>' if is_puppet else
                 '<small>狼伴侣 · 不带刀</small>' if is_wolf_partner else '')
+        if row.get('role') == '机械狼' and row.get('learned_role'):
+            target = f'学习{row["learning_target"]}号' if row.get('learning_target') is not None else '学习形态'
+            note += f'<small>{target} · {esc(row["learned_role"])}</small>'
         identity = esc(row.get('role') or '未知') + note
         rows.append(f'<tr data-seat="{number}"><td class="seat-number">{number}</td><td>{esc(name)}</td>'
                     f'<td>{identity}</td><td><span class="faction {css}">{faction}</span></td></tr>')

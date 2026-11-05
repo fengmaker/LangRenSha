@@ -18,6 +18,11 @@ from urllib.request import Request, urlopen
 import argparse
 import uuid
 
+if __package__:
+    from .player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings, split_player_rankings
+else:
+    from player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings, split_player_rankings
+
 
 class ExportError(RuntimeError):
     """The API did not provide a complete, consistently bound public snapshot."""
@@ -505,6 +510,8 @@ def _load_reuse_context(reuse_from: Path | None, reuse_index: dict[str, Any] | N
         raise ExportError(f"Cannot read reuse site manifest: {manifest_path}") from exc
     if not isinstance(old_manifest, dict) or old_manifest.get("complete") is not True:
         return None
+    if old_manifest.get("schema_version") not in {1, SNAPSHOT_SCHEMA_VERSION}:
+        raise ExportError("Reuse site has an unsupported static snapshot schema_version")
     snapshot_id = old_manifest.get("snapshot_id")
     if not isinstance(snapshot_id, str) or not _SAFE_ID_RE.fullmatch(snapshot_id):
         raise ExportError("Reuse site manifest has an invalid snapshot_id")
@@ -524,7 +531,33 @@ def _load_reuse_context(reuse_from: Path | None, reuse_index: dict[str, Any] | N
         if isinstance(candidate_metadata, dict):
             metadata = candidate_metadata
     return {"root": root, "release_root": release_root, "files": files,
-            "metadata": metadata}
+            "metadata": metadata, "schema_version": old_manifest["schema_version"], "rankings": {}}
+
+
+def _read_cached_json(reuse_context: dict[str, Any], relative: str) -> dict[str, Any]:
+    entry = reuse_context["files"].get(relative, {})
+    if not isinstance(entry, dict):
+        raise ExportError(f"Reuse export index has an invalid entry for {relative}")
+    expected_hash = entry.get("sha256")
+    if not _is_sha256(expected_hash):
+        raise ExportError(f"Reuse export index has an invalid file hash for {relative}")
+    source_root: Path = reuse_context["release_root"]
+    source = source_root.joinpath(*PurePosixPath(relative).parts)
+    try:
+        if source.is_symlink() or not source.is_file() or not source.resolve().is_relative_to(source_root.resolve()):
+            raise ExportError(f"Reused snapshot file is missing or unsafe: {source}")
+        body = source.read_bytes()
+    except OSError as exc:
+        raise ExportError(f"Cannot read reused snapshot file: {source}") from exc
+    if _sha256(body) != expected_hash:
+        raise ExportError(f"Reused snapshot file hash mismatch: {source}")
+    try:
+        value = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ExportError(f"Reused snapshot file is invalid JSON: {source}") from exc
+    if not isinstance(value, dict):
+        raise ExportError(f"Reused snapshot file is not a JSON object: {source}")
+    return value
 
 
 def _load_cached_json(reuse_context: dict[str, Any] | None, relative: str,
@@ -545,26 +578,16 @@ def _load_cached_json(reuse_context: dict[str, Any] | None, relative: str,
         raise ExportError(f"Reuse export index has an invalid entry for {relative}")
     if entry.get("input_hash") != input_hash:
         return None
-    expected_hash = entry.get("sha256")
-    if not _is_sha256(expected_hash):
-        raise ExportError(f"Reuse export index has an invalid file hash for {relative}")
-    source_root: Path = reuse_context["release_root"]
-    source = source_root.joinpath(*PurePosixPath(relative).parts)
-    try:
-        if source.is_symlink() or not source.is_file() or not source.resolve().is_relative_to(source_root.resolve()):
-            raise ExportError(f"Reused snapshot file is missing or unsafe: {source}")
-        body = source.read_bytes()
-    except OSError as exc:
-        raise ExportError(f"Cannot read reused snapshot file: {source}") from exc
-    actual_hash = _sha256(body)
-    if actual_hash != expected_hash:
-        raise ExportError(f"Reused snapshot file hash mismatch: {source}")
-    try:
-        value = json.loads(body.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise ExportError(f"Reused snapshot file is invalid JSON: {source}") from exc
-    if not isinstance(value, dict):
-        raise ExportError(f"Reused snapshot file is not a JSON object: {source}")
+    value = _read_cached_json(reuse_context, relative)
+    if relative.startswith("players/") and reuse_context["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+        ranking_path = f"rankings/{PurePosixPath(relative).name}"
+        rankings = reuse_context["rankings"]
+        if ranking_path not in rankings:
+            rankings[ranking_path] = _read_cached_json(reuse_context, ranking_path)
+        try:
+            value = restore_player_rankings(value, rankings[ranking_path])
+        except ValueError as exc:
+            raise ExportError(str(exc)) from exc
     result = dict(value)
     result["release_id"] = release_id
     if "bluff_publication_id" in result or "bluff_payload_hash" in result:
@@ -877,6 +900,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
                                if row["season"] in seasons],
     }
     snapshot_fingerprint = _sha256(_canonical_json({
+        "schema_version": SNAPSHOT_SCHEMA_VERSION,
         "release_id": release_id, "source_hash": release["source_hash"],
         "seasons": scoped_metadata["seasons"], "bluff_publications": scoped_metadata["bluff_publications"],
         "media_manifest_hashes": initial_metadata["media_manifest_hashes"],
@@ -913,10 +937,18 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         })
         for season, page in players_by_season.items():
             write_release_json(f"players/by-season/{season}.json", page)
+        shared_rankings: dict[str, dict[str, Any]] = {}
         for (player_id, interval), detail in zip(player_jobs, player_results):
             if not _SAFE_ID_RE.fullmatch(player_id):
                 raise ExportError(f"Unsafe player ID: {player_id}")
-            write_release_json(f"players/{player_id}/{interval['start']}--{interval['end']}.json", detail)
+            range_name = f"{interval['start']}--{interval['end']}"
+            compact, shared = split_player_rankings(detail)
+            if range_name in shared_rankings and shared_rankings[range_name] != shared:
+                raise ExportError(f"Player ranking boards differ within season range {range_name}")
+            shared_rankings[range_name] = shared
+            write_release_json(f"players/{player_id}/{range_name}.json", compact)
+        for range_name, shared in shared_rankings.items():
+            write_release_json(f"rankings/{range_name}.json", shared)
         for interval, response in zip(ranges, stats_results):
             write_release_json(f"stats/{interval['start']}--{interval['end']}.json", response)
         for season, phase, response in leaderboards:
@@ -966,7 +998,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         if build_id is None:
             build_id = f"export-{now.strftime('%Y%m%dT%H%M%SZ')}-{uuid.uuid4().hex[:8]}"
         manifest = {
-            "schema_version": 1,
+            "schema_version": SNAPSHOT_SCHEMA_VERSION,
             "snapshot_id": snapshot_id,
             "build_id": build_id,
             "release_id": release_id,

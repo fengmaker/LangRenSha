@@ -38,6 +38,21 @@ def test_mirror_writes_only_changed_files_and_removes_obsolete_generated_files(t
     assert tree_hash(source) == tree_hash(target)
 
 
+def test_mirror_records_only_timed_sync_steps_when_requested(tmp_path):
+    source = tmp_path / "ready"
+    target = tmp_path / "publication/site"
+    source.mkdir()
+    target.mkdir(parents=True)
+    (source / "new.html").write_text("new")
+    (target / "old.html").write_text("old")
+    timings = {}
+
+    sync_pages.sync_tree(source, target, timings=timings)
+
+    assert set(timings) == {"enumerate", "compare", "copy", "delete"}
+    assert all(value >= 0 for value in timings.values())
+
+
 def fixture(tmp_path, monkeypatch):
     ready = tmp_path / "preview/site"
     (ready / "data/releases/snapshot-1").mkdir(parents=True)
@@ -80,7 +95,58 @@ def test_sync_pushes_only_accepted_site_and_owned_configuration(tmp_path, monkey
     assert json.loads((ready.parent / "publication.json").read_text())["state"] == "passed"
     assert set(record["stage_seconds"]) == {"publication_check", "sync", "commit", "push", "deployment", "online_check"}
     assert all(value >= 0 for value in record["stage_seconds"].values())
+    assert set(record["sync_stage_seconds"]) == {
+        "enumerate", "compare", "copy", "delete", "final_validation",
+    }
+    assert set(record["commit_stage_seconds"]) == {
+        "git_add", "diff_scope_check", "git_commit", "head_read",
+    }
+    assert all(value >= 0 for value in record["sync_stage_seconds"].values())
+    assert all(value >= 0 for value in record["commit_stage_seconds"].values())
     assert record["commit_created"] is True
+
+
+def test_sync_failure_keeps_elapsed_substeps_without_commit_timings(tmp_path, monkeypatch):
+    ready, receipt, repo, _ = fixture(tmp_path, monkeypatch)
+    original_tree_hash = sync_pages.tree_hash
+
+    def changed_target(path):
+        if path == ready:
+            return original_tree_hash(path)
+        return "unexpected-tree-hash"
+
+    monkeypatch.setattr(sync_pages, "tree_hash", changed_target)
+    with pytest.raises(RuntimeError, match="working tree does not match"):
+        sync_pages.publish_site(ready, receipt, repo)
+
+    record = json.loads((ready.parent / "publication.json").read_text(encoding="utf-8"))
+    assert record["failed_stage"] == "sync"
+    assert set(record["sync_stage_seconds"]) == {
+        "enumerate", "compare", "copy", "delete", "final_validation",
+    }
+    assert record["commit_stage_seconds"] == {}
+
+
+def test_commit_scope_failure_keeps_attempted_commit_timings_only(tmp_path, monkeypatch):
+    ready, receipt, repo, calls = fixture(tmp_path, monkeypatch)
+    original_git = sync_pages.git
+
+    def unrelated_staged_file(path, *args):
+        if args == ("diff", "--cached", "--name-only"):
+            calls.append(args)
+            return "site/index.html\nunrelated.txt"
+        return original_git(path, *args)
+
+    monkeypatch.setattr(sync_pages, "git", unrelated_staged_file)
+    with pytest.raises(RuntimeError, match="unrelated staged files"):
+        sync_pages.publish_site(ready, receipt, repo)
+
+    record = json.loads((ready.parent / "publication.json").read_text(encoding="utf-8"))
+    assert record["failed_stage"] == "commit"
+    assert set(record["commit_stage_seconds"]) == {"git_add", "diff_scope_check"}
+    assert "git_commit" not in record["commit_stage_seconds"]
+    assert "head_read" not in record["commit_stage_seconds"]
+    assert "push" not in record["stage_seconds"]
 
 
 def test_partial_or_damaged_build_never_reaches_publication_commit(tmp_path, monkeypatch):
