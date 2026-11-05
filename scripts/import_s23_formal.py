@@ -168,7 +168,26 @@ def source_record(role: str, path: Path, kind: str, external_key: str) -> dict:
             "platform": "bilibili", "external_key": external_key}
 
 
-def resolve_source_files(dossier: dict) -> tuple[list[dict], dict]:
+def registered_audio_artifact_for_path(conn, external_key: str, relative_path: str,
+                                      expected_sha256: str) -> dict:
+    path = (ROOT / relative_path).resolve()
+    if not path.is_relative_to((ROOT / "data").resolve()):
+        raise ReviewError(f"音频来源必须位于data目录: {relative_path}")
+    registered_path = path.relative_to(ROOT).as_posix()
+    rows = conn.execute("""SELECT a.id,a.sha256,a.byte_size FROM sources s
+        JOIN artifacts a ON a.source_id=s.id AND a.kind='audio'
+        WHERE s.platform='bilibili' AND s.external_key=%s
+          AND (a.relative_path=%s OR a.metadata->>'ingested_from'=%s)""",
+        (external_key, registered_path, registered_path)).fetchall()
+    if len(rows) != 1:
+        raise ReviewError(f"缺失音频文件，来源未唯一登记对应audio artifact：{relative_path}")
+    if rows[0]["sha256"] != expected_sha256:
+        raise ReviewError(f"缺失音频文件，已登记artifact与manifest哈希不一致：{relative_path}")
+    return rows[0]
+
+
+def resolve_source_files(dossier: dict, *, audio_reuse_conn=None,
+                         allow_audio_reuse: bool = False) -> tuple[list[dict], dict]:
     bvid = bvid_from_slug(dossier["slug"])
     manifest_path = ROOT / "data/raw/bilibili" / bvid / "p01/manifest.json"
     manifest = read_json(manifest_path)
@@ -179,10 +198,25 @@ def resolve_source_files(dossier: dict) -> tuple[list[dict], dict]:
     raw_dir = manifest_path.parent
     audio_meta = manifest.get("audio") or {}
     raw_audio = raw_dir / str(audio_meta.get("file", ""))
-    if not raw_audio.is_file() or sha256_file(raw_audio) != audio_meta.get("sha256"):
+    if not raw_audio.resolve().is_relative_to((ROOT / "data").resolve()):
+        raise ReviewError(f"manifest音轨路径越界: {bvid}")
+    if raw_audio.is_file() and sha256_file(raw_audio) != audio_meta.get("sha256"):
         raise ReviewError(f"原始音轨与manifest哈希不一致: {bvid}")
+    if not raw_audio.is_file() and audio_reuse_conn is None and not allow_audio_reuse:
+        raise ReviewError(f"原始音轨缺失；仅数据库导入可复用已登记音频artifact: {bvid}")
+
+    def registered_audio(relative_path: str) -> dict:
+        if audio_reuse_conn is not None:
+            return registered_audio_artifact_for_path(
+                audio_reuse_conn, external_key, relative_path, audio_meta["sha256"])
+        if not allow_audio_reuse:
+            raise ReviewError(f"缺失音频文件；仅数据库模式可复用已登记audio artifact: {relative_path}")
+        with connect() as conn:
+            return registered_audio_artifact_for_path(
+                conn, external_key, relative_path, audio_meta["sha256"])
 
     files: list[dict] = []
+    reused_audio = None
     for item in dossier.get("files", []):
         path = (ROOT / item["path"]).resolve()
         rec = dict(item)
@@ -191,10 +225,18 @@ def resolve_source_files(dossier: dict) -> tuple[list[dict], dict]:
         rec["external_key"] = rec.get("external_key") or external_key
         if rec["platform"] != "bilibili" or rec["external_key"] != external_key:
             raise ReviewError(f"候选来源外键与媒体manifest不匹配: {bvid}/{rec.get('role')}")
-        if not path.is_file() or not path.resolve().is_relative_to((ROOT / "data").resolve()):
+        if not path.resolve().is_relative_to((ROOT / "data").resolve()):
             raise ReviewError(f"候选所列来源文件不存在或越界: {rec['path']}")
-        if rec.get("role") == "audio" and sha256_file(path) != audio_meta.get("sha256"):
-            raise ReviewError(f"候选音频与manifest音轨哈希不一致: {bvid}")
+        if rec.get("role") == "audio":
+            if path.is_file():
+                if sha256_file(path) != audio_meta.get("sha256"):
+                    raise ReviewError(f"候选音频与manifest音轨哈希不一致: {bvid}")
+            else:
+                if rec.get("kind") != "audio":
+                    raise ReviewError(f"缺失音频来源的kind必须是audio: {rec['path']}")
+                reused_audio = registered_audio(rec["path"])
+        elif not path.is_file():
+            raise ReviewError(f"候选所列来源文件不存在或越界: {rec['path']}")
         files.append(rec)
 
     by_role = {f["role"]: f for f in files}
@@ -207,7 +249,12 @@ def resolve_source_files(dossier: dict) -> tuple[list[dict], dict]:
     }
     for role, (path, kind) in required.items():
         if role not in by_role:
-            files.append(source_record(role, path, kind, external_key))
+            if role == "audio" and not path.is_file():
+                reused_audio = registered_audio(rel(path))
+                files.append({"role": role, "path": rel(path), "kind": kind,
+                              "platform": "bilibili", "external_key": external_key})
+            else:
+                files.append(source_record(role, path, kind, external_key))
     if "subtitle" not in by_role:
         subtitle_meta = next((t for t in (manifest.get("subtitles") or {}).get("tracks", [])
                               if t.get("language") == "ai-zh"), None)
@@ -219,7 +266,8 @@ def resolve_source_files(dossier: dict) -> tuple[list[dict], dict]:
     return files, {"bvid": bvid, "cid": cid, "external_key": external_key,
                    "manifest_path": rel(manifest_path), "manifest_sha256": sha256_file(manifest_path),
                    "audio_sha256": audio_meta["sha256"], "audio_path": rel(raw_audio),
-                   "audio_bytes": raw_audio.stat().st_size}
+                   "audio_bytes": (raw_audio.stat().st_size if raw_audio.is_file() else
+                                   reused_audio["byte_size"] if reused_audio else audio_meta.get("bytes"))}
 
 
 def empty_event(slot: str) -> dict:
@@ -324,7 +372,8 @@ def verify_candidate_is_current(candidate_path: Path, effective_game: dict | Non
 
 
 def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
-                 daily: dict, audit: dict, *, effective_game: dict | None = None) -> dict:
+                 daily: dict, audit: dict, *, effective_game: dict | None = None,
+                 audio_reuse_conn=None, allow_audio_reuse: bool = False) -> dict:
     candidate_path = candidate_path.resolve()
     if not candidate_path.is_relative_to((ROOT / "data/games/S23").resolve()) or candidate_path.name != "dossier.candidate.json":
         raise ReviewError(f"候选路径不属于S23当前候选目录: {candidate_path}")
@@ -345,7 +394,8 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     if template.get("code") != storage_code:
         raise ReviewError(f"S23版型模板代码不一致: {template_path}")
 
-    source_files, media = resolve_source_files(source)
+    source_files, media = resolve_source_files(source, audio_reuse_conn=audio_reuse_conn,
+                                               allow_audio_reuse=allow_audio_reuse)
     ai_path = candidate_path.with_name("ai_review.json")
     ai_review = read_json(ai_path)
     if ai_review.get("slug") not in {None, slug} and ai_review.get("game_slug") not in {None, slug}:
@@ -465,7 +515,9 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
                 for flag in (*PUBLIC_EVENT_FLAGS, "confirmation_status"):
                     event.pop(flag, None)
     try:
-        game_records.validate(db_dossier, allow_incomplete=True)
+        # resolve_source_files already checks every source file; a missing audio
+        # file has passed the exact source/path/hash DB registration check above.
+        game_records.validate(db_dossier, check_files=False, allow_incomplete=True)
     except ReviewError as exc:
         raise ReviewError(f"{slug}: {exc}") from exc
     source_hashes = {
@@ -480,7 +532,11 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     for entry in source_files:
         path = ROOT / entry["path"]
         source_hashes[f"source:{entry['role']}:{entry['path']}"] = {
-            "path": entry["path"], "sha256": sha256_file(path), "kind": entry["kind"],
+            # The missing audio's manifest hash is accepted only after the
+            # exact registered source/path/hash tuple was verified above.
+            "path": entry["path"],
+            "sha256": media["audio_sha256"] if entry["role"] == "audio" and not path.is_file()
+            else sha256_file(path), "kind": entry["kind"],
             "external_key": entry["external_key"],
         }
     source_hashes["media_manifest"] = {"path": media["manifest_path"], "sha256": media["manifest_sha256"]}
@@ -638,7 +694,8 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     }
 
 
-def build_batch(bvids: list[str] | None = None) -> dict:
+def build_batch(bvids: list[str] | None = None, *, audio_reuse_conn=None,
+                allow_audio_reuse: bool = False) -> dict:
     selected_bvids = list(dict.fromkeys(bvids or []))
     scope, rules, progress, daily, audit = load_inputs(selected_bvids or None)
     candidates = progress["candidate_dossiers"]
@@ -676,7 +733,8 @@ def build_batch(bvids: list[str] | None = None) -> dict:
         else:
             candidate_path = ROOT / rel_path
         games.append(prepare_game(candidate_path, scope, rules, progress, daily, audit,
-                                  effective_game=effective_game))
+                                  effective_game=effective_game, audio_reuse_conn=audio_reuse_conn,
+                                  allow_audio_reuse=allow_audio_reuse))
     slugs = [game["slug"] for game in games]
     if not games or len(slugs) != len(set(slugs)):
         raise ReviewError("候选slug必须唯一且至少包含一局")
@@ -1057,6 +1115,12 @@ def verify_database(batch: dict, *, write: bool, verify_idempotency: bool = Fals
         missing_formal = [name for name in formal_tables if conn.execute("SELECT to_regclass(%s) AS name", (name,)).fetchone()["name"] is None]
         season = conn.execute("SELECT id FROM seasons WHERE code='S23'").fetchone()
         keys = sorted({g["media"]["external_key"] for g in batch["games"]})
+        for game in batch["games"]:
+            audio_file = next((item for item in game.get("source_files", [])
+                               if item.get("role") == "audio"), None)
+            if audio_file and not (ROOT / audio_file["path"]).is_file():
+                registered_audio_artifact_for_path(
+                    conn, game["media"]["external_key"], audio_file["path"], game["media"]["audio_sha256"])
         rows = conn.execute("""SELECT s.external_key,a.sha256 FROM sources s
             JOIN artifacts a ON a.source_id=s.id AND a.kind='audio'
             WHERE s.platform='bilibili' AND s.external_key=ANY(%s)""", (keys,)).fetchall()
@@ -1272,7 +1336,17 @@ def main() -> int:
         args.report = ROOT / 'data/reports/S23' / name
     try:
         preparation_started = perf_counter()
-        batch = build_batch(bvids=args.bvid)
+        if mode in {"check_db", "import_db"}:
+            # File-only --check retains its strict local-source rule. DB modes
+            # verify registrations on this connection before considering reuse.
+            with connect() as audio_reuse_conn:
+                batch = build_batch(bvids=args.bvid, audio_reuse_conn=audio_reuse_conn,
+                                    allow_audio_reuse=True)
+        elif mode == "prepare":
+            # Connect lazily only if an audio file is actually missing.
+            batch = build_batch(bvids=args.bvid, allow_audio_reuse=True)
+        else:
+            batch = build_batch(bvids=args.bvid)
         if mode == "prepare":
             result = materialize(batch, report_path=args.report)
             preparation_seconds = perf_counter() - preparation_started
