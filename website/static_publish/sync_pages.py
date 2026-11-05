@@ -31,15 +31,25 @@ PUBLICATION_TIMEZONE = timezone(timedelta(hours=8))
 
 
 @contextmanager
-def stage(record: dict, name: str):
+def _timing(timings: dict, name: str, *, accumulate: bool = False):
     started = time.perf_counter()
     try:
         yield
+    finally:
+        elapsed = time.perf_counter() - started
+        if accumulate:
+            elapsed += timings.get(name, 0)
+        timings[name] = round(elapsed, 3)
+
+
+@contextmanager
+def stage(record: dict, name: str):
+    try:
+        with _timing(record.setdefault("stage_seconds", {}), name):
+            yield
     except BaseException:
         record["failed_stage"] = name
         raise
-    finally:
-        record.setdefault("stage_seconds", {})[name] = round(time.perf_counter() - started, 3)
 
 
 @contextmanager
@@ -126,8 +136,10 @@ def _ordinary_directory(path: Path) -> None:
         raise ValueError(f"Generated paths cannot be links: {path}")
 
 
-def sync_tree(source: Path, destination: Path) -> dict[str, int]:
+def sync_tree(source: Path, destination: Path, *, timings: dict | None = None) -> dict[str, int]:
     """Mirror this dedicated site tree, writing only changed files."""
+    if timings is None:
+        timings = {}
     source = source.resolve()
     _ordinary_directory(destination)
     destination.mkdir(parents=True, exist_ok=True)
@@ -136,31 +148,40 @@ def sync_tree(source: Path, destination: Path) -> dict[str, int]:
     if target.name != "site" or target.parent == target:
         raise ValueError("Published files must be in the repository's dedicated site/ directory")
     existing = {}
-    for path in target.rglob("*"):
-        _ordinary_directory(path)
-        if path.is_file():
-            existing[path.relative_to(target).as_posix()] = path
+    with _timing(timings, "enumerate"):
+        for path in target.rglob("*"):
+            _ordinary_directory(path)
+            if path.is_file():
+                existing[path.relative_to(target).as_posix()] = path
+        source_paths = sorted(source.rglob("*"))
     counts = {"written": 0, "unchanged": 0, "removed": 0}
-    for path in sorted(source.rglob("*")):
-        _ordinary_directory(path)
-        if not path.is_file():
-            continue
-        name = path.relative_to(source).as_posix()
-        old = existing.pop(name, None)
-        if (old is not None and old.stat().st_size == path.stat().st_size
-                and hashlib.sha256(old.read_bytes()).digest() == hashlib.sha256(path.read_bytes()).digest()):
-            counts["unchanged"] += 1
-            continue
-        output = target / name
-        output.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, output)
-        counts["written"] += 1
-    for path in existing.values():
-        path.unlink()
-        counts["removed"] += 1
-    for path in sorted(target.rglob("*"), key=lambda p: len(p.parts), reverse=True):
-        if path.is_dir() and not any(path.iterdir()):
-            path.rmdir()
+    changed = []
+    with _timing(timings, "compare"):
+        for path in source_paths:
+            _ordinary_directory(path)
+            if not path.is_file():
+                continue
+            name = path.relative_to(source).as_posix()
+            old = existing.pop(name, None)
+            if (old is not None and old.stat().st_size == path.stat().st_size
+                    and hashlib.sha256(old.read_bytes()).digest() == hashlib.sha256(path.read_bytes()).digest()):
+                counts["unchanged"] += 1
+                continue
+            changed.append((path, name))
+    if changed:
+        with _timing(timings, "copy"):
+            for path, name in changed:
+                output = target / name
+                output.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(path, output)
+                counts["written"] += 1
+    with _timing(timings, "delete"):
+        for path in existing.values():
+            path.unlink()
+            counts["removed"] += 1
+        for path in sorted(target.rglob("*"), key=lambda p: len(p.parts), reverse=True):
+            if path.is_dir() and not any(path.iterdir()):
+                path.rmdir()
     return counts
 
 
@@ -206,6 +227,8 @@ def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int =
                  record: dict | None = None) -> dict:
     if record is None:
         record = {}
+    record.setdefault("sync_stage_seconds", {})
+    record.setdefault("commit_stage_seconds", {})
     with stage(record, "publication_check"):
         ready = ready.resolve()
         repository = repository.absolute()
@@ -242,25 +265,33 @@ def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int =
     try:
         print("Synchronizing accepted files to publication repository", flush=True)
         with stage(record, "sync"):
-            record["files"] = sync_tree(ready, target)
-            if tree_hash(target) != receipt["artifact_hash"]:
-                raise RuntimeError("Published working tree does not match the accepted artifact")
-            for name, source in templates.items():
-                target_file = repository / name
-                for parent in target_file.relative_to(repository).parents:
-                    _ordinary_directory(repository / parent)
-                _ordinary_directory(target_file)
-                target_file.parent.mkdir(parents=True, exist_ok=True)
-                target_file.write_bytes(source.read_bytes())
+            sync_timings = record["sync_stage_seconds"]
+            record["files"] = sync_tree(ready, target, timings=sync_timings)
+            with _timing(sync_timings, "final_validation"):
+                if tree_hash(target) != receipt["artifact_hash"]:
+                    raise RuntimeError("Published working tree does not match the accepted artifact")
+            with _timing(sync_timings, "copy", accumulate=True):
+                for name, source in templates.items():
+                    target_file = repository / name
+                    for parent in target_file.relative_to(repository).parents:
+                        _ordinary_directory(repository / parent)
+                    _ordinary_directory(target_file)
+                    target_file.parent.mkdir(parents=True, exist_ok=True)
+                    target_file.write_bytes(source.read_bytes())
         with stage(record, "commit"):
-            git(repository, "add", "--", "site", *templates)
-            staged = git(repository, "diff", "--cached", "--name-only").splitlines()
-            if any(not name.startswith("site/") and name not in templates for name in staged):
-                raise RuntimeError("Refusing to commit unrelated staged files")
-            changed = bool(staged)
+            commit_timings = record["commit_stage_seconds"]
+            with _timing(commit_timings, "git_add"):
+                git(repository, "add", "--", "site", *templates)
+            with _timing(commit_timings, "diff_scope_check"):
+                staged = git(repository, "diff", "--cached", "--name-only").splitlines()
+                if any(not name.startswith("site/") and name not in templates for name in staged):
+                    raise RuntimeError("Refusing to commit unrelated staged files")
+                changed = bool(staged)
             if changed:
-                git(repository, "-c", "maintenance.auto=false", "commit", "--quiet", "-m", f"Update static archive {manifest['build_id']}")
-            record["commit"] = git(repository, "rev-parse", "HEAD")
+                with _timing(commit_timings, "git_commit"):
+                    git(repository, "-c", "maintenance.auto=false", "commit", "--quiet", "-m", f"Update static archive {manifest['build_id']}")
+            with _timing(commit_timings, "head_read"):
+                record["commit"] = git(repository, "rev-parse", "HEAD")
             record["commit_created"] = changed
         record["state"] = "pushing"
         write_json(record_path, record)
@@ -338,6 +369,9 @@ def main() -> int:
         print(f"{label} {record['state']}: {record['duration_seconds']:.3f}s; record: {history_path}", flush=True)
         print("Stage seconds: " + json.dumps(record["stage_seconds"], ensure_ascii=False), flush=True)
         print("Build stage seconds: " + json.dumps(record["build_stage_seconds"], ensure_ascii=False), flush=True)
+        if "sync_stage_seconds" in record:
+            print("Sync stage seconds: " + json.dumps(record["sync_stage_seconds"], ensure_ascii=False), flush=True)
+            print("Commit stage seconds: " + json.dumps(record["commit_stage_seconds"], ensure_ascii=False), flush=True)
 
 
 if __name__ == "__main__":

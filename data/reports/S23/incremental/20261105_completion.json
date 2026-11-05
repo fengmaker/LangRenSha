@@ -1,0 +1,75 @@
+{
+  "state": "completed",
+  "completed_at_utc": "2026-11-05T06:03:14.170629+00:00",
+  "scope": {
+    "season": "S23",
+    "date": "2026-11-04",
+    "bvids": [
+      "BV1zzxR6sEB6",
+      "BV1zzxR6sEos",
+      "BV16zxR6sEKG"
+    ],
+    "mode": "partial"
+  },
+  "original_review": "data/manual_review/feedback/S23_逐局复核意见_20261105_20261104.json",
+  "current_review": "data/manual_review/feedback/S23_逐局复核意见_20261105_补充修订.json",
+  "followup_revisions": "data/manual_review/feedback/S23_备注结构化修订_20261105.json",
+  "confirmed_actions": [
+    {
+      "bvid": "BV1zzxR6sEos",
+      "round": 1,
+      "phase": "night",
+      "slot": "magician_exchange",
+      "action": "pass"
+    },
+    {
+      "bvid": "BV16zxR6sEKG",
+      "round": 3,
+      "phase": "night",
+      "slot": "mechanical_action",
+      "action": "pass"
+    }
+  ],
+  "terminal": {
+    "bvid": "BV16zxR6sEKG",
+    "round": 4,
+    "label": "第三天夜晚",
+    "target": 3,
+    "following_guard_or_hunter_shot": false
+  },
+  "database_readback": "data/reports/S23/incremental/20261105_database_readback.json",
+  "release_id": "S21_S22_S23-32c304c8a408553f-af68d320-p13-s2",
+  "public_counts": {
+    "S21": 122,
+    "S22": 148,
+    "S23": 93,
+    "total": 363
+  },
+  "preserved_snapshots": {
+    "S21": 122,
+    "S22": 148,
+    "S23": 90
+  },
+  "acceptance": {
+    "path": "data/reports/S23/incremental/publication_acceptance_batch_7ffa4a08a93b.json",
+    "sha256": "3cec36e84e32b59503ee4464685d931850347d3d1365bc6bcb18bbe11d5c6a17",
+    "accepted_games": 3,
+    "detail_requests": 3,
+    "browser_pages": 42,
+    "widths": [
+      1440,
+      390
+    ]
+  },
+  "changed_game_pages": {
+    "path": "outputs/review_20261105/qa/changed-game-pages.json",
+    "pages": 6,
+    "javascript_errors": []
+  },
+  "backups": [
+    "data/backups/workflow-20261105T055500/receipt.json",
+    "data/backups/workflow-20261105T055915/receipt.json"
+  ],
+  "local_website": "http://127.0.0.1:3000",
+  "local_api": "http://127.0.0.1:8000"
+}

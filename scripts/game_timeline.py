@@ -12,6 +12,7 @@ from .role_constraints import family, puppet_target
 
 _INACTIVE = {None, 'unavailable', 'not_applicable', 'not_held', 'forbidden', 'none', 'no_skill'}
 _UNKNOWN_IMPORTANT = {'guard', 'wolf_attack', 'witch_save', 'witch_poison', 'seer_check',
+                      'magician_exchange',
                       'mechanical_action', 'mechanical_day_skill', 'nine_tail_kill',
                       'puppet_select', 'puppet_skill_effect', 'night_deaths', 'exile_result',
                       'masquerade_attack', 'wolf_girl_confession', 'troublemaker_action'}
@@ -165,7 +166,8 @@ def _text(event: dict, seats: dict, title: str) -> str:
             return f'{actor}本夜空守。'
         return '狼队本夜空刀。' if slot == 'wolf_attack' else f'{actor or title}本轮未发动。'
     if action == 'unknown':
-        return f'{actor or title}的具体情况待核。'
+        detail = str(result).rstrip('。；') + '。' if result and re.search(r'[\u4e00-\u9fff]', str(result)) else ''
+        return f'{actor or title}的具体情况待核。' + detail
     if action == 'none' and slot == 'exile_result':
         return '两轮投票均平票，本日无人被放逐。'
     if slot == 'treasure_choice' and action == 'choose' and result:
@@ -491,6 +493,13 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                     if boom is not None:
                         events.remove(election)
                         events.insert(events.index(boom) + 1, election)
+                # All-player signup loses the badge before the night-death
+                # announcement; no election or self-destruct causes this loss.
+                if registration and registration.get('off_police') == []:
+                    for badge in [e for e in events if e['slot'] == 'badge' and e.get('action') == 'badge_lost']:
+                        events.remove(badge)
+                        at = max(i for i, e in enumerate(events) if e['slot'] == 'sheriff_candidates') + 1
+                        events.insert(at, badge)
                 # The fixed morning slot can precede the actual announcement.
                 # Move it only when this game's source explicitly records that timing.
                 for death in [e for e in events if e['slot'] == 'night_deaths'
@@ -502,6 +511,14 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                         while at < len(events) and events[at]['slot'] in {'badge', 'sheriff_result'}:
                             at += 1
                         events.insert(at, death)
+                # Guile redirection resolves the final exile, including a
+                # prince revote. It cannot precede the reveal and revote.
+                final_exile = next((e for e in reversed(events) if e['slot'] in {'exile_result', 'second_exile_result'}
+                                    and e.get('action') == 'exile'), None)
+                if final_exile:
+                    for effect in [e for e in events if e['slot'] == 'guile_exchange_result' and e.get('action') == 'apply']:
+                        events.remove(effect)
+                        events.insert(events.index(final_exile) + 1, effect)
             if phase == 'night':
                 events = _masquerade_knife(events, roles, template, departed)
             else:
@@ -535,6 +552,7 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                         event['puppet_note'] = note
                 title = _COMMON_TITLES.get(slot) or event.get('slot_label') or definitions.get(slot, {}).get('label', slot)
                 title = {'wolf_attack': '机械狼击杀' if seats.get(actor, {}).get('role') == '机械狼' else '狼队击杀',
+                         'seer_check': '通灵师查验' if seats.get(actor, {}).get('role') == '通灵师' else '预言家查验',
                          'mixed_blood_model': '混血儿选择榜样',
                          'dancer_dance': '舞者共舞'}.get(slot, title)
                 if slot == 'sheriff_candidates' and action == 'continued':

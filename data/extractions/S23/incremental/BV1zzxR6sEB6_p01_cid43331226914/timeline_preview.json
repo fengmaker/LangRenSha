@@ -1,0 +1,835 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "mixed_blood_model",
+          "title": "混血儿选择榜样",
+          "text": "9号董鲸鱼（混血儿）选择4号荣耀（狼人）作为榜样。",
+          "events": [
+            {
+              "slot": "mixed_blood_model",
+              "action": "choose",
+              "actor": 9,
+              "targets": [
+                4
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "混血儿选择榜样（首夜）",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mixed_blood_alignment",
+          "title": "混血儿胜利阵营",
+          "text": "9号董鲸鱼（混血儿）本局跟随狼人阵营。",
+          "events": [
+            {
+              "slot": "mixed_blood_alignment",
+              "action": "wolf",
+              "actor": 9,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "混血儿胜利阵营",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀11号又又（狼人）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "8号牛肉干（女巫）使用解药，救起11号又又（狼人）。",
+          "events": [
+            {
+              "slot": "witch_save",
+              "action": "save",
+              "actor": 8,
+              "targets": [
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫解药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "10号陈明峻（预言家）查验3号豆腐（白神），结果为好人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 10,
+              "targets": [
+                3
+              ],
+              "result": "good",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "good"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "上警名单",
+          "text": "上警：1号橘子（平民）、2号圈圈（平民）、3号豆腐（白神）、4号荣耀（狼人）、5号耿许儿（狼人）、6号KS（猎人）、7号小苍（平民）、8号牛肉干（女巫）、9号董鲸鱼（混血儿）、10号陈明峻（预言家）、11号又又（狼人）、12号Bobby（狼人）。\n警下：无人。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": null,
+              "targets": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "off_police": [],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "badge",
+          "title": "警徽",
+          "text": "警徽流失，本局不再进行警长竞选。",
+          "events": [
+            {
+              "slot": "badge",
+              "action": "badge_lost",
+              "actor": null,
+              "targets": [],
+              "result": "全员上警，警徽流失。",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "inferred": true,
+              "inference_note": "逐日竞选记录确认警徽流失；具体原因未据此推断。",
+              "description": "警徽流失，本局不再进行警长竞选。",
+              "slot_label": "警徽",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-1-1",
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 10,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 4,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "4号荣耀（狼人）被放逐（8票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                4
+              ],
+              "result": "4号8票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀10号陈明峻（预言家）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                10
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "8号牛肉干（女巫）使用毒药，目标为10号陈明峻（预言家）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 8,
+              "targets": [
+                10
+              ],
+              "result": "10号同刀同毒出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "10号陈明峻（预言家）查验12号Bobby（狼人），结果为狼人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 10,
+              "targets": [
+                12
+              ],
+              "result": "werewolf",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "werewolf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": false,
+      "label": "第二天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：10号陈明峻（预言家）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                10
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "12号Bobby（狼人）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 12,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "night",
+      "terminal": false,
+      "label": "第二天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀8号牛肉干（女巫）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                8
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "day",
+      "terminal": false,
+      "label": "第三天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：8号牛肉干（女巫）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                8
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-3-1",
+            "day": 3,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7,
+              9,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7,
+              9,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 9,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 7,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 7,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "7号小苍（平民）被放逐（4票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                7
+              ],
+              "result": "7号4票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "night",
+      "terminal": false,
+      "label": "第三天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀3号豆腐（白神）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "day",
+      "terminal": true,
+      "label": "第四天白天 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：3号豆腐（白神）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-4-1",
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              5,
+              6,
+              9,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              5,
+              6,
+              9,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 6,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              5,
+              6
+            ],
+            "winner": null,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "binding_victory",
+          "title": "绑票终局",
+          "text": "绑票终局：5号和6号各获3票。5号、11号狼人及9号狼混形成3对3票力，法官在本轮投票后宣布游戏结束，狼人阵营绑票获胜；没有进行PK或继续放逐。",
+          "events": [
+            {
+              "slot": "binding_victory",
+              "slot_label": "绑票终局",
+              "action": "note",
+              "actor": null,
+              "targets": [],
+              "result": "5号和6号各获3票。5号、11号狼人及9号狼混形成3对3票力，法官在本轮投票后宣布游戏结束，狼人阵营绑票获胜；没有进行PK或继续放逐。",
+              "display_result": "5号和6号各获3票。5号、11号狼人及9号狼混形成3对3票力，法官在本轮投票后宣布游戏结束，狼人阵营绑票获胜；没有进行PK或继续放逐。"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "狼人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

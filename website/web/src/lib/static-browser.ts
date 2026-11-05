@@ -4,8 +4,10 @@ import type { BluffReview, GameDetail, GameSummary, Leaderboard, Overview, PageR
 import type { SnapshotManifest } from "@/lib/snapshot-data";
 import { basePath } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
+import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
 
 let manifestPromise: Promise<SnapshotManifest> | undefined;
+const playerRankings = new Map<string, Promise<SharedPlayerRankings>>();
 
 async function requestJson<T>(url: string, cache?: RequestCache): Promise<T> {
   let response: Response;
@@ -24,7 +26,7 @@ async function requestJson<T>(url: string, cache?: RequestCache): Promise<T> {
 
 async function readSnapshotManifest(): Promise<SnapshotManifest> {
   const manifest = await requestJson<SnapshotManifest>(`${basePath}/data/manifest.json`, "no-store");
-  if (!manifest.snapshot_id || !Array.isArray(manifest.seasons) || !manifest.seasons.length) throw new ApiError("invalid", "静态数据清单缺少快照或赛季信息。");
+  if (![1, 2].includes(manifest.schema_version) || !manifest.snapshot_id || !Array.isArray(manifest.seasons) || !manifest.seasons.length) throw new ApiError("invalid", "静态数据清单的格式、快照或赛季信息无效。");
   return manifest;
 }
 
@@ -75,7 +77,21 @@ export const fetchGame = (id: string) => fetchStaticJson<GameDetail>(`games/${id
 export const fetchReleases = () => fetchStaticJson<{ items: Release[] }>("releases.json");
 export const fetchGamesIndex = () => fetchStaticJson<{ release_id: string; total: number; items: (GameSummary & { search_text?: string })[] }>("games/index.json");
 export const fetchPlayersForSeason = (season: string) => fetchStaticJson<PageResult<PlayerSummary>>(`players/by-season/${season}.json`);
-export const fetchPlayerRange = (id: string, start: string, end: string) => fetchStaticJson<PlayerDetail>(`players/${id}/${start}--${end}.json`);
+export async function fetchPlayerRange(id: string, start: string, end: string): Promise<PlayerDetail> {
+  const manifest = await fetchSnapshotManifest();
+  const profile = fetchStaticJson<PlayerDetail>(`players/${id}/${start}--${end}.json`);
+  if (manifest.schema_version === 1) return profile;
+  const range = `${start}--${end}`;
+  if (!playerRankings.has(range)) {
+    const request = fetchStaticJson<SharedPlayerRankings>(`rankings/${range}.json`);
+    playerRankings.set(range, request);
+    void request.catch(() => {
+      if (playerRankings.get(range) === request) playerRankings.delete(range);
+    });
+  }
+  const [detail, shared] = await Promise.all([profile, playerRankings.get(range)!]);
+  return restorePlayerRankings(detail, shared);
+}
 export const fetchStatsRange = (start: string, end: string) => fetchStaticJson<Stats>(`stats/${start}--${end}.json`);
 export const fetchLeaderboard = (season: string, phase: "all" | "finals_week") => fetchStaticJson<Leaderboard>(`leaderboards/${season}/${phase}.json`);
 export const fetchBluffReview = (season: string) => fetchStaticJson<BluffReview>(`bluff-review/${season}.json`);

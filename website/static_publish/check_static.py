@@ -20,6 +20,11 @@ from typing import Any
 from urllib.parse import parse_qs, quote, urlencode, urlsplit, unquote
 from urllib.request import urlopen
 
+if __package__:
+    from .player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings
+else:
+    from player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings
+
 
 MANIFEST_FIELDS = {
     "schema_version", "snapshot_id", "build_id", "release_id", "source_hash",
@@ -147,6 +152,9 @@ def _validate_export_index(snapshot: dict[str, Any], docs: dict[str, Any],
                 or not isinstance(entry.get("input_hash"), str) or not _SHA256_RE.fullmatch(entry["input_hash"])
                 or not isinstance(entry.get("reused"), bool)):
             raise StaticAcceptanceError(f"Invalid incremental export index hashes or reused flag: {relative}")
+        if (relative.startswith("rankings/") and snapshot.get("player_rankings")
+                and hashlib.sha256((data_root / relative).read_bytes()).hexdigest() != entry["sha256"]):
+            raise StaticAcceptanceError(f"Shared player rankings SHA-256 differs from the site: {relative}")
 
         target = (data_root / Path(*PurePosixPath(relative).parts)).resolve()
         if not target.is_relative_to(data_root) or not target.is_file():
@@ -263,7 +271,7 @@ def _load_snapshot(out: Path, base_path: str) -> dict[str, Any]:
     if manifest["base_path"] != base_path:
         raise StaticAcceptanceError(
             f"Manifest base_path {manifest['base_path']!r} differs from {base_path!r}")
-    if manifest["schema_version"] != 1:
+    if manifest["schema_version"] not in {1, SNAPSHOT_SCHEMA_VERSION}:
         raise StaticAcceptanceError(f"Unsupported static manifest schema_version {manifest['schema_version']!r}")
     if not isinstance(manifest["complete"], bool):
         raise StaticAcceptanceError("Manifest complete must be a boolean")
@@ -289,8 +297,36 @@ def _load_snapshot(out: Path, base_path: str) -> dict[str, Any]:
                      for row in manifest["ranges"]]
     if actual_ranges != _expected_ranges(seasons):
         raise StaticAcceptanceError("Manifest ranges do not contain every contiguous season range")
-    return {"out": out, "manifest": manifest, "seasons": seasons,
-            "data": out / "data" / "releases" / manifest["snapshot_id"]}
+    data = out / "data" / "releases" / manifest["snapshot_id"]
+    rankings = {}
+    if manifest["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+        expected_rankings = {f"{row['start']}--{row['end']}.json" for row in actual_ranges}
+        if {path.name for path in (data / "rankings").glob("*.json")} != expected_rankings:
+            raise StaticAcceptanceError("Shared player ranking files do not cover the snapshot ranges")
+        for row in actual_ranges:
+            name = f"{row['start']}--{row['end']}.json"
+            shared = _json(data / "rankings" / name)
+            scope = {"season_start": row["start"], "season_end": row["end"],
+                     "seasons": row["seasons"], "minimum_appearances": 0}
+            shared_scope = shared.get("scope")
+            if (shared.get("release_id") != manifest["release_id"]
+                    or shared.get("analytics_version") != manifest["analytics_version"]
+                    or not isinstance(shared_scope, dict)
+                    or any(shared_scope.get(key) != value for key, value in scope.items())):
+                raise StaticAcceptanceError(f"Shared player rankings version or scope binding differs: {name}")
+            rankings[name] = shared
+    return {"out": out, "manifest": manifest, "seasons": seasons, "data": data,
+            "player_rankings": rankings}
+
+
+def _player_json(snapshot: dict[str, Any], path: Path, document: dict | None = None) -> dict[str, Any]:
+    profile = _json(path) if document is None else document
+    if snapshot["manifest"]["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+        try:
+            return restore_player_rankings(profile, snapshot["player_rankings"][path.name])
+        except ValueError as exc:
+            raise StaticAcceptanceError(f"{path}: {exc}") from exc
+    return profile
 
 
 def _read_documents(snapshot: dict[str, Any]) -> dict[str, Any]:
@@ -525,11 +561,14 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
         raise StaticAcceptanceError("Complete player range coverage is incomplete")
 
     media_references: set[str] = set()
+    player_paths = set(actual_player_ranges)
     for path in json_files:
         document = _json(path)
         release_id = document.get("release_id") if isinstance(document, dict) else None
         if release_id is not None and release_id != manifest["release_id"]:
             raise StaticAcceptanceError(f"Stale release binding in {path.relative_to(out)}")
+        if path in player_paths:
+            _player_json(snapshot, path, document)
     if not basic:
         media_references = _media_references_for_check(snapshot, media_cache)
         media_hashes = media_cache.setdefault("hashes", {}) if media_cache is not None else {}
@@ -946,7 +985,7 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
                           if path.parent.name != "by-season"]
     nonzero_profiles: list[tuple[Path, int]] = []
     for path in player_range_files:
-        player = _json(path)
+        player = _player_json(snapshot, path)
         if player.get("release_id") != release_id:
             raise StaticAcceptanceError(f"Player range release binding differs: {path.relative_to(data)}")
         if player.get("scope", {}).get("minimum_appearances") != 0:
@@ -956,7 +995,7 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
             nonzero_profiles.append((path, appearances))
 
     def compare_profile(path: Path) -> tuple[str, str, int] | None:
-        static_player = _json(path)
+        static_player = _player_json(snapshot, path)
         start, end = path.name.removesuffix(".json").split("--", 1)
         relative = path.relative_to(data).as_posix()
         if relative in reusable["paths"]:
@@ -979,12 +1018,18 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
         start, end = path.name.removesuffix(".json").split("--", 1)
         range_key = f"{start}--{end}"
         if range_key not in samples_by_range:
-            samples_by_range[range_key] = (path, _json(path))
+            samples_by_range[range_key] = (path, _player_json(snapshot, path))
     checked_players = []
     for range_key, (path, static_player) in samples_by_range.items():
         player_id = static_player["id"]
         start, end = range_key.split("--", 1)
         scope_appearances = appearances_by_range[range_key]
+        if manifest["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+            base_player = _get_json(api_url, "/api/v1/players/" + quote(player_id, safe="") + "?" + urlencode(
+                {"season_start": start, "season_end": end, "minimum_appearances": 0}))
+            _require_equal(static_player.get("stats", {}).get("ranking_boards"),
+                           base_player.get("stats", {}).get("ranking_boards"),
+                           f"shared player rankings {range_key}")
         rank_rows = _check_player_rankings(static_player.get("stats", {}), 0, scope_appearances)
         checked_players.append({"id": player_id, "range": range_key,
                                 "appearances": static_player["appearances"], "ranking_rows": rank_rows})
@@ -1671,7 +1716,7 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
     profile_path = None
     profile_ranking: list[dict[str, Any]] = []
     for candidate in candidate_profiles:
-        candidate_data = _json(candidate)
+        candidate_data = _player_json(snapshot, candidate)
         ranking = candidate_data.get("stats", {}).get("ranking_boards", {}).get("total_win_rate", [])
         max_appearances = max((row.get("appearances", 0) for row in ranking), default=0)
         if (candidate_data.get("appearances", 0) > 0 and ranking
@@ -1683,7 +1728,7 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
         profile_path = candidate_profiles[0] if candidate_profiles else None
     if profile_path is None:
         raise StaticAcceptanceError("Player range data is missing for browser interactions")
-    profile = _json(profile_path)
+    profile = _player_json(snapshot, profile_path)
     player_id = profile["id"]
     range_start, range_end = profile_path.name.removesuffix(".json").split("--", 1)
     initial_end = "latest" if len(snapshot["seasons"]) == 1 else range_end

@@ -3,6 +3,7 @@ import "server-only";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { BluffReview, GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
+import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
 
 export type SnapshotManifest = {
   schema_version: number;
@@ -58,7 +59,15 @@ export async function getSnapshotPlayerIndex() {
 }
 
 export async function getSnapshotPlayer(id: string, start: string, end: string) {
-  return readSnapshotJson<PlayerDetail>(`${await releaseDir()}/players/${encodeURIComponent(id)}/${encodeURIComponent(start)}--${encodeURIComponent(end)}.json`);
+  const manifest = await getSnapshotManifest();
+  const root = `releases/${manifest.snapshot_id}`;
+  const range = `${encodeURIComponent(start)}--${encodeURIComponent(end)}`;
+  const profile = readSnapshotJson<PlayerDetail>(`${root}/players/${encodeURIComponent(id)}/${range}.json`);
+  if (manifest.schema_version === 1) return profile;
+  const [detail, shared] = await Promise.all([
+    profile, readSnapshotJson<SharedPlayerRankings>(`${root}/rankings/${range}.json`),
+  ]);
+  return restorePlayerRankings(detail, shared);
 }
 
 export async function getSnapshotLeaderboard(season: string, phase: "all" | "finals_week") {

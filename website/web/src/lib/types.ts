@@ -232,6 +232,7 @@ export type PlayerDetail = {
   boards: BoardCount[];
   games: GameSummary[];
   release_id: string;
+  analytics_version?: number;
   stats?: PlayerStats;
   scope?: { season: string; phase: string; games: number; season_start?: string; season_end?: string; seasons?: string[]; minimum_appearances?: number };
   available_seasons?: string[];

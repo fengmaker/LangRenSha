@@ -16,7 +16,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
 WEB = ROOT / "website/web"
-FRONTEND_MODE = "data_separated_shells_v1"
+FRONTEND_MODE = "data_separated_shells_v2"
 SHELL_ID = "__static__"
 SHELL_DIRECTORY = ".static-shells"
 ROUTE_FAMILIES = ("games", "players", "seasons")
