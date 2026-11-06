@@ -612,8 +612,11 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
     return details
 
 
-def load_publication(root: Path, season: str, sample: str | None = None) -> tuple[list[dict], str, str]:
+def load_publication(root: Path, season: str, sample: str | None = None, *,
+                     rule_cache: dict | None = None) -> tuple[list[dict], str, str]:
     root = root.resolve()
+    if rule_cache is None:
+        rule_cache = {}
     rules_hashes, rules = _logical_rules(root, season)
     scope = rules["scope"]
     rules_hash = digest_bytes(canonical_json(rules_hashes))
@@ -698,7 +701,7 @@ def load_publication(root: Path, season: str, sample: str | None = None) -> tupl
                         or not source.is_file()
                         or hashlib.sha256(source.read_bytes()).hexdigest() != binding.get("sha256")):
                     raise ValueError("警上发言旁证的字幕来源已变化，请重新生成规则推导")
-            normalized = apply_precomputed(dossier, source_voting, derivations)
+            normalized = apply_precomputed(dossier, source_voting, derivations, rule_cache=rule_cache)
         except (ValueError, KeyError, IndexError, TypeError) as exc:
             raise PublishError(f"{season}/{folder.name}：{exc}") from exc
         dossier, voting = normalized["dossier"], normalized["voting"]
@@ -776,8 +779,9 @@ def load_release(root: Path, season: str | list[str] | tuple[str, ...], sample: 
     if sample:
         raise PublishError("多赛季发布不能指定单局样例")
     entries, sources, rules = [], {}, {}
+    rule_cache = {}
     for selected in seasons:
-        batch, source_hash, rules_hash = load_publication(root, selected)
+        batch, source_hash, rules_hash = load_publication(root, selected, rule_cache=rule_cache)
         entries.extend(batch)
         sources[selected], rules[selected] = source_hash, rules_hash
     if len({entry["dossier"]["slug"] for entry in entries}) != len(entries):

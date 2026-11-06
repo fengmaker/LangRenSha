@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import database
 import voting_records as voting
+import voting_core
 
 
 def transcript(*lines):
@@ -22,6 +23,12 @@ def sample(lines):
 
 
 class VotingExtractionTests(unittest.TestCase):
+    def test_legacy_module_reexports_generic_core_api(self):
+        for name in ("extract", "validate", "import_voting", "choices", "evidence",
+                     "find_registration_candidates", "GROUP", "seats", "normalized"):
+            self.assertIs(getattr(voting, name), getattr(voting_core, name))
+        self.assertTrue(callable(voting.run))
+
     def test_target_is_not_reused_as_abstaining_voter(self):
         self.assertEqual(voting.choices("五号投给十一号七号弃票"), [
             {"voter": 5, "target": 11, "state": "cast"}, {"voter": 7, "target": None, "state": "abstained"}])

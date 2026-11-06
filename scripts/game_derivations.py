@@ -17,17 +17,17 @@ try:
     from . import game_inference as inference
     from .role_constraints import event_constraint, family, puppet_target, wolf_girl_partner_target
     from .board_outcomes import derive_board_outcomes
-    from .board_config import load_template
+    from .board_config import load_template, template_path
     from .season_config import load_season
 except ImportError:
     import game_inference as inference
     from role_constraints import event_constraint, family, puppet_target, wolf_girl_partner_target
     from board_outcomes import derive_board_outcomes
-    from board_config import load_template
+    from board_config import load_template, template_path
     from season_config import load_season
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = 1
+VERSION = 2
 EVENT_FIELDS = {"slot", "action", "actor", "targets", "result", "start_seat", "direction",
                 "votes", "random_point", "speech_scope", "availability", "effects"}
 INACTIVE = {None, "unknown", "unavailable", "forbidden", "not_applicable", "not_held", "none"}
@@ -56,14 +56,54 @@ def board_template(code, season=None):
         return {}
 
 
-def rule_sources():
-    paths = [ROOT / "config/game_rules.json", ROOT / "config/seasons.json"]
-    paths += sorted((ROOT / "config/board_templates").glob("*.json"))
-    paths += [ROOT / "scripts" / name for name in
-              ("game_derivations.py", "role_constraints.py", "board_outcomes.py", "game_inference.py",
-               "sheriff_speech_evidence.py", "voting_records.py", "board_config.py",
-               "rule_config.py", "season_config.py")]
-    return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+def rule_sources(dossier=None, *, cache=None):
+    """Fingerprint used configuration; no dossier retains the version-1 contract.
+
+    A caller-owned cache lasts for one publication, never across publications.
+    Old reports must still match their original full dependency set.
+    """
+    if cache is None:
+        cache = {}
+
+    def file_hash(path):
+        key = ("file", path.resolve())
+        if key not in cache:
+            cache[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+        return cache[key]
+
+    shared = ("game_derivations.py", "role_constraints.py", "board_outcomes.py", "game_inference.py",
+              "sheriff_speech_evidence.py", "board_config.py", "rule_config.py", "season_config.py")
+    paths = [ROOT / "config/game_rules.json"]
+    if dossier is None:
+        paths += [ROOT / "config/seasons.json"]
+        paths += sorted((ROOT / "config/board_templates").glob("*.json"))
+        paths.append(ROOT / "scripts/voting_records.py")
+    else:
+        paths.append(ROOT / "scripts/voting_core.py")
+    paths += [ROOT / "scripts" / name for name in shared]
+    sources = {p.relative_to(ROOT).as_posix(): file_hash(p) for p in paths}
+    if dossier is None:
+        return sources
+
+    season, code = dossier.get("season"), dossier.get("board")
+    season_key = ("season", ROOT.resolve(), season)
+    if season_key not in cache:
+        settings = load_season(season, ROOT)
+        cache[season_key] = (settings, fingerprint(settings))
+    settings, season_hash = cache[season_key]
+    sources[f"config/seasons.json#{season}"] = season_hash
+    if season == "S23":
+        code = settings["formal_import"]["board_code_map"].get(code, code)
+    board_key = ("board", ROOT.resolve(), code)
+    if board_key not in cache:
+        try:
+            path = template_path(code, ROOT)
+        except FileNotFoundError:
+            cache[board_key] = {}
+        else:
+            cache[board_key] = {path.relative_to(ROOT).as_posix(): file_hash(path)}
+    sources.update(cache[board_key])
+    return sources
 
 
 def _event(round_, slot, phase=None):
@@ -617,7 +657,7 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
         _derive_sheriff_registration(votes, speech_evidence, roster, changes)
     vote_work = _derive_voting(game, votes, timeline, terminal, changes, issues) if votes is not None else []
     report = {"schema_version": 1, "version": VERSION, "game_slug": game.get("slug"),
-              "input_hashes": inputs, "rule_sources": rule_sources(), "terminal": terminal,
+              "input_hashes": inputs, "rule_sources": rule_sources(dossier), "terminal": terminal,
               "rounds": timeline, "slot_states": states, "review_tasks": work,
               "vote_review_tasks": vote_work,
               "changes": changes, "consequences": consequences, "issues": issues, "gaps": gaps,
@@ -737,11 +777,12 @@ def restore_source_records(dossier, voting, report):
     return values
 
 
-def apply_precomputed(dossier, voting, report):
+def apply_precomputed(dossier, voting, report, *, rule_cache=None):
     """Validate and consume saved derivations without running any game rules."""
-    if report.get("version") != VERSION or report.get("game_slug") != dossier.get("slug"):
+    version = report.get("version")
+    if version not in {1, VERSION} or report.get("game_slug") != dossier.get("slug"):
         raise ValueError("规则推导版本或对局关联不一致，请重新生成")
-    if report.get("rule_sources") != rule_sources():
+    if report.get("rule_sources") != rule_sources(dossier if version == VERSION else None, cache=rule_cache):
         raise ValueError("通用规则已变化，请重新生成规则推导")
     values = {"dossier": deepcopy(dossier), "voting": deepcopy(voting)}
     actual = {k: fingerprint(v) for k, v in values.items()}

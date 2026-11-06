@@ -9,6 +9,7 @@
 | [backup_database.py](backup_database.py) | Back up the whole database and record every retained season's source baseline. |
 | [cleanup_data.py](cleanup_data.py) | Offline cleanup preview: preserve active season media and registered evidence. |
 | [database.py](database.py) | Migrations, provenance ingestion and explicit local review for the pilot game. |
+| [file_io.py](file_io.py) | Shared JSON reading, file hashing and atomic JSON replacement. |
 | [local_postgres.py](local_postgres.py) | Project-local PostgreSQL for Windows; no service or global PATH changes. |
 | [season_config.py](season_config.py) | Shared registry for season metadata and existing season-specific profiles. |
 | [workflow.py](workflow.py) | Inspect progress, preview or execute a named season stage; no task template. |
@@ -63,7 +64,8 @@
 | [recap_specials.py](recap_specials.py) | Conservative extraction of explicit special-board recap actions. |
 | [rule_config.py](rule_config.py) | Load shared rules and season scope, rotation and import settings. |
 | [voting_crosscheck.py](voting_crosscheck.py) | Reconcile announced voting outcomes with the independent referee recap. |
-| [voting_records.py](voting_records.py) | Extract announced ballots from full transcripts; keep evidence outside game facts. |
+| [voting_core.py](voting_core.py) | Season-independent ballot extraction, validation and transactional database import. |
+| [voting_records.py](voting_records.py) | S22 voting batch command and compatibility exports for voting_core. |
 | [voting_rules.py](voting_rules.py) | Apply user-confirmed S22 election and default-abstention rules after source corrections. |
 
 ## 按季复核适配和校验

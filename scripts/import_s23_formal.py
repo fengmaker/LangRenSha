@@ -25,7 +25,7 @@ if str(ROOT / "scripts") not in sys.path:
 from database import ReviewError, connect
 import game_records
 import import_manual_slot_review as manual_slot_review
-import voting_records
+import voting_core as voting_records
 from game_derivations import derive_game
 from rule_config import load_formal_rules, load_rules, load_scope
 from board_config import load_template, template_path as board_template_path
@@ -563,7 +563,7 @@ def prepare_game(candidate_path: Path, scope: dict, rules: dict, progress: dict,
     source_hashes[f"board_template:{storage_code}"] = {
         "path": rel(template_dep), "sha256": sha256_file(template_dep),
     }
-    for dependency in ("import_s23_formal.py", "import_manual_slot_review.py", "game_records.py", "voting_records.py",
+    for dependency in ("import_s23_formal.py", "import_manual_slot_review.py", "game_records.py", "voting_core.py",
                        "game_derivations.py", "sheriff_speech_evidence.py", "board_config.py",
                        "rule_config.py", "season_config.py"):
         dependency_path = ROOT / "scripts" / dependency

@@ -18,7 +18,7 @@ import database
 import endgame_records
 import game_records
 import media_ingest
-import voting_records
+import voting_core as voting_records
 from incremental_common import entry_key, load_state, save_state, write_json
 from incremental_scope import approved_incremental_count
 from raw_media_fixture import make_subtitle_media
@@ -68,7 +68,14 @@ class IncrementalPipelineTests(unittest.TestCase):
                     patch.object(analyze, "run_json", side_effect=ai_result) as ai, \
                     patch.object(capture_bilibili_frame, "capture", side_effect=capture), \
                     patch.object(analyze.subprocess, "run", side_effect=AssertionError("中文字幕不能跑ASR")):
-                result = analyze.run(root=root)
+                prepared = analyze.run(root=root)
+                self.assertEqual(prepared["analyzed"], 0)
+                self.assertEqual(prepared["prepared"], 1)
+                self.assertIsNone(prepared["review_page"])
+                ai.assert_not_called()
+                capture_bilibili_frame.capture.assert_not_called()
+
+                result = analyze.run(root=root, prepare_only=False)
                 self.assertEqual(result["analyzed"], 1)
                 self.assertFalse(result["failures"])
                 self.assertTrue(Path(result["review_page"]).is_file())

@@ -513,7 +513,7 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
         if not saved_review:
             bluff_review = _combine_bluff_reviews(bluff_review, selected_bluffs)
         from game_records import validate as validate_game
-        from voting_records import validate as validate_voting
+        from voting_core import validate as validate_voting
         validate_game(accepted["dossier"], check_files=True, allow_incomplete=True)
         validate_voting(accepted["voting"])
         from endgame_records import validate as validate_endgame
@@ -650,7 +650,7 @@ def _import_database(plan: dict, state: dict, season: str, root: Path) -> dict:
     from database import import_media
     from database import connect
     from game_records import import_game
-    from voting_records import import_voting
+    from voting_core import import_voting
     from endgame_records import import_endgame
 
     if (sha256_file(plan["candidate_path"]) != plan["game"]["candidate_sha256"]
@@ -995,7 +995,7 @@ def _verify(plans: list[dict], state: dict, season: str, root: Path) -> dict | N
 
 def apply_review(review_path: Path, *, season: str = "S23", root: Path = ROOT,
                  apply: bool = False, publish: bool = False, codex: str = "codex",
-                 backup: bool = True, run_ai: bool = True,
+                 backup: bool = True, run_ai: bool = False,
                  note_revisions: Path | None = None) -> dict:
     if publish and not apply:
         raise ReviewApplyError("--publish 必须与 --apply 一起使用")

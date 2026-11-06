@@ -908,18 +908,42 @@ def compute_player_summaries(games: list[dict[str, Any]], *, season: str = "S22"
                              phase: str = "all") -> list[dict[str, Any]]:
     """Aggregate season-wide player cards from one in-memory game collection."""
     season_games = scope_games(games, season, "all")
-    players, notes = _accumulate(season_games, season, "all")
+    players, _ = _accumulate(season_games, season, "all")
+    attendance_players = []
+    for game in season_games:
+        attendance_players.append({
+            player_id for seat in game.get("seats", [])
+            if (player_id := _seat_person_id(seat)) is not None
+        })
+
     output = []
     for player_id, acc in players.items():
-        stats = _serialize_player(acc, season_games, "all", notes, attendance_games=season_games)
+        attendance_samples = [
+            {"game_id": game["id"], "positive": int(player_id in present),
+             "negative": int(player_id not in present)}
+            for game, present in zip(season_games, attendance_players)
+        ]
+        attendance_appearances = sum(sample["positive"] for sample in attendance_samples)
         role_counts = [{"role": role, "count": value["appearances"]}
                        for role, value in sorted(acc["roles"].items())]
         output.append({"id": player_id, "name": acc["name"], "appearances": acc["appearances"],
                        "roles": role_counts, "stats": {
-                           key: stats[key] for key in (
-                               "wins", "losses", "pending_games", "points", "points_complete",
-                               "total_win_rate", "werewolf_win_rate", "good_win_rate", "attendance",
-                           )
+                           "wins": acc["wins"], "losses": acc["losses"],
+                           "pending_games": acc["pending_games"],
+                           "points": acc["points_half"] / 2,
+                           "points_complete": acc["pending_games"] == 0,
+                           "total_win_rate": _metric_result(acc["total_win_rate"]),
+                           "werewolf_win_rate": _metric_result(acc["faction_win_rates"]["werewolf"]),
+                           "good_win_rate": _metric_result(acc["faction_win_rates"]["good"]),
+                           "attendance": {
+                               "numerator": attendance_appearances,
+                               "denominator": len(season_games),
+                               "rate": (attendance_appearances / len(season_games)
+                                        if season_games else None),
+                               "excluded": 0,
+                               "game_ids": [str(game.get("id", "")) for game in season_games],
+                               "samples": attendance_samples,
+                           },
                        }})
     return sorted(output, key=lambda item: (-item["appearances"], item["name"], item["id"]))
 

@@ -19,7 +19,7 @@ import endgame_records
 import game_records
 import import_manual_slot_review as manual_slot_review
 import s21_phase_review as phase_review
-import voting_records
+import voting_core as voting_records
 from rule_config import load_formal_rules, load_scope
 from psycopg.types.json import Jsonb
 

@@ -1,4 +1,4 @@
-"""Prepare only new games with ASR when needed, AI evidence review, and a notes page."""
+"""Prepare new-game inputs locally; the legacy CLI analysis path is opt-in."""
 from __future__ import annotations
 
 import argparse
@@ -137,7 +137,7 @@ def skeleton(entry: dict, source: Path, *, root: Path = ROOT, season="S23") -> d
 def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root: Path = ROOT) -> dict:
     """Validate the AI boundary; facts, evidence and source ownership stay distinct."""
     from game_records import validate_batch
-    from voting_records import validate as validate_voting
+    from voting_core import validate as validate_voting
     if (not isinstance(candidate, dict) or not isinstance(candidate.get("dossier"), dict)
             or not isinstance(candidate.get("voting"), dict)
             or not isinstance(candidate.get("evidence"), list)
@@ -173,6 +173,7 @@ def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root:
         raise ValueError("AI未提供实际日夜与证据，不能生成已分析候选")
     duration = entry["duration_seconds"] * 1000
     source_rows = normalized_segments(source_path)
+    evidence_hashes = {}
     for evidence in value["evidence"]:
         if not isinstance(evidence, dict) or not isinstance(evidence.get("source_path"), str):
             raise ValueError("证据缺少本地来源路径")
@@ -183,7 +184,9 @@ def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root:
             # Weibo original images/text may be used, but not unrelated game sources.
             if not path.is_relative_to((root / "data/raw/weibo").resolve()):
                 raise ValueError("证据属于另一对局或未经提供的来源")
-        digest = sha256(path)
+        if path not in evidence_hashes:
+            evidence_hashes[path] = sha256(path)
+        digest = evidence_hashes[path]
         if evidence.get("sha256") not in (None, digest):
             raise ValueError("证据SHA与本地原件不一致")
         evidence["sha256"] = digest
@@ -238,7 +241,7 @@ def weibo_sources(root: Path, event_date: str) -> list[dict]:
 
 
 def analyze_one(item: dict, season: str, *, root: Path = ROOT, codex="codex", device="cuda",
-                auth="none", cookies: Path | None = None, prepare_only=False) -> dict:
+                auth="none", cookies: Path | None = None, prepare_only=True) -> dict:
     entry = item["entry"]
     print(f"处理新局：{entry['title']} · {entry_key(entry)}", flush=True)
     source = prepare_text(entry, season, root=root, device=device)
@@ -332,7 +335,7 @@ def analyze_one(item: dict, season: str, *, root: Path = ROOT, codex="codex", de
 
 
 def run(season="S23", *, root: Path = ROOT, codex="codex", device="cuda", auth="none",
-        cookies=None, bvids=(), prepare_only=False) -> dict:
+        cookies=None, bvids=(), prepare_only=True) -> dict:
     state = load_state(root, season)
     selected = set(bvids)
     known = {item["entry"]["bvid"] for item in state["items"].values()}
@@ -381,11 +384,16 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--season", choices=["S23"], default="S23")
     parser.add_argument("--bvid", action="append", default=[])
-    parser.add_argument("--codex", default="codex", help="已登录的Codex CLI路径")
+    parser.add_argument("--codex", default="codex", help="仅供显式启用旧CLI分析流程时使用")
     parser.add_argument("--device", choices=["cuda", "cpu"], default="cuda")
     parser.add_argument("--auth", choices=["none", "cookies"])
     parser.add_argument("--cookies-file", type=Path, default=Path(".secrets/bilibili.cookies.txt"))
-    parser.add_argument("--prepare-only", action="store_true", help="只准备本机文字输入（缺文字仍需ASR），不调用AI/截图，不生成假分析页面")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--prepare-only", action="store_true", dest="prepare_only",
+                      help="只准备本机文字输入（默认；保留此参数供旧命令兼容）")
+    mode.add_argument("--run-legacy-ai", action="store_false", dest="prepare_only",
+                      help="显式启用旧CLI截图规划和候选分析流程")
+    parser.set_defaults(prepare_only=True)
     args = parser.parse_args(argv)
     auth = args.auth or ("cookies" if args.cookies_file.is_file() else "none")
     report = run(args.season, codex=args.codex, device=args.device, auth=auth,

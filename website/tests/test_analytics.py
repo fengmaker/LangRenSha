@@ -5,6 +5,7 @@ from fractions import Fraction
 
 import pytest
 
+from website.api import analytics
 from website.api.analytics import (
     build_leaderboard,
     compute_player_stats,
@@ -66,6 +67,40 @@ def test_attendance_samples_include_both_appearances_and_absences():
     assert {s['game_id']: (s['positive'], s['negative']) for s in metric['samples']} == {
         'present': (1, 0), 'absent': (0, 1),
     }
+
+
+def test_player_summaries_match_full_serialization_without_calling_it(monkeypatch):
+    games = [
+        game("present-win", winner="good", seats=[seat(1, "p", "平民", "good")]),
+        game("present-pending", winner=None, seats=[seat(1, "p", "预言家", "good")],
+             date="2026-06-02"),
+        game("absent", winner="werewolf", seats=[seat(1, "other", "狼人", "werewolf")],
+             date="2026-06-03"),
+    ]
+    scoped = analytics.scope_games(games, "S22", "all")
+    players, notes = analytics._accumulate(scoped, "S22", "all")
+    summary_keys = (
+        "wins", "losses", "pending_games", "points", "points_complete",
+        "total_win_rate", "werewolf_win_rate", "good_win_rate", "attendance",
+    )
+    expected = []
+    for player_id, acc in players.items():
+        full = analytics._serialize_player(acc, scoped, "all", notes, attendance_games=scoped)
+        expected.append({
+            "id": player_id,
+            "name": acc["name"],
+            "appearances": acc["appearances"],
+            "roles": [{"role": role, "count": value["appearances"]}
+                      for role, value in sorted(acc["roles"].items())],
+            "stats": {key: full[key] for key in summary_keys},
+        })
+    expected.sort(key=lambda item: (-item["appearances"], item["name"], item["id"]))
+
+    def fail_if_called(*args, **kwargs):
+        raise AssertionError("player summaries must not build full player details")
+
+    monkeypatch.setattr(analytics, "_serialize_player", fail_if_called)
+    assert compute_player_summaries(games) == expected
 
 
 def test_unknown_faction_is_pending_not_a_loss_or_zero_point_result():

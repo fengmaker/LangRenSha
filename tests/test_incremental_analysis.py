@@ -92,6 +92,57 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(value["evidence"][0]["sha256"], analysis.sha256(self.source))
         self.assertFalse((self.root / "data/games").exists())
 
+    def test_evidence_hash_is_cached_per_path_but_each_row_is_checked(self):
+        value = self.candidate()
+        value["evidence"].append({**value["evidence"][0], "field": "dossier.rounds.1"})
+        with patch.object(analysis, "sha256", wraps=analysis.sha256) as hash_file:
+            checked = analysis.validate_candidate(value, self.entry, self.source, root=self.root)
+        self.assertEqual(hash_file.call_count, 1)
+        self.assertEqual(checked["evidence"][0]["sha256"], checked["evidence"][1]["sha256"])
+
+        invalid_rows = [
+            ({"sha256": "0" * 64}, "证据SHA"),
+            ({"start_ms": -1}, "合法时间窗口"),
+            ({"quote": "不是字幕里的原话"}, "原话"),
+        ]
+        for change, message in invalid_rows:
+            with self.subTest(change=change):
+                invalid = self.candidate()
+                invalid["evidence"].append({**invalid["evidence"][0], "field": "dossier.rounds.1", **change})
+                with patch.object(analysis, "sha256", wraps=analysis.sha256) as hash_file:
+                    with self.assertRaisesRegex(ValueError, message):
+                        analysis.validate_candidate(invalid, self.entry, self.source, root=self.root)
+                self.assertEqual(hash_file.call_count, 1)
+
+    def test_evidence_source_ownership_is_checked_for_each_row(self):
+        other = self.root / "data/raw/bilibili/another-game.json"
+        other.parent.mkdir(parents=True, exist_ok=True)
+        other.write_text(json.dumps({"body": [{"from": 1, "to": 3, "content": "合法文字"}]}), encoding="utf-8")
+        value = self.candidate()
+        value["evidence"].append({**value["evidence"][0],
+                                  "field": "dossier.seats", "source_path": other.relative_to(self.root).as_posix()})
+        with self.assertRaisesRegex(ValueError, "另一对局"):
+            analysis.validate_candidate(value, self.entry, self.source, root=self.root)
+
+    def test_analyze_one_defaults_to_local_preparation(self):
+        item = {"entry": self.entry}
+        with patch.object(analysis, "prepare_text", return_value=self.source), \
+                patch.object(analysis, "run_json", side_effect=AssertionError("default must not call CLI")):
+            result = analysis.analyze_one(item, "S23", root=self.root)
+        self.assertTrue(result["prepared"])
+        self.assertEqual(json.loads(Path(result["input"]).read_text(encoding="utf-8"))["source_path"],
+                         self.source.relative_to(self.root).as_posix())
+
+    def test_cli_defaults_to_preparation_and_keeps_explicit_legacy_switch(self):
+        report = {"failures": [], "waiting_acquisition": [], "analyzed": 0, "prepared": 0}
+        with patch.object(analysis, "run", return_value=report) as run:
+            self.assertEqual(analysis.main([]), 0)
+            self.assertTrue(run.call_args.kwargs["prepare_only"])
+            self.assertEqual(analysis.main(["--run-legacy-ai"]), 0)
+            self.assertFalse(run.call_args.kwargs["prepare_only"])
+            self.assertEqual(analysis.main(["--prepare-only"]), 0)
+            self.assertTrue(run.call_args.kwargs["prepare_only"])
+
     def test_independent_endgame_is_preserved_and_validated_at_candidate_boundary(self):
         value = self.candidate()
         value["endgame"] = {"schema_version": 1, "game_slug": value["dossier"]["slug"], "phases": [

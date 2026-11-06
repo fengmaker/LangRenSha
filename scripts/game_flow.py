@@ -231,7 +231,7 @@ def replay(dossier, facts=None, supplements=(), endgame_phases=(), terminal_conf
 
 def collect_death_announcements(segments, dossier, facts, audit):
     """Use complete judge death reports inside a uniquely dated daylight span."""
-    from voting_records import GROUP, seats, normalized, evidence
+    from voting_core import GROUP, seats, normalized, evidence
 
     recap = audit.get("day_crosscheck_source", {}).get("recap_segments", [])
     cutoff = min((s["start_ms"] for s in recap), default=float("inf"))

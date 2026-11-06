@@ -10,11 +10,13 @@ SEASON_COUNTS = {"S22": 148, "S23": 75}
 
 def test_load_release_keeps_both_seasons_in_combined_release(monkeypatch, tmp_path):
     loaded = []
+    caches = []
 
-    def fake_load_publication(root, season, sample=None):
+    def fake_load_publication(root, season, sample=None, *, rule_cache=None):
         assert root == tmp_path
         assert sample is None
         loaded.append(season)
+        caches.append(rule_cache)
         entries = [
             {"dossier": {"slug": f"{season}-g{number:03}", "season": season}}
             for number in range(1, SEASON_COUNTS[season] + 1)
@@ -26,6 +28,7 @@ def test_load_release_keeps_both_seasons_in_combined_release(monkeypatch, tmp_pa
     entries, source_hash, rules_hash = publisher.load_release(tmp_path, ["S23", "S22"])
 
     assert loaded == ["S22", "S23"]
+    assert caches[0] is caches[1] and caches[0] is not None
     assert len(entries) == 223
     assert {season: sum(entry["dossier"]["season"] == season for entry in entries)
             for season in SEASON_COUNTS} == SEASON_COUNTS
