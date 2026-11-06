@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | 阶段调度 | `workflow.py` | 六个自动化阶段处理命令顺序、执行环境和全保留季发布；不代替微博或逐局判断，不生成任务单 |
 | 每日增量采集 | `update_incremental.py --season S23` | 在线比较正赛/决赛周合集，按本地微博窗口续到今天；确认前不请求微博，确认后用官网帖子列表采集。`--check-only`只查差距，`--yes`明确同意采集 |
-| 新局资料准备 | `analyze_incremental.py --season S23 --prepare-only` | 缺文字才ASR；随后由当前窗口用户所选模型阅读微博、文字与截图，校验候选并生成复核页；旧默认入口含模型CLI，不再调用 |
+| 新局资料准备 | `analyze_incremental.py --season S23` | 默认只准备本机输入，缺文字才ASR；随后由当前窗口用户所选模型阅读微博、文字与截图，校验候选并生成复核页。`--prepare-only`保留兼容；旧CLI分析需显式传`--run-legacy-ai`，日常增量流程不使用 |
 | 标准逐局复核页 | `game_review_page.py --season S23 [--bvid ...] [--output ...]` | 使用已准备的候选和`review_display.json`；按[09](../docs/09_复核页面生成规范.md)生成身份截图、座位身份、单行悍跳人/成功选择、共用流程、复盘文字及意见填写区，输出离线v2意见页 |
 | 日夜与票型呈现 | `game_timeline.build_game_timeline` | 复核页与网站共用阶段、事件/票轮顺序及角色触发；常规角色与特殊版型按[10](../docs/10_对局信息呈现规范.md)生成展示序列 |
 | 应用新局人工结果 | 当前窗口接收复核导出JSON | 当前模型解释备注并生成预览；授权后复用`apply_incremental_review.py`的校验、备份、事务及发布函数。非空备注的旧模型CLI分支不再调用，详见[增量流程](../docs/08_增量更新流程.md) |

@@ -14,7 +14,7 @@ from board_catalog import BOARD_CODES
 from collect_bilibili_audio import save_json
 from game_records import empty_event
 from season_naming import digest
-from voting_records import extract as extract_votes
+from voting_core import extract as extract_votes
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT/'data/extractions/S23/game_reviews'

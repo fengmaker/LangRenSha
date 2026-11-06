@@ -214,10 +214,15 @@ def test_public_snapshot_excludes_source_paths_and_review_text():
     assert "source_path" not in json.dumps(doc, ensure_ascii=False)
 
 
-def test_publication_consumes_precomputed_rules_without_rerunning(monkeypatch, tmp_path):
+@pytest.mark.parametrize("version", [1, 2])
+def test_publication_consumes_precomputed_rules_without_rerunning(monkeypatch, tmp_path, version):
     from scripts import game_derivations
 
-    _publication_fixture(tmp_path)
+    folder, report = _publication_fixture(tmp_path)
+    if version == 2:
+        dossier = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
+        report.update(version=2, rule_sources=game_derivations.rule_sources(dossier))
+        _write_json(folder / "rule_derivations.json", report)
     monkeypatch.setattr(
         game_derivations, "derive_game",
         lambda *args, **kwargs: pytest.fail("publisher reran game derivation"),
@@ -251,6 +256,30 @@ def test_publication_consumes_precomputed_rules_without_rerunning(monkeypatch, t
     assert "private detail" not in json.dumps(doc, ensure_ascii=False)
     assert set(doc["bluff_source_binding"]) == {"derived_fingerprint", "source_fingerprint"}
     assert doc["presentation"]
+
+
+def test_publication_reuses_rule_file_hashes_but_refreshes_next_load(monkeypatch, tmp_path):
+    import hashlib
+    from scripts import game_derivations
+
+    folder, report = _publication_fixture(tmp_path)
+    # Two independent records in one sampled load share the same rule files.
+    shutil.copytree(folder, folder.with_name(folder.name + "_second"))
+    path = game_derivations.ROOT / "scripts/role_constraints.py"
+    original = Path.read_bytes
+    calls = []
+
+    def read_bytes(source):
+        if source == path:
+            calls.append(source)
+        return original(source)
+
+    monkeypatch.setattr(Path, "read_bytes", read_bytes)
+    assert len(publisher.load_publication(tmp_path, "S22", SAMPLE)[0]) == 2
+    assert len(calls) == 1
+    assert report["rule_sources"]["scripts/role_constraints.py"] == hashlib.sha256(original(path)).hexdigest()
+    assert len(publisher.load_publication(tmp_path, "S22", SAMPLE)[0]) == 2
+    assert len(calls) == 2
 
 
 @pytest.mark.parametrize('materialized_audit', [False, True])

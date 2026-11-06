@@ -649,9 +649,9 @@ def load_bound_sheriff_speeches(
         raise ValueError(f"bound selected transcript has no segments list: {relative_path}")
 
     try:
-        from .voting_records import find_registration_candidates
+        from .voting_core import find_registration_candidates
     except ImportError:
-        from voting_records import find_registration_candidates
+        from voting_core import find_registration_candidates
     segments = transcript["segments"]
     candidates = find_registration_candidates(segments)
     if candidates:

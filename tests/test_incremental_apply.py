@@ -25,13 +25,13 @@ def test_prepared_hash_matches_the_formal_file_writer(tmp_path):
     assert apply._json_sha256(value) == digest(path)
 
 
-def test_cli_reports_codex_runtime_failure_as_json(monkeypatch, capsys, tmp_path):
+def test_cli_reports_preparation_runtime_failure_as_json(monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(apply, "apply_review",
-                        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("Codex unavailable")))
+                        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("local preparation failed")))
 
     assert apply.main([str(tmp_path / "review.json")]) == 1
     assert json.loads(capsys.readouterr().err) == {
-        "state": "blocked", "error": "Codex unavailable"}
+        "state": "blocked", "error": "local preparation failed"}
 
 
 def candidate(slug="bili-BV1abc-p01-g01"):
@@ -78,7 +78,8 @@ def setup_review(tmp_path: Path, *, reviewed=True, note=""):
 
 def install_local_preflight_mocks(monkeypatch, state):
     monkeypatch.setattr(apply, "load_state", lambda root, season: state)
-    import analyze_incremental, game_records, voting_records, media_ingest
+    import analyze_incremental, game_records, media_ingest
+    import voting_core as voting_records
     monkeypatch.setattr(analyze_incremental, "validate_candidate", lambda value, *a, **k: value)
     monkeypatch.setattr(game_records, "validate", lambda *a, **k: None)
     monkeypatch.setattr(voting_records, "validate", lambda *a, **k: None)
@@ -171,8 +172,7 @@ def test_new_note_can_reach_preview_via_structured_revision_without_model(tmp_pa
     monkeypatch.setattr(apply, "_apply_note", lambda *a, **k: pytest.fail("model must not run"))
     revision_path = note_revisions(export, tmp_path / "note_revisions.json")
 
-    report = apply.apply_review(export, season="S23", root=root, run_ai=False,
-                                note_revisions=revision_path)
+    report = apply.apply_review(export, season="S23", root=root, note_revisions=revision_path)
 
     assert report["state"] == "prepared_cached"
     assert report["games"][0]["patches"][0]["value"] == "good"
@@ -186,7 +186,18 @@ def test_new_note_can_reach_preview_via_structured_revision_without_model(tmp_pa
     monkeypatch.setattr(game_derivations, "apply_precomputed", lambda dossier, voting, _: {
         "dossier": dossier, "voting": voting})
     monkeypatch.setattr(game_derivations, "derive_game", lambda *a, **k: pytest.fail("must reuse cache"))
-    apply.apply_review(export, season="S23", root=root, run_ai=False)
+    apply.apply_review(export, season="S23", root=root)
+
+
+def test_apply_review_defaults_to_no_model_for_free_notes(tmp_path, monkeypatch):
+    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
+    install_local_preflight_mocks(monkeypatch, state)
+    monkeypatch.setattr(apply, "_apply_note", lambda *a, **k: pytest.fail("default must not call model"))
+
+    with pytest.raises(apply.ReviewApplyError, match="当前窗口模型准备结构化修订"):
+        apply.apply_review(export, season="S23", root=root)
+
+    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
 
 
 @pytest.mark.parametrize("changes, message", [
@@ -617,7 +628,8 @@ def test_bluff_merge_preserves_old_games_and_adds_unknown_new_seats(tmp_path, mo
 
 
 def test_game_and_voting_imports_share_a_transaction_and_roll_back_together(monkeypatch, tmp_path):
-    import database, game_records, voting_records
+    import database, game_records
+    import voting_core as voting_records
 
     class Connection:
         def __init__(self):
@@ -667,7 +679,8 @@ def test_game_and_voting_imports_share_a_transaction_and_roll_back_together(monk
 def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(tmp_path, monkeypatch):
     root, state, export, _ = setup_review(tmp_path)
     install_local_preflight_mocks(monkeypatch, state)
-    import database, endgame_records, game_derivations, game_records, voting_records
+    import database, endgame_records, game_derivations, game_records
+    import voting_core as voting_records
 
     derived_inputs = []
 
