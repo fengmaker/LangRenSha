@@ -3,7 +3,8 @@
 import { ArchiveLink } from "@/components/archive-link";
 import type { Metric, MetricRanking, PlayerDetail, PlayerLedgerEntry, RankingEntry } from "@/lib/types";
 import { formatDate, formatNumber, phaseLabel, factionLabel } from "@/lib/format";
-import { publicPath } from "@/lib/site-mode";
+import { isStaticSite, publicPath } from "@/lib/site-mode";
+import { StaticPlayerPhoto } from "@/components/static-player-photo";
 import styles from "./player-detail.module.css";
 import { SeasonRangeFilter } from "./season-range-filter";
 import { MetricSamples, type SampleLabels } from "@/components/metric-samples";
@@ -48,7 +49,7 @@ export function PlayerProfileView({ player, start, end, minimumAppearances, onRa
   return <div className={`page-wrap player-profile ${styles.profile}`}>
     <div className="breadcrumb"><ArchiveLink href={`/players?season=${encodeURIComponent(season)}&phase=all`}>选手索引</ArchiveLink><span>/</span><span>{player.name}</span></div>
     <section className="player-profile-hero">
-      <div className="profile-photo-frame">{player.photo ? <img src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <div className="profile-photo-empty"><span>{season} 赛季</span><b>{player.name}</b></div>}</div>
+      <div className="profile-photo-frame">{player.photo ? isStaticSite ? <StaticPlayerPhoto photo={player.photo} alt={`${player.name} · ${player.photo.season} 官方海报`} priority="high" /> : <img src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <div className="profile-photo-empty"><span>{season} 赛季</span><b>{player.name}</b></div>}</div>
       <div className="profile-hero-copy"><h1>{player.name}</h1><p className="profile-range-label">{rangeLabel}</p></div>
       <div className="profile-hero-controls">
         <SeasonRangeFilter action={publicPath(baseHref)} seasons={availableSeasons} start={season} end={end === "latest" ? "latest" : endSeason} minimumAppearances={appliedMinimum} onApply={onRangeChange} />
@@ -67,7 +68,7 @@ export function PlayerProfileView({ player, start, end, minimumAppearances, onRa
       <section className="profile-stat-section"><div className="section-heading"><h2>好人表现</h2></div><div className="profile-stat-grid">
         <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.good_wins} ranking={rankings?.good_wins} label="好人胜场" value={formatNumber(stats.good_win_rate.numerator)} />
         <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.good_win_rate} ranking={rankings?.good_win_rate} label="好人胜率" value={rateText(stats.good_win_rate.rate)} />
-        <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.wolf_vote_rate} ranking={rankings?.wolf_vote_rate} label="投狼率" value={rateText(stats.wolf_vote_rate.rate)} metric={stats.wolf_vote_rate} games={ledger} sampleLabels={{ positive: "投中狼人", negative: "未投中狼人", unit: "次", description: "按有票权的好人放逐投票轮次统计，盗宝大师属于狼人阵营，其选票不计入；好人投向盗宝大师算投中狼人。包含PK和技能复投；明确弃票算未投中，缺失记录排除。" }} />
+        <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.wolf_vote_rate} ranking={rankings?.wolf_vote_rate} label="投狼率" value={rateText(stats.wolf_vote_rate.rate)} metric={stats.wolf_vote_rate} games={ledger} sampleLabels={{ positive: "投中狼人", negative: "未投中狼人", unit: "次", description: "按有票权的好人放逐票统计；PK和技能复投逐轮计数。明确弃票计入分母，缺失选票或目标阵营未知时排除。" }} />
         <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.good_sheriff_registration_rate} ranking={rankings?.good_sheriff_registration_rate} label="好人上警率" value={rateText(stats.good_sheriff_registration_rate.rate)} metric={stats.good_sheriff_registration_rate} games={ledger} sampleLabels={{ positive: "上警", negative: "未上警", unit: "场", description: "仅统计好人阵营的首次报名；名单或阵营未知的场次排除。" }} />
         <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.seer_follow_rate} ranking={rankings?.seer_follow_rate} label="站边率" value={rateText(stats.seer_follow_rate.rate)} metric={stats.seer_follow_rate} games={ledger} sampleLabels={{ positive: "站边正确", negative: "站边错误", unit: "次", description: "按放逐投票轮次比较与真实预言家 / 通灵师的投向。同一局可能同时有站对与站错的轮次，会分别显示在两类样本中。" }} />
         <MetricCard rankContext={rankContext} rankingBoard={stats.ranking_boards?.sheriff_seer_vote_rate} ranking={rankings?.sheriff_seer_vote_rate} label="警徽票投对预言家率" value={rateText(stats.sheriff_seer_vote_rate.rate)} metric={stats.sheriff_seer_vote_rate} games={ledger} sampleLabels={{ positive: "投对", negative: "未投对", unit: "次", description: "按警徽投票轮次统计，正面样本为投给真实预言家 / 通灵师的记录，负面样本为未投对的记录；包含 PK 复投。" }} />

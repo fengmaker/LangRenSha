@@ -30,12 +30,16 @@ def write_json(path: Path, value: dict) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def tree_hash(root: Path) -> str:
+def tree_hash(root: Path, *, file_hashes: dict[str, bytes] | None = None) -> str:
     digest = hashlib.sha256()
     for path in sorted(root.rglob("*")):
         if path.is_file():
-            digest.update(path.relative_to(root).as_posix().encode())
-            digest.update(bytes.fromhex(hashlib.sha256(path.read_bytes()).hexdigest()))
+            relative = path.relative_to(root).as_posix()
+            content_hash = hashlib.sha256(path.read_bytes()).digest()
+            digest.update(relative.encode())
+            digest.update(content_hash)
+            if file_hashes is not None:
+                file_hashes[relative] = content_hash
     return digest.hexdigest()
 
 

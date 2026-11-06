@@ -2,15 +2,19 @@ from __future__ import annotations
 
 from collections import Counter
 import hashlib
+from io import BytesIO
 import json
 from pathlib import Path
 
 import pytest
+from PIL import Image
 
 from website.static_publish.export_static import ExportError, export_snapshot
 
 
-_IMAGE = b"incremental export image"
+_IMAGE_BUFFER = BytesIO()
+Image.new("RGB", (12, 20), "#203040").save(_IMAGE_BUFFER, "JPEG")
+_IMAGE = _IMAGE_BUFFER.getvalue()
 _IMAGE_HASH = hashlib.sha256(_IMAGE).hexdigest()
 
 

@@ -78,6 +78,20 @@ def test_check_basic_rejects_mixed_release_binding(tmp_path):
         checker.check_basic(out, "/example-site")
 
 
+def test_basic_acceptance_reuses_each_game_file_stat_within_its_inventory(tmp_path, monkeypatch):
+    out = _snapshot(tmp_path)
+    target = out / 'data/releases/snapshot-1/games/game-1.json'
+    original = Path.stat
+    calls = []
+    def track(path, *args, **kwargs):
+        if path == target:
+            calls.append(path)
+        return original(path, *args, **kwargs)
+    monkeypatch.setattr(Path, 'stat', track)
+    checker.check_basic(out, '/example-site')
+    assert len(calls) == 1
+
+
 def test_local_asset_check_resolves_cloned_html_assets_once(monkeypatch, tmp_path):
     out = _snapshot(tmp_path)
     asset_root = out / "assets"

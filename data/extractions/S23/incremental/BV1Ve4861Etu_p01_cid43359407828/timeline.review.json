@@ -1,0 +1,715 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "5号耿许儿（守卫）守护2号朴佳佳（猎人）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 5,
+              "targets": [
+                2
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀3号小肥（平民）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "12号小张（女巫）使用解药，救起3号小肥（平民）。",
+          "events": [
+            {
+              "slot": "witch_save",
+              "action": "save",
+              "actor": 12,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫解药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "6号KS（机械狼）学习12号小张（女巫），学习结果为机械女巫。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "learn",
+              "actor": 6,
+              "targets": [
+                12
+              ],
+              "result": "机械女巫",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": "机械女巫"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "通灵师查验",
+          "text": "10号陈明峻（通灵师）查验2号朴佳佳（猎人），结果为猎人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 10,
+              "targets": [
+                2
+              ],
+              "result": "猎人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "通灵师查验",
+              "display_result": "猎人"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "首次上警",
+          "text": "上警：1号猫儿曼（平民）、2号朴佳佳（猎人）、3号小肥（平民）、4号葛小舞（狼人）、7号JY（平民）、8号小苍（狼人）、10号陈明峻（通灵师）、11号Ted（平民）、12号小张（女巫）。\n警下：5号耿许儿（守卫）、6号KS（机械狼）、9号董鲸鱼（狼人）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": "initial",
+              "targets": [
+                1,
+                2,
+                3,
+                4,
+                7,
+                8,
+                10,
+                11,
+                12
+              ],
+              "off_police": [
+                5,
+                6,
+                9
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "退水后候选",
+          "text": "本轮候选：1号猫儿曼（平民）、2号朴佳佳（猎人）、8号小苍（狼人）、10号陈明峻（通灵师）、11号Ted（平民）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "actor": null,
+              "targets": [
+                1,
+                2,
+                8,
+                10,
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "上警名单",
+              "display_result": null,
+              "candidate_stage": "remaining"
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票",
+          "ballot": {
+            "id": "sheriff-1-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              8,
+              10,
+              11
+            ],
+            "eligible_voters": [
+              5,
+              6,
+              9
+            ],
+            "votes": [
+              {
+                "voter": 5,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 8,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 8,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "8号小苍（狼人）当选警长。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "elected",
+              "actor": null,
+              "targets": [
+                8
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-1-1",
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 10,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 10,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "10号陈明峻（通灵师）被放逐（8.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                10
+              ],
+              "result": "10号8.5票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "5号耿许儿（守卫）守护2号朴佳佳（猎人）。连续两晚守护2号，5号本夜被判离，需追刀追投；判离不计入本夜死亡，未因此立即终局。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 5,
+              "targets": [
+                2
+              ],
+              "result": "连续两晚守护2号，5号本夜被判离，需追刀追投；判离不计入本夜死亡，未因此立即终局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": "判离不计入本夜死亡，未因此立即终局"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀12号小张（女巫）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                12
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_medicine",
+          "title": "女巫用药",
+          "text": "12号小张（女巫）使用毒药，目标为7号JY（平民）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 12,
+              "targets": [
+                7
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "女巫毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "mechanical_action",
+          "title": "机械狼夜间技能",
+          "text": "6号KS（机械狼）使用毒药，目标为2号朴佳佳（猎人）。",
+          "events": [
+            {
+              "slot": "mechanical_action",
+              "action": "poison",
+              "actor": 6,
+              "targets": [
+                2
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "机械狼夜间技能",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": true,
+      "label": "第二天白天 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：2号朴佳佳（猎人）、7号JY（平民）、12号小张（女巫）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                2,
+                7,
+                12
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "hunter_shot",
+          "title": "猎人技能",
+          "text": "2号朴佳佳（猎人）本次出局不能开枪。",
+          "events": [
+            {
+              "slot": "hunter_shot",
+              "action": "unavailable",
+              "actor": 2,
+              "targets": [],
+              "result": "2号猎人中机械女巫毒，不能开枪",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "猎人开枪",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-2-1",
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              8,
+              9,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              6,
+              8,
+              9,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 8,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 8,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 5,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "5号耿许儿（守卫）被放逐。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                5
+              ],
+              "result": "5号高票出局，追投最后一神后游戏结束，狼队春天获胜",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "狼人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

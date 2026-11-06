@@ -25,7 +25,7 @@ export type Metric = {
   game_ids: string[];
   samples?: { game_id: string; positive: number; negative: number }[];
 };
-export type PlayerPhoto = { url: string; season: string; source_url: string; source_date: string };
+export type PlayerPhoto = { url: string; original_url?: string; season: string; source_url: string; source_date: string };
 export type PlayerLedgerEntry = {
   season?: string;
   game_id: string;

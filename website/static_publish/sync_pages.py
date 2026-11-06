@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import stat
 import socket
 import subprocess
 import sys
@@ -131,12 +132,19 @@ def git(repository: Path, *args: str) -> str:
     return result.stdout.rstrip("\r\n")
 
 
-def _ordinary_directory(path: Path) -> None:
-    if path.is_symlink() or (hasattr(path, "is_junction") and path.is_junction()):
+def _ordinary_directory(path: Path) -> os.stat_result | None:
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return None
+    if (stat.S_ISLNK(info.st_mode)
+            or os.name == "nt" and info.st_reparse_tag == stat.IO_REPARSE_TAG_MOUNT_POINT):
         raise ValueError(f"Generated paths cannot be links: {path}")
+    return info
 
 
-def sync_tree(source: Path, destination: Path, *, timings: dict | None = None) -> dict[str, int]:
+def sync_tree(source: Path, destination: Path, *, timings: dict | None = None,
+              source_hashes: dict[str, bytes] | None = None) -> dict[str, int]:
     """Mirror this dedicated site tree, writing only changed files."""
     if timings is None:
         timings = {}
@@ -150,21 +158,23 @@ def sync_tree(source: Path, destination: Path, *, timings: dict | None = None) -
     existing = {}
     with _timing(timings, "enumerate"):
         for path in target.rglob("*"):
-            _ordinary_directory(path)
-            if path.is_file():
-                existing[path.relative_to(target).as_posix()] = path
+            info = _ordinary_directory(path)
+            if info is not None and stat.S_ISREG(info.st_mode):
+                existing[path.relative_to(target).as_posix()] = (path, info.st_size)
         source_paths = sorted(source.rglob("*"))
     counts = {"written": 0, "unchanged": 0, "removed": 0}
     changed = []
     with _timing(timings, "compare"):
         for path in source_paths:
-            _ordinary_directory(path)
-            if not path.is_file():
+            info = _ordinary_directory(path)
+            if info is None or not stat.S_ISREG(info.st_mode):
                 continue
             name = path.relative_to(source).as_posix()
             old = existing.pop(name, None)
-            if (old is not None and old.stat().st_size == path.stat().st_size
-                    and hashlib.sha256(old.read_bytes()).digest() == hashlib.sha256(path.read_bytes()).digest()):
+            if (old is not None and old[1] == info.st_size
+                    and hashlib.sha256(old[0].read_bytes()).digest() == (
+                        source_hashes[name] if source_hashes is not None and name in source_hashes
+                        else hashlib.sha256(path.read_bytes()).digest())):
                 counts["unchanged"] += 1
                 continue
             changed.append((path, name))
@@ -176,7 +186,7 @@ def sync_tree(source: Path, destination: Path, *, timings: dict | None = None) -
                 shutil.copy2(path, output)
                 counts["written"] += 1
     with _timing(timings, "delete"):
-        for path in existing.values():
+        for path, _ in existing.values():
             path.unlink()
             counts["removed"] += 1
         for path in sorted(target.rglob("*"), key=lambda p: len(p.parts), reverse=True):
@@ -223,7 +233,7 @@ def verify_online(ready: Path, manifest: dict) -> dict:
     return {"state": "passed", "manifest_matches": True, "routes": routes}
 
 
-def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int = 1200,
+def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int = 1800,
                  record: dict | None = None) -> dict:
     if record is None:
         record = {}
@@ -253,7 +263,8 @@ def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int =
                 or manifest.get("complete") is not True or manifest.get("base_path") != "/langrensha-site"
                 or manifest.get("build_id") != receipt.get("build_id")):
             raise ValueError("Only a complete accepted build can be published")
-        if tree_hash(ready) != receipt.get("artifact_hash"):
+        source_hashes = {}
+        if tree_hash(ready, file_hashes=source_hashes) != receipt.get("artifact_hash"):
             raise ValueError("Accepted build changed before publication")
         target = repository / "site"
         _ordinary_directory(target)
@@ -266,7 +277,7 @@ def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int =
         print("Synchronizing accepted files to publication repository", flush=True)
         with stage(record, "sync"):
             sync_timings = record["sync_stage_seconds"]
-            record["files"] = sync_tree(ready, target, timings=sync_timings)
+            record["files"] = sync_tree(ready, target, timings=sync_timings, source_hashes=source_hashes)
             with _timing(sync_timings, "final_validation"):
                 if tree_hash(target) != receipt["artifact_hash"]:
                     raise RuntimeError("Published working tree does not match the accepted artifact")
@@ -283,7 +294,7 @@ def publish_site(ready: Path, receipt: dict, repository: Path, *, timeout: int =
             with _timing(commit_timings, "git_add"):
                 git(repository, "add", "--", "site", *templates)
             with _timing(commit_timings, "diff_scope_check"):
-                staged = git(repository, "diff", "--cached", "--name-only").splitlines()
+                staged = git(repository, "diff", "--cached", "--no-renames", "--name-only").splitlines()
                 if any(not name.startswith("site/") and name not in templates for name in staged):
                     raise RuntimeError("Refusing to commit unrelated staged files")
                 changed = bool(staged)

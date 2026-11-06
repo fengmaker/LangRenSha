@@ -11,6 +11,7 @@ export type SnapshotManifest = {
   build_id?: string | null;
   release_id: string;
   source_hash?: string;
+  player_photo_thumbnails?: Record<string, string>;
   seasons: { id: string; game_count: number; phases?: string[] }[];
   ranges: { start: string; end: string; seasons: string[] }[];
   complete: boolean;

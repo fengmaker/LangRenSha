@@ -4,6 +4,7 @@ import { createContext, useContext, useId, useState, type ReactNode } from "reac
 import type { Leaderboard } from "@/lib/types";
 import { formatNumber } from "@/lib/format";
 import { MetricSamples, type SampleLabels, type SampleMetric } from "./metric-samples";
+import { MetricFormula } from "@/components/metric-formula";
 
 const SampleGames = createContext<Leaderboard["sample_games"]>([]);
 const ShowDetails = createContext(false);
@@ -23,7 +24,7 @@ export function LeaderboardSampleLink({ label, metric, playerId, playerName }: {
 }) {
   const allGames = useContext(SampleGames);
   const showDetails = useContext(ShowDetails);
-  if (!showDetails) return <span className="leaderboard-rate-equation">{formatNumber(metric.numerator)} / {formatNumber(metric.denominator)}</span>;
+  if (!showDetails) return <span className="leaderboard-rate-equation"><MetricFormula numerator={formatNumber(metric.numerator)} denominator={formatNumber(metric.denominator)} /></span>;
   const ids = new Set((metric.samples ?? []).map((sample) => sample.game_id));
   const games = allGames.filter((game) => ids.has(game.game_id)).map((game) => ({
     ...game, role: playerId in game.roles ? game.roles[playerId] : "未出场",
@@ -32,7 +33,7 @@ export function LeaderboardSampleLink({ label, metric, playerId, playerName }: {
   const labels: SampleLabels = { positive, negative, unit,
     description: `正面样本为${positive}记录，负面样本为${negative}记录。${unit === "次" ? "按投票轮次统计；同一局可同时包含正面和负面样本。" : "每位选手每局计一次。"}` };
   return <MetricSamples label={`${playerName} · ${label}`} metric={metric} games={games} labels={labels}
-    trigger={<>{formatNumber(metric.numerator)} / {formatNumber(metric.denominator)} <span aria-hidden="true">↗</span></>} />;
+    trigger={<><MetricFormula numerator={formatNumber(metric.numerator)} denominator={formatNumber(metric.denominator)} /> <span aria-hidden="true">↗</span></>} />;
 }
 
 export function LeaderboardMetricDetails({ children, sampleGames }: { children: ReactNode; sampleGames: Leaderboard["sample_games"] }) {

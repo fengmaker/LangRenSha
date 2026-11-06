@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1Ve4861EtL-p01-g02",
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "off_police": [
+        4,
+        5,
+        9,
+        12
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "sheriff-1-1",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        3,
+        7,
+        11
+      ],
+      "eligible_voters": [
+        4,
+        5,
+        9,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 4,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 7,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": null,
+          "state": "abstained",
+          "abstention_basis": "explicit"
+        },
+        {
+          "voter": 12,
+          "target": 7,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 7,
+      "unrecorded_voters": []
+    },
+    {
+      "id": "exile-2-1",
+      "day": 2,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10,
+        11
+      ],
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10,
+        11
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 3,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 3,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 3,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 5,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 3,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 3,
+      "unrecorded_voters": []
+    }
+  ],
+  "interruptions": [
+    {
+      "day": 1,
+      "kind": "self_destruct",
+      "seat": 8
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "recorded",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 2,
+      "sheriff": "not_applicable",
+      "exile": "recorded"
+    }
+  ]
+}

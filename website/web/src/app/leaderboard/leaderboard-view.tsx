@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/page-intro";
 import { LeaderboardScroll } from "@/components/leaderboard-scroll";
 import { LeaderboardMetricDetails, LeaderboardSampleLink } from "@/components/leaderboard-metric-details";
 import { LeaderboardCalculationRules } from "@/components/leaderboard-calculation-rules";
+import { MetricFormula } from "@/components/metric-formula";
 import type { Leaderboard, LeaderboardItem, Metric, Overview } from "@/lib/types";
 import { formatNumber } from "@/lib/format";
 import { publicPath } from "@/lib/site-mode";
@@ -14,7 +15,7 @@ function percentage(rate: number | null): string { return typeof rate === "numbe
 function RateCell({ value, label, player, samples = true }: { value: Metric; label: string; player: LeaderboardItem; samples?: boolean }) {
   return <td><strong>{percentage(value.rate)}</strong><div className="leaderboard-rate-detail">
     {samples ? <LeaderboardSampleLink label={label} metric={{ numerator: value.numerator, denominator: value.denominator, excluded: value.excluded, samples: value.samples }} playerId={player.id} playerName={player.name} />
-      : <span className="leaderboard-rate-equation">{formatNumber(value.numerator)} / {formatNumber(value.denominator)}</span>}
+      : <span className="leaderboard-rate-equation"><MetricFormula numerator={formatNumber(value.numerator)} denominator={formatNumber(value.denominator)} /></span>}
   </div></td>;
 }
 function BluffCountCell({ player, season }: { player: LeaderboardItem; season: string }) {
@@ -54,7 +55,7 @@ export function LeaderboardView({ data, overview, season, phase, availablePhases
         <BluffCountCell player={player} season={season} /><RateCell label="悍跳率" player={player} value={player.bluff_rate} /><RateCell label="悍跳成功率" player={player} value={player.bluff_success_rate} />
       </tr>)}</tbody></table></LeaderboardScroll></LeaderboardMetricDetails> : <div className="empty-state"><span className="empty-number">—</span><p>当前阶段还没有可展示的积分记录。</p></div>}
     </section>
-    <details className="methodology-details"><summary>数据说明与版本</summary><p>悍跳次数与比例依据逐局复核结果统计；归属不明确时显示“≥已识别次数”或“—”，并从悍跳率分母排除；成功结果不确定时不计入成功率分母。<ArchiveLink href={`/leaderboard/bluff-review?season=${encodeURIComponent(season)}`}>查看悍跳证据与复核结果 →</ArchiveLink></p>{data.notes.length ? <ul>{data.notes.map((note, index) => <li key={index}>{note}</li>)}</ul> : null}<p>数据版本：<code>{data.release_id}</code></p></details>
+    <details className="methodology-details"><summary>统计范围与数据版本</summary><p>整季榜累计全部正式对局积分，决赛周冠军榜仅累计决赛周积分；出场、胜率与投票指标均按整季计算。待定记录不按失败或零分处理。</p><p>悍跳次数与成功结果依据逐局复核；归属不明时显示“≥已识别次数”或“—”，并排除相关比例的待定样本。<ArchiveLink href={`/leaderboard/bluff-review?season=${encodeURIComponent(season)}`}>查看悍跳复核结果 →</ArchiveLink></p><p>数据版本：<code>{data.release_id}</code></p></details>
     <LeaderboardCalculationRules scoring={data.scoring} />
   </div>;
 }

@@ -14,9 +14,7 @@ function nonNegativeInteger(value: string | null): number {
   return Number.isSafeInteger(number) && number >= 0 ? number : 0;
 }
 
-function LoadedPlayerBrowser({ id, defaultStart, manifest, initialPlayer }: { id: string; defaultStart: string; manifest: SnapshotManifest; initialPlayer: PlayerDetail }) {
-  const search = useSearchParams();
-  const seasons = manifest.seasons.map((item) => item.id);
+function resolvePlayerRange(search: URLSearchParams, seasons: string[], defaultStart: string) {
   const latest = seasons.at(-1) ?? defaultStart;
   const legacySeason = search.get("season");
   const rawStart = search.get("season_start") || legacySeason || defaultStart;
@@ -24,6 +22,13 @@ function LoadedPlayerBrowser({ id, defaultStart, manifest, initialPlayer }: { id
   const rawEnd = search.get("season_end") || (legacySeason && !search.get("season_start") ? start : "latest");
   let end = rawEnd === "latest" ? latest : seasons.includes(rawEnd) ? rawEnd : latest;
   if (seasons.indexOf(end) < seasons.indexOf(start)) end = start;
+  return { latest, rawStart, start, rawEnd, end };
+}
+
+function LoadedPlayerBrowser({ id, defaultStart, manifest, initialPlayer }: { id: string; defaultStart: string; manifest: SnapshotManifest; initialPlayer: PlayerDetail }) {
+  const search = useSearchParams();
+  const seasons = manifest.seasons.map((item) => item.id);
+  const { latest, rawStart, start, rawEnd, end } = resolvePlayerRange(search, seasons, defaultStart);
   const minimum = nonNegativeInteger(search.get("minimum_appearances"));
   const [player, setPlayer] = useState(initialPlayer);
   const [loading, setLoading] = useState(false);
@@ -74,7 +79,8 @@ async function loadPlayer() {
   const id = staticRouteId("players");
   const manifest = await fetchSnapshotManifest();
   const defaultStart = manifest.seasons.at(-1)!.id;
-  const initialPlayer = await fetchPlayerRange(id, defaultStart, defaultStart);
+  const { start, end, latest } = resolvePlayerRange(new URLSearchParams(window.location.search), manifest.seasons.map((item) => item.id), defaultStart);
+  const initialPlayer = await fetchPlayerRange(id, start, end === "latest" ? latest : end);
   document.title = `${initialPlayer.name} · 选手档案 · 大师赛档案`;
   return { id, defaultStart, manifest, initialPlayer };
 }

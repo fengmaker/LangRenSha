@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import subprocess
+import shutil
 
 import pytest
 
@@ -73,7 +74,7 @@ def fixture(tmp_path, monkeypatch):
             return sync_pages.ORIGIN
         if args == ("branch", "--show-current"):
             return "main"
-        if args == ("diff", "--cached", "--name-only"):
+        if args[:2] == ("diff", "--cached"):
             return "site/index.html\n.github/workflows/deploy-pages.yml\nREADME.md"
         if args == ("rev-parse", "HEAD"):
             return "commit-1"
@@ -90,6 +91,7 @@ def test_sync_pushes_only_accepted_site_and_owned_configuration(tmp_path, monkey
     record = sync_pages.publish_site(ready, receipt, repo)
     assert record["state"] == "passed" and record["commit"] == "commit-1"
     assert ("push", "origin", "main") in calls
+    assert ("diff", "--cached", "--no-renames", "--name-only") in calls
     assert (repo / ".github/workflows/deploy-pages.yml").read_bytes() == (sync_pages.ROOT / "website/static_publish/templates/deploy-pages.yml").read_bytes()
     assert not list((repo / "site").rglob("*receipt*"))
     assert json.loads((ready.parent / "publication.json").read_text())["state"] == "passed"
@@ -110,9 +112,9 @@ def test_sync_failure_keeps_elapsed_substeps_without_commit_timings(tmp_path, mo
     ready, receipt, repo, _ = fixture(tmp_path, monkeypatch)
     original_tree_hash = sync_pages.tree_hash
 
-    def changed_target(path):
+    def changed_target(path, **kwargs):
         if path == ready:
-            return original_tree_hash(path)
+            return original_tree_hash(path, **kwargs)
         return "unexpected-tree-hash"
 
     monkeypatch.setattr(sync_pages, "tree_hash", changed_target)
@@ -132,7 +134,7 @@ def test_commit_scope_failure_keeps_attempted_commit_timings_only(tmp_path, monk
     original_git = sync_pages.git
 
     def unrelated_staged_file(path, *args):
-        if args == ("diff", "--cached", "--name-only"):
+        if args[:2] == ("diff", "--cached"):
             calls.append(args)
             return "site/index.html\nunrelated.txt"
         return original_git(path, *args)
@@ -147,6 +149,33 @@ def test_commit_scope_failure_keeps_attempted_commit_timings_only(tmp_path, monk
     assert "git_commit" not in record["commit_stage_seconds"]
     assert "head_read" not in record["commit_stage_seconds"]
     assert "push" not in record["stage_seconds"]
+
+
+def test_publication_reads_unchanged_source_content_once_and_reuses_checked_hashes(tmp_path, monkeypatch):
+    ready, receipt, repo, _ = fixture(tmp_path, monkeypatch)
+    shutil.copytree(ready, repo / 'site')
+    original = Path.read_bytes
+    reads = {}
+    def track(path):
+        if path.is_relative_to(ready):
+            reads[path] = reads.get(path, 0) + 1
+        return original(path)
+    monkeypatch.setattr(Path, 'read_bytes', track)
+    sync_pages.publish_site(ready, receipt, repo)
+    assert reads and all(count == 1 for count in reads.values())
+
+
+def test_corrupt_copy_is_rejected_before_commit_even_with_reused_source_hashes(tmp_path, monkeypatch):
+    ready, receipt, repo, calls = fixture(tmp_path, monkeypatch)
+    original = shutil.copy2
+    def corrupt(source, target, *args, **kwargs):
+        result = original(source, target, *args, **kwargs)
+        Path(target).write_bytes(b'corrupt')
+        return result
+    monkeypatch.setattr(shutil, 'copy2', corrupt)
+    with pytest.raises(RuntimeError, match='working tree does not match'):
+        sync_pages.publish_site(ready, receipt, repo)
+    assert not any(args[0] in {'add', 'commit', 'push'} for args in calls)
 
 
 def test_partial_or_damaged_build_never_reaches_publication_commit(tmp_path, monkeypatch):

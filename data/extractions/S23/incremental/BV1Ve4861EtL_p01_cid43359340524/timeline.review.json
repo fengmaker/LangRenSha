@@ -1,0 +1,580 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_girl_confession",
+          "title": "狼女孩表白",
+          "text": "8号小苍（狼女孩）向12号小张（守卫）表白；表白失败，对象为守卫。",
+          "events": [
+            {
+              "slot": "wolf_girl_confession",
+              "action": "confess",
+              "actor": 8,
+              "targets": [
+                12
+              ],
+              "result": "表白失败，对象为守卫",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼女孩表白",
+              "display_result": "表白失败，对象为守卫"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "12号小张（守卫）本夜空守。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "pass",
+              "actor": 12,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "6号KS（毒师）本轮未发动。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "pass",
+              "actor": 6,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "3号小肥（预言家）查验4号葛小舞（狼人），结果为狼人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 3,
+              "targets": [
+                4
+              ],
+              "result": "werewolf",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "werewolf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "首次上警",
+          "text": "上警：1号猫儿曼（平民）、2号朴佳佳（猎人）、3号小肥（预言家）、6号KS（毒师）、7号JY（狼人）、8号小苍（狼女孩）、10号陈明峻（平民）、11号Ted（平民）。\n警下：4号葛小舞（狼人）、5号耿许儿（狼人）、9号董鲸鱼（平民）、12号小张（守卫）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": "initial",
+              "targets": [
+                1,
+                2,
+                3,
+                6,
+                7,
+                8,
+                10,
+                11
+              ],
+              "off_police": [
+                4,
+                5,
+                9,
+                12
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "退水后候选",
+          "text": "本轮候选：3号小肥（预言家）、7号JY（狼人）、11号Ted（平民）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "actor": null,
+              "targets": [
+                3,
+                7,
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "上警名单",
+              "display_result": null,
+              "candidate_stage": "remaining"
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票",
+          "ballot": {
+            "id": "sheriff-1-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              3,
+              7,
+              11
+            ],
+            "eligible_voters": [
+              4,
+              5,
+              9,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 4,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": null,
+                "state": "abstained",
+                "abstention_basis": "explicit"
+              },
+              {
+                "voter": 12,
+                "target": 7,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 7,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "7号JY（狼人）当选警长。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "elected",
+              "actor": null,
+              "targets": [
+                7
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "8号小苍（狼女孩）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 8,
+              "targets": [],
+              "result": "狼女孩自爆，12号守卫因报复出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_girl_revenge",
+          "title": "狼女孩报复连带",
+          "text": "狼女孩报复连带出局12号小张（守卫）。",
+          "events": [
+            {
+              "slot": "wolf_girl_revenge",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                12
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼女孩报复连带",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀6号KS（毒师）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                6
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "6号KS（毒师）使用毒药，目标为4号葛小舞（狼人）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 6,
+              "targets": [
+                4
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "3号小肥（预言家）查验1号猫儿曼（平民），结果为好人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 3,
+              "targets": [
+                1
+              ],
+              "result": "good",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "good"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": true,
+      "label": "第二天白天 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：4号葛小舞（狼人）、6号KS（毒师）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                4,
+                6
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-2-1",
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              9,
+              10,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              5,
+              7,
+              9,
+              10,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 3,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 3,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 3,
+            "unrecorded_voters": []
+          }
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "3号小肥（预言家）被放逐（4.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                3
+              ],
+              "result": "3号4.5票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_rush",
+          "title": "狼人拍刀",
+          "text": "狼人发动拍刀，目标集合为1号猫儿曼（平民）、2号朴佳佳（猎人）。法官确认本次拍刀后游戏结束。",
+          "events": [
+            {
+              "slot": "wolf_rush",
+              "action": "rush",
+              "actor": null,
+              "targets": [
+                1,
+                2
+              ],
+              "result": "werewolf_win",
+              "display_result": "werewolf_win"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "狼人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

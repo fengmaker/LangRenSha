@@ -25,6 +25,16 @@
 .goodSummary > strong { color: var(--mint); }
 .wolfSummary > strong { color: var(--rose); }
 
+.calculationGuide { padding-top: 32px; }
+.calculationGuide > h2 { margin: 0 0 18px; font-size: 24px; font-weight: 550; }
+.guideFormulas { display: flex; flex-wrap: wrap; gap: 24px 64px; margin: 0; padding: 20px 0; border-block: 1px solid var(--line); }
+.guideFormulas > div { display: grid; gap: 12px; min-width: 0; }
+.guideFormulas dt { color: var(--stats-copy); font-size: 15px; font-weight: 500; }
+.guideFormulas dd { margin: 0; }
+.guideNote { max-width: 68ch; margin: 16px 0 0; color: var(--stats-copy); font-size: 15px; line-height: 1.8; }
+.rulesLink { margin: 20px 0 0; font-size: 15px; }
+.rulesLink a { color: var(--mint); text-decoration: underline; text-underline-offset: 4px; }
+
 .section { padding-top: 38px; }
 .section > h2 { margin: 0 0 18px; font-size: 24px; font-weight: 550; }
 .tableWrap, .releaseWrap { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
@@ -53,9 +63,9 @@
 .details[open] > summary > span { transform: rotate(45deg); }
 .details > summary:hover { color: var(--mint); }
 .detailsContent { padding: 0 22px 22px; }
-.methodology { display: grid; gap: 12px; margin: 0; padding: 18px 0 0 20px; border-top: 1px solid var(--line); color: var(--stats-copy); font-size: 14px; line-height: 1.8; }
+.methodology { display: grid; gap: 12px; max-width: 72ch; margin: 0; padding: 18px 0 0 20px; border-top: 1px solid var(--line); color: var(--stats-copy); font-size: 15px; line-height: 1.8; }
 .methodology li::marker { color: var(--faint); }
-.stateLegend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.7; }
+.stateLegend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.7; }
 .stateLegend dt { margin-bottom: 5px; color: var(--text); font-weight: 500; }
 .stateLegend dd { margin: 0; color: var(--stats-muted); }
 .releaseWrap { margin: 0 22px 20px; }
@@ -75,6 +85,7 @@
   .rangeForm { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 16px 10px; }
   .rangeForm :global(.button) { grid-column: 1 / -1; }
   .summaryGrid { gap: 10px; }
+  .guideFormulas { gap: 24px 40px; }
   .summaryCard { gap: 14px; padding: 18px 16px; }
   .summaryCard > strong { font-size: 28px; }
   .roleGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
@@ -93,6 +104,8 @@
   .summaryCard > strong { font-size: clamp(21px, 5.8vw, 28px); }
   .summaryCard .unit { margin-left: 4px; font-size: 12px; }
   .section { padding-top: 30px; }
+  .calculationGuide { padding-top: 30px; }
+  .calculationGuide > h2 { font-size: 22px; }
   .section > h2 { margin-bottom: 16px; font-size: 22px; }
   .boardTable { min-width: 620px; }
   .boardTable th:first-child { position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--line); background: var(--panel); }

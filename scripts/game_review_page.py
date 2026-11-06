@@ -48,7 +48,8 @@ def ballot_html(item: dict, seats: dict) -> str:
     for vote in votes:
         name = seats[vote['voter']].get('name') or '姓名未知'
         head.append(f'<th scope="col" title="{esc(name)}">{vote["voter"]}号</th>')
-        target = ('弃票' if vote['state'] == 'abstained' else '待核' if vote['state'] == 'unknown'
+        abstention = {'explicit': '原文明确弃票', 'rule_default': '按规则默认弃票'}.get(vote.get('abstention_basis'), '弃票')
+        target = (abstention if vote['state'] == 'abstained' else '待核' if vote['state'] == 'unknown'
                   else str(vote['target']) + '号')
         cells.append(f'<td>{esc(target)}</td>')
     ballot = item['ballot']
