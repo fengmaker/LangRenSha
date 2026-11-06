@@ -123,6 +123,36 @@ def test_preview_keeps_confirmed_endgame_for_derivation_and_formal_output(tmp_pa
     assert json.loads((plans[0]["formal_dir"] / "endgame.json").read_text(encoding="utf-8")) == endgame
 
 
+def test_preview_carries_review_bound_supplemental_to_rules_cache_and_formal_output(tmp_path, monkeypatch):
+    from game_derivations import fingerprint
+    root, state, export, path = setup_review(tmp_path)
+    install_local_preflight_mocks(monkeypatch, state)
+    value = json.loads(path.read_text(encoding='utf-8'))
+    supplemental = {'events': [{'round': 2, 'phase': 'night', 'event': {
+        'slot': 'guard_disqualification', 'action': 'disqualify', 'actor': 5,
+        'targets': [5], 'result': '连守被判离，仍需追刀追投'}}]}
+    (path.parent / 'supplemental.json').write_text(json.dumps(supplemental), encoding='utf-8')
+    (path.parent / 'rule_derivations.json').write_text(json.dumps({'input_hashes': {
+        'dossier': fingerprint(value['dossier']), 'voting': fingerprint(value['voting']),
+        'supplemental': fingerprint(supplemental)}}), encoding='utf-8')
+    import game_derivations
+    inputs = []
+    def derive(dossier, voting, **kwargs):
+        inputs.append(kwargs['supplemental'])
+        return {'dossier': dossier, 'voting': voting, 'derivations': {}}
+    monkeypatch.setattr(game_derivations, 'derive_game', derive)
+    _, plans = apply._prepare_export(export, 'S23', root=root, run_ai=False)
+    expected = {**supplemental, 'schema_version': 1, 'game_slug': value['dossier']['slug'], 'season': 'S23'}
+    assert inputs == [expected]
+    apply._persist_accepted(plans[0], state, 'S23', root)
+    apply._write_formal(plans[0], state, 'S23', root)
+    assert json.loads((plans[0]['formal_dir'] / 'supplemental.json').read_text(encoding='utf-8')) == expected
+    supplemental['events'][0]['event']['actor'] = 6
+    (path.parent / 'supplemental.json').write_text(json.dumps(supplemental), encoding='utf-8')
+    with pytest.raises(apply.ReviewApplyError, match='补充事实'):
+        apply._prepare_export(export, 'S23', root=root, run_ai=False)
+
+
 def note_revisions(export, path, **changes):
     game = json.loads(export.read_text(encoding="utf-8"))["games"][0]
     revision = {key: game[key] for key in ("review_id", "candidate_sha256", "source_sha256", "note")}

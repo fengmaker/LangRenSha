@@ -246,11 +246,19 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
         if phase not in {"night", "day"} or not isinstance(source, dict):
             continue
         action = source.get("action")
-        if action not in {"disqualify", "surrender", "select_pair"}:
+        revenge = source.get("slot") == "wolf_girl_revenge" and action == "die"
+        if action not in {"disqualify", "surrender", "select_pair"} and not revenge:
+            continue
+        # This guard ruling is already displayed on the attempted guard. The
+        # seat still requires pursuit and must not become an ordinary death.
+        if (source.get("slot") == "guard_disqualification" and action == "disqualify"
+                and "追刀追投" in str(source.get("result") or "")):
             continue
         event = _pick(source, EVENT_FIELDS)
         event["supplemental"] = True
-        if action == "disqualify":
+        if revenge:
+            event["slot_label"] = "狼女孩报复连带"
+        elif action == "disqualify":
             event["slot"] = "disqualification"
             targets = event.get("targets") or []
             seats = "、".join(f"{seat}号" for seat in targets)

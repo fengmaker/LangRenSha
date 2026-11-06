@@ -399,6 +399,29 @@ def _combine_bluff_reviews(note_review: dict, selections: dict) -> dict:
     return result
 
 
+def _review_supplemental(folder: Path, candidate: dict, season: str) -> dict | None:
+    """Carry the reviewed supplemental facts into the same formal transaction."""
+    from game_derivations import fingerprint
+    path = folder / "supplemental.json"
+    value = _read_json(path) if path.is_file() else {}
+    if value:
+        report = _read_json(folder / "rule_derivations.json")
+        inputs = report.get("input_hashes", {})
+        if (inputs.get("supplemental") != fingerprint(value)
+                or any(inputs.get(key) != fingerprint(candidate[key]) for key in ("dossier", "voting"))):
+            raise ReviewApplyError("补充事实与已复核候选的规则推导不一致")
+    events = deepcopy(value.get("events", []))
+    for row in (candidate["dossier"].get("_publication_context") or {}).get("supplemental_events", []):
+        if row not in events:
+            events.append(deepcopy(row))
+    if not value and not events:
+        return None
+    slug = candidate["dossier"]["slug"]
+    if value.get("game_slug", slug) != slug:
+        raise ReviewApplyError("补充事实与对局slug不一致")
+    return {**value, "schema_version": 1, "game_slug": slug, "season": season, "events": events}
+
+
 def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
                     run_ai: bool = True, codex: str = "codex",
                     note_revisions: Path | None = None) -> tuple[dict, list[dict]]:
@@ -438,6 +461,7 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
         selected_bluffs = _selected_bluffs(game, candidate, required=payload["format"] == REVIEW_FORMAT_V2)
         patches: list[dict] = []
         folder = work_dir(root, season, entry)
+        supplemental = _review_supplemental(folder, candidate, season)
         accepted_path = folder / "accepted_candidate.json"
         review_record_path = folder / "accepted_review.json"
         accepted_formal_path = folder / "accepted_formal.json"
@@ -503,6 +527,8 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
             try:
                 if cached_formal.get("endgame") != endgame:
                     raise ValueError("保存的终局档案已变化")
+                if cached_formal.get("supplemental") != supplemental:
+                    raise ValueError("保存的补充档案已变化")
                 if (cached_formal["derivations"].get("input_hashes", {}).get("endgame")
                         != fingerprint(endgame)):
                     raise ValueError("保存的规则派生未绑定当前终局档案")
@@ -520,9 +546,12 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
             prepared_formal = None
         if prepared_formal is None:
             from game_derivations import derive_game
-            derived = derive_game(accepted["dossier"], accepted["voting"], endgame=endgame)
+            derived = derive_game(accepted["dossier"], accepted["voting"],
+                                  supplemental=supplemental, endgame=endgame)
             prepared_formal = {"dossier": derived["dossier"], "voting": derived["voting"],
                                "endgame": endgame, "derivations": derived["derivations"]}
+            if supplemental is not None:
+                prepared_formal["supplemental"] = supplemental
         validate_game(prepared_formal["dossier"], check_files=True, allow_incomplete=True)
         validate_voting(prepared_formal["voting"])
         media_entry = {**entry, "manifest_path": item.get("manifest_path", entry.get("manifest_path"))}
@@ -558,6 +587,8 @@ def _prepare_export(review_path: Path, season: str, *, root: Path = ROOT,
             "rule_derivations.json": prepared_formal["derivations"],
             "incremental_review.json": review_record,
         }
+        if supplemental is not None:
+            outputs["supplemental.json"] = supplemental
         relative = _check_formal_ownership(root, season, item, destination, entry,
                                            prepared_formal["dossier"], outputs)
         prepared.append({"key": key, "game": game, "item": item, "entry": entry,
@@ -651,6 +682,8 @@ def _write_formal(plan: dict, state: dict, season: str, root: Path) -> None:
         "endgame.json": plan["prepared_formal"]["endgame"],
         "rule_derivations.json": plan["prepared_formal"]["derivations"],
     }
+    if plan["prepared_formal"].get("supplemental") is not None:
+        outputs["supplemental.json"] = plan["prepared_formal"]["supplemental"]
     for name, value in outputs.items():
         target = destination / name
         if target.is_file() and _read_json(target) != value:

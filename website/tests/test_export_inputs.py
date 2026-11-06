@@ -235,6 +235,23 @@ def test_implementation_fingerprint_is_a_cache_input(monkeypatch):
     assert changed["seasons"] == original["seasons"]
 
 
+def test_write_only_entrypoints_do_not_invalidate_read_api_but_shared_publisher_does(tmp_path, monkeypatch):
+    from website.api import app as api
+    sources = tmp_path / 'website/api'
+    sources.mkdir(parents=True)
+    for name in ('app.py', 'publisher.py', 'publish.py', 'publish_bluffs.py'):
+        (sources / name).write_text('original', encoding='utf-8')
+    original_files = api._implementation_source_files
+    monkeypatch.setattr(api, 'PROJECT_ROOT', tmp_path)
+    monkeypatch.setattr(api, '_implementation_source_files', lambda: original_files(tmp_path))
+    before = api._implementation_fingerprint()
+    for name in ('publish.py', 'publish_bluffs.py'):
+        (sources / name).write_text('write entrypoint changed', encoding='utf-8')
+    assert api._implementation_fingerprint() == before
+    (sources / 'publisher.py').write_text('shared runtime changed', encoding='utf-8')
+    assert api._implementation_fingerprint() != before
+
+
 @pytest.mark.parametrize("season", ["S22", "S23"])
 def test_export_refuses_a_release_without_its_required_manual_bluff_binding(monkeypatch, season):
     _configure_media(monkeypatch)

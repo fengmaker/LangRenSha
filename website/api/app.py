@@ -55,7 +55,9 @@ def _canonical_sha256(value: object) -> str:
 
 def _implementation_source_files(root: Path = PROJECT_ROOT) -> list[Path]:
     """Return the Python and runtime data files used to build API responses."""
-    api_sources = (root / "website" / "api").rglob("*.py")
+    api_root = root / "website" / "api"
+    write_entrypoints = {api_root / "publish.py", api_root / "publish_bluffs.py"}
+    api_sources = (path for path in api_root.rglob("*.py") if path not in write_entrypoints)
     script_sources = (
         root / "scripts" / name for name in (
             "board_config.py", "game_inference.py", "game_time.py", "game_timeline.py",

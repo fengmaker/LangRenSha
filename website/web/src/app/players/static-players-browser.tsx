@@ -1,6 +1,7 @@
 "use client";
 
 import { StaticData } from "@/components/static-data";
+import { StaticPlayerPhoto } from "@/components/static-player-photo";
 import { ArchiveLink } from "@/components/archive-link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
@@ -81,7 +82,7 @@ function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { ove
       {error ? <div className="empty-state" role="alert"><p>{error}</p></div> : null}
       {(loading || !isCurrent) && !error ? <p role="status">正在读取选手索引…</p> : null}
       {isCurrent && !loading && !error ? result.items.length ? <div className="player-grid">{result.items.map((player) => <ArchiveLink href={`/players/${encodeURIComponent(player.id)}?season=${encodeURIComponent(season)}&phase=all`} className="player-card player-photo-card" key={player.id}>
-        <div className="player-card-photo">{player.photo ? <img loading="lazy" decoding="async" src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season}`} /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>
+        <div className="player-card-photo">{player.photo ? <StaticPlayerPhoto photo={player.photo} alt={`${player.name} · ${player.photo.season}`} /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>
         <div className="player-card-copy"><h3>{player.name}</h3><p>{formatNumber(player.stats?.appearances ?? player.appearances)} 场出场{player.stats ? ` · ${formatNumber(player.stats.wins)} 胜 ${formatNumber(player.stats.losses)} 负` : ""}</p>{player.stats ? <div className="player-card-rate"><span>总胜率</span><strong>{typeof player.stats.total_win_rate.rate === "number" ? `${(player.stats.total_win_rate.rate * 100).toFixed(1)}%` : "—"}</strong></div> : null}</div>
       </ArchiveLink>)}</div> : <div className="empty-state"><span className="empty-number">—</span><p>没有找到匹配的选手档案。</p></div> : null}
       {isCurrent && !loading && !error ? <Pagination page={page} pageSize={PAGE_SIZE} total={result.total} params={browserParams} /> : null}

@@ -143,6 +143,14 @@ def _night_deaths(round_):
     return dead, bool(records)
 
 
+def _phase_events(game, round_, phase):
+    events = list(round_.get(phase, []))
+    for row in (game.get("_publication_context") or {}).get("supplemental_events", []):
+        if row["round"] == round_["number"] and row["phase"] == phase and row["event"] not in events:
+            events.append(row["event"])
+    return events
+
+
 def _ordinary_settlement(game, round_, dead, uses, roles):
     """Resolve only boards without unobserved redirection or extra kills."""
     if family(game.get("board")) not in {"mixed_blood", "seer_witch_hunter_white", "wolf_king_guard",
@@ -281,6 +289,9 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
     # Reuse the existing checked poison, hunter, feedback and voting inference.
     # This now runs at preparation time and its typed changes are persisted.
     normalized = deepcopy(game)
+    for round_ in normalized.get("rounds", []):
+        for phase in ("night", "day"):
+            round_[phase] = deepcopy(_phase_events(game, round_, phase))
     normalized["board"] = family(game.get("board"))
     normalized["voting"] = votes or {"days": [], "ballots": []}
     if terminal:
@@ -309,7 +320,7 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
     for ri, r in enumerate(game.get("rounds", [])):
         n = r["number"]
         before = set(dead)
-        round_events = [*r.get("night", []), *r.get("day", [])]
+        round_events = [*_phase_events(game, r, "night"), *_phase_events(game, r, "day")]
         wolf_killed_last_god = inference.terminal_wolf_attack_kills_last_god(
             game, n, before, round_events, terminal,
         )
@@ -326,10 +337,10 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                     change(e, "action", "die" if settled else "peaceful", path, "ordinary_night_settlement", [n])
                     change(e, "targets", sorted(settled), path, "ordinary_night_settlement", [n])
                     night_dead, night_known = settled, True
-        night_dead.update(inference._actual_deaths(r.get("night", [])))
+        night_dead.update(inference._actual_deaths(_phase_events(game, r, "night")))
         current_dq = disqualifications.get((n, "night"), set()) | disqualifications.get((n, "day"), set())
         before_vote = before | night_dead | current_dq
-        day_non_results = [e for e in r.get("day", []) if e.get("slot") != "night_deaths"]
+        day_non_results = [e for e in _phase_events(game, r, "day") if e.get("slot") != "night_deaths"]
         current_ballots = [b for b in (votes or {}).get("ballots", []) if b.get("day") == n]
         exile_ballots = [b for b in current_ballots if b.get("kind") == "exile"]
         current_exiles = {s for e in day_non_results if e.get("action") == "exile"

@@ -19,8 +19,10 @@ import argparse
 import uuid
 
 if __package__:
+    from .photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
     from .player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings, split_player_rankings
 else:
+    from photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
     from player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings, split_player_rankings
 
 
@@ -531,7 +533,8 @@ def _load_reuse_context(reuse_from: Path | None, reuse_index: dict[str, Any] | N
         if isinstance(candidate_metadata, dict):
             metadata = candidate_metadata
     return {"root": root, "release_root": release_root, "files": files,
-            "metadata": metadata, "schema_version": old_manifest["schema_version"], "rankings": {}}
+            "metadata": metadata, "schema_version": old_manifest["schema_version"],
+            "manifest": old_manifest, "rankings": {}}
 
 
 def _read_cached_json(reuse_context: dict[str, Any], relative: str) -> dict[str, Any]:
@@ -901,6 +904,7 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
     }
     snapshot_fingerprint = _sha256(_canonical_json({
         "schema_version": SNAPSHOT_SCHEMA_VERSION,
+        "photo_thumbnail_version": PHOTO_THUMBNAIL_VERSION,
         "release_id": release_id, "source_hash": release["source_hash"],
         "seasons": scoped_metadata["seasons"], "bluff_publications": scoped_metadata["bluff_publications"],
         "media_manifest_hashes": initial_metadata["media_manifest_hashes"],
@@ -972,6 +976,15 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
         else:
             media_files = []
 
+        try:
+            photo_thumbnails = create_thumbnails(
+                stage / "media", media_files,
+                reuse_context["root"] if reuse_context else None,
+                reuse_context["manifest"] if reuse_context else None,
+            )
+        except (OSError, ValueError) as exc:
+            raise ExportError(str(exc)) from exc
+
         final_metadata = _request_json(api_url, "/api/v1/export-manifest")
         if final_metadata != initial_metadata:
             raise ExportError("Export metadata changed during snapshot generation")
@@ -1006,6 +1019,8 @@ def export_snapshot(api_url: str, output: Path, *, base_path: str = "", build_id
             "analytics_version": analytics_version,
             "bluff_publications": scoped_metadata["bluff_publications"],
             "media_manifest_hashes": initial_metadata["media_manifest_hashes"],
+            "photo_thumbnail_version": PHOTO_THUMBNAIL_VERSION,
+            "player_photo_thumbnails": photo_thumbnails,
             "generated_at": generated_at,
             "base_path": base_path,
             "seasons": [{"id": row["season"], "game_count": row["game_count"], "phases": row["phases"]}

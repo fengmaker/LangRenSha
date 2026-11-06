@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 from pathlib import PurePosixPath
 import re
+import stat
 import sys
 import tempfile
 from threading import Thread
@@ -21,8 +22,10 @@ from urllib.parse import parse_qs, quote, urlencode, urlsplit, unquote
 from urllib.request import urlopen
 
 if __package__:
+    from .photo_thumbnails import thumbnail_bytes, thumbnail_mapping
     from .player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings
 else:
+    from photo_thumbnails import thumbnail_bytes, thumbnail_mapping
     from player_rankings import SNAPSHOT_SCHEMA_VERSION, restore_player_rankings
 
 
@@ -386,7 +389,7 @@ def _media_references(value: Any):
 
 
 def _snapshot_media_references(snapshot: dict[str, Any]) -> set[str]:
-    references: set[str] = set()
+    references = set(_media_references(snapshot["manifest"].get("player_photo_thumbnails", {})))
     for path in (snapshot["data"]).rglob("*.json"):
         references.update(_media_references(_json(path)))
     for html_file in snapshot["out"].rglob("*.html"):
@@ -417,7 +420,7 @@ _STATIC_ASSET_EXTENSIONS = {".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jp
                            ".avif"}
 
 
-def _check_local_assets(snapshot: dict[str, Any]) -> int:
+def _check_local_assets(snapshot: dict[str, Any], *, files: list[Path] | None = None) -> int:
     out, base = snapshot["out"], snapshot["manifest"]["base_path"]
     resolved_out = out.resolve()
     checked: set[str] = set()
@@ -447,11 +450,12 @@ def _check_local_assets(snapshot: dict[str, Any]) -> int:
         checked_references.add(reference_key)
         checked.add(target.relative_to(resolved_out).as_posix())
 
-    for html_file in out.rglob("*.html"):
+    paths = files if files is not None else list(out.rglob("*"))
+    for html_file in (path for path in paths if path.match("*.html")):
         source = html_file.read_text(encoding="utf-8")
         for match in re.finditer(r"(?:src|href)=[\"']([^\"']+)", source):
             check_reference(match.group(1), html_file)
-    for css_file in out.rglob("*.css"):
+    for css_file in (path for path in paths if path.match("*.css")):
         source = css_file.read_text(encoding="utf-8")
         for match in re.finditer(r"url\(\s*[\"']?([^\"')]+)", source, flags=re.IGNORECASE):
             check_reference(match.group(1), css_file)
@@ -463,6 +467,14 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
                      basic: bool = False) -> dict[str, Any]:
     manifest, data, out = snapshot["manifest"], snapshot["data"], snapshot["out"]
     counts = manifest["counts"]
+    file_sizes = {}
+    for directory, _, names in os.walk(out):
+        for name in names:
+            path = Path(directory) / name
+            info = path.stat()
+            if stat.S_ISREG(info.st_mode):
+                file_sizes[path] = info.st_size
+    all_files = list(file_sizes)
     games = docs["games_index"].get("items", [])
     players = docs["players_index"].get("items", [])
     if len({item.get("id") for item in games}) != len(games):
@@ -502,21 +514,29 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
             raise StaticAcceptanceError("Partial data does not match its declared one-game, one-player scope")
 
     media_root = out / "media"
-    media_files = [path for path in media_root.rglob("*") if path.is_file()] if media_root.exists() else []
+    try:
+        thumbnails = thumbnail_mapping(manifest)
+    except ValueError as error:
+        raise StaticAcceptanceError(str(error)) from error
+    for source, target in thumbnails.items():
+        if out / source.lstrip('/') not in file_sizes or out / target.lstrip('/') not in file_sizes:
+            raise StaticAcceptanceError(f"Player photo thumbnail or its source is missing: {target}")
+    media_files = [path for path in all_files if path.is_relative_to(media_root)]
     if len(media_files) != counts["media_files"]:
         raise StaticAcceptanceError("Manifest media_files count differs from the static media directory")
-    json_files = [path for path in data.rglob("*.json") if path.is_file()]
+    json_files = [path for path in all_files if path.is_relative_to(data) and path.match("*.json")]
     required_files = [data / "overview.json", data / "releases.json",
                       data / "games" / "index.json", data / "players" / "index.json"]
-    if any(not path.is_file() for path in required_files):
+    if any(path not in file_sizes for path in required_files):
         raise StaticAcceptanceError("Required snapshot JSON file is missing")
-    actual_player_ranges = list((data / "players").glob("*/*--*.json"))
+    actual_player_ranges = [path for path in json_files
+                            if path.parent.parent == data / "players" and "--" in path.name]
     # The season summaries live one directory below players/by-season and are not player ranges.
     actual_player_ranges = [path for path in actual_player_ranges if path.parent.name != "by-season"]
-    actual_stats_ranges = list((data / "stats").glob("*--*.json")) if (data / "stats").is_dir() else []
-    actual_reviews = list((data / "bluff-review").glob("*.json")) if (data / "bluff-review").is_dir() else []
-    actual_leaderboards = list((data / "leaderboards").glob("*/*.json")) if (data / "leaderboards").is_dir() else []
-    actual_game_details = list((data / "games").glob("*.json")) if (data / "games").is_dir() else []
+    actual_stats_ranges = [path for path in json_files if path.parent == data / "stats" and "--" in path.name]
+    actual_reviews = [path for path in json_files if path.parent == data / "bluff-review"]
+    actual_leaderboards = [path for path in json_files if path.parent.parent == data / "leaderboards"]
+    actual_game_details = [path for path in json_files if path.parent == data / "games"]
     actual_game_details = [path for path in actual_game_details if path.name != "index.json"]
     if counts["player_ranges"] != len(actual_player_ranges):
         raise StaticAcceptanceError("Manifest player_ranges count differs from exported player range files")
@@ -529,7 +549,7 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
     expected_game_detail_names = {f"{item['id']}.json" for item in games}
     if {path.name for path in actual_game_details} != expected_game_detail_names:
         raise StaticAcceptanceError("Game detail files do not exactly cover the exported game index")
-    if any(not (data / "players" / "by-season" / f"{season}.json").is_file()
+    if any(data / "players" / "by-season" / f"{season}.json" not in file_sizes
            for season in snapshot["seasons"]):
         raise StaticAcceptanceError("A snapshot season is missing its by-season player index")
     known_ranges = {f"{row['start']}--{row['end']}.json" for row in manifest["ranges"]}
@@ -544,7 +564,7 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
             raise StaticAcceptanceError("Complete player range files do not cover every player and range")
     expected_stats_ranges = [data / "stats" / f"{item['start']}--{item['end']}.json"
                              for item in manifest["ranges"]]
-    if any(not path.is_file() for path in expected_stats_ranges):
+    if any(path not in file_sizes for path in expected_stats_ranges):
         raise StaticAcceptanceError("One or more range stats files are missing")
     expected_review_seasons = set(snapshot["seasons"])
     if {path.stem for path in actual_reviews} != expected_review_seasons:
@@ -584,17 +604,16 @@ def _structure_check(snapshot: dict[str, Any], docs: dict[str, Any], *,
             digest = _media_sha256(path, reference, media_hashes)
             if digest.casefold() != path.stem.casefold():
                 raise StaticAcceptanceError(f"Media content hash differs from filename: {reference}")
-    all_files = [path for path in out.rglob("*") if path.is_file()]
-    sizes = {"total_bytes": sum(path.stat().st_size for path in all_files),
-             "json_bytes": sum(path.stat().st_size for path in json_files),
-             "media_bytes": sum(path.stat().st_size for path in media_files),
+    sizes = {"total_bytes": sum(file_sizes.values()),
+             "json_bytes": sum(file_sizes[path] for path in json_files),
+             "media_bytes": sum(file_sizes[path] for path in media_files),
              "files": len(all_files), "json_files": len(json_files),
              "media_files": len(media_files), "media_references": None if basic else len(media_references)}
     _check_site_size(sizes["total_bytes"])
     routes = _record_routes(snapshot, docs)
     return {"state": "passed", "files": sizes, "routes_checked": len(routes),
             "media_references_checked": len(media_references),
-            "static_assets_checked": _check_local_assets(snapshot),
+            "static_assets_checked": _check_local_assets(snapshot, files=all_files),
             "hash_algorithm": None if basic else "sha256",
             "hashes_checked": 0 if basic else len(media_files)}
 
@@ -853,6 +872,17 @@ def _api_check(snapshot: dict[str, Any], docs: dict[str, Any], api_url: str,
             raise StaticAcceptanceError(f"Invalid media manifest hash: {name}")
     allowed_assets = {item.get("url", "").lstrip("/"): item.get("sha256")
                       for item in binding.get("media_assets", [])}
+    for source, target in thumbnail_mapping(manifest).items():
+        if source.lstrip('/') not in allowed_assets:
+            raise StaticAcceptanceError(f"Player photo thumbnail source is not allowed by export-manifest: {source}")
+        original = snapshot["out"] / source.lstrip('/')
+        try:
+            expected = hashlib.sha256(thumbnail_bytes(original.read_bytes())).hexdigest()
+        except (OSError, ValueError) as error:
+            raise StaticAcceptanceError(f"Cannot verify player photo thumbnail: {target}") from error
+        if Path(target).stem != expected:
+            raise StaticAcceptanceError(f"Player photo thumbnail differs from its source: {target}")
+        allowed_assets[target.lstrip('/')] = expected
     media_references = _media_references_for_check(snapshot, media_cache)
     media_hashes = media_cache.setdefault("hashes", {}) if media_cache is not None else {}
     for reference in media_references:

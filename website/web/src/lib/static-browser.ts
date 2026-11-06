@@ -2,9 +2,10 @@
 
 import type { BluffReview, GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
 import type { SnapshotManifest } from "@/lib/snapshot-data";
-import { basePath } from "@/lib/site-mode";
+import { basePath, publicPath } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
 import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
+import type { PlayerPhoto } from "@/lib/types";
 
 let manifestPromise: Promise<SnapshotManifest> | undefined;
 const playerRankings = new Map<string, Promise<SharedPlayerRankings>>();
@@ -76,20 +77,60 @@ export const fetchOverview = () => fetchStaticJson<Overview>("overview.json");
 export const fetchGame = (id: string) => fetchStaticJson<GameDetail>(`games/${id}.json`);
 export const fetchReleases = () => fetchStaticJson<{ items: Release[] }>("releases.json");
 export const fetchGamesIndex = () => fetchStaticJson<{ release_id: string; total: number; items: (GameSummary & { search_text?: string })[] }>("games/index.json");
-export const fetchPlayersForSeason = (season: string) => fetchStaticJson<PageResult<PlayerSummary>>(`players/by-season/${season}.json`);
+function withPlayerPhotoThumbnail<T extends { photo?: PlayerPhoto | null }>(player: T, manifest: SnapshotManifest): T {
+  if (!player.photo) return player;
+  const thumbnail = manifest.player_photo_thumbnails?.[player.photo.url];
+  return thumbnail ? { ...player, photo: { ...player.photo, url: thumbnail, original_url: player.photo.url } } : player;
+}
+
+function preloadPlayerPhoto(photo: PlayerPhoto | null | undefined) {
+  if (!photo || typeof document === "undefined") return;
+  const sources: { url: string; priority: "auto" | "high" }[] = photo.original_url
+    ? [{ url: photo.url, priority: "auto" }, { url: photo.original_url, priority: "high" }]
+    : [{ url: photo.url, priority: "high" }];
+  for (const { url, priority } of sources) {
+    const href = publicPath(url);
+    const alreadyPreloaded = Array.from(document.head.querySelectorAll('link[rel="preload"][as="image"]'))
+      .some((link) => link.getAttribute("href") === href);
+    if (alreadyPreloaded) continue;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = href;
+    link.fetchPriority = priority;
+    document.head.append(link);
+  }
+}
+
+export async function fetchPlayersForSeason(season: string): Promise<PageResult<PlayerSummary>> {
+  const [manifest, result] = await Promise.all([
+    fetchSnapshotManifest(),
+    fetchStaticJson<PageResult<PlayerSummary>>(`players/by-season/${season}.json`),
+  ]);
+  return { ...result, items: result.items.map((player) => withPlayerPhotoThumbnail(player, manifest)) };
+}
+
 export async function fetchPlayerRange(id: string, start: string, end: string): Promise<PlayerDetail> {
   const manifest = await fetchSnapshotManifest();
   const profile = fetchStaticJson<PlayerDetail>(`players/${id}/${start}--${end}.json`);
-  if (manifest.schema_version === 1) return profile;
+  if (manifest.schema_version === 1) {
+    const detail = withPlayerPhotoThumbnail(await profile, manifest);
+    preloadPlayerPhoto(detail.photo);
+    return detail;
+  }
   const range = `${start}--${end}`;
-  if (!playerRankings.has(range)) {
+  let sharedRequest = playerRankings.get(range);
+  if (!sharedRequest) {
     const request = fetchStaticJson<SharedPlayerRankings>(`rankings/${range}.json`);
+    sharedRequest = request;
     playerRankings.set(range, request);
     void request.catch(() => {
       if (playerRankings.get(range) === request) playerRankings.delete(range);
     });
   }
-  const [detail, shared] = await Promise.all([profile, playerRankings.get(range)!]);
+  const detail = withPlayerPhotoThumbnail(await profile, manifest);
+  preloadPlayerPhoto(detail.photo);
+  const shared = await sharedRequest;
   return restorePlayerRankings(detail, shared);
 }
 export const fetchStatsRange = (start: string, end: string) => fetchStaticJson<Stats>(`stats/${start}--${end}.json`);
