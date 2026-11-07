@@ -55,10 +55,11 @@ def ballot_html(item: dict, seats: dict) -> str:
     ballot = item['ballot']
     missing = ballot.get('unrecorded_voters') or []
     gap = '<p class="muted">待核票型：' + '、'.join(f'{n}号' for n in missing) + '。</p>' if missing else ''
+    note = f'<p class="table-note">{esc(item["note"])}</p>' if item.get('note') else ''
     return (f'<article class="flow-ballot" data-slot="{esc(item["slot"])}"><h4>{esc(item["title"])}</h4>'
             f'<div class="table-wrap"><table class="ballot-grid {"wide" if len(votes) > 6 else ""}">'
             f'<thead><tr><th>投票座位</th>{"".join(head)}</tr></thead>'
-            f'<tbody><tr><th>投向</th>{"".join(cells)}</tr></tbody></table></div>{gap}</article>')
+            f'<tbody><tr><th>投向</th>{"".join(cells)}</tr></tbody></table></div>{note}{gap}</article>')
 
 
 def timeline_html(dossier: dict, voting: dict, endgame: dict | None = None) -> str:

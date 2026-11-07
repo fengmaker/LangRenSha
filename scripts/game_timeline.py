@@ -596,8 +596,11 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                         selected = candidates[:1]
                     for ballot in selected:
                         suffix = {'pk': ' · PK复投', 'revote': ' · 技能重投'}.get(ballot.get('stage'), '')
+                        note = str(event.get('result') or '') if ballot is selected[-1] else ''
+                        if not re.search(r'票重|警徽票', note):
+                            note = ''
                         items.append({'kind': 'ballot', 'slot': slot, 'title': title + suffix,
-                                      'ballot': deepcopy(ballot)})
+                                      'ballot': deepcopy(ballot), 'note': note})
                         emitted_ballots.add(ballot['id'])
                     continue
                 double_tie = slot == 'exile_result' and action == 'none' and (

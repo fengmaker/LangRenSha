@@ -1,0 +1,928 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_girl_confession",
+          "title": "狼女孩表白",
+          "text": "11号小白（狼女孩）向5号耿许儿（平民）表白；表白成功；5号平民成为狼伴侣，个人胜利阵营跟狼人，不带狼刀。",
+          "events": [
+            {
+              "slot": "wolf_girl_confession",
+              "action": "confess",
+              "actor": 11,
+              "targets": [
+                5
+              ],
+              "result": "表白成功；5号平民成为狼伴侣，个人胜利阵营跟狼人，不带狼刀",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼女孩表白",
+              "display_result": "表白成功；5号平民成为狼伴侣，个人胜利阵营跟狼人，不带狼刀"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "9号董鲸鱼（守卫）本夜空守。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "pass",
+              "actor": 9,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "8号牛肉干（毒师）本轮未发动。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "pass",
+              "actor": 8,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "预言家查验",
+          "text": "2号智贤（预言家）查验7号JY（狼人），结果为狼人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 2,
+              "targets": [
+                7
+              ],
+              "result": "狼人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "预言家查验",
+              "display_result": "狼人"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "首次上警",
+          "text": "上警：2号智贤（预言家）、3号李斯（平民）、6号荣耀（平民）、7号JY（狼人）、8号牛肉干（毒师）、10号Duu（猎人）、11号小白（狼女孩）、12号小鱼丸（狼人）。\n警下：1号郭小炜（平民）、4号宝玉妹妹（狼人）、5号耿许儿（平民）、9号董鲸鱼（守卫）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": "initial",
+              "targets": [
+                2,
+                3,
+                6,
+                7,
+                8,
+                10,
+                11,
+                12
+              ],
+              "off_police": [
+                1,
+                4,
+                5,
+                9
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "退水后候选",
+          "text": "本轮候选：2号智贤（预言家）、12号小鱼丸（狼人）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "actor": null,
+              "targets": [
+                2,
+                12
+              ],
+              "result": "退水后候选：2号、12号",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "上警名单",
+              "display_result": null,
+              "candidate_stage": "remaining"
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票",
+          "ballot": {
+            "id": "sheriff-1-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              2,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              4,
+              5,
+              9
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 12,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 12,
+            "unrecorded_voters": []
+          },
+          "note": ""
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "12号小鱼丸（狼人）当选警长。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "elected",
+              "actor": null,
+              "targets": [
+                12
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-1-1",
+            "day": 1,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 7,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 2,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 2,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 2,
+            "unrecorded_voters": []
+          },
+          "note": "12号为警长，本轮票重1.5"
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "2号智贤（预言家）被放逐（8.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                2
+              ],
+              "result": "2号8.5票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "9号董鲸鱼（守卫）守护9号董鲸鱼（守卫）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 9,
+              "targets": [
+                9
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀8号牛肉干（毒师）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                8
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "8号牛肉干（毒师）使用毒药，目标为7号JY（狼人）。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 8,
+              "targets": [
+                7
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": false,
+      "label": "第二天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：7号JY（狼人）、8号牛肉干（毒师）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                7,
+                8
+              ],
+              "result": "7号中毒；8号中刀",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-2-1",
+            "day": 2,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              9,
+              10,
+              11,
+              12
+            ],
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              9,
+              10,
+              11,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 12,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 6,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 12,
+            "unrecorded_voters": []
+          },
+          "note": "12号为警长，本轮票重1.5"
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "12号小鱼丸（狼人）被放逐（7票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                12
+              ],
+              "result": "12号7票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "badge",
+          "title": "警徽",
+          "text": "警徽由12号小鱼丸（狼人）移交给5号耿许儿（平民）。",
+          "events": [
+            {
+              "slot": "badge",
+              "action": "transfer",
+              "actor": 12,
+              "targets": [
+                5
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警徽",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "night",
+      "terminal": false,
+      "label": "第二天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "guard",
+          "title": "守卫守护",
+          "text": "9号董鲸鱼（守卫）守护3号李斯（平民）。",
+          "events": [
+            {
+              "slot": "guard",
+              "action": "guard",
+              "actor": 9,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "守卫守护",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀9号董鲸鱼（守卫）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                9
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "day",
+      "terminal": false,
+      "label": "第三天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：9号董鲸鱼（守卫）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                9
+              ],
+              "result": "9号守卫中刀出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-3-1",
+            "day": 3,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              10,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              3,
+              4,
+              5,
+              6,
+              10,
+              11
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 4,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 6,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 11,
+                "target": 6,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 4,
+            "unrecorded_voters": []
+          },
+          "note": "5号为警长，本轮票重1.5"
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "4号宝玉妹妹（狼人）被放逐（4票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                4
+              ],
+              "result": "4号4票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "night",
+      "terminal": true,
+      "label": "第三天夜晚 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀10号Duu（猎人）。实际击杀最后一神10号猎人，当夜游戏结束，狼人屠神获胜。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": 11,
+              "targets": [
+                10
+              ],
+              "result": "实际击杀最后一神10号猎人，当夜游戏结束，狼人屠神获胜",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀",
+              "display_result": "实际击杀最后一神10号猎人，当夜游戏结束，狼人屠神获胜"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "本夜出局：10号Duu（猎人）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                10
+              ],
+              "result": "最后一神10号猎人中刀，当夜终局；未进入D4白天",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "display_result": null,
+              "terminal": true
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "狼人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

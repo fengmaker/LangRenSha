@@ -1,0 +1,1177 @@
+{
+  "schema_version": 1,
+  "version": 2,
+  "game_slug": "bili-BV1B74563Exj-p01-g01",
+  "input_hashes": {
+    "dossier": "9ec78397f640c314fdac6eae49b2cc5b8c948258a7a4d153c65a39d03b949a8c",
+    "voting": "0a97aea58aaa194184b9bf7b61a18b36aeb37209e029b735294eed5d44c4d9b8",
+    "supplemental": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "endgame": "59a56afb85951a95c72fb9f0f567715b810a716a0e3495d0af998d3bd57c5990"
+  },
+  "rule_sources": {
+    "config/game_rules.json": "020d3bced24295cd0cd4b44434f2f88e34eb04012008e91a333e771f6358f427",
+    "scripts/voting_core.py": "b5e2debef10f612944bc8fc58a7ccd8d40cb6dcb9334fe10f07cf9914a254df9",
+    "scripts/game_derivations.py": "f7a59e5bc64078081f381d11cb38b668fcd4be599772e0244dabd956328dd96a",
+    "scripts/role_constraints.py": "d9e9e181645623e39a8e41e6df9d0914a1fa13d0bc6a27ad37356553e7b65526",
+    "scripts/board_outcomes.py": "1e9e625865a586c3605320b1a14ee7e0fc76a9141417bda502101a7e6368bc98",
+    "scripts/game_inference.py": "c170eb4cf34fc6681c7b3b841ee6fe8fb3ca2ac3017b195dcd1c6e120b1c8d2a",
+    "scripts/sheriff_speech_evidence.py": "c2114a08751c2f644176153691d9abb93a5dddcdb273a5ce01006b0e2e01282a",
+    "scripts/board_config.py": "6751f334f6793fc97e61119c78e7dafc3a352fd51a8226de7eb26d726e8a9b5f",
+    "scripts/rule_config.py": "135803829d8477467e093af2ea7dac58285b86968fa1d1002d7306b175e7788f",
+    "scripts/season_config.py": "75fa4182eb3dd9d8a58b0c33370446445571240c2b07cb65101ec0c08e293165",
+    "config/seasons.json#S23": "022b08fee7b7c875eb7129929b43ff5de3a175a4111f6a4ff6232714fc245374",
+    "config/board_templates/wolf_girl.json": "48ad18e5d78ee84f78b026d7b7fb0ee7c7c7496019177f96657ff802c701622e"
+  },
+  "terminal": {
+    "round": 4,
+    "phase": "night"
+  },
+  "rounds": [
+    {
+      "day": 1,
+      "dead_before_night": [],
+      "night_deaths": [],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_after_day": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "known_departed_after_day": [
+        2
+      ],
+      "disqualified": [],
+      "badge_holder": 12,
+      "badge_known": true,
+      "badge_lost": false
+    },
+    {
+      "day": 2,
+      "dead_before_night": [
+        2
+      ],
+      "night_deaths": [
+        7,
+        8
+      ],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12
+      ],
+      "living_after_day": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11
+      ],
+      "known_departed_after_day": [
+        2,
+        7,
+        8,
+        12
+      ],
+      "disqualified": [],
+      "badge_holder": 5,
+      "badge_known": true,
+      "badge_lost": false
+    },
+    {
+      "day": 3,
+      "dead_before_night": [
+        2,
+        7,
+        8,
+        12
+      ],
+      "night_deaths": [
+        9
+      ],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11
+      ],
+      "living_after_day": [
+        1,
+        3,
+        5,
+        6,
+        10,
+        11
+      ],
+      "known_departed_after_day": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        12
+      ],
+      "disqualified": [],
+      "badge_holder": 5,
+      "badge_known": true,
+      "badge_lost": false
+    },
+    {
+      "day": 4,
+      "dead_before_night": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        12
+      ],
+      "night_deaths": [
+        10
+      ],
+      "night_deaths_complete": true,
+      "living_before_vote": [
+        1,
+        3,
+        5,
+        6,
+        11
+      ],
+      "living_after_day": null,
+      "known_departed_after_day": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        10,
+        12
+      ],
+      "disqualified": [],
+      "badge_holder": 5,
+      "badge_known": true,
+      "badge_lost": false
+    }
+  ],
+  "slot_states": [
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_girl_confession",
+      "actor": 11,
+      "status": "available",
+      "reason": "wolf_girl_confession_available",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 9,
+      "status": "available",
+      "reason": "guard_targets_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "wolf_girl_first_night_attack_forbidden",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 8,
+      "status": "available",
+      "reason": "medicine_available",
+      "legal_targets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 2,
+      "status": "unknown",
+      "reason": "seer_check_role_unknown",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 10,
+      "status": "unavailable",
+      "reason": "death_trigger_absent",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "badge",
+      "actor": 12,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "exile_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "game_end",
+      "actor": null,
+      "status": "available",
+      "reason": "game_end_state_recorded",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_girl_confession",
+      "actor": 11,
+      "status": "unavailable",
+      "reason": "wolf_girl_confession_first_night_only",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 9,
+      "status": "available",
+      "reason": "guard_targets_available",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": null,
+      "status": "unknown",
+      "reason": "wolf_attack_actor_unknown",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 8,
+      "status": "available",
+      "reason": "medicine_available",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 2,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 10,
+      "status": "unavailable",
+      "reason": "death_trigger_absent",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "badge",
+      "actor": 12,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "game_end",
+      "actor": null,
+      "status": "available",
+      "reason": "game_end_state_recorded",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "wolf_girl_confession",
+      "actor": 11,
+      "status": "unavailable",
+      "reason": "wolf_girl_confession_first_night_only",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 9,
+      "status": "available",
+      "reason": "guard_targets_available",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11
+      ],
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": null,
+      "status": "unknown",
+      "reason": "wolf_attack_actor_unknown",
+      "legal_targets": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11
+      ],
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 8,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 2,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "sheriff_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 10,
+      "status": "unavailable",
+      "reason": "death_trigger_absent",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "badge",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": true
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_vote",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unknown",
+      "reason": "no_applicable_rule",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "game_end",
+      "actor": null,
+      "status": "available",
+      "reason": "game_end_state_recorded",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "wolf_girl_confession",
+      "actor": 11,
+      "status": "unavailable",
+      "reason": "wolf_girl_confession_first_night_only",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "guard",
+      "actor": 9,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": [
+        1,
+        5,
+        6,
+        10,
+        11
+      ],
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "wolf_attack",
+      "actor": 11,
+      "status": "unknown",
+      "reason": "wolf_attack_special_role_rule_unknown",
+      "legal_targets": [
+        1,
+        3,
+        5,
+        6,
+        10,
+        11
+      ],
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "witch_poison",
+      "actor": 8,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "night",
+      "slot": "seer_check",
+      "actor": 2,
+      "status": "unavailable",
+      "reason": "actor_departed",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "sheriff_candidates",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "sheriff_vote",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "sheriff_result",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "night_deaths",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "hunter_shot",
+      "actor": 10,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "badge",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_vote",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "exile_result",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "self_destruct",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    },
+    {
+      "round": 4,
+      "phase": "day",
+      "slot": "game_end",
+      "actor": null,
+      "status": "unavailable",
+      "reason": "game_ended",
+      "legal_targets": null,
+      "review_required": false
+    }
+  ],
+  "review_tasks": [
+    {
+      "round": 1,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    },
+    {
+      "round": 2,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    },
+    {
+      "round": 3,
+      "phase": "day",
+      "slot": "speech_order",
+      "actor": null,
+      "reason": "no_applicable_rule",
+      "legal_targets": null
+    }
+  ],
+  "vote_review_tasks": [],
+  "changes": [
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        0,
+        "day",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "death_trigger_absent",
+      "dependencies": [
+        1,
+        "day",
+        10
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        1,
+        "night",
+        0,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "wolf_girl_confession_first_night_only",
+      "dependencies": [
+        2,
+        "night",
+        11
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        1,
+        "night",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        2,
+        "night",
+        2
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        1,
+        "day",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "death_trigger_absent",
+      "dependencies": [
+        2,
+        "day",
+        10
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        2,
+        "night",
+        0,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "wolf_girl_confession_first_night_only",
+      "dependencies": [
+        3,
+        "night",
+        11
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        2,
+        "night",
+        3,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        3,
+        "night",
+        8
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        2,
+        "night",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        3,
+        "night",
+        2
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        2,
+        "day",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "death_trigger_absent",
+      "dependencies": [
+        3,
+        "day",
+        10
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        3,
+        "night",
+        0,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "wolf_girl_confession_first_night_only",
+      "dependencies": [
+        4,
+        "night",
+        11
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        3,
+        "night",
+        1,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        4,
+        "night",
+        9
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        3,
+        "night",
+        3,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        4,
+        "night",
+        8
+      ]
+    },
+    {
+      "path": [
+        "dossier",
+        "rounds",
+        3,
+        "night",
+        4,
+        "action"
+      ],
+      "before": "unknown",
+      "after": "unavailable",
+      "rule": "actor_departed",
+      "dependencies": [
+        4,
+        "night",
+        2
+      ]
+    }
+  ],
+  "consequences": [],
+  "issues": [],
+  "gaps": [],
+  "output_hashes": {
+    "dossier": "8748b5f8d42cab8be792e3e01fbf90c24aadaa67122afd764996362e250e9859",
+    "voting": "0a97aea58aaa194184b9bf7b61a18b36aeb37209e029b735294eed5d44c4d9b8"
+  }
+}

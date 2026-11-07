@@ -1,0 +1,1076 @@
+{
+  "phases": [
+    {
+      "number": 1,
+      "phase": "night",
+      "terminal": false,
+      "label": "首夜",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "treasure_remainder",
+          "title": "盗宝大师查看三张余牌（首夜）",
+          "text": "1号郭小炜（盗宝大师）查看。实际余牌为猎人、平民、狼人。",
+          "events": [
+            {
+              "slot": "treasure_remainder",
+              "action": "view",
+              "actor": 1,
+              "targets": [],
+              "result": "实际余牌为猎人、平民、狼人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师查看三张余牌（首夜）",
+              "display_result": "实际余牌为猎人、平民、狼人"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "treasure_alignment",
+          "title": "盗宝大师阵营判定",
+          "text": "1号郭小炜（盗宝大师）：盗宝大师固定狼人阵营。",
+          "events": [
+            {
+              "slot": "treasure_alignment",
+              "action": "wolf",
+              "actor": 1,
+              "targets": [],
+              "result": "盗宝大师固定狼人阵营",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师阵营判定",
+              "display_result": "盗宝大师固定狼人阵营"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "treasure_choice",
+          "title": "盗宝大师选择身份（平民或本局另一牌）",
+          "text": "1号郭小炜（盗宝大师）本夜选择平民身份。",
+          "events": [
+            {
+              "slot": "treasure_choice",
+              "action": "choose",
+              "actor": 1,
+              "targets": [],
+              "result": "平民",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师选择身份（平民或本局另一牌）",
+              "display_result": "平民"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "通灵师查验",
+          "text": "11号小白（通灵师）查验5号耿许儿（平民），结果为平民。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 11,
+              "targets": [
+                5
+              ],
+              "result": "平民",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "通灵师查验（若在场）",
+              "display_result": "平民"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "9号董鲸鱼（毒师）本轮未发动。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "pass",
+              "actor": 9,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dreamer_action",
+          "title": "摄梦人技能（若在场）",
+          "text": "6号荣耀（摄梦人）梦游8号牛肉干（狼人）。",
+          "events": [
+            {
+              "slot": "dreamer_action",
+              "action": "dream",
+              "actor": 6,
+              "targets": [
+                8
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "摄梦人技能（若在场）",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "phase": "day",
+      "terminal": false,
+      "label": "第一天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "首次上警",
+          "text": "上警：1号郭小炜（盗宝大师）、2号智贤（平民）、4号宝玉妹妹（狼人）、5号耿许儿（平民）、6号荣耀（摄梦人）、7号JY（平民）、9号董鲸鱼（毒师）、10号Duu（平民）、11号小白（通灵师）、12号小鱼丸（狼王）。\n警下：3号李斯（蒙面人）、8号牛肉干（狼人）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "candidate_stage": "initial",
+              "targets": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                7,
+                9,
+                10,
+                11,
+                12
+              ],
+              "off_police": [
+                3,
+                8
+              ],
+              "votes": []
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_candidates",
+          "title": "退水后候选",
+          "text": "本轮候选：4号宝玉妹妹（狼人）、7号JY（平民）、11号小白（通灵师）。",
+          "events": [
+            {
+              "slot": "sheriff_candidates",
+              "action": "register",
+              "actor": null,
+              "targets": [
+                4,
+                7,
+                11
+              ],
+              "result": "退水后候选：4号、7号、11号",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "上警名单",
+              "display_result": null,
+              "candidate_stage": "remaining"
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票",
+          "ballot": {
+            "id": "sheriff-1-1",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              4,
+              7,
+              11
+            ],
+            "eligible_voters": [
+              3,
+              8
+            ],
+            "votes": [
+              {
+                "voter": 3,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 11,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [
+              4,
+              11
+            ],
+            "winner": null,
+            "unrecorded_voters": []
+          },
+          "note": ""
+        },
+        {
+          "kind": "ballot",
+          "slot": "sheriff_vote",
+          "title": "警长投票 · PK复投",
+          "ballot": {
+            "id": "sheriff-1-2",
+            "day": 1,
+            "kind": "sheriff",
+            "number": 2,
+            "stage": "pk",
+            "status": "complete",
+            "candidates": [
+              4,
+              11
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              12
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 7,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 8,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 4,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 11,
+                "state": "cast"
+              },
+              {
+                "voter": 12,
+                "target": 11,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 11,
+            "unrecorded_voters": []
+          },
+          "note": ""
+        },
+        {
+          "kind": "event",
+          "slot": "sheriff_result",
+          "title": "警长结果",
+          "text": "11号小白（通灵师）当选警长。",
+          "events": [
+            {
+              "slot": "sheriff_result",
+              "action": "elected",
+              "actor": null,
+              "targets": [
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警长结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "8号牛肉干（狼人）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 8,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "night",
+      "terminal": false,
+      "label": "第一天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀11号小白（通灵师）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                11
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀（首夜禁刀）",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "treasure_choice",
+          "title": "盗宝大师选择身份（平民或本局另一牌）",
+          "text": "1号郭小炜（盗宝大师）本夜选择猎人身份。",
+          "events": [
+            {
+              "slot": "treasure_choice",
+              "action": "choose",
+              "actor": 1,
+              "targets": [],
+              "result": "猎人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师选择身份（平民或本局另一牌）",
+              "display_result": "猎人"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "seer_check",
+          "title": "通灵师查验",
+          "text": "11号小白（通灵师）查验3号李斯（蒙面人），结果为蒙面人。",
+          "events": [
+            {
+              "slot": "seer_check",
+              "action": "check",
+              "actor": 11,
+              "targets": [
+                3
+              ],
+              "result": "蒙面人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "通灵师查验（若在场）",
+              "display_result": "蒙面人"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "witch_poison",
+          "title": "毒师毒药",
+          "text": "9号董鲸鱼（毒师）尝试对4号宝玉妹妹（狼人）使用毒药，但未生效。4号被摄梦，毒药失效；本夜仅11号中刀出局。",
+          "events": [
+            {
+              "slot": "witch_poison",
+              "action": "poison",
+              "actor": 9,
+              "targets": [
+                4
+              ],
+              "result": "4号被摄梦，毒药失效；本夜仅11号中刀出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "毒师毒药",
+              "display_result": "4号被摄梦，毒药失效"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dreamer_action",
+          "title": "摄梦人技能（若在场）",
+          "text": "6号荣耀（摄梦人）梦游4号宝玉妹妹（狼人）。",
+          "events": [
+            {
+              "slot": "dreamer_action",
+              "action": "dream",
+              "actor": 6,
+              "targets": [
+                4
+              ],
+              "result": "4号被摄梦，9号毒药未造成死亡",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "摄梦人技能（若在场）",
+              "display_result": "4号被摄梦，9号毒药未造成死亡"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "phase": "day",
+      "terminal": false,
+      "label": "第二天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：11号小白（通灵师）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                11
+              ],
+              "result": "11号通灵师中刀出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "badge",
+          "title": "警徽",
+          "text": "警徽由11号小白（通灵师）移交给3号李斯（蒙面人）。",
+          "events": [
+            {
+              "slot": "badge",
+              "action": "transfer",
+              "actor": 11,
+              "targets": [
+                3
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "警徽",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "self_destruct",
+          "title": "狼人自爆",
+          "text": "12号小鱼丸（狼王）自爆。",
+          "events": [
+            {
+              "slot": "self_destruct",
+              "action": "self_destruct",
+              "actor": 12,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼人自爆",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "night",
+      "terminal": false,
+      "label": "第二天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀7号JY（平民）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": null,
+              "targets": [
+                7
+              ],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀（首夜禁刀）",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "treasure_choice",
+          "title": "盗宝大师选择身份（平民或本局另一牌）",
+          "text": "1号郭小炜（盗宝大师）本夜选择平民身份。",
+          "events": [
+            {
+              "slot": "treasure_choice",
+              "action": "choose",
+              "actor": 1,
+              "targets": [],
+              "result": "平民",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师选择身份（平民或本局另一牌）",
+              "display_result": "平民"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dreamer_action",
+          "title": "摄梦人技能（若在场）",
+          "text": "6号荣耀（摄梦人）梦游4号宝玉妹妹（狼人）。连续两夜梦游4号，实际4号出局。",
+          "events": [
+            {
+              "slot": "dreamer_action",
+              "action": "dream",
+              "actor": 6,
+              "targets": [
+                4
+              ],
+              "result": "连续两夜梦游4号，实际4号出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "摄梦人技能（若在场）",
+              "display_result": "连续两夜梦游4号，实际4号出局"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "phase": "day",
+      "terminal": false,
+      "label": "第三天白天",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "昨夜出局：4号宝玉妹妹（狼人）、7号JY（平民）。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "die",
+              "actor": null,
+              "targets": [
+                4,
+                7
+              ],
+              "result": "4号连续两夜被梦游出局；7号中刀出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-3-1",
+            "day": 3,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              9,
+              10
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              9,
+              10
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 5,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 6,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": 5,
+                "state": "cast"
+              },
+              {
+                "voter": 10,
+                "target": 5,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 5,
+            "unrecorded_voters": []
+          },
+          "note": "3号为警长，本轮票重1.5"
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "5号耿许儿（平民）被放逐（5.5票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                5
+              ],
+              "result": "5号5.5票出局",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "night",
+      "terminal": false,
+      "label": "第三天夜晚",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "wolf_attack",
+          "title": "狼队击杀",
+          "text": "狼队选择击杀2号智贤（平民）。",
+          "events": [
+            {
+              "slot": "wolf_attack",
+              "action": "attack",
+              "actor": 1,
+              "targets": [
+                2
+              ],
+              "result": "2号受摄梦保护，本夜平安夜",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "狼队击杀（首夜禁刀）",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "treasure_choice",
+          "title": "盗宝大师选择身份（平民或本局另一牌）",
+          "text": "1号郭小炜（盗宝大师）本夜选择猎人身份。",
+          "events": [
+            {
+              "slot": "treasure_choice",
+              "action": "choose",
+              "actor": 1,
+              "targets": [],
+              "result": "猎人",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "盗宝大师选择身份（平民或本局另一牌）",
+              "display_result": "猎人"
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "dreamer_action",
+          "title": "摄梦人技能（若在场）",
+          "text": "6号荣耀（摄梦人）梦游2号智贤（平民）。梦游2号，免疫本夜狼刀。",
+          "events": [
+            {
+              "slot": "dreamer_action",
+              "action": "dream",
+              "actor": 6,
+              "targets": [
+                2
+              ],
+              "result": "梦游2号，免疫本夜狼刀",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "摄梦人技能（若在场）",
+              "display_result": "梦游2号，免疫本夜狼刀"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "phase": "day",
+      "terminal": true,
+      "label": "第四天白天 · 游戏结束",
+      "items": [
+        {
+          "kind": "event",
+          "slot": "night_deaths",
+          "title": "夜间出局",
+          "text": "天亮，昨夜平安夜。",
+          "events": [
+            {
+              "slot": "night_deaths",
+              "action": "peaceful",
+              "actor": null,
+              "targets": [],
+              "result": null,
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "夜间出局",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "ballot",
+          "slot": "exile_vote",
+          "title": "放逐投票",
+          "ballot": {
+            "id": "exile-4-1",
+            "day": 4,
+            "kind": "exile",
+            "number": 1,
+            "stage": "initial",
+            "status": "complete",
+            "candidates": [
+              1,
+              10
+            ],
+            "eligible_voters": [
+              1,
+              2,
+              3,
+              6,
+              9,
+              10
+            ],
+            "votes": [
+              {
+                "voter": 1,
+                "target": 10,
+                "state": "cast"
+              },
+              {
+                "voter": 2,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 3,
+                "target": null,
+                "state": "abstained",
+                "abstention_basis": "explicit"
+              },
+              {
+                "voter": 6,
+                "target": 1,
+                "state": "cast"
+              },
+              {
+                "voter": 9,
+                "target": null,
+                "state": "abstained",
+                "abstention_basis": "explicit"
+              },
+              {
+                "voter": 10,
+                "target": 1,
+                "state": "cast"
+              }
+            ],
+            "tied_candidates": [],
+            "winner": 1,
+            "unrecorded_voters": []
+          },
+          "note": "本轮归票1号、10号，警长宣布警徽票变为1票"
+        },
+        {
+          "kind": "event",
+          "slot": "exile_result",
+          "title": "放逐结果",
+          "text": "1号郭小炜（盗宝大师）被放逐（3票）。",
+          "events": [
+            {
+              "slot": "exile_result",
+              "action": "exile",
+              "actor": null,
+              "targets": [
+                1
+              ],
+              "result": "1号3票出局，最后一狼出局，游戏结束，好人胜",
+              "start_seat": null,
+              "direction": null,
+              "votes": [],
+              "random_point": null,
+              "speech_scope": null,
+              "availability": null,
+              "effects": [],
+              "slot_label": "放逐结果",
+              "display_result": null
+            }
+          ]
+        },
+        {
+          "kind": "event",
+          "slot": "game_result",
+          "title": "本局结果",
+          "text": "好人阵营获胜。",
+          "events": []
+        }
+      ]
+    }
+  ]
+}

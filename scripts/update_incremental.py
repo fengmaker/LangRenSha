@@ -7,6 +7,7 @@ from datetime import date, datetime, timedelta, timezone
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 import tempfile
 
@@ -742,14 +743,14 @@ def _choose_seed(snapshot: dict, root: Path, since: date, until: date) -> Path |
 
 def _collect_weibo_windows(root: Path, uid: str, windows: list[dict],
                            auth: str, cookies: Path | None, state: dict,
-                           *, completed_at: datetime | None = None) -> bool:
+                           *, completed_at: datetime | None = None,
+                           refresh_login: bool = True) -> bool:
     session = requests.Session()
-    configure_auth(session, auth, str(cookies) if cookies else None)
-    collector = _new_desktop_weibo_collector(session)
+    collector = None
     state_weibo = state.setdefault("weibo", {})
     stored = state_weibo.setdefault("windows", [])
     success = True
-    for window in windows:
+    for index, window in enumerate(windows):
         since, until = window["since"], window["until"]
         archive_root = window["path"] or _archive_dir(root, since, until, uid)
         manifest_path = archive_root / "manifest.json"
@@ -765,6 +766,9 @@ def _collect_weibo_windows(root: Path, uid: str, windows: list[dict],
         if seed is None and not window["resume"]:
             seed = _choose_seed(weibo_local_snapshot(root, uid), root, since, until)
         try:
+            if collector is None:
+                configure_auth(session, auth, str(cookies) if auth == "cookies" and cookies else None)
+                collector = _new_desktop_weibo_collector(session)
             manifest = collect_archive(collector, archive_root, uid, since, until,
                                       max_pages=MAX_WEIBO_PAGES, seed_path=seed)
             did_scan = (not scan_was_complete and
@@ -808,8 +812,22 @@ def _collect_weibo_windows(root: Path, uid: str, windows: list[dict],
         save_state(root, state["season"], state)
         success = success and record["complete"]
         if not record["complete"]:
+            if refresh_login and record["termination_reason"] in {"login_required", "auth_configuration_failed"}:
+                cookie_path = cookies or root / DEFAULT_WEIBO_COOKIES
+                print("微博登录态不可用，正在重新获取官网 Cookie；已有浏览器登录态时直接复用。",flush=True)
+                session.close()
+                if _refresh_weibo_cookies(root, cookie_path):
+                    return _collect_weibo_windows(root, uid, windows[index:], "cookies", cookie_path,
+                                                  state, completed_at=completed_at, refresh_login=False)
+                print("微博 Cookie 更新未完成；保留当前窗口，下次从这里续跑。",file=sys.stderr)
             break
     return success
+
+
+def _refresh_weibo_cookies(root: Path, cookies: Path) -> bool:
+    result = subprocess.run([sys.executable, str(root / "scripts/login_session.py"),
+                             "weibo", "--refresh", "--cookies-file", str(cookies)], cwd=root)
+    return result.returncode == 0
 
 
 def _new_desktop_weibo_collector(session: requests.Session):
@@ -1056,7 +1074,9 @@ def run(args: argparse.Namespace, root: Path = ROOT) -> int:
         return 2
 
     if not _collect_weibo_windows(root, WEIBO_UID, weibo_plan["windows"],
-                                  weibo_auth, weibo_cookies, state):
+                                  weibo_auth, weibo_cookies or (
+                                      weibo_cookie_path if args.auth != "none" else None), state,
+                                  refresh_login=args.auth != "none"):
         all_successful = False
     print(f"增量采集状态：{'完成' if all_successful else '部分完成'}")
     return 0 if all_successful else 2

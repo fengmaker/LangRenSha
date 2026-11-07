@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "game_slug": "bili-BV1B74563EXB-p01-g03",
+  "registrations": [
+    {
+      "id": "registration-1",
+      "day": 1,
+      "on_police": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12
+      ],
+      "off_police": [
+        5,
+        9
+      ]
+    }
+  ],
+  "ballots": [
+    {
+      "id": "sheriff-1-1",
+      "day": 1,
+      "kind": "sheriff",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        6,
+        8
+      ],
+      "eligible_voters": [
+        5,
+        9
+      ],
+      "votes": [
+        {
+          "voter": 5,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 8,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 8,
+      "unrecorded_voters": []
+    },
+    {
+      "id": "exile-1-1",
+      "day": 1,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "eligible_voters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 3,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 5,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 6,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 7,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 8,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 9,
+          "target": 6,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 8,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 6,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 6,
+      "unrecorded_voters": []
+    },
+    {
+      "id": "exile-4-1",
+      "day": 4,
+      "kind": "exile",
+      "number": 1,
+      "stage": "initial",
+      "status": "complete",
+      "candidates": [
+        1,
+        2,
+        4,
+        10,
+        11,
+        12
+      ],
+      "eligible_voters": [
+        1,
+        2,
+        4,
+        10,
+        11,
+        12
+      ],
+      "votes": [
+        {
+          "voter": 1,
+          "target": 10,
+          "state": "cast"
+        },
+        {
+          "voter": 2,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 4,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 10,
+          "target": 11,
+          "state": "cast"
+        },
+        {
+          "voter": 11,
+          "target": 1,
+          "state": "cast"
+        },
+        {
+          "voter": 12,
+          "target": 1,
+          "state": "cast"
+        }
+      ],
+      "tied_candidates": [],
+      "winner": 1,
+      "unrecorded_voters": []
+    }
+  ],
+  "interruptions": [
+    {
+      "id": "interruption-2",
+      "day": 2,
+      "kind": "self_destruct",
+      "actor": 8,
+      "ends_day": true
+    },
+    {
+      "id": "interruption-3",
+      "day": 3,
+      "kind": "self_destruct",
+      "actor": 5,
+      "ends_day": true
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "sheriff": "recorded",
+      "exile": "recorded"
+    },
+    {
+      "day": 2,
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 3,
+      "sheriff": "badge_lost",
+      "exile": "interrupted_self_destruct"
+    },
+    {
+      "day": 4,
+      "sheriff": "badge_lost",
+      "exile": "recorded"
+    }
+  ]
+}

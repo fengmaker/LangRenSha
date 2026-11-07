@@ -1,0 +1,106 @@
+{
+  "state": "completed",
+  "created_at": "2026-11-07T05:53:12.658990+00:00",
+  "scope": "2026-11-06 S23 three user-confirmed games, database import and local website publication",
+  "feedback": "data/manual_review/feedback/S23_逐局复核意见_20261107_20261106.json",
+  "feedback_sha256": "17017f1e74d46a77761abab5ec17f5afcc85a1d065960aab6d9b7d3596cc1995",
+  "backup_receipt": "data/backups/workflow-20261107T054858/receipt.json",
+  "database_readback": "data/reports/S23/incremental/20261107_20261106_database_readback.json",
+  "publication_acceptance": "data/reports/S23/incremental/publication_acceptance_batch_97f92fc8a058.json",
+  "publication_acceptance_sha256": "b320512940ee0a130c1c75492498632a0f3c47cc7a8c819eff9b35392836c74f",
+  "release_id": "S21_S22_S23-2c9235470bcbbd29-af68d320-p13-s2",
+  "website_url": "http://127.0.0.1:3000",
+  "launcher_pid": 9988,
+  "publication_counts": [
+    {
+      "id": "S21",
+      "name": "傀趣奇谭",
+      "games": 122,
+      "days": 42
+    },
+    {
+      "id": "S22",
+      "name": "曙光航纪",
+      "games": 148,
+      "days": 47
+    },
+    {
+      "id": "S23",
+      "name": "昆仑归墟",
+      "games": 99,
+      "days": 31
+    }
+  ],
+  "verification": {
+    "mode": "partial",
+    "accepted_games": 3,
+    "browser_pages": 44,
+    "viewports": [
+      1440,
+      390
+    ],
+    "affected_player_stats": 12
+  },
+  "games": [
+    {
+      "review_id": "BV1B74563Exj:43389421739:p01",
+      "bvid": "BV1B74563Exj",
+      "formal_dir": "data/games/S23/2026-11-06_g01_BV1B74563Exj",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "bluffs": [
+        {
+          "seat": 12,
+          "decision": "yes",
+          "success": "success"
+        }
+      ]
+    },
+    {
+      "review_id": "BV1B74563ECy:43389619217:p01",
+      "bvid": "BV1B74563ECy",
+      "formal_dir": "data/games/S23/2026-11-06_g02_BV1B74563ECy",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "bluffs": [
+        {
+          "seat": 4,
+          "decision": "yes",
+          "success": "failure"
+        }
+      ]
+    },
+    {
+      "review_id": "BV1B74563EXB:43389750029:p01",
+      "bvid": "BV1B74563EXB",
+      "formal_dir": "data/games/S23/2026-11-06_g03_BV1B74563EXB",
+      "phases": {
+        "database": "done",
+        "formal": "done",
+        "bluffs": "done",
+        "publish": "done",
+        "verify": "done"
+      },
+      "bluffs": [
+        {
+          "seat": 8,
+          "decision": "yes",
+          "success": "success"
+        }
+      ]
+    }
+  ],
+  "static_site_synchronized": false,
+  "git_commit_performed": false,
+  "git_push_performed": false
+}
