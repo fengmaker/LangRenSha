@@ -21,6 +21,48 @@ def cookie(domain='.bilibili.com',name='SESSDATA',expires=-1):
 
 
 class ExistingChromeExportTests(unittest.TestCase):
+    def test_weibo_export_validates_before_replacing_existing_file(self):
+        context = Mock()
+        context.cookies.return_value = [cookie('.weibo.com', name='SUB')]
+        with tempfile.TemporaryDirectory(dir=ROOT/'tmp') as folder:
+            target = Path(folder)/'weibo.cookies.txt'
+            target.write_text('previous-file-placeholder',encoding='utf-8')
+            with patch.object(login,'validate_weibo_cookies',side_effect=login.LoginSessionError(
+                    '官网要求登录',reason='login_required')) as validate:
+                with self.assertRaises(login.LoginSessionError):
+                    login.export_platform_cookies(context,'weibo',target)
+                validate.assert_called_once()
+                self.assertEqual(target.read_text(encoding='utf-8'),'previous-file-placeholder')
+            with patch.object(login,'validate_weibo_cookies'):
+                self.assertEqual(login.export_platform_cookies(context,'weibo',target),1)
+            parsed=MozillaCookieJar(str(target))
+            parsed.load(ignore_discard=True,ignore_expires=True)
+            self.assertEqual([c.name for c in parsed],['SUB'])
+            self.assertEqual(list(Path(folder).glob('*.part')),[])
+
+    def test_refresh_reuses_valid_browser_login_without_prompt(self):
+        with patch.object(login,'export_platform_cookies',return_value=10) as export, \
+                patch('builtins.input',side_effect=AssertionError('already signed in')):
+            context=Mock()
+            target=Path('synthetic-unused-target')
+            self.assertEqual(login.refresh_weibo_cookies(context,target),10)
+            export.assert_called_once_with(context,'weibo',target)
+
+    def test_refresh_waits_only_when_website_requires_login(self):
+        with patch.object(login,'export_platform_cookies',side_effect=[
+                login.LoginSessionError('官网要求登录',reason='login_required'),10]) as export, \
+                patch('builtins.input',return_value='') as wait:
+            self.assertEqual(login.refresh_weibo_cookies(Mock(),Path('synthetic-unused-target')),10)
+            self.assertEqual(export.call_count,2)
+            wait.assert_called_once()
+
+    def test_refresh_does_not_prompt_again_for_network_failure(self):
+        with patch.object(login,'export_platform_cookies',side_effect=OSError('network unavailable')), \
+                patch('builtins.input') as wait:
+            with self.assertRaises(OSError):
+                login.refresh_weibo_cookies(Mock(),Path('synthetic-unused-target'))
+            wait.assert_not_called()
+
     def test_only_explicit_loopback_cdp_addresses_are_accepted(self):
         for value in ['ws://127.0.0.1:9222/devtools/browser','http://localhost:9222','ws://[::1]:9222/devtools/browser/test']:
             self.assertEqual(login.local_cdp_url(value),value)

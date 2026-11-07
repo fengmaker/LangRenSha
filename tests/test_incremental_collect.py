@@ -781,6 +781,85 @@ class IncrementalCollectTests(unittest.TestCase):
         self.assertEqual(collect.call_count, 1)
         self.assertFalse(state["weibo"]["windows"][0]["complete"])
 
+    def test_weibo_login_failure_refreshes_cookies_and_resumes_same_window(self):
+        partial={"window_scan_status":"in_progress","termination_reason":"login_required","counts":{}}
+        complete={"window_scan_status":"completed","termination_reason":"api_end_marker","counts":{
+            "unparseable_dates_skipped":0,"images_not_downloaded":0,"long_posts":0,"long_posts_expanded":0}}
+        windows=[{"since":date(2026,11,6),"until":date(2026,11,7),"path":None,"resume":False}]
+        state={"season":"S23","items":{},"weibo":{}}
+        cookie_path=self.root/'custom-weibo.cookies.txt'
+        with patch.object(incremental,'configure_auth') as auth, \
+                patch.object(incremental,'_new_desktop_weibo_collector',return_value=object()) as factory, \
+                patch.object(incremental,'collect_archive',side_effect=[partial,complete]) as collect, \
+                patch.object(incremental,'_refresh_weibo_cookies',return_value=True) as refresh:
+            self.assertTrue(incremental._collect_weibo_windows(
+                self.root,incremental.WEIBO_UID,windows,'cookies',cookie_path,state))
+        refresh.assert_called_once_with(self.root,cookie_path)
+        self.assertEqual(factory.call_count,2)
+        self.assertEqual(auth.call_count,2)
+        self.assertEqual(collect.call_args_list[0].args[1],collect.call_args_list[1].args[1])
+        self.assertEqual(len(state['weibo']['windows']),1)
+        self.assertTrue(state['weibo']['windows'][0]['complete'])
+
+    def test_weibo_refresh_failure_or_second_login_failure_keeps_window_incomplete(self):
+        partial={"window_scan_status":"in_progress","termination_reason":"login_required","counts":{}}
+        windows=[{"since":date(2026,11,6),"until":date(2026,11,7),"path":None,"resume":False}]
+        for refreshed,expected_calls in [(False,1),(True,2)]:
+            state={"season":"S23","items":{},"weibo":{}}
+            with self.subTest(refreshed=refreshed), \
+                    patch.object(incremental,'configure_auth'), \
+                    patch.object(incremental,'_new_desktop_weibo_collector',return_value=object()), \
+                    patch.object(incremental,'collect_archive',return_value=partial) as collect, \
+                    patch.object(incremental,'_refresh_weibo_cookies',return_value=refreshed) as refresh:
+                self.assertFalse(incremental._collect_weibo_windows(
+                    self.root,incremental.WEIBO_UID,windows,'cookies',self.root/'weibo.cookies.txt',state))
+                refresh.assert_called_once()
+                self.assertEqual(collect.call_count,expected_calls)
+                self.assertFalse(state['weibo']['windows'][0]['complete'])
+
+    def test_weibo_missing_or_expired_cookie_is_refreshed_before_collection(self):
+        complete={"window_scan_status":"completed","termination_reason":"api_end_marker","counts":{
+            "unparseable_dates_skipped":0,"images_not_downloaded":0,"long_posts":0,"long_posts_expanded":0}}
+        windows=[{"since":date(2026,11,6),"until":date(2026,11,7),"path":None,"resume":False}]
+        state={"season":"S23","items":{},"weibo":{}}
+        with patch.object(incremental,'configure_auth',side_effect=[
+                incremental.WeiboCollectionError('Cookie不可用',reason='auth_configuration_failed'),None]), \
+                patch.object(incremental,'_new_desktop_weibo_collector',return_value=object()), \
+                patch.object(incremental,'collect_archive',return_value=complete) as collect, \
+                patch.object(incremental,'_refresh_weibo_cookies',return_value=True) as refresh:
+            self.assertTrue(incremental._collect_weibo_windows(
+                self.root,incremental.WEIBO_UID,windows,'cookies',self.root/'weibo.cookies.txt',state))
+            self.assertEqual(collect.call_count,1)
+            refresh.assert_called_once()
+
+    def test_weibo_missing_custom_cookie_path_is_kept_for_refresh(self):
+        partial={"window_scan_status":"in_progress","termination_reason":"login_required","counts":{}}
+        complete={"window_scan_status":"completed","termination_reason":"api_end_marker","counts":{
+            "unparseable_dates_skipped":0,"images_not_downloaded":0,"long_posts":0,"long_posts_expanded":0}}
+        windows=[{"since":date(2026,11,6),"until":date(2026,11,7),"path":None,"resume":False}]
+        state={"season":"S23","items":{},"weibo":{}}
+        cookie_path=self.root/'custom-weibo.cookies.txt'
+        with patch.object(incremental,'configure_auth') as auth, \
+                patch.object(incremental,'_new_desktop_weibo_collector',return_value=object()), \
+                patch.object(incremental,'collect_archive',side_effect=[partial,complete]), \
+                patch.object(incremental,'_refresh_weibo_cookies',return_value=True) as refresh:
+            self.assertTrue(incremental._collect_weibo_windows(
+                self.root,incremental.WEIBO_UID,windows,'none',cookie_path,state))
+        refresh.assert_called_once_with(self.root,cookie_path)
+        self.assertEqual(auth.call_args_list[0].args[1:],('none',None))
+        self.assertEqual(auth.call_args_list[1].args[1:],('cookies',str(cookie_path)))
+
+    def test_weibo_explicit_anonymous_mode_does_not_refresh_login(self):
+        partial={"window_scan_status":"in_progress","termination_reason":"login_required","counts":{}}
+        windows=[{"since":date(2026,11,6),"until":date(2026,11,7),"path":None,"resume":False}]
+        state={"season":"S23","items":{},"weibo":{}}
+        with patch.object(incremental,'_new_desktop_weibo_collector',return_value=object()), \
+                patch.object(incremental,'collect_archive',return_value=partial), \
+                patch.object(incremental,'_refresh_weibo_cookies') as refresh:
+            self.assertFalse(incremental._collect_weibo_windows(
+                self.root,incremental.WEIBO_UID,windows,'none',None,state,refresh_login=False))
+            refresh.assert_not_called()
+
     def test_weibo_timeline_is_not_scanned_and_user_can_decline_before_weibo_collection(self):
         entry = self.entry(phase="regular")
         entry["labels"]["event_date_candidate"] = "2026-09-01"

@@ -14,7 +14,9 @@ from auth_support import PLATFORM_COOKIE_URLS, PLATFORM_URLS, cookie_matches_pla
 
 
 class LoginSessionError(ValueError):
-    pass
+    def __init__(self, message: str, *, reason: str | None = None):
+        super().__init__(message)
+        self.reason = reason
 
 
 def local_cdp_url(value: str) -> str:
@@ -53,7 +55,8 @@ def export_platform_cookies(context, platform: str, cookie_path: Path) -> int:
                if cookie_matches_platform(cookie.get("domain", ""), platform)
                and (cookie.get("expires", -1) <= 0 or cookie["expires"] > now)]
     if not cookies:
-        raise LoginSessionError("没有找到未过期的该平台 Cookie；请先在所连接的 Chrome 中正常登录")
+        raise LoginSessionError("没有找到未过期的该平台 Cookie；请先在所连接的 Chrome 中正常登录",
+                                reason="login_required")
     if platform == "bilibili" and not any(cookie.get("name") == "SESSDATA" and cookie.get("value") for cookie in cookies):
         raise LoginSessionError("未找到 B 站 SESSDATA 登录 Cookie；请先在所连接的 Chrome 中登录 B 站，原 Cookie 文件保持不变")
     contents = "# Netscape HTTP Cookie File\n"
@@ -67,10 +70,39 @@ def export_platform_cookies(context, platform: str, cookie_path: Path) -> int:
             os.chmod(temporary,0o600)
         except OSError:
             pass
+        if platform == "weibo":
+            validate_weibo_cookies(temporary)
         temporary.replace(cookie_path)
     finally:
         temporary.unlink(missing_ok=True)
     return len(cookies)
+
+
+def validate_weibo_cookies(cookie_path: Path) -> None:
+    """Check the same desktop endpoint as acquisition before replacing cookies."""
+    import requests
+    from collect_weibo import CollectionError, DesktopWeiboCollector, configure_auth
+    try:
+        with requests.Session() as session:
+            configure_auth(session, "cookies", str(cookie_path))
+            DesktopWeiboCollector(session=session).get_timeline_page("7525583841", "")
+    except CollectionError as error:
+        if error.reason == "login_required":
+            raise LoginSessionError("微博官网尚未认可当前登录态，原 Cookie 文件保持不变",
+                                    reason="login_required") from None
+        raise
+
+
+def refresh_weibo_cookies(context, cookie_path: Path) -> int:
+    """Reuse a signed-in profile; wait for the user only when sign-in is needed."""
+    try:
+        return export_platform_cookies(context, "weibo", cookie_path)
+    except LoginSessionError as error:
+        if error.reason != "login_required":
+            raise
+    print("微博官网要求登录。请在已打开的 weibo.com 完成登录或验证，再回终端按 Enter。",flush=True)
+    input()
+    return export_platform_cookies(context, "weibo", cookie_path)
 
 
 def export_from_existing(playwright, endpoint: str, platform: str, cookie_path: Path, timeout_ms: int) -> int:
@@ -90,9 +122,14 @@ def main() -> int:
     parser.add_argument("--cdp-url",type=local_cdp_url,
                         help="连接已打开的本机 Chrome，不新建窗口；例如 ws://127.0.0.1:9222/devtools/browser")
     parser.add_argument("--timeout",type=int,default=30,help="CDP 连接超时秒数，默认 30")
+    parser.add_argument("--cookies-file", type=Path, help="Cookie 导出路径；默认 .secrets/<平台>.cookies.txt")
+    parser.add_argument("--refresh", action="store_true",
+                        help="微博登录失效恢复：优先复用浏览器登录态，官网要求登录时才等待人工验证")
     args = parser.parse_args()
     if not 1 <= args.timeout <= 60:
         parser.error("--timeout 必须为 1 到 60 秒")
+    if args.refresh and args.platform != "weibo":
+        parser.error("--refresh 目前只用于微博官网登录态恢复")
 
     try:
         from playwright.sync_api import sync_playwright
@@ -103,7 +140,7 @@ def main() -> int:
     root = Path(__file__).resolve().parents[1]
     secrets_dir = root / ".secrets"
     profile_dir = secrets_dir / f"browser-profile-{args.platform}-{args.channel}"
-    cookie_path = secrets_dir / f"{args.platform}.cookies.txt"
+    cookie_path = args.cookies_file or secrets_dir / f"{args.platform}.cookies.txt"
     context = None
     try:
         secrets_dir.mkdir(parents=True, exist_ok=True)
@@ -128,13 +165,17 @@ def main() -> int:
             )
             page = context.pages[0] if context.pages else context.new_page()
             page.goto(PLATFORM_URLS[args.platform], wait_until="domcontentloaded", timeout=60000)
-            print(f"已打开 {args.platform} 登录页。请在浏览器中自行登录；完成后回到此终端按 Enter。")
-            print("此助手使用独立浏览器配置，不读取或接管你现有的浏览器会话，也不会处理验证码。")
-            input()
-
-            count = export_platform_cookies(context,args.platform,cookie_path)
+            if args.refresh:
+                print("正在从微博专用浏览器导出并验证 Cookie；已有登录态时无需重新登录。",flush=True)
+                count = refresh_weibo_cookies(context,cookie_path)
+            else:
+                print(f"已打开 {args.platform} 页面。已登录时可直接回终端按 Enter 导出；未登录时请先正常登录。",flush=True)
+                print("此助手使用独立浏览器配置，不读取或接管你现有的浏览器会话，也不会处理验证码。")
+                input()
+                count = export_platform_cookies(context,args.platform,cookie_path)
             print(f"已导出 {count} 条该平台 Cookie：{cookie_path}")
-            print("导出只表示浏览器提供了 Cookie，不保证该会话仍有效或拥有目标内容权限。")
+            print("微博 Cookie 已通过官网帖子列表接口验证。" if args.platform == "weibo" else
+                  "导出只表示浏览器提供了 Cookie，不保证该会话仍有效或拥有目标内容权限。")
             print("后续直接运行带 --auth cookies 的采集命令即可，不需要每次重新打开登录窗口。")
             return 0
     except KeyboardInterrupt:
