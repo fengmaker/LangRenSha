@@ -15,4 +15,4 @@
 
 采集复用 `collect_season.py`、`collect_bilibili_audio.py`、`collect_weibo*.py`；缺少可用中文文字时才用 `transcribe_funasr.py`。`capture_bilibili_frame.py` 根据已确定的时点取画面。身份、阵营、票型和特殊结算的规则模块继续复用。历史赛季导入器、数据库写入与一次性审计工具已退役。
 
-完整步骤和授权边界见[增量流程](../docs/08_增量更新流程.md)。
+操作示例见[常用命令](../docs/01_常用命令.md)，完整步骤和授权边界见[增量流程](../docs/02_增量更新流程.md)。

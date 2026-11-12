@@ -22,6 +22,6 @@
 
 `build_static.py` 默认把成品写到 `tmp/pages-preview/langrensha-site`，使用 `/langrensha-site` 子路径；`--output`、`--base-path` 可调整。构建继续复用无数据的详情模板，再按当前清单生成对局、选手和赛季地址；结构校验与少量代表页面检查通过后替换本地合格成品。生成目录均忽略 Git，无需长期保留构建副本或验收回执。
 
-`sync_pages.py --check-only` 只做本地成品检查。无该参数时同步现有独立发布仓库 `D:\langrensha-site` 的 `site/` 及部署模板，提交并推送发布仓库 main，然后核对部署状态与线上数据版本。发布目标为 https://github.com/fengmaker/langrensha-site，线上为 https://fengmaker.github.io/langrensha-site/ 。它与源码仓库的提交/推送是独立操作，日常本地修改不调用此命令。
+`sync_pages.py` 已包含构建，无需先单独构建；`--check-only` 也会重新构建并检查本地成品。无该参数时同步现有独立发布仓库 `D:\langrensha-site` 的 `site/` 及部署模板，提交并推送发布仓库 main，然后核对部署状态与线上数据版本。发布目标为 https://github.com/fengmaker/langrensha-site，线上为 https://fengmaker.github.io/langrensha-site/ 。它与源码仓库的提交/推送是独立操作，日常本地修改不调用此命令。日常指令见[常用命令](../../docs/01_常用命令.md#同步静态网站)。
 
 导出或构建失败时保留上一份合格成品；远端部署失败时报告具体错误，修复后重跑。网站历史数据的修订仍需先更新本地最终 JSON，再按授权同步。

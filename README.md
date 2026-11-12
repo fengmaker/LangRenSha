@@ -12,7 +12,7 @@
 
 打开 <http://127.0.0.1:3000>。安装说明见 [requirements](requirements/README.md)，网站及显式上线见 [website](website/README.md)。本地运行不会同步线上静态网站。
 
-新增对局从[增量更新流程](docs/08_增量更新流程.md)开始：
+常用窗口指令与 PowerShell 命令见[常用命令](docs/01_常用命令.md)。新增对局从[增量更新流程](docs/02_增量更新流程.md)开始：
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/workflow.py status --season S23

@@ -10,12 +10,7 @@
 
 ## 增量更新中的处理顺序
 
-正常运行仍先复用已有 Cookie，不在每次增量更新时打开登录窗口：
-
-```powershell
-Set-Location D:\langrensha
-.\.venv\Scripts\python.exe scripts/update_incremental.py --season S23 --yes
-```
+正常采集先复用已有 Cookie，不在每次增量更新时打开登录窗口。刷新、续跑和补采命令统一见[常用命令](01_常用命令.md#微博登录恢复与补采)。
 
 确认采集后，遇到 `login_required` 或 Cookie 无法加载的 `auth_configuration_failed`，入口按以下顺序恢复：
 
@@ -31,35 +26,10 @@ Set-Location D:\langrensha
 
 ## 单独刷新与续跑
 
-只更新微博 Cookie：
-
-```powershell
-.\.venv\Scripts\python.exe scripts/login_session.py weibo --refresh
-```
-
-默认复用 `.secrets/browser-profile-weibo-chrome/`，保存到 `.secrets/weibo.cookies.txt`。首次使用该浏览器配置时可能需要登录；以后浏览器仍有有效登录态时直接导出。Cookie 内容只留在本机，不写进日志、文档或 Git。
-
-使用自定义 Cookie 路径时，刷新和采集指向同一个文件：
-
-```powershell
-.\.venv\Scripts\python.exe scripts/login_session.py weibo --refresh --cookies-file .secrets/weibo-other.cookies.txt
-.\.venv\Scripts\python.exe scripts/update_incremental.py --season S23 --yes --weibo-cookies-file .secrets/weibo-other.cookies.txt
-```
-
-单独运行 `collect_weibo_archive.py` 不自动启动登录助手；先刷新 Cookie，再重跑原日期范围，程序会复用原件和未完成窗口：
-
-```powershell
-.\.venv\Scripts\python.exe scripts/login_session.py weibo --refresh
-.\.venv\Scripts\python.exe scripts/collect_weibo_archive.py --since 2026-11-06 --until 2026-11-07
-```
-
-如果要复用平时使用、已经开启远程调试的 Chrome，可继续传入浏览器提供的本机 CDP 地址：
-
-```powershell
-.\.venv\Scripts\python.exe scripts/login_session.py weibo --cdp-url "替换为Chrome显示的完整本机CDP地址"
-```
-
-该入口只连接已有浏览器并导出，不新建或关闭用户的浏览器。微博 Cookie 同样先验证官网，再替换文件。
+- `login_session.py weibo --refresh` 默认复用 `.secrets/browser-profile-weibo-chrome/`，保存到 `.secrets/weibo.cookies.txt`。首次使用该配置时可能需要登录，已有有效登录态时直接导出。
+- 使用自定义 Cookie 路径时，刷新和采集指向同一个文件。Cookie 内容只留在本机，不写入日志、文档或 Git。
+- 单独运行 `collect_weibo_archive.py` 不自动启动登录助手；必要时先刷新 Cookie，再重跑原日期范围，复用原件和未完成窗口。
+- `--cdp-url` 只连接已开启远程调试的现有浏览器并导出，不新建或关闭用户浏览器；同样先验证官网，再替换 Cookie 文件。
 
 ## 怎样判断恢复完成
 
@@ -67,12 +37,6 @@ Set-Location D:\langrensha
 - 原失败窗口已实际续采，列表扫描完成，长文、日期和图片满足现有完整性检查。
 - `data/reports/S23/incremental/state.json` 中对应窗口的 `complete` 为 `true`，不再以 `login_required` 结束。
 
-当天尚未结束时，“本次扫描完成”只表示已归档当前可见内容。次日仍按[增量覆盖规则](08_增量更新流程.md#第一步检查差距并确认采集)补扫尚未闭合的最后一天。
+当天尚未结束时仍按[增量覆盖规则](02_增量更新流程.md#采集与准备)处理，扫描完成不代表当天日期窗口已经闭合。
 
-## 2026-11-07 本次恢复记录
-
-本次打开微博专用浏览器时已有登录态。重新导出 10 条 Cookie 后，官网采集恢复正常；新增的 `--refresh` 入口也实测可直接导出并验证，无需再次登录或手动 Enter。
-
-11月6日至7日窗口共归档4条帖子、15张图片；其中复用1条旧帖及其1张图，补采3条帖子和14张图片。扫描4页后完成，取得11月6日大师赛阵容公告 `5362279673496334`，长文及12张阵容图片齐全。此次采集没有写入对局数据库或发布网站。
-
-实现见 [login_session.py](../scripts/login_session.py) 与 [update_incremental.py](../scripts/update_incremental.py)；本次回执见 Cookie恢复与补采记录。
+实现见 [login_session.py](../scripts/login_session.py) 与 [update_incremental.py](../scripts/update_incremental.py)。
