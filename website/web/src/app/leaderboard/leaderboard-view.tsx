@@ -18,9 +18,9 @@ function RateCell({ value, label, player, samples = true }: { value: Metric; lab
       : <span className="leaderboard-rate-equation">{formatNumber(value.numerator)} / {formatNumber(value.denominator)}</span>}
   </div></td>;
 }
-function BluffCountCell({ player, season }: { player: LeaderboardItem; season: string }) {
+function BluffCountCell({ player }: { player: LeaderboardItem }) {
   const count = player.bluff_count_complete ? formatNumber(player.bluff_count) : player.bluff_count ? `≥${formatNumber(player.bluff_count)}` : "—";
-  return <td><strong>{count}</strong>{player.bluff_review_count ? <ArchiveLink className="bluff-review-flag" href={`/leaderboard/bluff-review?${new URLSearchParams({ season, player: player.id })}`} title="查看悍跳归属或成功结果的疑问与原文证据">待复核</ArchiveLink> : null}</td>;
+  return <td><strong>{count}</strong></td>;
 }
 function TableHeading() {
   return <><colgroup><col className="leaderboard-rank-col" /><col className="leaderboard-name-col" /><col span={24} /></colgroup><thead>
@@ -55,10 +55,10 @@ export function LeaderboardView({ data, overview, season, phase, availablePhases
         <td>{formatNumber(player.appearances)}</td><RateCell label="出场率" player={player} value={player.attendance} samples={false} /><td>{formatNumber(player.wins)}</td><RateCell label="整季胜率" player={player} value={player.total_win_rate} samples={false} /><RateCell label="上警率" player={player} value={player.sheriff_registration_rate} />
         <td>{formatNumber(player.good_win_rate.numerator)}</td><RateCell label="好人胜率" player={player} value={player.good_win_rate} samples={false} /><td>{formatNumber(player.wolf_vote_rate.numerator)}</td><RateCell label="投狼率" player={player} value={player.wolf_vote_rate} /><td>{formatNumber(player.exile_abstentions)}</td><RateCell label="好人上警率" player={player} value={player.good_sheriff_registration_rate} /><RateCell label="好人警下率" player={player} value={player.good_off_police_rate} /><RateCell label="警徽正确率" player={player} value={player.sheriff_seer_vote_rate} /><RateCell label="跟真预言家投票率" player={player} value={player.seer_follow_rate} />
         <td>{formatNumber(player.werewolf_appearances)}</td><td>{formatNumber(player.werewolf_win_rate.numerator)}</td><RateCell label="狼人胜率" player={player} value={player.werewolf_win_rate} samples={false} /><RateCell label="拿狼率" player={player} value={player.werewolf_draw_rate} samples={false} /><RateCell label="自爆率" player={player} value={player.werewolf_self_explosion_rate} /><RateCell label="狼人上警率" player={player} value={player.werewolf_sheriff_registration_rate} />
-        <BluffCountCell player={player} season={season} /><RateCell label="悍跳率" player={player} value={player.bluff_rate} /><RateCell label="悍跳成功率" player={player} value={player.bluff_success_rate} />
+        <BluffCountCell player={player} /><RateCell label="悍跳率" player={player} value={player.bluff_rate} /><RateCell label="悍跳成功率" player={player} value={player.bluff_success_rate} />
       </tr>)}</tbody></table></LeaderboardScroll></LeaderboardMetricDetails> : <div className="empty-state"><span className="empty-number">—</span><p>当前阶段还没有可展示的积分记录。</p></div>}
     </section>
-    <details className="methodology-details"><summary>统计范围与数据版本</summary><p>整季榜累计全部正式对局积分，决赛周冠军榜仅累计决赛周积分；出场、胜率与投票指标均按整季计算。待定记录不按失败或零分处理。</p><p>悍跳次数与成功结果依据逐局复核；归属不明时显示“≥已识别次数”或“—”，并排除相关比例的待定样本。<ArchiveLink href={`/leaderboard/bluff-review?season=${encodeURIComponent(season)}`}>查看悍跳复核结果 →</ArchiveLink></p><p>数据版本：<code>{data.release_id}</code></p></details>
+    <details className="methodology-details"><summary>统计范围与数据版本</summary><p>整季榜累计全部正式对局积分，决赛周冠军榜仅累计决赛周积分；出场、胜率与投票指标均按整季计算。待定记录不按失败或零分处理。</p><p>悍跳次数与成功结果按逐局已确认结论统计；归属不明时显示“≥已识别次数”或“—”，待定样本排除在相应比例之外。</p><p>数据版本：<code>{data.release_id}</code></p></details>
     <LeaderboardCalculationRules scoring={data.scoring} />
   </div>;
 }

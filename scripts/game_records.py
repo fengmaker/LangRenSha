@@ -3,18 +3,19 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from contextlib import nullcontext
 import json
 from pathlib import Path
 
-from psycopg.types.json import Jsonb
 
 try:
     from .game_time import chinese, phase_label
 except ImportError:
     from game_time import chinese, phase_label
 
-from database import ROOT, ReviewError, artifact, connect
+ROOT = Path(__file__).resolve().parents[1]
+
+class ReviewError(ValueError):
+    pass
 try:
     from .board_config import load_template
     from .role_constraints import puppet_target, wolf_girl_partner_target
@@ -49,21 +50,6 @@ def data_file(relative):
     if not path.is_relative_to((ROOT / "data").resolve()) or not path.is_file():
         raise ReviewError(f"源文件必须位于data目录：{relative}")
     return path
-
-
-def registered_audio_artifact(conn, source_id, relative_path):
-    path = (ROOT / relative_path).resolve()
-    if not path.is_relative_to((ROOT / "data").resolve()):
-        raise ReviewError(f"源文件必须位于data目录：{relative_path}")
-    registered_path = path.relative_to(ROOT).as_posix()
-    rows = conn.execute("""SELECT id FROM artifacts WHERE source_id=%s AND kind='audio'
-        AND (relative_path=%s OR metadata->>'ingested_from'=%s)""",
-        (source_id, registered_path, registered_path)).fetchall()
-    if not rows:
-        raise ReviewError(f"缺失音频文件，来源未登记对应audio artifact：{relative_path}")
-    if len(rows) != 1:
-        raise ReviewError(f"缺失音频文件，来源存在多个匹配audio artifact，无法确定复用项：{relative_path}")
-    return rows[0]["id"]
 
 
 def primary_source_file(files):
@@ -899,153 +885,3 @@ def describe(value, round_number, phase, event):
             text=actor+{"locked":"技能未解锁","wrong_phase":"无白天技能" if phase=="day" else "无夜间技能","no_skill":"无技能","dead":"已出局","poisoned":"中毒，不能开枪","wolves_alive":"尚未带刀，不能发动技能刀"}.get(event["availability"],"未行动")
     else: raise ReviewError("未定义事件描述模板")
     return prefix+text
-
-
-def ensure_person(conn, name):
-    if not isinstance(name, str) or not name.strip():
-        raise ReviewError("人物姓名不能为空")
-    person = conn.execute("INSERT INTO people(name) VALUES(%s) ON CONFLICT(name) DO UPDATE SET name=EXCLUDED.name RETURNING id", (name,)).fetchone()
-    for alias in [name]+ALIASES.get(name,[]):
-        existing = conn.execute("SELECT person_id FROM person_aliases WHERE alias=%s", (alias,)).fetchone()
-        if existing and existing["person_id"]!=person["id"]:
-            raise ReviewError("人物别名已属于其他人")
-        conn.execute("INSERT INTO person_aliases(alias,person_id) VALUES(%s,%s) ON CONFLICT DO NOTHING", (alias,person["id"]))
-    return person["id"]
-
-
-def sync_board_template(conn, board):
-    """Insert or update one board template while retaining its transaction lock."""
-    conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("board-template-"+board["code"],))
-    conn.execute("""INSERT INTO board_templates(code,name,seat_count,role_counts,wake_order) VALUES(%s,%s,%s,%s,%s)
-        ON CONFLICT(code) DO UPDATE SET name=EXCLUDED.name,seat_count=EXCLUDED.seat_count,role_counts=EXCLUDED.role_counts,wake_order=EXCLUDED.wake_order""",
-        (board["code"],board["name"],board["seat_count"],Jsonb(board.get("role_counts") or {}),board["wake_order"]))
-    for phase in ["night", "day"]:
-        # Move existing positions clear before applying an expanded template.
-        conn.execute("""UPDATE board_event_slots SET position=position+
-            (SELECT COALESCE(max(position),0)+%s FROM board_event_slots WHERE board_code=%s AND phase=%s)
-            WHERE board_code=%s AND phase=%s""",
-            (len(board[phase+"_slots"])+1,board["code"],phase,board["code"],phase))
-        for position,slot in enumerate(board[phase+"_slots"],1):
-            conn.execute("""INSERT INTO board_event_slots(board_code,phase,code,position,label,actor_role,allowed_actions)
-                VALUES(%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(board_code,phase,code) DO UPDATE SET
-                position=EXCLUDED.position,label=EXCLUDED.label,actor_role=EXCLUDED.actor_role,allowed_actions=EXCLUDED.allowed_actions""",
-                (board["code"],phase,slot["code"],position,slot["label"],slot["actor_role"],slot["actions"]))
-
-
-def import_game(value, *, allow_incomplete=False, conn=None, derivations=None, sync_template=True):
-    """Import one game; batch callers may disable template sync after batch pre-sync."""
-    from game_scope import exclusion_reason
-    excluded = exclusion_reason(value)
-    if excluded:
-        raise ReviewError("该局已移出对局范围，禁止重新入库：" + excluded)
-    # The same preparation used by season builders also guards manual imports.
-    # It is deliberately before validation and SQL, not an API-only projection.
-    if derivations is None:
-        from game_derivations import derive_game
-        prepared = derive_game(value)
-        value, derivations = prepared["dossier"], prepared["derivations"]
-    # Database-backed imports still require every non-audio source file and
-    # preserve the default strict file checks on validate()/validate_batch().
-    # A removed audio file can only pass below by reusing its registered
-    # artifact from the same source.
-    board = validate(value, check_files=False, allow_incomplete=allow_incomplete)
-    primary_file = primary_source_file(value["files"])
-    transaction = connect() if conn is None else nullcontext(conn)
-    with transaction as conn:
-        conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-"+value["slug"],))
-        file_records=[]
-        for file in value["files"]:
-            source = conn.execute("SELECT id FROM sources WHERE platform=%s AND external_key=%s", (file["platform"],file["external_key"])).fetchone()
-            if not source: raise ReviewError("先登记源资料，再导入游戏内容")
-            path = (ROOT / file["path"]).resolve()
-            if not path.is_relative_to((ROOT / "data").resolve()):
-                data_file(file["path"])
-            if file.get("role") == "audio" and file.get("kind") == "audio" and not path.exists():
-                artifact_id = registered_audio_artifact(conn, source["id"], file["path"])
-            else:
-                artifact_id = artifact(conn,source["id"],data_file(file["path"]),file["kind"])
-            file_records.append((file,source["id"],artifact_id))
-        source_id=next(s for f,s,_ in file_records if f["role"]==primary_file["role"])
-        if sync_template:
-            sync_board_template(conn, board)
-        season = conn.execute("SELECT id FROM seasons WHERE code=%s", (value["season"],)).fetchone()
-        if not season: raise ReviewError("赛季尚未登记")
-        game=conn.execute("""INSERT INTO games(slug,season_id,primary_source_id) VALUES(%s,%s,%s)
-            ON CONFLICT(slug) DO NOTHING RETURNING id""", (value["slug"],season["id"],source_id)).fetchone()
-        if not game:
-            game=conn.execute("SELECT id,season_id,primary_source_id FROM games WHERE slug=%s", (value["slug"],)).fetchone()
-            if game["season_id"]!=season["id"] or game["primary_source_id"]!=source_id:
-                raise ReviewError("同名对局已关联其他赛季或源文件")
-        game_id=game["id"]
-        # Replace only the current structured record of this game, in one transaction.
-        conn.execute("DELETE FROM game_event_effects WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_event_votes WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_event_targets WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_event_records WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_rounds WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_staff WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_seats WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_files WHERE game_id=%s", (game_id,))
-        conn.execute("""INSERT INTO game_details(game_id,board_code,event_date,phase,episode,day_in_episode,game_number,winning_faction)
-            VALUES(%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT(game_id) DO UPDATE SET board_code=EXCLUDED.board_code,
-            event_date=EXCLUDED.event_date,phase=EXCLUDED.phase,episode=EXCLUDED.episode,day_in_episode=EXCLUDED.day_in_episode,
-            game_number=EXCLUDED.game_number,winning_faction=EXCLUDED.winning_faction""",
-            (game_id,value["board"],value["date"],value["phase"],value.get("episode"),value.get("day_in_episode"),value.get("game_number"),value.get("winner")))
-        names = value["roster"] + value["commentators"] + [seat["name"] for seat in value["seats"] if seat["name"] is not None] + [value["referee"],"豆儿啵","辉少"]
-        identities={name:ensure_person(conn,name) for name in dict.fromkeys(name for name in names if name is not None)}
-        for duty,names in [("commentator",value["commentators"]),("referee",[value["referee"]] if value["referee"] is not None else [])]:
-            for position,name in enumerate(names,1):
-                conn.execute("INSERT INTO game_staff(game_id,person_id,duty,position) VALUES(%s,%s,%s,%s)", (game_id,identities[name],duty,position))
-        for seat in value["seats"]:
-            conn.execute("""INSERT INTO game_seats(game_id,seat_number,person_id,role,faction,learning_target_seat,learned_role)
-                VALUES(%s,%s,%s,%s,%s,%s,%s)""", (game_id,seat["seat"],identities.get(seat["name"]),seat["role"],seat["faction"],seat.get("learning_target"),seat.get("learned_role")))
-        for file,_,file_id in file_records:
-            conn.execute("INSERT INTO game_files(game_id,file_role,artifact_id) VALUES(%s,%s,%s)", (game_id,file["role"],file_id))
-        for round_ in value["rounds"]:
-            number=round_["number"]
-            conn.execute("INSERT INTO game_rounds(game_id,round_number) VALUES(%s,%s)", (game_id,number))
-            for phase in ["night","day"]:
-                for event in round_[phase]:
-                    row=conn.execute("""INSERT INTO game_event_records(game_id,round_number,board_code,phase,slot_code,action,actor_seat,result_code,start_seat,direction,random_point,speech_scope,availability)
-                        VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id""", (game_id,number,value["board"],phase,event["slot"],event["action"],event["actor"],event["result"],event["start_seat"],event["direction"],event["random_point"],event["speech_scope"],event["availability"])).fetchone()
-                    for position,effect in enumerate(event["effects"],1):
-                        conn.execute("""INSERT INTO game_event_effects(event_id,game_id,position,kind,intended_target,dead_seat,shield_actor)
-                            VALUES(%s,%s,%s,%s,%s,%s,%s)""",(row["id"],game_id,position,effect["kind"],effect["intended_target"],effect["dead_seat"],effect["shield_actor"]))
-                    for position,target in enumerate(event["targets"],1):
-                        conn.execute("INSERT INTO game_event_targets(event_id,game_id,position,seat_number) VALUES(%s,%s,%s,%s)", (row["id"],game_id,position,target))
-                    for vote in event["votes"]:
-                        conn.execute("INSERT INTO game_event_votes(event_id,game_id,ballot_round,voter_seat,target_seat,abstained) VALUES(%s,%s,%s,%s,%s,%s)", (row["id"],game_id,vote["round"],vote["voter"],vote["target"],vote["abstained"]))
-        if derivations is not None:
-            import hashlib
-            rule_path = Path(__file__).with_name("game_derivations.py")
-            conn.execute("""INSERT INTO game_formal_annotations
-                (game_id,annotation_key,annotation_type,source_path,source_sha256,payload)
-                VALUES(%s,'shared-rule-derivations','review_context',%s,%s,%s)
-                ON CONFLICT(game_id,annotation_key) DO UPDATE SET
-                source_path=EXCLUDED.source_path,source_sha256=EXCLUDED.source_sha256,
-                payload=EXCLUDED.payload,recorded_at=now()""",
-                (game_id, "scripts/game_derivations.py", hashlib.sha256(rule_path.read_bytes()).hexdigest(), Jsonb(derivations)))
-        event_count = sum(len(round_[phase]) for round_ in value["rounds"] for phase in ("night", "day"))
-        return {"game_id":str(game_id),"slug":value["slug"],"people":len(identities),"seats":len(value["seats"]),
-                "rounds":len(value["rounds"]),"night_slots":len(board["night_slots"]),"day_slots":len(board["day_slots"]),
-                "event_records":event_count,"source_files":len(value["files"])}
-
-
-def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("file",type=Path)
-    parser.add_argument("--check-only",action="store_true")
-    parser.add_argument("--receipt",type=Path)
-    args=parser.parse_args()
-    value=json.loads(args.file.read_text(encoding="utf-8"))
-    if args.check_only:
-        validate(value)
-        result={"valid":True,"slug":value["slug"]}
-    else: result=import_game(value)
-    if args.receipt:
-        args.receipt.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps(result,ensure_ascii=False,indent=2))
-
-
-if __name__=="__main__":
-    main()

@@ -2,7 +2,7 @@
 import re
 
 from scripts.game_timeline import build_game_timeline
-from website.api.publisher import _public_endgame, _public_supplemental_events
+from website.game_data import _public_endgame, _public_supplemental_events
 
 
 def event(slot, action, *, actor=None, targets=(), result=None, **fields):

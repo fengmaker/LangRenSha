@@ -254,7 +254,7 @@ def test_common_display_labels_and_results_preserve_source_notes_outside_the_dis
 
 def test_real_s23_untriggered_hunter_and_no_self_destruct_slots_are_hidden():
     folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEur'))
-    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    source = json.loads((folder / 'game.json').read_text(encoding='utf-8'))
     before = deepcopy(source)
     presentation = build_game_presentation(source)
     for number in (1, 2):
@@ -311,7 +311,7 @@ def test_inactive_mechanical_slots_are_omitted_and_learned_form_is_shared():
 
 def test_real_s23_explicit_terminal_hides_d4_and_keeps_the_final_double_death():
     folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEid'))
-    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    source = json.loads((folder / 'game.json').read_text(encoding='utf-8'))
     before = deepcopy(source)
     presentation = build_game_presentation(source)
     assert get_event(presentation, 1, 'night', 'night_deaths') is None
@@ -426,8 +426,8 @@ def test_held_poison_requires_the_same_witch_and_a_valid_single_later_use():
 
 def test_real_guile_game_links_exchange_poison_history_and_badge():
     folder = next((ROOT / "data/games/S22").glob("*BV1jM8B6jEkF"))
-    source = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
-    source["voting"] = json.loads((folder / "voting.json").read_text(encoding="utf-8"))
+    source = json.loads((folder / "game.json").read_text(encoding="utf-8"))
+    source["voting"] = json.loads((folder / "game.json").read_text(encoding="utf-8"))["voting"]
     before = deepcopy(source)
     presentation = build_game_presentation(source)
     seer = get_event(presentation, 2, "night", "seer_check")
@@ -447,8 +447,8 @@ def test_other_real_games_share_exchange_and_poisoner_inference():
         ("BV1hZMp63Esx", 2, "witch_poison", 8),
     ]:
         folder = next((ROOT / "data/games/S22").glob(f"*{bvid}"))
-        source = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
-        source["voting"] = json.loads((folder / "voting.json").read_text(encoding="utf-8"))
+        source = json.loads((folder / "game.json").read_text(encoding="utf-8"))
+        source["voting"] = json.loads((folder / "game.json").read_text(encoding="utf-8"))["voting"]
         before = deepcopy(source)
         action = get_event(build_game_presentation(source), number, "night", slot)
         assert action["resolved_targets"] == [actual], bvid
@@ -457,7 +457,7 @@ def test_other_real_games_share_exchange_and_poisoner_inference():
         assert source == before
 
     folder = next((ROOT / "data/games/S22").glob("*BV1aXgW6nE6E"))
-    source = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
+    source = json.loads((folder / "game.json").read_text(encoding="utf-8"))
     presentation = build_game_presentation(source)
     assert get_event(presentation, 1, "night", "witch_poison")["action"] == "pass"
     assert get_event(presentation, 1, "night", "witch_poison")["slot_label"] == "毒师毒药"
@@ -635,7 +635,7 @@ def test_dead_roles_are_removed_from_later_nights_without_losing_facts():
 
 def test_real_s23_seer_slots_end_after_the_confirmed_d2_death():
     folder = next((ROOT / 'data/games/S23').glob('*BV17QJh6qEid'))
-    source = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
+    source = json.loads((folder / 'game.json').read_text(encoding='utf-8'))
     before = deepcopy(source)
     presentation = build_game_presentation(source)
     assert get_event(presentation, 2, 'night', 'seer_check')['actor'] == 6
@@ -1170,8 +1170,8 @@ def test_real_double_ties_have_an_explicit_no_exile_result():
     for bvid, day in [("BV1pGVC6cEbW", 4), ("BV18ijD6BExE", 2),
                       ("BV1TDun6wEqw", 1), ("BV1jM8B6jEkF", 4)]:
         folder = next((ROOT / "data/games/S22").glob(f"*{bvid}"))
-        source = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
-        source["voting"] = json.loads((folder / "voting.json").read_text(encoding="utf-8"))
+        source = json.loads((folder / "game.json").read_text(encoding="utf-8"))
+        source["voting"] = json.loads((folder / "game.json").read_text(encoding="utf-8"))["voting"]
         before = deepcopy(source)
 
         result = get_event(build_game_presentation(source), day, "day", "exile_result")
@@ -1343,9 +1343,7 @@ def test_previous_day_departed_hunter_has_no_later_shot_slot():
 
 
 def test_bv1j_sample_projection_preserves_rounds_and_source_and_uses_ballot_evidence():
-    folder = ROOT / "data" / "games" / "S22" / "2026-08-21_g01_BV1jM8B6jE2i"
-    dossier = json.loads((folder / "dossier.json").read_text(encoding="utf-8"))
-    dossier["voting"] = json.loads((folder / "voting.json").read_text(encoding="utf-8"))
+    dossier = json.loads((Path(__file__).parent / "fixtures/mixed_blood_incomplete_input.json").read_text(encoding="utf-8"))
     for round_ in dossier["rounds"]:
         for phase in ("night", "day"):
             for item in round_[phase]:
@@ -1390,9 +1388,9 @@ def test_bv1j_sample_projection_preserves_rounds_and_source_and_uses_ballot_evid
 
 def test_real_mechanical_rebound_and_puppet_examples_project_conservatively():
     paths = [
-        ROOT / "data" / "games" / "S22" / "2026-06-12_g03_BV11KJ56PEPY" / "dossier.json",
-        ROOT / "data" / "games" / "S22" / "2026-06-12_局次待核_BV1yKJ56PEak" / "dossier.json",
-        ROOT / "data" / "games" / "S22" / "2026-06-24_g03_BV13Ajo6xEY8" / "dossier.json",
+        ROOT / "data" / "games" / "S22" / "2026-06-12_g03_BV11KJ56PEPY" / "game.json",
+        ROOT / "data" / "games" / "S22" / "2026-06-12_局次待核_BV1yKJ56PEak" / "game.json",
+        ROOT / "data" / "games" / "S22" / "2026-06-24_g03_BV13Ajo6xEY8" / "game.json",
     ]
     dossiers = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
 

@@ -20,7 +20,7 @@ from scripts.identity_display import role_label
 from scripts.role_constraints import puppet_target, wolf_girl_partner_target
 from scripts.game_derivations import apply_precomputed
 from scripts.incremental_common import load_state, work_dir
-from scripts.prepare_s23_review import segments
+from scripts.analyze_incremental import normalized_segments as segments
 
 FORMAT = 'masters-incremental-review-v2'
 TEMPLATE = Path(__file__).with_name('templates') / 'game_review.html'

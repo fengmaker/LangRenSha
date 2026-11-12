@@ -12,7 +12,29 @@ from game_records import ReviewError, apply_derived_rules, describe, hunter_skil
 
 class ConfirmedGameRulesTests(unittest.TestCase):
     def setUp(self):
-        self.value=json.loads((ROOT/"data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json").read_text(encoding="utf-8"))
+        public = json.loads((ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/game.json")
+                            .read_text(encoding="utf-8"))
+        event_fields = ("slot", "action", "actor", "targets", "result", "start_seat",
+                        "direction", "random_point", "speech_scope", "availability",
+                        "effects", "votes")
+        self.value = {
+            "slug": public["id"], "season": public["season"], "date": public["date"],
+            "phase": public["phase"], "episode": public.get("episode"),
+            "day_in_episode": public.get("day_in_episode"),
+            "game_number": public["game_number"], "board": public["board"]["code"],
+            "winner": public["winner"],
+            "roster": [seat["name"] for seat in public["seats"] if seat.get("name")],
+            "commentators": public["commentators"], "referee": public["referee"],
+            "seats": [{key: seat.get(key) for key in (
+                "seat", "name", "role", "faction", "learning_target", "learned_role")}
+                for seat in public["seats"]],
+            "rounds": [{"number": row["number"], **{
+                phase: [{key: event.get(key, [] if key in {"targets", "effects", "votes"} else None)
+                        for key in event_fields} for event in row[phase]]
+                for phase in ("night", "day")}}
+                for row in public["rounds"]],
+            "files": [],
+        }
 
     def event(self,number,phase,slot):
         return next(e for e in self.value["rounds"][number-1][phase] if e["slot"]==slot)

@@ -1,22 +1,5 @@
-# 只读API与发布
+# 共用统计与照片工具
 
-运行时：`uvicorn website.api.app:app --host 127.0.0.1 --port 8000`。本机优先用`website/run.py`同时管理前端；部署配置`DATABASE_URL`并使用只读账号。本机先运行 `python -m website.grant_reader --local`，网站及静态发布的临时API共用 `.secrets/masters_web_reader.json`；本机只读凭据缺失时API明确报错，不回退到发布器连接。
+此目录只保留纯计算模块：analytics.py、process_metrics.py、skill_metrics.py、bluffs.py、game_presentation.py，以及稳定人物映射 people.py 和照片清单 photos.py/player_photos.json。
 
-| 文件 | 职责 |
-| --- | --- |
-| `app.py` | 参数校验、分页与范围查询；赛季名称／状态读取统一`config/seasons.json` |
-| `publisher.py`、`publish.py` | 从磁盘正式JSON构建不可变game release，白名单公开字段，事务切活动指针 |
-| `analytics.py` | 有效阵营、胜率、投票指标、排名与积分；不改源快照 |
-| `game_presentation.py` | 在保留原事件的基础上整理展示日序、夜间结算和终局边界 |
-| `bluffs.py`、`bluff_store.py`、`publish_bluffs.py` | 悍跳定义、逐季独立版本及绑定game release的发布 |
-| `photos.py`、`player_photos.json` | 同季照片清单与允许访问的静态原图，清单缓存需API重启刷新 |
-| `bluff_frames.py`、`bluff_frames.json` | 悍跳证据截图的清单与静态访问 |
-| `schema.sql` | 独立`masters_web`发布schema，不运行JCMS业务迁移 |
-
-常用GET：`/overview`、`/games`、`/games/{id}`、`/players`、`/players/{id}`、`/leaderboard`、`/stats`、`/bluff-review`、`/releases`，统一前缀`/api/v1`。
-
-选手详情与stats支持`season_start/season_end=latest`；旧`season=S22`保持单季兼容。榜单仍按季，`phase=all|finals_week`只改变积分榜范围，其他个人指标按整季。未知阵营／胜负不当成负场，零有效样本比例为null。
-
-发布与回退使用[网站README](../README.md)或`workflow.py`，不要用早期`database.py publish`。一个活动game release代表完整数据集，悍跳按每个保留季分别同步。
-
-唯邻是从的复核页与发布页验收顺序、傀儡规则及局部裁定见[对局信息呈现规范](../../docs/10_对局信息呈现规范.md#neighbor-puppet-display)。
+网站数据由 ../public_data.py 从最终 game.json 生成。数据库、动态 API、发布版本表、授权、备份和公开证据/反馈端点已退役。目录名保留，避免无关的导入路径重构。

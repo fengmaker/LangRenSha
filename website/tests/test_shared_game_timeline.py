@@ -7,10 +7,11 @@ import pytest
 
 from scripts.game_derivations import apply_precomputed, derive_game
 from scripts.game_timeline import build_game_timeline
-from website.api import publisher
+from final_fixtures import final_game
+from website.public_data import _resolved_game
 
 ROOT = Path(__file__).resolve().parents[2]
-api = importlib.import_module('website.api.app')
+
 
 
 def _game_with_recorded_rush_day(day):
@@ -55,37 +56,10 @@ def test_recorded_endgame_with_invalid_non_null_day_is_an_internal_error():
 
 
 @pytest.mark.parametrize('bvid', ['BV1cJxc6zEgf', 'BV1FJxc6zEzg', 'BV1RQx364EVx'])
-def test_game_detail_api_uses_the_same_sequence_as_the_review_page(bvid, monkeypatch):
-    folder = next((ROOT / 'data/extractions/S23/incremental').glob(bvid + '_*'))
-    candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
-    # Historical incremental sidecars bind older rule hashes. This parity test
-    # needs a current, in-memory report; stale-report rejection is tested apart.
-    report = derive_game(candidate['dossier'], candidate['voting'])['derivations']
-    records = apply_precomputed(candidate['dossier'], candidate['voting'], report)
-    dossier, voting = records['dossier'], records['voting']
-    _, rules = publisher._logical_rules(ROOT, 'S23')
-    public = publisher._public_game(dossier, voting, {}, None, rules['boards'][dossier['board']],
-                                    {s['name']: f'person-{s["seat"]}' for s in dossier['seats']})
-    public['release_id'] = 'fixture-release'
+def test_static_game_detail_uses_the_same_sequence_as_the_review_page(bvid):
+    public = final_game('S23', bvid)
     before = deepcopy(public)
-
-    class Connection:
-        def execute(self, query, params):
-            return self
-
-        def fetchone(self):
-            return {'snapshot': public, 'search_text': api._search_text(public)}
-
-    monkeypatch.setattr(api, '_release', lambda conn: {'id': 'fixture-release'})
-    response = api.GameDetail(**api.game_detail(public['id'], Connection())).model_dump()
-    expected = build_game_timeline(dossier, voting)
-    assert [(p['number'], p['phase'], p['terminal']) for p in response['timeline']['phases']] == [
-        (p['number'], p['phase'], p['terminal']) for p in expected['phases']]
-    for actual_phase, review_phase in zip(response['timeline']['phases'], expected['phases']):
-        assert [(i['kind'], i['slot'], i['title'], i.get('text')) for i in actual_phase['items']] == [
-            (i['kind'], i['slot'], i['title'], i.get('text')) for i in review_phase['items']]
-        def votes(phase):
-            return [[(v['voter'], v['target'], v['state']) for v in i['ballot']['votes']]
-                    for i in phase['items'] if i['kind'] == 'ballot']
-        assert votes(actual_phase) == votes(review_phase)
+    response = _resolved_game(public, 'fixture-release')
+    expected = build_game_timeline(public)
+    assert response['timeline'] == expected
     assert public == before

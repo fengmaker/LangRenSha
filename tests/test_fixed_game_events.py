@@ -10,18 +10,39 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from game_records import ReviewError, apply_derived_rules, describe, phase_label, template, validate
 
 
-DOSSIER = ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json"
+GAME = ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/game.json"
 
 
 class FixedGameEventTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.sample = json.loads(DOSSIER.read_text(encoding="utf-8"))
+        public = json.loads(GAME.read_text(encoding="utf-8"))
+        event_fields = ("slot", "action", "actor", "targets", "result", "start_seat",
+                        "direction", "random_point", "speech_scope", "availability",
+                        "effects", "votes")
+        cls.sample = {
+            "slug": public["id"], "season": public["season"], "date": public["date"],
+            "phase": public["phase"], "episode": public.get("episode"),
+            "day_in_episode": public.get("day_in_episode"),
+            "game_number": public["game_number"], "board": public["board"]["code"],
+            "winner": public["winner"],
+            "roster": [seat["name"] for seat in public["seats"] if seat.get("name")],
+            "commentators": public["commentators"], "referee": public["referee"],
+            "seats": [{key: seat.get(key) for key in (
+                "seat", "name", "role", "faction", "learning_target", "learned_role")}
+                for seat in public["seats"]],
+            "rounds": [{"number": row["number"], **{
+                phase: [{key: event.get(key, [] if key in {"targets", "effects", "votes"} else None)
+                        for key in event_fields} for event in row[phase]]
+                for phase in ("night", "day")}}
+                for row in public["rounds"]],
+            "files": [],
+        }
 
     def valid_sample(self):
         return copy.deepcopy(self.sample)
 
-    def test_real_dossier_has_eight_night_and_eleven_day_slots_every_round(self):
+    def test_final_game_has_template_slots_every_round(self):
         value = self.valid_sample()
         board = validate(value, check_files=False)
 

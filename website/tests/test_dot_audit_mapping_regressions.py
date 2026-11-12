@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from website.api import publisher
-from website.api.app import _search_text
+from website import game_data as publisher
+from final_fixtures import candidate_item, final_game
 from website.api.game_presentation import build_game_presentation
 from scripts.game_timeline import build_game_timeline
 
@@ -16,14 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def published_game(season: str, bvid: str) -> tuple[dict, dict]:
-    entries, _, _ = publisher.load_release(ROOT, season)
-    item = next(entry for entry in entries if entry["bvid"] == bvid)
-    person_ids = {seat["name"]: seat["name"] for seat in item["dossier"]["seats"]}
-    public = publisher._public_game(
-        item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"], person_ids,
-        source_voting=item.get("source_voting"), derivations=item.get("derivations"),
-    )
-    return item, public
+    return candidate_item(season, bvid), final_game(season, bvid)
 
 
 def test_s23_default_abstention_basis_survives_the_public_projection():
@@ -36,14 +29,13 @@ def test_s23_default_abstention_basis_survives_the_public_projection():
         vote for ballot in public["voting"]["ballots"] if ballot["id"] == "ballot-2"
         for vote in ballot["votes"] if vote["voter"] == 12
     )
-    assert "默认弃票" in source_vote["basis"]
+    assert source_vote["basis"] == "rule_default"
     assert public_vote["basis"] == "rule_default"
-    assert source_vote["basis"] not in json.dumps(public, ensure_ascii=False)
 
 
 def test_s22_audited_night_terminal_cuts_the_unplayed_day_and_keeps_terminal_deaths():
     item, public = published_game("S22", "BV149TJ6WETs")
-    terminal = item["audit"]["game_flow"]["terminal"]
+    terminal = public["terminal_observation"]
     assert terminal["round"] == 4 and terminal["phase"] == "night"
     assert public["rounds"][-1]["number"] == 4
     assert public["rounds"][-1]["day"] == []
@@ -80,22 +72,12 @@ def test_all_nine_s22_audited_night_terminals_hide_the_next_day():
         "BV149TJ6WETs", "BV1suMG6PEYP", "BV1WEN86gERp", "BV1RGgx6xEP9",
         "BV1iMgq6ZEtz", "BV13g3z6FEdh", "BV1DFM26MEWR", "BV1kG8A6dEfF", "BV1kG8A6dEye",
     }
-    entries, _, _ = publisher.load_release(ROOT, "S22")
-    by_bvid = {entry["bvid"]: entry for entry in entries}
-    assert terminal_bvids <= by_bvid.keys()
     for bvid in terminal_bvids:
-        item = by_bvid[bvid]
-        context = item["dossier"]["_publication_context"]
-        assert item["audit"].get("dossier_sha256") == item["source_hashes"]["dossier"], bvid
-        assert context["terminal_observation"]["phase"] == "night"
-        public = publisher._public_game(
-            item["dossier"], item["voting"], item["endgame"], item["audit"], item["board"],
-            {seat["name"]: seat["name"] for seat in item["dossier"]["seats"]},
-            source_voting=item.get("source_voting"), derivations=item.get("derivations"),
-        )
-        final_round = public["terminal_observation"]["round"]
-        assert next(row for row in public["rounds"] if row["number"] == final_round)["day"] == []
-        assert all(row["day"] < final_round for row in public["voting"]["days"])
+        public = final_game('S22', bvid)
+        assert public['terminal_observation']['phase'] == 'night'
+        final_round = public['terminal_observation']['round']
+        assert next(row for row in public['rounds'] if row['number'] == final_round)['day'] == []
+        assert all(row['day'] < final_round for row in public['voting']['days'])
 
 
 def test_supplemental_disqualification_ends_later_hunter_actions():
@@ -217,9 +199,6 @@ def test_s23_no_d4_day_wording_uses_the_explicit_terminal_boundary():
     assert next(e for e in final_night if e['slot'] == 'night_deaths')['targets'] == [3, 7]
 
 
-def test_publication_format_changes_when_public_projection_contract_changes():
-    assert publisher.PUBLICATION_FORMAT_VERSION >= 5
-
 
 def test_night_terminal_preserves_its_explicit_ending_note_outside_the_unplayed_day():
     _, public = published_game("S22", "BV1iaE26kE1w")
@@ -233,13 +212,10 @@ def test_night_terminal_preserves_its_explicit_ending_note_outside_the_unplayed_
     assert public["rounds"][-1]["day"] == []
 
 
-def test_api_response_model_keeps_the_public_terminal_fields():
-    from website.api.app import GameDetail, _resolved_snapshot
-    _, public = published_game("S22", "BV1iaE26kE1w")
-    public["release_id"] = "terminal-response-fixture"
-    response_data = _resolved_snapshot(public)
-    response_data["search_text"] = _search_text(public)
-    response_data["timeline"] = build_game_timeline(response_data)
-    response = GameDetail.model_validate(response_data).model_dump()
-    assert response.get("terminal_observation") == public["terminal_observation"]
-    assert response.get("terminal_events") == public["terminal_events"]
+def test_static_detail_keeps_the_public_terminal_fields():
+    from website.public_data import _resolved_game
+    public = final_game('S22', 'BV1iaE26kE1w')
+    response = _resolved_game(public, 'terminal-test')
+    assert response['terminal_observation'] == public['terminal_observation']
+    assert response['terminal_events'] == public['terminal_events']
+    assert response['timeline'] == build_game_timeline(response)

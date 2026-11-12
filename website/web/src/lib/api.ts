@@ -8,102 +8,51 @@ import type {
   Stats,
   Release,
   Leaderboard,
-  BluffReview,
   RankingEntry,
 } from "@/lib/types";
 import { cache } from "react";
 import { filterAndSortGames, validateGameFilters, type GameFilters } from "@/lib/game-query";
 import { filterRankingEntries } from "@/lib/ranking-filter";
-import { filterBluffReview } from "@/lib/bluff-filter";
 import { parsePositivePage } from "@/lib/query-state";
-import { isStaticSite } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
 export { ApiError } from "@/lib/api-error";
 import {
-  getSnapshotBluffReview, getSnapshotGame, getSnapshotGames, getSnapshotLeaderboard,
+  getSnapshotGame, getSnapshotGames, getSnapshotLeaderboard,
   getSnapshotManifest, getSnapshotOverview, getSnapshotPlayer, getSnapshotPlayers,
   getSnapshotReleases, getSnapshotStats,
 } from "@/lib/snapshot-data";
 
-const API_BASE_URL = (process.env.API_BASE_URL ?? "http://127.0.0.1:8000").replace(/\/$/, "");
-
-async function request<T>(path: string): Promise<T> {
-  let response: Response;
-  try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(10_000),
-      headers: { Accept: "application/json" },
-    });
-  } catch {
-    throw new ApiError("unavailable", "数据服务暂时无法连接。请稍后刷新，或确认数据 API 已启动。");
-  }
-
-  if (response.status === 404) throw new ApiError("not-found", "没有找到这条档案记录。");
-  if (!response.ok) throw new ApiError("unavailable", "暂时无法读取档案数据，请稍后刷新重试。");
-
-  try {
-    return (await response.json()) as T;
-  } catch {
-    throw new ApiError("invalid", "数据服务返回内容无法读取，请稍后重试。");
-  }
-}
-
 export function getOverview() {
-  if (isStaticSite) return getSnapshotOverview();
-  return request<Overview>("/api/v1/overview");
+  return getSnapshotOverview();
 }
 
 export function getGames(params: URLSearchParams) {
-  if (isStaticSite) return getStaticGames(params);
-  return request<PageResult<GameSummary>>(`/api/v1/games?${params.toString()}`);
+  return getStaticGames(params);
 }
 
-const getGameRequest = (id: string) => {
-  if (isStaticSite) return getSnapshotGame(id);
-  return request<GameDetail>(`/api/v1/games/${encodeURIComponent(id)}`);
-}
-
-export const getGame = cache(getGameRequest);
+export const getGame = cache((id: string) => getSnapshotGame(id));
 
 export function getPlayers(params: URLSearchParams) {
-  if (isStaticSite) return getStaticPlayers(params);
-  return request<PageResult<PlayerSummary>>(`/api/v1/players?${params.toString()}`);
-}
-
-const getPlayerRequest = (id: string, params: URLSearchParams) => {
-  if (isStaticSite) return getStaticPlayer(id, params);
-  return request<PlayerDetail>(`/api/v1/players/${encodeURIComponent(id)}?${params.toString()}`);
+  return getStaticPlayers(params);
 }
 
 export const getPlayer = cache((id: string, season = "S23", phase = "all", seasonEnd?: string, minimumAppearances = 0) => {
   const params = new URLSearchParams({ season, phase });
   if (seasonEnd) { params.set("season_start", season); params.set("season_end", seasonEnd); }
   if (minimumAppearances !== 0) params.set("minimum_appearances", String(minimumAppearances));
-  return getPlayerRequest(id, params);
+  return getStaticPlayer(id, params);
 });
 
 export function getLeaderboard(season = "S23", phase: "all" | "finals_week" = "all") {
-  if (isStaticSite) return getSnapshotLeaderboard(season, phase);
-  const params = new URLSearchParams({ season, phase });
-  return request<Leaderboard>(`/api/v1/leaderboard?${params.toString()}`);
-}
-
-export function getBluffReview(season = "S22", status: "all" | "pending" | "assistant_pending" = "pending", player = "") {
-  if (isStaticSite) return getStaticBluffReview(season, status, player);
-  return request<BluffReview>(`/api/v1/bluff-review?${new URLSearchParams({ season, status, player })}`);
+  return getSnapshotLeaderboard(season, phase);
 }
 
 export function getStats(season = "S22", seasonEnd?: string) {
-  if (isStaticSite) return getStaticStats(season, seasonEnd);
-  const params = new URLSearchParams({ season });
-  if (seasonEnd) { params.set("season_start", season); params.set("season_end", seasonEnd); }
-  return request<Stats>(`/api/v1/stats?${params.toString()}`);
+  return getStaticStats(season, seasonEnd);
 }
 
 export function getReleases() {
-  if (isStaticSite) return getSnapshotReleases();
-  return request<{ items: Release[] }>("/api/v1/releases");
+  return getSnapshotReleases();
 }
 
 async function getStaticGames(params: URLSearchParams): Promise<PageResult<GameSummary>> {
@@ -179,9 +128,4 @@ async function getStaticStats(season: string, seasonEnd?: string) {
   const requestedEnd = seasonEnd ?? start;
   const end = requestedEnd === "latest" ? manifest.seasons.at(-1)?.id ?? start : requestedEnd;
   return getSnapshotStats(start, end);
-}
-
-async function getStaticBluffReview(season: string, status: "all" | "pending" | "assistant_pending", player: string) {
-  const data = await getSnapshotBluffReview(season);
-  return filterBluffReview(data, status, player);
 }

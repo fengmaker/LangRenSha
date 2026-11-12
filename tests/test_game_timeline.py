@@ -191,9 +191,8 @@ def test_observed_death_announcement_after_self_destruct_stays_after_lost_badge(
 ])
 def test_qingqiu_timeline_uses_chinese_labels_for_archives_and_old_snapshots(folder):
     path = ROOT / 'data/games/S23' / folder
-    dossier = json.loads((path / 'dossier.json').read_text(encoding='utf-8'))
-    voting = json.loads((path / 'voting.json').read_text(encoding='utf-8'))
-    old_snapshot = deepcopy(dossier)
+    game = json.loads((path / 'game.json').read_text(encoding='utf-8'))
+    old_snapshot = deepcopy(game)
     old_snapshot['board'] = {'code': 'qingqiu_night', 'name': '青丘夜影'}
     for round_ in old_snapshot['rounds']:
         for phase in ('night', 'day'):
@@ -203,9 +202,9 @@ def test_qingqiu_timeline_uses_chinese_labels_for_archives_and_old_snapshots(fol
                 'sheriff_candidates': '上警名单', 'sheriff_vote': '警长投票',
                 'sheriff_result': '警长结果', 'night_deaths': '夜间出局',
                 'badge': '警徽', 'self_destruct': '狼人自爆'}
-    for source in (dossier, old_snapshot):
+    for source in (game, old_snapshot):
         before = deepcopy(source)
-        items = [item for phase in build_game_timeline(source, voting)['phases']
+        items = [item for phase in build_game_timeline(source)['phases']
                  for item in phase['items']]
         assert not [(item['slot'], item['title']) for item in items
                     if re.search(r'[A-Za-z_]', item['title'].split(' · ')[0])]
@@ -216,26 +215,24 @@ def test_qingqiu_timeline_uses_chinese_labels_for_archives_and_old_snapshots(fol
 
 
 def reviewed_mixed_game():
-    folder = ROOT / 'data/games/S23/2026-10-27_g01_BV1RQx364EaF'
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    voting = json.loads((folder / 'voting.json').read_text(encoding='utf-8'))
-    return dossier, voting
+    return json.loads((ROOT / 'data/games/S23/2026-10-27_g01_BV1RQx364EaF/game.json')
+                      .read_text(encoding='utf-8'))
 
 
 def test_mixed_first_night_places_alignment_after_model_without_hunter_status():
-    dossier, voting = reviewed_mixed_game()
-    before = deepcopy(dossier)
-    timeline = build_game_timeline(dossier, voting)
+    game = reviewed_mixed_game()
+    before = deepcopy(game)
+    timeline = build_game_timeline(game)
     night = timeline['phases'][0]
     slots = [item['slot'] for item in night['items']]
     assert slots[:2] == ['mixed_blood_model', 'mixed_blood_alignment']
     assert 'hunter_state' not in slots
-    assert dossier == before
+    assert game == before
 
 
 def test_later_phases_hide_spent_once_only_and_unchanged_badge_slots():
-    dossier, voting = reviewed_mixed_game()
-    timeline = build_game_timeline(dossier, voting)
+    game = reviewed_mixed_game()
+    timeline = build_game_timeline(game)
     later = [phase for phase in timeline['phases'] if phase['number'] > 1]
     slots = [item['slot'] for phase in later for item in phase['items']]
     assert not {'mixed_blood_model', 'mixed_blood_alignment', 'hunter_state',
@@ -245,8 +242,8 @@ def test_later_phases_hide_spent_once_only_and_unchanged_badge_slots():
 
 
 def test_ballots_are_inside_their_day_between_registration_and_result():
-    dossier, voting = reviewed_mixed_game()
-    timeline = build_game_timeline(dossier, voting)
+    game = reviewed_mixed_game()
+    timeline = build_game_timeline(game)
     day = next(phase for phase in timeline['phases'] if phase['phase'] == 'day')
     items = day['items']
     slots = [item['slot'] for item in items]
@@ -258,8 +255,8 @@ def test_ballots_are_inside_their_day_between_registration_and_result():
 
 
 def test_night_surrender_stops_before_unplayed_deaths_shots_and_exile():
-    dossier, voting = reviewed_mixed_game()
-    timeline = build_game_timeline(dossier, voting)
+    game = reviewed_mixed_game()
+    timeline = build_game_timeline(game)
     assert [(phase['number'], phase['phase']) for phase in timeline['phases']] == [
         (1, 'night'), (1, 'day'), (2, 'night'), (2, 'day'), (3, 'night')]
     terminal = timeline['phases'][-1]
@@ -316,10 +313,9 @@ def test_continued_election_is_kept_without_repeating_registration():
 
 
 def test_skill_revote_follows_prince_reveal_instead_of_first_ballot():
-    folder = ROOT / 'data/games/S23/2026-10-27_g02_BV1RQx364EVx'
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    voting = json.loads((folder / 'voting.json').read_text(encoding='utf-8'))
-    phases = build_game_timeline(dossier, voting)['phases']
+    game = json.loads((ROOT / 'data/games/S23/2026-10-27_g02_BV1RQx364EVx/game.json')
+                      .read_text(encoding='utf-8'))
+    phases = build_game_timeline(game)['phases']
     first_day = next(phase for phase in phases if phase['phase'] == 'day')
     items = first_day['items']
     exile_indices = [i for i, item in enumerate(items) if item['kind'] == 'ballot' and item['ballot']['kind'] == 'exile']
@@ -356,29 +352,26 @@ def test_retained_ballots_are_not_lost_when_an_archive_has_no_vote_slot():
     ('BV1RQx364EVx', 2, 'day'),
 ])
 def test_recorded_latest_game_endings_stop_at_the_actual_phase(bvid, number, phase):
-    folder = next((ROOT / 'data/extractions/S23/incremental').glob(bvid + '_*'))
-    candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
-    before = deepcopy(candidate)
-    timeline = build_game_timeline(candidate['dossier'], candidate['voting'])
+    game = game_for_bvid(bvid)
+    before = deepcopy(game)
+    timeline = build_game_timeline(game)
     ending = timeline['phases'][-1]
     assert (ending['number'], ending['phase'], ending['terminal']) == (number, phase, True)
     assert '获胜' in ending['items'][-1]['text']
-    assert candidate == before
+    assert game == before
 
 
 def test_surrender_note_keeps_the_self_destruct_that_preceded_it():
-    folder = next((ROOT / 'data/extractions/S23/incremental').glob('BV1kksX6DEbH_*'))
-    candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
-    ending = build_game_timeline(candidate['dossier'], candidate['voting'])['phases'][-1]
+    game = game_for_bvid('BV1kksX6DEbH')
+    ending = build_game_timeline(game)['phases'][-1]
     slots = [item['slot'] for item in ending['items']]
     assert slots.index('self_destruct') < slots.index('werewolf_surrender')
     assert '8号荣耀' in ending['items'][-1]['text']
 
 
 def test_swap_effects_keep_original_targets_and_actual_results_visible():
-    folder = ROOT / 'data/games/S23/2026-10-27_g02_BV1RQx364EVx'
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    night = next(p for p in build_game_timeline(dossier)['phases'] if p['number'] == 2 and p['phase'] == 'night')
+    game = game_for_bvid('BV1RQx364EVx')
+    night = next(p for p in build_game_timeline(game)['phases'] if p['number'] == 2 and p['phase'] == 'night')
     attack = next(item['text'] for item in night['items'] if item['slot'] == 'wolf_attack')
     check = next(item['text'] for item in night['items'] if item['slot'] == 'seer_check')
     assert '3号小张' in attack and '实际1号' in attack
@@ -393,15 +386,19 @@ def test_existing_sheriff_does_not_restart_a_later_election():
     assert [item['slot'] for item in later['items']] == ['night_deaths']
 
 
-def incremental_game(bvid):
-    folder = next((ROOT / 'data/extractions/S23/incremental').glob(bvid + '_*'))
-    return json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
+def game_for_bvid(bvid):
+    for path in (ROOT / 'data/games').glob('S*/*/game.json'):
+        game = json.loads(path.read_text(encoding='utf-8'))
+        source = game.get('source') or {}
+        if source.get('bvid') == bvid:
+            return game
+    raise AssertionError(f'No final game.json for {bvid}')
 
 
 @pytest.mark.parametrize('bvid', ['BV1FJxc6zEzg', 'BV1RQx364Eit'])
 def test_speech_order_is_never_a_display_slot(bvid):
-    candidate = incremental_game(bvid)
-    phases = build_game_timeline(candidate['dossier'], candidate['voting'])['phases']
+    game = game_for_bvid(bvid)
+    phases = build_game_timeline(game)['phases']
     assert all(item['slot'] != 'speech_order' for phase in phases for item in phase['items'])
 
 
@@ -410,8 +407,8 @@ def test_speech_order_is_never_a_display_slot(bvid):
     ('BV1FJxc6zEzg', 2, 'self_destruct'),
 ])
 def test_badge_processing_follows_the_departure_that_triggered_it(bvid, number, trigger):
-    candidate = incremental_game(bvid)
-    phases = build_game_timeline(candidate['dossier'], candidate['voting'])['phases']
+    game = game_for_bvid(bvid)
+    phases = build_game_timeline(game)['phases']
     day = next(p for p in phases if p['number'] == number and p['phase'] == 'day')
     slots = [item['slot'] for item in day['items']]
     assert slots.index('badge') == slots.index(trigger) + 1
@@ -433,9 +430,9 @@ def test_badges_follow_each_death_and_shot_chain_without_moving_the_morning_to_e
 
 
 def test_last_masquerade_carries_knife_but_dq_invalidates_the_attack():
-    candidate = incremental_game('BV1FJxc6zEzg')
-    before = deepcopy(candidate)
-    phases = build_game_timeline(candidate['dossier'], candidate['voting'])['phases']
+    game = game_for_bvid('BV1FJxc6zEzg')
+    before = deepcopy(game)
+    phases = build_game_timeline(game)['phases']
     assert not any(item['slot'].startswith('masquerade_knife') for p in phases[:-1] for item in p['items'])
     ending = phases[-1]
     slots = [item['slot'] for item in ending['items']]
@@ -447,7 +444,7 @@ def test_last_masquerade_carries_knife_but_dq_invalidates_the_attack():
     assert '1号郭小炜（假面）' in attack['text'] and '失效' in attack['text']
     assert '待核' not in attack['text']
     assert slots.count('night_deaths') == 1
-    assert candidate == before
+    assert game == before
 
 
 @pytest.mark.parametrize('action', ['attack', 'surrender'])
@@ -469,7 +466,7 @@ def test_masquerade_keeps_a_real_knife_target_and_does_not_add_a_knife_after_sur
 
 
 def test_shared_narrative_keeps_the_existing_puppet_witch_failed_save():
-    path = next((ROOT / 'data/games').glob('S*/2026-05-15_g02_BV18n5z6AEAt/dossier.json'))
+    path = next((ROOT / 'data/games').glob('S*/2026-05-15_g02_BV18n5z6AEAt/game.json'))
     dossier = json.loads(path.read_text(encoding='utf-8'))
     night = build_game_timeline(dossier)['phases'][0]
     medicine = next(i for i in night['items'] if i['slot'] == 'witch_medicine')
@@ -485,18 +482,16 @@ def test_two_tied_ballots_keep_the_no_exile_result():
 
 
 def test_mechanical_wolf_normal_knife_is_named_for_the_carrier():
-    folder = ROOT / 'data/games/S23/2026-10-29_g03_BV1cJxc6zEbr'
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    ending = build_game_timeline(dossier)['phases'][-1]
+    game = game_for_bvid('BV1cJxc6zEbr')
+    ending = build_game_timeline(game)['phases'][-1]
     attack = next(i for i in ending['items'] if i['slot'] == 'wolf_attack')
     assert attack['title'] == '机械狼击杀'
     assert '11号小白（机械狼）选择击杀3号园长（女巫）' in attack['text']
 
 
 def test_masquerade_disqualifications_are_not_night_deaths_and_surrender_ends_game():
-    folder = ROOT / 'data/games/S23/2026-10-29_g02_BV1FJxc6zEzg'
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    ending = build_game_timeline(dossier)['phases'][-1]
+    game = game_for_bvid('BV1FJxc6zEzg')
+    ending = build_game_timeline(game)['phases'][-1]
     settlement = next(i for i in ending['items'] if i['slot'] == 'night_deaths')
     assert settlement['text'] == '本夜为平安夜。'
     assert settlement['events'][0]['targets'] == []

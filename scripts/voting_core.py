@@ -1,11 +1,10 @@
-"""Season-independent voting extraction, validation, and database import."""
+"""Season-independent voting extraction and candidate validation."""
 from __future__ import annotations
 
 from collections import Counter
-from contextlib import nullcontext
 import re
 
-from database import ReviewError, connect
+from game_records import ReviewError
 
 
 NUM = r"(?<![\d一二两三四五六七八九十])(?:12|11|10|[1-9]|十二|十一|十|[一二两三四五六七八九])"
@@ -378,36 +377,5 @@ def validate(facts):
                 raise ReviewError("缺票名单或票权不一致")
         if b["status"] not in {"partial", "complete"} or b["status"] == "complete" and (b["eligible_voters"] is None or b["unrecorded_voters"]):
             raise ReviewError("票权未知或缺票不能标为完整")
-
-
-def import_voting(facts, conn=None):
-    """Replace only this game's voting supplement, atomically and idempotently."""
-    validate(facts)
-    transaction = connect() if conn is None else nullcontext(conn)
-    with transaction as conn:
-        conn.execute("SELECT pg_advisory_xact_lock(hashtext(%s))", ("game-record-" + facts["game_slug"],))
-        game = conn.execute("SELECT id FROM games WHERE slug=%s", (facts["game_slug"],)).fetchone()
-        if game is None:
-            raise ReviewError("投票档案对应的对局尚未入库")
-        game_id = game["id"]
-        conn.execute("DELETE FROM game_sheriff_registrations WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_ballots WHERE game_id=%s", (game_id,))
-        conn.execute("DELETE FROM game_voting_days WHERE game_id=%s", (game_id,))
-        for r in facts["registrations"]:
-            for registered, ns in ((True, r["on_police"]), (False, r["off_police"])):
-                for n in ns:
-                    conn.execute("INSERT INTO game_sheriff_registrations(game_id,registration_key,day_number,seat_number,registered) VALUES(%s,%s,%s,%s,%s)",
-                                 (game_id, r["id"], r["day"], n, registered))
-        for b in facts["ballots"]:
-            row = conn.execute("""INSERT INTO game_ballots(game_id,ballot_key,day_number,kind,ballot_number,stage,status,candidates,eligible_voters,tied_candidates,winner_seat)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id""",
-                (game_id,b["id"],b["day"],b["kind"],b["number"],b["stage"],b["status"],b["candidates"],b["eligible_voters"],b["tied_candidates"],b["winner"])).fetchone()
-            for v in b["votes"]:
-                conn.execute("INSERT INTO game_ballot_choices(ballot_id,voter_seat,target_seat,state) VALUES(%s,%s,%s,%s)",
-                             (row["id"],v["voter"],v["target"],v["state"]))
-        for d in facts["days"]:
-            conn.execute("INSERT INTO game_voting_days(game_id,day_number,sheriff_status,exile_status) VALUES(%s,%s,%s,%s) ON CONFLICT(game_id,day_number) DO UPDATE SET sheriff_status=EXCLUDED.sheriff_status,exile_status=EXCLUDED.exile_status",
-                         (game_id,d["day"],d["sheriff"],d["exile"]))
-        return {"ballots": len(facts["ballots"]), "choices": sum(len(b["votes"]) for b in facts["ballots"])}
 
 

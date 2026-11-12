@@ -18,33 +18,37 @@ CORRECTED_CASES = [
 ]
 
 
+def game_for_bvid(bvid):
+    for path in (ROOT / 'data/games').glob('S*/*/game.json'):
+        game = json.loads(path.read_text(encoding='utf-8'))
+        if (game.get('source') or {}).get('bvid') == bvid:
+            return game
+    raise AssertionError(f'No final game.json for {bvid}')
+
+
 def test_treasure_master_election_has_only_the_two_announced_off_police_voters():
-    folder = ROOT / 'data/games/S23/2026-10-01_g02_BV1D2ak6XEji'
-    voting = json.loads((folder / 'voting.json').read_text(encoding='utf-8'))
+    voting = game_for_bvid('BV1D2ak6XEji')['voting']
     registration = voting['registrations'][0]
     assert registration['off_police'] == [3, 11]
     assert registration['on_police'] == [1, 2, 4, 5, 6, 7, 8, 9, 10, 12]
     initial, pk = [ballot for ballot in voting['ballots'] if ballot['kind'] == 'sheriff']
     assert initial['candidates'] == [1, 8, 12]
     assert initial['eligible_voters'] == [3, 11]
-    assert initial['votes'] == [
-        {'voter': 3, 'target': 8, 'state': 'cast'},
-        {'voter': 11, 'target': 12, 'state': 'cast'},
+    assert [(vote['voter'], vote['target'], vote['state']) for vote in initial['votes']] == [
+        (3, 8, 'cast'), (11, 12, 'cast'),
     ]
     assert initial['tied_candidates'] == [8, 12]
     assert pk['winner'] == 12 and len(pk['votes']) == 10
 
 
 def test_corrected_registration_survives_candidate_rebuild_and_keeps_final_candidates_separate():
-    from s23_effective_game import load_effective_game
     from scripts.game_timeline import build_game_timeline
 
-    game = load_effective_game('BV1D2ak6XEji', require_complete=True)
+    game = game_for_bvid('BV1D2ak6XEji')
     voting = game['voting']
     assert voting['registrations'][0]['off_police'] == [3, 11]
     assert voting['ballots'][0]['eligible_voters'] == [3, 11]
-    dossier = json.loads((ROOT / game['entry']['output_dir'] / 'dossier.json').read_text(encoding='utf-8'))
-    phases = build_game_timeline(dossier, voting)['phases']
+    phases = build_game_timeline(game)['phases']
     first_day = next(phase for phase in phases if phase['number'] == 1 and phase['phase'] == 'day')
     signup = [item for item in first_day['items'] if item['slot'] == 'sheriff_candidates']
     assert [item['title'] for item in signup] == ['首次上警', '退水后候选']
@@ -55,8 +59,7 @@ def test_corrected_registration_survives_candidate_rebuild_and_keeps_final_candi
 
 @pytest.mark.parametrize('bvid,off_police,expected_votes', CORRECTED_CASES)
 def test_confirmed_sheriff_electorates_remove_ineligible_voters(bvid, off_police, expected_votes):
-    folder = next((ROOT / 'data/games/S23').glob('*' + bvid))
-    voting = json.loads((folder / 'voting.json').read_text(encoding='utf-8'))
+    voting = game_for_bvid(bvid)['voting']
     registration = next(row for row in voting['registrations'] if row['day'] == 1)
     assert registration['off_police'] == off_police
     assert registration['on_police'] == [seat for seat in range(1, 13) if seat not in off_police]
@@ -69,15 +72,10 @@ def test_confirmed_sheriff_electorates_remove_ineligible_voters(bvid, off_police
 
 @pytest.mark.parametrize('bvid,off_police,expected_votes', CORRECTED_CASES)
 def test_confirmed_corrections_survive_rebuilding_and_render_with_the_right_signup(bvid, off_police, expected_votes):
-    from s23_effective_game import load_effective_game
     from scripts.game_timeline import build_game_timeline
 
-    game = load_effective_game(bvid, require_complete=True)
-    folder = ROOT / game['entry']['output_dir']
-    voting = json.loads((folder / 'voting.json').read_text(encoding='utf-8'))
-    assert game['voting'] == voting
-    dossier = json.loads((folder / 'dossier.json').read_text(encoding='utf-8'))
-    phases = build_game_timeline(dossier, voting)['phases']
+    game = game_for_bvid(bvid)
+    phases = build_game_timeline(game)['phases']
     day = next(phase for phase in phases if phase['number'] == 1 and phase['phase'] == 'day')
     signup = next(item for item in day['items'] if item['slot'] == 'sheriff_candidates')
     assert signup['events'][0]['off_police'] == off_police

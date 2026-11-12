@@ -1,10 +1,6 @@
 from copy import deepcopy
 import pytest
-
-from website.api.bluffs import (
-    aggregate_bluffs, claim_fingerprint, evaluate_success, fully_reviewed_game_count,
-    review_items, source_fingerprint, success_fingerprint, physical_wolf,
-)
+from website.api.bluffs import aggregate_bluffs, evaluate_success, physical_wolf
 
 
 def sample(*, exile=2, badge=3, phase="regular"):
@@ -22,221 +18,6 @@ def sample(*, exile=2, badge=3, phase="regular"):
             "voting": {"days": [{"day": 1, "sheriff": "recorded", "exile": "recorded"}], "ballots": []},
             "bluff_evidence_sources": {"e" * 64: "a" * 64}}
 
-
-def review(game, decision="yes"):
-    payload = {"games": [{"game_id": game["id"], "source_fingerprint": source_fingerprint(game),
-                      "assessments": [{"seat": 1, "name": "狼甲", "physical_role": "狼人",
-                                       "decision": decision, "claimed_role": "通灵师", "claim_day": 1, "confidence": "high",
-                                       "evidence": [{"kind": "recap", "text": "1号悍跳狼人",
-                                                    "source_ref": "e" * 64, "source_sha256": "a" * 64}]},
-                                      {"seat": 4, "name": "狼乙", "physical_role": "机械狼",
-                                       "decision": "no", "confidence": "medium", "evidence": []}]}]}
-    return sign_assessments(game, payload)
-
-
-def sign_assessments(game, payload):
-    record = payload["games"][0]
-    for assessment in record["assessments"]:
-        assessment["claim_fingerprint"] = claim_fingerprint(game, assessment)
-        assessment["success_fingerprint"] = success_fingerprint(
-            game, assessment["seat"], assessment.get("claim_day", 1),
-            result_review=record.get("result_review"),
-        )
-    return payload
-
-
-def test_bluff_stage_counts_follow_election_and_literal_first_day_exile():
-    first = sample(exile=1, badge=1)
-    first["id"] = "elected-and-exiled"
-    second = sample(exile=None, badge=3)
-    second["id"] = "later-exile"
-    second["voting"]["days"][0]["exile"] = "not_held"
-    second["rounds"].append({"number": 2, "day": [
-        {"slot": "exile_result", "action": "exile", "targets": [1]},
-        {"slot": "badge", "action": "transfer", "targets": [1]},
-    ]})
-    payload = {"games": review(first)["games"] + review(second)["games"]}
-    row = aggregate_bluffs([first, second], payload)["wolf"]
-    assert row["bluff_badge_count"]["numerator"] == 1
-    assert row["bluff_badge_count"]["denominator"] == 2
-    assert row["bluff_first_day_exiled"]["numerator"] == 1
-    assert row["bluff_first_day_exiled"]["denominator"] == 2
-    assert row["bluff_badge_count"]["samples"] == [
-        {"game_id": "elected-and-exiled", "positive": 1, "negative": 0},
-        {"game_id": "later-exile", "positive": 0, "negative": 1},
-    ]
-
-
-def test_confirmed_bluffer_election_is_counted_when_claim_day_was_not_recorded():
-    game = sample(badge=1)
-    payload = review(game)
-    assessment = payload["games"][0]["assessments"][0]
-    assessment.update(verification_status="user_confirmed", claim_day=None, manual_success=True)
-    row = aggregate_bluffs([game], payload)["wolf"]
-    assert row["bluff_badge_count"]["numerator"] == 1
-    assert row["bluff_badge_count"]["excluded"] == 0
-
-
-@pytest.mark.parametrize('role', ['狼女孩', '捣蛋鬼'])
-def test_special_wolf_physical_identity_counts_without_manual_inclusion(role):
-    game = sample()
-    game['seats'][0]['role'] = role
-    assert physical_wolf(game, game['seats'][0])
-    payload = review(game)
-    payload['games'][0]['assessments'][0]['physical_role'] = role
-    sign_assessments(game, payload)
-    item = next(row for row in review_items([game], payload) if row['seat'] == 1)
-    assert item['decision'] == 'yes'
-    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 1
-    partner = {**game['seats'][0], 'role': '平民'}
-    assert not physical_wolf(game, partner)
-
-
-@pytest.mark.parametrize('manual_result', [True, False, None])
-@pytest.mark.parametrize('change', ['missing_signatures', 'effective_faction', 'evidence_source'])
-def test_user_confirmed_result_stays_locked_until_the_user_explicitly_changes_it(manual_result, change):
-    game = sample()
-    payload = review(game)
-    row = payload['games'][0]['assessments'][0]
-    row.update(verification_status='user_confirmed', manual_success=manual_result,
-               decision_note='人工定案，不因技术签名变化重置')
-    changed = deepcopy(game)
-    if change == 'missing_signatures':
-        row.pop('claim_fingerprint')
-        row.pop('success_fingerprint')
-    elif change == 'effective_faction':
-        changed['seats'][1]['faction'] = 'werewolf'
-    else:
-        changed['bluff_evidence_sources']['e' * 64] = 'b' * 64
-    original = deepcopy(payload)
-    item = next(item for item in review_items([changed], payload) if item['seat'] == 1)
-    assert item['decision'] == 'yes'
-    assert item['success'] is manual_result
-    assert item['success_source'] == 'user'
-    assert item['claim_needs_review'] is False
-    assert item['success_needs_review'] is False
-    assert item['legacy_success_needs_review'] is False
-    assert item['decision_note'] == row['decision_note']
-    assert payload == original
-    stats = aggregate_bluffs([changed], payload)['wolf']
-    assert stats['bluff_count'] == 1
-    assert stats['bluff_success_rate']['denominator'] == (0 if manual_result is None else 1)
-
-
-def test_user_confirmed_no_bluff_is_not_reopened_by_evidence_changes():
-    game = sample()
-    payload = review(game, decision='no')
-    payload['games'][0]['assessments'][0]['verification_status'] = 'user_confirmed'
-    changed = deepcopy(game)
-    changed['bluff_evidence_sources']['e' * 64] = 'b' * 64
-    item = next(item for item in review_items([changed], payload) if item['seat'] == 1)
-    assert item['decision'] == 'no'
-    assert item['claim_needs_review'] is False
-
-
-def test_reviewed_game_coverage_uses_final_records_without_changing_decisions_or_results():
-    games = []
-    records = []
-    for season in ("S22", "S23"):
-        game = sample()
-        game.update(id=f"{season}-reviewed", season=season)
-        payload = review(game)
-        for assessment in payload["games"][0]["assessments"]:
-            assessment["verification_status"] = "user_confirmed"
-            assessment.pop("review_stage", None)
-        payload["games"][0]["assessments"][0]["manual_success"] = True
-        games.append(game)
-        records.extend(payload["games"])
-
-    before = deepcopy(records)
-    items = review_items(games, {"games": records})
-    decisions = [(item["game_id"], item["decision"], item["success"]) for item in items]
-
-    assert fully_reviewed_game_count(items) == 2
-    assert decisions == [
-        ("S22-reviewed", "yes", True), ("S22-reviewed", "no", None),
-        ("S23-reviewed", "yes", True), ("S23-reviewed", "no", None),
-    ]
-    assert records == before
-
-    records[1]["assessments"][0]["verification_status"] = "assistant_inferred"
-    items = review_items(games, {"games": records})
-    assert fully_reviewed_game_count(items) == 1
-
-
-def test_unpublished_review_keeps_all_player_counts_incomplete_even_with_unknown_factions():
-    game = sample()
-    for seat in game["seats"]:
-        seat["faction"] = None
-    stats = aggregate_bluffs([game], {"games": []})
-    assert len(stats) == len(game["seats"])
-    assert all(row["bluff_count"] == 0 and row["bluff_count_complete"] is False
-               and row["bluff_success_rate"]["rate"] is None for row in stats.values())
-
-
-def test_bluff_rate_uses_wolf_appearances_and_excludes_undecided_claims():
-    games, reviewed = [], []
-    for decision in ('yes', 'no', 'uncertain'):
-        game = sample()
-        game['id'] = decision
-        games.append(game)
-        reviewed.extend(review(game, decision)['games'])
-    mixed = sample()
-    mixed['id'] = 'wolf-mixed'
-    mixed['seats'][0]['role'] = '混血儿'
-    good = sample()
-    good['id'] = 'good'
-    good['seats'][0].update(role='平民', faction='good')
-    unknown = sample()
-    unknown['id'] = 'unknown'
-    unknown['seats'][0]['faction'] = None
-    games.extend([mixed, good, unknown])
-
-    metric = aggregate_bluffs(games, {'games': reviewed})['wolf']['bluff_rate']
-
-    assert (metric['numerator'], metric['denominator'], metric['excluded']) == (1, 3, 2)
-    assert metric['rate'] == 1 / 3
-    assert metric['game_ids'] == ['yes', 'no', 'wolf-mixed']
-    assert aggregate_bluffs([good], {'games': []})['wolf']['bluff_rate']['rate'] is None
-
-
-def test_bluff_success_samples_match_confirmed_results_and_exclude_pending():
-    games, records = [], []
-    for gid, result in [('success', True), ('failure', False), ('pending', None)]:
-        game = sample()
-        game['id'] = gid
-        payload = review(game)
-        payload['games'][0]['assessments'][0].update(
-            verification_status='user_confirmed', manual_success=result)
-        games.append(game)
-        records.extend(payload['games'])
-    metric = aggregate_bluffs(games, {'games': records})['wolf']['bluff_success_rate']
-    assert (metric['numerator'], metric['denominator'], metric['excluded']) == (1, 2, 1)
-    assert metric['samples'] == [
-        {'game_id': 'success', 'positive': 1, 'negative': 0},
-        {'game_id': 'failure', 'positive': 0, 'negative': 1},
-    ]
-
-
-def test_team_first_day_good_exile_succeeds_without_personal_call_or_majority():
-    game = sample(exile=2, badge=3)
-    game["voting"]["ballots"] = [{"id": "vote1", "day": 1, "kind": "exile", "winner": 2,
-                                   "votes": [{"voter": 1, "target": 4, "state": "cast"}]}]
-    stats = aggregate_bluffs([game], review(game))["wolf"]
-    assert stats["bluff_count"] == 1
-    assert stats["bluff_success_rate"]["rate"] == 1
-    assert evaluate_success(game, 1)["reasons"][0]["target"] == 2
-
-
-def test_badge_alone_succeeds_and_repeated_conditions_do_not_double_count():
-    game = sample(exile=4, badge=1)
-    assert evaluate_success(game, 1)["value"] is True
-    both = sample(exile=2, badge=1)
-    stats = aggregate_bluffs([both], review(both))["wolf"]
-    assert stats["bluff_success_rate"]["numerator"] == 1
-    assert len(evaluate_success(both, 1)["reasons"]) == 2
-
-
 def test_later_good_exile_and_badge_transfer_do_not_replace_first_day_conditions():
     game = sample(exile=4, badge=3)
     game["rounds"].append({"number": 2, "day": [
@@ -245,7 +26,6 @@ def test_later_good_exile_and_badge_transfer_do_not_replace_first_day_conditions
     ]})
     assert evaluate_success(game, 1)["value"] is False
 
-
 def test_self_destruct_does_not_move_first_day_to_the_first_vote_day():
     game = sample(exile=None, badge=3)
     game["voting"]["days"][0]["exile"] = "interrupted_self_destruct"
@@ -253,224 +33,12 @@ def test_self_destruct_does_not_move_first_day_to_the_first_vote_day():
         {"slot": "exile_result", "action": "exile", "targets": [2]}]})
     assert evaluate_success(game, 1)["value"] is False
 
-
-def test_final_result_overrides_initial_pk_ballot_and_unknown_is_not_failure():
-    game = sample(exile=4, badge=3)
-    game["voting"]["ballots"] = [{"kind": "exile", "day": 1, "winner": 2},
-                                   {"kind": "exile", "day": 1, "winner": 4}]
-    assert evaluate_success(game, 1)["value"] is False
-    game = sample(exile=None, badge=3)
-    result = aggregate_bluffs([game], review(game))["wolf"]
-    assert result["bluff_count"] == 1
-    assert result["bluff_success_rate"]["rate"] is None
-    assert result["bluff_success_rate"]["excluded"] == 1
-    assert result["bluff_review_count"] == 1
-
-
-def test_candidate_and_badge_without_bluff_evidence_never_create_a_bluff():
-    game = sample(badge=1)
-    payload = review(game, decision="uncertain")
-    stats = aggregate_bluffs([game], payload)["wolf"]
-    assert stats["bluff_count"] == 0 and stats["bluff_count_complete"] is False
-    assert stats["bluff_success_rate"]["denominator"] == 0
-    payload["games"][0]["assessments"][0]["decision"] = "yes"
-    payload["games"][0]["assessments"][0]["evidence"] = []
-    assert aggregate_bluffs([game], payload)["wolf"]["bluff_count"] == 0
-
-
-def test_stale_identity_or_result_cannot_reuse_old_inference():
-    game = sample()
-    payload = review(game)
-    changed = deepcopy(game)
-    changed["rounds"][0]["day"][1]["targets"] = [4]
-    item = review_items([changed], payload)[0]
-    assert item["decision"] == "yes" and item["success_needs_review"]
-    assert aggregate_bluffs([changed], payload)["wolf"]["bluff_success_rate"]["denominator"] == 0
-    changed = deepcopy(game)
-    changed["seats"][0]["name"] = "另一人"
-    assert aggregate_bluffs([changed], payload)["wolf"]["bluff_count"] == 0
-
-
-def test_changed_effective_faction_reports_inputs_without_changing_a_confirmed_result():
-    game = sample(exile=2, badge=3)
-    payload = review(game)
-    assessment = payload["games"][0]["assessments"][0]
-    assessment.update(verification_status="user_confirmed", manual_success=True,
-                      decision_note="用户上次确认悍跳成功。")
-
-    changed = deepcopy(game)
-    changed["seats"][1]["faction"] = "werewolf"
-
-    assert source_fingerprint(changed) == payload["games"][0]["source_fingerprint"]
-    item = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert item["decision"] == "yes"
-    assert item["success"] is True
-    assert item["success_source"] == "user"
-    assert item["previous_success"] is True
-    assert item["needs_review"] is False
-    assert item['input_change_notes']
-    assert item["decision_note"] == "用户上次确认悍跳成功。"
-
-
-def test_unrelated_second_day_ballot_and_other_seat_faction_reuse_both_conclusions():
-    game = sample(exile=2, badge=3)
-    payload = review(game)
-    record = payload["games"][0]["assessments"][0]
-    record.update(verification_status="user_confirmed", manual_success=True)
-
-    changed = deepcopy(game)
-    changed["seats"][3]["faction"] = "good"
-    changed["voting"]["ballots"].append({"kind": "exile", "day": 2, "winner": 4})
-
-    item = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert item["decision"] == "yes"
-    assert item["success"] is True and item["success_source"] == "user"
-    assert item["claim_needs_review"] is False and item["success_needs_review"] is False
-    assert item["needs_review"] is False
-
-
-def test_evidence_source_change_rechecks_claim_but_keeps_previous_decision_and_note():
-    game = sample()
-    payload = review(game)
-    assessment = payload["games"][0]["assessments"][0]
-    assessment.update(verification_status="assistant_inferred", decision_note="上次备注保留")
-    changed = deepcopy(game)
-    changed["bluff_evidence_sources"]["e" * 64] = "b" * 64
-
-    assert source_fingerprint(changed) == payload["games"][0]["source_fingerprint"]
-    item = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert item["decision"] == "uncertain" and item["claim_needs_review"] is True
-    assert item["previous_decision"] == "yes" and item["decision_note"] == "上次备注保留"
-    assert item["success"] is None
-
-    unbound = deepcopy(game)
-    unbound.pop("bluff_evidence_sources")
-    item = next(row for row in review_items([unbound], payload) if row["seat"] == 1)
-    assert item["claim_needs_review"] is True
-
-
-def test_manually_included_mixed_blood_faction_change_does_not_invalidate_speech_claim():
-    game = sample()
-    game["seats"][0]["role"] = "混血儿"
-    payload = review(game)
-    row = payload["games"][0]["assessments"][0]
-    row.update(physical_role="混血儿", verification_status="user_confirmed",
-               manual_included=True, manual_success=True)
-    sign_assessments(game, payload)
-
-    changed = deepcopy(game)
-    changed["seats"][0]["faction"] = "good"
-    item = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert item["decision"] == "yes" and item["claim_needs_review"] is False
-    assert item["success"] is True
-
-
-def test_manual_success_with_unknown_claim_day_stays_locked_after_exile_faction_change():
-    game = sample(exile=2, badge=3)
-    payload = review(game)
-    row = payload["games"][0]["assessments"][0]
-    row.update(verification_status="user_confirmed", manual_success=True, claim_day=None,
-               decision_note="第几天待补，旧成功结论保留")
-    sign_assessments(game, payload)
-
-    changed = deepcopy(game)
-    changed["seats"][1]["faction"] = "werewolf"
-    item = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert item["decision"] == "yes" and item["claim_needs_review"] is False
-    assert item["success"] is True and item["success_needs_review"] is False
-    assert item['input_change_notes']
-    assert item["previous_success"] is True and item["decision_note"] == "第几天待补，旧成功结论保留"
-
-
-def test_legacy_human_results_stay_locked_without_technical_dependency_signatures():
-    game = sample()
-    payload = review(game)
-    assessment = payload["games"][0]["assessments"][0]
-    assessment.update(verification_status="user_confirmed", manual_success=True)
-    assessment.pop("claim_fingerprint")
-    assessment.pop("success_fingerprint")
-
-    current = next(row for row in review_items([game], payload) if row["seat"] == 1)
-    assert current["decision"] == "yes" and current["success"] is True
-    assert current["legacy_success_needs_review"] is False
-    assert current["previous_success"] is True
-    changed = deepcopy(game)
-    changed["voting"]["ballots"].append({"kind": "exile", "day": 2, "winner": 4})
-    stale = next(row for row in review_items([changed], payload) if row["seat"] == 1)
-    assert stale["decision"] == "yes" and stale["claim_needs_review"] is False
-    assert stale["previous_success"] is True and stale["success"] is True
-
-
-def test_source_binding_survives_equal_derived_view_but_rejects_changed_identity_or_vote():
-    game = sample()
-    game["voting"]["ballots"] = [{"id": "vote1", "day": 1, "kind": "exile", "winner": 2,
-                                   "votes": [{"voter": 1, "target": 2, "state": "cast"}]}]
-    derived_fingerprint = source_fingerprint(game)
-    source_fingerprint_value = "a" * 64
-    game["bluff_source_binding"] = {
-        "derived_fingerprint": derived_fingerprint,
-        "source_fingerprint": source_fingerprint_value,
-    }
-    assert source_fingerprint(game) == source_fingerprint_value
-
-    changed_seat = deepcopy(game)
-    changed_seat["seats"][0]["name"] = "新名字"
-    assert source_fingerprint(changed_seat) != source_fingerprint_value
-
-    changed_vote = deepcopy(game)
-    changed_vote["voting"]["ballots"][0]["votes"][0]["target"] = 4
-    assert source_fingerprint(changed_vote) != source_fingerprint_value
-
-    changed_faction = deepcopy(game)
-    changed_faction["seats"][1]["faction"] = "werewolf"
-    assert source_fingerprint(changed_faction) == source_fingerprint_value
-
-
-def test_mixed_blood_and_real_information_roles_are_not_wolf_card_bluffs():
-    game = sample()
-    game["seats"][0]["role"] = "混血儿"
-    stats = aggregate_bluffs([game], review(game))
-    assert stats["wolf"]["bluff_count"] == 0
-    assert stats["seer"]["bluff_count"] == 0
-
-
-@pytest.mark.parametrize('value', [True, False, None])
-def test_manual_success_overrides_rules_including_explicit_unknown(value):
-    game = sample(exile=2)
-    payload = review(game)
-    payload['games'][0]['assessments'][0].update(
-        verification_status='user_confirmed', manual_success=value, claim_day=None)
-    sign_assessments(game, payload)
-    item = review_items([game], payload)[0]
-    assert item['success'] is value
-    assert item['success_source'] == 'user'
-    assert item['success_reasons'][0]['kind'] == 'user_review'
-    metric = aggregate_bluffs([game], payload)['wolf']['bluff_success_rate']
-    assert metric['denominator'] == (value is not None)
-    assert metric['numerator'] == (value is True)
-
-
-def test_only_explicitly_included_user_reviewed_mixed_blood_is_counted():
-    game = sample()
-    game['seats'][0]['role'] = '混血儿'
-    payload = review(game)
-    row = payload['games'][0]['assessments'][0]
-    row.update(physical_role='混血儿', verification_status='user_confirmed',
-               manual_included=True, manual_success=True)
-    sign_assessments(game, payload)
-    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 1
-    assert review_items([game], payload)[0]['manual_included'] is True
-    row['verification_status'] = 'assistant_inferred'
-    assert aggregate_bluffs([game], payload)['wolf']['bluff_count'] == 0
-
-
 def test_unknown_badge_after_deferral_is_not_proven_absent_by_later_not_applicable():
     game = sample(exile=4)
     game["rounds"][0]["day"][0] = {"slot": "sheriff_result", "action": "deferred", "targets": []}
     game["voting"]["days"] = [{"day": 1, "sheriff": "deferred", "exile": "recorded"},
                                {"day": 2, "sheriff": "not_applicable", "exile": "recorded"}]
     assert evaluate_success(game, 1)["value"] is None
-
 
 def test_explicit_badge_loss_and_complete_final_pk_tie_are_known_results():
     game = sample(exile=4)
@@ -484,7 +52,6 @@ def test_explicit_badge_loss_and_complete_final_pk_tie_are_known_results():
     game["voting"]["ballots"][0]["votes"].pop()
     assert evaluate_success(game, 1)["value"] is None
 
-
 def test_later_claim_cannot_reuse_earlier_badge_or_first_day_good_exile():
     game = sample(exile=2, badge=1)
     assert evaluate_success(game, 1, claim_day=2)["value"] is False
@@ -493,17 +60,6 @@ def test_later_claim_cannot_reuse_earlier_badge_or_first_day_good_exile():
     game["rounds"].append({"number": 2, "day": [
         {"slot": "sheriff_result", "action": "elected", "targets": [1]}]})
     assert evaluate_success(game, 1, claim_day=2)["value"] is True
-
-
-def test_human_confirmation_can_resolve_previously_missing_claim_evidence():
-    game = sample()
-    payload = review(game)
-    row = payload["games"][0]["assessments"][0]
-    row["evidence"] = []
-    row["verification_status"] = "user_confirmed"
-    sign_assessments(game, payload)
-    assert aggregate_bluffs([game], payload)["wolf"]["bluff_count"] == 1
-
 
 def test_complete_all_police_registration_proves_no_badge_but_partial_list_does_not():
     game = sample(exile=1)
@@ -517,13 +73,81 @@ def test_complete_all_police_registration_proves_no_badge_but_partial_list_does_
     assert evaluate_success(game, 1)["value"] is None
 
 
-def test_confirmed_bluff_without_day_is_counted_while_success_remains_unknown():
-    game = sample()
-    payload = review(game)
-    row = payload["games"][0]["assessments"][0]
-    row.update(claim_day=None, verification_status="user_confirmed")
-    sign_assessments(game, payload)
-    result = aggregate_bluffs([game], payload)["wolf"]
-    assert result["bluff_count"] == 1
-    assert result["bluff_success_rate"]["denominator"] == 0
-    assert result["bluff_success_rate"]["excluded"] == 1
+def final(game, decision='yes', success=True, *, manual_included=False):
+    game['bluff_review_available'] = True
+    game['bluffs'] = [{
+        'game_id':game['id'], 'seat':1, 'player_id':'wolf', 'name':'狼甲',
+        'physical_role':game['seats'][0]['role'], 'decision':decision, 'success':success,
+        'manual_included':manual_included, 'verification_status':'user_confirmed',
+        'needs_review':decision == 'uncertain' or (decision == 'yes' and success is None),
+    }, {'game_id':game['id'], 'seat':4, 'player_id':'wolf2', 'decision':'no',
+        'manual_included':False, 'verification_status':'user_confirmed', 'success':None,
+        'needs_review':False}]
+    return game
+
+
+def test_final_success_samples_preserve_success_failure_and_unknown_denominators():
+    games=[]
+    for label, result in [('success',True),('failure',False),('pending',None)]:
+        game=sample()
+        game['id']=label
+        games.append(final(game, success=result))
+    stats=aggregate_bluffs(games)['wolf']
+    assert stats['bluff_count'] == 3
+    metric=stats['bluff_success_rate']
+    assert (metric['numerator'],metric['denominator'],metric['excluded']) == (1,2,1)
+    assert metric['samples'] == [{'game_id':'success','positive':1,'negative':0},
+                                 {'game_id':'failure','positive':0,'negative':1}]
+
+
+@pytest.mark.parametrize('value',[True,False,None])
+def test_final_human_success_is_not_recomputed_from_changed_votes(value):
+    game=final(sample(exile=2,badge=1),success=value)
+    game['rounds'][0]['day']=[]
+    metric=aggregate_bluffs([game])['wolf']['bluff_success_rate']
+    assert metric['numerator'] == int(value is True)
+    assert metric['denominator'] == int(value is not None)
+    assert game['bluffs'][0]['success'] is value
+
+
+def test_unknown_bluff_is_excluded_but_confirmed_no_is_in_rate_denominator():
+    unknown=final(sample(),decision='uncertain',success=None)
+    known=final(sample(),decision='no',success=None)
+    known['id']='known'
+    for row in known['bluffs']: row['game_id']='known'
+    result=aggregate_bluffs([unknown,known])['wolf']
+    assert result['bluff_count'] == 0 and result['bluff_count_complete'] is False
+    assert result['bluff_rate']['denominator'] == 1
+    assert result['bluff_rate']['excluded'] == 1
+
+
+def test_missing_review_keeps_good_only_players_counts_incomplete():
+    game=sample()
+    game['bluffs']=[]
+    game['bluff_review_available']=False
+    assert aggregate_bluffs([game])['good']['bluff_count_complete'] is False
+
+
+def test_explicitly_included_mixed_blood_keeps_its_final_bluff_result():
+    game=sample()
+    game['seats'][0].update(role='混血儿',faction='good')
+    assert not physical_wolf(game,game['seats'][0])
+    final(game,manual_included=True)
+    assert aggregate_bluffs([game])['wolf']['bluff_count'] == 1
+    assert aggregate_bluffs([game])['wolf']['bluff_rate']['numerator'] == 1
+
+
+def test_success_rule_uses_first_day_team_exile_or_badge_once():
+    assert evaluate_success(sample(exile=2,badge=3),1)['value'] is True
+    assert evaluate_success(sample(exile=4,badge=1),1)['value'] is True
+    both=final(sample(exile=2,badge=1))
+    assert len(evaluate_success(both,1)['reasons']) == 2
+    assert aggregate_bluffs([both])['wolf']['bluff_success_rate']['numerator'] == 1
+
+
+def test_final_pk_result_overrides_initial_ballot_and_unknown_is_not_failure():
+    game=sample(exile=4,badge=3)
+    game['voting']['ballots']=[{'kind':'exile','day':1,'winner':2},
+                               {'kind':'exile','day':1,'winner':4}]
+    assert evaluate_success(game,1)['value'] is False
+    assert evaluate_success(sample(exile=None,badge=3),1)['value'] is None

@@ -1,16 +1,11 @@
-"""Voting extraction checks focus on lost/ambiguous ballots and round boundaries."""
+"""Voting-core checks focus on lost/ambiguous ballots and round boundaries."""
 import copy
-import os
 from pathlib import Path
 import sys
 import unittest
-from unittest.mock import patch
-import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-import database
-import voting_records as voting
 import voting_core
 
 
@@ -19,22 +14,16 @@ def transcript(*lines):
 
 
 def sample(lines):
-    return voting.extract(transcript(*lines), {"slug": "voting-test", "rounds": [{"number": 1}]}, "data/test.json")
+    return voting_core.extract(transcript(*lines), {"slug": "voting-test", "rounds": [{"number": 1}]}, "data/test.json")
 
 
 class VotingExtractionTests(unittest.TestCase):
-    def test_legacy_module_reexports_generic_core_api(self):
-        for name in ("extract", "validate", "import_voting", "choices", "evidence",
-                     "find_registration_candidates", "GROUP", "seats", "normalized"):
-            self.assertIs(getattr(voting, name), getattr(voting_core, name))
-        self.assertTrue(callable(voting.run))
-
     def test_target_is_not_reused_as_abstaining_voter(self):
-        self.assertEqual(voting.choices("五号投给十一号七号弃票"), [
+        self.assertEqual(voting_core.choices("五号投给十一号七号弃票"), [
             {"voter": 5, "target": 11, "state": "cast"}, {"voter": 7, "target": None, "state": "abstained"}])
-        self.assertEqual(voting.choices("十九号投给八号"), [])
-        self.assertEqual(voting.choices("我觉得一号投给八号就能赢"), [])
-        self.assertEqual(voting.choices("八号投给十号十九号，投给八号十号投给九号十二号投给八号"), [
+        self.assertEqual(voting_core.choices("十九号投给八号"), [])
+        self.assertEqual(voting_core.choices("我觉得一号投给八号就能赢"), [])
+        self.assertEqual(voting_core.choices("八号投给十号十九号，投给八号十号投给九号十二号投给八号"), [
             {"voter":8,"target":10,"state":"cast"}, {"voter":10,"target":9,"state":"cast"},
             {"voter":12,"target":8,"state":"cast"}])
 
@@ -64,7 +53,7 @@ class VotingExtractionTests(unittest.TestCase):
         self.assertEqual(ballot["status"], "partial")
         self.assertEqual(len(ballot["votes"]), 1)
         self.assertTrue(audit["issues"])
-        voting.validate(facts)
+        voting_core.validate(facts)
 
     def test_nightfall_without_dawn_still_separates_next_day(self):
         facts, audit = sample([
@@ -81,8 +70,8 @@ class VotingExtractionTests(unittest.TestCase):
         facts, _ = sample([(1, "321请出票"), (2, "一号投给八号投票结束")])
         value = copy.deepcopy(facts)
         value["ballots"][0]["votes"][0]["target"] = None
-        with self.assertRaises(database.ReviewError):
-            voting.validate(value)
+        with self.assertRaises(voting_core.ReviewError):
+            voting_core.validate(value)
 
     def test_corrected_candidate_announcement_and_pk_pool_override_first_list(self):
         facts, _ = sample([
@@ -115,58 +104,6 @@ class VotingExtractionTests(unittest.TestCase):
         ])
         self.assertEqual(facts["ballots"][0]["stage"],"pk")
         self.assertEqual(len(facts["ballots"][0]["votes"]),2)
-
-    def test_real_self_destruct_sequences_keep_two_days(self):
-        import batch_s22 as batch
-        for bvid, actors in (("BV1CSuN62Eey", [9,8]), ("BV1nBj664EFS", [8,4])):
-            entry = batch.load_state()["items"][bvid]
-            dossier = batch.read_json(batch.ROOT / entry["output_dir"] / "dossier.json")
-            segments = batch.load_segments(batch.ROOT / entry["source_path"])
-            facts, _ = voting.extract(segments, dossier, entry["source_path"])
-            self.assertEqual([(x["actor"],x["day"]) for x in facts["interruptions"]], list(zip(actors,[1,2])))
-
-    def test_player_recollection_does_not_add_an_extra_day(self):
-        import batch_s22 as batch
-        entry=batch.load_state()['items']['BV1BPNB6QE1s']
-        dossier=batch.read_json(batch.ROOT/entry['output_dir']/'dossier.json')
-        facts,_=voting.extract(batch.load_segments(batch.ROOT/entry['source_path']),dossier,entry['source_path'])
-        self.assertEqual([b['day'] for b in facts['ballots']],[1,1,2,3])
-
-
-@unittest.skipUnless((ROOT / ".secrets/database.json").is_file() or os.environ.get("DATABASE_URL"), "需要本地 PostgreSQL 配置")
-class VotingDatabaseTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.schema = "jcms_voting_test_" + uuid.uuid4().hex
-        database.migrate(cls.schema)
-
-    @classmethod
-    def tearDownClass(cls):
-        from psycopg import sql
-        assert cls.schema.startswith("jcms_voting_test_")
-        with database.connect() as conn:
-            conn.execute(sql.SQL("DROP SCHEMA {} CASCADE").format(sql.Identifier(cls.schema)))
-
-    def test_reimport_is_idempotent_and_invalid_record_preserves_previous_votes(self):
-        facts, _ = sample([
-            (1, "321请出票"), (2, "一号投给八号十一号弃票投票结束"),
-        ])
-        facts["game_slug"] = "vote-" + uuid.uuid4().hex
-        with patch.dict(os.environ, {"DATABASE_SCHEMA": self.schema}):
-            with database.connect() as conn:
-                conn.execute("INSERT INTO games(slug) VALUES(%s)", (facts["game_slug"],))
-            voting.import_voting(facts)
-            voting.import_voting(facts)
-            broken = copy.deepcopy(facts)
-            broken["ballots"][0]["votes"][0]["voter"] = 19
-            with self.assertRaises(database.ReviewError):
-                voting.import_voting(broken)
-            with database.connect() as conn:
-                self.assertEqual(conn.execute("SELECT count(*) n FROM game_ballots").fetchone()["n"], 1)
-                self.assertEqual(conn.execute("SELECT count(*) n FROM game_ballot_choices").fetchone()["n"], 2)
-                conn.execute("DELETE FROM games WHERE slug=%s", (facts["game_slug"],))
-                self.assertEqual(conn.execute("SELECT count(*) n FROM game_ballot_choices").fetchone()["n"], 0)
-
 
 if __name__ == "__main__":
     unittest.main()

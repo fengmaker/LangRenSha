@@ -1,4 +1,4 @@
-"""Prepare shared game rules before validation, database import and publication.
+"""Prepare shared game rules for the current incremental candidate.
 
 Source observations stay in their existing evidence files.  Changes to typed
 records, their prerequisites, remaining review work and conflicts are returned
@@ -56,12 +56,8 @@ def board_template(code, season=None):
         return {}
 
 
-def rule_sources(dossier=None, *, cache=None):
-    """Fingerprint used configuration; no dossier retains the version-1 contract.
-
-    A caller-owned cache lasts for one publication, never across publications.
-    Old reports must still match their original full dependency set.
-    """
+def rule_sources(dossier, *, cache=None):
+    """Fingerprint the current candidate's rules for its temporary review."""
     if cache is None:
         cache = {}
 
@@ -74,17 +70,9 @@ def rule_sources(dossier=None, *, cache=None):
     shared = ("game_derivations.py", "role_constraints.py", "board_outcomes.py", "game_inference.py",
               "sheriff_speech_evidence.py", "board_config.py", "rule_config.py", "season_config.py")
     paths = [ROOT / "config/game_rules.json"]
-    if dossier is None:
-        paths += [ROOT / "config/seasons.json"]
-        paths += sorted((ROOT / "config/board_templates").glob("*.json"))
-        paths.append(ROOT / "scripts/voting_records.py")
-    else:
-        paths.append(ROOT / "scripts/voting_core.py")
+    paths.append(ROOT / "scripts/voting_core.py")
     paths += [ROOT / "scripts" / name for name in shared]
     sources = {p.relative_to(ROOT).as_posix(): file_hash(p) for p in paths}
-    if dossier is None:
-        return sources
-
     season, code = dossier.get("season"), dossier.get("board")
     season_key = ("season", ROOT.resolve(), season)
     if season_key not in cache:
@@ -780,9 +768,9 @@ def restore_source_records(dossier, voting, report):
 def apply_precomputed(dossier, voting, report, *, rule_cache=None):
     """Validate and consume saved derivations without running any game rules."""
     version = report.get("version")
-    if version not in {1, VERSION} or report.get("game_slug") != dossier.get("slug"):
+    if version != VERSION or report.get("game_slug") != dossier.get("slug"):
         raise ValueError("规则推导版本或对局关联不一致，请重新生成")
-    if report.get("rule_sources") != rule_sources(dossier if version == VERSION else None, cache=rule_cache):
+    if report.get("rule_sources") != rule_sources(dossier, cache=rule_cache):
         raise ValueError("通用规则已变化，请重新生成规则推导")
     values = {"dossier": deepcopy(dossier), "voting": deepcopy(voting)}
     actual = {k: fingerprint(v) for k, v in values.items()}

@@ -1,4 +1,4 @@
-export const isStaticSite = process.env.NEXT_PUBLIC_SITE_MODE === "static";
+export const isStaticSite = true;
 
 const configuredBasePath = isStaticSite ? process.env.NEXT_PUBLIC_BASE_PATH ?? "" : "";
 export const basePath = configuredBasePath === "/" ? "" : configuredBasePath.replace(/\/$/, "");

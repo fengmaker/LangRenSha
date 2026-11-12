@@ -55,42 +55,6 @@ class SeasonArchiveTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_cues({'body':[{'from':3,'to':1,'content':'synthetic'}]})
 
-    def test_caption_time_coverage_does_not_double_count_overlaps(self):
-        from audit_season import coverage
-        result=coverage([{'from':0,'to':20,'content':'synthetic'},
-                         {'from':10,'to':30,'content':'synthetic'},
-                         {'from':40,'to':50,'content':'synthetic'}],100)
-        self.assertEqual(result['covered_seconds'],40)
-        self.assertEqual(result['covered_ratio'],0.4)
-
-    def test_short_intro_caption_is_flagged_without_claiming_accuracy(self):
-        from audit_season import coverage
-        result=coverage([{'from':1,'to':30,'content':'synthetic introduction'}],5000)
-        self.assertEqual(result['screening_status'],'needs_review')
-        self.assertFalse(result['accuracy_verified'])
-        self.assertGreater(len(result['warnings']),0)
-
-    def test_existing_chinese_capture_survives_empty_or_short_refresh(self):
-        import reconcile_season_subtitles as reconciliation
-        from season_naming import digest
-        from unittest.mock import patch
-        with tempfile.TemporaryDirectory(dir=ROOT/'data') as folder:
-            base=Path(folder)
-            archive=base/'data/archive'
-            archive.mkdir(parents=True)
-            candidates=[]
-            for name,language,end in [('short','ai-zh',20),('full','ai-zh',5000),('foreign','ai-en',6000)]:
-                path=archive/f'{name}.json'
-                path.write_text(json.dumps({'body':[{'from':0,'to':end,'content':'synthetic'}]}),encoding='utf-8')
-                candidates.append({'relative_path':path.relative_to(base).as_posix(),
-                                   'sha256':digest(path),'metadata':{'language':language}})
-            with patch.object(reconciliation,'ROOT',base):
-                self.assertEqual(reconciliation.choose_best(candidates,6000)['relative_path'],'data/archive/full.json')
-                self.assertIsNone(reconciliation.choose_best([],6000))
-                candidates[0]['sha256']='0'*64
-                with self.assertRaisesRegex(ValueError,'哈希'):
-                    reconciliation.choose_best(candidates,6000)
-
     def test_export_keeps_raw_subtitle_bytes_and_uses_hardlinked_audio(self):
         import season_naming
         from unittest.mock import patch

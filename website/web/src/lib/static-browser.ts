@@ -1,6 +1,6 @@
 "use client";
 
-import type { BluffReview, GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
+import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
 import type { SnapshotManifest } from "@/lib/snapshot-data";
 import { basePath, publicPath } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
@@ -135,4 +135,3 @@ export async function fetchPlayerRange(id: string, start: string, end: string): 
 }
 export const fetchStatsRange = (start: string, end: string) => fetchStaticJson<Stats>(`stats/${start}--${end}.json`);
 export const fetchLeaderboard = (season: string, phase: "all" | "finals_week") => fetchStaticJson<Leaderboard>(`leaderboards/${season}/${phase}.json`);
-export const fetchBluffReview = (season: string) => fetchStaticJson<BluffReview>(`bluff-review/${season}.json`);

@@ -159,61 +159,13 @@ class IncrementalCollectTests(unittest.TestCase):
             (folder / "audio.m4a").write_bytes(payload + b"partial")
             self.assertFalse(ready_media(entry, self.root))
 
-    def test_formal_source_accepts_matching_complete_transcript_without_raw_media(self):
+    def test_check_only_treats_final_game_as_complete_without_old_raw_media(self):
         entry = self.entry()
-        transcript_path = (self.root / "data" / "transcripts" / "S23" /
-                           f"{entry['bvid']}_p01_cid{entry['cid']}_funasr" / "transcript.json")
-        transcript_path.parent.mkdir(parents=True)
-        transcript = {
-            "full_audio_processed": True,
-            "audio_duration_ms": 1000,
-            "source": {"bvid": entry["bvid"], "cid": entry["cid"], "page": 1},
-            "segments": [{"start_ms": 100, "end_ms": 900, "text": "完整转写内容"}],
-        }
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-
-        self.assertTrue(incremental.formal_media_present(entry, self.root))
-
-        transcript["source"]["cid"] += 1
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-        self.assertFalse(incremental.formal_media_present(entry, self.root))
-
-        transcript["source"]["cid"] = entry["cid"]
-        transcript["source"]["bvid"] = "BV0AbCdeFgHi"
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-        self.assertFalse(incremental.formal_media_present(entry, self.root))
-
-        transcript["source"]["bvid"] = entry["bvid"]
-        transcript["source"]["page"] = 2
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-        self.assertFalse(incremental.formal_media_present(entry, self.root))
-
-        transcript["source"]["page"] = 1
-        transcript["full_audio_processed"] = False
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-        self.assertFalse(incremental.formal_media_present(entry, self.root))
-
-        transcript["full_audio_processed"] = True
-        transcript["segments"] = []
-        transcript_path.write_text(json.dumps(transcript), encoding="utf-8")
-        self.assertFalse(incremental.formal_media_present(entry, self.root))
-
-    def test_check_only_reports_complete_transcript_as_formal_source_file(self):
-        entry = self.entry()
-        transcript_path = (self.root / "data" / "transcripts" / "S23" /
-                           f"{entry['bvid']}_p01_funasr_full" / "transcript.json")
-        transcript_path.parent.mkdir(parents=True)
-        transcript_path.write_text(json.dumps({
-            "full_audio_processed": True,
-            "audio_duration_ms": 1000,
-            "source": {"bvid": entry["bvid"], "cid": entry["cid"], "page": 1},
-            "segments": [{"start_ms": 100, "end_ms": 900, "text": "完整转写内容"}],
-        }), encoding="utf-8")
-        dossier = self.root / "data" / "games" / "S23" / "formal" / "dossier.json"
-        dossier.parent.mkdir(parents=True)
-        dossier.write_text(json.dumps({
+        game_path = self.root / "data" / "games" / "S23" / "formal" / "game.json"
+        game_path.parent.mkdir(parents=True)
+        game_path.write_text(json.dumps({
             "season": "S23", "slug": f"bili-{entry['bvid']}-p01-g01",
-            "files": [{"external_key": f"{entry['bvid']}:{entry['cid']}"}],
+            "source": {"media": [{"bvid": entry["bvid"], "cid": entry["cid"], "page": 1}]},
         }), encoding="utf-8")
         plan_path = self.root / "data" / "indexes" / "S23_采集计划.json"
         plan_path.parent.mkdir(parents=True)
@@ -245,6 +197,25 @@ class IncrementalCollectTests(unittest.TestCase):
         self.assertIn("已正式归档但来源文件缺失 0 条", output.getvalue())
         self.assertNotIn("正式来源文件缺失：", output.getvalue())
         save.assert_not_called()
+
+    def test_weibo_checkpoint_preserves_coverage_after_raw_archives_are_removed(self):
+        checkpoint = self.root / "data" / "sources" / "weibo_checkpoint.json"
+        checkpoint.parent.mkdir(parents=True)
+        checkpoint.write_text(json.dumps({
+            "uid": incremental.WEIBO_UID,
+            "complete_intervals": [["2026-09-01", "2026-10-29"]],
+            "posts": {"known-post": "2026-10-28"},
+        }), encoding="utf-8")
+
+        snapshot = incremental.weibo_local_snapshot(self.root, incremental.WEIBO_UID)
+        plan = incremental.plan_weibo_windows(
+            self.root, incremental.WEIBO_UID, date(2026, 9, 1), date(2026, 10, 29),
+            scan_date=date(2026, 10, 30))
+
+        self.assertEqual(snapshot["archives"], [])
+        self.assertEqual(snapshot["known_ids"], {"known-post"})
+        self.assertEqual(snapshot["complete_intervals"], [(date(2026, 9, 1), date(2026, 10, 29))])
+        self.assertEqual(plan["windows"], [])
 
     def test_weibo_cli_completion_predicate_ignores_partial_summary_label(self):
         manifest = {"status": "partial", "window_scan_status": "completed",
@@ -502,12 +473,12 @@ class IncrementalCollectTests(unittest.TestCase):
         save.assert_not_called()
         bili_collector.assert_not_called()
 
-    def test_only_exact_formal_dossier_source_is_excluded_from_new_queue(self):
-        dossier = self.root / "data" / "games" / "S23" / "2026-09-01_g01_BV1AbCdeFgHi-p02-g01" / "dossier.json"
-        dossier.parent.mkdir(parents=True)
-        dossier.write_text(json.dumps({
+    def test_only_exact_formal_game_source_is_excluded_from_new_queue(self):
+        game = self.root / "data" / "games" / "S23" / "2026-09-01_g01_BV1AbCdeFgHi-p02-g01" / "game.json"
+        game.parent.mkdir(parents=True)
+        game.write_text(json.dumps({
             "season": "S23", "slug": "bili-BV1AbCdeFgHi-p02-g01",
-            "files": [{"role": "manifest", "external_key": "BV1AbCdeFgHi:10"}],
+            "source": {"media": [{"bvid": "BV1AbCdeFgHi", "cid": 10, "page": 2}]},
         }), encoding="utf-8")
         exact, by_page = incremental.formal_dossier_sources(self.root, "S23")
         self.assertIn(("BV1AbCdeFgHi", 10, 2), exact)

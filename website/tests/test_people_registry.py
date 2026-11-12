@@ -1,4 +1,3 @@
-import hashlib
 import json
 from pathlib import Path
 import uuid
@@ -13,9 +12,6 @@ from website.api.people import (
 )
 
 
-ACTIVE_PEOPLE_MAP_SHA256 = "efb644bcaab1e4b9fc613f3b6a2a6869cb7dfae87b968d06303f82e7bc8dfaee"
-
-
 def _write_registry(tmp_path: Path, people: dict[str, str]) -> Path:
     path = tmp_path / "people.json"
     path.write_text(json.dumps({
@@ -26,17 +22,14 @@ def _write_registry(tmp_path: Path, people: dict[str, str]) -> Path:
     return path
 
 
-def test_bundled_mapping_matches_active_release_baseline():
+def test_bundled_mapping_matches_final_game_identities():
     registry = load_people()
-    payload = json.loads(PEOPLE_FILE.read_text(encoding="utf-8"))
-    canonical_people = json.dumps(
-        payload["people"], ensure_ascii=False, sort_keys=True, separators=(",", ":")
-    ).encode("utf-8")
-
     assert PEOPLE_FILE.is_file()
-    assert registry.source_release_id == "S21_S22_S23-dff4f1efc050a5d0-af68d320-p13-s2"
-    assert registry.people_count == 90
-    assert hashlib.sha256(canonical_people).hexdigest() == ACTIVE_PEOPLE_MAP_SHA256
+    root = PEOPLE_FILE.parents[2]
+    for path in (root / "data/games").glob("*/*/game.json"):
+        game = json.loads(path.read_text(encoding="utf-8"))
+        for seat in game["seats"]:
+            assert registry.id_for(seat["name"]) == seat["person_id"]
     assert registry.id_for("牛肉干") == "e404d4f6-2613-4ca7-94e0-2b719287988f"
 
 

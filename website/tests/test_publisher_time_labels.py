@@ -1,5 +1,5 @@
 from scripts.game_time import display_time_text
-from website.api.publisher import _display_inference_notes, _public_endgame, _rounds
+from website.game_data import _display_inference_notes, _public_endgame, _rounds
 
 
 def test_round_description_uses_day_relative_chinese_label():

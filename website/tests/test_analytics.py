@@ -317,12 +317,14 @@ def test_treasure_role_label_uses_its_god_card_even_while_switching_to_civilian(
         {"number": 2, "night": [{"slot": "treasure_choice", "action": "choose",
                                  "actor": 1, "result": "平民"}], "day": []},
     ]
+    snapshot.update(ballot_count=0, round_count=2, board={"code": "treasure_master", "name": "盗宝大师"})
     before = deepcopy(snapshot)
     assert role_label(snapshot, snapshot["seats"][0]) == expected
     ledger = compute_player_stats("treasure", [snapshot])["ledger"][0]
     assert ledger["role_label"] == expected
     assert ledger["role"] == "盗宝大师" and ledger["faction"] == "werewolf"
-    from website.api.app import _resolved_snapshot
+    from website.public_data import _resolved_game
+    _resolved_snapshot = lambda game: _resolved_game(game, "test")
     assert _resolved_snapshot(snapshot)["seats"][0]["role_label"] == expected
     assert snapshot == before
 

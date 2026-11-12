@@ -1,13 +1,12 @@
-# 正式对局档案
+# 最终对局
 
-本目录按赛季保存逐局结构化档案，是发布与数据库入库所使用的正式源文件。
+每局一份 `game.json`，`schema_version: 1`。字段保持网站业务格式：
 
-S21当前为按已核身份和流程生成的122条媒体档案，先供网站展示；正式计分总局数尚未确认，未决阵营、胜方和流程缺口继续保留未知，悍跳待用户后续复核。
+- `id/season/date/phase/game_number/board/winner`：范围与赛果；S21 仍保留媒体档案和计分范围未确认的说明。
+- `seats/players`：稳定人物 ID、物理底牌、个人阵营、榜样/学习与傀儡状态。
+- `rounds/voting/endgame/terminal_observation/terminal_events`：真实日夜、每轮逐人票型和独立终局。
+- `rules_state`：最终存活、夜死完整性、槽位资格和未知状态；统计必须消费这些结果。
+- `bluffs`：最终悍跳归属、是否成功、人工纳入及确认/未知状态。`bluff_review_available` 决定该范围的悍跳信息完整性，不能因删除历史材料改变分母。
+- `source.media`：BV、CID、分 P 和官方视频链接；`data_notes` 保存必要业务说明。
 
-- 每局 `dossier.json` 保存赛季、对局、座位、身份、事件和来源等结构化字段。
-- `voting.json`、`voting_review.json` 等 JSON 侧件保存票型及独立复核结果。
-- CSV 便于逐行检查；HTML、Markdown 是阅读或复核呈现，不能替代对应 JSON 源记录。
-- 文件中的用户判断、来源引用和未知状态都属于证据链；不要从页面展示结果反写或覆盖原件。
-- 日常入口为 [scripts/workflow.py](../../scripts/workflow.py)：`status --season S22`，再用 `plan` / `run --stage review|import|publish`。
-- 赛季注册与固定范围、规则快照路径见 [config/seasons.json](../../config/seasons.json) 及 `config/S22_*`、`config/S23_*`；不要搬移这些快照。
-- 原始媒体在 [raw](../raw/README.md)，逐局提取在 [extractions](../extractions/README.md)，验收结果在 [reports](../reports/README.md)。
+正式结果可以独立导出网站。当前增量的 `dossier/voting/endgame` 候选和 `rule_derivations` 仅在临时工作目录处理，经人工确认后固化成此格式；历史推导、输入指纹和回执不是发布依赖。

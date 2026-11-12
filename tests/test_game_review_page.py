@@ -25,22 +25,36 @@ def test_treasure_review_shows_known_poisoner_name_and_preserves_physical_role()
 
 
 def test_neighbor_review_keeps_base_role_with_wolf_faction_and_chronological_surrender():
-    path = ROOT / 'data/games/S22/2026-08-07_g02_BV1pSuN62Ekr'
-    dossier = json.loads((path / 'dossier.json').read_text(encoding='utf-8'))
-    voting = json.loads((path / 'voting.json').read_text(encoding='utf-8'))
+    dossier = {
+        'board': 'neighbor_puppet', 'slug': 'fixture-neighbor', 'date': '2026-08-07',
+        'game_number': 2, 'winner': 'good', 'commentators': [], 'referee': None,
+        'seats': [{'seat': n, 'name': '大卫' if n == 12 else f'玩家{n}',
+                   'role': '狼人' if n == 1 else '守卫' if n == 12 else '平民',
+                   'faction': 'werewolf' if n == 1 else 'good'} for n in range(1, 13)],
+        'rounds': [
+            {'number': 1, 'night': [
+                {'slot': 'puppet_select', 'action': 'select', 'actor': 1, 'targets': [4]},
+                {'slot': 'guard', 'action': 'pass', 'actor': 12}],
+             'day': [{'slot': 'night_deaths', 'action': 'peaceful'},
+                     {'slot': 'exile_result', 'action': 'none'}]},
+            {'number': 2, 'night': [], 'day': [
+                {'slot': 'werewolf_surrender', 'action': 'surrender', 'actor': None,
+                 'targets': [], 'result': '狼人交牌，好人阵营获胜。'}]},
+        ],
+        '_publication_context': {'terminal_observation': {'round': 2, 'phase': 'day'}},
+    }
+    voting = {'registrations': [], 'ballots': []}
     before = deepcopy(dossier)
     seats = seat_html(dossier)
     row = re.search(r'<tr data-seat="4">(.*?)</tr>', seats).group(1)
     assert '平民<small>傀儡 · 不带刀</small>' in row
     assert '<span class="faction wolf">狼人</span>' in row
-    dossier['_publication_context'] = {'supplemental_events': json.loads((path / 'supplemental.json').read_text(encoding='utf-8'))['events']}
     flow = timeline_html(dossier, voting)
     assert '12号大卫（守卫）本夜空守' in flow
     assert 'data-slot="puppet_skill_effect"' not in flow
     assert 'no_effect' not in flow
     assert flow.rfind('data-slot="night_deaths"') < flow.index('data-slot="werewolf_surrender"')
     assert '狼人选择交牌' in flow
-    del dossier['_publication_context']
     assert dossier == before
 
 
@@ -61,14 +75,40 @@ def test_wolf_girl_review_marks_confessed_civilian_as_wolf_partner_without_repla
 
 
 def sample(root):
-    folder = ROOT / 'data/extractions/S23/incremental/BV1RQx364EaF_p01_cid43105127019'
-    candidate = json.loads((folder / 'candidate.json').read_text(encoding='utf-8'))
     (root / 'assets').mkdir(exist_ok=True)
     (root / 'assets/identity.png').write_bytes(b'fixture-image')
     (root / 'assets/source.json').write_text(json.dumps({'body': [
         {'from': 0, 'to': 1, 'content': '不内嵌的局中全文'},
         {'from': 2, 'to': 3, 'content': '选中的连续复盘 <script>文字</script>'},
         {'from': 4, 'to': 5, 'content': '不内嵌的广告'}]}), encoding='utf-8')
+    seats = [{'seat': n, 'name': '宝玉妹妹' if n == 11 else '小苍' if n == 9 else f'玩家{n}',
+              'role': '狼人' if n in {1, 3, 11} else '女巫' if n == 9 else '平民',
+              'faction': 'werewolf' if n in {1, 3, 11} else 'good'}
+             for n in range(1, 13)]
+    dossier = {'slug': 'bili-BV1RQx364EaF-p01-g01', 'date': '2026-10-27',
+               'game_number': 1, 'board': 's23_mixed_blood', 'winner': 'good',
+               'commentators': ['甲'], 'referee': '乙', 'roster': [s['name'] for s in seats],
+               'seats': seats, 'rounds': [
+                   {'number': 1, 'night': [], 'day': [
+                       {'slot': 'sheriff_candidates', 'action': 'register', 'targets': [1, 2]},
+                       {'slot': 'sheriff_result', 'action': 'elected', 'targets': [1]},
+                       {'slot': 'night_deaths', 'action': 'peaceful'},
+                       {'slot': 'exile_result', 'action': 'exile', 'targets': [4]}]},
+                   {'number': 2, 'night': [], 'day': [
+                       {'slot': 'night_deaths', 'action': 'peaceful'},
+                       {'slot': 'exile_result', 'action': 'none'}]},
+                   {'number': 3, 'night': [
+                       {'slot': 'werewolf_surrender', 'action': 'surrender', 'actor': 11,
+                        'targets': [], 'result': '狼人交牌，好人阵营获胜。'}], 'day': []}],
+               'terminal_observation': {'round': 3, 'phase': 'night'}}
+    voting = {'registrations': [{'day': 1, 'on_police': [1, 2], 'off_police': list(range(3, 13))}],
+              'ballots': [
+                  {'id': 'sheriff-1', 'day': 1, 'kind': 'sheriff', 'number': 1,
+                   'stage': 'initial', 'votes': [{'voter': 3, 'target': 1, 'state': 'cast'}]},
+                  {'id': 'exile-1', 'day': 1, 'kind': 'exile', 'number': 1,
+                   'stage': 'initial', 'votes': [{'voter': 1, 'target': 4, 'state': 'cast'}]},
+              ]}
+    candidate = {'dossier': dossier, 'voting': voting, 'endgame': {'phases': []}}
     return {'entry': {'bvid': 'BV1RQx364EaF', 'cid': 43105127019, 'page': 1},
             'candidate': candidate, 'candidate_sha256': 'candidate-v1', 'source_sha256': 'source-v1',
             'review_display': {'identity_frames': [{'source_path': 'assets/identity.png', 'caption': '身份截图'}],

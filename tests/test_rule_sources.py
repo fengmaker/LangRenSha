@@ -89,13 +89,11 @@ def test_rule_hashes_are_reused_only_in_the_supplied_scope(rule_root, monkeypatc
     assert rules.rule_sources(games[0]) != before
 
 
-@pytest.mark.parametrize("version", [1, 2])
-def test_saved_versions_keep_rule_and_fact_validation(version):
+def test_saved_version_keeps_rule_and_fact_validation():
     game, votes = fixture(rounds=1), voting([])
     result = rules.derive_game(game, votes)
     report = deepcopy(result["derivations"])
-    report["version"] = version
-    report["rule_sources"] = rules.rule_sources(None if version == 1 else game)
+    report["rule_sources"] = rules.rule_sources(game)
     expected = {key: result[key] for key in ("dossier", "voting")}
     assert rules.apply_precomputed(game, votes, report) == expected
     assert rules.apply_precomputed(result["dossier"], result["voting"], report) == expected
@@ -114,25 +112,3 @@ def test_unknown_report_version_is_rejected():
     report["version"] = 999
     with pytest.raises(ValueError, match="规则推导版本"):
         rules.apply_precomputed(game, votes, report)
-
-
-def test_prepare_migrates_legacy_report_without_changing_source_facts(tmp_path, monkeypatch):
-    import prepare_game_rules as command
-
-    game, votes = fixture(rounds=1), voting([])
-    report = rules.derive_game(game, votes)["derivations"]
-    report.update(version=1, rule_sources=rules.rule_sources())
-    # Even stale legacy rules need an explicit refresh, never a validation bypass.
-    report["rule_sources"]["scripts/role_constraints.py"] = "old code"
-    folder = tmp_path / "data/games/S22/fixture"
-    folder.mkdir(parents=True)
-    for name, value in [("dossier", game), ("voting", votes), ("rule_derivations", report)]:
-        (folder / f"{name}.json").write_text(json.dumps(value), encoding="utf-8")
-    originals = [(folder / f"{name}.json").read_bytes() for name in ("dossier", "voting")]
-    monkeypatch.setattr(command, "ROOT", tmp_path)
-    command.prepare(["S22"], apply=True)
-    updated = json.loads((folder / "rule_derivations.json").read_text(encoding="utf-8"))
-    assert updated["version"] == 2
-    assert updated["rule_sources"] == rules.rule_sources(game)
-    assert rules.apply_precomputed(game, votes, updated)
-    assert [(folder / f"{name}.json").read_bytes() for name in ("dossier", "voting")] == originals

@@ -48,12 +48,12 @@ export function LeaderboardCalculationRules({ scoring }: { scoring: Leaderboard[
     { field: "拿狼率", calculation: rate("狼人阵营出场次数", "个人阵营已知的出场次数"), note: "个人阵营待定的场次排除。" },
     { field: "自爆率", calculation: rate("主动自爆的狼人场次", "狼人阵营出场次数"), note: "每位选手每局最多计一次；放逐或技能淘汰不计自爆。" },
     { field: "狼人上警率", calculation: rate("狼人首次报名上警次数", "上警名单已知的狼人场次"), note: "每局按首次报名计一次。" },
-    { field: "悍跳次数", calculation: "逐局复核识别的悍跳次数", note: "同一选手每局最多计一次。" },
-    { field: "悍跳率", calculation: rate("悍跳次数", "可判定的狼人场次"), note: "按逐局复核范围统计；悍跳归属或阵营待定的场次排除。" },
+    { field: "悍跳次数", calculation: "已确认的逐局悍跳次数", note: "同一选手每局最多计一次。" },
+    { field: "悍跳率", calculation: rate("悍跳次数", "可判定的狼人场次"), note: "悍跳归属或狼人阵营未知的场次排除。" },
     {
       field: "悍跳成功率",
-      calculation: rate("复核成功的悍跳次数", "结果已确定的悍跳次数"),
-      note: "以抗推预言家的复核结论为准；仅获得警徽不计成功。待定结果排除。",
+      calculation: rate("判定成功的悍跳次数", "结果已确定的悍跳次数"),
+      note: "以抗推预言家为准；仅获得警徽不计成功，结果待定时排除。",
     },
   ];
 

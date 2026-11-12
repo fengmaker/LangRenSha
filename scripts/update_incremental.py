@@ -1,4 +1,4 @@
-"""Check new S23 matches and extend local Weibo date windows after confirmation."""
+"""Check new season matches and extend local Weibo date windows after confirmation."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ from collect_bilibili_audio import CollectionError
 from collect_weibo import CollectionError as WeiboCollectionError
 from collect_weibo import WeiboCollector, configure_auth, normalize_post, post_date, timeline_statuses
 from collect_weibo_archive import collect_archive
+from season_config import season_codes
 from incremental_common import ROOT, entry_key, load_state, ready_media, save_state, write_json
 
 
@@ -127,42 +128,15 @@ def resolve_auth(explicit_auth: str | None, cookie_path: Path | None) -> tuple[s
 
 
 def formal_dossier_sources(root: Path, season: str) -> tuple[set[tuple[str, int, int]], dict[tuple[str, int], set[int]]]:
-    """Return source identities represented by formal dossier.json files, without a DB read."""
-    exact: set[tuple[str, int, int]] = set()
-    by_bvid_page: dict[tuple[str, int], set[int]] = {}
-    pattern = re.compile(r"(BV[0-9A-Za-z]{10}):(\d+)(?::p(\d+))?")
-    dossiers = Path(root) / "data" / "games" / season
-    if not dossiers.is_dir():
-        return exact, by_bvid_page
-    for path in dossiers.glob("*/dossier.json"):
-        try:
-            document = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            continue
-        if document.get("season") != season:
-            continue
-        slug = str(document.get("slug") or path.parent.name)
-        page_match = re.search(r"-p(\d+)(?:-|$)", slug, re.IGNORECASE)
-        default_page = int(page_match.group(1)) if page_match else 1
-        sources = document.get("files")
-        if isinstance(sources, dict):
-            source_rows = sources.values()
-        elif isinstance(sources, list):
-            source_rows = sources
-        else:
-            source_rows = []
-        for source in source_rows:
-            if not isinstance(source, dict):
-                continue
-            identity = source.get("external_key")
-            match = pattern.fullmatch(str(identity or ""))
-            if not match:
-                continue
-            bvid, cid_text, page_text = match.groups()
-            cid = int(cid_text)
-            page_number = int(page_text) if page_text else default_page
-            exact.add((bvid, cid, page_number))
-            by_bvid_page.setdefault((bvid, page_number), set()).add(cid)
+    """Read completed source identities without reopening their old materials."""
+    exact = set()
+    by_bvid_page = {}
+    for path in (Path(root) / "data/games" / season).glob("*/game.json"):
+        game = json.loads(path.read_text(encoding="utf-8"))
+        for source in game["source"]["media"]:
+            bvid, cid, page = source["bvid"], int(source["cid"]), int(source["page"])
+            exact.add((bvid, cid, page))
+            by_bvid_page.setdefault((bvid, page), set()).add(cid)
     return exact, by_bvid_page
 
 
@@ -355,6 +329,19 @@ def weibo_local_snapshot(root: Path, uid: str, *, post_since: date | None = None
     collection_starts: list[date] = []
     complete_intervals: list[tuple[date, date]] = []
     incomplete: list[dict] = []
+    checkpoint = Path(root) / "data/sources/weibo_checkpoint.json"
+    if checkpoint.is_file():
+        saved = json.loads(checkpoint.read_text(encoding="utf-8"))
+        if saved["uid"] == uid:
+            complete_intervals = [(date.fromisoformat(a), date.fromisoformat(b))
+                                  for a, b in saved["complete_intervals"]]
+            collection_starts = [a for a, _ in complete_intervals]
+            latest_requested_until = max((b for _, b in complete_intervals), default=None)
+            known_ids.update(saved["posts"])
+            dates = [date.fromisoformat(value) for value in saved["posts"].values()]
+            local_latest = max((value for value in dates
+                                if (post_since is None or value >= post_since)
+                                and (post_until is None or value <= post_until)), default=None)
     for path in _archive_paths(root, uid):
         manifest = json.loads(path.read_text(encoding="utf-8"))
         interval = _archive_interval(manifest)
@@ -943,7 +930,7 @@ def run(args: argparse.Namespace, root: Path = ROOT) -> int:
         if conflicting_cid is not None:
             scope, reason = "scope_gap", "existing_raw_cid_conflict"
         if formal:
-            present = formal_media_present(entry, root)
+            present = True
             local_present_by_key[key] = present
             formal_present_count += int(present)
             if not present:
@@ -973,7 +960,7 @@ def run(args: argparse.Namespace, root: Path = ROOT) -> int:
         key = entry_key(entry)
         if key not in local_present_by_key:
             if _source_tuple(entry) in formal_keys:
-                local_present_by_key[key] = formal_media_present(entry, root)
+                local_present_by_key[key] = True
                 formal_present_count += int(local_present_by_key[key])
             else:
                 media_ready_by_key[key] = ready_media(entry, root)
@@ -1084,7 +1071,7 @@ def run(args: argparse.Namespace, root: Path = ROOT) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--season", choices=("S23",), default="S23")
+    parser.add_argument("--season", choices=season_codes(ROOT), default="S23")
     parser.add_argument("--auth", choices=("none", "cookies"),
                         help="同时指定 Bilibili 与 Weibo 认证模式；默认各自按 Cookie 文件是否存在选择")
     parser.add_argument("--cookies-file", type=Path, default=ROOT / DEFAULT_BILI_COOKIES)

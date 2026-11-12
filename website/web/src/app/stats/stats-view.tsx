@@ -51,7 +51,7 @@ export function StatsView({ stats, releases, start, end, latestDate, onRangeChan
           <li>本页汇总所选赛季区间的正式对局。身份记录按每位选手每局的原始身份累计，身份未知单独计数。</li>
           <li>个人胜率、出场率、上警率与投票指标均包含整季及决赛周。整季积分包含全部正式对局，决赛周冠军榜仅累计决赛周积分。</li>
           <li>好人、狼人指标按个人胜利阵营分别统计；投票指标按轮次计数，PK、技能复投分别计入。</li>
-          <li>悍跳次数与成功结果依据逐局复核，待定结论排除在相应比例的分母之外。</li>
+          <li>悍跳次数与成功率按已确认的逐局结论计算；结果待定时不计入相应比例。</li>
         </ul>
         <dl className={styles.stateLegend}><div><dt>有效样本</dt><dd>信息可判定，计入对应指标的分子或分母。</dd></div><div><dt>排除样本</dt><dd>记录缺失或结论待定，不按失败计入分母。</dd></div><div><dt>无有效样本</dt><dd>分母为零，比例显示“—”。</dd></div></dl>
         <p className={styles.rulesLink}><ArchiveLink href={`/leaderboard?season=${encodeURIComponent(startSeason)}#leaderboard-calculation-rules`}>查看个人指标计算规则 →</ArchiveLink></p>

@@ -6,15 +6,8 @@
       "status": "completed",
       "collection_id": 8209896,
       "seed_bvid": "BV1tj8p6REqy",
-      "subtitle_reconcile_entry": "scripts/reconcile_season_subtitles.py",
       "scope_file": "config/seasons.json",
       "formal_rules_file": "config/game_rules.json",
-      "review_profile": "s22_text_review",
-      "review_entry": "scripts/s22_text_review.py",
-      "import_profile": "s22_formal_entry",
-      "import_entry": "scripts/formal_entry.py",
-      "bluff_profile": "s22_bluff_inference",
-      "bluff_entry": "scripts/build_bluff_inference.py",
       "scope": {
         "updated_at": "2026-10-24T18:54:14+08:00",
         "source": "用户确认表演赛、2026-07-03娱乐局及明确列出的六种娱乐版型不计分、不进入正式统计。按确认的版型分类，出现次数不作为判据。",
@@ -52,8 +45,7 @@
         "retained_phases": [
           "regular",
           "finals_week"
-        ],
-        "removal_report": "data/reports/S22/S22_非正赛移除记录.json"
+        ]
       },
       "formal_import": {
         "scope": {
@@ -62,7 +54,6 @@
           "scored_total": 148,
           "count_source": {
             "type": "catalogue_count_after_user_scope_filter",
-            "catalogue": "data/seasons/S22/S22_音频与字幕总目录.csv",
             "scope_policy": "config/seasons.json",
             "counted_on": "2026-10-24"
           },
@@ -153,7 +144,6 @@
           ],
           "source": {
             "type": "catalogue_count_after_user_scope_filter",
-            "catalogue": "data/seasons/S22/S22_音频与字幕总目录.csv",
             "scope_policy": "config/seasons.json",
             "counted_on": "2026-10-24"
           }
@@ -167,7 +157,8 @@
           "neighbor_puppet": 6,
           "all_in": 1
         }
-      }
+      },
+      "archive_game_count": 148
     },
     "S21": {
       "name": "傀趣奇谭",
@@ -176,8 +167,6 @@
       "seed_bvid": "BV15EfUBrENW",
       "scope_file": "config/seasons.json",
       "formal_rules_file": "config/game_rules.json",
-      "import_profile": "s21_formal_import",
-      "import_entry": "scripts/import_s21_formal.py",
       "collection_note": "官方音频与可取得中文字幕已采集；8条缺字幕音轨已全文补转写与术语轻校对。正式导入复用已核身份、日夜及票型，未定字段继续保留未知。2026-10-29已先发布122条媒体档案到本机网站，正式计分总局数待核，未复核悍跳留空。",
       "scope": {
         "schema_version": 1,
@@ -390,13 +379,12 @@
         "publication_policy": {
           "excluded_media": "local_raw_only_no_database_no_website_no_followup_game_identity_or_rules_review",
           "retained_media": "pending_same_media_boundary_review_before_any_formal_game_count_or_import"
-        },
-        "phase_evidence_index": "data/reports/S21/S21_范围与规则证据.json#official_same_day_announcements"
+        }
       },
       "formal_import": {
-        "configuration_status": "partial_evidence_only",
-        "evidence_report": "data/reports/S21/S21_当季规则逐项证据.json"
-      }
+        "configuration_status": "partial_evidence_only"
+      },
+      "archive_game_count": 122
     },
     "S23": {
       "name": "昆仑归墟",
@@ -405,18 +393,11 @@
       "seed_bvid": "BV1z6tG6rEfw",
       "scope_file": "config/seasons.json",
       "formal_rules_file": "config/game_rules.json",
-      "review_profile": "s23_game_review",
       "review_rules_file": "config/game_rules.json",
-      "review_entry": "scripts/build_s23_review.py",
-      "import_profile": "s23_formal_import",
-      "import_entry": "scripts/import_s23_formal.py",
-      "bluff_profile": "s23_bluff_publication",
-      "bluff_entry": "scripts/build_s23_bluff_publication.py",
       "scope": {
         "scope_code": "S23_regular_75",
         "expected_games": 75,
         "showmatches_included": false,
-        "snapshot_report": "data/reports/S23/S23_逐局复核进度.json",
         "authoritative_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
         "candidate_paths_field": "candidate_dossiers",
         "candidate_suffix": "dossier.candidate.json",
@@ -433,7 +414,7 @@
         "scope_config": "config/seasons.json",
         "scope_code": "S23_regular_75",
         "scope": {
-          "scored_total": 75,
+          "scored_total": 106,
           "excluded_showmatches": 12
         },
         "authoritative_snapshot_id": "4dfbb615c6e2cf8ab56847408536277a01dd7d8c08c0b476e0332bc2d9f82c54",
@@ -454,11 +435,17 @@
         "board_override_evidence": {
           "BV1Eox662EE8": {
             "reason": "当前窗口模型核对录像规则介绍、官方当日微博及法官复盘，确认实际版型为狼女孩；线上标题误标为预女猎白混。保留原标题和其他标签，只覆盖本局实际版型。",
-            "subtitle_source": "data/raw/bilibili/BV1Eox662EE8/p01/subtitle.01.raw.json",
-            "subtitle_range_ms": [1264200, 1356900],
+            "source_url": "https://www.bilibili.com/video/BV1Eox662EE8/",
+            "subtitle_range_ms": [
+              1264200,
+              1356900
+            ],
             "official_weibo_post_id": "5359741557277067",
             "referee_recap_bvid": "BV1Eox662EE8",
-            "referee_recap_range_seconds": [8238, 8316.5]
+            "referee_recap_range_seconds": [
+              8238,
+              8316.5
+            ]
           }
         },
         "template_dir": "config/board_templates",
@@ -488,7 +475,8 @@
             "night_death_note": "DQ is a separate departure; do not count it as a wolf-knife death"
           }
         }
-      }
+      },
+      "archive_game_count": 106
     }
   }
 }

@@ -9,7 +9,6 @@ from unittest.mock import Mock, patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from collect_bilibili_audio import Collector, CollectionError
-import database
 import media_ingest
 from raw_media_fixture import make_media, make_subtitle_media
 
@@ -173,88 +172,6 @@ class RawMediaBoundaryTests(unittest.TestCase):
                 collector.collect('BV1tj8p6REqy',1,self.path.parent,True,128000,200*1024*1024,expected_owner='19106800')
             self.assertEqual(api.call_count,1)
             download.assert_not_called()
-
-
-class RawMediaRegistrationTests(unittest.TestCase):
-    def test_subtitle_only_import_registers_no_audio_artifact(self):
-        manifest = {
-            'bvid': 'BV1tj8p6REqy', 'cid': 123456, 'page': 1,
-            'duration_seconds': 1, 'owner': {'mid': 19106800},
-            'published_timestamp': None, 'title': 'synthetic subtitle fixture',
-            'subtitles': {'status': 'visible_tracks', 'tracks': []},
-        }
-        root = Path(__file__).resolve().parents[1]
-        checked = {
-            'manifest': manifest,
-            'manifest_path': root / 'data' / 'synthetic' / 'manifest.json',
-            'raw_path': root / 'data' / 'synthetic' / 'metadata.raw.json',
-            'audio_path': None,
-            'subtitles': [(root / 'data' / 'synthetic' / 'subtitle.json', {'language': 'ai-zh'})],
-            'summary': {'status': 'raw_subtitles_ready', 'audio_available': False,
-                        'subtitle_available': True},
-        }
-
-        class Cursor:
-            def fetchone(self):
-                return {'id': 'source-1'}
-
-        class Connection:
-            def __init__(self):
-                self.calls = []
-
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *_):
-                return False
-
-            def execute(self, *args):
-                self.calls.append(args)
-                return Cursor()
-
-        connection = Connection()
-        with patch.object(database, 'validate_media', return_value=checked), \
-                patch.object(database, 'connect', return_value=connection), \
-                patch.object(database, 'artifact', side_effect=lambda _conn, _sid, _path, kind, *_args: kind) as artifact:
-            result = database.import_media(checked['manifest_path'])
-
-        kinds = [call.args[3] for call in artifact.call_args_list]
-        self.assertEqual(kinds, ['manifest', 'metadata', 'subtitle'])
-        self.assertEqual(result['validation']['status'], 'raw_subtitles_ready')
-        self.assertFalse(result['validation']['audio_available'])
-        audit = next(params for statement, params in connection.calls if 'register_raw_media' in statement)
-        self.assertNotIn('audio_sha256', audit[1].obj)
-
-    def test_raw_status_counts_audio_and_subtitle_capabilities_separately(self):
-        rows = [
-            {'id': '1', 'platform': 'bilibili', 'external_key': 'audio', 'title': None,
-             'author_id': None, 'media_validation': {'status': 'raw_media_ready', 'audio_available': True,
-                                                     'subtitle_available': False}, 'raw_artifact_count': 3},
-            {'id': '2', 'platform': 'bilibili', 'external_key': 'subtitle', 'title': None,
-             'author_id': None, 'media_validation': {'status': 'raw_subtitles_ready', 'audio_available': False,
-                                                     'subtitle_available': True}, 'raw_artifact_count': 3},
-            {'id': '3', 'platform': 'bilibili', 'external_key': 'legacy-audio', 'title': None,
-             'author_id': None, 'media_validation': {'status': 'raw_media_ready'}, 'raw_artifact_count': 3},
-        ]
-
-        class Cursor:
-            def fetchall(self):
-                return rows
-
-        class Connection:
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *_):
-                return False
-
-            def execute(self, *_args):
-                return Cursor()
-
-        with patch.object(database, 'connect', return_value=Connection()):
-            result = database.raw_status()
-        self.assertEqual(result['validated_audio_source_count'], 2)
-        self.assertEqual(result['validated_subtitle_source_count'], 1)
 
 
 if __name__ == '__main__':

@@ -75,4 +75,4 @@ Set-Location D:\langrensha
 
 11月6日至7日窗口共归档4条帖子、15张图片；其中复用1条旧帖及其1张图，补采3条帖子和14张图片。扫描4页后完成，取得11月6日大师赛阵容公告 `5362279673496334`，长文及12张阵容图片齐全。此次采集没有写入对局数据库或发布网站。
 
-实现见 [login_session.py](../scripts/login_session.py) 与 [update_incremental.py](../scripts/update_incremental.py)；本次回执见 [Cookie恢复与补采记录](../data/reports/S23/incremental/20261107_weibo_login_recovery.json)。
+实现见 [login_session.py](../scripts/login_session.py) 与 [update_incremental.py](../scripts/update_incremental.py)；本次回执见 Cookie恢复与补采记录。

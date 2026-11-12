@@ -2,7 +2,7 @@ import "server-only";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { BluffReview, GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
+import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
 import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
 
 export type SnapshotManifest = {
@@ -73,10 +73,6 @@ export async function getSnapshotPlayer(id: string, start: string, end: string) 
 
 export async function getSnapshotLeaderboard(season: string, phase: "all" | "finals_week") {
   return readSnapshotJson<Leaderboard>(`${await releaseDir()}/leaderboards/${encodeURIComponent(season)}/${phase}.json`);
-}
-
-export async function getSnapshotBluffReview(season: string) {
-  return readSnapshotJson<BluffReview>(`${await releaseDir()}/bluff-review/${encodeURIComponent(season)}.json`);
 }
 
 export async function getSnapshotStats(start: string, end: string) {

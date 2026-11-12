@@ -92,7 +92,6 @@ export type PlayerStats = {
   werewolf_off_police_rate: Metric;
   bluff_count?: number;
   bluff_count_complete?: boolean;
-  bluff_pending_games?: number;
   bluff_rate?: Metric;
   bluff_success_rate?: Metric;
   performance?: Partial<Record<PerformanceKey, Metric>>;
@@ -276,40 +275,9 @@ export type LeaderboardItem = {
   sheriff_seer_vote_rate: Metric;
   bluff_count: number;
   bluff_count_complete: boolean;
-  bluff_pending_games: number;
-  bluff_review_count: number;
   bluff_rate: Metric;
   bluff_success_rate: Metric;
   photo: PlayerPhoto | null;
-};
-export type BluffReview = {
-  release_id: string;
-  analytics_version: number;
-  season: string;
-  status: "all" | "pending" | "assistant_pending";
-  player: string;
-  inference_version: string | null;
-  manual_review?: boolean;
-  summary: { games: number; wolf_appearances: number; manual_included_appearances?: number; identified_bluffs: number; successes: number; pending: number; assistant_pending?: number; reviewed_games?: number | null };
-  notes: string[];
-  items: {
-    review_id: string; source_fingerprint: string; claim_fingerprint?: string | null; success_fingerprint?: string | null;
-    game_id: string; date: string; game_number: number | null; bvid: string | null;
-    player_id: string; seat: number; name: string; physical_role: string; claimed_role: string | null;
-    decision: "yes" | "no" | "uncertain"; confidence: "high" | "medium" | "low";
-    claim_day: 1 | 2 | "later" | null; first_day_claim: boolean | null; decision_note: string; verification_status: string;
-    previous_decision?: "yes" | "no" | "uncertain" | null;
-    actual_claim_day?: number | null;
-    evidence: { kind: string; text: string; start_ms?: number; end_ms?: number; url?: string; image_url?: string; interpretation?: string }[];
-    success: boolean | null; success_reasons: { kind: string; text: string; target?: number }[];
-    current_success?: boolean | null; previous_success?: boolean | null; previous_success_saved?: boolean;
-    success_needs_review?: boolean;
-    legacy_success_needs_review?: boolean;
-    claim_needs_review?: boolean;
-    success_source?: "user" | "rules"; manual_included?: boolean;
-    review_questions: string[]; needs_review: boolean;
-    requires_user_review?: boolean; assistant_pending?: boolean; review_stage?: string | null;
-  }[];
 };
 export type Leaderboard = {
   release_id: string;

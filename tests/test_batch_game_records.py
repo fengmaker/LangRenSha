@@ -10,14 +10,35 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from board_config import load_template
 import game_records
-from game_records import ReviewError, ensure_person, import_game, validate
+from game_records import ReviewError, validate
 
 
 class BatchGameRecordTests(unittest.TestCase):
     def setUp(self):
-        self.value = json.loads(
-            (ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/dossier.json").read_text(encoding="utf-8")
+        public = json.loads(
+            (ROOT / "data/games/S22/2026-06-25_g03_BV1yt7v6QE3Q/game.json").read_text(encoding="utf-8")
         )
+        event_fields = ("slot", "action", "actor", "targets", "result", "start_seat",
+                        "direction", "random_point", "speech_scope", "availability",
+                        "effects", "votes")
+        self.value = {
+            "slug": public["id"], "season": public["season"], "date": public["date"],
+            "phase": public["phase"], "episode": public.get("episode"),
+            "day_in_episode": public.get("day_in_episode"),
+            "game_number": public["game_number"], "board": public["board"]["code"],
+            "winner": public["winner"],
+            "roster": [seat["name"] for seat in public["seats"] if seat.get("name")],
+            "commentators": public["commentators"], "referee": public["referee"],
+            "seats": [{key: seat.get(key) for key in (
+                "seat", "name", "role", "faction", "learning_target", "learned_role")}
+                for seat in public["seats"]],
+            "rounds": [{"number": row["number"], **{
+                phase: [{key: event.get(key, [] if key in {"targets", "effects", "votes"} else None)
+                        for key in event_fields} for event in row[phase]]
+                for phase in ("night", "day")}}
+                for row in public["rounds"]],
+            "files": [],
+        }
 
     def incomplete(self):
         value = copy.deepcopy(self.value)
@@ -376,75 +397,6 @@ class BatchGameRecordTests(unittest.TestCase):
         mechanic.update(learning_target=None, learned_role="机械女巫")
         with self.assertRaises(ReviewError):
             validate(value, check_files=False)
-
-    def test_ensure_person_refuses_unknown_names_before_writing(self):
-        class Connection:
-            def execute(self, *args, **kwargs):
-                raise AssertionError("must not write a null person")
-
-        with self.assertRaises(ReviewError):
-            ensure_person(Connection(), None)
-
-    def test_batch_import_skips_unknown_referee_and_keeps_unknowns_null(self):
-        class Result:
-            def __init__(self, row=None):
-                self.row = row
-
-            def fetchone(self):
-                return self.row
-
-        class Connection:
-            def __init__(self):
-                self.queries = []
-                self.next_person = 0
-
-            def __enter__(self):
-                return self
-
-            def __exit__(self, *_args):
-                return False
-
-            def execute(self, query, params=()):
-                statement = " ".join(query.split())
-                self.queries.append((statement, params))
-                if statement.startswith("SELECT id FROM seasons"):
-                    return Result({"id": "season-id"})
-                if statement.startswith("SELECT id FROM sources"):
-                    return Result({"id": "source-id"})
-                if statement.startswith("INSERT INTO games"):
-                    return Result({"id": "game-id"})
-                if statement.startswith("INSERT INTO people"):
-                    self.next_person += 1
-                    return Result({"id": f"person-{self.next_person}"})
-                if statement.startswith("INSERT INTO game_event_records"):
-                    return Result({"id": "event-id"})
-                return Result()
-
-        conn = Connection()
-        value = self.incomplete()
-        value["rounds"] = []
-        with patch("game_records.connect", return_value=conn), \
-             patch("game_records.artifact", return_value="artifact-id"), \
-             patch("game_records.data_file", return_value=Path("synthetic")), \
-             patch("game_records.sync_board_template", wraps=game_records.sync_board_template) as sync_template:
-            import_game(value, allow_incomplete=True)
-            sync_template.assert_called_once()
-            sync_template.reset_mock()
-            import_game(value, allow_incomplete=True, sync_template=False)
-            sync_template.assert_not_called()
-
-        people = [params for query, params in conn.queries if query.startswith("INSERT INTO people")]
-        staff = [params for query, params in conn.queries if query.startswith("INSERT INTO game_staff")]
-        seats = [params for query, params in conn.queries if query.startswith("INSERT INTO game_seats")]
-        details = [params for query, params in conn.queries if query.startswith("INSERT INTO game_details")]
-        forbidden = ("game_revisions", "evidence_links", "reviews", "transcription_runs")
-        self.assertTrue(people)
-        self.assertTrue(all(params[0] is not None for params in people))
-        self.assertEqual(staff, [])
-        self.assertTrue(any(params[3] is None and params[4] is None for params in seats))
-        self.assertEqual(details[0][-2:], (None, "third_party"))
-        self.assertFalse(any(any(table in query for table in forbidden) for query, _ in conn.queries))
-
 
 if __name__ == "__main__":
     unittest.main()

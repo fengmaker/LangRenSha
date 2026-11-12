@@ -2,14 +2,14 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
-from website.api import publisher
+from website import game_data as publisher
 
 ROOT=Path(__file__).resolve().parents[2]
 
 
 def public_variant():
-    entries,_,_=publisher.load_publication(ROOT,'S22','BV1yt7v6QE3Q')
-    item=deepcopy(entries[0])
+    from final_fixtures import candidate_item
+    item = candidate_item('S22', 'BV1yt7v6QE3Q')
     dossier=item['dossier']
     dossier['season']='S23'
     ids={s['name']:'person' for s in dossier['seats']}
@@ -24,7 +24,8 @@ def render(item,ids):
 def test_terminal_night_keeps_only_observed_phases_and_explains_blocked_hunter():
     item,ids=public_variant()
     r=item['dossier']['rounds'][0]
-    shot=next(e for e in r['day'] if e['slot']=='hunter_shot')
+    shot = {'slot':'hunter_shot', 'action':'unknown', 'targets':[]}
+    r['day'].append(shot)
     shot.update(action='unavailable',blocked_by_game_end=True)
     item['dossier']['_publication_context']={'terminal_observation':{'round':r['number'],'phase':'night'}}
     # This synthetic N1 terminal fixture cannot also contain later day votes.

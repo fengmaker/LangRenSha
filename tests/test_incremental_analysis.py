@@ -1,9 +1,7 @@
-"""Incremental text routing, provenance checks and read-only AI execution."""
-from copy import deepcopy
+"""Incremental text routing and candidate provenance checks."""
 import json
 from pathlib import Path
 import shutil
-import subprocess
 import sys
 import tempfile
 import unittest
@@ -13,7 +11,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import analyze_incremental as analysis
 import game_records
-import incremental_ai
 
 
 class AnalysisTests(unittest.TestCase):
@@ -87,6 +84,17 @@ class AnalysisTests(unittest.TestCase):
             run.assert_called_once()
             self.assertIn("--no-speakers", run.call_args.args[0])
 
+    def test_s22_known_template_does_not_require_a_season_code_mapping(self):
+        entry = {**self.entry, "labels": {**self.entry["labels"], "board_candidate": "预女猎白混"}}
+
+        self.assertEqual(analysis.board_for(entry, "S22", self.root), "mixed_blood")
+
+    def test_configured_entertainment_board_is_rejected_during_candidate_preparation(self):
+        entry = {**self.entry, "labels": {**self.entry["labels"], "board_candidate": "狼王守卫"}}
+
+        with self.assertRaisesRegex(ValueError, "娱乐版型"):
+            analysis.board_for(entry, "S22", self.root)
+
     def test_valid_candidate_has_evidence_hash_and_no_formal_write(self):
         value = analysis.validate_candidate(self.candidate(), self.entry, self.source, root=self.root)
         self.assertEqual(value["evidence"][0]["sha256"], analysis.sha256(self.source))
@@ -124,24 +132,21 @@ class AnalysisTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "另一对局"):
             analysis.validate_candidate(value, self.entry, self.source, root=self.root)
 
-    def test_analyze_one_defaults_to_local_preparation(self):
+    def test_analyze_one_prepares_local_candidate_input_by_default(self):
         item = {"entry": self.entry}
-        with patch.object(analysis, "prepare_text", return_value=self.source), \
-                patch.object(analysis, "run_json", side_effect=AssertionError("default must not call CLI")):
+        with patch.object(analysis, "prepare_text", return_value=self.source):
             result = analysis.analyze_one(item, "S23", root=self.root)
         self.assertTrue(result["prepared"])
         self.assertEqual(json.loads(Path(result["input"]).read_text(encoding="utf-8"))["source_path"],
                          self.source.relative_to(self.root).as_posix())
 
-    def test_cli_defaults_to_preparation_and_keeps_explicit_legacy_switch(self):
+    def test_cli_validate_candidates_switches_from_preparation_to_candidate_validation(self):
         report = {"failures": [], "waiting_acquisition": [], "analyzed": 0, "prepared": 0}
         with patch.object(analysis, "run", return_value=report) as run:
             self.assertEqual(analysis.main([]), 0)
             self.assertTrue(run.call_args.kwargs["prepare_only"])
-            self.assertEqual(analysis.main(["--run-legacy-ai"]), 0)
+            self.assertEqual(analysis.main(["--validate-candidates"]), 0)
             self.assertFalse(run.call_args.kwargs["prepare_only"])
-            self.assertEqual(analysis.main(["--prepare-only"]), 0)
-            self.assertTrue(run.call_args.kwargs["prepare_only"])
 
     def test_independent_endgame_is_preserved_and_validated_at_candidate_boundary(self):
         value = self.candidate()
@@ -155,7 +160,7 @@ class AnalysisTests(unittest.TestCase):
             analysis.validate_candidate(value, self.entry, self.source, root=self.root)
         value["endgame"]["game_slug"] = value["dossier"]["slug"]
         value["endgame"]["phases"][0]["declared_targets"] = [13]
-        from database import ReviewError
+        from game_records import ReviewError
         with self.assertRaisesRegex(ReviewError, "拍刀目标座位"):
             analysis.validate_candidate(value, self.entry, self.source, root=self.root)
 
@@ -185,33 +190,11 @@ class AnalysisTests(unittest.TestCase):
         candidate_path.write_text("{}")
         item = {"entry": self.entry, "analysis": "failed", "source_sha256": analysis.sha256(self.source),
                 "candidate_sha256": "old"}
-        with patch.object(analysis, "prepare_text", return_value=self.source), patch.object(analysis, "run_json") as ai:
+        with patch.object(analysis, "prepare_text", return_value=self.source):
             for _ in range(2):
                 with self.assertRaisesRegex(ValueError, "版本已变化"):
                     analysis.analyze_one(item, "S23", root=self.root)
             self.assertEqual(candidate_path.read_text(), "{}")
-            ai.assert_not_called()
-
-    def test_runner_uses_read_only_luna_and_rejects_failed_stale_output(self):
-        target = self.root / "data/test/result.json"
-
-        def invoke(command, **kwargs):
-            response = Path(command[command.index("--output-last-message") + 1])
-            response.write_text(json.dumps({"result_json": json.dumps({"ok": True})}))
-            return subprocess.CompletedProcess(command, 0)
-
-        with patch.object(incremental_ai.shutil, "which", return_value="codex.exe"), \
-                patch.object(incremental_ai.subprocess, "run", side_effect=invoke) as runner:
-            self.assertEqual(incremental_ai.run_json("限定任务", target, root=self.root), {"ok": True})
-            command = runner.call_args.args[0]
-            self.assertEqual(command[command.index("--sandbox") + 1], "read-only")
-            self.assertEqual(command[command.index("--model") + 1], "gpt-6-luna")
-            self.assertNotIn("--worktree", command)
-        with patch.object(incremental_ai.shutil, "which", return_value="codex.exe"), \
-                patch.object(incremental_ai.subprocess, "run", return_value=subprocess.CompletedProcess([], 1)):
-            with self.assertRaisesRegex(RuntimeError, "调用失败"):
-                incremental_ai.run_json("限定任务", target, root=self.root)
-        self.assertEqual(json.loads(target.read_text()), {"ok": True})
 
 
 if __name__ == "__main__":

@@ -1,7 +1,10 @@
-import hashlib
+from __future__ import annotations
+
 from copy import deepcopy
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import sys
 
 import pytest
@@ -9,880 +12,199 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import apply_incremental_review as apply
+from incremental_common import entry_key, save_state, work_dir
 
 
-def digest(path: Path) -> str:
+def _digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_prepared_hash_matches_the_formal_file_writer(tmp_path):
-    from incremental_common import write_json
+def _fixture(root: Path, monkeypatch):
+    shutil.copytree(ROOT / "config/board_templates", root / "config/board_templates")
+    people_path = root / "website/assets/people.json"
+    people_path.parent.mkdir(parents=True)
+    shutil.copyfile(ROOT / "website/assets/people.json", people_path)
 
-    value = {"name": "小苍", "nested": {"note": "第一行\n第二行"}}
-    path = tmp_path / "formal.json"
-    write_json(path, value)
-
-    assert apply._json_sha256(value) == digest(path)
-
-
-def test_cli_reports_preparation_runtime_failure_as_json(monkeypatch, capsys, tmp_path):
-    monkeypatch.setattr(apply, "apply_review",
-                        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("local preparation failed")))
-
-    assert apply.main([str(tmp_path / "review.json")]) == 1
-    assert json.loads(capsys.readouterr().err) == {
-        "state": "blocked", "error": "local preparation failed"}
-
-
-def candidate(slug="bili-BV1abc-p01-g01"):
-    return {
-        "dossier": {
-            "slug": slug, "season": "S23", "date": "2026-10-01", "phase": "regular",
-            "game_number": 1, "board": "s23_test", "winner": None, "files": [
-                {"role": "transcript", "kind": "transcript", "platform": "bilibili",
-                 "external_key": "BV1abc:123", "path": "data/source.json"},
-            ], "rounds": [], "seats": [],
-        },
-        "voting": {"schema_version": 1, "game_slug": slug, "registrations": [],
-                    "ballots": [], "interruptions": [], "days": []},
-        "evidence": [], "issues": [],
-    }
-
-
-def setup_review(tmp_path: Path, *, reviewed=True, note=""):
-    root = tmp_path
-    source = root / "data" / "source.json"
+    bvid, cid, page = "BV1ABCDEF123", 456, 1
+    entry = {"bvid": bvid, "cid": cid, "page": page, "labels": {"season": "S23"}}
+    key = entry_key(entry)
+    source = root / "data/source.json"
     source.parent.mkdir(parents=True)
-    source.write_text(json.dumps({"source": {"bvid": "BV1abc", "cid": 123, "page": 1}}),
-                      encoding="utf-8")
-    entry = {"bvid": "BV1abc", "cid": 123, "page": 1,
-             "labels": {"season": "S23"}, "duration_seconds": 60}
-    folder = root / "data" / "extractions" / "S23" / "incremental" / "BV1abc_p01_cid123"
+    source.write_text(json.dumps({"source": {"bvid": bvid, "cid": cid, "page": page}}), encoding="utf-8")
+    folder = work_dir(root, "S23", entry)
     folder.mkdir(parents=True)
+    (folder / "supplemental.json").write_text(json.dumps({
+        "schema_version": 1, "game_slug": "bili-BV1ABCDEF123-p01-g01",
+        "events": [{"round": 1, "phase": "day", "event": {
+            "slot": "disqualification", "action": "disqualify", "actor": 3,
+            "targets": [3],
+        }}],
+    }), encoding="utf-8")
+    seats = [{"seat": number, "name": f"选手{number}",
+              "role": "狼人" if number in {1, 2} else "平民",
+              "faction": "werewolf" if number in {1, 2} else "good",
+              "learning_target": None, "learned_role": None}
+             for number in range(1, 13)]
+    dossier = {
+        "slug": "bili-BV1ABCDEF123-p01-g01", "season": "S23", "date": "2026-10-27",
+        "phase": "regular", "game_number": 1, "board": "mixed_blood", "winner": None,
+        "commentators": [], "referee": None, "seats": seats,
+        "rounds": [{"number": 1, "night": [], "day": []}],
+        "files": [{"role": "transcript", "platform": "bilibili",
+                   "external_key": f"{bvid}:{cid}", "path": "data/source.json"}],
+    }
+    voting = {"schema_version": 1, "game_slug": dossier["slug"], "registrations": [],
+              "ballots": [], "interruptions": [], "days": []}
+    candidate = {"dossier": dossier, "voting": voting,
+                 "endgame": {"schema_version": 1, "game_slug": dossier["slug"], "phases": []},
+                 "evidence": [], "issues": []}
     candidate_path = folder / "candidate.json"
-    candidate_path.write_text(json.dumps(candidate()), encoding="utf-8")
-    manifest = root / "data" / "raw" / "bilibili" / "BV1abc" / "p01" / "manifest.json"
-    manifest.parent.mkdir(parents=True)
-    manifest.write_text("{}", encoding="utf-8")
+    candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
+    source_hash, candidate_hash = _digest(source), _digest(candidate_path)
+
+    manifest_path = root / "data/raw/bilibili" / bvid / "p01/manifest.json"
+    manifest_path.parent.mkdir(parents=True)
+    manifest_path.write_text(json.dumps({"bvid": bvid, "cid": cid, "page": page,
+                                        "url": f"https://www.bilibili.com/video/{bvid}/?p=1"}),
+                             encoding="utf-8")
     item = {"entry": entry, "analysis": "ready", "source_path": "data/source.json",
-            "source_sha256": digest(source), "candidate_sha256": digest(candidate_path)}
-    state = {"schema_version": 1, "season": "S23", "items": {"BV1abc:123:p01": item}, "weibo": {}}
-    export = root / "review.json"
-    export.write_text(json.dumps({"format": apply.REVIEW_FORMAT, "season": "S23", "games": [{
-        "review_id": "BV1abc:123:p01", "bvid": "BV1abc", "cid": 123, "page": 1,
-        "candidate_sha256": item["candidate_sha256"], "source_sha256": item["source_sha256"],
-        "reviewed": reviewed, "note": note,
-    }]}), encoding="utf-8")
-    return root, state, export, candidate_path
+            "source_sha256": source_hash, "candidate_sha256": candidate_hash}
+    state = {"schema_version": 1, "season": "S23", "items": {key: item}, "weibo": {}}
+    save_state(root, "S23", state)
+    review = root / "data/reports/S23/incremental/review.json"
+    review.parent.mkdir(parents=True, exist_ok=True)
+    rows = [{"seat": number, "decision": "yes" if number == 1 else "", "success": ""}
+            for number in range(1, 13)]
+    game = {"review_id": key, "bvid": bvid, "cid": cid, "page": page,
+            "candidate_sha256": candidate_hash, "source_sha256": source_hash,
+            "reviewed": True, "note": "", "bluffs": rows}
+    review.write_text(json.dumps({"format": apply.REVIEW_FORMAT_V2, "season": "S23", "games": [game]}),
+                      encoding="utf-8")
 
+    import analyze_incremental
+    import endgame_records
+    import game_derivations
+    import game_records
+    import media_ingest
+    import voting_core
 
-def install_local_preflight_mocks(monkeypatch, state):
-    monkeypatch.setattr(apply, "load_state", lambda root, season: state)
-    import analyze_incremental, game_records, media_ingest
-    import voting_core as voting_records
     monkeypatch.setattr(analyze_incremental, "validate_candidate", lambda value, *a, **k: value)
     monkeypatch.setattr(game_records, "validate", lambda *a, **k: None)
-    monkeypatch.setattr(voting_records, "validate", lambda *a, **k: None)
-    import game_derivations
-    monkeypatch.setattr(game_derivations, "derive_game", lambda dossier, voting, **kwargs: {
-        "dossier": deepcopy(dossier), "voting": deepcopy(voting),
-        "derivations": {"gaps": [], "issues": [], "changes": [],
-                        "input_hashes": {"endgame": game_derivations.fingerprint(kwargs["endgame"])}},
-    })
-    monkeypatch.setattr(media_ingest, "validate_media", lambda path, bvid, page: {
-        "manifest": {"bvid": bvid, "cid": 123, "page": page},
-    })
-
-
-@pytest.mark.parametrize("with_rush", [True, False])
-def test_preview_keeps_confirmed_endgame_for_derivation_and_formal_output(tmp_path, monkeypatch, with_rush):
-    root, state, export, candidate_path = setup_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    value = json.loads(candidate_path.read_text(encoding="utf-8"))
-    endgame = {"schema_version": 1, "game_slug": value["dossier"]["slug"], "phases": [
-        {"kind": "wolf_rush", "day": 1, "actor": 1,
-         "declared_targets": [9], "result": "werewolf_win"},
-    ] if with_rush else []}
-    value["endgame"] = endgame
-    candidate_path.write_text(json.dumps(value), encoding="utf-8")
-    state["items"]["BV1abc:123:p01"]["candidate_sha256"] = digest(candidate_path)
-    payload = json.loads(export.read_text(encoding="utf-8"))
-    payload["games"][0]["candidate_sha256"] = digest(candidate_path)
-    export.write_text(json.dumps(payload), encoding="utf-8")
-    import game_derivations
-    inputs = []
-    monkeypatch.setattr(game_derivations, "derive_game", lambda dossier, voting, **kwargs: (
-        inputs.append(kwargs["endgame"]) or {
-            "dossier": dossier, "voting": voting, "derivations": {}}))
-
-    _, plans = apply._prepare_export(export, "S23", root=root, run_ai=False)
-
-    assert inputs == [endgame]
-    assert plans[0]["prepared_formal"]["endgame"] == endgame
-    apply._persist_accepted(plans[0], state, "S23", root)
-    apply._write_formal(plans[0], state, "S23", root)
-    assert json.loads((plans[0]["formal_dir"] / "endgame.json").read_text(encoding="utf-8")) == endgame
-
-
-def test_preview_carries_review_bound_supplemental_to_rules_cache_and_formal_output(tmp_path, monkeypatch):
-    from game_derivations import fingerprint
-    root, state, export, path = setup_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    value = json.loads(path.read_text(encoding='utf-8'))
-    supplemental = {'events': [{'round': 2, 'phase': 'night', 'event': {
-        'slot': 'guard_disqualification', 'action': 'disqualify', 'actor': 5,
-        'targets': [5], 'result': '连守被判离，仍需追刀追投'}}]}
-    (path.parent / 'supplemental.json').write_text(json.dumps(supplemental), encoding='utf-8')
-    (path.parent / 'rule_derivations.json').write_text(json.dumps({'input_hashes': {
-        'dossier': fingerprint(value['dossier']), 'voting': fingerprint(value['voting']),
-        'supplemental': fingerprint(supplemental)}}), encoding='utf-8')
-    import game_derivations
-    inputs = []
-    def derive(dossier, voting, **kwargs):
-        inputs.append(kwargs['supplemental'])
-        return {'dossier': dossier, 'voting': voting, 'derivations': {}}
-    monkeypatch.setattr(game_derivations, 'derive_game', derive)
-    _, plans = apply._prepare_export(export, 'S23', root=root, run_ai=False)
-    expected = {**supplemental, 'schema_version': 1, 'game_slug': value['dossier']['slug'], 'season': 'S23'}
-    assert inputs == [expected]
-    apply._persist_accepted(plans[0], state, 'S23', root)
-    apply._write_formal(plans[0], state, 'S23', root)
-    assert json.loads((plans[0]['formal_dir'] / 'supplemental.json').read_text(encoding='utf-8')) == expected
-    supplemental['events'][0]['event']['actor'] = 6
-    (path.parent / 'supplemental.json').write_text(json.dumps(supplemental), encoding='utf-8')
-    with pytest.raises(apply.ReviewApplyError, match='补充事实'):
-        apply._prepare_export(export, 'S23', root=root, run_ai=False)
-
-
-def note_revisions(export, path, **changes):
-    game = json.loads(export.read_text(encoding="utf-8"))["games"][0]
-    revision = {key: game[key] for key in ("review_id", "candidate_sha256", "source_sha256", "note")}
-    revision.update(patches=[{"path": "/dossier/winner", "value": "good",
-                             "note_quote": "确认好人胜", "reason": "备注明确胜方"}],
-                    unresolved=[], bluffs={"reviewed": False, "no_bluff": False, "items": []})
-    revision.update(changes)
-    path.write_text(json.dumps({"format": "masters-incremental-note-revisions-v1",
-                                "season": "S23", "games": [revision]}), encoding="utf-8")
-    return path
-
-
-def test_new_note_can_reach_preview_via_structured_revision_without_model(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    monkeypatch.setattr(apply, "_apply_note", lambda *a, **k: pytest.fail("model must not run"))
-    revision_path = note_revisions(export, tmp_path / "note_revisions.json")
-
-    report = apply.apply_review(export, season="S23", root=root, note_revisions=revision_path)
-
-    assert report["state"] == "prepared_cached"
-    assert report["games"][0]["patches"][0]["value"] == "good"
-    folder = root / state["items"]["BV1abc:123:p01"]["accepted_candidate_path"]
-    assert json.loads(folder.read_text(encoding="utf-8"))["dossier"]["winner"] == "good"
-    assert state["items"]["BV1abc:123:p01"].get("phases", {}).get("database") is None
-
-    # The saved interpretation is sufficient for the later command without
-    # passing the handoff file again or invoking a model.
-    import game_derivations
-    monkeypatch.setattr(game_derivations, "apply_precomputed", lambda dossier, voting, _: {
-        "dossier": dossier, "voting": voting})
-    monkeypatch.setattr(game_derivations, "derive_game", lambda *a, **k: pytest.fail("must reuse cache"))
-    apply.apply_review(export, season="S23", root=root)
-
-
-def test_apply_review_defaults_to_no_model_for_free_notes(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    monkeypatch.setattr(apply, "_apply_note", lambda *a, **k: pytest.fail("default must not call model"))
-
-    with pytest.raises(apply.ReviewApplyError, match="当前窗口模型准备结构化修订"):
-        apply.apply_review(export, season="S23", root=root)
-
-    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
-
-
-@pytest.mark.parametrize("changes, message", [
-    ({"review_id": "another-game"}, "已勾选对局"),
-    ({"candidate_sha256": "f" * 64}, "不匹配"),
-    ({"source_sha256": "f" * 64}, "不匹配"),
-    ({"note": "确认狼人胜"}, "不匹配"),
-    ({"patches": [{"path": "/dossier/slug", "value": "other", "note_quote": "确认好人胜"}]}, "不能修改"),
-    ({"patches": [{"path": "/dossier/winner", "value": "good", "note_quote": "不存在的引文"}]}, "范围引用"),
-])
-def test_note_handoff_rejects_unbound_or_out_of_scope_revisions(tmp_path, monkeypatch, changes, message):
-    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    revision_path = note_revisions(export, tmp_path / "revisions.json", **changes)
-    with pytest.raises(apply.ReviewApplyError, match=message):
-        apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=revision_path)
-    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
-
-
-def test_unresolved_structured_note_stays_in_preview_and_cannot_be_applied(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    revision_path = note_revisions(export, tmp_path / "revisions.json", unresolved=["胜方存在歧义"])
-    report = apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=revision_path)
-    assert report["state"] == "needs_resolution"
-    assert report["games"][0]["unresolved"] == ["胜方存在歧义"]
-    assert "accepted_candidate_path" not in state["items"]["BV1abc:123:p01"]
-    with pytest.raises(apply.ReviewApplyError, match="未解决内容"):
-        apply.apply_review(export, season="S23", root=root, apply=True,
-                           run_ai=False, note_revisions=revision_path)
-
-
-def test_changed_interpretation_replaces_only_unapplied_cache(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, note="请确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    path = note_revisions(export, tmp_path / "revisions.json")
-    apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
-    item = state["items"]["BV1abc:123:p01"]
-    path = note_revisions(export, path, patches=[{
-        "path": "/dossier/winner", "value": None, "note_quote": "确认好人胜",
-        "reason": "同一备注重新解释的待核示例"}])
-    apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
-    assert json.loads((root / item["accepted_candidate_path"]).read_text(encoding="utf-8"))["dossier"]["winner"] is None
-    item["phases"]["database"] = "done"
-    note_revisions(export, path)
-    with pytest.raises(apply.ReviewApplyError, match="正式修订流程"):
-        apply.apply_review(export, season="S23", root=root, run_ai=False, note_revisions=path)
-
-
-def test_cli_forwards_note_revisions_without_enabling_model(tmp_path, monkeypatch, capsys):
-    observed = {}
-
-    def prepare(path, **kwargs):
-        observed.update(kwargs)
-        return {"state": "prepared_cached"}
-
-    monkeypatch.setattr(apply, "apply_review", prepare)
-    revision_path = tmp_path / "revisions.json"
-    assert apply.main([str(tmp_path / "review.json"), "--note-revisions", str(revision_path)]) == 0
-    assert observed["note_revisions"] == revision_path
-    assert observed["run_ai"] is False
-    assert json.loads(capsys.readouterr().out)["state"] == "prepared_cached"
-
-
-def setup_v2_review(tmp_path):
-    root, state, export, candidate_path = setup_review(tmp_path)
-    value = candidate()
-    value['dossier']['seats'] = [
-        {'seat': 1, 'person_id': 'p1', 'name': '狼甲', 'role': '狼人', 'faction': 'werewolf'},
-        {'seat': 2, 'person_id': 'p2', 'name': '混血乙', 'role': '混血儿', 'faction': 'good'},
-    ]
-    candidate_path.write_text(json.dumps(value), encoding='utf-8')
-    item = state['items']['BV1abc:123:p01']
-    item['candidate_sha256'] = digest(candidate_path)
-    payload = json.loads(export.read_text(encoding='utf-8'))
-    payload['format'] = apply.REVIEW_FORMAT_V2
-    payload['games'][0]['candidate_sha256'] = item['candidate_sha256']
-    payload['games'][0]['bluffs'] = [
-        {'seat': 1, 'decision': 'yes', 'success': ''},
-        {'seat': 2, 'decision': '', 'success': ''},
-    ]
-    export.write_text(json.dumps(payload), encoding='utf-8')
-    return root, state, export, candidate_path, payload
-
-
-def test_v2_choices_prepare_without_model_and_do_not_turn_blanks_into_no(tmp_path, monkeypatch):
-    root, state, export, _, payload = setup_v2_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    monkeypatch.setattr(apply, '_apply_note', lambda *a, **k: pytest.fail('model must not run'))
-
-    _, plans = apply._prepare_export(export, 'S23', root=root, run_ai=False)
-
-    record = plans[0]['review_record']
-    assert record['bluffs_input'] == payload['games'][0]['bluffs']
-    assert record['bluffs_review']['no_bluff'] is False
-    assert [(row['seat'], row['decision'], row['success_selected'])
-            for row in record['bluffs_review']['items']] == [(1, 'yes', False)]
-
-
-@pytest.mark.parametrize('bad', [
-    {'seat': 1, 'decision': 'no', 'success': 'success'},
-    {'seat': True, 'decision': 'yes', 'success': ''},
-    {'seat': 1, 'decision': [], 'success': ''},
-    {'seat': 1, 'decision': 'yes', 'success': 'unknown'},
-])
-def test_v2_invalid_selection_rejected_before_any_application(tmp_path, monkeypatch, bad):
-    root, state, export, _, payload = setup_v2_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    payload['games'][0]['bluffs'][0] = bad
-    export.write_text(json.dumps(payload), encoding='utf-8')
-    with pytest.raises(apply.ReviewApplyError, match='悍跳选择'):
-        apply._prepare_export(export, 'S23', root=root, run_ai=False)
-
-
-def test_v2_blank_success_differs_from_explicit_uncertainty(tmp_path):
-    from website.api import bluffs
-    _, _, _, candidate_path, payload = setup_v2_review(tmp_path)
-    value = json.loads(candidate_path.read_text(encoding='utf-8'))
-    game = {**value['dossier'], 'id': value['dossier']['slug'],
-            'source': {'bvid': 'BV1abc'}, 'voting': value['voting']}
-    selection = payload['games'][0]
-    plan = {'review_record': {'review_id': selection['review_id'], 'manual_sha256': 'a' * 64,
-                            'note': '', 'bluffs_review': apply._selected_bluffs(selection, value, required=True)}}
-    blank = apply._new_bluff_assessments(game, plan, bluffs)[0]
-    assert blank['decision'] == 'yes' and 'manual_success' not in blank
-    selection['bluffs'][0]['success'] = 'uncertain'
-    plan['review_record']['bluffs_review'] = apply._selected_bluffs(selection, value, required=True)
-    uncertain = apply._new_bluff_assessments(game, plan, bluffs)[0]
-    assert 'manual_success' in uncertain and uncertain['manual_success'] is None
-
-
-def test_v2_changed_choices_for_applied_game_require_revision(tmp_path, monkeypatch):
-    root, state, export, candidate_path, payload = setup_v2_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    folder = candidate_path.parent
-    (folder / 'accepted_candidate.json').write_bytes(candidate_path.read_bytes())
-    old = {**payload['games'][0], 'bluffs_input': deepcopy(payload['games'][0]['bluffs'])}
-    old['bluffs_input'][0]['success'] = 'failure'
-    (folder / 'accepted_review.json').write_text(json.dumps(old), encoding='utf-8')
-    state['items']['BV1abc:123:p01']['phases'] = {'database': 'done'}
-    with pytest.raises(apply.ReviewApplyError, match='正式修订流程'):
-        apply._prepare_export(export, 'S23', root=root, run_ai=False)
-
-
-def test_v2_blank_success_preserves_old_human_result_but_explicit_pending_revises(tmp_path, monkeypatch):
-    from website.api import bluffs, publisher
-    root, _, _, candidate_path, payload = setup_v2_review(tmp_path)
-    value = json.loads(candidate_path.read_text(encoding='utf-8'))
-    game = {**value['dossier'], 'id': value['dossier']['slug'],
-            'source': {'bvid': 'BV1abc'}, 'voting': value['voting']}
-    old = {'seat': 1, 'decision': 'yes', 'manual_success': True,
-           'verification_status': 'user_confirmed', 'manual_note': '原人工结论'}
-    asset = root / 'website/assets/bluffs/S23.json'
-    asset.parent.mkdir(parents=True)
-    asset.write_text(json.dumps({'schema_version': 1, 'season': 'S23', 'games': [{
-        'game_id': game['id'], 'bvid': 'BV1abc', 'source_fingerprint': bluffs.source_fingerprint(game),
-        'assessments': [old]}]}), encoding='utf-8')
-    monkeypatch.setattr(publisher, 'load_publication', lambda *a: ([{
-        'dossier': {}, 'voting': {}, 'endgame': {}, 'board': {}}], '', ''))
-    monkeypatch.setattr(publisher, '_public_game', lambda *a, **k: game)
-    monkeypatch.setattr(apply, 'save_state', lambda *a: None)
-    selection = payload['games'][0]
-    plan = {'game': selection, 'candidate': value, 'item': {}, 'review_record': {
-        'review_id': selection['review_id'], 'manual_sha256': 'a' * 64, 'note': '',
-        'bluffs_review': apply._selected_bluffs(selection, value, required=True)}}
-
-    apply._merge_bluff_records(root, 'S23', [plan], {})
-    assert json.loads(asset.read_text(encoding='utf-8'))['games'][0]['assessments'][0] == old
-
-    selection['bluffs'][0]['success'] = 'uncertain'
-    plan['review_record']['bluffs_review'] = apply._selected_bluffs(selection, value, required=True)
-    apply._merge_bluff_records(root, 'S23', [plan], {})
-    revised = json.loads(asset.read_text(encoding='utf-8'))['games'][0]['assessments'][0]
-    assert revised['decision'] == 'yes' and revised['manual_success'] is None
-
-
-def test_unreviewed_rows_are_ignored_without_needing_queue_membership(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, reviewed=False)
-    state["items"].clear()
-    monkeypatch.setattr(apply, "load_state", lambda root, season: state)
-
-    loaded, plans = apply._prepare_export(export, "S23", root=root, run_ai=False)
-
-    assert loaded is state
-    assert plans == []
-
-
-def test_export_version_mismatch_blocks_before_import_preparation(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    payload = json.loads(export.read_text(encoding="utf-8"))
-    payload["games"][0]["candidate_sha256"] = "f" * 64
-    export.write_text(json.dumps(payload), encoding="utf-8")
-
-    with pytest.raises(apply.ReviewApplyError, match="候选版本不匹配"):
-        apply._prepare_export(export, "S23", root=root, run_ai=False)
-
-
-def test_notes_apply_as_scoped_patches_and_blank_note_keeps_candidate(monkeypatch, tmp_path):
-    import analyze_incremental, incremental_ai
-    original = candidate()
-    calls = []
-
-    def fake_run_json(prompt, output, **kwargs):
-        calls.append(prompt)
-        return {"patches": [{"path": "/dossier/winner", "value": "good",
-                             "note_quote": "确认好人胜", "reason": "按备注更正胜方"}],
-                "unresolved": [],
-                "bluffs": {"reviewed": False, "no_bluff": False, "items": []}}
-
-    monkeypatch.setattr(incremental_ai, "run_json", fake_run_json)
-    monkeypatch.setattr(analyze_incremental, "validate_candidate", lambda value, *a, **k: value)
-    root = tmp_path
-    (root / "data").mkdir()
-
-    changed, patches, bluff_review, unresolved = apply._apply_note(
-        original, "请确认好人胜", "BV1abc:123:p01", root=root)
-    unchanged, no_patches, no_bluffs, no_unresolved = apply._apply_note(
-        original, "   ", "BV1abc:123:p01", root=root)
-
-    assert changed["dossier"]["winner"] == "good"
-    assert patches[0]["note_quote"] == "确认好人胜"
-    assert original["dossier"]["winner"] is None
-    assert bluff_review == {"reviewed": False, "no_bluff": False, "items": []}
-    assert unchanged == original
-    assert no_patches == []
-    assert no_bluffs == {"reviewed": False, "no_bluff": False, "items": []}
-    assert unresolved == no_unresolved == []
-    assert len(calls) == 1
-
-
-def test_preview_shows_applied_changes_and_caches_only_local_preparation(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path, note="确认好人胜")
-    install_local_preflight_mocks(monkeypatch, state)
-    import analyze_incremental, incremental_ai
-
-    calls = []
-
-    def fake_run_json(prompt, output, **kwargs):
-        calls.append(prompt)
-        quote = "改判狼人胜" if "改判狼人胜" in prompt else "确认好人胜"
-        return {"patches": [{"path": "/dossier/winner",
-                             "value": "werewolf" if quote == "改判狼人胜" else "good",
-                             "note_quote": quote, "reason": "备注明确胜方"}],
-                "unresolved": [],
-                "bluffs": {"reviewed": False, "no_bluff": False, "items": []}}
-
-    monkeypatch.setattr(incremental_ai, "run_json", fake_run_json)
-    monkeypatch.setattr(analyze_incremental, "validate_candidate", lambda value, *a, **k: value)
-
-    report = apply.apply_review(export, season="S23", root=root, apply=False, run_ai=True)
-
-    item = state["items"]["BV1abc:123:p01"]
-    cached = json.loads((root / item["accepted_candidate_path"]).read_text(encoding="utf-8"))
-    assert report["state"] == "prepared_cached"
-    assert report["games"][0]["patches"][0]["value"] == "good"
-    assert report["preview_path"] and (root / report["preview_path"]).is_file()
-    assert cached["dossier"]["winner"] == "good"
-    assert item["phases"].get("database") is None
-    assert not (root / "data" / "games" / "S23" / "2026-10-01_g01_BV1abc").exists()
-
-    payload = json.loads(export.read_text(encoding="utf-8"))
-    payload["games"][0]["note"] = "改判狼人胜"
-    export.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
-    updated = apply.apply_review(export, season="S23", root=root, apply=False, run_ai=True)
-    cached = json.loads((root / item["accepted_candidate_path"]).read_text(encoding="utf-8"))
-    accepted_review = json.loads((root / item["review_record_path"]).read_text(encoding="utf-8"))
-    assert updated["games"][0]["patches"][0]["value"] == "werewolf"
-    assert cached["dossier"]["winner"] == "werewolf"
-    assert accepted_review["note"] == "改判狼人胜"
-    assert len(calls) == 2
-
-
-@pytest.mark.parametrize('decisions, expected', [
-    ({1: 'yes'}, ['yes', 'no', 'no']),
-    ({1: 'yes', 2: 'yes'}, ['yes', 'yes', 'no']),
-    ({1: 'yes', 2: 'uncertain'}, ['yes', 'uncertain', 'no']),
-    ({}, ['uncertain', 'uncertain', 'uncertain']),
-])
-def test_selected_wolf_completes_bluff_list_and_preserves_explicit_exceptions(decisions, expected):
-    from website.api import bluffs
-
-    game = {
-        'id': 'new-game', 'season': 'S23', 'date': '2026-10-31',
-        'source': {'bvid': 'BV1234567890'}, 'rounds': [], 'voting': {},
-        'seats': [{'seat': n, 'person_id': str(n), 'name': f'选手{n}',
-                   'role': '狼人', 'faction': 'werewolf'} for n in range(1, 4)],
-    }
-    plan = {'review_record': {
-        'review_id': 'BV1234567890:123:p01', 'manual_sha256': 'a' * 64, 'note': '',
-        'bluffs_review': {'reviewed': bool(decisions), 'no_bluff': False,
-                         'items': [{'seat': seat, 'decision': decision, 'success': False,
-                                    'note': f'{seat}号：{decision}'}
-                                   for seat, decision in decisions.items()]},
-    }}
-
-    assessments = apply._new_bluff_assessments(game, plan, bluffs)
-    payload = {'games': [{'game_id': game['id'], 'assessments': assessments}]}
-    items = bluffs.review_items([game], payload)
-
-    assert [item['decision'] for item in items] == expected
-    assert [item['needs_review'] for item in items] == [value == 'uncertain' for value in expected]
-    for assessment in assessments:
-        if assessment['decision'] == 'no':
-            assert assessment['verification_status'] == 'user_confirmed'
-            assert assessment['evidence'][0]['source_sha256'] == 'a' * 64
-
-
-def test_explicit_bluff_note_can_include_mixed_blood_with_bound_fingerprints():
-    from website.api import bluffs
-
-    game = {
-        "id": "bili-BVnew-p01-g01", "season": "S24", "date": "2026-10-30",
-        "source": {"bvid": "BVnew"}, "rounds": [],
-        "voting": {"days": [], "ballots": [], "registrations": []},
-        "seats": [
-            {"seat": 1, "person_id": "p1", "name": "狼甲", "role": "狼人", "faction": "werewolf"},
-            {"seat": 2, "person_id": "p2", "name": "混血乙", "role": "混血儿", "faction": "werewolf"},
-            {"seat": 3, "person_id": "p3", "name": "好人丙", "role": "平民", "faction": "good"},
-        ],
-    }
-    plan = {"game": {"bvid": "BVnew"}, "candidate": {"dossier": {"slug": game["id"]}},
-            "review_record": {"review_id": "BVnew:123:p01", "manual_sha256": "a" * 64,
-                              "note": "2号混血儿悍跳成功", "bluffs_review": {
-                                  "reviewed": True, "no_bluff": False,
-                                  "items": [{"seat": 2, "decision": "yes", "success": True,
-                                             "note": "2号混血儿悍跳成功"}],
-                              }}}
-
-    rows = apply._new_bluff_assessments(game, plan, bluffs)
-
-    assert [row["seat"] for row in rows] == [1, 2]
-    assert rows[0]["decision"] == "uncertain"
-    assert rows[0]["verification_status"] == "assistant_inferred"
-    included = rows[1]
-    assert included["decision"] == "yes"
-    assert included["verification_status"] == "user_confirmed"
-    assert included["manual_included"] is True
-    assert included["manual_success"] is True
-    assert included["claim_fingerprint"] == bluffs.claim_fingerprint(game, included)
-    assert included["success_fingerprint"] == bluffs.success_fingerprint(
-        game, 2, bluffs.assessment_success_day(included))
-
-
-def test_explicit_negative_bluff_note_stays_no_and_does_not_create_nonphysical_row(monkeypatch, tmp_path):
-    import incremental_ai
-    from website.api import bluffs
-
-    note = "6号没有悍跳，2号混血儿没有悍跳，10号悍跳成功"
-    result = {"patches": [], "unresolved": [], "bluffs": {
-        "reviewed": True, "no_bluff": False,
-        "items": [
-            {"seat": 6, "decision": "no", "success": None, "note": "6号没有悍跳"},
-            {"seat": 2, "decision": "no", "success": None, "note": "2号混血儿没有悍跳"},
-            {"seat": 10, "decision": "yes", "success": True, "note": "10号悍跳成功"},
-        ],
-    }}
-    monkeypatch.setattr(incremental_ai, "run_json", lambda *args, **kwargs: result)
-    _, _, bluff_review, unresolved = apply._apply_note(
-        candidate(), note, "BVnew:123:p01", root=tmp_path)
-    assert unresolved == []
-
-    game = {
-        "id": "bili-BVnew-p01-g01", "season": "S24", "date": "2026-10-30",
-        "source": {"bvid": "BVnew"}, "rounds": [],
-        "voting": {"days": [], "ballots": [], "registrations": []},
-        "seats": [
-            {"seat": 2, "person_id": "p2", "name": "混血乙", "role": "混血儿", "faction": "werewolf"},
-            {"seat": 6, "person_id": "p6", "name": "狼甲", "role": "狼人", "faction": "werewolf"},
-            {"seat": 10, "person_id": "p10", "name": "狼乙", "role": "狼人", "faction": "werewolf"},
-        ],
-    }
-    plan = {"game": {"bvid": "BVnew"}, "candidate": {"dossier": {"slug": game["id"]}},
-            "review_record": {"review_id": "BVnew:123:p01", "manual_sha256": "b" * 64,
-                              "note": note, "bluffs_review": bluff_review}}
-    rows = apply._new_bluff_assessments(game, plan, bluffs)
-    by_seat = {row["seat"]: row for row in rows}
-    assert by_seat[6]["decision"] == "no"
-    assert by_seat[6]["verification_status"] == "user_confirmed"
-    assert "manual_success" not in by_seat[6]
-    assert by_seat[10]["decision"] == "yes"
-    assert by_seat[10]["manual_success"] is True
-    assert 2 not in by_seat
-
-
-def test_bluff_merge_preserves_old_games_and_adds_unknown_new_seats(tmp_path, monkeypatch):
-    root = tmp_path
-    asset = root / "website" / "assets" / "bluffs" / "S24.json"
-    asset.parent.mkdir(parents=True)
-    old = {"game_id": "old-game", "bvid": "BVold", "source_fingerprint": "old-fp",
-           "assessments": [{"seat": 1, "decision": "no", "verification_status": "user_confirmed"}]}
-    asset.write_text(json.dumps({"schema_version": 1, "season": "S24",
-                                 "inference_version": "old-version", "games": [old]}),
-                     encoding="utf-8")
-    game = {
-        "id": "bili-BVnew-p01-g01", "season": "S24", "date": "2026-10-30",
-        "source": {"bvid": "BVnew"}, "rounds": [],
-        "voting": {"days": [], "ballots": [], "registrations": []},
-        "seats": [
-            {"seat": 1, "person_id": "p1", "name": "狼甲", "role": "狼人", "faction": "werewolf"},
-            {"seat": 2, "person_id": "p2", "name": "混血乙", "role": "混血儿", "faction": "good"},
-        ],
-    }
-    from website.api import publisher
-    monkeypatch.setattr(publisher, "load_publication", lambda root, season: ([{
-        "dossier": {}, "voting": {}, "endgame": {}, "audit": None, "board": {},
-    }], "", ""))
-    monkeypatch.setattr(publisher, "_public_game", lambda *a, **k: game)
-    monkeypatch.setattr(apply, "save_state", lambda *a, **k: None)
-    plan = {"game": {"bvid": "BVnew"}, "candidate": {"dossier": {"slug": game["id"]}},
-            "item": {"phases": {}},
-            "review_record": {"review_id": "BVnew:123:p01", "manual_sha256": "a" * 64,
-                              "note": "2号混血儿悍跳成功", "bluffs_review": {"reviewed": True,
-                                  "no_bluff": False, "items": [{"seat": 2, "decision": "yes", "success": True,
-                                      "note": "2号混血儿悍跳成功"}]}}}
-
-    apply._merge_bluff_records(root, "S24", [plan], {"season": "S24", "items": {}})
-
-    merged = json.loads(asset.read_text(encoding="utf-8"))
-    assert merged["inference_version"] == "old-version"
-    assert next(row for row in merged["games"] if row["game_id"] == "old-game") == old
-    new = next(row for row in merged["games"] if row["game_id"] == game["id"])
-    assert [row["seat"] for row in new["assessments"]] == [1, 2]
-    assert new["assessments"][0]["decision"] == "uncertain"
-    assert new["assessments"][0]["verification_status"] == "assistant_inferred"
-    assert new["assessments"][1]["manual_included"] is True
-    assert new["assessments"][1]["verification_status"] == "user_confirmed"
-
-
-def test_game_and_voting_imports_share_a_transaction_and_roll_back_together(monkeypatch, tmp_path):
-    import database, game_records
-    import voting_core as voting_records
-
-    class Connection:
-        def __init__(self):
-            self.rolled_back = False
-            self.committed = False
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc, tb):
-            self.rolled_back = exc_type is not None
-            self.committed = exc_type is None
-
-    conn = Connection()
-    observed = []
-    monkeypatch.setattr(database, "import_media", lambda *a, **k: {"registered": True})
-    monkeypatch.setattr(database, "connect", lambda: conn)
-    monkeypatch.setattr(game_records, "import_game", lambda value, **kwargs: observed.append(kwargs["conn"]))
-
-    def fail_voting(value, **kwargs):
-        observed.append(kwargs["conn"])
-        raise RuntimeError("simulated voting failure")
-
-    monkeypatch.setattr(voting_records, "import_voting", fail_voting)
-    item = {"phases": {}}
-    state = {"season": "S23", "items": {"x": item}}
-    candidate_path = tmp_path / "candidate.json"
-    source_path = tmp_path / "source.json"
-    candidate_path.write_text("{}", encoding="utf-8")
-    source_path.write_text("source", encoding="utf-8")
-    plan = {"item": item, "game": {"review_id": "review-1", "bvid": "BV1abc", "page": 1,
-                                    "candidate_sha256": digest(candidate_path),
-                                    "source_sha256": digest(source_path)},
-            "candidate_path": candidate_path, "source_path": source_path,
-            "manifest": Path("manifest"),
-            "prepared_formal": {"dossier": candidate()["dossier"],
-            "voting": candidate()["voting"], "derivations": {}}}
-
-    with pytest.raises(RuntimeError, match="simulated voting failure"):
-        apply._import_database(plan, state, "S23", tmp_path)
-
-    assert observed == [conn, conn]
-    assert conn.rolled_back and not conn.committed
-    assert item["phases"] == {}
-
-
-def test_apply_writes_owned_formal_bundle_and_archived_review_after_db_success(tmp_path, monkeypatch):
-    root, state, export, _ = setup_review(tmp_path)
-    install_local_preflight_mocks(monkeypatch, state)
-    import database, endgame_records, game_derivations, game_records
-    import voting_core as voting_records
-
-    derived_inputs = []
-
-    def derive(dossier, voting, **kwargs):
-        derived_inputs.append((deepcopy(dossier), deepcopy(voting)))
-        prepared_dossier = deepcopy(dossier)
-        prepared_dossier["winner"] = "good"
-        return {"dossier": prepared_dossier, "voting": deepcopy(voting),
-                "derivations": {"gaps": [], "issues": [], "changes": [], "derived_for_test": True,
-                                "input_hashes": {"endgame": game_derivations.fingerprint(
-                                    kwargs["endgame"])}}}
+    monkeypatch.setattr(voting_core, "validate", lambda *a, **k: None)
+    monkeypatch.setattr(endgame_records, "validate", lambda *a, **k: None)
+
+    def derive(game_dossier, game_voting, **kwargs):
+        return {"dossier": deepcopy(game_dossier), "voting": deepcopy(game_voting),
+                "derivations": {"gaps": [], "issues": [], "terminal": {
+                    "round": 1, "phase": "day"}, "input_hashes": {
+                    "endgame": game_derivations.fingerprint(kwargs["endgame"])}}}
 
     monkeypatch.setattr(game_derivations, "derive_game", derive)
-
-    class Connection:
-        def __init__(self):
-            self.committed = False
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc, tb):
-            self.committed = exc_type is None
-
-    conn = Connection()
-    imported = []
-    monkeypatch.setattr(apply.subprocess, "run", lambda *a, **k: None)
-    monkeypatch.setattr(database, "import_media", lambda *a, **k: {"registered": True})
-    monkeypatch.setattr(database, "connect", lambda: conn)
-    monkeypatch.setattr(game_records, "import_game", lambda value, **kwargs: imported.append(("game", value, kwargs)))
-    monkeypatch.setattr(voting_records, "import_voting", lambda value, **kwargs: imported.append(("voting", value, kwargs)))
-    monkeypatch.setattr(endgame_records, "import_endgame", lambda value, **kwargs: imported.append(("endgame", value, kwargs)))
-    monkeypatch.setattr(apply, "save_state", lambda *a, **k: None)
-
-    report = apply.apply_review(export, season="S23", root=root, apply=True,
-                                backup=True, run_ai=False)
-
-    formal = root / "data" / "games" / "S23" / "2026-10-01_g01_BV1abc"
-    sidecar = json.loads((formal / "incremental_review.json").read_text(encoding="utf-8"))
-    assert report["state"] == "completed"
-    assert [row[0] for row in imported] == ["game", "voting", "endgame"]
-    assert imported[0][1] == json.loads((formal / "dossier.json").read_text(encoding="utf-8"))
-    assert imported[1][1] == json.loads((formal / "voting.json").read_text(encoding="utf-8"))
-    assert imported[2][1] == json.loads((formal / "endgame.json").read_text(encoding="utf-8"))
-    assert imported[0][1]["winner"] == "good"
-    assert imported[0][2]["conn"] is imported[1][2]["conn"] is imported[2][2]["conn"] is conn
-    assert imported[0][2]["derivations"]["derived_for_test"] is True
-    assert derived_inputs[0][1] == candidate()["voting"]
-    assert conn.committed
-    assert sidecar["format"] == "masters-incremental-confirmed-v1"
-    assert sidecar["reviewed"] is True
-    assert sidecar["manual_sha256"] == digest(root / sidecar["manual_source_path"])
-    assert sidecar["dossier_sha256"] == digest(formal / "dossier.json")
-    assert sidecar["voting_sha256"] == digest(formal / "voting.json")
-    assert (formal / "endgame.json").is_file()
-    assert json.loads((formal / "rule_derivations.json").read_text(encoding="utf-8"))["derived_for_test"]
-
-    monkeypatch.setattr(game_derivations, "apply_precomputed", lambda dossier, voting, derivations: {
-        "dossier": {**deepcopy(dossier), "winner": "good"}, "voting": deepcopy(voting)})
-    resumed = apply.apply_review(export, season="S23", root=root, apply=True,
-                                 backup=True, run_ai=False)
-    assert resumed["state"] == "completed"
-    assert len(imported) == 3
+    monkeypatch.setattr(game_derivations, "apply_precomputed", lambda game_dossier, game_voting, _: {
+        "dossier": deepcopy(game_dossier), "voting": deepcopy(game_voting)})
+    monkeypatch.setattr(media_ingest, "validate_media", lambda path, bvid, page: {
+        "manifest": json.loads(path.read_text(encoding="utf-8"))})
+    return root, state, review, key
 
 
-def test_publish_resume_skips_database_and_leaves_other_games_untouched(tmp_path, monkeypatch):
-    root = tmp_path
-    source = root / "data" / "source.json"
-    source.parent.mkdir(parents=True)
-    source.write_text(json.dumps({"source": {"bvid": "BV1abc", "cid": 123, "page": 1}}),
-                      encoding="utf-8")
-    entry = {"bvid": "BV1abc", "cid": 123, "page": 1, "labels": {"season": "S23"}}
-    work = root / "data" / "extractions" / "S23" / "incremental" / "BV1abc_p01_cid123"
-    work.mkdir(parents=True)
-    candidate_path = work / "candidate.json"
-    candidate_path.write_text(json.dumps(candidate()), encoding="utf-8")
-    accepted_path = work / "accepted_candidate.json"
-    accepted_path.write_text(json.dumps(candidate()), encoding="utf-8")
-    accepted_formal_path = work / "accepted_formal.json"
-    accepted_formal_path.write_text(json.dumps({"dossier": candidate()["dossier"],
-        "voting": candidate()["voting"], "derivations": {"gaps": [], "issues": []}}),
-        encoding="utf-8")
-    manual_path = root / "data" / "reports" / "S23" / "incremental" / "reviews" / "manual.json"
-    manual_path.parent.mkdir(parents=True)
-    manual_path.write_text('{"original":true}', encoding="utf-8")
-    record = {"review_id": "BV1abc:123:p01", "source_sha256": digest(source),
-              "candidate_sha256": digest(candidate_path), "manual_source_path": manual_path.relative_to(root).as_posix(),
-              "manual_sha256": digest(manual_path), "note": "", "patches": [],
-              "bluffs_review": {"reviewed": False, "no_bluff": False, "items": []}}
-    review_record_path = work / "accepted_review.json"
-    review_record_path.write_text(json.dumps(record), encoding="utf-8")
-    formal_other = root / "data" / "games" / "S23" / "other" / "dossier.json"
-    formal_other.parent.mkdir(parents=True)
-    formal_other.write_text('{"other":true}', encoding="utf-8")
-    other_before = formal_other.read_bytes()
-    target = {
-        "entry": entry, "analysis": "ready", "source_path": "data/source.json",
-        "source_sha256": digest(source), "candidate_sha256": digest(candidate_path),
-        "accepted_candidate_path": accepted_path.relative_to(root).as_posix(),
-        "accepted_candidate_sha256": digest(accepted_path),
-        "accepted_formal_sha256": digest(accepted_formal_path),
-        "review_record_path": review_record_path.relative_to(root).as_posix(),
-        "formal_dir": "data/games/S23/2026-10-01_g01_BV1abc",
-        "applied": True, "phases": {"database": "done", "formal": "done", "publish": "failed"},
-    }
-    other = {"entry": {"bvid": "BV1other", "cid": 9, "page": 1},
-             "phases": {"database": "done", "formal": "done", "publish": "done", "verify": "done"}}
-    state = {"schema_version": 1, "season": "S23",
-             "items": {"BV1abc:123:p01": target, "BV1other:9:p01": other}, "weibo": {}}
-    export = root / "review.json"
-    export.write_text(json.dumps({"format": apply.REVIEW_FORMAT, "season": "S23", "games": []}),
-                      encoding="utf-8")
-    monkeypatch.setattr(apply, "load_state", lambda root, season: state)
-    monkeypatch.setattr(apply, "save_state", lambda *a, **k: None)
-    monkeypatch.setattr(apply, "_merge_bluff_records", lambda *a, **k: None)
-    import workflow
-    monkeypatch.setattr(workflow, "formal_seasons", lambda root: ["S23"])
-    def stage_commands(stage, season, **kwargs):
-        if stage == "publish":
-            assert kwargs["photos"] is True
-        return [[stage, kwargs.get("bvid", "")]]
-
-    monkeypatch.setattr(workflow, "stage_commands", stage_commands)
-    jobs = []
-
-    def run_jobs(values, root):
-        jobs.extend(values)
-        for command in values:
-            if "website/check_publication.py" not in command:
-                continue
-            bvid_index = command.index("--bvid") + 1
-            output_path = Path(command[command.index("--output") + 1])
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(json.dumps({
-                "state": "passed", "source": {"selected_bvids": [command[bvid_index]]},
-                "api": {"release_id": "release-1"},
-            }), encoding="utf-8")
-
-    monkeypatch.setattr(apply, "_run_jobs", run_jobs)
-
-    report = apply.apply_review(export, season="S23", root=root, apply=True, publish=True,
-                                backup=True, run_ai=False)
+def test_apply_writes_only_final_game_and_same_result_is_idempotent(tmp_path, monkeypatch):
+    root, state, review, key = _fixture(tmp_path, monkeypatch)
+    report = apply.apply_review(review, season="S23", root=root, apply=True)
+    state_path = root / "data/reports/S23/incremental/state.json"
+    state_after = json.loads(state_path.read_text(encoding="utf-8"))
+    item = state_after["items"][key]
+    destination = root / item["formal_dir"]
+    game_path = destination / "game.json"
 
     assert report["state"] == "completed"
-    assert target["phases"]["publish"] == "done"
-    assert target["phases"]["verify"] == "done"
-    assert target["publication_acceptance_path"] == apply._acceptance_report_path(
-        root, "S23", ["BV1abc"]).relative_to(root).as_posix()
-    assert target["published_release_id"] == report["publication_acceptance"]["release_id"] == "release-1"
-    assert other["phases"]["publish"] == "done"
-    assert formal_other.read_bytes() == other_before
-    assert jobs[0] == ["publish", ""]
-    assert len(jobs) == 2
-    assert "website/check_publication.py" in jobs[1]
-    assert jobs[1][jobs[1].index("--seasons") + 1] == "S23"
-    assert jobs[1][jobs[1].index("--bvid") + 1] == "BV1abc"
-    assert jobs[1][jobs[1].index("--output") + 1] == str(
-        apply._acceptance_report_path(root, "S23", ["BV1abc"]))
+    assert game_path.is_file()
+    assert [path.name for path in destination.iterdir()] == ["game.json"]
+    game = json.loads(game_path.read_text(encoding="utf-8"))
+    assert game["schema_version"] == 1
+    assert game["bluff_review_available"] is True
+    assert game["source"]["media"] == [{
+        "bvid": "BV1ABCDEF123", "cid": 456, "page": 1,
+        "url": "https://www.bilibili.com/video/BV1ABCDEF123/?p=1",
+    }]
+    assert game["board"] == {"code": "mixed_blood", "name": "预女猎白混"}
+    assert "release_id" not in game and "presentation" not in game
+    assert game["terminal_observation"] == {"round": 1, "phase": "day"}
+    assert any(event["slot"] == "disqualification" for event in game["rounds"][0]["day"])
+    assert item["phases"] == {"formal": "done"}
+    assert item["applied"] is True
+    original_bytes = game_path.read_bytes()
+
+    again = apply.apply_review(review, season="S23", root=root, apply=True)
+
+    assert again["state"] == "completed"
+    assert game_path.read_bytes() == original_bytes
+    state_after = json.loads(state_path.read_text(encoding="utf-8"))
+    assert state_after["items"][key]["phases"] == {"formal": "done"}
+    assert state_after["items"][key]["applied"] is True
+
+    payload = json.loads(review.read_text(encoding="utf-8"))
+    payload["games"][0]["note"] = "不同复核结论"
+    review.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(apply.ReviewApplyError, match="已应用备注或悍跳结论不同"):
+        apply.apply_review(review, season="S23", root=root, apply=True)
 
 
-def test_verify_runs_one_acceptance_for_the_whole_batch_and_shares_its_receipt(
-        tmp_path, monkeypatch):
-    import workflow
+def test_formal_ownership_rejects_existing_game_with_same_source_elsewhere(tmp_path):
+    bvid, cid, page = "BV1ABCDEF123", 456, 1
+    destination = tmp_path / "data/games/S23/2026-10-27_g01_BV1ABCDEF123"
+    other = tmp_path / "data/games/S23/other/game.json"
+    other.parent.mkdir(parents=True)
+    other.write_text(json.dumps({"id": "different-game", "source": {"media": [
+        {"bvid": bvid, "cid": cid, "page": page, "url": "https://example.test/video"},
+    ]}}), encoding="utf-8")
+    entry = {"bvid": bvid, "cid": cid, "page": page}
+    final_game = {"id": "bili-BV1ABCDEF123-p01-g01", "source": {"media": [
+        {"bvid": bvid, "cid": cid, "page": page, "url": "https://example.test/video"},
+    ]}}
 
-    root = tmp_path
-    monkeypatch.setattr(workflow, "formal_seasons", lambda root: ["S23"])
-    plans = [
-        {"game": {"bvid": "BV1abc"}, "item": {"phases": {"verify": "done"}}},
-        {"game": {"bvid": "BV1def"}, "item": {"phases": {"verify": "failed"}}},
+    with pytest.raises(apply.ReviewApplyError, match="已在其他正式目录出现"):
+        apply._check_formal_ownership(tmp_path, "S23", {}, destination, entry, final_game)
+
+
+def test_unselected_manual_success_falls_back_to_rule_evaluation(monkeypatch):
+    from website.api import bluffs
+
+    monkeypatch.setattr(bluffs, "evaluate_success", lambda game, seat: {"value": True})
+    seats = [
+        {"seat": 1, "person_id": "person-1", "name": "狼甲", "role": "狼人", "faction": "werewolf"},
+        {"seat": 2, "person_id": "person-2", "name": "狼乙", "role": "狼人", "faction": "werewolf"},
     ]
-    calls = []
+    rows = [{"seat": 1, "decision": "yes", "success": ""},
+            {"seat": 2, "decision": "", "success": ""}]
+    selection = apply._selected_bluffs({"bluffs": rows}, {"dossier": {"seats": seats}}, required=True)
+    review = apply._combine_bluff_reviews({"reviewed": False, "no_bluff": False, "items": []}, selection)
+    game = {"id": "game-1", "source": {"bvid": "BV1ABCDEF123"}, "seats": seats}
 
-    def run_jobs(jobs, root):
-        calls.append(jobs)
-        assert len(jobs) == 1
-        command = jobs[0]
-        selected = command[command.index("--bvid") + 1:command.index("--output")]
-        output_path = Path(command[command.index("--output") + 1])
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(json.dumps({
-            "state": "passed", "source": {"selected_bvids": selected},
-            "api": {"release_id": "release-batch"},
-        }), encoding="utf-8")
+    projected = apply._public_bluffs(game, {"bluffs_review": review})
 
-    monkeypatch.setattr(apply, "_run_jobs", run_jobs)
+    assert [row["decision"] for row in projected] == ["yes", "no"]
+    assert projected[0]["success"] is True
+    assert projected[0]["success_source"] == "rules"
+    assert projected[0]["manual_included"] is False
 
-    receipt = apply._verify(plans, {"season": "S23", "items": {}}, "S23", root)
 
-    assert len(calls) == 1
-    command = calls[0][0]
-    assert "website/check_publication.py" in command
-    assert command[command.index("--bvid") + 1:command.index("--output")] == ["BV1abc", "BV1def"]
-    expected_path = apply._acceptance_report_path(root, "S23", ["BV1abc", "BV1def"])
-    assert expected_path.name.startswith("publication_acceptance_batch_")
-    assert Path(command[command.index("--output") + 1]) == expected_path
-    assert receipt == {
-        "path": expected_path.relative_to(root).as_posix(),
-        "sha256": digest(expected_path),
-        "release_id": "release-batch",
-        "selected_bvids": ["BV1abc", "BV1def"],
-    }
-    assert all(plan["item"]["phases"]["verify"] == "done" for plan in plans)
-    assert all(plan["item"]["publication_acceptance_path"] == receipt["path"] for plan in plans)
-    assert all(plan["item"]["publication_acceptance_sha256"] == receipt["sha256"] for plan in plans)
-    assert all(plan["item"]["published_release_id"] == "release-batch" for plan in plans)
+def test_selected_null_success_stays_pending_when_rules_can_judge(monkeypatch):
+    from website.api import bluffs
+
+    monkeypatch.setattr(bluffs, "evaluate_success", lambda game, seat: {"value": True})
+    seats = [
+        {"seat": 1, "person_id": "person-1", "name": "狼甲", "role": "狼人", "faction": "werewolf"},
+        {"seat": 2, "person_id": "person-2", "name": "狼乙", "role": "狼人", "faction": "werewolf"},
+    ]
+    rows = [{"seat": 1, "decision": "yes", "success": "uncertain"},
+            {"seat": 2, "decision": "", "success": ""}]
+    selection = apply._selected_bluffs({"bluffs": rows}, {"dossier": {"seats": seats}}, required=True)
+    review = apply._combine_bluff_reviews({"reviewed": False, "no_bluff": False, "items": []}, selection)
+    game = {"id": "game-1", "source": {"bvid": "BV1ABCDEF123"}, "seats": seats}
+
+    projected = apply._public_bluffs(game, {"bluffs_review": review})
+
+    assert review["items"][0]["success_selected"] is True
+    assert projected[0]["success"] is None
+    assert projected[0]["success_source"] == "user"
+    assert projected[0]["success_needs_review"] is True

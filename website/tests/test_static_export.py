@@ -1,225 +1,99 @@
-from __future__ import annotations
-
-from datetime import datetime, timezone
-import hashlib
-import json
 from pathlib import Path
 
-import pytest
-from fastapi import HTTPException
-import psycopg
-
-from website.api import app as api_module
-from website.static_publish.export_static import ExportError, _ranges, export_snapshot, sync_media
-
-
-class _Cursor:
-    def __init__(self, *, row=None, rows=None):
-        self.row = row
-        self.rows = rows or []
-
-    def fetchone(self):
-        return self.row
-
-    def fetchall(self):
-        return self.rows
+from website.public_data import ROOT, _ranges, build_public_data, check_public_data
+from website.static_publish.export_static import (
+    ExportError,
+    _media_endpoint,
+    _safe_base_path,
+    export_direct_snapshot,
+)
 
 
-def test_game_summary_search_text_matches_publisher_field_order():
-    snapshot = {
-        "id": "2026-10-01_g01_BV1234567890", "season": "S23", "date": "2026-10-01",
-        "phase": "regular", "game_number": 1, "board": {"code": "b", "name": "标准版"},
-        "winner": "good", "players": [], "ballot_count": 1, "round_count": 2,
-        "source": {"bvid": "BV1234567890"},
-        "seats": [{"name": "甲"}, {"name": "乙"}],
-    }
-    assert api_module._search_text(snapshot) == (
-        "2026-10-01_g01_BV1234567890 BV1234567890 2026-10-01 标准版 甲 乙"
+def test_final_json_covers_all_published_games_and_response_scopes():
+    result = check_public_data(ROOT)
+    data = build_public_data(ROOT)
+    expected_seasons = sorted({game["season"] for game in data["games"]})
+    expected_ranges = _ranges(expected_seasons)
+    assert result["games"] == len(data["games"])
+    assert result["seasons"] == expected_seasons
+    assert result["players"] == len(data["player_index"]["items"])
+    assert result["ranges_checked"] == len(expected_ranges)
+    assert result["leaderboards"] == sum(
+        1 + ("finals_week" in row["phases"]) for row in data["season_rows"]
     )
-    summary = api_module.GameSummary.model_validate({**snapshot, "search_text": api_module._search_text(snapshot)})
-    assert summary.model_dump()["search_text"] == api_module._search_text(snapshot)
+
+    game_index = data["documents"]["games/index.json"]
+    assert game_index["total"] == result["games"]
+    game_id = game_index["items"][0]["id"]
+    detail = data["documents"][f"games/{game_id}.json"]
+    assert {"id", "seats", "rounds", "voting", "endgame", "rules_state", "terminal_events",
+            "presentation", "timeline"}.issubset(detail)
+    assert not {"schema_version", "bluffs", "bluff_review_available"}.intersection(detail)
+
+    profile = next(value for name, value in data["documents"].items()
+                   if name.startswith("players/") and "--" in Path(name).name
+                   and isinstance(value["stats"].get("bluff_count"), int)
+                   and isinstance(value["stats"].get("bluff_rate"), dict))
+    metric = profile["stats"]["bluff_rate"]
+    success = profile["stats"]["bluff_success_rate"]
+    assert profile["stats"]["bluff_count"] == metric["numerator"]
+    assert metric["denominator"] >= 0 and isinstance(metric["samples"], list)
+    assert success["denominator"] == profile["stats"]["bluff_count"]
+
+    for season in data["seasons"]:
+        board = data["documents"][f"leaderboards/{season}/all.json"]
+        assert board["items"]
+        assert {"bluff_count", "bluff_count_complete", "bluff_rate", "bluff_success_rate"}.issubset(
+            board["items"][0]
+        )
+        assert all(type(item.get("bluff_count_complete")) is bool for item in board["items"])
 
 
-def test_export_manifest_binds_release_reviews_and_media_and_distinguishes_missing_release(monkeypatch):
-    release = {"id": "release-1", "published_at": datetime(2026, 11, 4, tzinfo=timezone.utc),
-               "game_count": 2, "source_hash": "a" * 64}
-    media_hashes = {"player_photos": "b" * 64, "bluff_frames": "c" * 64}
-    monkeypatch.setattr(api_module, "_effective_media_assets", lambda: (media_hashes, []))
-    game_rows = [
-        {"id": "game-22", "season": "S22", "event_date": "2026-01-01", "phase": "regular",
-         "game_number": 1, "board_code": "standard", "board_name": "标准版", "winner": "good",
-         "bvid": "BV0000000001", "search_text": "game-22 甲", "ballot_count": 1,
-         "vote_count": 2, "round_count": 2,
-         "snapshot": {"id": "game-22", "season": "S22", "seats": [{"person_id": "p1", "name": "甲"}]}},
-        {"id": "game-23", "season": "S23", "event_date": "2026-02-01", "phase": "regular",
-         "game_number": 1, "board_code": "standard", "board_name": "标准版", "winner": "werewolf",
-         "bvid": "BV0000000002", "search_text": "game-23 乙", "ballot_count": 1,
-         "vote_count": 2, "round_count": 2,
-         "snapshot": {"id": "game-23", "season": "S23", "seats": [{"person_id": "p2", "name": "乙"}]}},
-    ]
+def test_media_allowlist_and_base_path_validation():
+    digest = "a" * 64
+    endpoint, relative, path_hash = _media_endpoint(f"/media/player-photos/S23/{digest}.jpg")
+    assert endpoint == f"/media/player-photos/S23/{digest}.jpg"
+    assert relative == f"player-photos/S23/{digest}.jpg"
+    assert path_hash == digest
+    assert _safe_base_path("/") == ""
+    assert _safe_base_path("/langrensha-site") == "/langrensha-site"
+    for invalid in ("relative", "/bad/../path", "/trailing/", "//double"):
+        try:
+            _safe_base_path(invalid)
+        except ExportError:
+            continue
+        raise AssertionError(f"invalid base path was accepted: {invalid}")
 
-    class Connection:
-        def execute(self, query, params=None):
-            text = str(query)
-            if "FROM active_release" in text:
-                return _Cursor(row=release)
-            if "array_agg(DISTINCT phase" in text:
-                return _Cursor(rows=[{"season": "S22", "game_count": 1, "phases": ["regular"]},
-                                     {"season": "S23", "game_count": 1,
-                                      "phases": ["finals_week", "regular"]}])
-            if "active_publication_id" in text:
-                return _Cursor(rows=[
-                    {"season": "S22", "active_publication_id": "pub-22",
-                     "publication_id": "pub-22", "payload_hash": "e" * 64,
-                     "payload": {"season": "S22", "inference_version": "v1", "games": []}},
-                    {"season": "S23", "active_publication_id": "pub-23",
-                     "publication_id": "pub-23", "payload_hash": "d" * 64,
-                     "payload": {"season": "S23", "inference_version": "v1", "games": []}},
-                ])
-            if "FROM game_players" in text:
-                return _Cursor(rows=[
-                    {"game_id": "game-22", "person_id": "p1", "name": "甲", "seat": 1,
-                     "role": "平民", "faction": "good"},
-                    {"game_id": "game-23", "person_id": "p2", "name": "乙", "seat": 1,
-                     "role": "狼人", "faction": "werewolf"},
-                ])
-            if "FROM players" in text:
-                return _Cursor(rows=[{"id": "p1", "name": "甲"}, {"id": "p2", "name": "乙"}])
-            if "round_count, snapshot FROM games" in text:
-                return _Cursor(rows=game_rows)
-            raise AssertionError(text)
-
-    result = api_module.export_manifest(Connection())
-    validated = api_module.ExportManifest.model_validate(result).model_dump()
-    assert validated["release_id"] == "release-1"
-    assert validated["bluff_publications"] == [
-        {"season": "S22", "publication_id": "pub-22", "payload_hash": "e" * 64},
-        {"season": "S23", "publication_id": "pub-23", "payload_hash": "d" * 64},
-    ]
-    assert validated["media_manifest_hashes"] == media_hashes
-    assert validated["analytics_version"] == api_module.ANALYTICS_VERSION
-    fingerprints = validated["content_fingerprints"]
-    assert fingerprints["implementation"] == api_module.IMPLEMENTATION_FINGERPRINT
-    assert set(fingerprints["games"]) == {"game-22", "game-23"}
-    assert set(fingerprints["seasons"]) == {"S22", "S23"}
-    assert all(len(value) == 64 for value in [fingerprints["implementation"],
-                                             *fingerprints["games"].values(),
-                                             *fingerprints["seasons"].values()])
-
-    class NoRelease:
-        def execute(self, query, params=None):
-            return _Cursor(row=None)
-
-    with pytest.raises(HTTPException) as missing:
-        api_module.export_manifest(NoRelease())
-    assert missing.value.detail == "No published release"
-
-    class FailedRead:
-        def execute(self, query, params=None):
-            raise psycopg.Error("database read failed")
-
-    with pytest.raises(HTTPException) as failed:
-        api_module.export_manifest(FailedRead())
-    assert failed.value.detail == "Export metadata unavailable"
+    try:
+        _media_endpoint(f"/media/bluff-frames/S23/{digest}.png")
+    except ExportError:
+        pass
+    else:
+        raise AssertionError("retired evidence media must not enter the static export")
 
 
-def test_ranges_include_every_contiguous_season_window():
-    assert _ranges(["S21", "S22", "S23"]) == [
-        {"start": "S21", "end": "S21", "seasons": ["S21"]},
-        {"start": "S21", "end": "S22", "seasons": ["S21", "S22"]},
-        {"start": "S21", "end": "S23", "seasons": ["S21", "S22", "S23"]},
-        {"start": "S22", "end": "S22", "seasons": ["S22"]},
-        {"start": "S22", "end": "S23", "seasons": ["S22", "S23"]},
-        {"start": "S23", "end": "S23", "seasons": ["S23"]},
-    ]
+def test_snapshot_id_tracks_response_content_and_is_stable(tmp_path, monkeypatch):
+    from website import public_data
 
+    state = {"display": "first"}
 
-def test_sync_media_checks_content_addressed_hash_and_writes_allowlisted_asset(tmp_path, monkeypatch):
-    content = b"sample image bytes"
-    digest = hashlib.sha256(content).hexdigest()
-    url = f"/media/player-photos/S23/{digest}.jpg"
-    monkeypatch.setattr("website.static_publish.export_static._request_bytes", lambda api_url, path: (content, {}))
+    def fixture(_root):
+        return {
+            "release_id": "direct-" + "a" * 24,
+            "source_hash": "b" * 64,
+            "documents": {"overview.json": {"display": state["display"]}},
+            "season_rows": [{"season": "S23", "game_count": 0, "phases": ["regular"]}],
+            "ranges": [],
+            "counts": {"games": 0, "players": 0, "game_details": 0,
+                       "player_ranges": 0, "stats_ranges": 0, "leaderboards": 0},
+        }
 
-    copied = sync_media("http://127.0.0.1:8000", tmp_path, [{"url": url, "sha256": digest}])
-    target = tmp_path / "player-photos" / "S23" / f"{digest}.jpg"
-    assert target.read_bytes() == content
-    assert copied == [{"url": url, "sha256": digest, "path": f"player-photos/S23/{digest}.jpg"}]
+    monkeypatch.setattr(public_data, "build_public_data", fixture)
+    first = export_direct_snapshot(tmp_path, tmp_path / "first/data", base_path="/site", build_id="build")
+    repeated = export_direct_snapshot(tmp_path, tmp_path / "repeated/data", base_path="/site", build_id="build")
+    assert repeated["snapshot_id"] == first["snapshot_id"]
 
-    monkeypatch.setattr("website.static_publish.export_static._request_bytes", lambda api_url, path: (b"changed", {}))
-    with pytest.raises(ExportError, match="content hash mismatch"):
-        sync_media("http://127.0.0.1:8000", tmp_path / "bad", [{"url": url, "sha256": digest}])
-
-
-def test_partial_snapshot_exports_one_season_game_player_and_is_marked_incomplete(tmp_path, monkeypatch):
-    release = {"id": "release-1", "published_at": "2026-11-04T00:00:00Z",
-               "game_count": 1, "source_hash": "a" * 64}
-    metadata = {
-        "release_id": "release-1", "release": release,
-        "seasons": [{"season": "S23", "game_count": 1, "phases": ["regular"]}],
-        "bluff_publications": [{"season": "S23", "publication_id": None, "payload_hash": None}],
-        "media_manifest_hashes": {"player_photos": "b" * 64, "bluff_frames": "c" * 64},
-        "media_assets": [], "analytics_version": 15,
-    }
-    summary = {"id": "game-1", "season": "S23", "date": "2026-10-01", "phase": "regular",
-               "game_number": 1, "board": {"code": "test", "name": "标准版"}, "winner": "good",
-               "players": [{"id": "player-1", "name": "甲", "seat": 1, "role": "平民", "faction": "good"}],
-               "ballot_count": 1, "round_count": 2, "search_text": "game-1 BV1234567890 2026-10-01 标准版 甲"}
-    game_detail = {**summary, "release_id": "release-1", "analytics_version": 15,
-                   "source": {"bvid": "BV1234567890"}, "voting": {"ballots": []}}
-    player_summary = {"id": "player-1", "name": "甲", "appearances": 1, "roles": [], "photo": None}
-    player_detail = {
-        "id": "player-1", "name": "甲", "release_id": "release-1", "analytics_version": 15,
-        "bluff_publications": [{"season": "S23", "publication_id": None, "payload_hash": None}],
-        "scope": {"season_start": "S23", "season_end": "S23", "seasons": ["S23"],
-                  "minimum_appearances": 0},
-    }
-
-    def fake_json(api_url, path, params=None):
-        params = params or {}
-        if path == "/api/v1/releases":
-            return {"items": [{**release, "active": True}]}
-        if path == "/health":
-            return {"status": "ok"}
-        if path == "/api/v1/export-manifest":
-            return metadata
-        if path == "/api/v1/overview":
-            return {"release": release, "totals": {"games": 1, "players": 1},
-                    "seasons": [{"id": "S23", "name": "S23", "games": 1, "days": 1}],
-                    "boards": [], "recent_games": [summary]}
-        if path == "/api/v1/games":
-            return {"release_id": "release-1", "total": 1, "page": params.get("page", 1),
-                    "page_size": 100, "items": [summary]}
-        if path == "/api/v1/players":
-            return {"release_id": "release-1", "analytics_version": 15, "total": 1,
-                    "page": params.get("page", 1), "page_size": 100, "items": [player_summary]}
-        if path == "/api/v1/games/game-1":
-            return game_detail
-        if path == "/api/v1/players/player-1":
-            return player_detail
-        if path == "/api/v1/stats":
-            return {"release_id": "release-1", "analytics_version": 15,
-                    "scope": {"season_start": "S23", "season_end": "S23", "seasons": ["S23"]}}
-        if path == "/api/v1/leaderboard":
-            return {"release_id": "release-1", "analytics_version": 15, "season": "S23",
-                    "phase": "all", "bluff_publication_id": None, "bluff_payload_hash": None,
-                    "game_count": 1, "items": [player_summary]}
-        if path == "/api/v1/bluff-review":
-            return {"release_id": "release-1", "analytics_version": 15, "season": "S23",
-                    "status": "all", "bluff_publication_id": None, "bluff_payload_hash": None,
-                    "summary": {"games": 1}, "items": []}
-        raise AssertionError((path, params))
-
-    monkeypatch.setattr("website.static_publish.export_static._request_json", fake_json)
-    result = export_snapshot("http://127.0.0.1:8000", tmp_path / "snapshot", base_path="/langrensha-site",
-                             build_id="sample-build", partial_season="S23")
-
-    assert result["complete"] is False
-    assert result["partial"] == {"enabled": True, "season": "S23", "game_id": "game-1",
-                                  "player_id": "player-1"}
-    assert result["counts"]["games"] == 1 and result["counts"]["players"] == 1
-    assert result["ranges"] == [{"start": "S23", "end": "S23", "seasons": ["S23"]}]
-    data_root = tmp_path / "snapshot" / "data"
-    written = json.loads((data_root / "manifest.json").read_text(encoding="utf-8"))
-    assert written["build_id"] == "sample-build"
-    assert (data_root / "releases" / result["snapshot_id"] / "games/game-1.json").is_file()
-    assert (data_root / "releases" / result["snapshot_id"] / "players/player-1/S23--S23.json").is_file()
+    state["display"] = "changed response"
+    changed = export_direct_snapshot(tmp_path, tmp_path / "changed/data", base_path="/site", build_id="build")
+    assert changed["source_hash"] == first["source_hash"]
+    assert changed["snapshot_id"] != first["snapshot_id"]

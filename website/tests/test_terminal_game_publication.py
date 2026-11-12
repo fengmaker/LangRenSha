@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from website.api import publisher
+from website import game_data as publisher
 
 
 def _terminal_seer_game(*, seer_action: str = "unavailable", seer_targets: list[int] | None = None) -> dict:
@@ -44,8 +44,9 @@ def _terminal_seer_game(*, seer_action: str = "unavailable", seer_targets: list[
         ],
         "_publication_context": {"terminal_observation": {"round": 3, "phase": "night"}},
     }
-    _, rules = publisher._logical_rules(publisher.PACKAGE_ROOT, "S21")
-    board = rules["boards"][dossier["board"]]
+    from scripts.board_config import load_template
+    board = load_template(dossier["board"])
+    board["_public_board"] = {"code": "mechanical_wolf_seer", "name": board["name"]}
     person_ids = {name: f"person-{seat}" for seat, name in enumerate(names, 1)}
     return publisher._public_game(dossier, {}, {}, None, board, person_ids)
 
@@ -71,7 +72,7 @@ def test_terminal_night_publication_preserves_an_explicit_seer_check():
     assert any(event["slot"] == "seer_check" and event["action"] == "check"
                for round_ in doc["presentation"]["rounds"] for event in round_["night"])
 def test_s21_confirmed_endgame_concession_is_exposed_once():
-    from website.api.publisher import _public_supplemental_events
+    from website.game_data import _public_supplemental_events
     supplemental = {"phase_reviewed": {"events": [
         {"round": 4, "phase": "endgame", "action": "concede", "actor": 1,
          "state": "performed", "status": "text_explicit"},
