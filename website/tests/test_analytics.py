@@ -327,6 +327,21 @@ def test_treasure_role_label_uses_its_god_card_even_while_switching_to_civilian(
     assert snapshot == before
 
 
+@pytest.mark.parametrize(('slot', 'action', 'result', 'expected'), [
+    ('treasure_alignment', 'wolf', '本局为盗宝毒师，固定狼人阵营。', '盗宝毒师'),
+    ('treasure_remainder', 'view', '三张余牌：毒师、平民、狼人', '盗宝大师'),
+])
+def test_treasure_label_uses_confirmed_identity_without_guessing_from_remainder(slot, action, result, expected):
+    snapshot = game('treasure-label-source', seats=[seat(1, 'treasure', '盗宝大师', 'werewolf')])
+    snapshot['rounds'] = [{'number': 1, 'night': [
+        {'slot': slot, 'action': action, 'actor': 1, 'result': result},
+        {'slot': 'treasure_choice', 'action': 'choose', 'actor': 1, 'result': '平民'},
+    ], 'day': []}]
+    before = deepcopy(snapshot)
+    assert role_label(snapshot, snapshot['seats'][0]) == expected
+    assert snapshot == before
+
+
 def test_werewolf_appearance_explosion_and_sheriff_rates_use_confirmed_personal_faction():
     first_wolf_game = game("wolf-first", seats=[seat(1, "p", "狼人", "werewolf")], registrations=[
         # Earliest day wins even if records arrive out of order.

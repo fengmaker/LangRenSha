@@ -62,6 +62,18 @@ def client(monkeypatch):
                 "rate": numerator / denominator, "excluded": 0,
                 "game_ids": [f"{payload['season']}-bluff"],
             },
+            "bluff_badge_count": {
+                "numerator": numerator, "denominator": 1, "rate": numerator,
+                "excluded": 0, "game_ids": [f"{payload['season']}-bluff"],
+                "samples": [{"game_id": f"{payload['season']}-bluff", "positive": numerator,
+                             "negative": 1 - numerator}],
+            },
+            "bluff_first_day_exiled": {
+                "numerator": 1 - numerator, "denominator": 1, "rate": 1 - numerator,
+                "excluded": 0, "game_ids": [f"{payload['season']}-bluff"],
+                "samples": [{"game_id": f"{payload['season']}-bluff", "positive": 1 - numerator,
+                             "negative": numerator}],
+            },
         }}
 
     monkeypatch.setattr(api, "aggregate_bluffs", fake_aggregate_bluffs)
@@ -187,6 +199,11 @@ def test_player_range_resolves_latest_and_aggregates_season_local_bluff_metrics(
 
     assert response.status_code == 200
     detail = response.json()
+    for key in ("bluff_badge_count", "bluff_first_day_exiled"):
+        metric = detail["stats"]["performance"][key]
+        assert (metric["numerator"], metric["denominator"]) == (1, 2)
+        assert metric["game_ids"] == ["S22-bluff", "S23-bluff"]
+        assert sum(sample["positive"] for sample in metric["samples"]) == 1
     assert detail["scope"]["season_start"] == "S22"
     assert detail["scope"]["season_end"] == "S23"
     assert detail["scope"]["seasons"] == ["S22", "S23"]

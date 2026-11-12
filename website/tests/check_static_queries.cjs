@@ -45,6 +45,18 @@ assert.deepEqual(filterRankingEntries(nestedMetricEntries, {
 }).map(x => [x.id, x.rank]), [['few-role-games', 1]]);
 assert.equal(nestedMetricEntries[0].appearances, 1);
 
+// A player's total appearances and distinct games cannot replace a metric's denominator.
+const sampleEntries = [
+  { id: 'one-witch-game', rank: 1, appearances: 60, sample_count: 1, value: 1 },
+  { id: 'many-witch-games', rank: 2, appearances: 60, sample_count: 8, value: 0.75 },
+];
+assert.deepEqual(filterRankingEntries(sampleEntries, { minimumAppearances: 20, minimumSamples: 5 })
+  .map(x => [x.id, x.rank]), [['many-witch-games', 1]]);
+assert.deepEqual(filterRankingEntries(entries, { minimumSamples: 10, minimumEffectiveGames: 4 })
+  .map(x => [x.id, x.rank]), [['c', 1], ['d', 2]]);
+assert.deepEqual(filterRankingEntries(entries, { minimumSamples: 10 }).map(x => [x.id, x.rank]),
+  [['b', 1], ['c', 2], ['d', 3]]);
+
 const { filterAndSortGames, validateGameFilters } = load('lib/game-query.ts');
 const game = (id, date, number, name) => ({ id, date, game_number: number, season: 'S23', phase: 'regular',
   board: { code: 'board', name: '版型' }, players: [{ id: 'p', name }], search_text: `${id} BVx 版型 ${name}` });

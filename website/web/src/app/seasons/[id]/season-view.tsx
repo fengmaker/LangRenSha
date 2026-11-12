@@ -1,4 +1,5 @@
 import { ArchiveLink } from "@/components/archive-link";
+import { DataScopeSummary } from "@/components/data-scope-summary";
 import { GameArchiveList } from "@/components/game-archive-list";
 import { PageIntro } from "@/components/page-intro";
 import { formatNumber } from "@/lib/format";
@@ -17,6 +18,7 @@ export function SeasonView({ season, stats, recent, regularCount, finalsCount }:
   return <div className="page-wrap season-page">
     <div className="breadcrumb"><ArchiveLink href="/">档案首页</ArchiveLink><span>/</span><span>赛季索引</span></div>
     <PageIntro title={season.name} description="查看本季对局、版型分布与阶段积分。" action={<span className="season-hero-code">{season.id}</span>} />
+    <DataScopeSummary range={season.id} gameCount={season.games} latestDate={recent.find((game) => game.date)?.date} />
     <section className="season-summary-metrics">
       <article><span>对局</span><strong>{formatNumber(season.games)}</strong></article>
       <article><span>比赛日</span><strong>{formatNumber(season.days)}</strong></article>

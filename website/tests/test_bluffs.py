@@ -2,8 +2,8 @@ from copy import deepcopy
 import pytest
 
 from website.api.bluffs import (
-    aggregate_bluffs, claim_fingerprint, evaluate_success, review_items, source_fingerprint,
-    success_fingerprint, physical_wolf,
+    aggregate_bluffs, claim_fingerprint, evaluate_success, fully_reviewed_game_count,
+    review_items, source_fingerprint, success_fingerprint, physical_wolf,
 )
 
 
@@ -43,6 +43,38 @@ def sign_assessments(game, payload):
             result_review=record.get("result_review"),
         )
     return payload
+
+
+def test_bluff_stage_counts_follow_election_and_literal_first_day_exile():
+    first = sample(exile=1, badge=1)
+    first["id"] = "elected-and-exiled"
+    second = sample(exile=None, badge=3)
+    second["id"] = "later-exile"
+    second["voting"]["days"][0]["exile"] = "not_held"
+    second["rounds"].append({"number": 2, "day": [
+        {"slot": "exile_result", "action": "exile", "targets": [1]},
+        {"slot": "badge", "action": "transfer", "targets": [1]},
+    ]})
+    payload = {"games": review(first)["games"] + review(second)["games"]}
+    row = aggregate_bluffs([first, second], payload)["wolf"]
+    assert row["bluff_badge_count"]["numerator"] == 1
+    assert row["bluff_badge_count"]["denominator"] == 2
+    assert row["bluff_first_day_exiled"]["numerator"] == 1
+    assert row["bluff_first_day_exiled"]["denominator"] == 2
+    assert row["bluff_badge_count"]["samples"] == [
+        {"game_id": "elected-and-exiled", "positive": 1, "negative": 0},
+        {"game_id": "later-exile", "positive": 0, "negative": 1},
+    ]
+
+
+def test_confirmed_bluffer_election_is_counted_when_claim_day_was_not_recorded():
+    game = sample(badge=1)
+    payload = review(game)
+    assessment = payload["games"][0]["assessments"][0]
+    assessment.update(verification_status="user_confirmed", claim_day=None, manual_success=True)
+    row = aggregate_bluffs([game], payload)["wolf"]
+    assert row["bluff_badge_count"]["numerator"] == 1
+    assert row["bluff_badge_count"]["excluded"] == 0
 
 
 @pytest.mark.parametrize('role', ['狼女孩', '捣蛋鬼'])
@@ -100,6 +132,36 @@ def test_user_confirmed_no_bluff_is_not_reopened_by_evidence_changes():
     item = next(item for item in review_items([changed], payload) if item['seat'] == 1)
     assert item['decision'] == 'no'
     assert item['claim_needs_review'] is False
+
+
+def test_reviewed_game_coverage_uses_final_records_without_changing_decisions_or_results():
+    games = []
+    records = []
+    for season in ("S22", "S23"):
+        game = sample()
+        game.update(id=f"{season}-reviewed", season=season)
+        payload = review(game)
+        for assessment in payload["games"][0]["assessments"]:
+            assessment["verification_status"] = "user_confirmed"
+            assessment.pop("review_stage", None)
+        payload["games"][0]["assessments"][0]["manual_success"] = True
+        games.append(game)
+        records.extend(payload["games"])
+
+    before = deepcopy(records)
+    items = review_items(games, {"games": records})
+    decisions = [(item["game_id"], item["decision"], item["success"]) for item in items]
+
+    assert fully_reviewed_game_count(items) == 2
+    assert decisions == [
+        ("S22-reviewed", "yes", True), ("S22-reviewed", "no", None),
+        ("S23-reviewed", "yes", True), ("S23-reviewed", "no", None),
+    ]
+    assert records == before
+
+    records[1]["assessments"][0]["verification_status"] = "assistant_inferred"
+    items = review_items(games, {"games": records})
+    assert fully_reviewed_game_count(items) == 1
 
 
 def test_unpublished_review_keeps_all_player_counts_incomplete_even_with_unknown_factions():

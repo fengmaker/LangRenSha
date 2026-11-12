@@ -19,38 +19,47 @@ export function MetricRank({ ranking, label, provisional, title, entries = [], m
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [minimumGames, setMinimumGames] = useState(0);
   const [customMinimum, setCustomMinimum] = useState("");
+  const [minimumSamples, setMinimumSamples] = useState(0);
+  const [customSamples, setCustomSamples] = useState("");
   const canFilterGames = format === "percent" && metricLabel !== "出场率";
   const showsRoundCounts = canFilterGames && sampleUnit === "次";
   const effectiveGames = (entry: RankingEntry) => entry.effective_game_count ?? entry.sample_count;
-  const visibleEntries = hasOpened ? filterRankingEntries(entries, {
+  const filteredEntries = filterRankingEntries(entries, {
     minimumAppearances: context.minimumAppearances,
     minimumEffectiveGames: canFilterGames ? minimumGames : 0,
+    minimumSamples: canFilterGames ? minimumSamples : 0,
     totalAppearancesByPlayer: context.totalAppearancesByPlayer,
-  }) : [];
-  const appearanceCohort = filterRankingEntries(entries, { minimumAppearances: context.minimumAppearances, totalAppearancesByPlayer: context.totalAppearancesByPlayer });
-  const qualifiedCurrent = appearanceCohort.find((entry) => entry.id === context.playerId);
-  const adjustedRanking = context.minimumAppearances > 0 ? qualifiedCurrent
-    ? { rank: qualifiedCurrent.rank, total: appearanceCohort.length, tied: qualifiedCurrent.tied } : null
-    : ranking ?? (qualifiedCurrent ? { rank: qualifiedCurrent.rank, total: appearanceCohort.length, tied: qualifiedCurrent.tied } : null);
+  });
+  const visibleEntries = hasOpened ? filteredEntries : [];
+  const qualifiedCurrent = filteredEntries.find((entry) => entry.id === context.playerId);
+  const adjustedRanking = context.minimumAppearances > 0 || minimumGames > 0 || minimumSamples > 0 ? qualifiedCurrent
+    ? { rank: qualifiedCurrent.rank, total: filteredEntries.length, tied: qualifiedCurrent.tied } : null
+    : ranking ?? (qualifiedCurrent ? { rank: qualifiedCurrent.rank, total: filteredEntries.length, tied: qualifiedCurrent.tied } : null);
   const selectedEntry = entries.find((entry) => entry.id === context.playerId);
   const selectedExcluded = canFilterGames && selectedEntry && effectiveGames(selectedEntry) < minimumGames;
+  const sampleExcluded = canFilterGames && selectedEntry && selectedEntry.sample_count < minimumSamples;
   const appearanceExcluded = context.appearances < context.minimumAppearances;
   function applyMinimumGames(value: number) {
     setMinimumGames(value);
     setCustomMinimum(value ? String(value) : "");
     if (tableScroll.current) tableScroll.current.scrollTop = 0;
   }
+  function applyMinimumSamples(value: number) {
+    setMinimumSamples(value);
+    setCustomSamples(value ? String(value) : "");
+    if (tableScroll.current) tableScroll.current.scrollTop = 0;
+  }
   const params = new URLSearchParams({ season_start: context.start, season_end: context.end });
   if (context.minimumAppearances > 0) params.set("minimum_appearances", String(context.minimumAppearances));
   const displayValue = (value: number) => format === "percent" ? `${(value * 100).toFixed(1)}%` : formatNumber(value);
-  if (!adjustedRanking && !appearanceExcluded) return <span className="metric-rank rank-unavailable">{label ? `${label} ` : ""}暂无排名</span>;
+  if (!adjustedRanking && !appearanceExcluded && !sampleExcluded && !selectedExcluded) return <span className="metric-rank rank-unavailable">{label ? `${label} ` : ""}暂无排名</span>;
   return <div className="ranking-control">
     <button className="metric-rank" type="button" aria-haspopup="dialog" aria-label={`${metricLabel}：查看排行榜`} title={title ?? "点击查看当前范围内的排行榜"} onClick={() => {
       setFiltersOpen(false);
       flushSync(() => setHasOpened(true));
       dialog.current?.showModal();
       currentRow.current?.scrollIntoView({ block: "nearest" });
-    }}>{label ? `${label} ` : ""}{adjustedRanking ? <>{provisional ? "暂列" : ""}第 <b>{adjustedRanking.rank}</b><span className="rank-total"> / {adjustedRanking.total}</span></> : "未达出场门槛"}<span className="rank-arrow" aria-hidden="true"> ↗</span></button>
+    }}>{label ? `${label} ` : ""}{adjustedRanking ? <>{provisional ? "暂列" : ""}第 <b>{adjustedRanking.rank}</b><span className="rank-total"> / {adjustedRanking.total}</span></> : appearanceExcluded ? "未达出场门槛" : "未达样本门槛"}<span className="rank-arrow" aria-hidden="true"> ↗</span></button>
     <dialog ref={dialog} className="sample-dialog ranking-dialog" aria-labelledby={titleId} onClick={(event) => {
       if (event.target !== event.currentTarget) return;
       const bounds = event.currentTarget.getBoundingClientRect();
@@ -58,11 +67,22 @@ export function MetricRank({ ranking, label, provisional, title, entries = [], m
     }}>
       {hasOpened ? <><header className="sample-dialog-header ranking-dialog-header">
         <h2 id={titleId}>{metricLabel}排行榜</h2>
-        <p className="ranking-header-meta" aria-live="polite">{context.scopeLabel} · {formatNumber(visibleEntries.length)} 位选手{context.minimumAppearances > 0 ? ` · 区间出场 ≥ ${formatNumber(context.minimumAppearances)} 场` : ""}{canFilterGames && minimumGames > 0 ? ` · 有效场次 ≥ ${formatNumber(minimumGames)} 场` : ""}</p>
+        <p className="ranking-header-meta" aria-live="polite">{context.scopeLabel} · {formatNumber(visibleEntries.length)} 位选手{context.minimumAppearances > 0 ? ` · 区间出场 ≥ ${formatNumber(context.minimumAppearances)} 场` : ""}{minimumSamples > 0 ? ` · 指标样本 ≥ ${formatNumber(minimumSamples)} ${sampleUnit}` : ""}{canFilterGames && minimumGames > 0 ? ` · 有效场次 ≥ ${formatNumber(minimumGames)} 场` : ""}</p>
         <button className="sample-close" type="button" aria-label="关闭排行榜" onClick={() => dialog.current?.close()}>×</button>
       </header>
       {canFilterGames ? <div className="ranking-toolbar">
         <div className="ranking-game-filter" id={filtersId} hidden={!filtersOpen}>
+          <div className="ranking-sample-filter">
+            <div className="ranking-filter-shortcuts"><span>当前指标样本数</span><div className="ranking-minimum-options" role="group" aria-label="当前指标最低样本数">
+              {[0, 5, 10, 20].map((value) => <button key={value} type="button" aria-pressed={minimumSamples === value} onClick={() => applyMinimumSamples(value)}>{value ? `≥ ${value} ${sampleUnit}` : "全部"}</button>)}
+            </div></div>
+            <form className="ranking-custom-minimum" onSubmit={(event) => {
+              event.preventDefault();
+              const value = Number(customSamples);
+              if (Number.isSafeInteger(value) && value >= 0) applyMinimumSamples(value);
+            }}><label><span>自定义 ≥</span><input type="number" name="minimumSamples" min={0} max={Number.MAX_SAFE_INTEGER} step={1} required aria-label="自定义当前指标最低样本数" value={customSamples} onChange={(event) => setCustomSamples(event.target.value)} /><span>{sampleUnit}</span></label><button type="submit">应用</button></form>
+          </div>
+          {showsRoundCounts ? <div className="ranking-sample-filter">
           <div className="ranking-filter-shortcuts"><span>最低有效场次</span><div className="ranking-minimum-options" role="group" aria-label="最低有效场次">
             {[0, 5, 10, 20].map((value) => <button key={value} type="button" aria-pressed={minimumGames === value} onClick={() => applyMinimumGames(value)}>{value ? `≥ ${value} 场` : "全部"}</button>)}
           </div></div>
@@ -71,16 +91,18 @@ export function MetricRank({ ranking, label, provisional, title, entries = [], m
             const value = Number(customMinimum);
             if (Number.isSafeInteger(value) && value >= 0) applyMinimumGames(value);
           }}><label><span>自定义 ≥</span><input type="number" name="minimumGames" min={0} max={Number.MAX_SAFE_INTEGER} step={1} required aria-label="自定义最低有效场次" value={customMinimum} onChange={(event) => setCustomMinimum(event.target.value)} /><span>场</span></label><button type="submit">应用</button></form>
+          </div> : null}
         </div>
-        <button className="ranking-filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls={filtersId} data-active={minimumGames > 0 || undefined} onClick={() => setFiltersOpen((value) => !value)}><span aria-hidden="true">{filtersOpen ? "›" : "‹"}</span>筛选场次</button>
+        <button className="ranking-filter-toggle" type="button" aria-expanded={filtersOpen} aria-controls={filtersId} data-active={minimumGames > 0 || minimumSamples > 0 || undefined} onClick={() => setFiltersOpen((value) => !value)}><span aria-hidden="true">{filtersOpen ? "›" : "‹"}</span>筛选样本</button>
       </div> : null}
       {appearanceExcluded ? <p className="ranking-filter-status" role="status">当前选手在所选区间出场 {formatNumber(context.appearances)} 场，未达到 {formatNumber(context.minimumAppearances)} 场门槛，不参与本次排名。</p>
+        : sampleExcluded ? <p className="ranking-filter-status" role="status">当前选手的此项指标有 {formatNumber(selectedEntry.sample_count)} {sampleUnit}有效样本，未达到 {formatNumber(minimumSamples)} {sampleUnit}，暂不参与本次排名。</p>
         : selectedExcluded ? <p className="ranking-filter-status" role="status">当前选手有 {formatNumber(effectiveGames(selectedEntry))} 场有效对局，未达到 {formatNumber(minimumGames)} 场，暂不参与本次排名。</p> : null}
-      <div ref={tableScroll} className="ranking-table-scroll"><table className="ranking-table"><thead><tr><th scope="col">排名</th><th scope="col">选手</th><th scope="col">{metricLabel}</th><th scope="col">{showsRoundCounts ? "有效场次 / 票次" : "有效样本"}</th></tr></thead><tbody>{visibleEntries.map((entry) => <tr key={entry.id} ref={entry.id === context.playerId ? currentRow : undefined} data-current={entry.id === context.playerId ? "true" : undefined}>
-        <td><b>{entry.rank}</b></td><td><ArchiveLink href={`/players/${encodeURIComponent(entry.id)}?${params}`} onClick={() => dialog.current?.close()}>{entry.name}</ArchiveLink>{entry.id === context.playerId ? <small>当前选手</small> : null}</td><td className="ranking-value">{displayValue(entry.value)}</td><td>{showsRoundCounts ? <>{formatNumber(effectiveGames(entry))} 场<small className="ranking-round-count">{formatNumber(entry.sample_count)} 次投票</small></> : <>{formatNumber(entry.sample_count)} {sampleUnit}</>}</td>
+      <div ref={tableScroll} className="ranking-table-scroll"><table className="ranking-table"><thead><tr><th scope="col">排名</th><th scope="col">选手</th><th scope="col">{metricLabel}</th><th scope="col">{showsRoundCounts ? "有效场次 / 次数" : "有效样本"}</th></tr></thead><tbody>{visibleEntries.map((entry) => <tr key={entry.id} ref={entry.id === context.playerId ? currentRow : undefined} data-current={entry.id === context.playerId ? "true" : undefined}>
+        <td><b>{entry.rank}</b></td><td><ArchiveLink href={`/players/${encodeURIComponent(entry.id)}?${params}`} onClick={() => dialog.current?.close()}>{entry.name}</ArchiveLink>{entry.id === context.playerId ? <small>当前选手</small> : null}</td><td className="ranking-value">{displayValue(entry.value)}</td><td>{showsRoundCounts ? <>{formatNumber(effectiveGames(entry))} 场<small className="ranking-round-count">{formatNumber(entry.sample_count)} 次</small></> : <>{formatNumber(entry.sample_count)} {sampleUnit}</>}</td>
       </tr>)}</tbody></table></div>
-      {visibleEntries.length === 0 ? <p className="ranking-empty" role="status">当前条件下没有符合要求的选手，可以降低场次门槛。</p> : null}
-      <p className="ranking-note">仅比较当前范围内有有效数据的选手；同分选手按姓名排列。</p>
+      {visibleEntries.length === 0 ? <p className="ranking-empty" role="status">当前条件下没有符合要求的选手，可以降低筛选门槛。</p> : null}
+      <p className="ranking-note">指标样本数是此项比例的分母，与区间总出场次数分别筛选。{showsRoundCounts ? "同一局可包含多次记录，有效场次按对局去重。" : ""}仅比较当前范围内有有效数据的选手；同分选手按姓名排列。</p>
       </> : null}
     </dialog>
   </div>;

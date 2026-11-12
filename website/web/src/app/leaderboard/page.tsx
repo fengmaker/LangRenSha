@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getLeaderboard, getOverview } from "@/lib/api";
+import { getGames, getLeaderboard, getOverview } from "@/lib/api";
 import { isStaticSite } from "@/lib/site-mode";
 import { DataProblem } from "@/components/data-state";
 import { PageIntro } from "@/components/page-intro";
@@ -26,7 +26,10 @@ export default async function LeaderboardPage({ searchParams }: { searchParams: 
     const season = safeSeason(first(query.season) || fallback, fallback);
     const phase = safePhase(first(query.phase));
     data = await getLeaderboard(season, phase);
-    return <LeaderboardView data={data} overview={overview} season={season} phase={phase} />;
+    const latestParams = new URLSearchParams({ season, page: "1", page_size: "1" });
+    if (phase === "finals_week") latestParams.set("phase", phase);
+    const latestDate = await getGames(latestParams).then((games) => games.items[0]?.date ?? null).catch(() => null);
+    return <LeaderboardView data={data} overview={overview} season={season} phase={phase} latestDate={latestDate} />;
   } catch (error) {
     return <div className="page-wrap"><PageIntro title="赛季积分榜" /><DataProblem error={error} /></div>;
   }

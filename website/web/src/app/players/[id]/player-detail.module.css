@@ -218,8 +218,9 @@
 }
 
 /* 单行筛选：按钮固定在右侧，条件向左展开，窄屏横向滚动。 */
-.profile :global(.ranking-toolbar) { display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; gap: 12px; height: 36px; min-width: 0; margin: 0 0 16px; }
-.profile :global(.ranking-game-filter) { display: flex; flex: 1 1 auto; align-items: center; justify-content: flex-start; flex-wrap: nowrap; gap: 14px; min-width: 0; height: 36px; margin: 0; padding: 0; border: 0; background: transparent; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.profile :global(.ranking-toolbar) { display: flex; align-items: flex-start; justify-content: flex-end; flex-wrap: nowrap; gap: 12px; min-height: 36px; min-width: 0; margin: 0 0 16px; }
+.profile :global(.ranking-game-filter) { display: flex; flex: 1 1 auto; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; overflow-x: auto; scrollbar-width: thin; }
+.profile :global(.ranking-sample-filter) { display: flex; flex: 0 0 auto; align-items: center; gap: 14px; min-height: 36px; }
 .profile :global(.ranking-game-filter::-webkit-scrollbar) { display: none; }
 .profile :global(.ranking-game-filter[hidden]) { display: none; }
 .profile :global(.ranking-filter-shortcuts), .profile :global(.ranking-minimum-options), .profile :global(.ranking-custom-minimum), .profile :global(.ranking-custom-minimum label) { display: flex; flex: 0 0 auto; align-items: center; flex-direction: row; flex-wrap: nowrap; gap: 6px; height: 36px; white-space: nowrap; }
@@ -234,5 +235,39 @@
 @media (max-width: 600px) {
   .profile :global(.ranking-toolbar) { gap: 8px; }
   .profile :global(.ranking-game-filter) { gap: 10px; }
-  .profile :global(.ranking-filter-shortcuts > span) { display: none; }
+  .profile :global(.ranking-sample-filter) { gap: 10px; }
 }
+
+.performanceTabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: 100%;
+  margin-top: 16px;
+  padding: 2px 2px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.performanceTabs::-webkit-scrollbar { display: none; }
+.performanceTab {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.performanceTab[aria-pressed="true"] { border-color: #7ce1bf66; color: var(--mint); background: #18342b; }
+.performanceTab:hover { color: var(--text); border-color: var(--mint); }
+.performanceTab:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+.performancePanel { min-width: 0; margin-top: 10px; }
+.performancePanel :global(.profile-stat-grid) { margin-top: 0; }
+.performancePanel :global(.lane-empty) { margin: 0; }
+.performanceSubsection { margin-top: 24px; }
+.performanceSubsection h3 { margin: 0; color: var(--text); font-size: 18px; line-height: 1.4; font-weight: 650; }
+.performanceSubsection :global(.profile-stat-grid) { margin-top: 14px; }

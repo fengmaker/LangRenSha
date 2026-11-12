@@ -12,8 +12,41 @@
     "假面": 1
   },
   "wake_order": [],
-  "wake_order_note": "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。",
+  "wake_order_note": "2026-11-12用户确认：舞者先睁眼给出舞池，假面随后验证、赐予面具；假面接刀及击杀也在舞者之后。其余角色的完整睁眼顺序未核，槽位顺序不补造未核关系。",
   "night_slots": [
+    {
+      "code": "dancer_dance",
+      "label": "舞者选择共舞（第二夜起）",
+      "actor_role": "舞者",
+      "actions": [
+        "dance",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "masquerade_verify",
+      "label": "假面验证舞池成员",
+      "actor_role": "假面",
+      "actions": [
+        "verify",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    {
+      "code": "masquerade_mask",
+      "label": "假面赐予面具",
+      "actor_role": "假面",
+      "actions": [
+        "give_mask",
+        "pass",
+        "unavailable",
+        "unknown"
+      ]
+    },
     {
       "code": "wolf_attack",
       "label": "狼队击杀",
@@ -53,39 +86,6 @@
       "actor_role": "预言家",
       "actions": [
         "check",
-        "pass",
-        "unavailable",
-        "unknown"
-      ]
-    },
-    {
-      "code": "masquerade_verify",
-      "label": "假面验证舞池成员",
-      "actor_role": "假面",
-      "actions": [
-        "verify",
-        "pass",
-        "unavailable",
-        "unknown"
-      ]
-    },
-    {
-      "code": "masquerade_mask",
-      "label": "假面赐予面具",
-      "actor_role": "假面",
-      "actions": [
-        "give_mask",
-        "pass",
-        "unavailable",
-        "unknown"
-      ]
-    },
-    {
-      "code": "dancer_dance",
-      "label": "舞者选择共舞（第二夜起）",
-      "actor_role": "舞者",
-      "actions": [
-        "dance",
         "pass",
         "unavailable",
         "unknown"
@@ -217,13 +217,13 @@
       "code": "s21_masquerade",
       "name": "S21 假面舞会（核实归档）",
       "role_counts": null,
-      "wake_order_note": "仅归档本季已核事实；此模板不定义完整规则或睁眼顺序。",
+      "wake_order_note": "2026-11-12用户确认：舞者先睁眼给出舞池，假面随后验证、赐予面具；假面接刀及击杀也在舞者之后。其余角色的完整睁眼顺序未核，槽位顺序不补造未核关系。",
       "slot_codes": {
         "night": [
-          "wolf_attack",
-          "seer_check",
           "dancer_dance",
           "masquerade_mask",
+          "wolf_attack",
+          "seer_check",
           "witch_save",
           "witch_poison"
         ],
@@ -309,7 +309,7 @@
         "假面": 1,
         "白神": 1
       },
-      "wake_order_note": "S23逐局档案未将完整睁眼顺序确认为版型规则；槽位次序仅表示归档顺序。",
+      "wake_order_note": "2026-11-12用户确认：舞者先睁眼给出舞池，假面随后验证、赐予面具；假面接刀及击杀也在舞者之后。其余角色的完整睁眼顺序未核，槽位顺序不补造未核关系。",
       "slot_codes": {},
       "slot_overrides": {
         "day": {

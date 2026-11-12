@@ -29,7 +29,7 @@ function GameRows({ game }: { game: GameSummary }) {
       <ol className={styles.seats} aria-label={formatDate(game.date) + " " + match + " 座位阵容"}>{players.map((player) => {
         const content = <><span className={styles.seat}>{player.seat}</span><span className={styles.playerInfo}><strong>{player.name}</strong><span>{player.role || "身份未知"}</span></span></>;
         return <li key={player.seat + "-" + (player.id ?? player.name)}>{player.id
-          ? <ArchiveLink href={"/players/" + encodeURIComponent(player.id)} aria-label={player.seat + "号 " + player.name + " · " + (player.role || "身份未知")}>{content}</ArchiveLink>
+          ? <ArchiveLink href={"/players/" + encodeURIComponent(player.id) + "?season=" + encodeURIComponent(game.season)} aria-label={player.seat + "号 " + player.name + " · " + (player.role || "身份未知")}>{content}</ArchiveLink>
           : <div>{content}</div>}</li>;
       })}</ol>
     </td></tr>

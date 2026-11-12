@@ -2,13 +2,49 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pytest
 from fastapi.testclient import TestClient
 
 from website.api.app import app
 from website.api.photos import MANIFEST_PATH, PHOTO_ROOT, manifest, photo_for, photo_path
+
+
+def test_photo_preparation_preserves_existing_records_with_retained_review_inputs(monkeypatch):
+    from website import prepare_photos
+
+    original = prepare_photos.read_json(prepare_photos.OUTPUT_JSON)
+    with TemporaryDirectory(prefix="photo-preparation-", dir=prepare_photos.ROOT / "tmp") as directory:
+        output = Path(directory)
+        (output / "player_photos.json").write_bytes(prepare_photos.OUTPUT_JSON.read_bytes())
+        shutil.copytree(prepare_photos.OUTPUT_ASSETS, output / "player-photos")
+        monkeypatch.setattr(prepare_photos, "OUTPUT_JSON", output / "player_photos.json")
+        monkeypatch.setattr(prepare_photos, "OUTPUT_ASSETS", output / "player-photos")
+        monkeypatch.setattr(prepare_photos, "OUTPUT_REPORT", output / "S23-report.json")
+        monkeypatch.setattr(prepare_photos, "S21_OUTPUT_REPORT", output / "S21-report.json")
+        assert prepare_photos.build() == original
+        report = prepare_photos.read_json(prepare_photos.OUTPUT_REPORT)
+        assert report["coverage_rate"] == 1.0
+        assert report["missing"] == []
+
+
+def test_retained_photo_reviews_preserve_original_human_decisions():
+    from website import prepare_photos
+
+    mappings = prepare_photos.read_csv(prepare_photos.MAPPING_CSV)
+    reviews = {row["照片编号"]: row for row in prepare_photos.read_csv(prepare_photos.REVIEW_CSV)}
+    assert set(reviews) == {row["照片编号"] for row in mappings}
+    for row in mappings:
+        review = reviews[row["照片编号"]]
+        assert review["人工确认"] == row["原人工确认状态"]
+        assert review["图上名字_候选"] == row["原图名字"]
+        assert review["图片SHA256"] == row["图片SHA256"]
+        assert review["赛季"] == row["赛季"]
+        expected = row["复核行名字"] if row["原人工确认状态"] in prepare_photos.APPROVED_STATUSES else ""
+        assert review["确认后的名字"] == expected
 
 
 def test_reviewed_assets_match_hashes_and_cover_current_s22_players():

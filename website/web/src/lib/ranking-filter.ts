@@ -3,6 +3,7 @@ import type { RankingEntry } from "@/lib/types";
 export type RankingFilter = {
   minimumAppearances?: number;
   minimumEffectiveGames?: number;
+  minimumSamples?: number;
   totalAppearancesByPlayer?: ReadonlyMap<string, number>;
 };
 
@@ -13,10 +14,12 @@ export type RankingFilter = {
 export function filterRankingEntries(entries: RankingEntry[], filter: RankingFilter = {}): RankingEntry[] {
   const minimumAppearances = Math.max(0, filter.minimumAppearances ?? 0);
   const minimumEffectiveGames = Math.max(0, filter.minimumEffectiveGames ?? 0);
+  const minimumSamples = Math.max(0, filter.minimumSamples ?? 0);
   const cohort = entries.filter((entry) => (filter.totalAppearancesByPlayer
       ? filter.totalAppearancesByPlayer.get(entry.id) ?? 0
       : entry.appearances) >= minimumAppearances
-    && (entry.effective_game_count ?? entry.sample_count) >= minimumEffectiveGames);
+    && (entry.effective_game_count ?? entry.sample_count) >= minimumEffectiveGames
+    && entry.sample_count >= minimumSamples);
   const groupSizes = new Map<number, number>();
   for (const entry of cohort) groupSizes.set(entry.rank, (groupSizes.get(entry.rank) ?? 0) + 1);
   let previousSourceRank: number | undefined;

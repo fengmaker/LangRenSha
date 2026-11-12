@@ -164,6 +164,11 @@ def test_bluff_review_and_season_metrics_are_consistent_and_do_not_export_local_
     review = client.get("/api/v1/bluff-review?status=all").json()
     assert review["summary"]["games"] == board["game_count"]
     assert review["analytics_version"] >= 3
+    for season in ("S22", "S23"):
+        season_review = client.get(f"/api/v1/bluff-review?season={season}&status=all").json()
+        assert season_review["summary"]["reviewed_games"] == season_review["summary"]["games"]
+        assert season_review["summary"]["pending"] == season_review["summary"]["assistant_pending"] == 0
+        assert all(item["verification_status"] == "user_confirmed" for item in season_review["items"])
     import json
     body = json.dumps(review, ensure_ascii=False)
     assert '"source_path"' not in body

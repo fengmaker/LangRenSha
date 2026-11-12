@@ -1,6 +1,7 @@
 "use client";
 
 import { ArchiveLink } from "@/components/archive-link";
+import { DataScopeSummary } from "@/components/data-scope-summary";
 import { StatsRangeFilter } from "./stats-range-filter";
 import type { Release, Stats } from "@/lib/types";
 import { PageIntro } from "@/components/page-intro";
@@ -12,12 +13,12 @@ function percentage(wins: number, settled: number): string {
   return settled > 0 ? `${(wins / settled * 100).toFixed(1)}%` : "—";
 }
 
-export function StatsView({ stats, releases, start, end, onRangeChange }: {
-  stats: Stats; releases: { items: Release[] }; start: string; end: string; onRangeChange?: (start: string, end: string) => void;
+export function StatsView({ stats, releases, start, end, latestDate, onRangeChange }: {
+  stats: Stats; releases: { items: Release[] }; start: string; end: string; latestDate?: string | null; onRangeChange?: (start: string, end: string) => void;
 }) {
   const startSeason = stats.scope.season_start;
   const endSeason = stats.scope.season_end;
-  const rangeLabel = end === "latest" ? `${start} 至今` : start === endSeason ? start : `${start} — ${endSeason}`;
+  const rangeLabel = startSeason === endSeason ? startSeason : `${startSeason} — ${endSeason}`;
   const totals = stats.boards.reduce((sum, board) => ({ good: sum.good + board.good_wins, werewolf: sum.werewolf + board.werewolf_wins }), { good: 0, werewolf: 0 });
   const settled = totals.good + totals.werewolf;
   return <div className={`page-wrap ${styles.statsPage}`}>
@@ -26,8 +27,8 @@ export function StatsView({ stats, releases, start, end, onRangeChange }: {
       <div className={styles.filterHeading}><h2 id="stats-scope-heading">统计范围</h2><span className={styles.scopeBadge}>{rangeLabel}</span></div>
       <StatsRangeFilter key={`${start}:${end}`} seasons={stats.available_seasons} start={start || startSeason} end={end} onApply={onRangeChange} />
     </section>
+    <DataScopeSummary range={rangeLabel} gameCount={stats.game_count} latestDate={latestDate} />
     <section className={styles.summaryGrid} aria-label="对局统计概览">
-      <article className={styles.summaryCard}><span>纳入对局</span><strong>{formatNumber(stats.game_count)}<span className={styles.unit}>局</span></strong></article>
       <article className={`${styles.summaryCard} ${styles.goodSummary}`}><span>好人胜率</span><strong>{percentage(totals.good, settled)}</strong></article>
       <article className={`${styles.summaryCard} ${styles.wolfSummary}`}><span>狼人胜率</span><strong>{percentage(totals.werewolf, settled)}</strong></article>
     </section>

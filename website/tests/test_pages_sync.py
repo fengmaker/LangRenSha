@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import subprocess
 import shutil
@@ -7,6 +8,45 @@ import pytest
 
 from website.static_publish import sync_pages
 from website.static_publish.build_static import tree_hash
+
+
+@pytest.mark.parametrize("proxies,expected", [
+    ({"https": "http://127.0.0.1:7890"}, {"HTTPS_PROXY": "http://127.0.0.1:7890"}),
+    ({"all": "socks5h://127.0.0.1:7891", "no": "localhost,127.0.0.1"},
+     {"ALL_PROXY": "socks5h://127.0.0.1:7891", "NO_PROXY": "localhost,127.0.0.1"}),
+    ({}, {}),
+])
+def test_git_push_inherits_system_proxies_without_changing_process_environment(monkeypatch, tmp_path, proxies, expected):
+    for key in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "NO_PROXY",
+                "http_proxy", "https_proxy", "all_proxy", "no_proxy"):
+        monkeypatch.delenv(key, raising=False)
+    monkeypatch.setattr(sync_pages, "getproxies", lambda: proxies, raising=False)
+    calls = []
+
+    def run(args, **kwargs):
+        calls.append((args, kwargs))
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(sync_pages.subprocess, "run", run)
+    before = dict(os.environ)
+    sync_pages.git(tmp_path, "push", "origin", "main")
+
+    args, kwargs = calls[0]
+    assert args == ["git", "-C", str(tmp_path), "push", "origin", "main"]
+    child_env = kwargs.get("env") or os.environ
+    for key, value in expected.items():
+        assert child_env.get(key) == value
+    assert dict(os.environ) == before
+
+
+def test_local_git_commands_do_not_read_or_override_proxy_settings(monkeypatch, tmp_path):
+    monkeypatch.setattr(sync_pages, "getproxies", lambda: pytest.fail("Read proxies for local Git command"), raising=False)
+    calls = []
+    monkeypatch.setattr(sync_pages.subprocess, "run", lambda args, **kwargs:
+                        calls.append(kwargs) or subprocess.CompletedProcess(args, 0, "main\n", ""))
+
+    assert sync_pages.git(tmp_path, "branch", "--show-current") == "main"
+    assert calls[0].get("env") is None
 
 
 def test_git_status_retains_the_leading_column_for_unstaged_edits(tmp_path):

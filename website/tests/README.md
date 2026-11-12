@@ -4,6 +4,8 @@
 
 前端票卡与时间线组件的离线React SSR回归：`node website/tests/check_web_semantics.cjs website/web/node_modules website/web/src`。
 
+个人页技能、首夜与放逐、竞选阶段统计由 `test_skill_metrics.py`、`test_process_metrics.py`、`test_performance_analytics.py` 覆盖；新增区域、角色切换和数值状态的离线 React SSR 检查：`node website/tests/check_profile_performance.cjs website/web/node_modules website/web/src`。
+
 静态列表排序／筛选和排名并列、两种场次门槛叠加：`node website/tests/check_static_queries.cjs website/web/node_modules website/web/src`。静态快照完整性、版本切换、图片缺失与失败保留在对应 `test_static_*.py`；真实API、HTML和子路径浏览器流程由 `website/static_publish/check_static.py` 一并验收。
 
 增量输入指纹、跨发布复用和局部失效分别见 `test_export_inputs.py`、`test_incremental_export.py`、`test_incremental_acceptance.py`；自动同步的路径保护、差异文件写入、提交范围和部署失败回执见 `test_pages_sync.py`。临时目录受限时，可给 pytest 添加 `--basetemp=tmp/pytest-local`，使用本工作区内的专用目录。

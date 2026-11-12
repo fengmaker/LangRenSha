@@ -16,6 +16,7 @@ if str(ROOT / 'scripts') not in sys.path:
 
 from scripts.board_config import load_canonical_template
 from scripts.game_timeline import build_game_timeline
+from scripts.identity_display import role_label
 from scripts.role_constraints import puppet_target, wolf_girl_partner_target
 from scripts.game_derivations import apply_precomputed
 from scripts.incremental_common import load_state, work_dir
@@ -97,7 +98,10 @@ def seat_html(dossier: dict) -> str:
         if row.get('role') == '机械狼' and row.get('learned_role'):
             target = f'学习{row["learning_target"]}号' if row.get('learning_target') is not None else '学习形态'
             note += f'<small>{target} · {esc(row["learned_role"])}</small>'
-        identity = esc(row.get('role') or '未知') + note
+        label = role_label(dossier, row)
+        if label != row.get('role'):
+            note += f'<small>底牌：{esc(row["role"])}</small>'
+        identity = esc(label or '未知') + note
         rows.append(f'<tr data-seat="{number}"><td class="seat-number">{number}</td><td>{esc(name)}</td>'
                     f'<td>{identity}</td><td><span class="faction {css}">{faction}</span></td></tr>')
     return ''.join(rows)

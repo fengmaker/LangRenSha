@@ -1,4 +1,5 @@
 import { ArchiveLink } from "@/components/archive-link";
+import { DataScopeSummary } from "@/components/data-scope-summary";
 import { formatNumber } from "@/lib/format";
 import { GameArchiveList } from "@/components/game-archive-list";
 import styles from "./home.module.css";
@@ -18,6 +19,7 @@ export function HomeView({ data }: { data: Overview }) {
 
       <section className="overview-section">
         <div className="section-heading"><h2>档案概览</h2></div>
+        <DataScopeSummary range={`全部赛季${data.seasons.length ? ` · ${data.seasons.map((season) => season.id).join("、")}` : ""}`} gameCount={data.totals.games} latestDate={data.recent_games?.find((game) => game.date)?.date} />
         <div className="metric-grid">
           <article className="metric-card metric-feature"><span>已整理对局</span><strong>{formatNumber(data.totals.games)}</strong></article>
           <article className="metric-card"><span>比赛日</span><strong>{formatNumber(data.totals.days)}</strong></article>

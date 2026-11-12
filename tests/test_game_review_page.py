@@ -10,6 +10,20 @@ from scripts.game_review_page import render_review_page, seat_html, timeline_htm
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_treasure_review_shows_known_poisoner_name_and_preserves_physical_role():
+    dossier = {'seats': [{'seat': 1, 'name': '焦阳', 'role': '盗宝大师', 'faction': 'werewolf'}],
+               'rounds': [{'number': 1, 'night': [
+                   {'slot': 'treasure_alignment', 'action': 'wolf', 'actor': 1,
+                    'result': '本局为盗宝毒师，固定狼人阵营。'},
+                   {'slot': 'treasure_choice', 'action': 'choose', 'actor': 1, 'result': '平民'},
+               ], 'day': []}]}
+    before = deepcopy(dossier)
+    text = seat_html(dossier)
+    assert '盗宝毒师<small>底牌：盗宝大师</small>' in text
+    assert '<span class="faction wolf">狼人</span>' in text
+    assert dossier == before
+
+
 def test_neighbor_review_keeps_base_role_with_wolf_faction_and_chronological_surrender():
     path = ROOT / 'data/games/S22/2026-08-07_g02_BV1pSuN62Ekr'
     dossier = json.loads((path / 'dossier.json').read_text(encoding='utf-8'))

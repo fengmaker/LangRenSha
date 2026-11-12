@@ -7,6 +7,7 @@ import re
 from .board_config import load_canonical_template
 from .game_inference import _actual_deaths, build_game_presentation, terminal_from_events
 from .game_time import phase_label
+from .identity_display import role_label, treasure_god_card
 from .role_constraints import family, puppet_target
 
 
@@ -31,12 +32,14 @@ _COMMON_TITLES = {
     'trade_resolution': '交易结算', 'wolf_rush': '狼人拍刀',
     'whiteze_clear': '白泽清除标记', 'whiteze_clear_mark': '白泽清除标记',
     'nine_tail_hunt': '九尾狐猎杀', 'nine_tail_skill': '九尾狐猎杀',
+    'treasure_alignment': '盗宝大师身份与阵营',
+    'treasure_choice': '盗宝大师选择身份',
 }
 
 
 def _person(number: int | None, seats: dict) -> str:
     row = seats.get(number)
-    return (f'{number}号{row.get("name") or "姓名未知"}（{row.get("role") or "身份未知"}）'
+    return (f'{number}号{row.get("name") or "姓名未知"}（{row.get("role_label") or row.get("role") or "身份未知"}）'
             if row else f'{number}号' if number is not None else '')
 
 
@@ -60,6 +63,11 @@ def _text(event: dict, seats: dict, title: str) -> str:
     if slot in {'mixed_blood_alignment', 'mixed_blood_victory'}:
         faction = '好人' if action == 'good' else '狼人'
         return f'{actor}本局跟随{faction}阵营。'
+    if slot == 'treasure_alignment' and action == 'wolf':
+        god_card = seats.get(event.get('actor'), {}).get('treasure_god_card')
+        pair = (f'可在平民与{god_card}两张身份牌之间切换。' if god_card
+                else '可在平民与另一张神牌之间切换，神牌身份待核。')
+        return f'{actor}固定属于狼人阵营。{pair}'
     if slot == 'sheriff_candidates':
         if action == 'continued':
             return '继续上一天中断的警长竞选。'
@@ -280,6 +288,7 @@ def _masquerade_knife(events: list[dict], roles: dict, template: dict, departed:
     attack = next((e for e in events if e['slot'] == 'wolf_attack'), None)
     if attack is None or attack.get('action') == 'surrender':
         return events
+    attack_position = events.index(attack)
     attack.update(slot='masquerade_attack', actor=actor, slot_label='假面击杀')
     events = [e for e in events if e is not attack]
     verification = next((e for e in events if e['slot'] == 'masquerade_verify'
@@ -288,9 +297,13 @@ def _masquerade_knife(events: list[dict], roles: dict, template: dict, departed:
         attack.update(action='unavailable', invalidated=True)
         events.insert(events.index(verification) + 1, attack)
     else:
-        events.insert(0, attack)
-    events.insert(0, {'slot': 'masquerade_knife_status', 'slot_label': '假面接刀',
-                      'action': 'carrying', 'actor': actor, 'inferred': True})
+        events.insert(attack_position, attack)
+    # The dancer establishes the pool before the mask wakes, including when
+    # the mask has inherited the knife. Keep takeover beside the mask's turn.
+    mask_position = next(i for i, event in enumerate(events)
+                         if event['slot'] in {'masquerade_verify', 'masquerade_mask', 'masquerade_attack'})
+    events.insert(mask_position, {'slot': 'masquerade_knife_status', 'slot_label': '假面接刀',
+                                 'action': 'carrying', 'actor': actor, 'inferred': True})
     return events
 
 
@@ -388,7 +401,10 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
     terminal = _recorded_ending(source)
     if terminal:
         source['terminal_observation'] = terminal
-    seats = {row['seat']: row for row in source.get('seats', [])}
+    seats = {row['seat']: {**row, 'role_label': role_label(source, row),
+                          'treasure_god_card': treasure_god_card(source, row['seat'])
+                          if row.get('role') == '盗宝大师' else None}
+             for row in source.get('seats', [])}
     # Trim the copied source before projection. A later occurrence of the same
     # slot must not survive merely because that slot occurred before surrender.
     for row in source.get('rounds', []):
@@ -561,7 +577,8 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                     title = '退水后候选'
                 elif slot == 'sheriff_candidates' and event.get('candidate_stage') == 'initial':
                     title = '首次上警'
-                if slot in {'speech_order', 'hunter_state', 'wolf_king_state', 'puppet_hunter_eligibility'}:
+                if slot in {'speech_order', 'hunter_state', 'wolf_king_state', 'puppet_hunter_eligibility',
+                            'treasure_remainder'}:
                     continue
                 if slot == 'mixed_blood_model' and number != 1:
                     continue

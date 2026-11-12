@@ -130,6 +130,48 @@
       "number": 1,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "unavailable",
+          "actor": 12,
+          "targets": [],
+          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "unavailable",
+          "actor": 11,
+          "targets": [],
+          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "unavailable",
+          "actor": 11,
+          "targets": [],
+          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -183,48 +225,6 @@
             3
           ],
           "result": "平民/好人",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "unavailable",
-          "actor": 11,
-          "targets": [],
-          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "unavailable",
-          "actor": 11,
-          "targets": [],
-          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "unavailable",
-          "actor": 12,
-          "targets": [],
-          "result": "用户确认：假面与舞者首夜不能发动技能，从第一天白天结束后的夜晚开始。",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -409,6 +409,56 @@
       "number": 2,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "dance",
+          "actor": 12,
+          "targets": [
+            1,
+            4,
+            9
+          ],
+          "result": "1、4、9共舞，舞池内无事发生",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "verify",
+          "actor": 11,
+          "targets": [
+            2
+          ],
+          "result": "2号平民不在舞池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "give_mask",
+          "actor": 11,
+          "targets": [
+            5
+          ],
+          "result": "给予5号狼人一张面具",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -462,56 +512,6 @@
             2
           ],
           "result": "好人",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "verify",
-          "actor": 11,
-          "targets": [
-            2
-          ],
-          "result": "2号平民不在舞池",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "give_mask",
-          "actor": 11,
-          "targets": [
-            5
-          ],
-          "result": "给予5号狼人一张面具",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "dance",
-          "actor": 12,
-          "targets": [
-            1,
-            4,
-            9
-          ],
-          "result": "1、4、9共舞，舞池内无事发生",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -687,6 +687,56 @@
       "number": 3,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "dance",
+          "actor": 12,
+          "targets": [
+            10,
+            11,
+            12
+          ],
+          "result": "10、11、12共舞",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "verify",
+          "actor": 11,
+          "targets": [
+            10
+          ],
+          "result": "10号白神在舞池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "give_mask",
+          "actor": 11,
+          "targets": [
+            10
+          ],
+          "result": "给予10号白神一张面具",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -736,56 +786,6 @@
           "actor": null,
           "targets": [],
           "result": null,
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "verify",
-          "actor": 11,
-          "targets": [
-            10
-          ],
-          "result": "10号白神在舞池",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "give_mask",
-          "actor": 11,
-          "targets": [
-            10
-          ],
-          "result": "给予10号白神一张面具",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "dance",
-          "actor": 12,
-          "targets": [
-            10,
-            11,
-            12
-          ],
-          "result": "10、11、12共舞",
           "start_seat": null,
           "direction": null,
           "votes": [],

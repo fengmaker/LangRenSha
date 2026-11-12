@@ -7,9 +7,11 @@ import { isStaticSite, publicPath } from "@/lib/site-mode";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
 import { GameArchiveList } from "@/components/game-archive-list";
+import { DataScopeSummary } from "@/components/data-scope-summary";
 import { Pagination } from "@/components/pagination";
 import styles from "./games.module.css";
 import { StaticGamesBrowser } from "./static-games-browser";
+import { phaseLabel } from "@/lib/format";
 
 const PAGE_SIZE = 24;
 export const metadata: Metadata = { title: "对局档案", description: "检索大师赛各赛季的对局、票型和选手记录。" };
@@ -55,6 +57,22 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
   }
   const browserParams = new URLSearchParams();
   Object.entries(filters).forEach(([key, value]) => { if (value) browserParams.set(key, value); });
+  let latestDate = data.items.find((game) => game.date)?.date ?? null;
+  if (page > 1) {
+    const latestParams = new URLSearchParams(params);
+    latestParams.set("page", "1");
+    latestParams.set("page_size", "1");
+    latestDate = await getGames(latestParams).then((games) => games.items[0]?.date ?? null).catch(() => null);
+  }
+  const selectedBoard = overview.boards.find((board) => board.code === filters.board)?.name ?? filters.board;
+  const rangeParts = [
+    filters.season || "全部赛季",
+    filters.phase ? phaseLabel(filters.phase) : "全部阶段",
+    selectedBoard || "全部版型",
+    filters.date_from || filters.date_to ? `${filters.date_from || "不限"} 至 ${filters.date_to || "不限"}` : null,
+    filters.player ? `选手：${filters.player}` : null,
+    filters.q ? `关键词：${filters.q}` : null,
+  ].filter(Boolean);
   return <div className={"page-wrap " + styles.page}>
     <ArchiveIntro />
     <section className={styles.filters} aria-label="对局筛选">
@@ -69,6 +87,7 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
         <div className={styles.actions}><button className="button button-primary" type="submit">检索对局</button><ArchiveLink href="/games">清除条件</ArchiveLink></div>
       </form>
     </section>
+    <DataScopeSummary range={rangeParts.join(" · ")} gameCount={data.total} latestDate={latestDate} />
     <section className={styles.results} aria-labelledby="games-heading">
       <h2 id="games-heading">对局列表</h2>
       <GameArchiveList games={data.items} />

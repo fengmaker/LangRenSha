@@ -21,7 +21,11 @@
 .page :global(.leaderboard-points > strong) { color: var(--mint); font-size: 17px; }
 .page :global(.leaderboard-detail-controls) { margin-bottom: 12px; }
 .page :global(.leaderboard-rules-link) { font-size: 14px; }
-.page :global(.leaderboard-rate-detail .sample-trigger) { padding: 0; border: 0; background: transparent; color: var(--mint); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; cursor: pointer; }
+.page :global(.leaderboard-metric-details[data-show-calculations="true"] .leaderboard-comparison td) { padding-block: 14px; }
+.page :global(.leaderboard-table td .leaderboard-rate-detail) { margin-top: 10px; text-align: center; }
+.page :global(.leaderboard-rate-detail .leaderboard-rate-equation) { display: inline-block; font-size: 13px; }
+.page :global(.leaderboard-rate-detail .sample-trigger) { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; color: var(--mint); font: inherit; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; cursor: pointer; }
+.page :global(.leaderboard-sample-arrow) { position: absolute; left: calc(100% + 7px); top: 50%; transform: translateY(-50%); font-size: 12px; }
 .page :global(.leaderboard-detail-controls button) { min-height: 38px; padding: 0 13px; border-color: var(--line-strong); color: var(--muted); background: transparent; }
 .page :global(.leaderboard-calculation-rules) { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); }
 .page :global(.leaderboard-calculation-rules > summary) { font-size: 15px; cursor: pointer; }

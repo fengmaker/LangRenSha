@@ -17,7 +17,7 @@ import time
 import uuid
 from urllib.parse import quote
 from urllib.error import HTTPError
-from urllib.request import Request, urlopen
+from urllib.request import Request, getproxies, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -125,8 +125,18 @@ def published_api(api_url: str | None):
 
 
 def git(repository: Path, *args: str) -> str:
+    env = None
+    if args[:1] == ("push",):
+        # Git does not read Windows Internet Settings; urllib does, as do our
+        # deployment/online checks. Pass those proxies only to the push process.
+        proxies = getproxies()
+        env = {**os.environ, **{f"{scheme.upper()}_PROXY": value
+                              for scheme, value in proxies.items()
+                              if scheme in {"http", "https", "all", "no"}}}
+        if proxies.get("https") or proxies.get("all"):
+            print("Using environment/system proxy settings for Git push", flush=True)
     result = subprocess.run(["git", "-C", str(repository), *args], capture_output=True,
-                            text=True, encoding="utf-8", errors="replace")
+                            text=True, encoding="utf-8", errors="replace", env=env)
     if result.returncode:
         raise RuntimeError(f"git {' '.join(args[:2])} failed: {result.stderr.strip()}")
     return result.stdout.rstrip("\r\n")

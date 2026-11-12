@@ -783,10 +783,12 @@ def _check_player_rankings(stats: dict[str, Any], minimum: int,
 
 def _filtered_rank_rows(rows: list[dict[str, Any]], minimum_appearances: int,
                         minimum_effective_games: int = 0,
-                        scope_appearances: dict[str, int] | None = None) -> list[dict[str, Any]]:
+                        scope_appearances: dict[str, int] | None = None,
+                        minimum_samples: int = 0) -> list[dict[str, Any]]:
     cohort = [row for row in rows
               if (scope_appearances or {}).get(row.get("id"), row.get("appearances", 0)) >= minimum_appearances
-              and row.get("effective_game_count", row.get("sample_count", 0)) >= minimum_effective_games]
+              and row.get("effective_game_count", row.get("sample_count", 0)) >= minimum_effective_games
+              and row.get("sample_count", 0) >= minimum_samples]
     group_sizes: dict[int, int] = {}
     for row in cohort:
         group_sizes[row["rank"]] = group_sizes.get(row["rank"], 0) + 1
@@ -1788,12 +1790,12 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
     dialog = page.get_by_role("dialog")
     if dialog.count() != 1 or not dialog.is_visible():
         raise StaticAcceptanceError("Ranking dialog did not open")
-    filters = dialog.get_by_role("button", name="筛选场次")
+    filters = dialog.get_by_role("button", name="筛选样本")
     if filters.count() != 1:
-        raise StaticAcceptanceError("Total-win-rate dialog has no effective-game filter")
+        raise StaticAcceptanceError("Total-win-rate dialog has no metric-sample filter")
     filters.click()
-    if dialog.get_by_role("group", name="最低有效场次").count() != 1:
-        raise StaticAcceptanceError("Ranking dialog did not expose the effective-game threshold")
+    if dialog.get_by_role("group", name="当前指标最低样本数").count() != 1:
+        raise StaticAcceptanceError("Ranking dialog did not expose the metric-sample threshold")
     ranking_rows = profile_ranking or profile.get("stats", {}).get("ranking_boards", {}).get("total_win_rate", [])
     expected_appearance_rows = _filtered_rank_rows(ranking_rows, minimum)
     actual_appearance_rows = dialog.get_by_role("table").locator("tbody tr").all()
@@ -1806,23 +1808,22 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
                            .path.rstrip("/").rsplit("/", 1)[-1]) for row in actual_appearance_rows]
     if actual_ids != [row["id"] for row in expected_appearance_rows]:
         raise StaticAcceptanceError("Appearance threshold changed ranking order")
-    max_effective = max((row.get("effective_game_count", row.get("sample_count", 0))
-                         for row in ranking_rows), default=0)
+    max_samples = max((row.get("sample_count", 0) for row in ranking_rows), default=0)
     nonzero_threshold = 1
-    custom_threshold = max_effective + 1
-    dialog.get_by_label("自定义最低有效场次").fill(str(nonzero_threshold))
+    custom_threshold = max_samples + 1
+    dialog.get_by_label("自定义当前指标最低样本数").fill(str(nonzero_threshold))
     dialog.get_by_role("button", name="应用").click()
-    expected_effective_rows = _filtered_rank_rows(ranking_rows, minimum, nonzero_threshold)
+    expected_effective_rows = _filtered_rank_rows(ranking_rows, minimum, minimum_samples=nonzero_threshold)
     actual_effective_rows = dialog.get_by_role("table").locator("tbody tr").all()
     if len(actual_effective_rows) != len(expected_effective_rows) or not actual_effective_rows:
-        raise StaticAcceptanceError("Non-zero effective-game threshold removed every eligible ranking row")
+        raise StaticAcceptanceError("Non-zero metric-sample threshold removed every eligible ranking row")
     effective_ranks = [int(row.locator("td").nth(0).inner_text()) for row in actual_effective_rows]
     if effective_ranks != [row["rank"] for row in expected_effective_rows]:
-        raise StaticAcceptanceError("Effective-game threshold did not recalculate visible boundary ranks")
-    dialog.get_by_label("自定义最低有效场次").fill(str(custom_threshold))
+        raise StaticAcceptanceError("Metric-sample threshold did not recalculate visible boundary ranks")
+    dialog.get_by_label("自定义当前指标最低样本数").fill(str(custom_threshold))
     dialog.get_by_role("button", name="应用").click()
     if not any("没有符合要求" in text for text in dialog.get_by_role("status").all_inner_texts()):
-        raise StaticAcceptanceError("Ranking effective-game boundary did not produce an empty result")
+        raise StaticAcceptanceError("Ranking metric-sample boundary did not produce an empty result")
     dialog.get_by_role("button", name="关闭排行榜").click()
     if dialog.is_visible():
         raise StaticAcceptanceError("Ranking dialog did not close")
@@ -1831,7 +1832,7 @@ def _exercise_browser_flows(page, web_url: str, snapshot: dict[str, Any], docs: 
     return {"games_filter_ids": game_ids, "games_pagination": games_pagination, "player_id": player_id,
             "player_range": f"{range_start}--{range_end}", "minimum_appearances": minimum,
             "player_range_switch": player_range_switch,
-            "ranking_dialog": {"nonzero_effective_games": nonzero_threshold,
+            "ranking_dialog": {"nonzero_metric_samples": nonzero_threshold,
                                "empty_boundary": custom_threshold}}
 
 

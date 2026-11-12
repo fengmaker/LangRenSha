@@ -6,6 +6,7 @@ from collections import defaultdict
 from fractions import Fraction
 from typing import Any
 from scripts.role_constraints import puppet_target
+from scripts.identity_display import role_label
 
 
 PHASES = {"all", "regular", "finals_week"}
@@ -14,6 +15,18 @@ SEER_ROLE = "预言家"
 MEDIUM_ROLE = "通灵师"
 MIXED_BLOOD_ROLE = "混血儿"
 SELF_EXPLOSION_ACTIONS = {"self_destruct"}
+PERFORMANCE_RATE_KEYS = frozenset({
+    "witch_poison_wolf_rate", "hunter_shot_wolf_rate",
+    "mechanical_poison_wolf_rate", "mechanical_shot_wolf_rate",
+})
+PERFORMANCE_RANKING_KEYS = (
+    "witch_poison_count", "witch_poison_wolf_rate", "witch_poison_wolf_kills",
+    "hunter_shot_count", "hunter_shot_wolf_rate", "hunter_shot_wolf_kills",
+    "mechanical_poison_count", "mechanical_poison_wolf_rate", "mechanical_poison_wolf_kills",
+    "mechanical_shot_count", "mechanical_shot_wolf_rate", "mechanical_shot_wolf_kills",
+    "seer_campaign_count", "seer_badge_count", "seer_first_day_exiled",
+    "bluff_badge_count", "bluff_first_day_exiled",
+)
 PLAYER_RANKING_KEYS = (
     "points", "appearances", "attendance", "total_win_rate", "wins", "losses",
     "werewolf_win_rate", "good_win_rate", "sheriff_registration_rate",
@@ -22,7 +35,7 @@ PLAYER_RANKING_KEYS = (
     "werewolf_appearances", "werewolf_wins", "werewolf_draw_rate",
     "werewolf_self_explosion_rate", "werewolf_sheriff_registration_rate",
     "bluff_count", "bluff_rate", "bluff_success_rate",
-)
+) + PERFORMANCE_RANKING_KEYS
 
 
 def scope_games(games: list[dict[str, Any]], season: str | list[str], phase: str = "all") -> list[dict[str, Any]]:
@@ -101,23 +114,6 @@ def effective_faction(game: dict[str, Any], seat: dict[str, Any]) -> str | None:
     return _effective_faction_detail(game, seat)[0]
 
 
-def role_label(game: dict[str, Any], seat: dict[str, Any]) -> str | None:
-    """Name a treasure master by its evidenced god card, preserving its base role."""
-    role = seat.get("role")
-    if role != "盗宝大师":
-        return role
-    names = {"毒师": "盗宝毒师", "蒙面人": "盗宝蒙面", "摄梦人": "盗宝摄梦",
-             "通灵师": "盗宝通灵", "猎人": "盗宝猎人"}
-    choices = set()
-    for round_ in game.get("rounds", []):
-        for event in round_.get("night", []):
-            if (event.get("slot") in {"treasure_choice", "s21_treasure_action"}
-                    and event.get("action") == "choose" and event.get("actor") == seat.get("seat")):
-                text = str(event.get("result") or "")
-                choices.update(name for name in names if name in text)
-    return names[choices.pop()] if len(choices) == 1 else role
-
-
 def _unique_information_seat(seats: list[dict[str, Any]]) -> int | None:
     """Return the sole seer/medium seat; ambiguous or absent records stay unknown."""
     matches = [seat.get("seat") for seat in _information_seats(seats)]
@@ -176,6 +172,17 @@ def _new_metric() -> dict[str, Any]:
     return {"numerator": 0, "denominator": 0, "excluded": 0, "game_ids": [], "samples_by_game": {}}
 
 
+def _merge_metric(target: dict[str, Any], source: dict[str, Any]) -> None:
+    """Merge a serialized metric while retaining its per-game sample counts."""
+    for key in ("numerator", "denominator", "excluded"):
+        target[key] += source[key]
+    target["game_ids"].extend(source["game_ids"])
+    for sample in source.get("samples", []):
+        counts = target["samples_by_game"].setdefault(sample["game_id"], {"positive": 0, "negative": 0})
+        for key in ("positive", "negative"):
+            counts[key] += sample[key]
+
+
 def _add_denominator(metric: dict[str, Any], game_id: str, *, success: bool = False) -> None:
     metric["denominator"] += 1
     metric["numerator"] += int(success)
@@ -208,6 +215,13 @@ def _rank_values(values: dict[str, int | Fraction], *, descending: bool = True) 
 
 def _player_rank_value(acc: dict[str, Any], key: str) -> tuple[int | Fraction | None, int]:
     """Return an exact ranking value and its sample count for one profile metric."""
+    if key in PERFORMANCE_RANKING_KEYS:
+        metric = acc["performance"].get(key)
+        if metric is None or metric["denominator"] == 0:
+            return None, 0
+        if key in PERFORMANCE_RATE_KEYS:
+            return Fraction(metric["numerator"], metric["denominator"]), metric["denominator"]
+        return ((metric["numerator"], metric["denominator"]) if metric["excluded"] == 0 else (None, 0))
     known_results = acc["wins"] + acc["losses"]
     if key == "points":
         return (acc["points_half"], known_results) if known_results else (None, 0)
@@ -315,6 +329,8 @@ def _player_rankings(
             if metric_source is not None:
                 metric = players[player_id][metric_source]
                 row["effective_game_count"] = len(set(metric["game_ids"]))
+            elif key in PERFORMANCE_RANKING_KEYS:
+                row["effective_game_count"] = len(set(players[player_id]["performance"][key]["game_ids"]))
             board_rows.append(row)
         boards[key] = board_rows
     return rankings, boards
@@ -412,6 +428,7 @@ def _new_player_acc(seat: dict[str, Any], game_count: int) -> dict[str, Any]:
         "werewolf_self_explosion": _new_metric(), "werewolf_registration": _new_metric(),
         "good_registration": _new_metric(),
         "exile_abstentions": 0,
+        "performance": {},
         "scope_games": game_count,
     }
 
@@ -561,6 +578,23 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
                 else:
                     _add_denominator(acc["faction_win_rates"][faction], game_id,
                                      success=(game.get("winner") == faction))
+
+        if include_boards:
+            from website.api.process_metrics import process_observations
+            from website.api.skill_metrics import skill_metrics
+
+            observations = process_observations(game)
+            skills = skill_metrics(game, lambda seat: effective_faction(game, seat))
+            for seat, acc in game_players.values():
+                performance = acc["performance"]
+                for key, value in observations.get(seat.get("seat"), {}).items():
+                    metric = performance.setdefault(key, _new_metric())
+                    if value is None:
+                        _add_excluded(metric)
+                    else:
+                        _add_denominator(metric, game_id, success=value)
+                for key, value in skills.get(seat.get("seat"), {}).items():
+                    _merge_metric(performance.setdefault(key, _new_metric()), value)
 
         # Attendance and first sheriff registration have explicit denominators.
         on_police = set(first.get("on_police") or []) if first else set()
@@ -717,7 +751,7 @@ def _methodology_notes(games: list[dict[str, Any]]) -> list[str]:
     notes = [
         "胜负依据每位玩家的个人胜利阵营与整局胜方；混血按其个人胜利阵营计分。",
         "整季榜累计全部正式对局积分；狼人胜 +1.5，好人胜 +1，个人败 -1。决赛周冠军榜只累计决赛周对局。",
-        "站边率只计算放逐票中好人且身份不是预言家或通灵师，并且双方同轮都有票权的轮次；按该局唯一的预言家或通灵师的明确投向比较，弃票算失败，缺失投票记录列为排除。",
+        "跟真预言家投票率只计算放逐票中好人且身份不是预言家或通灵师，并且双方同轮都有票权的轮次；按该局唯一真实预言家或通灵师的明确投向比较，同投向计入分子，本人弃票计为未同投向，信息神弃票时该轮不计，缺失投票记录列为排除。该指标在一定程度上反映站边情况，但分票、独立判断等会造成投向不同，不能据此直接判定站边对错。",
         "警徽票率只计算好人（预言家本人除外）有票权且该局唯一的预言家或通灵师是合法候选的轮次；PK 和技能复投均计入，明确弃票算失败。",
         "版型没有预言家或通灵师时不适用这两类比例；身份未记录或信息神不唯一时无法判定，符合票权条件的样本列为排除。",
         "候选名单缺失时，仅用同轮实际投向该局唯一预言家或通灵师的选票作为其可参选证据；没有该证据的轮次按缺失排除，每位玩家只在其为好人且有票权时增加排除数。",
@@ -842,6 +876,7 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
         "good_off_police_rate": _off_police_metric(acc["good_registration"]),
         "werewolf_off_police_rate": _off_police_metric(acc["werewolf_registration"]),
         "roles": roles,
+        "performance": {key: _metric_result(value) for key, value in acc["performance"].items()},
         "ledger": ledger,
         "notes": notes,
     }
@@ -866,6 +901,10 @@ class PlayerStatsScope:
         if bluff_stats is not None:
             for pid, player_acc in self.players.items():
                 player_acc["bluffs"] = bluff_stats.get(pid)
+                for key in ("bluff_badge_count", "bluff_first_day_exiled"):
+                    metric = (bluff_stats.get(pid) or {}).get(key)
+                    if metric is not None:
+                        _merge_metric(player_acc["performance"].setdefault(key, _new_metric()), metric)
         self.default_rankings = self._rankings(0)
 
     def _rankings(self, minimum_appearances: int):

@@ -10,6 +10,27 @@ from scripts.game_timeline import build_game_timeline
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.mark.parametrize('board', ['masquerade', 's21_masquerade', 's23_masquerade'])
+def test_dancer_defines_pool_before_mask_verification_and_takeover_attack(board):
+    source = {'board': board, 'seats': [
+        {'seat': n, 'name': str(n), 'role': '狼人', 'faction': 'werewolf'} for n in [1, 2, 3]] + [
+        {'seat': 4, 'name': '假面', 'role': '假面', 'faction': 'werewolf'},
+        {'seat': 5, 'name': '舞者', 'role': '舞者', 'faction': 'good'}],
+        'rounds': [{'number': n, 'night': [], 'day': [event('self_destruct', 'self_destruct', n)]}
+                   for n in [1, 2, 3]] + [{'number': 4, 'day': [], 'night': [
+            event('wolf_attack', 'attack', targets=[10]),
+            event('masquerade_verify', 'verify', 4, [5], '在舞池'),
+            event('masquerade_mask', 'give_mask', 4, [5]),
+            event('dancer_dance', 'dance', 5, [5, 6, 7]),
+            event('dance_resolution', 'minority_dies', targets=[5]),
+        ]}]}
+    before = deepcopy(source)
+    slots = [item['slot'] for item in build_game_timeline(source)['phases'][-1]['items']]
+    assert slots == ['dancer_dance', 'masquerade_knife_status', 'masquerade_verify',
+                     'masquerade_mask', 'masquerade_attack', 'dance_resolution']
+    assert source == before
+
+
 def test_masquerade_verification_keeps_the_observed_pool_feedback():
     source = {
         'board': 's23_masquerade',
@@ -42,6 +63,27 @@ def test_treasure_opening_and_first_day_night_show_the_chosen_identities():
     assert phases[1]['label'] == '第一天夜晚'
     assert '选择毒师身份' in phases[1]['items'][0]['text']
     assert not any(item['slot'] == 'wolf_attack' for item in phases[0]['items'])
+
+
+def test_treasure_poisoner_identity_is_known_even_when_only_civilian_was_chosen():
+    source = {'board': 's23_treasure_master',
+              'seats': [{'seat': 1, 'name': '焦阳', 'role': '盗宝大师', 'faction': 'werewolf'}],
+              'rounds': [{'number': 1, 'night': [
+                  {'slot': 'treasure_remainder', 'action': 'view', 'actor': 1,
+                   'result': '三张余牌：毒师、平民、狼人'},
+                  {'slot': 'treasure_alignment', 'action': 'wolf', 'actor': 1,
+                   'result': '本局为盗宝毒师，固定狼人阵营。'},
+                  {'slot': 'treasure_choice', 'action': 'choose', 'actor': 1, 'result': '平民'},
+              ], 'day': []}]}
+    before = deepcopy(source)
+    items = build_game_timeline(source)['phases'][0]['items']
+    text = '\n'.join(item.get('text', '') for item in items)
+    assert '1号焦阳（盗宝毒师）固定属于狼人阵营' in text
+    assert '平民与毒师两张身份牌之间切换' in text
+    assert '本夜选择平民身份' in text
+    assert not any(item['slot'] == 'treasure_remainder' for item in items)
+    assert '三张余牌' not in text
+    assert source == before
 
 
 def test_confirmed_empty_guard_and_supplemental_day_surrender_share_the_timeline():
@@ -398,7 +440,8 @@ def test_last_masquerade_carries_knife_but_dq_invalidates_the_attack():
     ending = phases[-1]
     slots = [item['slot'] for item in ending['items']]
     assert 'wolf_attack' not in slots
-    assert slots[0] == 'masquerade_knife_status'
+    assert slots[0] == 'dancer_dance'
+    assert slots.index('dancer_dance') < slots.index('masquerade_knife_status') < slots.index('masquerade_verify')
     assert slots.index('masquerade_attack') > slots.index('masquerade_verify')
     attack = next(item for item in ending['items'] if item['slot'] == 'masquerade_attack')
     assert '1号郭小炜（假面）' in attack['text'] and '失效' in attack['text']

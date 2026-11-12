@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getReleases, getStats } from "@/lib/api";
+import { getGames, getReleases, getStats } from "@/lib/api";
 import { isStaticSite } from "@/lib/site-mode";
 import type { SearchParams } from "@/lib/types";
 import { DataProblem } from "@/components/data-state";
@@ -21,7 +21,11 @@ export default async function StatsPage({ searchParams }: { searchParams: Promis
   const end = first(query.season_end) || (legacySeason && !first(query.season_start) ? start : "latest");
   try {
     const [stats, releases] = await Promise.all([getStats(start, end), getReleases()]);
-    return <StatsView stats={stats} releases={releases} start={start} end={end} />;
+    const latestSeason = stats.scope.seasons.at(-1);
+    const latestDate = latestSeason
+      ? await getGames(new URLSearchParams({ season: latestSeason, page: "1", page_size: "1" })).then((games) => games.items[0]?.date ?? null).catch(() => null)
+      : null;
+    return <StatsView stats={stats} releases={releases} start={start} end={end} latestDate={latestDate} />;
   } catch (error) {
     return <div className="page-wrap"><PageIntro title="数据说明" /><DataProblem error={error} /></div>;
   }

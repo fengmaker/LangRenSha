@@ -25,6 +25,14 @@ export type Metric = {
   game_ids: string[];
   samples?: { game_id: string; positive: number; negative: number }[];
 };
+export type PerformanceKey =
+  | "witch_poison_count" | "witch_poison_wolf_rate" | "witch_poison_wolf_kills"
+  | "hunter_shot_count" | "hunter_shot_wolf_rate" | "hunter_shot_wolf_kills"
+  | "mechanical_poison_count" | "mechanical_poison_wolf_rate" | "mechanical_poison_wolf_kills"
+  | "mechanical_shot_count" | "mechanical_shot_wolf_rate" | "mechanical_shot_wolf_kills"
+  | "seer_campaign_count" | "seer_badge_count" | "seer_first_day_exiled"
+  | "bluff_badge_count" | "bluff_first_day_exiled"
+  | "first_night_targeted" | "first_night_death" | "first_day_exiled";
 export type PlayerPhoto = { url: string; original_url?: string; season: string; source_url: string; source_date: string };
 export type PlayerLedgerEntry = {
   season?: string;
@@ -46,7 +54,8 @@ export type RankingEntry = { id: string; name: string; rank: number; tied: boole
 export type MetricRanking = { rank: number; total: number; tied: boolean };
 export type PlayerRankingKey = "points" | "appearances" | "attendance" | "total_win_rate" | "wins" | "losses" | "werewolf_win_rate" | "good_win_rate" | "sheriff_registration_rate" | "seer_follow_rate" | "sheriff_seer_vote_rate"
   | "good_wins" | "wolf_vote_rate" | "good_sheriff_registration_rate" | "werewolf_appearances" | "werewolf_wins"
-  | "werewolf_draw_rate" | "werewolf_self_explosion_rate" | "werewolf_sheriff_registration_rate" | "bluff_count" | "bluff_rate" | "bluff_success_rate";
+  | "werewolf_draw_rate" | "werewolf_self_explosion_rate" | "werewolf_sheriff_registration_rate" | "bluff_count" | "bluff_rate" | "bluff_success_rate"
+  | Exclude<PerformanceKey, "first_night_targeted" | "first_night_death" | "first_day_exiled">;
 export type PlayerBoardStats = {
   code: string | null;
   name: string | null;
@@ -86,6 +95,7 @@ export type PlayerStats = {
   bluff_pending_games?: number;
   bluff_rate?: Metric;
   bluff_success_rate?: Metric;
+  performance?: Partial<Record<PerformanceKey, Metric>>;
   seer_follow_rate: Metric;
   sheriff_seer_vote_rate: Metric;
   rankings?: Partial<Record<PlayerRankingKey, MetricRanking | null>>;

@@ -30,7 +30,13 @@ from website.api.analytics import (
 from website.api import photos, bluff_frames
 from website.api.photos import photo_for, photo_path
 from website.api.bluff_frames import frame_path as bluff_frame_path
-from website.api.bluffs import METHODOLOGY as BLUFF_METHODOLOGY, S23_VIDEO_METHODOLOGY, aggregate_bluffs, review_items
+from website.api.bluffs import (
+    METHODOLOGY as BLUFF_METHODOLOGY,
+    S23_VIDEO_METHODOLOGY,
+    aggregate_bluffs,
+    fully_reviewed_game_count,
+    review_items,
+)
 from website.api.bluff_store import read_review_publication
 from website.api.game_presentation import build_game_presentation
 from scripts.season_config import load_season, season_codes
@@ -39,7 +45,7 @@ from scripts.role_constraints import puppet_target
 
 
 app = FastAPI(title="Masters archive API", version="1.0.0", debug=False)
-ANALYTICS_VERSION = 16
+ANALYTICS_VERSION = 17
 SEASON_CATALOG = {code: load_season(code) for code in season_codes()}
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 LOCAL_READER_CONFIG = PROJECT_ROOT / ".secrets" / "masters_web_reader.json"
@@ -455,12 +461,16 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
                                "excluded": 0, "game_ids": [], "samples": []},
                 "bluff_review_count": 0, "bluff_success_rate": {
                     "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": [], "samples": []},
+                "bluff_badge_count": {
+                    "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": [], "samples": []},
+                "bluff_first_day_exiled": {
+                    "numerator": 0, "denominator": 0, "rate": None, "excluded": 0, "game_ids": [], "samples": []},
             })
             row["bluff_count"] += season_row["bluff_count"]
             row["bluff_count_complete"] = row["bluff_count_complete"] and season_row["bluff_count_complete"]
             row["bluff_pending_games"] += season_row["bluff_pending_games"]
             row["bluff_review_count"] += season_row["bluff_review_count"]
-            for metric_key in ("bluff_rate", "bluff_success_rate"):
+            for metric_key in ("bluff_rate", "bluff_success_rate", "bluff_badge_count", "bluff_first_day_exiled"):
                 metric = row[metric_key]
                 season_metric = season_row[metric_key]
                 for key in ("numerator", "denominator", "excluded"):
@@ -469,7 +479,7 @@ def _combine_player_bluff_stats(snapshots_by_season: list[tuple[str, list[dict[s
                 metric["samples"].extend(season_metric.get("samples", []))
 
     for row in combined.values():
-        for metric_key in ("bluff_rate", "bluff_success_rate"):
+        for metric_key in ("bluff_rate", "bluff_success_rate", "bluff_badge_count", "bluff_first_day_exiled"):
             metric = row[metric_key]
             metric["game_ids"] = list(dict.fromkeys(metric["game_ids"]))
             metric["rate"] = metric["numerator"] / metric["denominator"] if metric["denominator"] else None
@@ -723,7 +733,11 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
     snapshots = _scope_snapshots(conn, release["id"], season, "all")
     review = read_review_publication(conn, release["id"], season)
     payload = review["payload"]
-    rows = review_items(snapshots, payload)
+    all_rows = review_items(snapshots, payload)
+    reviewed_games = (fully_reviewed_game_count(all_rows) if season in {"S22", "S23"} else
+                      payload.get('summary',{}).get('manual_reviewed_games',
+                          payload.get('summary',{}).get('independently_rechecked_games')))
+    rows = all_rows
     if player:
         rows = [row for row in rows if row["player_id"] == player]
     identified = [row for row in rows if row["decision"] == "yes"]
@@ -746,8 +760,7 @@ def bluff_review(season: str = Query(default="S22", max_length=20),
                     "successes": sum(row["success"] is True for row in identified),
                     "pending": sum(row["requires_user_review"] for row in rows),
                     "assistant_pending":sum(row['assistant_pending'] for row in rows),
-                    "reviewed_games":payload.get('summary',{}).get('manual_reviewed_games',
-                        payload.get('summary',{}).get('independently_rechecked_games'))},
+                    "reviewed_games":reviewed_games},
         "items": ([row for row in rows if row["requires_user_review"]] if status == "pending" else
                   [row for row in rows if row['assistant_pending']] if status=='assistant_pending' else rows),
         "notes": notes,

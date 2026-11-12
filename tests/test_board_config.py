@@ -44,6 +44,17 @@ def test_old_template_shapes_are_preserved(path):
         previous["wake_order_note"] = (
             "完整睁眼顺序未核；槽位排列仅用于事件归档，不表示已确认夜序。15 张候选牌中发出 12 张、"
             "余 3 张；物理余牌与可切换身份分开，盗宝大师只能在平民与本局另一张身份间切换；首夜狼队禁刀。")
+    if code in {"masquerade", "s21_masquerade", "s23_masquerade"}:
+        # The 2026-11-12 confirmation changes only the shared night sequence.
+        codes = (["dancer_dance", "masquerade_mask", "wolf_attack", "seer_check", "witch_save", "witch_poison"]
+                 if code == "s21_masquerade" else
+                 ["dancer_dance", "masquerade_verify", "masquerade_mask", "wolf_attack",
+                  "witch_save", "witch_poison", "seer_check", "dance_resolution"])
+        slots = {s["code"]: s for s in previous["night_slots"]}
+        previous["night_slots"] = [slots[c] for c in codes]
+        previous["wake_order_note"] = (
+            "2026-11-12用户确认：舞者先睁眼给出舞池，假面随后验证、赐予面具；"
+            "假面接刀及击杀也在舞者之后。其余角色的完整睁眼顺序未核，槽位顺序不补造未核关系。")
     assert load_template(code) == previous
     assert not template_path(code).stem.startswith(("s21_", "s23_"))
 

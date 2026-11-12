@@ -130,6 +130,48 @@
       "number": 1,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "unavailable",
+          "actor": 1,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "unavailable",
+          "actor": 4,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "unavailable",
+          "actor": 4,
+          "targets": [],
+          "result": null,
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -183,48 +225,6 @@
             4
           ],
           "result": "狼人",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "unavailable",
-          "actor": 4,
-          "targets": [],
-          "result": null,
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "unavailable",
-          "actor": 4,
-          "targets": [],
-          "result": null,
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "unavailable",
-          "actor": 1,
-          "targets": [],
-          "result": null,
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -395,6 +395,56 @@
       "number": 2,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "dance",
+          "actor": 1,
+          "targets": [
+            3,
+            9,
+            11
+          ],
+          "result": "舞者1号选择3号平民、9号白痴、11号女巫",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "verify",
+          "actor": 4,
+          "targets": [
+            1
+          ],
+          "result": "不在舞池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "give_mask",
+          "actor": 4,
+          "targets": [
+            2
+          ],
+          "result": "给2号平民扣面具",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -446,56 +496,6 @@
             11
           ],
           "result": "好人",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "verify",
-          "actor": 4,
-          "targets": [
-            1
-          ],
-          "result": "不在舞池",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "give_mask",
-          "actor": 4,
-          "targets": [
-            2
-          ],
-          "result": "给2号平民扣面具",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "dance",
-          "actor": 1,
-          "targets": [
-            3,
-            9,
-            11
-          ],
-          "result": "舞者1号选择3号平民、9号白痴、11号女巫",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -668,6 +668,56 @@
       "number": 3,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "dance",
+          "actor": 1,
+          "targets": [
+            2,
+            10,
+            12
+          ],
+          "result": "舞者选择2号平民、10号狼人和12号平民入池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "verify",
+          "actor": 4,
+          "targets": [
+            12
+          ],
+          "result": "在舞池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "give_mask",
+          "actor": 4,
+          "targets": [
+            12
+          ],
+          "result": "假面给12号平民扣面具",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -717,56 +767,6 @@
           "actor": 6,
           "targets": [],
           "result": null,
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "verify",
-          "actor": 4,
-          "targets": [
-            12
-          ],
-          "result": "在舞池",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "give_mask",
-          "actor": 4,
-          "targets": [
-            12
-          ],
-          "result": "假面给12号平民扣面具",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "dance",
-          "actor": 1,
-          "targets": [
-            2,
-            10,
-            12
-          ],
-          "result": "舞者选择2号平民、10号狼人和12号平民入池",
           "start_seat": null,
           "direction": null,
           "votes": [],
@@ -942,6 +942,56 @@
       "number": 4,
       "night": [
         {
+          "slot": "dancer_dance",
+          "action": "dance",
+          "actor": 1,
+          "targets": [
+            1,
+            4,
+            8
+          ],
+          "result": "舞者选择自己1号、4号假面、8号平民入池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_verify",
+          "action": "verify",
+          "actor": 4,
+          "targets": [
+            8
+          ],
+          "result": "在舞池",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
+          "slot": "masquerade_mask",
+          "action": "give_mask",
+          "actor": 4,
+          "targets": [
+            8
+          ],
+          "result": "假面给8号扣面具",
+          "start_seat": null,
+          "direction": null,
+          "votes": [],
+          "random_point": null,
+          "speech_scope": null,
+          "availability": null,
+          "effects": []
+        },
+        {
           "slot": "wolf_attack",
           "action": "attack",
           "actor": null,
@@ -991,56 +1041,6 @@
           "actor": 6,
           "targets": [],
           "result": null,
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_verify",
-          "action": "verify",
-          "actor": 4,
-          "targets": [
-            8
-          ],
-          "result": "在舞池",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "masquerade_mask",
-          "action": "give_mask",
-          "actor": 4,
-          "targets": [
-            8
-          ],
-          "result": "假面给8号扣面具",
-          "start_seat": null,
-          "direction": null,
-          "votes": [],
-          "random_point": null,
-          "speech_scope": null,
-          "availability": null,
-          "effects": []
-        },
-        {
-          "slot": "dancer_dance",
-          "action": "dance",
-          "actor": 1,
-          "targets": [
-            1,
-            4,
-            8
-          ],
-          "result": "舞者选择自己1号、4号假面、8号平民入池",
           "start_seat": null,
           "direction": null,
           "votes": [],

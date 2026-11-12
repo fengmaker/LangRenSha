@@ -467,9 +467,24 @@ def review_items(games: list[dict], payload: dict) -> list[dict]:
     return output
 
 
+def fully_reviewed_game_count(items: list[dict]) -> int:
+    """Count games whose current included records all have final human decisions."""
+    by_game: dict[str, list[dict]] = {}
+    for item in items:
+        by_game.setdefault(item["game_id"], []).append(item)
+    return sum(
+        bool(rows) and all(
+            item["verification_status"] == "user_confirmed"
+            for item in rows
+        )
+        for rows in by_game.values()
+    )
+
+
 def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, Any]]:
     stats: dict[str, dict] = {}
     items = review_items(games, payload)
+    games_by_id = {game.get("id", game.get("slug")): game for game in games}
     by_seat = {(item["game_id"], item["seat"]): item for item in items}
     for game in games:
         for seat in game.get("seats", []):
@@ -478,6 +493,7 @@ def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, An
                     "bluff_count": 0, "bluff_count_complete": bool(payload.get("games")), "bluff_pending_games": 0,
                     "bluff_rate": _new_metric(),
                     "bluff_review_count": 0, "bluff_success_rate": _new_metric(),
+                    "bluff_badge_count": _new_metric(), "bluff_first_day_exiled": _new_metric(),
                 })
                 game_id = game.get("id", game.get("slug"))
                 item = by_seat.get((game_id, seat["seat"]))
@@ -501,13 +517,25 @@ def aggregate_bluffs(games: list[dict], payload: dict) -> dict[str, dict[str, An
             row["bluff_count_complete"] = False
             row["bluff_pending_games"] += 1
             _add_excluded(metric)
+            _add_excluded(row["bluff_badge_count"])
+            _add_excluded(row["bluff_first_day_exiled"])
         elif item["decision"] == "yes":
             row["bluff_count"] += 1
+            game = games_by_id[item["game_id"]]
+            badge, _ = _badge_result(game, item["seat"])
+            target, exile_known, _ = _final_exile(game, 1)
+            for key, outcome in (
+                    ("bluff_badge_count", badge),
+                    ("bluff_first_day_exiled", target == item["seat"] if exile_known else None)):
+                if outcome is None:
+                    _add_excluded(row[key])
+                else:
+                    _add_denominator(row[key], item["game_id"], success=outcome)
             if item["success"] is None:
                 _add_excluded(metric)
             else:
                 _add_denominator(metric, item["game_id"], success=item["success"])
     for row in stats.values():
-        row["bluff_rate"] = _metric_result(row["bluff_rate"])
-        row["bluff_success_rate"] = _metric_result(row["bluff_success_rate"])
+        for key in ("bluff_rate", "bluff_success_rate", "bluff_badge_count", "bluff_first_day_exiled"):
+            row[key] = _metric_result(row[key])
     return stats
