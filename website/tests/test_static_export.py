@@ -1,4 +1,9 @@
 from pathlib import Path
+import os
+import shutil
+import subprocess
+
+import pytest
 
 from website.public_data import ROOT, _ranges, build_public_data, check_public_data
 from website.static_publish.export_static import (
@@ -97,3 +102,37 @@ def test_snapshot_id_tracks_response_content_and_is_stable(tmp_path, monkeypatch
     changed = export_direct_snapshot(tmp_path, tmp_path / "changed/data", base_path="/site", build_id="build")
     assert changed["source_hash"] == first["source_hash"]
     assert changed["snapshot_id"] != first["snapshot_id"]
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows ACL inheritance")
+def test_exported_public_directories_inherit_workspace_permissions(tmp_path, monkeypatch):
+    from website import public_data
+
+    monkeypatch.setattr(public_data, "build_public_data", lambda _root: {
+        "release_id": "release-1", "source_hash": "source-1",
+        "documents": {"overview.json": {}}, "season_rows": [], "ranges": [], "counts": {},
+    })
+    output = tmp_path / "snapshot/data"
+    output.parent.mkdir()
+    shell = shutil.which("pwsh") or shutil.which("powershell")
+    env = {**os.environ, "LANGRENSHA_ACL_DATA": str(output),
+           "LANGRENSHA_ACL_PARENT": str(output.parent),
+           "LANGRENSHA_ACL_MEDIA": str(output.parent / "media")}
+    # Reproduce the workspace's inheritable Modify grant. Pytest's own tmp_path
+    # is private, so checking only its default ACL would miss the account issue.
+    subprocess.run([shell, "-NoProfile", "-Command",
+        "$acl = Get-Acl -LiteralPath $env:LANGRENSHA_ACL_PARENT; "
+        "$sid = [System.Security.Principal.SecurityIdentifier]::new('S-1-5-11'); "
+        "$rule = [System.Security.AccessControl.FileSystemAccessRule]::new("
+        "$sid, 'Modify', 'ContainerInherit,ObjectInherit', 'None', 'Allow'); "
+        "$acl.AddAccessRule($rule); Set-Acl -LiteralPath $env:LANGRENSHA_ACL_PARENT -AclObject $acl",
+    ], env=env, capture_output=True, text=True, check=True)
+    export_direct_snapshot(tmp_path, output)
+    result = subprocess.run([
+        shell, "-NoProfile", "-Command",
+        "Get-Acl -LiteralPath $env:LANGRENSHA_ACL_DATA,$env:LANGRENSHA_ACL_MEDIA | "
+        "ForEach-Object { @($_.Access | Where-Object { "
+        "$_.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value "
+        "-eq 'S-1-5-11' -and $_.AccessControlType -eq 'Allow' }).Count -gt 0 }",
+    ], env=env, capture_output=True, text=True, check=True)
+    assert result.stdout.split() == ["True", "True"]

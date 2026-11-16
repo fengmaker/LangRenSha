@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -10,6 +11,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,6 +27,15 @@ from website.run import node_binary
 def write_json(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+@contextmanager
+def timed_stage(timings: dict[str, float], name: str):
+    started = time.perf_counter()
+    try:
+        yield
+    finally:
+        timings[name] = round(time.perf_counter() - started, 3)
 
 
 def tree_hash(root: Path) -> str:
@@ -166,6 +177,26 @@ def materialize_snapshot(site: Path, snapshot: Path) -> dict[str, int]:
     return {family: len(ids) for family, ids in routes.items()}
 
 
+def _rename_generated(source: Path, destination: Path) -> None:
+    # Windows also reports access denied when a child directory has a handle
+    # without delete sharing (for example while a scanner indexes new output).
+    for attempt in range(7):
+        try:
+            source.rename(destination)
+            return
+        except OSError as error:
+            if getattr(error, "winerror", None) not in {5, 32}:
+                raise
+            if attempt == 6:
+                raise RuntimeError(
+                    f"Windows 持续阻止目录替换，重试 6 次后仍失败：{source} -> {destination}。"
+                    f"请释放相关目录占用并检查访问权限后重试。原始错误：{error}"
+                ) from error
+            if attempt == 0:
+                print(f"Windows 暂时拒绝目录替换，等待后重试：{source} -> {destination}", flush=True)
+            time.sleep(0.1 * 2 ** attempt)
+
+
 def _promote(site: Path, output: Path, build_id: str, *, root: Path | None = None) -> None:
     root = Path(root or ROOT).resolve()
     output = _generated_path(Path(output), root, "Ready output")
@@ -181,14 +212,14 @@ def _promote(site: Path, output: Path, build_id: str, *, root: Path | None = Non
     replaced = False
     try:
         if output.exists():
-            output.rename(backup)
+            _rename_generated(output, backup)
             replaced = True
-        site.rename(output)
+        _rename_generated(site, output)
     except BaseException:
         if output.exists() and not site.exists():
-            output.rename(site)
+            _rename_generated(output, site)
         if replaced and backup.exists():
-            backup.rename(output)
+            _rename_generated(backup, output)
         raise
     if backup.exists():
         shutil.rmtree(backup)
@@ -206,11 +237,15 @@ def build(base_path: str, output: Path, *, root: Path = ROOT) -> dict[str, Any]:
     build_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:8]
     candidate_root = root / "tmp" / "pages-build" / build_id
     candidate_root.mkdir(parents=True)
+    timings = {}
+    started = time.perf_counter()
     try:
-        print(f"[{build_id}] Exporting final game JSON", flush=True)
-        manifest = export_direct_snapshot(root, candidate_root / "snapshot/data",
-                                          base_path=base_path, build_id=build_id)
-        workspace = prepare_static_workspace(candidate_root / "snapshot")
+        print("正在构建静态网站…", flush=True)
+        with timed_stage(timings, "export_json"):
+            manifest = export_direct_snapshot(root, candidate_root / "snapshot/data",
+                                              base_path=base_path, build_id=build_id)
+        with timed_stage(timings, "prepare_workspace"):
+            workspace = prepare_static_workspace(candidate_root / "snapshot")
         node = node_binary()
         env = {**os.environ, "NEXT_PUBLIC_SITE_MODE": "static", "NEXT_PUBLIC_BASE_PATH": base_path,
                "NEXT_TELEMETRY_DISABLED": "1"}
@@ -219,27 +254,37 @@ def build(base_path: str, output: Path, *, root: Path = ROOT) -> dict[str, Any]:
         if not npm:
             raise RuntimeError("npm is unavailable")
         for step in ("build", "typecheck"):
-            print(f"[{build_id}] Frontend {step}", flush=True)
-            with (candidate_root / f"{step}.log").open("w", encoding="utf-8") as log:
-                result = subprocess.run([npm, "run", step], cwd=workspace, env=env, stdout=log,
-                                        stderr=subprocess.STDOUT, timeout=1800)
-            if result.returncode:
-                raise RuntimeError(f"Frontend {step} failed; see {candidate_root / (step + '.log')}")
-        out = workspace / "out"
-        normalize_rsc_paths(out)
-        site = candidate_root / "site"
-        shutil.copytree(out, site)
-        retain_route_shells(site)
-        route_counts = materialize_snapshot(site, candidate_root / "snapshot")
-        report = check(site, base_path)
-        _promote(site, output, build_id, root=root)
+            with timed_stage(timings, f"frontend_{step}"):
+                with (candidate_root / f"{step}.log").open("w", encoding="utf-8") as log:
+                    result = subprocess.run([npm, "run", step], cwd=workspace, env=env, stdout=log,
+                                            stderr=subprocess.STDOUT, timeout=1800)
+                if result.returncode:
+                    raise RuntimeError(f"Frontend {step} failed; see {candidate_root / (step + '.log')}")
+        with timed_stage(timings, "materialize_pages"):
+            out = workspace / "out"
+            normalize_rsc_paths(out)
+            site = candidate_root / "site"
+            shutil.copytree(out, site)
+            retain_route_shells(site)
+            route_counts = materialize_snapshot(site, candidate_root / "snapshot")
+        with timed_stage(timings, "check_static"):
+            report = check(site, base_path)
+        with timed_stage(timings, "promote_output"):
+            _promote(site, output, build_id, root=root)
+        timings["build_total"] = round(time.perf_counter() - started, 3)
         result = {"state": "passed", "build_id": build_id, "snapshot_id": manifest["snapshot_id"],
                   "release_id": manifest["release_id"], "source_hash": manifest["source_hash"],
-                  "routes": route_counts, "check": report, "output": str(output)}
+                  "routes": route_counts, "check": report, "output": str(output),
+                  "timings_seconds": timings}
         write_json(candidate_root / "result.json", result)
-        print(f"[{build_id}] Static site ready: {output}", flush=True)
+        print(f"构建通过：{route_counts['games']} 场对局、{route_counts['players']} 位选手，"
+              f"耗时 {timings['build_total']:.1f} 秒。", flush=True)
         return result
     except BaseException:
+        timings["build_total"] = round(time.perf_counter() - started, 3)
+        write_json(candidate_root / "result.json", {
+            "state": "failed", "build_id": build_id, "timings_seconds": timings,
+        })
         raise
 
 
@@ -250,11 +295,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, default=ROOT / "tmp/pages-preview/langrensha-site")
     args = parser.parse_args(argv)
     try:
-        result = build(args.base_path, args.output, root=args.root)
+        build(args.base_path, args.output, root=args.root)
     except Exception as error:
         print(str(error), file=sys.stderr)
         return 1
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print(f"本地成品：{args.output}", flush=True)
     return 0
 
 

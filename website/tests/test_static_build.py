@@ -1,9 +1,30 @@
 import json
+import os
 from pathlib import Path
+import time
 
 import pytest
 
 from website.static_publish import build_static
+
+
+@pytest.mark.parametrize("fails", [False, True])
+def test_stage_timer_records_elapsed_time_even_when_stage_fails(monkeypatch, fails):
+    clock = iter([10.0, 12.3456])
+    monkeypatch.setattr(time, "perf_counter", lambda: next(clock))
+    timings = {}
+
+    def run():
+        with build_static.timed_stage(timings, "export_json"):
+            if fails:
+                raise RuntimeError("export failed")
+
+    if fails:
+        with pytest.raises(RuntimeError, match="export failed"):
+            run()
+    else:
+        run()
+    assert timings == {"export_json": 2.346}
 
 
 def compiler_shells(out):
@@ -154,6 +175,106 @@ def test_promote_rejects_outputs_outside_workspace_tmp(tmp_path, monkeypatch):
     output = tmp_path / "outside/site"
     with pytest.raises(ValueError, match="subdirectory.*tmp"):
         build_static._promote(site, output, "build-1", root=root)
+
+
+@pytest.mark.parametrize("locked_directory", ["candidate", "ready"])
+@pytest.mark.parametrize("winerror", [5, 32])
+def test_promote_waits_for_transient_windows_directory_lock(tmp_path, monkeypatch, locked_directory, winerror):
+    site = tmp_path / "tmp/candidate/site"
+    target = tmp_path / "tmp/preview/site"
+    for path, content in ((site, "next"), (target, "previous")):
+        path.mkdir(parents=True)
+        (path / "index.html").write_text(content)
+    locked = site if locked_directory == "candidate" else target
+    original_rename = Path.rename
+    failures = []
+    waits = []
+
+    def rename(path, destination):
+        if path == locked and len(failures) < 2:
+            failures.append(path)
+            error = PermissionError("Directory temporarily in use")
+            error.winerror = winerror
+            raise error
+        return original_rename(path, destination)
+
+    monkeypatch.setattr(Path, "rename", rename)
+    monkeypatch.setattr(time, "sleep", waits.append)
+    build_static._promote(site, target, "transient-lock", root=tmp_path)
+
+    assert len(failures) == len(waits) == 2
+    assert (target / "index.html").read_text() == "next"
+    assert not site.exists()
+    assert not list(target.parent.glob(".site-previous-*"))
+
+
+def test_promote_reports_persistent_windows_lock_and_restores_previous_site(tmp_path, monkeypatch):
+    site = tmp_path / "tmp/candidate/site"
+    target = tmp_path / "tmp/preview/site"
+    for path, content in ((site, "next"), (target, "previous")):
+        path.mkdir(parents=True)
+        (path / "index.html").write_text(content)
+    original_rename = Path.rename
+    waits = []
+
+    def rename(path, destination):
+        if path == site:
+            error = PermissionError("Directory still in use")
+            error.winerror = 5
+            raise error
+        return original_rename(path, destination)
+
+    monkeypatch.setattr(Path, "rename", rename)
+    monkeypatch.setattr(time, "sleep", waits.append)
+    with pytest.raises(RuntimeError, match="Windows.*目录") as error:
+        build_static._promote(site, target, "persistent-lock", root=tmp_path)
+
+    assert str(site) in str(error.value) and str(target) in str(error.value)
+    assert 0 < sum(waits) <= 7
+    assert (target / "index.html").read_text() == "previous"
+    assert (site / "index.html").read_text() == "next"
+    assert not list(target.parent.glob(".site-previous-*"))
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Exercises real Windows directory sharing")
+def test_promote_recovers_from_real_windows_child_directory_lock(tmp_path, monkeypatch):
+    import ctypes
+    from ctypes import wintypes
+
+    site = tmp_path / "tmp/candidate/site"
+    target = tmp_path / "tmp/preview/site"
+    for path, content in ((site, "next"), (target, "previous")):
+        path.mkdir(parents=True)
+        (path / "index.html").write_text(content)
+    child = site / "data"
+    child.mkdir()
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.CreateFileW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, wintypes.DWORD,
+                                  ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD, wintypes.HANDLE]
+    kernel.CreateFileW.restype = wintypes.HANDLE
+    kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+    # Open the child directory with read/write sharing, but without delete sharing.
+    handle = kernel.CreateFileW(str(child), 0x80000000, 0x1 | 0x2, None, 3, 0x02000000, None)
+    if handle == wintypes.HANDLE(-1).value:
+        raise ctypes.WinError(ctypes.get_last_error())
+    released = False
+
+    def release_lock(_delay):
+        nonlocal released
+        assert not released
+        assert kernel.CloseHandle(handle)
+        released = True
+
+    monkeypatch.setattr(time, "sleep", release_lock)
+    try:
+        build_static._promote(site, target, "real-lock", root=tmp_path)
+    finally:
+        if not released:
+            kernel.CloseHandle(handle)
+
+    assert released
+    assert (target / "index.html").read_text() == "next"
+    assert not site.exists()
 
 
 def test_static_check_validates_real_route_files_and_local_json(tmp_path):

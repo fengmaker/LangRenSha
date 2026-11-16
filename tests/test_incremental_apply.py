@@ -166,6 +166,52 @@ def test_formal_ownership_rejects_existing_game_with_same_source_elsewhere(tmp_p
         apply._check_formal_ownership(tmp_path, "S23", {}, destination, entry, final_game)
 
 
+def test_apply_preserves_reviewed_badge_loss_and_terminal_shot_window(tmp_path, monkeypatch):
+    from scripts.game_timeline import build_game_timeline
+
+    root, state, review, key = _fixture(tmp_path, monkeypatch)
+    entry = state["items"][key]["entry"]
+    folder = work_dir(root, "S23", entry)
+    candidate_path = folder / "candidate.json"
+    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+    candidate["dossier"]["winner"] = "werewolf"
+    candidate["dossier"]["seats"][4]["role"] = "猎人"
+    candidate["dossier"]["seats"][3]["role"] = "女巫"
+    candidate["dossier"]["rounds"][0]["day"] = [
+        {"slot": "sheriff_result", "action": "none", "actor": None, "targets": []},
+        {"slot": "exile_result", "action": "exile", "targets": [5]},
+        {"slot": "hunter_shot", "action": "unavailable", "actor": 5, "targets": []},
+    ]
+    candidate["dossier"]["_publication_context"] = {"supplemental_events": [
+        {"round": 1, "phase": "day", "event": {
+            "slot": "sheriff_result", "action": "badge_lost", "actor": None,
+            "targets": [], "result": "警长票两轮平票，警徽流失。"}},
+        {"round": 1, "phase": "day", "event": {
+            "slot": "hunter_shot", "action": "unavailable", "actor": 5,
+            "targets": [], "blocked_by_game_end": True,
+            "result": "放逐后直接宣胜，无后续猎枪窗口。"}},
+    ]}
+    candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
+    state["items"][key]["candidate_sha256"] = _digest(candidate_path)
+    save_state(root, "S23", state)
+    payload = json.loads(review.read_text(encoding="utf-8"))
+    payload["games"][0]["candidate_sha256"] = _digest(candidate_path)
+    review.write_text(json.dumps(payload), encoding="utf-8")
+
+    apply.apply_review(review, season="S23", root=root, apply=True)
+
+    updated = json.loads((root / "data/reports/S23/incremental/state.json").read_text(encoding="utf-8"))
+    game = json.loads((root / updated["items"][key]["formal_dir"] / "game.json").read_text(encoding="utf-8"))
+    day = game["rounds"][0]["day"]
+    shots = [event for event in day if event["slot"] == "hunter_shot"]
+    assert len(shots) == 1 and shots[0]["blocked_by_game_end"] is True
+    assert [event["action"] for event in day if event["slot"] == "sheriff_result"] == ["badge_lost"]
+    assert not any("最后一张神牌" in note for note in game["data_notes"])
+    items = [item for phase in build_game_timeline(game)["phases"] for item in phase["items"]]
+    assert any(item["slot"] == "sheriff_result" and "流失" in item["text"] for item in items)
+    assert not any(item["slot"] == "hunter_shot" for item in items)
+
+
 def test_unselected_manual_success_falls_back_to_rule_evaluation(monkeypatch):
     from website.api import bluffs
 

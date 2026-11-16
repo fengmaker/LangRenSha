@@ -183,6 +183,48 @@ def test_observed_death_announcement_after_self_destruct_stays_after_lost_badge(
     assert [item['slot'] for item in ordinary].index('night_deaths') < [item['slot'] for item in ordinary].index('self_destruct')
 
 
+def test_archived_badge_outcomes_keep_election_and_exile_timing():
+    source = {'board': 's23_treasure_master', 'seats': [
+        {'seat': 3, 'name': '盛宝', 'role': '盗宝大师', 'faction': 'werewolf'}],
+        'rounds': [{'number': 1, 'night': [], 'day': [
+            {'slot': 'sheriff_result', 'action': 'none', 'result': 'badge_lost'},
+            {'slot': 'night_deaths', 'action': 'peaceful'}]},
+            {'number': 2, 'night': [], 'day': [
+                {'slot': 'badge', 'action': 'none', 'actor': 3, 'result': 'badge_destroyed'},
+                {'slot': 'exile_result', 'action': 'exile', 'targets': [3]}]}]}
+    before = deepcopy(source)
+    phases = build_game_timeline(source)['phases']
+    assert [item['slot'] for item in phases[0]['items']] == ['sheriff_result', 'night_deaths']
+    assert '警徽流失' in phases[0]['items'][0]['text']
+    assert [item['slot'] for item in phases[1]['items']] == ['exile_result', 'badge']
+    assert phases[1]['items'][-1]['text'] == '警徽被撕毁。'
+    assert source == before
+
+
+def test_terminal_shot_supplement_marks_archival_placeholder_without_duplicate():
+    source = {
+        'season': 'S23', 'board': 's23_mixed_blood', 'winner': 'werewolf',
+        'seats': [{'seat': 5, 'name': '耿许儿', 'role': '猎人', 'faction': 'good'},
+                  {'seat': 2, 'name': '宝蓝', 'role': '女巫', 'faction': 'good'}],
+        'rounds': [{'number': 2, 'night': [], 'day': [
+            {'slot': 'hunter_shot', 'action': 'unavailable', 'actor': 5, 'targets': [],
+             'result': '法官直接终局，未进入开枪窗口。'},
+            {'slot': 'exile_result', 'action': 'exile', 'targets': [5]},
+        ]}],
+        '_publication_context': {
+            'terminal_observation': {'round': 2, 'phase': 'day'},
+            'supplemental_events': [{'round': 2, 'phase': 'day', 'event': {
+                'slot': 'hunter_shot', 'action': 'unavailable', 'actor': 5, 'targets': [],
+                'result': '放逐后直接宣胜，无后续猎枪窗口。', 'blocked_by_game_end': True,
+            }}],
+        },
+    }
+    before = deepcopy(source)
+    items = build_game_timeline(source)['phases'][0]['items']
+    assert [item['slot'] for item in items] == ['exile_result', 'game_result']
+    assert source == before
+
+
 @pytest.mark.parametrize('folder', [
     '2026-09-11_g02_BV1g1YU6kERd',
     '2026-09-17_g02_BV1nJer63EDh',

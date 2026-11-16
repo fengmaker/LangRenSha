@@ -8,9 +8,9 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import shutil
-import tempfile
 from typing import Any
 from urllib.parse import urlsplit
+import uuid
 
 if __package__:
     from .photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
@@ -174,7 +174,11 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
     documents.update({f"rankings/{name}": value for name, value in shared_rankings.items()})
 
     data_root.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix=f".{data_root.name}.direct-export-", dir=data_root.parent))
+    # These are public generated assets. Inherit the workspace ACL instead of
+    # tempfile's private Windows ACL, which survives promotion and prevents a
+    # different local account from replacing or cleaning the exported tree.
+    stage = data_root.parent / f".{data_root.name}.direct-export-{uuid.uuid4().hex}"
+    stage.mkdir()
     try:
         staged_data, staged_media = stage / "data", stage / "media"
         staged_media.mkdir()

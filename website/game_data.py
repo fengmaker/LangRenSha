@@ -166,7 +166,10 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
             continue
         action = source.get("action")
         revenge = source.get("slot") == "wolf_girl_revenge" and action == "die"
-        if action not in {"disqualify", "surrender", "select_pair"} and not revenge:
+        blocked_shot = (source.get("slot") in {"hunter_shot", "wolf_king_shot"}
+                        and action == "unavailable" and source.get("blocked_by_game_end") is True)
+        lost_election = source.get("slot") == "sheriff_result" and action == "badge_lost"
+        if action not in {"disqualify", "surrender", "select_pair"} and not (revenge or blocked_shot or lost_election):
             continue
         # This guard ruling is already displayed on the attempted guard. The
         # seat still requires pursuit and must not become an ordinary death.
@@ -175,7 +178,13 @@ def _public_supplemental_events(supplemental: dict) -> list[dict]:
             continue
         event = _pick(source, EVENT_FIELDS)
         event["supplemental"] = True
-        if revenge:
+        if blocked_shot:
+            event["slot_label"] = "猎人技能" if source["slot"] == "hunter_shot" else "狼王技能"
+            event["description"] = "对局已经结束，没有后续开枪窗口。"
+        elif lost_election:
+            event["slot_label"] = "警长结果"
+            event["description"] = "警长竞选结束，警徽流失。"
+        elif revenge:
             event["slot_label"] = "狼女孩报复连带"
         elif action == "disqualify":
             event["slot"] = "disqualification"
@@ -294,6 +303,15 @@ def _append_supplemental_events(rounds: list[dict], context: dict) -> None:
         output = _pick(event, EVENT_FIELDS)
         output["slot_label"] = event.get("slot_label") or output.get("slot")
         output["description"] = event.get("description") or "对局补充记录。"
+        if (event.get("blocked_by_game_end") is True
+                or event.get("slot") == "sheriff_result" and event.get("action") == "badge_lost"):
+            recorded = next((row for row in round_[phase]
+                             if row.get("slot") == event.get("slot")
+                             and row.get("actor") in {None, event.get("actor")}
+                             and row.get("action") in {None, "unknown", "unavailable", "none"}), None)
+            if recorded is not None:
+                recorded.update(output)
+                continue
         round_[phase].append(output)
 
 
@@ -458,7 +476,7 @@ def _public_game(dossier: dict, voting: dict, endgame: dict, audit: dict | None,
         if (any(event.get("blocked_by_game_end") for r in details["rounds"]
                 for phase in ("night", "day") for event in r[phase])
                 or any(event.get("blocked_by_game_end") for event in details.get("terminal_events", []))):
-            details["data_notes"].append("猎人作为最后一张神牌出局时对局立即结束，没有后续开枪环节。")
+            details["data_notes"].append("对局已在死亡技能处理前结束，没有后续开枪环节。")
     if terminal_observation is not None:
         number, phase = terminal_observation["round"], terminal_observation["phase"]
         if phase == "night":

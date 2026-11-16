@@ -8,6 +8,17 @@ import pytest
 from website.static_publish import sync_pages
 
 
+def test_pages_deploy_waits_for_upload_and_reuses_its_unique_artifact_name():
+    workflow = (sync_pages.ROOT / "website/static_publish/templates/deploy-pages.yml").read_text(encoding="utf-8")
+    upload, deploy = workflow.split("  deploy:\n", 1)
+    artifact_name = "github-pages-${{ github.run_id }}-${{ github.run_attempt }}"
+    assert f"artifact_name: {artifact_name}" in upload
+    assert f"name: {artifact_name}" in upload
+    assert "needs: upload" in deploy
+    assert "artifact_name: ${{ needs.upload.outputs.artifact_name }}" in deploy
+    assert "upload-pages-artifact@" not in deploy
+
+
 @pytest.mark.parametrize("proxies,expected", [
     ({"https": "http://proxy.test:8080"}, {"HTTPS_PROXY": "http://proxy.test:8080"}),
     ({"http": "http://proxy.test:8080", "all": "socks5://proxy.test"},
@@ -141,12 +152,91 @@ def test_publish_retries_push_even_when_no_new_commit_is_needed(tmp_path, monkey
     assert result["commit_created"] is False
     assert ("push", "origin", "main") in git_calls
     assert result["workflow"]["conclusion"] == "success"
+    assert set(result["timings_seconds"]) == {
+        "publication_preflight", "sync_files", "commit", "push", "deployment", "verify_online",
+    }
 
 
 def test_check_only_builds_locally_without_publishing(monkeypatch, tmp_path):
     calls = []
     monkeypatch.setattr(sync_pages, "build", lambda base_path, output: calls.append((base_path, output)) or {"state": "passed"})
     monkeypatch.setattr(sync_pages, "publish_site", lambda *args, **kwargs: pytest.fail("must not publish"))
+    monkeypatch.setattr(sync_pages, "cleanup", lambda *args, **kwargs: pytest.fail("must not clean"))
 
     assert sync_pages.main(["--check-only", "--output", str(tmp_path / "preview")]) == 0
     assert calls == [("/langrensha-site", tmp_path / "preview")]
+
+
+@pytest.mark.parametrize("fails", [False, True])
+def test_sync_records_build_and_publication_timings_on_success_or_failure(monkeypatch, tmp_path, fails):
+    monkeypatch.setattr(sync_pages, "ROOT", tmp_path)
+    built = {"state": "passed", "build_id": "build-1", "source_hash": "source-1",
+             "timings_seconds": {"export_json": 2.5, "build_total": 3.0}}
+    monkeypatch.setattr(sync_pages, "build", lambda *args: built)
+
+    def publish(*args, timings, **kwargs):
+        timings["push"] = 0.5
+        if fails:
+            raise RuntimeError("push failed")
+        return {"state": "passed", "commit": "abc123"}
+
+    monkeypatch.setattr(sync_pages, "publish_site", publish)
+    cleaned = []
+    monkeypatch.setattr(sync_pages, "cleanup", lambda *args: cleaned.append(args) or {
+        "state": "passed", "completed_games": 0, "pending_games": 0,
+    })
+    assert sync_pages.main([]) == (1 if fails else 0)
+    assert len(cleaned) == (0 if fails else 1)
+    report = json.loads((tmp_path / "tmp/pages-build/build-1/sync-result.json").read_text(encoding="utf-8"))
+    assert report["state"] == ("failed" if fails else "passed")
+    assert report["timings_seconds"]["export_json"] == 2.5
+    assert report["timings_seconds"]["push"] == 0.5
+    assert report["timings_seconds"]["total"] >= report["timings_seconds"]["publication_total"]
+    assert built["timings_seconds"] == {"export_json": 2.5, "build_total": 3.0}
+
+
+@pytest.mark.parametrize("keep_temp", [False, True])
+def test_cleanup_failure_does_not_misreport_verified_deployment_as_failed(monkeypatch, tmp_path, keep_temp):
+    monkeypatch.setattr(sync_pages, "ROOT", tmp_path)
+    monkeypatch.setattr(sync_pages, "build", lambda *args: {
+        "build_id": "build-1", "source_hash": "source-1", "timings_seconds": {},
+    })
+    monkeypatch.setattr(sync_pages, "publish_site", lambda *args, **kwargs: {"state": "passed"})
+    calls = []
+
+    def clean(*args):
+        calls.append(args)
+        raise PermissionError("occupied")
+
+    monkeypatch.setattr(sync_pages, "cleanup", clean)
+    assert sync_pages.main(["--keep-temp"] if keep_temp else []) == 0
+    report = json.loads((tmp_path / "tmp/pages-build/build-1/sync-result.json").read_text(encoding="utf-8"))
+    assert report["state"] == "passed"
+    if keep_temp:
+        assert calls == []
+        assert "cleanup" not in report
+    else:
+        assert report["cleanup"] == {"state": "failed", "errors": ["occupied"]}
+
+
+def test_default_sync_output_reports_outcome_without_dumping_internal_json(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(sync_pages, "ROOT", tmp_path)
+    monkeypatch.setattr(sync_pages, "build", lambda *args: {
+        "state": "passed", "build_id": "build-1", "source_hash": "source-1",
+        "routes": {"games": 380, "players": 95, "seasons": 3}, "timings_seconds": {},
+    })
+    monkeypatch.setattr(sync_pages, "publish_site", lambda *args, **kwargs: {
+        "state": "passed", "url": "https://example.test/", "commit": "abc123",
+    })
+    monkeypatch.setattr(sync_pages, "cleanup", lambda *args: {
+        "state": "passed", "completed_games": 4, "pending_games": 0, "paths": [], "errors": [],
+    })
+    assert sync_pages.main([]) == 0
+    output = capsys.readouterr().out
+    assert "上线成功" in output
+    assert "https://example.test/" in output
+    assert '"timings_seconds"' not in output
+    assert '"source_hash"' not in output
+    assert len(output.splitlines()) <= 6
+    report = json.loads((tmp_path / "tmp/pages-build/build-1/sync-result.json").read_text(encoding="utf-8"))
+    assert report["build"]["source_hash"] == "source-1"

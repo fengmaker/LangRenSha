@@ -386,6 +386,13 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
     source['voting'] = deepcopy(voting if voting is not None else game.get('voting', {}))
     if isinstance(source.get('board'), str):
         source['board'] = {'code': source['board']}
+    for row in source.get('rounds', []):
+        for event in row.get('day', []):
+            # Fixed archive slots store these confirmed outcomes in result.
+            if event.get('slot') in {'badge', 'sheriff_result'} and event.get('action') == 'none':
+                outcome = {'badge_lost': 'badge_lost', 'badge_destroyed': 'destroy'}.get(event.get('result'))
+                if outcome:
+                    event['action'] = outcome
     puppet = puppet_target(source)
     for seat in source.get('seats', []):
         if seat['seat'] == puppet:
@@ -393,6 +400,15 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
     context = source.get('_publication_context', {})
     for item in context.get('supplemental_events', []):
         row = next((r for r in source.get('rounds', []) if r['number'] == item['round']), None)
+        if (row is not None and item['event'].get('blocked_by_game_end')
+                and item['event'].get('slot') in {'hunter_shot', 'wolf_king_shot'}):
+            recorded = next((event for event in row[item['phase']]
+                             if event.get('slot') == item['event']['slot']
+                             and event.get('actor') in {None, item['event'].get('actor')}
+                             and event.get('action') in {None, 'unknown', 'unavailable'}), None)
+            if recorded is not None:
+                recorded.update(deepcopy(item['event']))
+                continue
         if row is not None and item['event'] not in row[item['phase']]:
             row[item['phase']].append(deepcopy(item['event']))
     if context.get('terminal_observation'):

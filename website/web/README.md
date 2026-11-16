@@ -17,3 +17,9 @@
 动态详情路由在编译时只生成 `__static__` 模板，构建器按快照清单生成实际地址，并保留 `.static-shells/` 供后续复用。仅数据变化（包含新增对局、选手或赛季）无需重新执行 Next 构建；源码、依赖或构建配置变化仍需编译。公开模式跨页链接使用带 basePath 的原生地址，查询参数变化通过浏览器 history 与 Next hooks 同步，避免向详情模板请求运行时 RSC。
 
 构建成品从根目录调用 `website/static_publish/build_static.py`，完成必要结构和代表页面检查。静态生成文件不纳入源码 Git。网站展示悍跳统计所需的最终次数与成功结果，不公开逐条复核证据、截图或反馈工具。
+
+页脚通过[不蒜子官方服务](https://busuanzi.ibruce.info/)展示累计浏览量（PV）和估算访客数（UV），无需账号或本站后端。数字默认收起，点击“访问统计”在入口右侧同一行显示，再次点击收起；收起不影响正常计数，同页重复展开不重新请求数据。仅在 `https://fengmaker.github.io/langrensha-site/` 的公开页面加载统计脚本，本地预览不发送统计请求。公开模式跨页面使用原生导航，每次页面加载记录一次；同页筛选不重复计数。未取得统计时显示 `—`，不以零替代。
+
+统计自接入后累计，无法补回接入前的访问；UV 按服务规则去重，不等于精确人数。数据由第三方保存，网络或拦截工具可能影响计数。统计按 `fengmaker.github.io` 域名归集，不按 GitHub 项目子路径隔离；重复静态部署或清理本地缓存不会重置计数。
+
+全站共用的 `SiteTraffic` 组件同时接入 [Cloudflare Web Analytics](https://developers.cloudflare.com/web-analytics/get-started/)，使用 `fengmaker.github.io` 统计站点分配的公开 Token，数据在 Cloudflare 后台查看。两套脚本共用上述公开地址限制，本地预览不加载；Cloudflare 设置 `spa: false`，避免同页筛选更新 URL 时被额外计为页面访问。它与不蒜子使用各自的统计口径，数字可能不同。

@@ -18,7 +18,8 @@ from urllib.request import Request, getproxies, urlopen
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from website.static_publish.build_static import build, tree_hash
+from website.static_publish.build_static import build, timed_stage, tree_hash, write_json
+from website.static_publish.cleanup_local import cleanup
 
 ORIGIN = "https://github.com/fengmaker/langrensha-site.git"
 REPOSITORY = "https://github.com/fengmaker/langrensha-site"
@@ -164,7 +165,8 @@ def _check_repository(repository: Path) -> tuple[Path, dict[str, Path]]:
     return target, templates
 
 
-def publish_site(ready: Path, repository: Path, *, timeout: int = 1800) -> dict:
+def publish_site(ready: Path, repository: Path, *, timeout: int = 1800,
+                 timings: dict[str, float] | None = None) -> dict:
     ready = Path(ready).absolute()
     _ordinary_directory(ready)
     ready = ready.resolve()
@@ -174,40 +176,50 @@ def publish_site(ready: Path, repository: Path, *, timeout: int = 1800) -> dict:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("complete") is not True or manifest.get("base_path") != "/langrensha-site":
         raise ValueError("Only a complete static build for /langrensha-site can be published")
-    artifact_hash = tree_hash(ready)
-    target, templates = _check_repository(Path(repository).absolute())
+    if timings is None:
+        timings = {}
+    print("正在同步发布仓库…", flush=True)
+    with timed_stage(timings, "publication_preflight"):
+        artifact_hash = tree_hash(ready)
+        target, templates = _check_repository(Path(repository).absolute())
 
-    print("Synchronizing generated files to the publication repository", flush=True)
-    counts = sync_tree(ready, target)
-    if tree_hash(target) != artifact_hash:
-        raise RuntimeError("Published working tree does not match the local build")
-    for name, source in templates.items():
-        output = target.parent / name
-        for parent in output.relative_to(target.parent).parents:
-            if parent != Path("."):
-                _ordinary_directory(target.parent / parent)
-        _ordinary_directory(output)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_bytes(source.read_bytes())
+    with timed_stage(timings, "sync_files"):
+        counts = sync_tree(ready, target)
+        if tree_hash(target) != artifact_hash:
+            raise RuntimeError("Published working tree does not match the local build")
+        for name, source in templates.items():
+            output = target.parent / name
+            for parent in output.relative_to(target.parent).parents:
+                if parent != Path("."):
+                    _ordinary_directory(target.parent / parent)
+            _ordinary_directory(output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_bytes(source.read_bytes())
 
-    git(target.parent, "add", "--", "site", *templates)
-    staged = git(target.parent, "diff", "--cached", "--no-renames", "--name-only").splitlines()
-    if any(not name.startswith("site/") and name not in templates for name in staged):
-        raise RuntimeError("Refusing to commit unrelated staged files")
-    changed = bool(staged)
-    if changed:
-        git(target.parent, "-c", "maintenance.auto=false", "commit", "--quiet", "-m",
-            f"Update static archive {manifest['build_id']}")
-    commit = git(target.parent, "rev-parse", "HEAD")
-    print(f"Pushing publication main {commit[:12]}", flush=True)
+    with timed_stage(timings, "commit"):
+        git(target.parent, "add", "--", "site", *templates)
+        staged = git(target.parent, "diff", "--cached", "--no-renames", "--name-only").splitlines()
+        if any(not name.startswith("site/") and name not in templates for name in staged):
+            raise RuntimeError("Refusing to commit unrelated staged files")
+        changed = bool(staged)
+        if changed:
+            git(target.parent, "-c", "maintenance.auto=false", "commit", "--quiet", "-m",
+                f"Update static archive {manifest['build_id']}")
+        commit = git(target.parent, "rev-parse", "HEAD")
     # Retry pushing even when the local tree is unchanged: a previous run can
     # have committed successfully and then failed before the remote push.
-    git(target.parent, "push", "origin", "main")
-    workflow = wait_for_deployment(commit, timeout)
-    online = verify_online(ready, manifest)
+    with timed_stage(timings, "push"):
+        git(target.parent, "push", "origin", "main")
+    print(f"已推送 {commit[:12]}，等待 Pages 部署…", flush=True)
+    with timed_stage(timings, "deployment"):
+        workflow = wait_for_deployment(commit, timeout)
+    print("部署完成，正在核验线上版本…", flush=True)
+    with timed_stage(timings, "verify_online"):
+        online = verify_online(ready, manifest)
     return {"state": "passed", "repository": REPOSITORY, "branch": "main", "build_id": manifest["build_id"],
             "commit": commit, "commit_created": changed, "files": counts,
-            "workflow": workflow, "online": online, "url": WEB_URL + "/"}
+            "workflow": workflow, "online": online, "url": WEB_URL + "/",
+            "timings_seconds": timings}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -215,18 +227,52 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, default=ROOT / "tmp/pages-preview/langrensha-site")
     parser.add_argument("--publish-dir", type=Path, default=ROOT.parent / "langrensha-site")
     parser.add_argument("--check-only", action="store_true", help="Build and validate locally without publishing")
+    parser.add_argument("--keep-temp", action="store_true", help="Keep temporary materials after successful deployment")
     parser.add_argument("--timeout", type=int, default=1800, help="Maximum wait for Pages deployment")
     args = parser.parse_args(argv)
+    started = time.perf_counter()
+    timings = {}
+    report_path = None
     try:
         built = build("/langrensha-site", args.output)
         if args.check_only:
-            print(json.dumps(built, ensure_ascii=False, indent=2))
+            print(f"本地检查通过：{args.output}", flush=True)
             return 0
-        published = publish_site(args.output, args.publish_dir, timeout=args.timeout)
-        print(json.dumps(published, ensure_ascii=False, indent=2))
+        timings.update(built["timings_seconds"])
+        report_path = ROOT / "tmp/pages-build" / built["build_id"] / "sync-result.json"
+        with timed_stage(timings, "publication_total"):
+            published = publish_site(args.output, args.publish_dir, timeout=args.timeout, timings=timings)
+        timings["total"] = round(time.perf_counter() - started, 3)
+        result = {**published, "build": built, "timings_seconds": timings}
+        write_json(report_path, result)
+        if not args.keep_temp:
+            try:
+                with timed_stage(timings, "cleanup"):
+                    result["cleanup"] = cleanup(ROOT, args.output, built["build_id"], built["source_hash"])
+            except Exception as error:
+                result["cleanup"] = {"state": "failed", "errors": [str(error)]}
+            timings["total"] = round(time.perf_counter() - started, 3)
+            write_json(report_path, result)
+        print(f"上线成功：{published.get('url', WEB_URL + '/')}（总耗时 {timings['total']:.1f} 秒）", flush=True)
+        if args.keep_temp:
+            print("已按 --keep-temp 保留本地临时资料。", flush=True)
+        elif result["cleanup"]["state"] == "passed":
+            cleaned = result["cleanup"]
+            summary = f"清理完成：{cleaned['completed_games']} 局资料"
+            if cleaned["pending_games"]:
+                summary += f"，保留 {cleaned['pending_games']} 局未完成资料"
+            print(summary + "。", flush=True)
+        else:
+            print(f"清理未完成，不影响上线；详情：{report_path.relative_to(ROOT)}", file=sys.stderr)
         return 0
     except Exception as error:
+        if report_path is not None:
+            timings["total"] = round(time.perf_counter() - started, 3)
+            write_json(report_path, {"state": "failed", "build": built,
+                                     "timings_seconds": timings, "error": str(error)})
         print(str(error), file=sys.stderr)
+        if report_path is not None:
+            print(f"详情：{report_path.relative_to(ROOT)}", file=sys.stderr)
         return 1
 
 

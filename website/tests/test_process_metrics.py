@@ -120,6 +120,33 @@ def test_badge_transfer_does_not_count_as_an_election_for_recipient():
     assert election_badge(snapshot, 3) is False
 
 
+def test_s23_0910_game_three_double_self_destruct_is_a_negative_badge_sample():
+    import json
+    from pathlib import Path
+
+    from scripts.game_timeline import build_game_timeline
+    from website.api.analytics import compute_player_stats
+
+    path = (Path(__file__).resolve().parents[2]
+            / "data/games/S23/2026-09-10_g03_BV14sY36hEPC/game.json")
+    snapshot = json.loads(path.read_text(encoding="utf-8"))
+    seer = next(row for row in snapshot["seats"] if row["role"] == "通灵师")
+
+    assert election_badge(snapshot, seer["seat"]) is False
+    metric = compute_player_stats(seer["person_id"], [snapshot], season="S23")["performance"]["seer_badge_count"]
+    assert (metric["numerator"], metric["denominator"], metric["excluded"]) == (0, 1, 0)
+    assert metric["samples"] == [{"game_id": snapshot["id"], "positive": 0, "negative": 1}]
+
+    days = {phase["number"]: phase["items"] for phase in build_game_timeline(snapshot)["phases"]
+            if phase["phase"] == "day"}
+    first_slots = [item["slot"] for item in days[1]]
+    assert first_slots.index("self_destruct") < first_slots.index("sheriff_result")
+    second_slots = [item["slot"] for item in days[2]]
+    assert second_slots.index("self_destruct") < second_slots.index("badge")
+    assert sum(item["slot"] == "badge" for items in days.values() for item in items) == 1
+    assert not any(item["slot"] == "sheriff_result" for item in days[3])
+
+
 def test_explicitly_forbidden_attack_is_known_not_targeted_but_missing_targets_are_unknown():
     forbidden = game(rounds=[{"number": 1, "night": [
         {"slot": "wolf_attack", "action": "forbidden", "targets": []},
