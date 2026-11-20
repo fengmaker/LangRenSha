@@ -4,7 +4,7 @@ import { ArchiveLink } from "@/components/archive-link";
 import { useState } from "react";
 import type { Metric, MetricRanking, PerformanceKey, PlayerDetail, PlayerLedgerEntry, PlayerRankingKey, PlayerStats, RankingEntry } from "@/lib/types";
 import { formatDate, formatNumber, phaseLabel, factionLabel } from "@/lib/format";
-import { isStaticSite, publicPath } from "@/lib/site-mode";
+import { isStaticSite, publicPagePath, publicPath } from "@/lib/site-mode";
 import { StaticPlayerPhoto } from "@/components/static-player-photo";
 import styles from "./player-detail.module.css";
 import { SeasonRangeFilter } from "./season-range-filter";
@@ -112,10 +112,10 @@ export function PlayerProfileView({ player, start, end, minimumAppearances, onRa
   return <div className={`page-wrap player-profile ${styles.profile}`}>
     <div className="breadcrumb"><ArchiveLink href={`/players?season=${encodeURIComponent(season)}&phase=all`}>选手索引</ArchiveLink><span>/</span><span>{player.name}</span></div>
     <section className="player-profile-hero">
-      <div className="profile-photo-frame">{player.photo ? isStaticSite ? <StaticPlayerPhoto photo={player.photo} alt={`${player.name} · ${player.photo.season} 官方海报`} priority="high" /> : <img src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <div className="profile-photo-empty"><span>{season} 赛季</span><b>{player.name}</b></div>}</div>
+      <div className="profile-photo-frame">{player.photo ? isStaticSite ? <StaticPlayerPhoto photo={player.photo} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <img src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season} 官方海报`} /> : <div className="profile-photo-empty"><span>{season} 赛季</span><b>{player.name}</b></div>}</div>
       <div className="profile-hero-copy"><h1>{player.name}</h1><p className="profile-range-label">{rangeLabel}</p></div>
       <div className="profile-hero-controls">
-        <SeasonRangeFilter action={publicPath(baseHref)} seasons={availableSeasons} start={season} end={end === "latest" ? "latest" : endSeason} minimumAppearances={appliedMinimum} onApply={onRangeChange} />
+        <SeasonRangeFilter action={publicPagePath(baseHref)} seasons={availableSeasons} start={season} end={end === "latest" ? "latest" : endSeason} minimumAppearances={appliedMinimum} onApply={onRangeChange} />
         {player.appearances < appliedMinimum ? <p className="profile-appearance-status" role="status">当前选手在所选区间出场 {formatNumber(player.appearances)} 场，未达到 {formatNumber(appliedMinimum)} 场门槛，不参与各项排名。</p> : null}
       </div>
     </section>

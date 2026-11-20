@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -277,8 +278,9 @@ def test_promote_recovers_from_real_windows_child_directory_lock(tmp_path, monke
     assert not site.exists()
 
 
-def test_static_check_validates_real_route_files_and_local_json(tmp_path):
-    from website.static_publish.check_static import check
+@pytest.mark.parametrize("schema_version", [2, 3])
+def test_static_check_validates_real_route_files_and_local_json(tmp_path, schema_version):
+    from website.static_publish.check_static import StaticAcceptanceError, check
 
     root = tmp_path / "site"
     snapshot_id = "snapshot-" + "a" * 64
@@ -298,24 +300,38 @@ def test_static_check_validates_real_route_files_and_local_json(tmp_path):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(value), encoding="utf-8")
     manifest = {
-        "schema_version": 2, "snapshot_id": snapshot_id, "build_id": "build-1",
+        "schema_version": schema_version, "snapshot_id": snapshot_id, "build_id": "build-1",
         "release_id": "release-1", "base_path": "/site", "complete": True,
         "seasons": [{"id": "S23"}], "ranges": [{"start": "S23", "end": "S23"}],
         "counts": {"games": 1, "players": 1, "media_files": 0},
     }
+    if schema_version == 3:
+        objects = root / "data/objects"
+        objects.mkdir()
+        manifest["document_hashes"] = {}
+        game_path = "games/game-1.json"
+        (release / game_path).unlink()
+        for relative, body in ((game_path, b'{"id":"game-1"}'), ("players/by-season/S23.json", b'{"items":[]}')):
+            digest = hashlib.sha256(body).hexdigest()
+            (objects / f"{digest}.json").write_bytes(body)
+            manifest["document_hashes"][relative] = digest
     (root / "data").mkdir(parents=True, exist_ok=True)
     (root / "data/manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     for route in ("", "games", "players", "stats", "leaderboard", "games/game-1",
                   "players/player-1", "seasons/S23"):
         path = root / route / "index.html" if route else root / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text("<!DOCTYPE html><html><body><main>static</main></body></html>", encoding="utf-8")
+        path.write_text("<!DOCTYPE html><html><body><main><h1>static</h1></main></body></html>", encoding="utf-8")
 
     result = check(root, "/site")
 
     assert result["state"] == "passed"
     assert result["snapshot_id"] == snapshot_id
     assert len(result["routes_checked"]) == 8
+    if schema_version == 3:
+        (objects / f"{manifest['document_hashes'][game_path]}.json").write_bytes(b"{}")
+        with pytest.raises(StaticAcceptanceError, match="hash differs from its filename"):
+            check(root, "/site")
 
 
 def test_build_cli_has_no_api_or_incremental_options(monkeypatch, tmp_path):

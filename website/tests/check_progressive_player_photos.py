@@ -17,6 +17,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from website.static_publish.check_static import _serve
+from website.static_publish.snapshot_files import document_path
 
 
 DEFAULT_SITE_ROOT = REPO_ROOT / "tmp" / "pages-preview" / "langrensha-site"
@@ -52,25 +53,25 @@ def _asset_file(site_root: Path, asset_url: str, base_path: str) -> Path:
 
 
 def _player_artifacts(site_root: Path) -> dict:
-    manifest = _read_json(site_root / "data" / "manifest.json")
-    snapshot_id = manifest["snapshot_id"]
+    data_root = site_root / "data"
+    manifest = _read_json(data_root / "manifest.json")
     base_path = manifest.get("base_path", "")
-    release_dir = site_root / "data" / "releases" / snapshot_id
-    season_players = _read_json(release_dir / "players" / "by-season" / f"{SEASON}.json")
+    season_players = _read_json(document_path(data_root, manifest, f"players/by-season/{SEASON}.json"))
     player = next((row for row in season_players["items"] if row.get("name", "").casefold() == PLAYER_NAME.casefold()), None)
     if not player or not player.get("photo"):
         raise ValueError(f"Could not find {PLAYER_NAME} with a photo in {SEASON} player data")
 
-    profile_path = release_dir / "players" / player["id"] / f"{SEASON}--{SEASON}.json"
+    profile_path = document_path(data_root, manifest, f"players/{player['id']}/{SEASON}--{SEASON}.json")
     profile = _read_json(profile_path)
     list_photo = player["photo"]
     profile_photo = profile.get("photo") or {}
-    original_url = list_photo.get("url")
-    thumbnail_url = manifest.get("player_photo_thumbnails", {}).get(original_url)
+    original_url = profile_photo.get("original_url", profile_photo.get("url"))
+    thumbnail_url = manifest.get("player_photo_thumbnails", {}).get(original_url, profile_photo.get("url"))
     if not original_url or not thumbnail_url:
-        raise ValueError("The static player photo must have a thumbnail in the manifest")
-    if profile_photo.get("url") != original_url:
-        raise ValueError("The selected player's list and profile photo URLs do not match")
+        raise ValueError("The static player photo must have an original and a thumbnail")
+    expected_list_url = thumbnail_url if manifest["schema_version"] >= 3 else original_url
+    if list_photo.get("url") != expected_list_url or thumbnail_url == original_url:
+        raise ValueError("The selected player's list and profile photo URLs do not match their expected variants")
 
     original_file = _asset_file(site_root, original_url, base_path)
     thumbnail_file = _asset_file(site_root, thumbnail_url, base_path)
@@ -82,7 +83,6 @@ def _player_artifacts(site_root: Path) -> dict:
 
     return {
         "manifest": manifest,
-        "release_dir": release_dir,
         "player": player,
         "original_url": original_url,
         "thumbnail_url": thumbnail_url,
@@ -92,61 +92,25 @@ def _player_artifacts(site_root: Path) -> dict:
     }
 
 
-async def _open_page_with_original_route(browser, page_url: str, original_path: str, *, abort_original: bool = False,
-                                         capture_priority: bool = False) -> dict:
+async def _open_page_with_original_route(browser, page_url: str, original_path: str) -> dict:
     context = await browser.new_context(viewport=VIEWPORT, device_scale_factor=1)
     page = await context.new_page()
     route_started = asyncio.Event()
-    route_aborted = asyncio.Event()
     release_route = asyncio.Event()
-    original_requests: list[str] = []
-    priorities: list[dict] = []
 
     async def handle_route(route):
         if urlsplit(route.request.url).path == original_path:
-            original_requests.append(route.request.url)
             route_started.set()
-            if abort_original:
-                await route.abort()
-                route_aborted.set()
-            else:
-                await release_route.wait()
-                await route.continue_()
-            return
+            await release_route.wait()
         await route.continue_()
 
     await context.route("**/*", handle_route)
-    cdp = None
-    if capture_priority:
-        cdp = await context.new_cdp_session(page)
-        await cdp.send("Network.enable")
-        await cdp.send("Network.setCacheDisabled", {"cacheDisabled": True})
-
-        def record_request(event):
-            request = event.get("request", {})
-            if urlsplit(request.get("url", "")).path == original_path:
-                priorities.append({
-                    "event": "requestWillBeSent",
-                    "initialPriority": request.get("initialPriority"),
-                    "isLinkPreload": request.get("isLinkPreload"),
-                })
-
-        def record_priority_change(event):
-            priorities.append({"event": "resourceChangedPriority", "priority": event.get("newPriority")})
-
-        cdp.on("Network.requestWillBeSent", record_request)
-        cdp.on("Network.resourceChangedPriority", record_priority_change)
-
     await page.goto(page_url, wait_until="domcontentloaded", timeout=45000)
     await asyncio.wait_for(route_started.wait(), timeout=25)
     return {
         "context": context,
         "page": page,
         "release_route": release_route,
-        "route_aborted": route_aborted,
-        "original_requests": original_requests,
-        "priorities": priorities,
-        "cdp": cdp,
     }
 
 
@@ -183,14 +147,6 @@ async def _assert_profile_preloads(page, original_absolute: str, thumbnail_absol
     if not thumbnail:
         raise AssertionError(f"Profile thumbnail preload is missing: {links}")
     return {"links": links, "original_priority": original["fetchPriority"]}
-
-
-async def _assert_low_priority(priority_events: list[dict]) -> dict:
-    initial = next((event.get("initialPriority") for event in priority_events
-                    if event.get("event") == "requestWillBeSent" and event.get("initialPriority")), None)
-    if not initial or str(initial).lower() != "low":
-        raise AssertionError(f"CDP did not report Low initial priority for the list original: {priority_events}")
-    return {"initial_priority": initial, "events": priority_events}
 
 
 async def _run_checks(site_root: Path, report_path: Path) -> dict:
@@ -249,46 +205,27 @@ async def _run_checks(site_root: Path, report_path: Path) -> dict:
                     profile["release_route"].set()
                     await profile["context"].close()
 
-                # Directory: capture the browser's initial request priority while the original is held.
-                listing = await _open_page_with_original_route(
-                    browser, web_root + artifacts["list_route"], original_public_path, capture_priority=True)
+                listing = await browser.new_context(viewport=VIEWPORT, device_scale_factor=1)
                 try:
-                    page = listing["page"]
+                    page = await listing.new_page()
+                    original_requests = []
+
+                    def record_original(request):
+                        if urlsplit(request.url).path == original_public_path:
+                            original_requests.append(request.url)
+
+                    page.on("request", record_original)
+                    await page.goto(web_root + artifacts["list_route"], wait_until="domcontentloaded")
                     list_preview = await _wait_for_photo(page, LIST_SELECTOR, thumbnail_absolute)
-                    priority = await _assert_low_priority(listing["priorities"])
                     list_shot = screenshot_dir / "list-thumbnail-visible.png"
                     await page.screenshot(path=str(list_shot), full_page=False)
                     report["screenshots"].append(str(list_shot))
-                    listing["release_route"].set()
-                    list_original = await _wait_for_photo(page, LIST_SELECTOR, original_absolute,
-                                                          artifacts["original_size"])
-                    report["checks"]["list_preview_then_original"] = {
-                        "passed": True,
-                        "preview": list_preview,
-                        "priority": priority,
-                        "original": list_original,
-                    }
+                    await page.wait_for_load_state("networkidle")
+                    if original_requests:
+                        raise AssertionError(f"The directory requested the profile original: {original_requests}")
+                    report["checks"]["list_thumbnail_only"] = {"passed": True, "preview": list_preview}
                 finally:
-                    listing["release_route"].set()
-                    await listing["context"].close()
-
-                # Directory: abort the original and confirm the decoded thumbnail remains visible.
-                aborted = await _open_page_with_original_route(
-                    browser, web_root + artifacts["list_route"], original_public_path, abort_original=True)
-                try:
-                    page = aborted["page"]
-                    await _wait_for_photo(page, LIST_SELECTOR, thumbnail_absolute)
-                    await asyncio.wait_for(aborted["route_aborted"].wait(), timeout=10)
-                    await page.wait_for_timeout(500)
-                    aborted_preview = await _wait_for_photo(page, LIST_SELECTOR, thumbnail_absolute)
-                    report["checks"]["original_abort_keeps_preview"] = {
-                        "passed": True,
-                        "aborted_requests": len(aborted["original_requests"]),
-                        "preview": aborted_preview,
-                    }
-                finally:
-                    aborted["release_route"].set()
-                    await aborted["context"].close()
+                    await listing.close()
             finally:
                 await browser.close()
     finally:

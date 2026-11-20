@@ -9,7 +9,7 @@
 .\.venv\Scripts\python.exe website/run.py
 ```
 
-`--check` 只读校验最终数据与统计投影，不需要历史基线副本。`export_static.py` 无参数时写入 `website/web/public/data` 和正式照片媒体；可用 `--root`、`--output`、`--base-path` 指定本地目录。导出结果使用内容指纹，保留对局、选手、统计区间、榜单与共用排名的现有浏览器格式，不再生成悍跳公开复核数据。
+`--check` 只读校验最终数据与统计投影，不需要历史基线副本。`export_static.py` 无参数时写入 `website/web/public/data` 和正式照片媒体；可用 `--root`、`--output`、`--base-path` 指定本地目录。清单记录当前发布版本，并把对局记录和按赛季生成的选手卡片映射到 `data/objects/<sha256>.json`。正文不变时可跨发布复用原地址。其余 JSON 仍按快照存放。
 
 只有用户明确要求构建/同步静态网站时才执行：
 

@@ -3,9 +3,6 @@
 from typing import Any
 
 
-SNAPSHOT_SCHEMA_VERSION = 2
-
-
 def split_player_rankings(profile: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
     stats = profile.get("stats")
     boards = {"ranking_boards": stats["ranking_boards"]} if isinstance(stats, dict) and "ranking_boards" in stats else {}

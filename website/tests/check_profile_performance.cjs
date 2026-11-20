@@ -37,7 +37,7 @@ function load(relative) {
       ArchiveLink: ({ href, children, ...props }) => React.createElement('a', { ...props, href }, children),
     };
     if (name === '@/components/static-player-photo') return { StaticPlayerPhoto: () => null };
-    if (name === '@/lib/site-mode') return { isStaticSite: false, publicPath: (value) => value };
+    if (name === '@/lib/site-mode') return { isStaticSite: false, publicPath: (value) => value, publicPagePath: (value) => value };
     if (name === '@/lib/format') return load('lib/format.ts');
     if (name === '@/lib/ranking-filter') return load('lib/ranking-filter.ts');
     if (name === '@/components/metric-samples') return load('components/metric-samples.tsx');

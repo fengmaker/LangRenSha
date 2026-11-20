@@ -1,6 +1,6 @@
 "use client";
 
-import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
+import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerCard, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
 import type { SnapshotManifest } from "@/lib/snapshot-data";
 import { basePath, publicPath } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
@@ -27,7 +27,10 @@ async function requestJson<T>(url: string, cache?: RequestCache): Promise<T> {
 
 async function readSnapshotManifest(): Promise<SnapshotManifest> {
   const manifest = await requestJson<SnapshotManifest>(`${basePath}/data/manifest.json`, "no-store");
-  if (![1, 2].includes(manifest.schema_version) || !manifest.snapshot_id || !Array.isArray(manifest.seasons) || !manifest.seasons.length) throw new ApiError("invalid", "静态数据清单的格式、快照或赛季信息无效。");
+  if (![1, 2, 3].includes(manifest.schema_version) || !manifest.snapshot_id || !Array.isArray(manifest.seasons) || !manifest.seasons.length
+    || (manifest.schema_version === 3 && (!manifest.document_hashes || typeof manifest.document_hashes !== "object" || Array.isArray(manifest.document_hashes)))) {
+    throw new ApiError("invalid", "静态数据清单的格式、快照或赛季信息无效。");
+  }
   return manifest;
 }
 
@@ -45,8 +48,14 @@ export function fetchSnapshotManifest(): Promise<SnapshotManifest> {
 
 export async function fetchStaticJson<T>(relativePath: string): Promise<T> {
   const safePath = relativePath.split("/").map(encodeURIComponent).join("/");
-  const { snapshot_id: snapshotId } = await fetchSnapshotManifest();
+  const manifest = await fetchSnapshotManifest();
+  const snapshotId = manifest.snapshot_id;
   try {
+    const digest = manifest.document_hashes?.[relativePath];
+    if (digest) {
+      const body = await requestJson<T>(`${basePath}/data/objects/${encodeURIComponent(digest)}.json`, "force-cache");
+      return { ...body, release_id: manifest.release_id };
+    }
     return await requestJson<T>(`${basePath}/data/releases/${encodeURIComponent(snapshotId)}/${safePath}`);
   } catch (error) {
     if (!(error instanceof ApiError) || error.kind !== "not-found") throw error;
@@ -102,12 +111,17 @@ function preloadPlayerPhoto(photo: PlayerPhoto | null | undefined) {
   }
 }
 
-export async function fetchPlayersForSeason(season: string): Promise<PageResult<PlayerSummary>> {
-  const [manifest, result] = await Promise.all([
-    fetchSnapshotManifest(),
-    fetchStaticJson<PageResult<PlayerSummary>>(`players/by-season/${season}.json`),
-  ]);
-  return { ...result, items: result.items.map((player) => withPlayerPhotoThumbnail(player, manifest)) };
+export async function fetchPlayersForSeason(season: string): Promise<PageResult<PlayerCard>> {
+  const manifest = await fetchSnapshotManifest();
+  const path = `players/by-season/${season}.json`;
+  if (manifest.schema_version === 3) return fetchStaticJson<PageResult<PlayerCard>>(path);
+
+  const result = await fetchStaticJson<PageResult<PlayerSummary>>(path);
+  return { ...result, items: result.items.map(({ id, name, appearances, photo, stats }) => ({
+    id, name, appearances: stats?.appearances ?? appearances,
+    ...(photo && { photo: { url: manifest.player_photo_thumbnails?.[photo.url] ?? photo.url, season: photo.season } }),
+    ...(stats && { stats: { wins: stats.wins, losses: stats.losses, win_rate: stats.total_win_rate.rate } }),
+  })) };
 }
 
 export async function fetchPlayerRange(id: string, start: string, end: string): Promise<PlayerDetail> {

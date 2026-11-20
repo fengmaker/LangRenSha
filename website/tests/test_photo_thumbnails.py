@@ -39,7 +39,7 @@ def test_static_thumbnail_is_small_content_addressed_and_preserves_original(tmp_
     assert generated.stat().st_size < len(original) / 3
     with Image.open(generated) as image:
         assert image.format == "WEBP"
-        assert image.width <= 600 and image.height <= 1067
+        assert image.width <= 480 and image.height <= 854
         assert image.width / image.height == pytest.approx(1440 / 2560, abs=.002)
 
 

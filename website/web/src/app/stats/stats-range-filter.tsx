@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import styles from "./stats.module.css";
-import { publicPath } from "@/lib/site-mode";
+import { publicPagePath } from "@/lib/site-mode";
 
 export function StatsRangeFilter({ seasons, start, end, onApply }: { seasons: string[]; start: string; end: string; onApply?: (start: string, end: string) => void }) {
   const [from, setFrom] = useState(start);
@@ -22,7 +22,7 @@ export function StatsRangeFilter({ seasons, start, end, onApply }: { seasons: st
   }
 
   return (
-    <form method="get" action={publicPath("/stats")} className={styles.rangeForm} aria-label="筛选统计范围" onSubmit={submit}>
+    <form method="get" action={publicPagePath("/stats")} className={styles.rangeForm} aria-label="筛选统计范围" onSubmit={submit}>
       <label className="filter-field">
         <span>起始赛季</span>
         <select name="season_start" value={from} onChange={(event) => changeStart(event.target.value)}>

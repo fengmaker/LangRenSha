@@ -4,18 +4,16 @@ import { useEffect, useState } from "react";
 import { publicPath } from "@/lib/site-mode";
 import type { PlayerPhoto } from "@/lib/types";
 
-export function StaticPlayerPhoto({ photo, alt, priority = "low" }: { photo: PlayerPhoto; alt: string; priority?: "high" | "low" }) {
+export function StaticPlayerPhoto({ photo, alt }: { photo: PlayerPhoto; alt: string }) {
   const preview = publicPath(photo.url);
   const original = publicPath(photo.original_url ?? photo.url);
-  const [loadedPreview, setLoadedPreview] = useState("");
   const [readyOriginal, setReadyOriginal] = useState("");
-  const loadOriginal = original !== preview && (priority === "high" || loadedPreview === preview);
 
   useEffect(() => {
-    if (!loadOriginal) return;
+    if (original === preview) return;
     let active = true;
     const image = new Image();
-    image.fetchPriority = priority;
+    image.fetchPriority = "high";
     image.decoding = "async";
     image.src = original;
     image.decode().then(() => { if (active) setReadyOriginal(original); })
@@ -24,15 +22,13 @@ export function StaticPlayerPhoto({ photo, alt, priority = "low" }: { photo: Pla
       active = false;
       image.removeAttribute("src");
     };
-  }, [original, loadOriginal, priority]);
+  }, [original, preview]);
 
   return <img
     src={readyOriginal === original ? original : preview}
     alt={alt}
-    loading={priority === "high" ? "eager" : "lazy"}
+    loading="eager"
     decoding="async"
-    fetchPriority={readyOriginal === original ? priority : "auto"}
-    onLoad={() => setLoadedPreview(preview)}
-    onError={() => setLoadedPreview(preview)}
+    fetchPriority={readyOriginal === original ? "high" : "auto"}
   />;
 }

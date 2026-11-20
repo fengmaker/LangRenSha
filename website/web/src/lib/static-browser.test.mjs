@@ -8,6 +8,9 @@ const manifestPath = new URL("./static-browser.ts", import.meta.url);
 const leaderboardPath = new URL("../app/leaderboard/static-leaderboard-browser.tsx", import.meta.url);
 const playerBrowserPath = new URL("../app/players/[id]/static-player-browser.tsx", import.meta.url);
 
+const playersBrowserPath = new URL("../app/players/static-players-browser.tsx", import.meta.url);
+const siteModePath = new URL("./site-mode.ts", import.meta.url);
+
 class ApiError extends Error {
   constructor(kind, message) {
     super(message);
@@ -90,6 +93,43 @@ test("a 404 with the same snapshot reports the missing relative path", async () 
   assert.equal(requests.filter((item) => item.endsWith("manifest.json")).length, 2);
 });
 
+test("unchanged documents reuse their URL across snapshots and report the selected release", async () => {
+  const digest = "a".repeat(64);
+  const path = "games/game-1.json";
+  const requests = [];
+  for (const release of ["old", "new"]) {
+    const browser = staticBrowser(async (url, { cache }) => {
+      if (url.endsWith("/manifest.json")) return response(200, manifest(release, {
+        schema_version: 3, release_id: release, document_hashes: { [path]: digest },
+      }));
+      requests.push([url, cache]);
+      return response(200, { id: "game-1" });
+    }, undefined, "/archive");
+
+    const game = await browser.fetchGame("game-1");
+    assert.equal(game.id, "game-1");
+    assert.equal(game.release_id, release);
+  }
+  const request = [`/archive/data/objects/${digest}.json`, "force-cache"];
+  assert.deepEqual(requests, [request, request]);
+});
+
+test("a missing content-addressed document refreshes a superseded snapshot", async () => {
+  const digest = "a".repeat(64);
+  let refreshed = false;
+  let reads = 0;
+  const browser = staticBrowser(async (url) => {
+    if (url.endsWith("/manifest.json")) return response(200, manifest(++reads === 1 ? "old" : "new", {
+      schema_version: 3, document_hashes: { "games/game-1.json": digest },
+    }));
+    assert.equal(url, `/data/objects/${digest}.json`);
+    return response(404, {});
+  }, { reload() { refreshed = true; } });
+
+  await assert.rejects(browser.fetchGame("game-1"), (error) => error.kind === "unavailable");
+  assert.equal(refreshed, true);
+});
+
 test("a failed first manifest request is not retained in the promise cache", async () => {
   let manifestRequests = 0;
   const browser = staticBrowser(async (url) => {
@@ -112,7 +152,8 @@ test("season player photos use mapped thumbnails and keep unmapped legacy URLs",
     if (url.endsWith("manifest.json")) return response(200, manifest("photos", { player_photo_thumbnails: { [original]: thumbnail } }));
     return response(200, {
       items: [
-        { id: "mapped", photo: { url: original, season: "S23", source_url: "https://example.test/a", source_date: "2026-01-01" } },
+        { id: "mapped", photo: { url: original, season: "S23", source_url: "https://example.test/a", source_date: "2026-01-01" },
+          appearances: 4, stats: { appearances: 3, wins: 1, losses: 0, total_win_rate: { rate: null }, ranking_boards: {} } },
         { id: "legacy", photo: { url: "/media/player-photos/S22/legacy.jpg", season: "S22", source_url: "https://example.test/b", source_date: "2025-01-01" } },
       ],
       total: 2,
@@ -124,9 +165,31 @@ test("season player photos use mapped thumbnails and keep unmapped legacy URLs",
 
   const result = await browser.fetchPlayersForSeason("S23");
   assert.equal(result.items[0].photo.url, thumbnail);
-  assert.equal(result.items[0].photo.original_url, original);
+  assert.equal(result.items[0].photo.original_url, undefined);
+  assert.equal(result.items[0].appearances, 3);
+  assert.equal(result.items[0].stats.win_rate, null);
+  assert.equal(result.items[0].stats.ranking_boards, undefined);
   assert.equal(result.items[1].photo.url, "/media/player-photos/S22/legacy.jpg");
 });
+
+test("the latest schema reads lightweight player cards from an immutable URL", async () => {
+  const digest = "b".repeat(64);
+  const thumbnail = "/media/player-photos/S23/thumb.webp";
+  const item = { id: "p1", name: "Player One", appearances: 3, photo: { url: thumbnail, season: "S23" },
+    stats: { wins: 2, losses: 1, win_rate: 2 / 3 } };
+  const browser = staticBrowser(async (url) => {
+    if (url.endsWith("/manifest.json")) return response(200, manifest("directory", {
+      schema_version: 3, release_id: "r3", document_hashes: { "players/by-season/S23.json": digest },
+    }));
+    assert.equal(url, `/data/objects/${digest}.json`);
+    return response(200, { items: [item], total: 1, page: 1, page_size: 1 });
+  });
+
+  const result = await browser.fetchPlayersForSeason("S23");
+  assert.equal(result.items[0], item);
+  assert.equal(result.release_id, "r3");
+});
+
 
 test("older manifests without a thumbnail map keep the original player photo URL", async () => {
   const original = "/media/player-photos/S22/legacy.jpg";
@@ -161,7 +224,7 @@ test("player profile uses the thumbnail and preloads it before shared rankings r
     },
   };
   const browser = staticBrowser(async (url) => {
-    if (url.endsWith("manifest.json")) return response(200, manifest("profile", { player_photo_thumbnails: { [original]: thumbnail } }));
+    if (url.endsWith("manifest.json")) return response(200, manifest("profile", { schema_version: 3, document_hashes: {} }));
     if (url.includes("/rankings/")) {
       rankingRequested();
       return rankingRequest;
@@ -170,7 +233,7 @@ test("player profile uses the thumbnail and preloads it before shared rankings r
       id: "p1",
       name: "Player One",
       release_id: "r1",
-      photo: { url: original, season: "S23", source_url: "https://example.test/a", source_date: "2026-01-01" },
+      photo: { url: thumbnail, original_url: original, season: "S23", source_url: "https://example.test/a", source_date: "2026-01-01" },
     });
   }, undefined, "/archive", { document });
 
@@ -255,4 +318,63 @@ test("the player profile first request follows the URL season", async () => {
   const loaded = await element.props.load();
   assert.deepEqual(playerRequests, [["p1", "S21", "S21"]]);
   assert.equal(loaded.initialPlayer.scope.season_start, "S21");
+});
+
+test("static page URLs keep query strings and fragments after the trailing slash", () => {
+  const siteMode = loadSource(siteModePath, {}, { process: { env: {
+    NEXT_PUBLIC_SITE_MODE: "static",
+    NEXT_PUBLIC_BASE_PATH: "/archive",
+  } } });
+  const local = loadSource(siteModePath, {}, { process: { env: {} } });
+
+  assert.equal(siteMode.publicPagePath("/"), "/archive/");
+  assert.equal(siteMode.publicPagePath("/players/p1?season=S23#results"), "/archive/players/p1/?season=S23#results");
+  assert.equal(siteMode.publicPagePath("/archive/games/"), "/archive/games/");
+  assert.equal(siteMode.publicPagePath("//example.org/other"), "//example.org/other");
+  assert.equal(siteMode.publicPagePath("#results"), "#results");
+  assert.equal(siteMode.publicPath("/media/portrait.webp"), "/archive/media/portrait.webp");
+  assert.equal(local.publicPagePath("/players?season=S23"), "/players?season=S23");
+});
+
+test("the player directory requests the season index while the overview is pending", async () => {
+  const requests = [];
+  const overview = { seasons: [{ id: "S23", name: "Season 23" }] };
+  let finishOverview;
+  const pendingOverview = new Promise((resolve) => { finishOverview = resolve; });
+  const directory = staticBrowser(async (url) => {
+    requests.push(url);
+    if (url.endsWith("/manifest.json")) return response(200, manifest("directory"));
+    if (url.endsWith("/overview.json")) return pendingOverview;
+    if (url.endsWith("/players/by-season/S23.json")) return response(200, { items: [], total: 0 });
+    throw new Error(`Unexpected request: ${url}`);
+  });
+  const jsx = (type, props) => ({ type, props });
+  const browser = loadSource(playersBrowserPath, {
+    "@/components/static-data": { StaticData() {} },
+    "@/components/archive-link": {},
+    "next/navigation": {},
+    react: {},
+    "@/lib/static-browser": directory,
+    "@/lib/site-mode": {},
+    "@/lib/query-state": {},
+    "@/components/pagination": {},
+    "@/components/page-intro": {},
+    "@/lib/format": {},
+    "./players.module.css": {},
+    "react/jsx-runtime": { jsx, jsxs: jsx },
+  });
+
+  const pending = browser.StaticPlayersBrowser().props.load();
+  await new Promise(setImmediate);
+  const started = [...requests];
+  finishOverview(response(200, overview));
+  const loaded = await pending;
+
+  assert.deepEqual(started, [
+    "/data/manifest.json",
+    "/data/releases/directory/overview.json",
+    "/data/releases/directory/players/by-season/S23.json",
+  ]);
+  assert.equal(loaded.overview, overview);
+  assert.equal(loaded.initialSeason, "S23");
 });

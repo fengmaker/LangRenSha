@@ -8,7 +8,7 @@ import { LeaderboardMetricDetails, LeaderboardSampleLink } from "@/components/le
 import { LeaderboardCalculationRules } from "@/components/leaderboard-calculation-rules";
 import type { Leaderboard, LeaderboardItem, Metric, Overview } from "@/lib/types";
 import { formatNumber } from "@/lib/format";
-import { publicPath } from "@/lib/site-mode";
+import { publicPagePath } from "@/lib/site-mode";
 import styles from "./leaderboard.module.css";
 
 function percentage(rate: number | null): string { return typeof rate === "number" && Number.isFinite(rate) ? `${(rate * 100).toFixed(1)}%` : "—"; }
@@ -42,7 +42,7 @@ export function LeaderboardView({ data, overview, season, phase, availablePhases
   return <div className={"page-wrap leaderboard-page " + styles.page}>
     <PageIntro title={`${season} 积分榜`} />
     <section className="leaderboard-controls filter-panel">
-      <form key={season} method="get" action={publicPath("/leaderboard")} className="leaderboard-season-form"><label className="filter-field"><span>赛季</span><select name="season" defaultValue={season}>{seasons.map((item) => <option value={item.id} key={item.id}>{item.name} · {item.id}</option>)}</select></label><input type="hidden" name="phase" value={phase} /><button className="button button-primary" type="submit">切换赛季 <span>→</span></button></form>
+      <form key={season} method="get" action={publicPagePath("/leaderboard")} className="leaderboard-season-form"><label className="filter-field"><span>赛季</span><select name="season" defaultValue={season}>{seasons.map((item) => <option value={item.id} key={item.id}>{item.name} · {item.id}</option>)}</select></label><input type="hidden" name="phase" value={phase} /><button className="button button-primary" type="submit">切换赛季 <span>→</span></button></form>
       <nav className="leaderboard-tabs" aria-label="积分榜阶段"><ArchiveLink href={href("all")} aria-current={phase === "all" ? "page" : undefined}>整季积分榜</ArchiveLink>{hasFinalsWeek ? <ArchiveLink href={href("finals_week")} aria-current={phase === "finals_week" ? "page" : undefined}>决赛周冠军榜</ArchiveLink> : null}</nav>
     </section>
     <DataScopeSummary range={`${season} · ${phase === "finals_week" ? "决赛周积分" : "整季"}`} gameCount={data.game_count} gameCountLabel="计分对局" latestDate={scopeLatestDate} note={phase === "finals_week" ? "积分按决赛周对局计算；表内出场、胜率与投票指标仍按整季统计。" : undefined} />

@@ -8,18 +8,18 @@ import re
 
 from PIL import Image, ImageOps
 
-VERSION = 1
+VERSION = 2
 _PHOTO_URL = re.compile(r'/media/player-photos/(S[0-9]{1,4})/[a-f0-9]{64}\.(?:jpg|jpeg|png|webp)')
 
 
 def thumbnail_bytes(body: bytes) -> bytes:
     with Image.open(BytesIO(body)) as source:
         image = ImageOps.exif_transpose(source)
-        image.thumbnail((600, 1067), Image.Resampling.LANCZOS)
+        image.thumbnail((480, 854), Image.Resampling.LANCZOS)
         if image.mode not in {'RGB', 'RGBA'}:
             image = image.convert('RGBA' if 'transparency' in image.info else 'RGB')
         output = BytesIO()
-        image.save(output, 'WEBP', quality=82)
+        image.save(output, 'WEBP', quality=74)
         return output.getvalue()
 
 

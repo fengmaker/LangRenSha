@@ -1,13 +1,12 @@
 "use client";
 
 import { StaticData } from "@/components/static-data";
-import { StaticPlayerPhoto } from "@/components/static-player-photo";
 import { ArchiveLink } from "@/components/archive-link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import type { Overview, PageResult, PlayerSummary } from "@/lib/types";
+import type { Overview, PageResult, PlayerCard } from "@/lib/types";
 import { fetchPlayersForSeason, fetchSnapshotManifest, fetchOverview, updateStaticQuery } from "@/lib/static-browser";
-import { publicPath } from "@/lib/site-mode";
+import { publicPagePath, publicPath } from "@/lib/site-mode";
 import { parsePositivePage } from "@/lib/query-state";
 import { Pagination } from "@/components/pagination";
 import { PageIntro } from "@/components/page-intro";
@@ -16,7 +15,7 @@ import styles from "./players.module.css";
 
 const PAGE_SIZE = 48;
 
-function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { overview: Overview; initialSeason: string; initialPlayers: PageResult<PlayerSummary> }) {
+function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { overview: Overview; initialSeason: string; initialPlayers: PageResult<PlayerCard> }) {
   const search = useSearchParams();
   const season = search.get("season") || initialSeason;
   const q = search.get("q") ?? "";
@@ -73,7 +72,7 @@ function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { ove
 
   return <div className={`page-wrap ${styles.directory}`}>
     <PageIntro title="选手索引" description="按赛季搜索选手并查看出场与胜率。" action={<ArchiveLink className="button button-outline" href={`/leaderboard?season=${encodeURIComponent(season)}&phase=all`}>查看积分榜 <span>→</span></ArchiveLink>} />
-    <section className="filter-panel player-filter-panel"><form method="get" action={publicPath("/players")} className="player-search-form" onSubmit={submit}>
+    <section className="filter-panel player-filter-panel"><form method="get" action={publicPagePath("/players")} className="player-search-form" onSubmit={submit}>
       <label className="filter-field filter-search"><span>选手姓名</span><input name="q" type="search" placeholder="搜索选手姓名" value={queryText} onChange={(event) => setQueryText(event.target.value)} /></label>
       <label className="filter-field"><span>赛季</span><select name="season" value={draftSeason} onChange={(event) => setDraftSeason(event.target.value)}>{seasons.map((item) => <option key={item.id} value={item.id}>{item.name} · {item.id}</option>)}</select></label>
       <button className="button button-primary" type="submit">筛选选手 <span>→</span></button>{q || season !== initialSeason ? <ArchiveLink className="clear-link" href="/players">清除</ArchiveLink> : null}
@@ -82,8 +81,8 @@ function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { ove
       {error ? <div className="empty-state" role="alert"><p>{error}</p></div> : null}
       {(loading || !isCurrent) && !error ? <p role="status">正在读取选手索引…</p> : null}
       {isCurrent && !loading && !error ? result.items.length ? <div className="player-grid">{result.items.map((player) => <ArchiveLink href={`/players/${encodeURIComponent(player.id)}?season=${encodeURIComponent(season)}&phase=all`} className="player-card player-photo-card" key={player.id}>
-        <div className="player-card-photo">{player.photo ? <StaticPlayerPhoto photo={player.photo} alt={`${player.name} · ${player.photo.season}`} /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>
-        <div className="player-card-copy"><h3>{player.name}</h3><p>{formatNumber(player.stats?.appearances ?? player.appearances)} 场出场{player.stats ? ` · ${formatNumber(player.stats.wins)} 胜 ${formatNumber(player.stats.losses)} 负` : ""}</p>{player.stats ? <div className="player-card-rate"><span>总胜率</span><strong>{typeof player.stats.total_win_rate.rate === "number" ? `${(player.stats.total_win_rate.rate * 100).toFixed(1)}%` : "—"}</strong></div> : null}</div>
+        <div className="player-card-photo">{player.photo ? <img src={publicPath(player.photo.url)} alt={`${player.name} · ${player.photo.season}`} loading="lazy" decoding="async" /> : <span className="player-photo-placeholder">{player.name.slice(0, 1)}</span>}<span className="row-arrow">↗</span></div>
+        <div className="player-card-copy"><h3>{player.name}</h3><p>{formatNumber(player.appearances)} 场出场{player.stats ? ` · ${formatNumber(player.stats.wins)} 胜 ${formatNumber(player.stats.losses)} 负` : ""}</p>{player.stats ? <div className="player-card-rate"><span>总胜率</span><strong>{typeof player.stats.win_rate === "number" ? `${(player.stats.win_rate * 100).toFixed(1)}%` : "—"}</strong></div> : null}</div>
       </ArchiveLink>)}</div> : <div className="empty-state"><span className="empty-number">—</span><p>没有找到匹配的选手档案。</p></div> : null}
       {isCurrent && !loading && !error ? <Pagination page={page} pageSize={PAGE_SIZE} total={result.total} params={browserParams} /> : null}
     </section>
@@ -91,9 +90,9 @@ function LoadedPlayersBrowser({ overview, initialSeason, initialPlayers }: { ove
 }
 
 async function loadPlayers() {
-  const [manifest, overview] = await Promise.all([fetchSnapshotManifest(), fetchOverview()]);
+  const manifest = await fetchSnapshotManifest();
   const initialSeason = manifest.seasons.at(-1)!.id;
-  const initialPlayers = await fetchPlayersForSeason(initialSeason);
+  const [overview, initialPlayers] = await Promise.all([fetchOverview(), fetchPlayersForSeason(initialSeason)]);
   return { overview, initialSeason, initialPlayers };
 }
 

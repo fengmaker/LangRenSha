@@ -17,8 +17,8 @@ import { parsePositivePage } from "@/lib/query-state";
 import { ApiError } from "@/lib/api-error";
 export { ApiError } from "@/lib/api-error";
 import {
-  getSnapshotGame, getSnapshotGames, getSnapshotLeaderboard,
-  getSnapshotManifest, getSnapshotOverview, getSnapshotPlayer, getSnapshotPlayers,
+  getSnapshotGames, getSnapshotLeaderboard,
+  getSnapshotManifest, getSnapshotOverview, getSnapshotPlayer,
   getSnapshotReleases, getSnapshotStats,
 } from "@/lib/snapshot-data";
 
@@ -28,12 +28,6 @@ export function getOverview() {
 
 export function getGames(params: URLSearchParams) {
   return getStaticGames(params);
-}
-
-export const getGame = cache((id: string) => getSnapshotGame(id));
-
-export function getPlayers(params: URLSearchParams) {
-  return getStaticPlayers(params);
 }
 
 export const getPlayer = cache((id: string, season = "S23", phase = "all", seasonEnd?: string, minimumAppearances = 0) => {
@@ -67,16 +61,6 @@ async function getStaticGames(params: URLSearchParams): Promise<PageResult<GameS
   const filtered = filterAndSortGames(source.items, filters);
   const page = parsePositivePage(params.get("page"));
   const pageSize = Math.max(1, Number(params.get("page_size")) || 24);
-  return { items: filtered.slice((page - 1) * pageSize, page * pageSize), total: filtered.length, page, page_size: pageSize, release_id: source.release_id };
-}
-
-async function getStaticPlayers(params: URLSearchParams): Promise<PageResult<PlayerSummary>> {
-  const season = params.get("season") ?? "S23";
-  const source = await getSnapshotPlayers(season);
-  const q = params.get("q") ?? "";
-  const filtered = q ? source.items.filter((player) => player.name.toLocaleLowerCase().includes(q.toLocaleLowerCase())) : source.items;
-  const page = parsePositivePage(params.get("page"));
-  const pageSize = Math.max(1, Number(params.get("page_size")) || 48);
   return { items: filtered.slice((page - 1) * pageSize, page * pageSize), total: filtered.length, page, page_size: pageSize, release_id: source.release_id };
 }
 

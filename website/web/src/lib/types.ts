@@ -17,6 +17,13 @@ export type PlayerSummary = {
   photo?: PlayerPhoto | null;
   stats?: Pick<PlayerStats, "appearances" | "wins" | "losses" | "pending_games" | "points" | "points_complete" | "total_win_rate">;
 };
+export type PlayerCard = {
+  id: string;
+  name: string;
+  appearances: number;
+  photo?: Pick<PlayerPhoto, "url" | "season">;
+  stats?: { wins: number; losses: number; win_rate: number | null };
+};
 export type Metric = {
   numerator: number;
   denominator: number;

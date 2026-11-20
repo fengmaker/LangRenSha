@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Iterable
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -14,10 +15,12 @@ import uuid
 
 if __package__:
     from .photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
-    from .player_rankings import SNAPSHOT_SCHEMA_VERSION, split_player_rankings
+    from .player_rankings import split_player_rankings
+    from .snapshot_files import SNAPSHOT_SCHEMA_VERSION, object_path
 else:
     from photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
-    from player_rankings import SNAPSHOT_SCHEMA_VERSION, split_player_rankings
+    from player_rankings import split_player_rankings
+    from snapshot_files import SNAPSHOT_SCHEMA_VERSION, object_path
 
 
 class ExportError(RuntimeError):
@@ -73,13 +76,9 @@ def _walk_media_values(value: Any):
         yield value, None
 
 
-def _response_media(data_root: Path) -> list[dict[str, str]]:
+def _response_media(documents: Iterable[object]) -> list[dict[str, str]]:
     references: dict[str, str] = {}
-    for path in data_root.rglob("*.json"):
-        try:
-            value = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError) as exc:
-            raise ExportError(f"Cannot read generated JSON while collecting media: {path}") from exc
+    for value in documents:
         for url, declared_hash in _walk_media_values(value):
             _, _, filename_hash = _media_endpoint(url)
             expected = declared_hash or filename_hash
@@ -148,6 +147,26 @@ def _promote_direct_export(stage: Path, data_root: Path, media_root: Path) -> No
         raise
 
 
+def _player_directory(page: dict, thumbnails: dict[str, str]) -> dict:
+    items = []
+    for player in page["items"]:
+        stats = player.get("stats")
+        photo = player.get("photo")
+        appearances = stats.get("appearances") if stats is not None else None
+        row = {
+            "id": player["id"],
+            "name": player["name"],
+            "appearances": player["appearances"] if appearances is None else appearances,
+        }
+        if stats is not None:
+            row["stats"] = {"wins": stats["wins"], "losses": stats["losses"],
+                            "win_rate": stats["total_win_rate"]["rate"]}
+        if photo:
+            row["photo"] = {"url": thumbnails[photo["url"]], "season": photo["season"]}
+        items.append(row)
+    return {"items": items, "total": page["total"], "page": page["page"], "page_size": page["page_size"]}
+
+
 def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: str = "",
                            build_id: str | None = None) -> dict[str, Any]:
     """Write static response JSON and media directly from final game records."""
@@ -163,8 +182,9 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
 
     documents = dict(data["documents"])
     shared_rankings: dict[str, dict[str, Any]] = {}
-    for relative in sorted(name for name in documents
-                           if name.startswith("players/") and "--" in PurePosixPath(name).name):
+    profile_paths = {name for name in documents
+                     if name.startswith("players/") and "--" in PurePosixPath(name).name}
+    for relative in sorted(profile_paths):
         compact, shared = split_player_rankings(documents[relative])
         range_name = PurePosixPath(relative).name
         if range_name in shared_rankings and shared_rankings[range_name] != shared:
@@ -183,11 +203,9 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
         staged_data, staged_media = stage / "data", stage / "media"
         staged_media.mkdir()
         pending = staged_data / "releases" / "__pending__"
-        document_hashes = {}
-        for relative, value in documents.items():
-            document_hashes[relative] = _write_json(pending.joinpath(*PurePosixPath(relative).parts), value)
+        pending.mkdir(parents=True)
 
-        media_files = _response_media(pending)
+        media_files = _response_media(documents.values())
         copied_media: list[dict[str, str]] = []
         for asset in media_files:
             _, relative, _ = _media_endpoint(asset["url"])
@@ -204,6 +222,27 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
             photo_thumbnails = create_thumbnails(staged_media, copied_media)
         except (OSError, ValueError) as exc:
             raise ExportError(f"Cannot create player photo thumbnails: {exc}") from exc
+
+        document_hashes = {}
+        immutable_hashes = {}
+        for relative, value in documents.items():
+            if relative.startswith("players/by-season/"):
+                value = _player_directory(value, photo_thumbnails)
+            elif relative in profile_paths and (photo := value.get("photo")):
+                original = photo["url"]
+                value = {**value, "photo": {**photo, "url": photo_thumbnails[original], "original_url": original}}
+
+            if relative.startswith("players/by-season/") or (relative.startswith("games/") and relative != "games/index.json"):
+                # The manifest owns the release ID. The immutable body describes only this document.
+                body = _canonical_json({key: item for key, item in value.items() if key != "release_id"}) + b"\n"
+                digest = _sha256(body)
+                target = object_path(staged_data, digest)
+                target.parent.mkdir(exist_ok=True)
+                if not target.exists():
+                    target.write_bytes(body)
+                immutable_hashes[relative] = document_hashes[relative] = digest
+            else:
+                document_hashes[relative] = _write_json(pending / relative, value)
 
         fingerprint = _sha256(_canonical_json({
             "schema_version": SNAPSHOT_SCHEMA_VERSION,
@@ -226,7 +265,7 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
             "source_hash": data["source_hash"],
             "analytics_version": ANALYTICS_VERSION,
             "photo_thumbnail_version": PHOTO_THUMBNAIL_VERSION,
-            "player_photo_thumbnails": photo_thumbnails,
+            "document_hashes": immutable_hashes,
             "generated_at": generated_at,
             "base_path": base_path,
             "seasons": [{"id": row["season"], "game_count": row["game_count"], "phases": row["phases"]}

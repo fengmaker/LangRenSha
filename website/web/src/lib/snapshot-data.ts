@@ -2,7 +2,7 @@ import "server-only";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
+import type { GameSummary, Leaderboard, Overview, PlayerDetail, Release, Stats } from "@/lib/types";
 import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
 
 export type SnapshotManifest = {
@@ -11,6 +11,7 @@ export type SnapshotManifest = {
   build_id?: string | null;
   release_id: string;
   source_hash?: string;
+  document_hashes?: Record<string, string>;
   player_photo_thumbnails?: Record<string, string>;
   seasons: { id: string; game_count: number; phases?: string[] }[];
   ranges: { start: string; end: string; seasons: string[] }[];
@@ -45,14 +46,6 @@ export async function getSnapshotOverview() {
 
 export async function getSnapshotGames() {
   return readSnapshotJson<{ release_id: string; total: number; items: (GameSummary & { search_text?: string })[] }>(`${await releaseDir()}/games/index.json`);
-}
-
-export async function getSnapshotGame(id: string) {
-  return readSnapshotJson<GameDetail>(`${await releaseDir()}/games/${encodeURIComponent(id)}.json`);
-}
-
-export async function getSnapshotPlayers(season: string) {
-  return readSnapshotJson<PageResult<PlayerSummary>>(`${await releaseDir()}/players/by-season/${encodeURIComponent(season)}.json`);
 }
 
 export async function getSnapshotPlayerIndex() {

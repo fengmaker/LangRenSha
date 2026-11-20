@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -13,6 +14,12 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import unquote, urlsplit
 from urllib.request import urlopen
+
+
+if __package__:
+    from .snapshot_files import SNAPSHOT_SCHEMA_VERSION, document_path, object_path
+else:
+    from snapshot_files import SNAPSHOT_SCHEMA_VERSION, document_path, object_path
 
 
 class StaticAcceptanceError(RuntimeError):
@@ -90,13 +97,14 @@ def check(out: Path | str, base_path: str = "", *, output: Path | str | None = N
     if not root.is_dir():
         raise StaticAcceptanceError(f"Static output directory does not exist: {root}")
 
-    manifest = _json(root / "data" / "manifest.json")
-    if (manifest.get("schema_version") != 2 or not manifest.get("complete")
+    data_root = root / "data"
+    manifest = _json(data_root / "manifest.json")
+    if (manifest.get("schema_version") not in (2, SNAPSHOT_SCHEMA_VERSION) or not manifest.get("complete")
             or not re.fullmatch(r"snapshot-[a-f0-9]{64}", str(manifest.get("snapshot_id", "")))
             or manifest.get("base_path") != base):
         raise StaticAcceptanceError("Static manifest schema, snapshot, completeness, or base path is invalid")
 
-    release = root / "data" / "releases" / manifest["snapshot_id"]
+    release = data_root / "releases" / manifest["snapshot_id"]
     overview = _json(release / "overview.json")
     games = _json(release / "games" / "index.json")
     players = _json(release / "players" / "index.json")
@@ -120,7 +128,23 @@ def check(out: Path | str, base_path: str = "", *, output: Path | str | None = N
     sample_season = season_rows[-1]["id"] if isinstance(season_rows[-1], dict) else None
     if not sample_game or not sample_player or not sample_season:
         raise StaticAcceptanceError("Static indexes contain no representative game, player, or season")
-    _json(release / "games" / f"{sample_game['id']}.json")
+    if manifest["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+        documents = manifest.get("document_hashes")
+        expected = {f"games/{row['id']}.json" for row in game_items}
+        expected.update(f"players/by-season/{row['id']}.json" for row in season_rows)
+        if not isinstance(documents, dict) or documents.keys() != expected:
+            raise StaticAcceptanceError("Content-addressed documents do not match the game and season indexes")
+        for digest in documents.values():
+            try:
+                path = object_path(data_root, digest)
+                content = path.read_bytes()
+            except (ValueError, OSError) as error:
+                raise StaticAcceptanceError(f"Cannot read content-addressed document {digest}: {error}") from error
+            if hashlib.sha256(content).hexdigest() != digest:
+                raise StaticAcceptanceError(f"Content-addressed document hash differs from its filename: {path}")
+        _json(document_path(data_root, manifest, f"players/by-season/{sample_season}.json"))
+    game_detail = document_path(data_root, manifest, f"games/{sample_game['id']}.json")
+    _json(game_detail)
     profile = release / "players" / sample_player["id"] / f"{sample_season}--{sample_season}.json"
     if not profile.is_file():
         # For a player who did not appear that season, any indexed range is valid.
@@ -154,6 +178,8 @@ def check(out: Path | str, base_path: str = "", *, output: Path | str | None = N
                 raise StaticAcceptanceError(f"Static route did not return an HTML document: {url}")
             checked.append(route or "/")
         _read_response(origin + "/data/manifest.json")
+        if manifest["schema_version"] == SNAPSHOT_SCHEMA_VERSION:
+            _read_response(origin + "/" + game_detail.relative_to(root).as_posix())
     finally:
         server.shutdown()
         thread.join(timeout=5)

@@ -1,9 +1,12 @@
-from pathlib import Path
+import hashlib
+import json
 import os
+from pathlib import Path
 import shutil
 import subprocess
 
 import pytest
+from PIL import Image
 
 from website.public_data import ROOT, _ranges, build_public_data, check_public_data
 from website.static_publish.export_static import (
@@ -12,6 +15,7 @@ from website.static_publish.export_static import (
     _safe_base_path,
     export_direct_snapshot,
 )
+from website.static_publish.snapshot_files import document_path
 
 
 def test_final_json_covers_all_published_games_and_response_scopes():
@@ -102,6 +106,70 @@ def test_snapshot_id_tracks_response_content_and_is_stable(tmp_path, monkeypatch
     changed = export_direct_snapshot(tmp_path, tmp_path / "changed/data", base_path="/site", build_id="build")
     assert changed["source_hash"] == first["source_hash"]
     assert changed["snapshot_id"] != first["snapshot_id"]
+
+
+def test_immutable_documents_reuse_addresses_and_keep_directory_photos_light(tmp_path, monkeypatch):
+    from website import public_data
+
+    source = tmp_path / "source.jpg"
+    Image.new("RGB", (48, 64), "navy").save(source)
+    original = source.read_bytes()
+    photo_name = f"{hashlib.sha256(original).hexdigest()}.jpg"
+    asset = tmp_path / "website/assets/player-photos/S23" / photo_name
+    asset.parent.mkdir(parents=True)
+    source.rename(asset)
+    photo = {"url": f"/media/player-photos/S23/{photo_name}", "season": "S23", "source_url": "https://example.test/"}
+    state = {"release": "r1", "winner": "wolves"}
+    game_path = "games/game-1.json"
+    directory_path = "players/by-season/S23.json"
+    profile_path = "players/p1/S23--S23.json"
+
+    def fixture(_root):
+        release_id = state["release"]
+        return {"release_id": release_id, "source_hash": release_id, "season_rows": [], "ranges": [], "counts": {},
+                "documents": {
+                    game_path: {"id": "game-1", "release_id": release_id, "winner": state["winner"]},
+                    directory_path: {"release_id": release_id, "total": 2, "page": 1, "page_size": 2, "items": [
+                        {"id": "p1", "name": "Player One", "photo": photo, "appearances": 4,
+                         "stats": {"wins": 1, "losses": 0,
+                                   "total_win_rate": {"rate": None, "game_ids": ["game-1"]}}},
+                        {"id": "p2", "name": "Player Two", "appearances": 1},
+                    ]},
+                    profile_path: {"id": "p1", "release_id": release_id, "analytics_version": 1,
+                                   "scope": {"season": "S23"}, "photo": photo},
+                }}
+
+    monkeypatch.setattr(public_data, "build_public_data", fixture)
+    output = tmp_path / "output/data"
+    first = export_direct_snapshot(tmp_path, output)
+    game_file = document_path(output, first, game_path)
+    assert json.loads(game_file.read_bytes()) == {"id": "game-1", "winner": "wolves"}
+    assert hashlib.sha256(game_file.read_bytes()).hexdigest() == game_file.stem
+    directory = json.loads(document_path(output, first, directory_path).read_bytes())
+    profile = json.loads(document_path(output, first, profile_path).read_bytes())
+    assert directory["items"] == [
+        {"id": "p1", "name": "Player One", "appearances": 4,
+         "stats": {"wins": 1, "losses": 0, "win_rate": None},
+         "photo": {"url": profile["photo"]["url"], "season": "S23"}},
+        {"id": "p2", "name": "Player Two", "appearances": 1},
+    ]
+    assert directory["items"][0]["photo"]["url"].endswith(".webp")
+    assert profile["photo"]["original_url"] == photo["url"]
+    assert profile["photo"]["source_url"] == photo["source_url"]
+    assert (output.parent / photo["url"].lstrip("/")).read_bytes() == original
+
+    state["release"] = "r2"
+    second = export_direct_snapshot(tmp_path, output)
+    assert second["snapshot_id"] != first["snapshot_id"]
+    assert second["document_hashes"] == first["document_hashes"]
+    assert document_path(output, second, game_path) == game_file
+    assert game_file.is_file()
+
+    state["winner"] = "good"
+    third = export_direct_snapshot(tmp_path, output)
+    assert third["document_hashes"][game_path] != first["document_hashes"][game_path]
+    assert third["document_hashes"][directory_path] == first["document_hashes"][directory_path]
+    assert json.loads(document_path(output, third, game_path).read_bytes())["winner"] == "good"
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Windows ACL inheritance")

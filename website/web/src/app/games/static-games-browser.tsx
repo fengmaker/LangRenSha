@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import type { GameSummary, Overview, PageResult } from "@/lib/types";
 import { filterAndSortGames, validateGameFilters } from "@/lib/game-query";
 import { parsePositivePage } from "@/lib/query-state";
-import { publicPath } from "@/lib/site-mode";
+import { publicPagePath } from "@/lib/site-mode";
 import { GameArchiveList } from "@/components/game-archive-list";
 import { Pagination } from "@/components/pagination";
 import styles from "./games.module.css";
@@ -68,7 +68,7 @@ function LoadedGamesBrowser({ games, overview }: { games: { release_id: string; 
 
   return <>
     <section className={styles.filters} aria-label="对局筛选">
-      <form method="get" action={publicPath("/games")} className={styles.form} onSubmit={submit}>
+      <form method="get" action={publicPagePath("/games")} className={styles.form} onSubmit={submit}>
         <label className={styles.search}><span>关键词</span><input name="q" type="search" maxLength={120} placeholder="选手名、日期或对局编号" value={filters.q} onChange={(event) => setFilters({ ...filters, q: event.target.value })} /></label>
         <label><span>赛季</span><select name="season" aria-label="赛季" value={filters.season} onChange={(event) => setFilters({ ...filters, season: event.target.value })}><option value="">全部赛季</option>{overview.seasons.map((season) => <option key={season.id} value={season.id}>{season.id} · {season.name}</option>)}</select></label>
         <label><span>比赛阶段</span><select name="phase" aria-label="比赛阶段" value={filters.phase} onChange={(event) => setFilters({ ...filters, phase: event.target.value })}><option value="">全部阶段</option><option value="regular">正赛</option><option value="finals_week">决赛周</option></select></label>

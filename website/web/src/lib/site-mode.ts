@@ -9,3 +9,10 @@ export function publicPath(path: string): string {
   if (path === basePath || path.startsWith(`${basePath}/`)) return path;
   return `${basePath}${path}`;
 }
+
+export function publicPagePath(path: string): string {
+  if (process.env.NEXT_PUBLIC_SITE_MODE !== "static" || !path.startsWith("/") || path.startsWith("//")) return publicPath(path);
+  const [pathname] = path.split(/[?#]/, 1);
+  const directory = pathname.endsWith("/") ? pathname : `${pathname}/`;
+  return publicPath(directory) + path.slice(pathname.length);
+}
