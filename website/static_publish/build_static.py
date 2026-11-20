@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, suppress
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -12,16 +12,21 @@ import shutil
 import subprocess
 import sys
 import time
+from typing import Any
 import uuid
+from zipfile import BadZipFile, ZipFile
+from zlib import error as CompressionError
 
 ROOT = Path(__file__).resolve().parents[2]
 WEB = ROOT / "website" / "web"
 SHELL_ID = "__static__"
 SHELL_DIRECTORY = ".static-shells"
 ROUTE_FAMILIES = ("games", "players", "seasons")
+FRONTEND_CACHE_VERSION = 1
 sys.path.insert(0, str(ROOT))
 
 from website.run import node_binary
+from website.static_publish.generated_dirs import rename_generated_directory
 
 
 def write_json(path: Path, value: dict) -> None:
@@ -36,15 +41,6 @@ def timed_stage(timings: dict[str, float], name: str):
         yield
     finally:
         timings[name] = round(time.perf_counter() - started, 3)
-
-
-def tree_hash(root: Path) -> str:
-    digest = hashlib.sha256()
-    for path in sorted(root.rglob("*")):
-        if path.is_file():
-            digest.update(path.relative_to(root).as_posix().encode())
-            digest.update(hashlib.sha256(path.read_bytes()).digest())
-    return digest.hexdigest()
 
 
 def normalize_rsc_paths(out: Path) -> int:
@@ -90,7 +86,7 @@ def _generated_path(path: Path, root: Path, label: str) -> Path:
 def replace_generated(source: Path | None, destination: Path) -> None:
     """Replace one of the explicit generated inputs inside Next's workspace."""
     workspace = (WEB / ".static-build").resolve()
-    allowed = [workspace / "src", workspace / "public", workspace / ".static-snapshot/data"]
+    allowed = [workspace / "src", workspace / "public"]
     resolved = destination.resolve()
     if (resolved not in [path.resolve() for path in allowed]
             or not resolved.is_relative_to(workspace) or _is_link(destination)):
@@ -103,7 +99,69 @@ def replace_generated(source: Path | None, destination: Path) -> None:
         destination.mkdir(parents=True, exist_ok=True)
 
 
-def prepare_static_workspace(snapshot: Path) -> Path:
+def _frontend_configs() -> list[Path]:
+    return sorted(path for path in WEB.iterdir()
+                  if path.is_file() and path.name != "next-env.d.ts"
+                  and (path.suffix in {".json", ".ts", ".js", ".mjs", ".cjs"}
+                       or path.name.startswith(".env")))
+
+
+def _public_assets() -> list[Path]:
+    public = WEB / "public"
+    return sorted(path for path in public.iterdir() if path.name not in {"data", "media"}) if public.is_dir() else []
+
+
+def _frontend_cache_key(node: str, env: dict[str, str]) -> str | None:
+    installed_lock = WEB / "node_modules/.package-lock.json"
+    if not installed_lock.is_file():
+        return None
+    node_path = Path(node).resolve()
+    node_stat = node_path.stat()
+    build_env = {key: value for key, value in env.items()
+                 if key.startswith("NEXT_") or key in {"CI", "NODE_ENV", "NODE_OPTIONS"}}
+    digest = hashlib.sha256(json.dumps(
+        [FRONTEND_CACHE_VERSION, str(node_path), node_stat.st_size, node_stat.st_mtime_ns, build_env],
+        sort_keys=True,
+    ).encode("utf-8"))
+    paths = [installed_lock, *_frontend_configs()]
+    for folder in (WEB / "src", *_public_assets()):
+        if _is_link(folder):
+            return None
+        paths.append(folder)
+        if folder.is_dir():
+            paths.extend(folder.rglob("*"))
+    for path in sorted(paths):
+        if _is_link(path):
+            return None
+        if path.is_file():
+            with path.open("rb") as stream:
+                file_hash = hashlib.file_digest(stream, "sha256").hexdigest()
+            digest.update(json.dumps([path.relative_to(WEB).as_posix(), file_hash]).encode("utf-8"))
+    return digest.hexdigest()
+
+
+def _restore_frontend(cache_file: Path, destination: Path, snapshot_id: str) -> bool:
+    try:
+        with ZipFile(cache_file) as archive:
+            if archive.comment != snapshot_id.encode("ascii"):
+                return False
+            entries = set(archive.namelist())
+            required = {"index.html", "404.html", *(
+                f"{SHELL_DIRECTORY}/{family}/index.html" for family in ROUTE_FAMILIES
+            )}
+            if (not required <= entries or not any(
+                    name.startswith("_next/static/") and not name.endswith("/") for name in entries)
+                    or archive.testzip() is not None):
+                return False
+            archive.extractall(destination)
+    except (OSError, BadZipFile, CompressionError):
+        if destination.exists():
+            raise
+        return False
+    return True
+
+
+def prepare_static_workspace() -> Path:
     """Build in a child project so Next output never overwrites the local app."""
     workspace = WEB / ".static-build"
     if _is_link(workspace):
@@ -112,27 +170,16 @@ def prepare_static_workspace(snapshot: Path) -> Path:
     for path in workspace.iterdir():
         if path.is_file() and not path.name.endswith(".tsbuildinfo"):
             path.unlink()
-    for path in WEB.iterdir():
-        if (path.is_file() and path.name != "next-env.d.ts"
-                and (path.suffix in {".json", ".ts", ".js", ".mjs", ".cjs"}
-                     or path.name.startswith(".env"))):
-            shutil.copy2(path, workspace / path.name)
+    for path in _frontend_configs():
+        shutil.copy2(path, workspace / path.name)
     replace_generated(WEB / "src", workspace / "src")
-    replace_generated(snapshot / "data", workspace / ".static-snapshot/data")
     public = workspace / "public"
     replace_generated(None, public)
-    source_public = WEB / "public"
-    if source_public.is_dir():
-        for path in source_public.iterdir():
-            if path.name in {"data", "media"}:
-                continue
-            if path.is_dir():
-                shutil.copytree(path, public / path.name)
-            else:
-                shutil.copy2(path, public / path.name)
-    shutil.copytree(snapshot / "data", public / "data")
-    if (snapshot / "media").is_dir():
-        shutil.copytree(snapshot / "media", public / "media")
+    for path in _public_assets():
+        if path.is_dir():
+            shutil.copytree(path, public / path.name)
+        else:
+            shutil.copy2(path, public / path.name)
     return workspace
 
 
@@ -144,11 +191,17 @@ def retain_route_shells(site: Path) -> None:
             raise RuntimeError(f"Frontend did not export the {family} route shell: {shell}")
         destination = site / SHELL_DIRECTORY / family
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shell.rename(destination)
+        rename_generated_directory(shell, destination)
 
 
 def materialize_snapshot(site: Path, snapshot: Path) -> dict[str, int]:
-    """Clone route shells for the IDs in this snapshot and copy public data/media."""
+    """Clone route shells and move the snapshot into the same build's candidate site."""
+    if _is_link(site) or _is_link(snapshot):
+        raise ValueError("Candidate site and snapshot cannot be links")
+    site, snapshot = site.resolve(), snapshot.resolve()
+    if site == snapshot or site.parent != snapshot.parent:
+        raise ValueError("Candidate site and snapshot must be separate directories in the same build")
+
     manifest = json.loads((snapshot / "data/manifest.json").read_text(encoding="utf-8"))
     release = snapshot / "data" / "releases" / manifest["snapshot_id"]
     routes = {family: [row["id"] for row in json.loads(
@@ -169,32 +222,15 @@ def materialize_snapshot(site: Path, snapshot: Path) -> dict[str, int]:
                 raise RuntimeError(f"Route ID leaves its generated directory: {route_id}")
             shutil.copytree(template, destination)
     for name in ("data", "media"):
+        source = snapshot / name
         destination = site / name
+        if _is_link(source) or _is_link(destination):
+            raise ValueError(f"Generated {name} directories cannot be links")
         if destination.exists():
             shutil.rmtree(destination)
-        if (snapshot / name).is_dir():
-            shutil.copytree(snapshot / name, destination)
+        if source.is_dir():
+            rename_generated_directory(source, destination)
     return {family: len(ids) for family, ids in routes.items()}
-
-
-def _rename_generated(source: Path, destination: Path) -> None:
-    # Windows also reports access denied when a child directory has a handle
-    # without delete sharing (for example while a scanner indexes new output).
-    for attempt in range(7):
-        try:
-            source.rename(destination)
-            return
-        except OSError as error:
-            if getattr(error, "winerror", None) not in {5, 32}:
-                raise
-            if attempt == 6:
-                raise RuntimeError(
-                    f"Windows 持续阻止目录替换，重试 6 次后仍失败：{source} -> {destination}。"
-                    f"请释放相关目录占用并检查访问权限后重试。原始错误：{error}"
-                ) from error
-            if attempt == 0:
-                print(f"Windows 暂时拒绝目录替换，等待后重试：{source} -> {destination}", flush=True)
-            time.sleep(0.1 * 2 ** attempt)
 
 
 def _promote(site: Path, output: Path, build_id: str, *, root: Path | None = None) -> None:
@@ -212,14 +248,14 @@ def _promote(site: Path, output: Path, build_id: str, *, root: Path | None = Non
     replaced = False
     try:
         if output.exists():
-            _rename_generated(output, backup)
+            rename_generated_directory(output, backup)
             replaced = True
-        _rename_generated(site, output)
+        rename_generated_directory(site, output)
     except BaseException:
         if output.exists() and not site.exists():
-            _rename_generated(output, site)
+            rename_generated_directory(output, site)
         if replaced and backup.exists():
-            _rename_generated(backup, output)
+            rename_generated_directory(backup, output)
         raise
     if backup.exists():
         shutil.rmtree(backup)
@@ -244,37 +280,54 @@ def build(base_path: str, output: Path, *, root: Path = ROOT) -> dict[str, Any]:
         with timed_stage(timings, "export_json"):
             manifest = export_direct_snapshot(root, candidate_root / "snapshot/data",
                                               base_path=base_path, build_id=build_id)
-        with timed_stage(timings, "prepare_workspace"):
-            workspace = prepare_static_workspace(candidate_root / "snapshot")
         node = node_binary()
         env = {**os.environ, "NEXT_PUBLIC_SITE_MODE": "static", "NEXT_PUBLIC_BASE_PATH": base_path,
-               "NEXT_TELEMETRY_DISABLED": "1"}
+               "NEXT_TELEMETRY_DISABLED": "1",
+               "ARCHIVE_PRERENDER_DATA": str(candidate_root / "snapshot/data")}
         env["PATH"] = str(Path(node).parent) + os.pathsep + env.get("PATH", "")
-        npm = str(Path(node).with_name("npm.cmd")) if os.name == "nt" else shutil.which("npm", path=env["PATH"])
-        if not npm:
-            raise RuntimeError("npm is unavailable")
-        for step in ("build", "typecheck"):
-            with timed_stage(timings, f"frontend_{step}"):
-                with (candidate_root / f"{step}.log").open("w", encoding="utf-8") as log:
-                    result = subprocess.run([npm, "run", step], cwd=workspace, env=env, stdout=log,
-                                            stderr=subprocess.STDOUT, timeout=1800)
-                if result.returncode:
-                    raise RuntimeError(f"Frontend {step} failed; see {candidate_root / (step + '.log')}")
+        site = candidate_root / "site"
+        with timed_stage(timings, "frontend_cache_lookup"):
+            key = _frontend_cache_key(node, env)
+            cache_file = root / ".cache/static-publish/frontend" / f"{key}.zip" if key else None
+            reused = cache_file is not None and _restore_frontend(cache_file, site, manifest["snapshot_id"])
+        archive = None
+        if not reused:
+            with timed_stage(timings, "prepare_workspace"):
+                workspace = prepare_static_workspace()
+            npm = str(Path(node).with_name("npm.cmd")) if os.name == "nt" else shutil.which("npm", path=env["PATH"])
+            if not npm:
+                raise RuntimeError("npm is unavailable")
+            for step in ("build", "typecheck"):
+                with timed_stage(timings, f"frontend_{step}"):
+                    with (candidate_root / f"{step}.log").open("w", encoding="utf-8") as log:
+                        result = subprocess.run([npm, "run", step], cwd=workspace, env=env, stdout=log,
+                                                stderr=subprocess.STDOUT, timeout=1800)
+                    if result.returncode:
+                        raise RuntimeError(f"Frontend {step} failed; see {candidate_root / (step + '.log')}")
+            with timed_stage(timings, "frontend_prepare_output"):
+                out = workspace / "out"
+                normalize_rsc_paths(out)
+                shutil.copytree(out, site)
+                retain_route_shells(site)
+                if cache_file is not None and _frontend_cache_key(node, env) == key:
+                    archive = Path(shutil.make_archive(str(candidate_root / "frontend"), "zip", site))
+                    with ZipFile(archive, "a") as cached:
+                        cached.comment = manifest["snapshot_id"].encode("ascii")
         with timed_stage(timings, "materialize_pages"):
-            out = workspace / "out"
-            normalize_rsc_paths(out)
-            site = candidate_root / "site"
-            shutil.copytree(out, site)
-            retain_route_shells(site)
             route_counts = materialize_snapshot(site, candidate_root / "snapshot")
         with timed_stage(timings, "check_static"):
             report = check(site, base_path)
+        if archive is not None and cache_file is not None:
+            with suppress(OSError):
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                archive.replace(cache_file)
         with timed_stage(timings, "promote_output"):
             _promote(site, output, build_id, root=root)
         timings["build_total"] = round(time.perf_counter() - started, 3)
         result = {"state": "passed", "build_id": build_id, "snapshot_id": manifest["snapshot_id"],
                   "release_id": manifest["release_id"], "source_hash": manifest["source_hash"],
                   "routes": route_counts, "check": report, "output": str(output),
+                  "frontend_cache": "hit" if reused else "miss",
                   "timings_seconds": timings}
         write_json(candidate_root / "result.json", result)
         print(f"构建通过：{route_counts['games']} 场对局、{route_counts['players']} 位选手，"

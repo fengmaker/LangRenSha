@@ -22,7 +22,7 @@ export function MetricRank({ ranking, label, provisional, title, entries = [], m
   const [minimumSamples, setMinimumSamples] = useState(0);
   const [customSamples, setCustomSamples] = useState("");
   const canFilterGames = format === "percent" && metricLabel !== "出场率";
-  const showsRoundCounts = canFilterGames && sampleUnit === "次";
+  const showsRoundCounts = sampleUnit === "次" && entries.some((entry) => entry.effective_game_count !== undefined);
   const effectiveGames = (entry: RankingEntry) => entry.effective_game_count ?? entry.sample_count;
   const filteredEntries = filterRankingEntries(entries, {
     minimumAppearances: context.minimumAppearances,
@@ -102,7 +102,7 @@ export function MetricRank({ ranking, label, provisional, title, entries = [], m
         <td><b>{entry.rank}</b></td><td><ArchiveLink href={`/players/${encodeURIComponent(entry.id)}?${params}`} onClick={() => dialog.current?.close()}>{entry.name}</ArchiveLink>{entry.id === context.playerId ? <small>当前选手</small> : null}</td><td className="ranking-value">{displayValue(entry.value)}</td><td>{showsRoundCounts ? <>{formatNumber(effectiveGames(entry))} 场<small className="ranking-round-count">{formatNumber(entry.sample_count)} 次</small></> : <>{formatNumber(entry.sample_count)} {sampleUnit}</>}</td>
       </tr>)}</tbody></table></div>
       {visibleEntries.length === 0 ? <p className="ranking-empty" role="status">当前条件下没有符合要求的选手，可以降低筛选门槛。</p> : null}
-      <p className="ranking-note">指标样本数是此项比例的分母，与区间总出场次数分别筛选。{showsRoundCounts ? "同一局可包含多次记录，有效场次按对局去重。" : ""}仅比较当前范围内有有效数据的选手；同分选手按姓名排列。</p>
+      <p className="ranking-note">数值相同时，有效场次多的选手排在前面。数值和有效场次都相同时并列，按姓名排列。{showsRoundCounts ? "有效场次按对局去重。" : ""}{canFilterGames ? "指标样本数是此项比例的分母，可与区间总出场次数分别筛选。" : ""}</p>
       </> : null}
     </dialog>
   </div>;

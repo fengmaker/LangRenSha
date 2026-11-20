@@ -2,7 +2,11 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
+import sys
 import time
+from types import SimpleNamespace
+from zipfile import ZipFile
 
 import pytest
 
@@ -39,15 +43,16 @@ def compiler_shells(out):
     asset.write_bytes(b"compiled frontend bytes")
 
 
-def _snapshot(snapshot, *, game_ids=("game-1",), player_ids=("player-1",), seasons=("S23",)):
-    release = snapshot / "data/releases/snapshot-1"
+def _snapshot(snapshot, *, game_ids=("game-1",), player_ids=("player-1",), seasons=("S23",),
+              snapshot_id="snapshot-1"):
+    release = snapshot / "data/releases" / snapshot_id
     for family, ids in (("games", game_ids), ("players", player_ids)):
         path = release / family / "index.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({"items": [{"id": value} for value in ids]}), encoding="utf-8")
     (release / "releases.json").write_text('{"items": []}', encoding="utf-8")
     (snapshot / "data/manifest.json").write_text(json.dumps({
-        "schema_version": 2, "snapshot_id": "snapshot-1", "build_id": "build-1",
+        "schema_version": 2, "snapshot_id": snapshot_id, "build_id": "build-1",
         "release_id": "release-1", "complete": True, "base_path": "/site",
         "seasons": [{"id": value} for value in seasons],
     }), encoding="utf-8")
@@ -86,7 +91,7 @@ def test_static_next_build_uses_an_isolated_workspace_root():
     assert "web/.static-build/" in website_ignore
 
 
-def test_prepare_static_workspace_replaces_data_without_touching_local_app(tmp_path, monkeypatch):
+def test_prepare_static_workspace_copies_only_frontend_inputs(tmp_path, monkeypatch):
     web = tmp_path / "web"
     monkeypatch.setattr(build_static, "WEB", web)
     (web / "src").mkdir(parents=True)
@@ -99,23 +104,124 @@ def test_prepare_static_workspace_replaces_data_without_touching_local_app(tmp_p
     (web / "public/data/old.json").write_text("old local data")
     (web / "public/media/old.jpg").write_text("old local media")
     (web / "node_modules/keep").write_text("local dependency")
-    snapshot = tmp_path / "snapshot"
-    (snapshot / "data").mkdir(parents=True)
-    (snapshot / "media").mkdir()
-    (snapshot / "data/manifest.json").write_text("new static data")
-    (snapshot / "media/current.jpg").write_text("current static media")
-
-    workspace = build_static.prepare_static_workspace(snapshot)
+    stale = web / ".static-build/public/data"
+    stale.mkdir(parents=True)
+    (stale / "manifest.json").write_text("previous snapshot")
+    workspace = build_static.prepare_static_workspace()
 
     assert workspace == web / ".static-build"
     assert (workspace / "src/page.tsx").read_text() == "current page"
-    assert (workspace / "public/data/manifest.json").read_text() == "new static data"
-    assert not (workspace / "public/data/old.json").exists()
-    assert (workspace / "public/media/current.jpg").read_text() == "current static media"
-    assert not (workspace / "public/media/old.jpg").exists()
+    assert not (workspace / "public/data").exists()
+    assert not (workspace / "public/media").exists()
+    assert not (workspace / ".static-snapshot").exists()
+    assert (web / "public/data/old.json").read_text() == "old local data"
+    assert (web / "public/media/old.jpg").read_text() == "old local media"
     assert (workspace / "public/icon.svg").read_text() == "icon"
     assert not (workspace / "node_modules").exists()
     assert (web / "node_modules/keep").read_text() == "local dependency"
+
+
+def test_build_reuses_frontend_only_for_same_snapshot_and_unchanged_inputs(tmp_path, monkeypatch):
+    from website.static_publish import check_static, export_static
+
+    web = tmp_path / "website/web"
+    (web / "src").mkdir(parents=True)
+    (web / "node_modules").mkdir()
+    (web / "node_modules/.package-lock.json").write_text("{}")
+    page = web / "src/page.tsx"
+    page.write_text("version one")
+    monkeypatch.setattr(build_static, "WEB", web)
+    monkeypatch.setattr(build_static, "node_binary", lambda: sys.executable)
+    monkeypatch.setattr(build_static.shutil, "which", lambda *_args, **_kwargs: "npm")
+    games = ["game-1"]
+    steps = []
+    checked = []
+
+    def export(_root, output, *, base_path, build_id):
+        _snapshot(output.parent, game_ids=games, snapshot_id="snapshot-" + games[0])
+        path = output / "manifest.json"
+        manifest = json.loads(path.read_text())
+        manifest.update(base_path=base_path, build_id=build_id, source_hash="source")
+        path.write_text(json.dumps(manifest))
+        return manifest
+
+    def compile_frontend(args, *, cwd, env, **_kwargs):
+        step = args[-1]
+        steps.append(step)
+        if step == "build":
+            out = cwd / "out"
+            if out.exists():
+                shutil.rmtree(out)
+            compiler_shells(out)
+            snapshot = json.loads((Path(env["ARCHIVE_PRERENDER_DATA"]) / "manifest.json").read_text())
+            (out / "index.html").write_text(f"{page.read_text()} · {snapshot['snapshot_id']}", encoding="utf-8")
+            (out / "404.html").write_text("not found")
+        return SimpleNamespace(returncode=0)
+
+    def check(site, base_path):
+        checked.append(base_path)
+        assert all((site / "games" / game / "index.html").is_file() for game in games)
+        assert (site / "media/photo.jpg").read_bytes() == b"generated media"
+        return {"state": "passed"}
+
+    monkeypatch.setattr(export_static, "export_direct_snapshot", export)
+    monkeypatch.setattr(build_static.subprocess, "run", compile_frontend)
+    monkeypatch.setattr(check_static, "check", check)
+    output = tmp_path / "tmp/ready"
+    first = build_static.build("/site", output, root=tmp_path)
+    assert first["frontend_cache"] == "miss"
+    assert steps == ["build", "typecheck"]
+    cache = tmp_path / ".cache/static-publish/frontend"
+    first_archive = next(cache.glob("*.zip"))
+    with ZipFile(first_archive) as archive:
+        assert not any(name.startswith(("data/", "media/")) for name in archive.namelist())
+
+    warm = build_static.build("/site", output, root=tmp_path)
+    assert warm["frontend_cache"] == "hit"
+    assert steps == ["build", "typecheck"]
+    assert warm["build_id"] != first["build_id"]
+
+    games[:] = ["game-2", "game-3"]
+    updated = build_static.build("/site", output, root=tmp_path)
+    assert updated["frontend_cache"] == "miss"
+    assert updated["routes"]["games"] == 2
+    assert not (output / "games/game-1").exists()
+    assert (output / "index.html").read_text(encoding="utf-8") == "version one · snapshot-game-2"
+    assert list(cache.glob("*.zip")) == [first_archive]
+
+    page.write_text("version two")
+    changed = build_static.build("/site", output, root=tmp_path)
+    assert changed["frontend_cache"] == "miss"
+    assert (output / "index.html").read_text(encoding="utf-8") == "version two · snapshot-game-2"
+    assert steps == ["build", "typecheck"] * 3
+    second_archive = next(path for path in cache.glob("*.zip") if path != first_archive)
+    second_archive.write_bytes(b"truncated cache")
+    rebuilt = build_static.build("/site", output, root=tmp_path)
+    assert rebuilt["frontend_cache"] == "miss"
+    assert steps == ["build", "typecheck"] * 4
+    assert checked == ["/site"] * 5
+
+
+def test_frontend_cache_key_tracks_build_inputs_and_ignores_generated_data(tmp_path, monkeypatch):
+    monkeypatch.setattr(build_static, "WEB", tmp_path)
+    lock = tmp_path / "node_modules/.package-lock.json"
+    lock.parent.mkdir()
+    lock.write_text("{}")
+    asset = tmp_path / "public/icon.svg"
+    asset.parent.mkdir()
+    asset.write_text("first public asset")
+    env = {"NEXT_PUBLIC_BASE_PATH": "/site"}
+    key = build_static._frontend_cache_key(sys.executable, env)
+    data = tmp_path / "public/data/manifest.json"
+    data.parent.mkdir()
+    data.write_text("fresh snapshot")
+    assert build_static._frontend_cache_key(sys.executable, env) == key
+    assert build_static._frontend_cache_key(sys.executable, {"NEXT_PUBLIC_BASE_PATH": "/other"}) != key
+    lock.write_text('{"packages":{"node_modules/next":{"version":"16.0.1"}}}')
+    changed_lock = build_static._frontend_cache_key(sys.executable, env)
+    assert changed_lock != key
+    asset.write_text("updated public asset")
+    assert build_static._frontend_cache_key(sys.executable, env) != changed_lock
 
 
 def test_materialize_snapshot_removes_stale_routes_and_updates_site_data(tmp_path):
@@ -138,6 +244,8 @@ def test_materialize_snapshot_removes_stale_routes_and_updates_site_data(tmp_pat
     assert (site / "seasons/S23/index.html").is_file()
     assert (site / "data/manifest.json").is_file()
     assert (site / "media/photo.jpg").read_bytes() == b"generated media"
+    assert not (snapshot / "data").exists()
+    assert not (snapshot / "media").exists()
 
 
 def test_promote_replaces_ready_site_and_restores_it_after_failure(tmp_path, monkeypatch):
@@ -293,6 +401,7 @@ def test_static_check_validates_real_route_files_and_local_json(tmp_path, schema
         "players/player-1/S23--S23.json": {"id": "player-1"},
         "stats/S23--S23.json": {"scope": {"seasons": ["S23"]}},
         "leaderboards/S23/all.json": {"items": []},
+        "leaderboards/S23/all.summary.json": {"release_id": "release-1", "items": []},
         "releases.json": {"items": []},
     }
     for relative, value in documents.items():

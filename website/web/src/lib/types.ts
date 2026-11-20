@@ -1,3 +1,17 @@
+export type SnapshotManifest = {
+  schema_version: number;
+  snapshot_id: string;
+  build_id?: string | null;
+  release_id: string;
+  source_hash?: string;
+  document_hashes?: Record<string, string>;
+  player_photo_thumbnails?: Record<string, string>;
+  seasons: { id: string; game_count: number; phases?: string[] }[];
+  ranges: { start: string; end: string; seasons: string[] }[];
+  complete: boolean;
+  partial?: { enabled: boolean; season?: string; game_id?: string; player_id?: string };
+};
+
 export type Release = {
   id: string;
   published_at: string | null;
@@ -35,8 +49,11 @@ export type Metric = {
 export type PerformanceKey =
   | "witch_poison_count" | "witch_poison_wolf_rate" | "witch_poison_wolf_kills"
   | "hunter_shot_count" | "hunter_shot_wolf_rate" | "hunter_shot_wolf_kills"
-  | "mechanical_poison_count" | "mechanical_poison_wolf_rate" | "mechanical_poison_wolf_kills"
-  | "mechanical_shot_count" | "mechanical_shot_wolf_rate" | "mechanical_shot_wolf_kills"
+  | "mechanical_poison_count" | "mechanical_shot_count"
+  | "mechanical_wolf_count" | "mechanical_wolf_rate"
+  | "mechanical_learn_rate" | "mechanical_poison_god_kills" | "mechanical_shot_god_kills"
+  | "mechanical_guard_count" | "mechanical_reflect_god_kills" | "mechanical_check_count"
+  | "mechanical_extra_attack_count" | "guard_count" | "guard_knife_hits" | "guard_knife_hit_rate"
   | "seer_campaign_count" | "seer_badge_count" | "seer_first_day_exiled"
   | "bluff_badge_count" | "bluff_first_day_exiled"
   | "first_night_targeted" | "first_night_death" | "first_day_exiled";
@@ -50,6 +67,7 @@ export type PlayerLedgerEntry = {
   board_name: string;
   role: string | null;
   role_label?: string | null;
+  mechanical_learned_role?: string | null;
   faction: string | null;
   faction_inferred?: boolean;
   result: "win" | "loss" | "unknown";
@@ -62,7 +80,7 @@ export type MetricRanking = { rank: number; total: number; tied: boolean };
 export type PlayerRankingKey = "points" | "appearances" | "attendance" | "total_win_rate" | "wins" | "losses" | "werewolf_win_rate" | "good_win_rate" | "sheriff_registration_rate" | "seer_follow_rate" | "sheriff_seer_vote_rate"
   | "good_wins" | "wolf_vote_rate" | "good_sheriff_registration_rate" | "werewolf_appearances" | "werewolf_wins"
   | "werewolf_draw_rate" | "werewolf_self_explosion_rate" | "werewolf_sheriff_registration_rate" | "bluff_count" | "bluff_rate" | "bluff_success_rate"
-  | Exclude<PerformanceKey, "first_night_targeted" | "first_night_death" | "first_day_exiled">;
+  | PerformanceKey;
 export type PlayerBoardStats = {
   code: string | null;
   name: string | null;
@@ -254,6 +272,8 @@ export type PlayerDetail = {
   available_seasons?: string[];
   photo?: PlayerPhoto | null;
 };
+export type LeaderboardMetric = Pick<Metric, "numerator" | "denominator" | "rate" | "excluded">;
+
 export type LeaderboardItem = {
   rank: number;
   id: string;
@@ -264,27 +284,26 @@ export type LeaderboardItem = {
   pending_games: number;
   points: number;
   points_complete: boolean;
-  total_win_rate: Metric;
-  werewolf_win_rate: Metric;
-  good_win_rate: Metric;
-  attendance: Metric;
-  sheriff_registration_rate: Metric;
-  good_sheriff_registration_rate: Metric;
-  good_off_police_rate: Metric;
-  wolf_vote_rate: Metric;
+  total_win_rate: LeaderboardMetric;
+  werewolf_win_rate: LeaderboardMetric;
+  good_win_rate: LeaderboardMetric;
+  attendance: LeaderboardMetric;
+  sheriff_registration_rate: LeaderboardMetric;
+  good_sheriff_registration_rate: LeaderboardMetric;
+  good_off_police_rate: LeaderboardMetric;
+  wolf_vote_rate: LeaderboardMetric;
   exile_abstentions: number;
   werewolf_appearances: number;
-  werewolf_draw_rate: Metric;
-  werewolf_self_explosion_rate: Metric;
-  werewolf_sheriff_registration_rate: Metric;
-  werewolf_off_police_rate: Metric;
-  seer_follow_rate: Metric;
-  sheriff_seer_vote_rate: Metric;
+  werewolf_draw_rate: LeaderboardMetric;
+  werewolf_self_explosion_rate: LeaderboardMetric;
+  werewolf_sheriff_registration_rate: LeaderboardMetric;
+  werewolf_off_police_rate: LeaderboardMetric;
+  seer_follow_rate: LeaderboardMetric;
+  sheriff_seer_vote_rate: LeaderboardMetric;
   bluff_count: number;
   bluff_count_complete: boolean;
-  bluff_rate: Metric;
-  bluff_success_rate: Metric;
-  photo: PlayerPhoto | null;
+  bluff_rate: LeaderboardMetric;
+  bluff_success_rate: LeaderboardMetric;
 };
 export type Leaderboard = {
   release_id: string;
@@ -295,9 +314,15 @@ export type Leaderboard = {
   pending_games: number;
   scoring: { werewolf_win: number; good_win: number; loss: number };
   items: LeaderboardItem[];
+  latest_date: string | null;
+};
+export type LeaderboardMetricKey = {
+  [Key in keyof LeaderboardItem]: LeaderboardItem[Key] extends LeaderboardMetric ? Key : never;
+}[keyof LeaderboardItem];
+export type LeaderboardSamples = {
+  items: (Pick<LeaderboardItem, "id"> & Record<LeaderboardMetricKey, Pick<Metric, "samples">>)[];
   sample_games: { game_id: string; season: string; date: string; game_number: number | null;
     board_name: string; roles: Record<string, string | null> }[];
-  notes: string[];
 };
 export type Stats = {
   release_id: string;
@@ -316,5 +341,3 @@ export type Stats = {
   players: PlayerSummary[];
   methodology: string[];
 };
-
-export type SearchParams = Record<string, string | string[] | undefined>;

@@ -3,8 +3,7 @@
 import { StaticData } from "@/components/static-data";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { Release, Stats } from "@/lib/types";
-import type { SnapshotManifest } from "@/lib/snapshot-data";
+import type { Release, SnapshotManifest, Stats } from "@/lib/types";
 import { fetchStatsRange, fetchSnapshotManifest, fetchReleases, updateStaticQuery } from "@/lib/static-browser";
 import { StatsView } from "./stats-view";
 

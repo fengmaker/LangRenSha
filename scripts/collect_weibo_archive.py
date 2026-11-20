@@ -19,7 +19,7 @@ from collect_weibo import (
     new_manifest, normalize_post, plain_text, post_date, save_json,
     timeline_statuses,
 )
-from weibo_naming import artifact_paths
+from weibo_naming import BEIJING, artifact_paths
 
 
 def inside(root: Path, relative: str) -> Path:
@@ -226,6 +226,8 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
     by_id = {post["post_id"]: post for post in manifest["posts"]}
     summarize(manifest)
     save_json(path, manifest)
+    print(f"[{datetime.now(BEIJING):%Y-%m-%d %H:%M:%S} 北京时间] "
+          f"微博目标窗口：{since} 至 {until}；采集内容：窗口内全部微博及配图", flush=True)
     try:
         for post in manifest["posts"]:
             raw = json.loads(inside(root, post["raw_file"]).read_text(encoding="utf-8"))
@@ -262,19 +264,26 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
             page = {"page": page_number, "cards_seen": len(data["cards"]),
                     "status_cards": len(statuses), "target_author_posts": 0,
                     "in_date_window": 0, "skipped_unparseable_date": 0,
+                    "pinned_posts": 0,
                     "post_ids": [], "oldest_date": None, "newest_date": None}
             dates: list[date] = []
+            regular_dates: list[date] = []
+            saved_before_page = len(manifest["posts"])
             for raw in statuses:
                 post = normalize_post(raw, expected_uid=uid)
                 if post["author_uid"] != uid:
                     continue
                 page["target_author_posts"] += 1
                 page["post_ids"].append(post["post_id"])
+                pinned = raw.get("isTop") in (True, 1, "1")
+                page["pinned_posts"] += int(pinned)
                 published = post_date(raw.get("created_at"))
                 if published is None:
                     page["skipped_unparseable_date"] += 1
                     continue
                 dates.append(published)
+                if not pinned:
+                    regular_dates.append(published)
                 if not since <= published <= until:
                     continue
                 page["in_date_window"] += 1
@@ -303,6 +312,9 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
                 save_json(path, manifest)
             page["oldest_date"] = min(dates).isoformat() if dates else None
             page["newest_date"] = max(dates).isoformat() if dates else None
+            page["regular_oldest_date"] = min(regular_dates).isoformat() if regular_dates else None
+            page["regular_newest_date"] = max(regular_dates).isoformat() if regular_dates else None
+            page["new_posts_saved"] = len(manifest["posts"]) - saved_before_page
             page["old_page"] = (len(dates) >= 5 and len(dates) == page["target_author_posts"]
                                 and max(dates) < since)
             page_file = (f"pages/第{page_number:04}页_发帖{page['oldest_date'] or '未知日期'}"
@@ -334,9 +346,12 @@ def collect_archive(collector: WeiboCollector, root: Path, uid: str, since: date
             summarize(manifest)
             save_json(path, manifest)
             counts = manifest["counts"]
-            print(f"page={page_number} dates={page['oldest_date']}..{page['newest_date']} "
-                  f"posts={counts['posts_saved']} images={counts['images_downloaded']} "
-                  f"long_text={counts['long_posts_expanded']}/{counts['long_posts']}", flush=True)
+            print(f"[{datetime.now(BEIJING):%Y-%m-%d %H:%M:%S} 北京时间] 第{page_number}页；"
+                  f"普通帖日期：{page['regular_oldest_date'] or '无'} 至 {page['regular_newest_date'] or '无'}"
+                  f"（置顶{page['pinned_posts']}条另计）；"
+                  f"本页命中{page['in_date_window']}条，新增保存{page['new_posts_saved']}条；"
+                  f"累计保存{counts['posts_saved']}条、图片{counts['images_downloaded']}张、"
+                  f"长文{counts['long_posts_expanded']}/{counts['long_posts']}", flush=True)
             if reason:
                 break
         except CollectionError as error:

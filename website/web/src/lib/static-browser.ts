@@ -1,7 +1,6 @@
 "use client";
 
-import type { GameDetail, GameSummary, Leaderboard, Overview, PageResult, PlayerCard, PlayerDetail, PlayerSummary, Release, Stats } from "@/lib/types";
-import type { SnapshotManifest } from "@/lib/snapshot-data";
+import type { GameDetail, GameSummary, Leaderboard, LeaderboardSamples, Overview, PageResult, PlayerCard, PlayerDetail, PlayerSummary, Release, SnapshotManifest, Stats } from "@/lib/types";
 import { basePath, publicPath } from "@/lib/site-mode";
 import { ApiError } from "@/lib/api-error";
 import { restorePlayerRankings, type SharedPlayerRankings } from "@/lib/player-rankings";
@@ -9,6 +8,7 @@ import type { PlayerPhoto } from "@/lib/types";
 
 let manifestPromise: Promise<SnapshotManifest> | undefined;
 const playerRankings = new Map<string, Promise<SharedPlayerRankings>>();
+const leaderboardSamples = new Map<string, Promise<LeaderboardSamples>>();
 
 async function requestJson<T>(url: string, cache?: RequestCache): Promise<T> {
   let response: Response;
@@ -46,13 +46,13 @@ export function fetchSnapshotManifest(): Promise<SnapshotManifest> {
   return manifestPromise;
 }
 
-export async function fetchStaticJson<T>(relativePath: string): Promise<T> {
+export async function fetchStaticJson<T>(relativePath: string, prerenderedSnapshotId?: string): Promise<T> {
   const safePath = relativePath.split("/").map(encodeURIComponent).join("/");
-  const manifest = await fetchSnapshotManifest();
-  const snapshotId = manifest.snapshot_id;
+  const manifest = prerenderedSnapshotId === undefined ? await fetchSnapshotManifest() : undefined;
+  const snapshotId = manifest?.snapshot_id ?? prerenderedSnapshotId!;
   try {
-    const digest = manifest.document_hashes?.[relativePath];
-    if (digest) {
+    const digest = manifest?.document_hashes?.[relativePath];
+    if (digest && manifest) {
       const body = await requestJson<T>(`${basePath}/data/objects/${encodeURIComponent(digest)}.json`, "force-cache");
       return { ...body, release_id: manifest.release_id };
     }
@@ -148,4 +148,16 @@ export async function fetchPlayerRange(id: string, start: string, end: string): 
   return restorePlayerRankings(detail, shared);
 }
 export const fetchStatsRange = (start: string, end: string) => fetchStaticJson<Stats>(`stats/${start}--${end}.json`);
-export const fetchLeaderboard = (season: string, phase: "all" | "finals_week") => fetchStaticJson<Leaderboard>(`leaderboards/${season}/${phase}.json`);
+export const fetchLeaderboard = (snapshotId: string, season: string, phase: Leaderboard["phase"]) =>
+  fetchStaticJson<Leaderboard>(`leaderboards/${season}/${phase}.summary.json`, snapshotId);
+
+export function fetchLeaderboardSamples(snapshotId: string, season: string, phase: Leaderboard["phase"]) {
+  const key = `${snapshotId}/${season}/${phase}`;
+  let request = leaderboardSamples.get(key);
+  if (!request) {
+    request = fetchStaticJson<LeaderboardSamples>(`leaderboards/${season}/${phase}.json`, snapshotId);
+    leaderboardSamples.set(key, request);
+    void request.catch(() => leaderboardSamples.delete(key));
+  }
+  return request;
+}

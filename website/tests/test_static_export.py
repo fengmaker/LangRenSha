@@ -1,9 +1,11 @@
+from collections import Counter
 import hashlib
 import json
-import os
 from pathlib import Path
+import os
 import shutil
 import subprocess
+import time
 
 import pytest
 from PIL import Image
@@ -11,6 +13,7 @@ from PIL import Image
 from website.public_data import ROOT, _ranges, build_public_data, check_public_data
 from website.static_publish.export_static import (
     ExportError,
+    _leaderboard_summary,
     _media_endpoint,
     _safe_base_path,
     export_direct_snapshot,
@@ -56,6 +59,16 @@ def test_final_json_covers_all_published_games_and_response_scopes():
             board["items"][0]
         )
         assert all(type(item.get("bluff_count_complete")) is bool for item in board["items"])
+        summary = _leaderboard_summary(board)
+        assert summary["latest_date"] == max(game["date"] for game in board["sample_games"])
+        assert "sample_games" not in summary
+        assert [(row["id"], row["rank"], row["points"]) for row in summary["items"]] == [
+            (row["id"], row["rank"], row["points"]) for row in board["items"]
+        ]
+        for compact, full in zip(summary["items"], board["items"]):
+            assert set(compact["wolf_vote_rate"]) == {"rate", "numerator", "denominator", "excluded"}
+            assert compact["wolf_vote_rate"]["rate"] == full["wolf_vote_rate"]["rate"]
+            assert "samples" in full["wolf_vote_rate"]
 
 
 def test_media_allowlist_and_base_path_validation():
@@ -79,6 +92,33 @@ def test_media_allowlist_and_base_path_validation():
         pass
     else:
         raise AssertionError("retired evidence media must not enter the static export")
+
+
+def test_game_and_catalog_hashes_use_the_bytes_already_read_for_parsing(tmp_path, monkeypatch):
+    from website.public_data import _load_catalog, _load_games
+
+    catalog_path = tmp_path / "config/seasons.json"
+    game_path = tmp_path / "data/games/S23/game-1/game.json"
+    catalog_bytes = b'{"seasons":{"S23":{"name":"test"}}}\r\n'
+    game_bytes = b'{"id":"game-1","season":"S23","schema_version":1,"seats":[],"rounds":[]}\r\n'
+    for path, body in [(catalog_path, catalog_bytes), (game_path, game_bytes)]:
+        path.parent.mkdir(parents=True)
+        path.write_bytes(body)
+
+    reads = Counter()
+    open_path = Path.open
+
+    def count_open(path, *args, **kwargs):
+        reads[path] += 1
+        return open_path(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", count_open)
+    catalog, catalog_hash = _load_catalog(tmp_path)
+    games, hashes = _load_games(tmp_path)
+    assert catalog["S23"]["name"] == "test" and games[0]["id"] == "game-1"
+    assert catalog_hash == hashlib.sha256(catalog_bytes).hexdigest()
+    assert hashes[game_path.relative_to(tmp_path).as_posix()] == hashlib.sha256(game_bytes).hexdigest()
+    assert reads == {catalog_path: 1, game_path: 1}
 
 
 def test_snapshot_id_tracks_response_content_and_is_stable(tmp_path, monkeypatch):
@@ -170,6 +210,56 @@ def test_immutable_documents_reuse_addresses_and_keep_directory_photos_light(tmp
     assert third["document_hashes"][game_path] != first["document_hashes"][game_path]
     assert third["document_hashes"][directory_path] == first["document_hashes"][directory_path]
     assert json.loads(document_path(output, third, game_path).read_bytes())["winner"] == "good"
+
+
+@pytest.mark.parametrize("lock", ["transient", "persistent", "rollback"])
+def test_export_retries_locked_media_directory(tmp_path, monkeypatch, lock):
+    from website import public_data
+
+    monkeypatch.setattr(public_data, "build_public_data", lambda _root: {
+        "release_id": "release-1", "source_hash": "source-1",
+        "documents": {"overview.json": {}}, "season_rows": [], "ranges": [], "counts": {},
+    })
+    snapshot = tmp_path / "snapshot"
+    output = snapshot / "data"
+    media = snapshot / "media"
+    output.mkdir(parents=True)
+    media.mkdir()
+    (output / "manifest.json").write_text("previous data", encoding="utf-8")
+    (media / "previous.jpg").write_bytes(b"previous media")
+    original_rename = Path.rename
+    waits = []
+
+    def rename(path, destination):
+        incoming_media_locked = destination == media and path.name == "media" and (lock != "transient" or not waits)
+        previous_data_locked = lock == "rollback" and path.name == "previous-0"
+        if incoming_media_locked or previous_data_locked:
+            error = PermissionError("Directory temporarily in use")
+            error.winerror = 5
+            raise error
+        return original_rename(path, destination)
+
+    monkeypatch.setattr(Path, "rename", rename)
+    monkeypatch.setattr(time, "sleep", waits.append)
+
+    if lock == "transient":
+        export_direct_snapshot(tmp_path, output)
+        assert len(waits) == 1
+        assert (output / "manifest.json").read_text(encoding="utf-8") != "previous data"
+        assert media.is_dir()
+        assert not list(snapshot.glob(".data.direct-export-*"))
+    else:
+        with pytest.raises(RuntimeError, match="Windows.*重试 6 次"):
+            export_direct_snapshot(tmp_path, output)
+        assert (media / "previous.jpg").read_bytes() == b"previous media"
+        if lock == "persistent":
+            assert len(waits) == 6
+            assert (output / "manifest.json").read_text(encoding="utf-8") == "previous data"
+            assert not list(snapshot.glob(".data.direct-export-*"))
+        else:
+            assert len(waits) == 12
+            backup, = snapshot.glob(".data.direct-export-*/previous-0/manifest.json")
+            assert backup.read_text(encoding="utf-8") == "previous data"
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Windows ACL inheritance")

@@ -27,7 +27,8 @@ def safe_name(value: str, limit: int = 65) -> str:
     return text[:limit].rstrip(" .") or "待核"
 
 
-def naming(title: str, bvid: str, cid: int, page: int, anchor: str, season: str = "S22") -> dict:
+def naming(title: str, bvid: str, cid: int, page: int, anchor: str, season: str = "S22", *,
+           end_year: int | None = None) -> dict:
     match = re.search(r"(?<!\d)(20\d{6})(?!\d)",title)
     event_date = None
     if match:
@@ -36,7 +37,7 @@ def naming(title: str, bvid: str, cid: int, page: int, anchor: str, season: str 
         except ValueError:
             pass
     first_day = date.fromisoformat(anchor)
-    date_conflict = event_date is not None and event_date.year != first_day.year
+    date_conflict = event_date is not None and not first_day.year <= event_date.year <= (end_year or first_day.year)
     phase = "showmatch" if "表演赛" in title else "finals_week" if "决赛" in title else "regular" if "正赛" in title else "special" if "特辑" in title else "unknown"
     issue_match = re.search(r"第([一二三四五六七八九十]+|\d+)期",title)
     issue = number(issue_match[1]) if issue_match else None

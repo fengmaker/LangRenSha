@@ -320,6 +320,18 @@ def _missing_ranges(since: date, until: date, covered: list[tuple[date, date]]) 
     return ranges
 
 
+def weibo_weekday_ranges(since: date, until: date) -> list[tuple[date, date]]:
+    """Clip each week's Tuesday–Friday to the requested Beijing dates."""
+    tuesday = since - timedelta(days=(since.weekday() - 1) % 7)
+    ranges = []
+    while tuesday <= until:
+        start, end = max(since, tuesday), min(until, tuesday + timedelta(days=3))
+        if start <= end:
+            ranges.append((start, end))
+        tuesday += timedelta(days=7)
+    return ranges
+
+
 def weibo_local_snapshot(root: Path, uid: str, *, post_since: date | None = None,
                          post_until: date | None = None) -> dict:
     archives = []
@@ -391,9 +403,11 @@ def _newest_complete_component(intervals: list[tuple[date, date]], since: date, 
 
 
 def plan_weibo_windows(root: Path, uid: str, since: date, until: date,
-                       *, scan_date: date | None = None) -> dict:
+                       *, scan_date: date | None = None, weekdays_only: bool = False) -> dict:
     snapshot = weibo_local_snapshot(root, uid)
     gaps = _missing_ranges(since, until, snapshot["complete_intervals"])
+    if weekdays_only:
+        gaps = [window for start, end in gaps for window in weibo_weekday_ranges(start, end)]
     windows = []
     scheduled: set[tuple[date, date, str]] = set()
     scan_date = scan_date or beijing_today()
@@ -468,6 +482,8 @@ def plan_weibo_windows(root: Path, uid: str, since: date, until: date,
     # older partial archive redundant, regardless of its original backend.
     for item in snapshot["incomplete"]:
         start, end = item["since"], item["until"]
+        if weekdays_only and weibo_weekday_ranges(start, end) != [(start, end)]:
+            continue
         if since <= start <= end <= until:
             if not _missing_ranges(start, end, snapshot["complete_intervals"]):
                 continue
@@ -842,6 +858,7 @@ def _print_summary(live_plan: dict, candidates: list[dict], formal_missing: list
     print(f"微博目标日期范围：{weibo_plan['since']} 至 {weibo_plan['until']}；"
           f"本地归档请求最大日期：{weibo_plan['latest_requested_until'] or '无'}；"
           f"本地最新帖子：{weibo_plan['local_latest'] or '无'}")
+    print("微博采集范围：每周周二至周五窗口内的所有微博正文、长文及配图。")
     print(f"微博连续完整覆盖：{coverage[0]} 至 {coverage[1]}" if coverage else
           "微博连续完整覆盖：无")
     if weibo_plan["missing_ranges"]:
@@ -974,16 +991,16 @@ def run(args: argparse.Namespace, root: Path = ROOT) -> int:
         raise ValueError("微博 --since 不能晚于 --until")
     local = weibo_local_snapshot(root, WEIBO_UID, post_since=season_start, post_until=until)
     since = args.since or season_start
-    reported_since = since
-    if args.since is None:
-        missing = _missing_ranges(season_start, until, local["complete_intervals"])
-        if missing:
-            reported_since = missing[0][0]
-    weibo_plan = plan_weibo_windows(root, WEIBO_UID, since, until)
+    weibo_plan = plan_weibo_windows(root, WEIBO_UID, since, until, weekdays_only=True)
+    target_ranges = weibo_weekday_ranges(since, until)
+    reported_since = target_ranges[0][0] if target_ranges else since
+    if weibo_plan["missing_ranges"]:
+        reported_since = weibo_plan["missing_ranges"][0][0]
+    reported_until = target_ranges[-1][1] if target_ranges else until
     local_archives_in_scope = [item for item in local["archives"]
                                if item["since"] <= until and item["until"] >= season_start]
     latest_requested_until = max((item["until"] for item in local_archives_in_scope), default=None)
-    weibo_plan.update(since=reported_since.isoformat(), until=until.isoformat(),
+    weibo_plan.update(since=reported_since.isoformat(), until=reported_until.isoformat(),
                       latest_requested_until=latest_requested_until,
                       local_latest=local["local_latest"])
     date_candidates = []
@@ -1076,8 +1093,8 @@ def build_parser() -> argparse.ArgumentParser:
                         help="同时指定 Bilibili 与 Weibo 认证模式；默认各自按 Cookie 文件是否存在选择")
     parser.add_argument("--cookies-file", type=Path, default=ROOT / DEFAULT_BILI_COOKIES)
     parser.add_argument("--weibo-cookies-file", type=Path, default=ROOT / DEFAULT_WEIBO_COOKIES)
-    parser.add_argument("--since", type=date.fromisoformat, help="微博窗口起始日期，含当天")
-    parser.add_argument("--until", type=date.fromisoformat, help="微博窗口结束日期，含当天；默认北京时间今天")
+    parser.add_argument("--since", type=date.fromisoformat, help="微博待补范围起始日期，含当天；仅扫描周二至周五")
+    parser.add_argument("--until", type=date.fromisoformat, help="微博待补范围结束日期，含当天；默认北京时间今天，仅扫描周二至周五")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--check-only", action="store_true", help="只查看差异，不提示、不下载、不写状态")
     mode.add_argument("--yes", action="store_true", help="明确同意立即开始下载")

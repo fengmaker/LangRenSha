@@ -25,7 +25,7 @@ from website.api.photos import photo_for
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYTICS_VERSION = 17
+ANALYTICS_VERSION = 22
 GAME_SCHEMA_VERSION = 1
 
 STATS_METHODOLOGY = [
@@ -50,19 +50,20 @@ def _sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
-def _read_json(path: Path) -> dict[str, Any]:
+def _read_json_with_hash(path: Path) -> tuple[dict[str, Any], str]:
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
+        body = path.read_bytes()
+        value = json.loads(body.decode("utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise PublicDataError(f"无法读取公开 JSON：{path}") from exc
     if not isinstance(value, dict):
         raise PublicDataError(f"公开 JSON 须为对象：{path}")
-    return value
+    return value, _sha256(body)
 
 
 def _load_catalog(root: Path) -> tuple[dict[str, dict[str, Any]], str]:
     path = root / "config" / "seasons.json"
-    value = _read_json(path)
+    value, digest = _read_json_with_hash(path)
     rows = value.get("seasons")
     if not isinstance(rows, dict):
         raise PublicDataError("config/seasons.json 缺少 seasons 对象")
@@ -71,7 +72,7 @@ def _load_catalog(root: Path) -> tuple[dict[str, dict[str, Any]], str]:
         if not isinstance(season, str) or not isinstance(row, dict):
             raise PublicDataError("config/seasons.json 含有无效赛季")
         catalog[season] = row
-    return catalog, _sha256(path.read_bytes())
+    return catalog, digest
 
 
 def _load_games(root: Path) -> tuple[list[dict[str, Any]], dict[str, str]]:
@@ -83,7 +84,7 @@ def _load_games(root: Path) -> tuple[list[dict[str, Any]], dict[str, str]]:
     seen_ids: set[str] = set()
     for path in sorted(games_root.rglob("game.json")):
         relative = path.relative_to(root).as_posix()
-        game = _read_json(path)
+        game, digest = _read_json_with_hash(path)
         game_id, season = game.get("id"), game.get("season")
         if (game.get("schema_version") != GAME_SCHEMA_VERSION
                 or not isinstance(game_id, str) or not game_id
@@ -94,7 +95,7 @@ def _load_games(root: Path) -> tuple[list[dict[str, Any]], dict[str, str]]:
         if game_id in seen_ids:
             raise PublicDataError(f"最终对局 ID 重复：{game_id}")
         seen_ids.add(game_id)
-        hashes[relative] = _sha256(path.read_bytes())
+        hashes[relative] = digest
         games.append(game)
     if not games:
         raise PublicDataError("data/games 下没有最终 game.json")

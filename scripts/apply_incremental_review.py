@@ -110,9 +110,15 @@ def _verify_disk_identity(game: dict, item: dict, entry: dict, candidate: dict,
         source = None
     if isinstance(source, dict):
         identity = source.get("source") if isinstance(source.get("source"), dict) else source
+        expected_identity = game
+        for file in dossier["files"]:
+            if isinstance(file, dict) and file.get("role") == "subtitle" and "page" in file:
+                source_bvid, _, source_cid = file["external_key"].partition(":")
+                expected_identity = {"bvid": source_bvid, "cid": source_cid, "page": file["page"]}
+                break
         for field in ("bvid", "cid", "page"):
             actual = identity.get(field)
-            expected = game[field]
+            expected = expected_identity[field]
             if actual is not None and str(actual) != str(expected):
                 raise ReviewApplyError(f"{game['review_id']} 原文内 {field} 身份不一致")
 

@@ -429,24 +429,28 @@ def _mixed_blood_constraint(number, phase, event, *, actor, uses):
     return _result("available", "mixed_blood_choice_available")
 
 
+def mechanical_form_name(value: str | None) -> str | None:
+    """Resolve a learned form or the name of its source role."""
+    if isinstance(value, str):
+        value = _MECHANICAL_FORM_ALIASES.get(value, value)
+        if value in _MECHANICAL_FORMS:
+            return value
+        return _MECHANICAL_FORM_BY_ROLE.get(value)
+    return None
+
+
 def _mechanical_form(game, actor: int, learning) -> tuple[dict | None, dict | None]:
     if learning is None:
         return None, None
     learned = learning.get(actor)
     if not isinstance(learned, dict):
         return None, {}
-    form = learned.get("form")
-    if isinstance(form, str):
-        form = _MECHANICAL_FORM_ALIASES.get(form, form)
-    if form not in _MECHANICAL_FORMS:
-        form = _MECHANICAL_FORM_BY_ROLE.get(form)
-    if form not in _MECHANICAL_FORMS:
+    form = mechanical_form_name(learned.get("form"))
+    if form is None:
         target = learned.get("target")
         target_role = (_seat_roles(game) or {}).get(target) if type(target) is int else None
-        form = _MECHANICAL_FORM_BY_ROLE.get(target_role)
-    if form not in _MECHANICAL_FORMS:
-        return None, learned
-    return _MECHANICAL_FORMS[form], learned
+        form = mechanical_form_name(target_role)
+    return _MECHANICAL_FORMS.get(form), learned
 
 
 def _unknown_prior_learning(previous, actor: int) -> bool:

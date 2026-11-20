@@ -1,9 +1,7 @@
-export const isStaticSite = true;
-
-const configuredBasePath = isStaticSite ? process.env.NEXT_PUBLIC_BASE_PATH ?? "" : "";
+const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const basePath = configuredBasePath === "/" ? "" : configuredBasePath.replace(/\/$/, "");
 
-/** Add the configured subpath to native browser URLs exactly once. Next Link handles it itself. */
+/** Add the configured subpath to native browser URLs exactly once. */
 export function publicPath(path: string): string {
   if (!path.startsWith("/") || path.startsWith("//") || !basePath) return path;
   if (path === basePath || path.startsWith(`${basePath}/`)) return path;

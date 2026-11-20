@@ -3,8 +3,7 @@
 import { StaticData } from "@/components/static-data";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { PlayerDetail } from "@/lib/types";
-import type { SnapshotManifest } from "@/lib/snapshot-data";
+import type { PlayerDetail, SnapshotManifest } from "@/lib/types";
 import { fetchPlayerRange, fetchSnapshotManifest, staticRouteId, updateStaticQuery } from "@/lib/static-browser";
 import { PlayerProfileView } from "./player-profile-view";
 

@@ -47,7 +47,10 @@ def test_performance_samples_merge_across_selected_seasons_and_retain_rank_scope
     assert metrics["first_day_exiled"]["denominator"] == 2
     assert player["rankings"]["witch_poison_wolf_rate"] == {"rank": 1, "total": 1, "tied": False}
     assert player["ranking_boards"]["witch_poison_wolf_rate"][0]["sample_count"] == 1
-    assert "first_night_targeted" not in player["rankings"]
+    assert player["rankings"]["first_night_targeted"] == {"rank": 1, "total": 3, "tied": False}
+    assert player["rankings"]["first_night_death"] == {"rank": 2, "total": 3, "tied": True}
+    assert player["rankings"]["first_day_exiled"] == {"rank": 1, "total": 3, "tied": True}
+    assert player["ranking_boards"]["first_night_targeted"][0]["sample_count"] == 2
     assert games == original
 
     single = compute_player_stats("witch", games, season="S23")
@@ -55,6 +58,7 @@ def test_performance_samples_merge_across_selected_seasons_and_retain_rank_scope
     assert single["performance"]["witch_poison_wolf_rate"]["denominator"] == 0
     excluded = compute_player_stats("witch", games, seasons=["S22", "S23"], minimum_appearances=3)
     assert excluded["rankings"]["witch_poison_wolf_rate"] is None
+    assert excluded["rankings"]["first_night_targeted"] is None
     assert excluded["performance"] == player["performance"]
 
 
@@ -77,3 +81,81 @@ def test_unrecorded_counts_do_not_enter_a_complete_count_ranking():
     assert metric["numerator"] == 1 and metric["excluded"] > 0
     assert player["rankings"]["witch_poison_count"] is None
     assert player["performance"]["first_night_targeted"]["excluded"] == 1
+    assert player["rankings"]["first_night_targeted"] is None
+
+
+def test_poisoner_and_witch_share_skill_stats_but_retain_their_roles():
+    witch = snapshot("witch-game", "S22")
+    poisoner = snapshot("poisoner-game", "S23")
+    poisoner["seats"][0]["role"] = "毒师"
+
+    player = compute_player_stats("witch", [witch, poisoner], seasons=["S22", "S23"])
+
+    assert player["performance"]["witch_poison_count"]["numerator"] == 2
+    assert player["performance"]["witch_poison_wolf_kills"]["numerator"] == 2
+    assert {game["role"] for game in player["ledger"]} == {"女巫", "毒师"}
+
+
+def test_mechanical_learning_and_skill_stats_use_confirmed_learning_and_scope():
+    def mechanical_game(game_id, season, actions):
+        game = snapshot(game_id, season)
+        game["seats"][0].update(role="机械狼", faction="werewolf")
+        game["rounds"] = [
+            {"number": number, "night": [{"slot": "mechanical_action", "actor": 1,
+                                         "action": action, "targets": targets}], "day": []}
+            for number, (action, targets) in enumerate(actions, 1)
+        ]
+        game.pop("presentation")
+        return game
+
+    learned = mechanical_game("learned", "S22", [("pass", []), ("learn", [2]), ("attack", [3])])
+    civilian = mechanical_game("civilian", "S22", [("learn", [3])])
+    civilian["seats"][2]["role"] = "平民"
+    did_not_learn = mechanical_game("did-not-learn", "S22", [("pass", [])])
+    unknown = mechanical_game("unknown", "S23", [("unknown", [])])
+    unknown_form = mechanical_game("unknown-form", "S23", [("learn", [])])
+    games = [learned, civilian, did_not_learn, unknown, unknown_form]
+
+    player = compute_player_stats("witch", games, seasons=["S22", "S23"])
+    rate = player["performance"]["mechanical_learn_rate"]
+    assert (rate["numerator"], rate["denominator"], rate["excluded"]) == (1, 3, 2)
+    assert {row["game_id"]: row["negative"] for row in rate["samples"]} == {
+        "learned": 0, "civilian": 1, "did-not-learn": 1,
+    }
+    assert player["rankings"]["mechanical_learn_rate"]["total"] == 1
+    assert {row["game_id"]: row["mechanical_learned_role"] for row in player["ledger"]} == {
+        "learned": "机械双刀狼", "civilian": "机械平民", "did-not-learn": None,
+        "unknown": None, "unknown-form": None,
+    }
+    assert player["performance"]["mechanical_extra_attack_count"]["samples"] == [
+        {"game_id": "learned", "positive": 1, "negative": 0},
+    ]
+    assert compute_player_stats("witch", games, season="S23")["performance"]["mechanical_learn_rate"]["rate"] is None
+
+
+def test_mechanical_wolf_draw_rate_uses_only_wolf_appearances_on_mechanical_boards():
+    def appearance(game_id, season, board, role, faction):
+        game = snapshot(game_id, season)
+        game["board"]["code"] = board
+        game["seats"][0].update(role=role, faction=faction)
+        return game
+
+    games = [
+        appearance("mechanical", "S22", "mechanical_wolf_seer", "机械狼", "werewolf"),
+        appearance("ordinary", "S23", "s23_mechanical_wolf_seer", "狼人", "werewolf"),
+        appearance("good", "S23", "s23_mechanical_wolf_seer", "女巫", "good"),
+        appearance("other-board", "S23", "wolf_king_guard", "狼王", "werewolf"),
+    ]
+
+    player = compute_player_stats("witch", games, seasons=["S22", "S23"])
+
+    rate = player["performance"]["mechanical_wolf_rate"]
+    assert (rate["numerator"], rate["denominator"], rate["rate"]) == (1, 2, 0.5)
+    assert rate["samples"] == [
+        {"game_id": "mechanical", "positive": 1, "negative": 0},
+        {"game_id": "ordinary", "positive": 0, "negative": 1},
+    ]
+    assert player["performance"]["mechanical_wolf_count"] == rate
+    assert player["rankings"]["mechanical_wolf_count"]["rank"] == 1
+    assert player["rankings"]["mechanical_wolf_rate"]["rank"] == 1
+    assert compute_player_stats("witch", games, season="S23")["performance"]["mechanical_wolf_rate"]["rate"] == 0

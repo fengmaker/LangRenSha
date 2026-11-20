@@ -32,6 +32,19 @@ class SeasonArchiveTests(unittest.TestCase):
         self.assertEqual(value['week_number'],9)
         self.assertIn('日期存疑',value['stem'])
 
+    def test_cross_year_season_uses_calendar_week_from_original_anchor(self):
+        value=naming('20250103 决赛 Day-4 第一局-预女猎白混',
+                     'BV1example',123,1,'2024-10-08','S16',end_year=2025)
+        self.assertFalse(value['date_conflict'])
+        self.assertEqual(value['week_number'],13)
+        self.assertNotIn('日期存疑',value['stem'])
+
+    def test_cross_year_season_still_flags_year_outside_its_range(self):
+        value=naming('20260103 决赛 Day-4 第一局-预女猎白混',
+                     'BV1example',123,1,'2024-10-08','S16',end_year=2025)
+        self.assertTrue(value['date_conflict'])
+        self.assertIsNone(value['week_number'])
+
     def test_missing_game_number_is_not_guessed(self):
         value=self.label('20260612 正赛 第二期 Day-4 唯邻是从')
         self.assertIsNone(value['game_number_candidate'])

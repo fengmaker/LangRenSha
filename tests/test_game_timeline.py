@@ -86,6 +86,32 @@ def test_treasure_poisoner_identity_is_known_even_when_only_civilian_was_chosen(
     assert source == before
 
 
+def test_treasure_masked_skill_only_shows_the_daytime_departure_before_exile():
+    source = {'board': 's23_treasure_master',
+              'seats': [{'seat': 9, 'name': '董鲸鱼', 'role': '蒙面人', 'faction': 'good'}],
+              'rounds': [
+                  {'number': 1, 'night': [event('masked_wound', 'not_wounded', 9)],
+                   'day': [event('night_deaths', 'peaceful'),
+                           event('masked_delayed_death', 'not_triggered', 9)]},
+                  {'number': 2, 'night': [event('wolf_attack', 'attack', targets=[9]),
+                                          event('masked_wound', 'wounded', 9, result='被狼刀击中。')],
+                   'day': [event('night_deaths', 'peaceful'),
+                           event('exile_result', 'exile', targets=[5]),
+                           event('masked_delayed_death', 'die_after_speech', 9, [9],
+                                 result='发言完毕后倒牌离场。')]},
+              ]}
+    before = deepcopy(source)
+    phases = build_game_timeline(source)['phases']
+    assert [(phase['number'], phase['phase'], item['slot']) for phase in phases for item in phase['items']] == [
+        (1, 'day', 'night_deaths'),
+        (2, 'night', 'wolf_attack'),
+        (2, 'day', 'night_deaths'),
+        (2, 'day', 'masked_delayed_death'),
+        (2, 'day', 'exile_result'),
+    ]
+    assert source == before
+
+
 def test_confirmed_empty_guard_and_supplemental_day_surrender_share_the_timeline():
     source = {'board': 'neighbor_puppet', 'winner': 'good',
               'seats': [{'seat': 12, 'name': '大卫', 'role': '守卫', 'faction': 'good'}],
@@ -198,6 +224,25 @@ def test_archived_badge_outcomes_keep_election_and_exile_timing():
     assert '警徽流失' in phases[0]['items'][0]['text']
     assert [item['slot'] for item in phases[1]['items']] == ['exile_result', 'badge']
     assert phases[1]['items'][-1]['text'] == '警徽被撕毁。'
+    assert source == before
+
+
+@pytest.mark.parametrize(('result', 'order'), [
+    ('9号于自爆前发言完毕并离场。', ['masked_delayed_death', 'self_destruct']),
+    ('7号自爆后法官公布9号倒牌，9号未发言。', ['self_destruct', 'masked_delayed_death']),
+])
+def test_masked_departure_keeps_observed_order_relative_to_self_destruct(result, order):
+    source = {'board': 's23_treasure_master', 'seats': [
+        {'seat': 7, 'name': 'JY', 'role': '狼人', 'faction': 'werewolf'},
+        {'seat': 9, 'name': '董鲸鱼', 'role': '蒙面人', 'faction': 'good'},
+    ], 'rounds': [{'number': 2, 'night': [], 'day': [
+        event('night_deaths', 'peaceful'),
+        event('self_destruct', 'self_destruct', 7),
+        event('masked_delayed_death', 'die_after_speech', 9, [9], result=result),
+    ]}]}
+    before = deepcopy(source)
+    items = build_game_timeline(source)['phases'][-1]['items']
+    assert [item['slot'] for item in items] == ['night_deaths', *order]
     assert source == before
 
 

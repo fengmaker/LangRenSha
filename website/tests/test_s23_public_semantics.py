@@ -35,7 +35,7 @@ def test_terminal_night_keeps_only_observed_phases_and_explains_blocked_hunter()
     game=render(item,ids)
     assert game['rounds'][-1]['day']==[]
     assert game['round_count']==1
-    assert any('最后一张神牌' in n for n in game['data_notes'])
+    assert any('没有后续开枪环节' in note for note in game['data_notes'])
     assert item['dossier']==before
 
 

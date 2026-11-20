@@ -5,9 +5,8 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const [modulesArg, sourceArg] = process.argv.slice(2);
-if (!sourceArg) throw Error('Usage: node check_web_semantics.cjs NODE_MODULES WEB_SRC');
-const modules = path.resolve(modulesArg);
-const source = path.resolve(sourceArg);
+const modules = path.resolve(modulesArg ?? path.join(__dirname, '../web/node_modules'));
+const source = path.resolve(sourceArg ?? path.join(__dirname, '../web/src'));
 const ts = require(path.join(modules, 'typescript'));
 const React = require(path.join(modules, 'react'));
 const { renderToStaticMarkup } = require(path.join(modules, 'react-dom/server'));
@@ -36,73 +35,76 @@ const seats = [
   { seat: 2, name: '甲', role: '狼人' }, { seat: 4, name: '乙', role: '猎人' },
   { seat: 8, name: '丙', role: '猎人' }, { seat: 10, name: '丁', role: '平民' },
 ];
-function render({ rounds = [], voting = {}, terminal = null }) {
-  return renderToStaticMarkup(React.createElement(EventBoard, { rounds, voting, seats, terminal }));
+const { gamePhaseLabel } = load('lib/format.ts');
+function render(...phases) {
+  return renderToStaticMarkup(React.createElement(EventBoard, { timeline: { phases }, seats }));
 }
 
-const badge = render({
-  rounds: [{ number: 1, night: [], day: [{ slot: 'badge', action: 'badge_lost',
-    result: '全员上警，警徽流失', description: '警徽流失，本局不再进行警长竞选。' }] }],
-  voting: { days: [{ day: 1, sheriff: 'badge_lost' }] },
-});
+function phase(number, phaseName, items, terminal = false) {
+  return { number, phase: phaseName, label: gamePhaseLabel(number, phaseName), terminal, items };
+}
+
+function eventItem(slot, action, title, text, details = {}) {
+  return { kind: 'event', slot, title, text, events: [{ slot, action, ...details }] };
+}
+
+function exileBallot(id, stage, number) {
+  return {
+    kind: 'ballot', slot: 'exile_vote', title: '放逐投票',
+    ballot: { id, day: 1, kind: 'exile', stage, number, status: 'complete',
+      candidates: [2, 10], eligible_voters: [2, 4], votes: [], tied_candidates: [],
+      winner: 2, unrecorded_voters: [] },
+  };
+}
+
+const badge = render(phase(1, 'day', [
+  eventItem('sheriff_result', 'badge_lost', '警长结果', '警徽流失，本局不再进行警长竞选。'),
+]));
 assert.match(badge, /警徽流失，本局不再进行警长竞选/);
 assert.doesNotMatch(badge, /延期警长竞选再次被狼人自爆中断/);
 
-const revote = render({
-  rounds: [],
-  voting: { ballots: [{ id: 'revote-1', day: 1, kind: 'exile', number: 2, stage: 'revote',
-    status: 'complete', candidates: [2, 10], eligible_voters: [2, 4], votes: [], tied_candidates: [],
-    winner: 2, unrecorded_voters: [] }] },
-});
+const revote = render(phase(1, 'day', [exileBallot('revote-1', 'revote', 2)]));
 assert.match(revote, /技能重投/);
 assert.doesNotMatch(revote, /其他投票轮次/);
 
-const conflict = render({
-  rounds: [{ number: 1, night: [], day: [{ slot: 'exile_result', action: 'exile', targets: [10] }] }],
-  voting: { ballots: [{ id: 'conflict-1', day: 1, kind: 'exile', number: 1, stage: 'initial',
-    status: 'complete', candidates: [2, 10], eligible_voters: [2, 4], votes: [], tied_candidates: [],
-    winner: 2, unrecorded_voters: [] }] },
-});
+const conflict = render(phase(1, 'day', [
+  exileBallot('conflict-1', 'initial', 1),
+  eventItem('exile_result', 'exile', '放逐结果', '10号丁（平民）被放逐出局。', { targets: [10] }),
+]));
 assert.match(conflict, /本轮结果与放逐事件记录冲突，待核实/);
 assert.doesNotMatch(conflict, /本轮结果：2号/);
 assert.match(conflict, /10号.*被放逐出局/);
 
-const dq = render({ rounds: [{ number: 2, night: [], day: [{ slot: 'disqualification',
-  action: 'disqualify', targets: [8], description: '8号玩家被DQ出局；此裁定与普通死亡结算分开记录。' }] }] });
+const dq = render(phase(2, 'day', [
+  eventItem('disqualification', 'disqualify', 'DQ出局', '8号玩家被DQ出局。', { targets: [8] }),
+]));
+assert.match(dq, /data-slot="disqualification" data-action="disqualify"/);
 assert.match(dq, /8号玩家被DQ出局/);
-assert.match(dq, /DQ出局/);
 
-const terminal = render({ terminal: { round: 4, phase: 'night', events: [{
-  slot: 'night_deaths', action: 'die', targets: [4], terminal: true,
-}] } });
-assert.match(terminal, /data-phase="terminal"/);
-assert.match(terminal, /本夜终局出局：4号乙（猎人）/);
-assert.doesNotMatch(terminal, /天亮，昨夜出局/);
-
-const localized = render({ rounds: [{ number: 1, night: [
-  { slot: 'wolf_attack', slot_label: 'wolf attack', action: 'attack', targets: [10] },
-  { slot: 'night_deaths', slot_label: 'night deaths', action: 'unknown' },
-  { slot: 'witch_poison', slot_label: '毒师毒药', action: 'pass' },
-], day: [
-  { slot: 'sheriff_candidates', slot_label: 'sheriff candidates', action: 'register',
-    description: '第1天白天，sheriff candidates：登记上警' },
-  { slot: 'exile_vote', slot_label: 'exile vote', action: 'vote', description: '第1天白天，exile vote：投票' },
-] }] });
-assert.doesNotMatch(localized, />wolf attack<|>night deaths<|night deaths的具体情况/);
-assert.match(localized, /狼队行动/);
-assert.match(localized, /天亮情况的具体情况仍待核实/);
+const localized = render(phase(1, 'night', [
+  eventItem('wolf_attack', 'attack', '狼队击杀', '狼队选择10号丁（平民）。', { slot_label: 'wolf attack' }),
+  eventItem('night_deaths', 'unknown', '夜间出局', '夜间出局情况待核。', { slot_label: 'night deaths' }),
+  eventItem('witch_poison', 'poison', '毒师毒药', '毒师选择2号甲（狼人）。'),
+]), phase(1, 'day', [
+  eventItem('sheriff_candidates', 'register', '警长竞选', '登记上警。', { slot_label: 'sheriff candidates' }),
+  exileBallot('localized-1', 'initial', 1),
+]));
+assert.doesNotMatch(localized, /wolf attack|night deaths|sheriff candidates|exile vote/);
+assert.match(localized, /狼队击杀/);
+assert.match(localized, /夜间出局情况待核/);
 assert.match(localized, /毒师毒药/);
-assert.doesNotMatch(localized, /sheriff candidates：|exile vote：/);
-assert.match(localized, /竞选报名：登记上警/);
-assert.match(localized, /放逐投票：投票/);
+assert.match(localized, /登记上警/);
+assert.match(localized, /放逐投票/);
 
-const endedNight = render({
-  rounds: [{ number: 4, night: [], day: [{ slot: 'exile_result', action: 'unknown' }] },
-    { number: 5, night: [{ slot: 'wolf_attack', action: 'unknown' }], day: [] }],
-  voting: { days: [{ day: 4, exile: 'unknown' }] },
-  terminal: { round: 4, phase: 'night', events: [{ slot: 'night_deaths', action: 'die', targets: [4], terminal: true }] },
-});
-assert.doesNotMatch(endedNight, /data-phase="day" data-day="4"|data-day="5"/);
-assert.match(endedNight, /本夜终局出局：4号乙（猎人）/);
+const terminal = render(phase(3, 'day', [
+  eventItem('exile_result', 'exile', '放逐结果', '10号丁（平民）被放逐出局。', { targets: [10] }),
+]),
+  phase(4, 'night', [
+    eventItem('night_deaths', 'die', '夜间出局', '4号乙（猎人）出局。', { targets: [4], terminal: true }),
+  ], true));
+assert.match(terminal, /timeline-night timeline-terminal" data-phase="night" data-day="4"/);
+assert.match(terminal, /终局结算/);
+assert.match(terminal, /4号乙（猎人）出局/);
+assert.doesNotMatch(terminal, /天亮，昨夜出局|data-phase="day" data-day="4"|data-day="5"/);
 
-console.log('7 actual component SSR scenarios passed');
+console.log('Timeline and ballot SSR checks passed');

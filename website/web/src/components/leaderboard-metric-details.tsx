@@ -1,12 +1,11 @@
 "use client";
 
 import { createContext, useContext, useId, useState, type ReactNode } from "react";
-import type { Leaderboard } from "@/lib/types";
+import type { LeaderboardMetricKey, LeaderboardSamples } from "@/lib/types";
 import { formatNumber } from "@/lib/format";
 import { MetricSamples, type SampleLabels, type SampleMetric } from "./metric-samples";
 
-const SampleGames = createContext<Leaderboard["sample_games"]>([]);
-const ShowDetails = createContext(false);
+const SampleLoader = createContext<(() => Promise<LeaderboardSamples>) | null>(null);
 const outcomes: Record<string, [string, string, "场" | "次"]> = {
   出场率: ["出场", "未出场", "场"], 整季胜率: ["获胜", "失利", "场"],
   上警率: ["上警", "未上警", "场"], 好人胜率: ["获胜", "失利", "场"],
@@ -18,24 +17,30 @@ const outcomes: Record<string, [string, string, "场" | "次"]> = {
   悍跳率: ["悍跳", "未悍跳", "场"], 悍跳成功率: ["成功", "失败", "场"],
 };
 
-export function LeaderboardSampleLink({ label, metric, playerId, playerName }: {
-  label: string; metric: SampleMetric; playerId: string; playerName: string;
+export function LeaderboardSampleLink({ label, field, metric, playerId, playerName }: {
+  label: string; field: LeaderboardMetricKey; metric: SampleMetric; playerId: string; playerName: string;
 }) {
-  const allGames = useContext(SampleGames);
-  const showDetails = useContext(ShowDetails);
-  if (!showDetails) return <span className="leaderboard-rate-equation">{formatNumber(metric.numerator)} / {formatNumber(metric.denominator)}</span>;
-  const ids = new Set((metric.samples ?? []).map((sample) => sample.game_id));
-  const games = allGames.filter((game) => ids.has(game.game_id)).map((game) => ({
-    ...game, role: playerId in game.roles ? game.roles[playerId] : "未出场",
-  }));
+  const load = useContext(SampleLoader);
+  if (!load) return <span className="leaderboard-rate-equation">{formatNumber(metric.numerator)} / {formatNumber(metric.denominator)}</span>;
   const [positive, negative, unit] = outcomes[label];
   const labels: SampleLabels = { positive, negative, unit,
     description: `正面样本为${positive}记录，负面样本为${negative}记录。${unit === "次" ? "按投票轮次统计；同一局可同时包含正面和负面样本。" : "每位选手每局计一次。"}` };
-  return <MetricSamples label={`${playerName} · ${label}`} metric={metric} games={games} labels={labels}
+  return <MetricSamples label={`${playerName} · ${label}`} metric={metric} games={[]} labels={labels}
+    loadSamples={async () => {
+      const data = await load();
+      const item = data.items.find(({ id }) => id === playerId);
+      if (!item) throw new Error("找不到该选手的榜单样本。");
+      const samples = item[field].samples;
+      const ids = new Set((samples ?? []).map((sample) => sample.game_id));
+      const games = data.sample_games.filter((game) => ids.has(game.game_id)).map((game) => ({
+        ...game, role: playerId in game.roles ? game.roles[playerId] : "未出场",
+      }));
+      return { samples, games };
+    }}
     trigger={<><span className="leaderboard-rate-equation">{formatNumber(metric.numerator)} / {formatNumber(metric.denominator)}</span><span className="leaderboard-sample-arrow" aria-hidden="true">↗</span></>} />;
 }
 
-export function LeaderboardMetricDetails({ children, sampleGames }: { children: ReactNode; sampleGames: Leaderboard["sample_games"] }) {
+export function LeaderboardMetricDetails({ children, loadSamples }: { children: ReactNode; loadSamples: () => Promise<LeaderboardSamples> }) {
   const [showDetails, setShowDetails] = useState(false);
   const tableId = useId();
 
@@ -47,6 +52,6 @@ export function LeaderboardMetricDetails({ children, sampleGames }: { children: 
         {showDetails ? "隐藏计算明细" : "显示计算明细"}
       </button>
     </div>
-    <ShowDetails.Provider value={showDetails}><SampleGames.Provider value={sampleGames}><div id={tableId}>{children}</div></SampleGames.Provider></ShowDetails.Provider>
+    <SampleLoader.Provider value={showDetails ? loadSamples : null}><div id={tableId}>{children}</div></SampleLoader.Provider>
   </div>;
 }

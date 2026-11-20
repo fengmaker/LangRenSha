@@ -528,6 +528,27 @@ def test_vote_ranking_rows_separate_valid_games_from_round_sample_count():
     assert "effective_game_count" not in stats["ranking_boards"]["points"][0]
 
 
+def test_equal_vote_rates_rank_by_distinct_games_before_names_or_round_counts():
+    seats = [seat(1, "seer", "预言家", "good"), seat(2, "a", "平民", "good"),
+             seat(3, "b", "平民", "good"), seat(4, "c", "平民", "good"),
+             seat(5, "wolf", "狼人", "werewolf")]
+
+    def ballot(*voters):
+        return {"kind": "exile", "eligible_voters": [1, *voters],
+                "votes": [vote(number, 5) for number in (1, *voters)]}
+
+    games = [
+        game("g1", seats=seats, ballots=[ballot(2, 3, 4), ballot(2), ballot(2)]),
+        game("g2", seats=seats, ballots=[ballot(3, 4)]),
+    ]
+
+    stats = compute_player_stats("a", games)
+    rows = stats["ranking_boards"]["seer_follow_rate"]
+    assert [(row["id"], row["rank"], row["tied"], row["effective_game_count"], row["sample_count"])
+            for row in rows] == [("b", 1, True, 2, 2), ("c", 1, True, 2, 2), ("a", 3, False, 1, 3)]
+    assert stats["rankings"]["seer_follow_rate"] == {"rank": 3, "total": 3, "tied": False}
+
+
 def test_medium_only_game_is_reference_and_learned_medium_is_not_a_role():
     medium_seats = [seat(1, "medium", "通灵师", "good"), seat(2, "p", "平民", "good"),
                     seat(3, "wolf", "狼人", "werewolf")]
@@ -836,12 +857,12 @@ def test_player_rankings_use_selected_scope_competition_ranks_and_role_cohorts()
     stats = compute_player_stats("a", games, seasons=["S22", "S23"])
     rankings = stats["rankings"]
 
-    assert rankings["points"] == {"rank": 1, "total": 4, "tied": True}
+    assert rankings["points"] == {"rank": 1, "total": 4, "tied": False}
     assert rankings["appearances"] == {"rank": 1, "total": 5, "tied": False}
     assert rankings["attendance"] == {"rank": 1, "total": 5, "tied": False}
     assert rankings["total_win_rate"] == {"rank": 2, "total": 4, "tied": False}
     assert rankings["wins"] == {"rank": 1, "total": 4, "tied": False}
-    assert rankings["losses"] == {"rank": 2, "total": 4, "tied": True}
+    assert rankings["losses"] == {"rank": 2, "total": 4, "tied": False}
     assert rankings["good_win_rate"] == {"rank": 2, "total": 4, "tied": False}
     assert rankings["werewolf_win_rate"] is None
     assert rankings["sheriff_registration_rate"] is None
@@ -850,9 +871,9 @@ def test_player_rankings_use_selected_scope_competition_ranks_and_role_cohorts()
     ranking_boards = stats["ranking_boards"]
     assert set(ranking_boards) == set(rankings)
     assert ranking_boards["points"] == [
-        {"id": "a", "name": "a", "rank": 1, "tied": True,
+        {"id": "a", "name": "a", "rank": 1, "tied": False,
          "value": 1.0, "sample_count": 3, "appearances": 3},
-        {"id": "d", "name": "d", "rank": 1, "tied": True,
+        {"id": "d", "name": "d", "rank": 2, "tied": False,
          "value": 1.0, "sample_count": 1, "appearances": 1},
         {"id": "b", "name": "b", "rank": 3, "tied": True,
          "value": 0.0, "sample_count": 2, "appearances": 2},
@@ -874,7 +895,7 @@ def test_player_rankings_use_selected_scope_competition_ranks_and_role_cohorts()
     assert ranking_boards["wins"][0]["value"] == 2
     assert ranking_boards["wins"][0]["sample_count"] == 3
     assert ranking_boards["losses"][0]["id"] == "d"
-    assert [row["rank"] for row in ranking_boards["losses"]] == [1, 2, 2, 2]
+    assert [row["rank"] for row in ranking_boards["losses"]] == [1, 2, 3, 3]
     assert ranking_boards["werewolf_win_rate"] == []
     assert all(row["id"] != "outsider" for row in ranking_boards["appearances"])
 
@@ -920,7 +941,7 @@ def test_rank_values_compare_exact_ratios_without_float_rounding_ties():
         "close-below": Fraction(3333333333333333, 10_000_000_000_000_000),
         "equal-half-a": Fraction(1, 2),
         "equal-half-b": Fraction(2, 4),
-    })
+    }, effective_games={"one-third": 1, "close-below": 20, "equal-half-a": 2, "equal-half-b": 2})
 
     assert ranks["equal-half-a"] == {"rank": 1, "total": 4, "tied": True}
     assert ranks["equal-half-b"] == {"rank": 1, "total": 4, "tied": True}
@@ -969,9 +990,9 @@ def test_player_board_stats_group_by_code_then_name_and_rank_board_cohorts_acros
     }
     assert classic["ranking"] == {"rank": 3, "total": 4, "tied": False}
     assert classic["ranking_board"] == [
-        {"id": "q", "name": "q", "rank": 1, "tied": True,
+        {"id": "q", "name": "q", "rank": 1, "tied": False,
          "value": 1.0, "sample_count": 2, "appearances": 2},
-        {"id": "t", "name": "t", "rank": 1, "tied": True,
+        {"id": "t", "name": "t", "rank": 2, "tied": False,
          "value": 1.0, "sample_count": 1, "appearances": 1},
         {"id": "p", "name": "p", "rank": 3, "tied": False,
          "value": 0.5, "sample_count": 2, "appearances": 3},

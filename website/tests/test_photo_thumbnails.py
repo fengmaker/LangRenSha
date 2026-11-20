@@ -55,3 +55,34 @@ def test_invalid_photo_fails_instead_of_publishing_a_broken_thumbnail(tmp_path):
     (tmp_path / "media" / photo["path"]).write_bytes(b"invalid image")
     with pytest.raises(ValueError, match="Cannot create player photo thumbnail"):
         photo_thumbnails.create_thumbnails(tmp_path / "media", [photo])
+
+
+def test_thumbnail_cache_reuses_verified_bytes_and_repairs_a_corrupt_entry(tmp_path, monkeypatch):
+    cache = tmp_path / "cache"
+    media = tmp_path / "media"
+    photo, _ = _photo(media, size=(100, 180))
+    encodes = []
+    encode = photo_thumbnails.thumbnail_bytes
+
+    def tracked_encode(body):
+        encodes.append(hashlib.sha256(body).hexdigest())
+        return encode(body)
+
+    monkeypatch.setattr(photo_thumbnails, "thumbnail_bytes", tracked_encode)
+    initial = photo_thumbnails.create_thumbnails(media, [photo], cache_root=cache)
+    generated = media / initial[photo["url"]].removeprefix("/media/")
+    expected = generated.read_bytes()
+    generated.unlink()
+    assert photo_thumbnails.create_thumbnails(media, [photo], cache_root=cache) == initial
+    assert generated.read_bytes() == expected
+    assert encodes == [photo["sha256"]]
+
+    next(cache.rglob("*.bin")).write_bytes(b"truncated cache")
+    assert photo_thumbnails.create_thumbnails(media, [photo], cache_root=cache) == initial
+    assert generated.read_bytes() == expected
+    assert encodes == [photo["sha256"]] * 2
+
+    other, _ = _photo(media, size=(120, 180))
+    photo_thumbnails.create_thumbnails(media, [photo, other], cache_root=cache)
+    assert encodes[-1] == other["sha256"]
+    assert len(encodes) == 3

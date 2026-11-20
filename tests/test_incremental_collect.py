@@ -40,6 +40,48 @@ def page(statuses, *, cursor="", has_more=False):
 
 
 class IncrementalCollectTests(unittest.TestCase):
+    def test_weekday_plan_only_schedules_tuesday_to_friday_gaps(self):
+        with patch.object(incremental, "weibo_local_snapshot", return_value={
+                "complete_intervals": [(date(2026, 11, 10), date(2026, 11, 11))],
+                "incomplete": [], "archives": []}):
+            plan = incremental.plan_weibo_windows(
+                Path("unused"), incremental.WEIBO_UID, date(2026, 11, 7), date(2026, 11, 18),
+                weekdays_only=True)
+        self.assertEqual([(row["since"], row["until"]) for row in plan["windows"]],
+                         [(date(2026, 11, 12), date(2026, 11, 13)),
+                          (date(2026, 11, 17), date(2026, 11, 18))])
+        self.assertEqual(plan["missing_ranges"],
+                         [(date(2026, 11, 12), date(2026, 11, 13)),
+                          (date(2026, 11, 17), date(2026, 11, 18))])
+
+    def test_weekday_plan_caps_at_friday_and_ignores_weekend_only_range(self):
+        plan = incremental.plan_weibo_windows(
+            self.root, incremental.WEIBO_UID, date(2026, 11, 17), date(2026, 11, 23),
+            weekdays_only=True)
+        self.assertEqual([(row["since"], row["until"]) for row in plan["windows"]],
+                         [(date(2026, 11, 17), date(2026, 11, 20))])
+        weekend = incremental.plan_weibo_windows(
+            self.root, incremental.WEIBO_UID, date(2026, 11, 21), date(2026, 11, 23),
+            weekdays_only=True)
+        self.assertEqual(weekend["windows"], [])
+
+    def test_weekday_plan_splits_old_incomplete_weekend_spanning_window(self):
+        legacy = incremental._archive_dir(
+            self.root, date(2026, 11, 6), date(2026, 11, 18), incremental.WEIBO_UID)
+        legacy.mkdir(parents=True)
+        (legacy / "manifest.json").write_text(json.dumps({
+            "mode": "author", "request": {"uid": incremental.WEIBO_UID,
+                "since": "2026-11-06", "until": "2026-11-18", "list_backend": "desktop"},
+            "window_scan_status": "in_progress", "counts": {}, "posts": []}), encoding="utf-8")
+        plan = incremental.plan_weibo_windows(
+            self.root, incremental.WEIBO_UID, date(2026, 11, 6), date(2026, 11, 18),
+            weekdays_only=True)
+        self.assertEqual([(row["since"], row["until"]) for row in plan["windows"]],
+                         [(date(2026, 11, 6), date(2026, 11, 6)),
+                          (date(2026, 11, 10), date(2026, 11, 13)),
+                          (date(2026, 11, 17), date(2026, 11, 18))])
+        self.assertFalse(any(row["resume"] for row in plan["windows"]))
+
     def setUp(self):
         workspace = Path(__file__).resolve().parents[1]
         temp_root = workspace / "tmp"

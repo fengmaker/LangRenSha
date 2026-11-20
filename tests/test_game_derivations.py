@@ -401,6 +401,21 @@ def test_shot_after_exile_does_not_remove_voters_from_the_prior_ballot():
     assert result["voting"]["ballots"][1]["eligible_voters"] == [2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
 
 
+def test_guile_redirection_keeps_the_ballot_winner_alive_until_self_destruct():
+    game = fixture("s23_guile_realm", rounds=2)
+    get(game, 1, "exile_result").update(action="exile", targets=[7])
+    get(game, 1, "guile_exchange_result").update(action="apply")
+    get(game, 2, "self_destruct").update(action="self_destruct", actor=12)
+
+    result = derive_game(game, voting([ballot(1, winner=12)]))
+    rounds = result["derivations"]["rounds"]
+    assert rounds[0]["known_departed_after_day"] == [7]
+    assert 12 in rounds[1]["living_before_vote"]
+    assert rounds[1]["known_departed_after_day"] == [7, 12]
+    assert result["voting"]["ballots"][0]["winner"] == 12
+    assert not result["derivations"]["issues"]
+
+
 def test_shot_triggered_by_night_death_removes_target_before_exile_vote():
     game = fixture()
     get(game, 1, "night_deaths").update(action="die", targets=[1])

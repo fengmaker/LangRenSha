@@ -1,62 +1,72 @@
 "use client";
 
-import { StaticData } from "@/components/static-data";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import type { Leaderboard, Overview } from "@/lib/types";
-import { fetchLeaderboard, fetchSnapshotManifest, fetchOverview, updateStaticQuery } from "@/lib/static-browser";
-import type { SnapshotManifest } from "@/lib/snapshot-data";
+import { fetchLeaderboard, updateStaticQuery } from "@/lib/static-browser";
+import type { Leaderboard, Overview, SnapshotManifest } from "@/lib/types";
+import { readLeaderboardSort, type LeaderboardSortField } from "./leaderboard-ranking";
 import { LeaderboardView } from "./leaderboard-view";
 
-function LoadedLeaderboardBrowser({ initialSeason, initialData, overview, seasons }: { initialSeason: string; initialData: Leaderboard; overview: Overview; seasons: SnapshotManifest["seasons"] }) {
+function LeaderboardQuery({ onChange }: { onChange: (query: string) => void }) {
   const search = useSearchParams();
-  const requestedSeason = search.get("season") || initialSeason;
-  const availableSeason = seasons.some((item) => item.id === requestedSeason) ? requestedSeason : initialSeason;
-  const season = seasons.find((item) => item.id === availableSeason)!;
-  const requestedPhase = search.get("phase") === "finals_week" ? "finals_week" : "all";
-  const phase = requestedPhase === "finals_week" && season.phases?.includes("finals_week") ? "finals_week" : "all";
-  const [data, setData] = useState(initialData);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  useEffect(() => onChange(search.toString()), [onChange, search]);
+  return null;
+}
+
+export function StaticLeaderboardBrowser({ initialData, snapshotId, seasons, seasonOptions }: {
+  initialData: Leaderboard;
+  snapshotId: string;
+  seasons: SnapshotManifest["seasons"];
+  seasonOptions: Overview["seasons"];
+}) {
+  const [queryString, setQueryString] = useState("");
+  const query = useMemo(() => new URLSearchParams(queryString), [queryString]);
+  const [loaded, setLoaded] = useState<Leaderboard>();
+  const [failure, setFailure] = useState<{ season: string; phase: Leaderboard["phase"]; message: string }>();
+
+  const requestedSeason = query.get("season") || initialData.season;
+  const selectedSeason = seasons.find(({ id }) => id === requestedSeason) ?? seasons.at(-1)!;
+  const season = selectedSeason.id;
+  const phase = query.get("phase") === "finals_week" && selectedSeason.phases?.includes("finals_week") ? "finals_week" : "all";
+  const sort = readLeaderboardSort(query.get("sort"));
+  const data = [initialData, loaded].find((board) => board?.season === season && board.phase === phase);
+  const error = failure?.season === season && failure.phase === phase ? failure.message : null;
 
   useEffect(() => {
-    if (requestedSeason !== availableSeason || (search.get("phase") === "finals_week" && phase !== "finals_week")) {
-      const next = new URLSearchParams(search.toString());
-      next.set("season", availableSeason); next.set("phase", phase);
+    if (requestedSeason !== season || (query.get("phase") === "finals_week" && phase !== "finals_week")) {
+      const next = new URLSearchParams(query);
+      next.set("season", season);
+      next.set("phase", phase);
       updateStaticQuery(next, true);
     }
-  }, [requestedSeason, availableSeason, search, phase]);
+  }, [requestedSeason, season, query, phase]);
 
   useEffect(() => {
-    if (data.season === availableSeason && data.phase === phase) {
-      setLoading(false); setError("");
-      return;
-    }
+    if (data) return;
     let active = true;
-    setLoading(true); setError("");
-    fetchLeaderboard(availableSeason, phase).then((result) => { if (active) setData(result); })
-      .catch((reason: unknown) => { if (active) setError(reason instanceof Error ? reason.message : "无法读取积分榜。"); })
-      .finally(() => { if (active) setLoading(false); });
+    setFailure(undefined);
+    fetchLeaderboard(snapshotId, season, phase)
+      .then((result) => { if (active) setLoaded(result); })
+      .catch((reason: unknown) => {
+        if (active) setFailure({ season, phase, message: reason instanceof Error ? reason.message : "无法读取积分榜。" });
+      });
     return () => { active = false; };
-  }, [availableSeason, phase, data.season, data.phase]);
+  }, [snapshotId, season, phase, data]);
 
-  if (error) return <div className="page-wrap" role="alert"><p>{error}</p><a href="">刷新页面</a></div>;
-  if (loading || data.season !== availableSeason || data.phase !== phase) return <p className="page-wrap" role="status">正在载入积分榜…</p>;
-  return <LeaderboardView data={data} overview={overview} season={availableSeason} phase={phase} availablePhases={season.phases} />;
-}
+  function changeSort(field: LeaderboardSortField) {
+    const next = new URLSearchParams(window.location.search);
+    next.set("season", season);
+    next.set("phase", phase);
+    if (field === "points") next.delete("sort");
+    else next.set("sort", field);
+    updateStaticQuery(next);
+  }
 
-async function loadLeaderboard() {
-  const search = new URLSearchParams(window.location.search);
-  const [manifest, overview] = await Promise.all([fetchSnapshotManifest(), fetchOverview()]);
-  const requestedSeason = search.get("season");
-  const initialSeason = manifest.seasons.some((item) => item.id === requestedSeason) ? requestedSeason! : manifest.seasons.at(-1)!.id;
-  const season = manifest.seasons.find((item) => item.id === initialSeason)!;
-  const requestedPhase = search.get("phase") === "finals_week" ? "finals_week" : "all";
-  const initialPhase = requestedPhase === "finals_week" && season.phases?.includes("finals_week") ? "finals_week" : "all";
-  const initialData = await fetchLeaderboard(initialSeason, initialPhase);
-  return { initialSeason, initialData, overview, seasons: manifest.seasons };
-}
-
-export function StaticLeaderboardBrowser() {
-  return <StaticData load={loadLeaderboard}>{(data) => <LoadedLeaderboardBrowser {...data} />}</StaticData>;
+  return <>
+    <Suspense><LeaderboardQuery onChange={setQueryString} /></Suspense>
+    {error ? <div className="page-wrap" role="alert"><p>{error}</p><a href="">刷新页面</a></div>
+      : data ? <LeaderboardView data={data} seasonOptions={seasonOptions} availablePhases={selectedSeason.phases}
+        sortField={sort} onSort={changeSort} snapshotId={snapshotId} />
+        : <p className="page-wrap" role="status">正在载入积分榜…</p>}
+  </>;
 }

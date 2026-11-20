@@ -7,6 +7,7 @@ from datetime import date
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -53,18 +54,42 @@ def normalized_segments(source: Path) -> list[dict]:
     return result
 
 
+def chinese_subtitles(checked: dict) -> list[Path]:
+    tracks = [(path, track) for path, track in checked["subtitles"]
+              if is_chinese_subtitle(track.get("language"))]
+    tracks.sort(key=lambda item: item[1]["language"].startswith("ai-"))
+    return [path for path, _ in tracks]
+
+
+def review_subtitle(entry: dict, season: str, root: Path) -> tuple[Path, dict] | None:
+    selection = work_dir(root, season, entry) / "review_subtitle.json"
+    if not selection.is_file():
+        return None
+    source = read_json(selection)
+    bvid, page, cid = source.get("bvid"), source.get("page"), source.get("cid")
+    if (not isinstance(bvid, str) or not re.fullmatch(r"BV[0-9A-Za-z]{10}", bvid)
+            or type(page) is not int or page < 1 or type(cid) is not int or cid < 1):
+        raise ValueError("替代字幕来源需要有效的 BV、CID 和分 P")
+    manifest_path = root / "data/raw/bilibili" / bvid / f"p{page:02d}" / "manifest.json"
+    checked = validate_media(manifest_path, bvid, page, expected_owner=None, root=root)
+    tracks = chinese_subtitles(checked)
+    if checked["manifest"]["cid"] != cid or not tracks:
+        raise ValueError("替代录像的 CID 不匹配或没有可用中文字幕")
+    return tracks[0], checked["manifest"]
+
+
 def prepare_text(entry: dict, season: str, *, root: Path = ROOT, device="cuda") -> Path:
+    alternate = review_subtitle(entry, season, root)
+    if alternate:
+        return alternate[0]
     folder = root / "data/raw/bilibili" / entry["bvid"] / f"p{entry['page']:02d}"
     checked = validate_media(folder / "manifest.json", entry["bvid"], entry["page"])
     manifest = checked["manifest"]
     if manifest["cid"] != entry["cid"]:
         raise ValueError("已采媒体CID与增量队列不一致")
-    chinese = [(path, track) for path, track in checked["subtitles"]
-               if is_chinese_subtitle(track.get("language"))]
+    chinese = chinese_subtitles(checked)
     if chinese:
-        # All tracks have already been validated. Prefer human Chinese over AI tracks.
-        chinese.sort(key=lambda item: str(item[1].get("language", "")).startswith("ai-"))
-        return chinese[0][0]
+        return chinese[0]
     if checked["audio_path"] is None:
         raise ValueError("没有中文字幕或完整音轨，不能开始分析")
     paths = [root / f"data/transcripts/{season}/{entry['bvid']}_p{entry['page']:02d}_cid{entry['cid']}_funasr",
@@ -113,7 +138,8 @@ def board_for(entry: dict, season: str, root: Path) -> str:
     return stored_code
 
 
-def skeleton(entry: dict, source: Path, *, root: Path = ROOT, season="S23") -> dict:
+def skeleton(entry: dict, source: Path, *, root: Path = ROOT, season="S23",
+             alternate: tuple[Path, dict] | None = None) -> dict:
     from game_records import empty_event
     labels = entry["labels"]
     board = board_for(entry, season, root)
@@ -136,6 +162,14 @@ def skeleton(entry: dict, source: Path, *, root: Path = ROOT, season="S23") -> d
                "files": [{"role": role, "kind": role, "platform": "bilibili",
                           "external_key": f"{entry['bvid']}:{entry['cid']}",
                           "path": source.relative_to(root).as_posix()}]}
+    if alternate:
+        selected, media = alternate
+        if selected.resolve() != source.resolve():
+            raise ValueError("替代字幕路径与已选的分 P 不一致")
+        dossier["files"][0].update(external_key=f"{media['bvid']}:{media['cid']}", page=media["page"])
+        dossier["files"].append({"role": "manifest", "kind": "manifest", "platform": "bilibili",
+                                 "external_key": f"{entry['bvid']}:{entry['cid']}",
+                                 "path": f"data/raw/bilibili/{entry['bvid']}/p{entry['page']:02d}/manifest.json"})
     return {"dossier": dossier, "voting": {"schema_version": 1, "game_slug": slug,
              "registrations": [], "ballots": [], "interruptions": [], "days": []},
             "evidence": [], "issues": []}
@@ -156,7 +190,8 @@ def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root:
     season = game.get("season")
     if season != entry["labels"].get("season", "S23"):
         raise ValueError("AI候选赛季与采集来源不一致")
-    expected = skeleton(entry, source_path, root=root, season=season)["dossier"]
+    alternate = review_subtitle(entry, season, root)
+    expected = skeleton(entry, source_path, root=root, season=season, alternate=alternate)["dossier"]
     for field in ("slug", "season", "files", "board", "phase"):
         if game.get(field) != expected[field]:
             raise ValueError(f"AI不得更换来源及已选范围：{field}")
@@ -178,7 +213,7 @@ def validate_candidate(candidate: dict, entry: dict, source_path: Path, *, root:
         raise ValueError(f"AI结构字段缺失或类型错误：{error}") from error
     if not game["rounds"] or not candidate["evidence"]:
         raise ValueError("AI未提供实际日夜与证据，不能生成已分析候选")
-    duration = entry["duration_seconds"] * 1000
+    duration = (alternate[1] if alternate else entry)["duration_seconds"] * 1000
     source_rows = normalized_segments(source_path)
     evidence_hashes = {}
     for evidence in value["evidence"]:
@@ -271,7 +306,7 @@ def analyze_one(item: dict, season: str, *, root: Path = ROOT, device="cuda",
         return {"entry": entry, "candidate": {**result, "dossier": rules["dossier"],
                                                "voting": rules["voting"]},
                 "candidate_sha256": item["candidate_sha256"], "source_sha256": source_hash}
-    base = skeleton(entry, source, root=root, season=season)
+    base = skeleton(entry, source, root=root, season=season, alternate=review_subtitle(entry, season, root))
     rows = normalized_segments(source)
     text_path = folder / "reading.txt"
     text_path.write_text("\n".join(f"[{r['index']} {r['start_ms']}..{r['end_ms']}] {r['text']}" for r in rows) + "\n", encoding="utf-8")

@@ -5,9 +5,7 @@ import vm from "node:vm";
 import ts from "typescript";
 
 const manifestPath = new URL("./static-browser.ts", import.meta.url);
-const leaderboardPath = new URL("../app/leaderboard/static-leaderboard-browser.tsx", import.meta.url);
 const playerBrowserPath = new URL("../app/players/[id]/static-player-browser.tsx", import.meta.url);
-
 const playersBrowserPath = new URL("../app/players/static-players-browser.tsx", import.meta.url);
 const siteModePath = new URL("./site-mode.ts", import.meta.url);
 
@@ -256,38 +254,20 @@ test("player profile uses the thumbnail and preloads it before shared rankings r
   assert.equal(result.rankings_restored, true);
 });
 
-test("the leaderboard first request follows the URL season and phase", async () => {
-  const leaderboardRequests = [];
-  const snapshot = {
-    seasons: [
-      { id: "S22", phases: ["all", "finals_week"] },
-      { id: "S23", phases: ["all"] },
-    ],
-  };
-  const jsx = (type, props) => ({ type, props });
-  const browser = loadSource(leaderboardPath, {
-    "@/components/static-data": { StaticData() {} },
-    "next/navigation": { useSearchParams() {} },
-    react: { useEffect() {}, useState() {} },
-    "@/lib/static-browser": {
-      fetchSnapshotManifest: async () => snapshot,
-      fetchOverview: async () => ({}),
-      fetchLeaderboard: async (season, phase) => {
-        leaderboardRequests.push([season, phase]);
-        return { season, phase };
-      },
-      updateStaticQuery() {},
-    },
-    "./leaderboard-view": { LeaderboardView() {} },
-    "react/jsx-runtime": { jsx, jsxs: jsx, Fragment: Symbol("Fragment") },
-  }, {
-    window: { location: { search: "?season=S22&phase=finals_week" } },
+test("the leaderboard requests the selected summary and reuses on-demand samples from its HTML snapshot", async () => {
+  const requests = [];
+  const browser = staticBrowser(async (url) => {
+    requests.push(url);
+    return response(200, {});
   });
 
-  const element = browser.StaticLeaderboardBrowser();
-  const loaded = await element.props.load();
-  assert.equal(loaded.initialSeason, "S22");
-  assert.deepEqual(leaderboardRequests, [["S22", "finals_week"]]);
+  const relativePath = "/data/releases/prerendered/leaderboards/S22/finals_week";
+  await browser.fetchLeaderboard("prerendered", "S22", "finals_week");
+  assert.deepEqual(requests, [relativePath + ".summary.json"]);
+  const samples = browser.fetchLeaderboardSamples("prerendered", "S22", "finals_week");
+  assert.equal(browser.fetchLeaderboardSamples("prerendered", "S22", "finals_week"), samples);
+  await samples;
+  assert.deepEqual(requests, [relativePath + ".summary.json", relativePath + ".json"]);
 });
 
 test("the player profile first request follows the URL season", async () => {

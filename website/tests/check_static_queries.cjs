@@ -2,8 +2,9 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const modules = path.resolve(process.argv[2]);
-const source = path.resolve(process.argv[3]);
+const [modulesArg, sourceArg] = process.argv.slice(2);
+const modules = path.resolve(modulesArg ?? path.join(__dirname, '../web/node_modules'));
+const source = path.resolve(sourceArg ?? path.join(__dirname, '../web/src'));
 const ts = require(path.join(modules, 'typescript'));
 function load(relative) {
   const code = ts.transpileModule(fs.readFileSync(path.join(source, relative), 'utf8'), {
@@ -15,7 +16,7 @@ function load(relative) {
 }
 const { filterRankingEntries } = load('lib/ranking-filter.ts');
 const entries = [
-  { id: 'a', rank: 1, appearances: 2, sample_count: 9, effective_game_count: 1, value: 0.667 },
+  { id: 'a', rank: 1, appearances: 3, sample_count: 9, effective_game_count: 3, value: 0.667 },
   { id: 'b', rank: 1, appearances: 10, sample_count: 10, effective_game_count: 3, value: 0.667 },
   { id: 'c', rank: 3, appearances: 10, sample_count: 10, effective_game_count: 5, value: 0.667 },
   { id: 'd', rank: 4, appearances: 10, sample_count: 10, effective_game_count: 6, value: 0.5 },
@@ -58,6 +59,28 @@ assert.deepEqual(filterRankingEntries(entries, { minimumSamples: 10 }).map(x => 
   [['b', 1], ['c', 2], ['d', 3]]);
 
 const { filterAndSortGames, validateGameFilters } = load('lib/game-query.ts');
+const { rankLeaderboard, readLeaderboardSort } = load('app/leaderboard/leaderboard-ranking.ts');
+const leaderboard = [
+  { id: 'missing-rate', rank: 1, points: 15, wolf_vote_rate: { rate: null, numerator: 0 }, bluff_count: 8, bluff_count_complete: false },
+  { id: 'low-rate', rank: 2, points: 12, wolf_vote_rate: { rate: 0.6666, numerator: 9 }, bluff_count: 0, bluff_count_complete: true },
+  { id: 'high-rate', rank: 2, points: 12, wolf_vote_rate: { rate: 0.667, numerator: 2 }, bluff_count: 3, bluff_count_complete: true },
+  { id: 'tied-rate', rank: 4, points: 3, wolf_vote_rate: { rate: 0.667, numerator: 4 }, bluff_count: 1, bluff_count_complete: true },
+  { id: 'zero-rate', rank: 5, points: 1, wolf_vote_rate: { rate: 0, numerator: 0 }, bluff_count: 0, bluff_count_complete: true },
+];
+const leaderboardRanks = (sort) => rankLeaderboard(leaderboard, readLeaderboardSort(sort)).map(({ player, rank }) => [player.id, rank]);
+assert.deepEqual(leaderboardRanks('wolf_vote_rate'), [
+  ['high-rate', 1], ['tied-rate', 1], ['low-rate', 3], ['zero-rate', 4], ['missing-rate', null],
+]);
+assert.deepEqual(leaderboardRanks('wolf_votes'), [
+  ['low-rate', 1], ['tied-rate', 2], ['high-rate', 3], ['missing-rate', 4], ['zero-rate', 4],
+]);
+assert.deepEqual(leaderboardRanks('bluff_count'), [
+  ['high-rate', 1], ['tied-rate', 2], ['low-rate', 3], ['zero-rate', 3], ['missing-rate', null],
+]);
+assert.deepEqual(leaderboardRanks('points'), leaderboard.map(({ id, rank }) => [id, rank]));
+assert.deepEqual(leaderboardRanks('unknown'), leaderboardRanks(null));
+assert.deepEqual(leaderboardRanks(null), leaderboardRanks('points'));
+
 const game = (id, date, number, name) => ({ id, date, game_number: number, season: 'S23', phase: 'regular',
   board: { code: 'board', name: '版型' }, players: [{ id: 'p', name }], search_text: `${id} BVx 版型 ${name}` });
 const games = [game('z', '2026-11-01', null, '选手'), game('b', '2026-11-01', 2, '选手'),

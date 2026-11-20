@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test ../tests/check_web_semantics.cjs ../tests/check_static_queries.cjs ../tests/check_profile_performance.cjs ../tests/check_shared_player_rankings.cjs && cd src && node --test"
   },
   "dependencies": {
     "next": "^16.0.0",

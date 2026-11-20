@@ -4,21 +4,24 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timedelta, timezone
 import hashlib
+from http.client import IncompleteRead
 import json
 import os
 from pathlib import Path
 import shutil
+from ssl import SSLEOFError
 import stat
 import subprocess
 import sys
 import time
+from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, getproxies, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from website.static_publish.build_static import build, timed_stage, tree_hash, write_json
+from website.static_publish.build_static import build, timed_stage, write_json
 from website.static_publish.cleanup_local import cleanup
 
 ORIGIN = "https://github.com/fengmaker/langrensha-site.git"
@@ -26,6 +29,18 @@ REPOSITORY = "https://github.com/fengmaker/langrensha-site"
 WEB_URL = "https://fengmaker.github.io/langrensha-site"
 GITHUB_API = "https://api.github.com/repos/fengmaker/langrensha-site"
 PUBLICATION_TIMEZONE = timezone(timedelta(hours=8))
+ONLINE_REQUEST_TIMEOUT = 45
+ONLINE_RETRY_DELAYS = (1, 2, 4)
+
+
+class PublicationCheckError(RuntimeError):
+    """A deployment check failed after the publication commit was pushed."""
+
+    def __init__(self, commit: str, stage: str, cause: Exception):
+        self.commit = commit
+        self.stage = stage
+        stage_label = "查询 Pages 部署状态" if stage == "deployment" else "核验线上版本"
+        super().__init__(f"已推送 {commit[:12]}，{stage_label}失败：{cause}")
 
 
 def _ordinary_directory(path: Path) -> os.stat_result | None:
@@ -39,7 +54,32 @@ def _ordinary_directory(path: Path) -> os.stat_result | None:
     return info
 
 
-def sync_tree(source: Path, destination: Path) -> dict[str, int]:
+def _scan_site(root: Path) -> tuple[dict[str, int], list[Path]]:
+    files = {}
+    directories = []
+    for path in root.rglob("*"):
+        info = _ordinary_directory(path)
+        if info is not None and stat.S_ISREG(info.st_mode):
+            files[path.relative_to(root).as_posix()] = info.st_size
+        elif info is not None and stat.S_ISDIR(info.st_mode):
+            directories.append(path)
+    return files, directories
+
+
+def _file_hash(path: Path) -> bytes:
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").digest()
+
+
+def _site_inventory(root: Path) -> dict[str, tuple[int, bytes]]:
+    sizes, _ = _scan_site(root)
+    return {name: (size, _file_hash(root / name))
+            for name, size in sizes.items()}
+
+
+def sync_tree(source: Path, destination: Path, *,
+              source_files: dict[str, tuple[int, bytes]] | None = None,
+              timings: dict[str, float] | None = None) -> dict[str, int]:
     """Mirror generated files into the publication repository's dedicated site/ directory."""
     source = source.resolve()
     if not source.is_dir():
@@ -51,34 +91,34 @@ def sync_tree(source: Path, destination: Path) -> dict[str, int]:
     if target.name != "site" or target.parent == target:
         raise ValueError("Published files must be in the repository's dedicated site/ directory")
 
-    existing: dict[str, Path] = {}
-    for path in target.rglob("*"):
-        info = _ordinary_directory(path)
-        if info is not None and stat.S_ISREG(info.st_mode):
-            existing[path.relative_to(target).as_posix()] = path
-    counts = {"written": 0, "unchanged": 0, "removed": 0}
-    source_paths = sorted(source.rglob("*"))
-    for path in source_paths:
-        info = _ordinary_directory(path)
-        if info is None or not stat.S_ISREG(info.st_mode):
-            continue
-        relative = path.relative_to(source).as_posix()
-        previous = existing.pop(relative, None)
-        if (previous is not None and previous.stat().st_size == info.st_size
-                and hashlib.sha256(previous.read_bytes()).digest() == hashlib.sha256(path.read_bytes()).digest()):
-            counts["unchanged"] += 1
-            continue
-        output = target / relative
-        output.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, output)
-        counts["written"] += 1
-    for path in existing.values():
-        path.unlink()
-        counts["removed"] += 1
-    for path in sorted(target.rglob("*"), key=lambda item: len(item.parts), reverse=True):
-        if path.is_dir() and not any(path.iterdir()):
-            path.rmdir()
-    return counts
+    if source_files is None:
+        source_files = _site_inventory(source)
+    if timings is None:
+        timings = {}
+    with timed_stage(timings, "scan_target"):
+        existing, directories = _scan_site(target)
+    with timed_stage(timings, "compare_target"):
+        changed = []
+        for relative, (size, digest) in sorted(source_files.items()):
+            if existing.pop(relative, None) != size or _file_hash(target / relative) != digest:
+                changed.append(relative)
+    with timed_stage(timings, "copy_files"):
+        known_directories = {target, *directories}
+        for relative in changed:
+            path, output = source / relative, target / relative
+            _ordinary_directory(path)
+            if output.parent not in known_directories:
+                output.parent.mkdir(parents=True, exist_ok=True)
+                known_directories.add(output.parent)
+            shutil.copy2(path, output)
+    with timed_stage(timings, "remove_stale_files"):
+        for relative in existing:
+            (target / relative).unlink()
+        for directory in sorted(directories, key=lambda item: len(item.parts), reverse=True):
+            if not any(directory.iterdir()):
+                directory.rmdir()
+    return {"written": len(changed), "unchanged": len(source_files) - len(changed),
+            "removed": len(existing)}
 
 
 def git(repository: Path, *args: str) -> str:
@@ -95,17 +135,43 @@ def git(repository: Path, *args: str) -> str:
     return result.stdout.rstrip("\r\n")
 
 
-def get_json(url: str) -> dict:
-    request = Request(url, headers={"Accept": "application/vnd.github+json",
-                                   "User-Agent": "LangRenSha-Pages-sync"})
-    with urlopen(request, timeout=45) as response:
-        return json.load(response)
+def _read_online(request: Request, *, deadline: float | None = None) -> bytes:
+    url = request.full_url
+    for attempt in range(len(ONLINE_RETRY_DELAYS) + 1):
+        remaining = ONLINE_REQUEST_TIMEOUT if deadline is None else deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError(f"等待部署超时：{url}")
+        try:
+            with urlopen(request, timeout=min(ONLINE_REQUEST_TIMEOUT, remaining)) as response:
+                if response.status != 200:
+                    raise RuntimeError(f"HTTP {response.status}：{url}")
+                return response.read()
+        except (OSError, IncompleteRead) as error:
+            if isinstance(error, HTTPError):
+                error.close()
+                retryable = error.code in {502, 503, 504}
+            else:
+                reason = error.reason if isinstance(error, URLError) else error
+                retryable = isinstance(reason, (SSLEOFError, ConnectionError, TimeoutError, IncompleteRead))
+            if not retryable:
+                raise
+            if attempt < len(ONLINE_RETRY_DELAYS):
+                delay = ONLINE_RETRY_DELAYS[attempt]
+                if deadline is None or time.monotonic() + delay < deadline:
+                    if attempt == 0:
+                        print(f"线上请求暂时失败，等待后重试：{url}", flush=True)
+                    time.sleep(delay)
+                    continue
+            raise RuntimeError(f"读取 {url} 失败（已尝试 {attempt + 1} 次）：{error}") from error
 
 
 def wait_for_deployment(commit: str, timeout: int) -> dict:
     deadline = time.monotonic() + timeout
+    url = GITHUB_API + f"/actions/workflows/deploy-pages.yml/runs?head_sha={commit}&branch=main&per_page=5"
+    request = Request(url, headers={"Accept": "application/vnd.github+json",
+                                   "User-Agent": "LangRenSha-Pages-sync"})
     while time.monotonic() < deadline:
-        result = get_json(GITHUB_API + f"/actions/workflows/deploy-pages.yml/runs?head_sha={commit}&branch=main&per_page=5")
+        result = json.loads(_read_online(request, deadline=deadline))
         runs = [run for run in result["workflow_runs"] if run["head_sha"] == commit]
         if runs:
             run = runs[0]
@@ -113,15 +179,16 @@ def wait_for_deployment(commit: str, timeout: int) -> dict:
                 if run["conclusion"] != "success":
                     raise RuntimeError(f"Pages deployment {run['conclusion']}: {run['html_url']}")
                 return {"id": run["id"], "url": run["html_url"], "conclusion": run["conclusion"]}
-        time.sleep(10)
+        remaining = deadline - time.monotonic()
+        if remaining > 0:
+            time.sleep(min(10, remaining))
     raise TimeoutError(f"Pages deployment is still pending; inspect {REPOSITORY}/actions")
 
 
 def verify_online(ready: Path, manifest: dict) -> dict:
     url = WEB_URL + "/data/manifest.json?build_id=" + quote(manifest["build_id"], safe="")
     request = Request(url, headers={"Cache-Control": "no-cache"})
-    with urlopen(request, timeout=45) as response:
-        actual = json.load(response)
+    actual = json.loads(_read_online(request))
     if actual != manifest:
         raise RuntimeError("Online manifest does not match the locally built static site")
     release = ready / "data" / "releases" / manifest["snapshot_id"]
@@ -131,9 +198,8 @@ def verify_online(ready: Path, manifest: dict) -> dict:
         game = next(item for item in games if item["season"] == season["id"])
         routes.append("/games/" + quote(game["id"], safe="") + "/")
     for route in routes:
-        with urlopen(WEB_URL + route, timeout=45) as response:
-            if response.status != 200 or b"<main" not in response.read():
-                raise RuntimeError(f"Online route failed: {route}")
+        if b"<main" not in _read_online(Request(WEB_URL + route)):
+            raise RuntimeError(f"Online route failed: {route}")
     return {"state": "passed", "manifest_matches": True, "routes": routes}
 
 
@@ -180,13 +246,17 @@ def publish_site(ready: Path, repository: Path, *, timeout: int = 1800,
         timings = {}
     print("正在同步发布仓库…", flush=True)
     with timed_stage(timings, "publication_preflight"):
-        artifact_hash = tree_hash(ready)
         target, templates = _check_repository(Path(repository).absolute())
+    with timed_stage(timings, "hash_source"):
+        source_files = _site_inventory(ready)
 
     with timed_stage(timings, "sync_files"):
-        counts = sync_tree(ready, target)
-        if tree_hash(target) != artifact_hash:
+        counts = sync_tree(ready, target, source_files=source_files, timings=timings)
+    with timed_stage(timings, "verify_files"):
+        if _site_inventory(target) != source_files:
             raise RuntimeError("Published working tree does not match the local build")
+
+    with timed_stage(timings, "commit"):
         for name, source in templates.items():
             output = target.parent / name
             for parent in output.relative_to(target.parent).parents:
@@ -196,7 +266,6 @@ def publish_site(ready: Path, repository: Path, *, timeout: int = 1800,
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_bytes(source.read_bytes())
 
-    with timed_stage(timings, "commit"):
         git(target.parent, "add", "--", "site", *templates)
         staged = git(target.parent, "diff", "--cached", "--no-renames", "--name-only").splitlines()
         if any(not name.startswith("site/") and name not in templates for name in staged):
@@ -211,11 +280,16 @@ def publish_site(ready: Path, repository: Path, *, timeout: int = 1800,
     with timed_stage(timings, "push"):
         git(target.parent, "push", "origin", "main")
     print(f"已推送 {commit[:12]}，等待 Pages 部署…", flush=True)
-    with timed_stage(timings, "deployment"):
-        workflow = wait_for_deployment(commit, timeout)
-    print("部署完成，正在核验线上版本…", flush=True)
-    with timed_stage(timings, "verify_online"):
-        online = verify_online(ready, manifest)
+    stage = "deployment"
+    try:
+        with timed_stage(timings, stage):
+            workflow = wait_for_deployment(commit, timeout)
+        print("部署完成，正在核验线上版本…", flush=True)
+        stage = "verify_online"
+        with timed_stage(timings, stage):
+            online = verify_online(ready, manifest)
+    except Exception as error:
+        raise PublicationCheckError(commit, stage, error) from error
     return {"state": "passed", "repository": REPOSITORY, "branch": "main", "build_id": manifest["build_id"],
             "commit": commit, "commit_created": changed, "files": counts,
             "workflow": workflow, "online": online, "url": WEB_URL + "/",
@@ -268,8 +342,11 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as error:
         if report_path is not None:
             timings["total"] = round(time.perf_counter() - started, 3)
-            write_json(report_path, {"state": "failed", "build": built,
-                                     "timings_seconds": timings, "error": str(error)})
+            result = {"state": "failed", "build": built,
+                      "timings_seconds": timings, "error": str(error)}
+            if isinstance(error, PublicationCheckError):
+                result.update(commit=error.commit, push_succeeded=True, failed_stage=error.stage)
+            write_json(report_path, result)
         print(str(error), file=sys.stderr)
         if report_path is not None:
             print(f"详情：{report_path.relative_to(ROOT)}", file=sys.stderr)

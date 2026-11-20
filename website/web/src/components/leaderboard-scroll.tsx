@@ -41,7 +41,11 @@ export function LeaderboardScroll({ children, heading }: { children: ReactNode; 
   }
 
   return <div className="leaderboard-scroll-shell">
-    <div ref={headerScroll} className="leaderboard-pinned-header" aria-hidden="true"><table className="leaderboard-table leaderboard-comparison">{heading}</table></div>
+    <div ref={headerScroll} className="leaderboard-pinned-header" role="group" aria-label="按字段排名" onScroll={(event) => {
+      const table = tableScroll.current;
+      const next = event.currentTarget.scrollLeft;
+      if (table && table.scrollLeft !== next) table.scrollLeft = next;
+    }}><table className="leaderboard-table leaderboard-comparison" role="presentation">{heading}</table></div>
     <div id={tableId} ref={tableScroll} className="data-table-scroll leaderboard-scroll" role="region" aria-label="选手积分与统计，可横向滚动" tabIndex={0} onScroll={(event) => syncPosition(event.currentTarget.scrollLeft)}>{children}</div>
     <div className="leaderboard-scroll-toolbar" role="group" aria-label="横向查看积分榜字段">
       <span>左右查看字段</span>

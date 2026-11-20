@@ -6,7 +6,7 @@ def test_real_player_profiles_round_trip_through_shared_static_rankings():
     direct = build_public_data(ROOT)
     documents = direct["documents"]
     shared_by_range = {}
-    profile_count = 0
+    checked_profiles = set()
 
     for name, profile in documents.items():
         if not name.startswith("players/") or "--" not in name.rsplit("/", 1)[-1]:
@@ -19,10 +19,14 @@ def test_real_player_profiles_round_trip_through_shared_static_rankings():
             shared_by_range[range_name] = shared
         assert "ranking_boards" not in compact["stats"]
         assert restore_player_rankings(compact, shared) == profile
-        profile_count += 1
+        checked_profiles.add(name)
 
-    assert profile_count == 558
-    assert set(shared_by_range) == {f"{start}--{end}.json" for start, end in (
+    expected_ranges = {f"{start}--{end}.json" for start, end in (
         ("S21", "S21"), ("S21", "S22"), ("S21", "S23"),
         ("S22", "S22"), ("S22", "S23"), ("S23", "S23"),
     )}
+    assert set(shared_by_range) == expected_ranges
+    assert checked_profiles == {
+        f"players/{player['id']}/{range_name}" for player in direct["player_index"]["items"]
+        for range_name in expected_ranges
+    }

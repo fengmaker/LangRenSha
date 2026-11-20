@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import analyze_incremental as analysis
 import game_records
+from raw_media_fixture import make_subtitle_media
 
 
 class AnalysisTests(unittest.TestCase):
@@ -46,6 +47,43 @@ class AnalysisTests(unittest.TestCase):
         with patch.object(analysis, "validate_media", return_value=checked), patch.object(analysis.subprocess, "run") as run:
             self.assertEqual(analysis.prepare_text(self.entry, "S23", root=self.root), self.source)
             run.assert_not_called()
+
+    def test_alternate_subtitle_keeps_official_game_and_uses_its_own_media_time(self):
+        bvid, cid, page = "BV1tj8p6REqy", 321, 2
+        folder = self.root / f"data/raw/bilibili/{bvid}/p{page:02d}"
+        manifest_path = make_subtitle_media(folder)
+        manifest = analysis.read_json(manifest_path)
+        manifest.update(cid=cid, page=page, owner={"mid": 999}, duration_seconds=3)
+        analysis.write_json(manifest_path, manifest)
+        analysis.write_json(folder / "metadata.raw.json", {"data": {
+            "bvid": bvid, "owner": manifest["owner"],
+            "pages": [{"page": page, "cid": cid, "duration": 3}],
+        }})
+        source = folder / "subtitle.01.raw.json"
+        analysis.write_json(source, {"body": [{"from": 2, "to": 3, "content": "合成中文测试字幕"}]})
+        official = self.source.parent / "manifest.json"
+        official.write_text("{}", encoding="utf-8")
+        self.entry["duration_seconds"] = 1
+        selection = analysis.work_dir(self.root, "S23", self.entry) / "review_subtitle.json"
+        analysis.write_json(selection, {"bvid": bvid, "cid": cid, "page": page})
+        item = {"entry": self.entry}
+        with patch.object(analysis.subprocess, "run") as run:
+            result = analysis.analyze_one(item, "S23", root=self.root)
+            run.assert_not_called()
+        prepared = analysis.read_json(Path(result["input"]))
+        value = prepared["skeleton"]
+        subtitle, primary = value["dossier"]["files"]
+        self.assertEqual((subtitle["external_key"], subtitle["page"]), (f"{bvid}:{cid}", page))
+        self.assertEqual(primary["external_key"], f"{self.entry['bvid']}:{self.entry['cid']}")
+        self.assertIn(self.entry["bvid"], value["dossier"]["slug"])
+        value["evidence"] = [{"field": "dossier.rounds", "kind": "text",
+                              "source_path": prepared["source_path"], "start_ms": 2000, "end_ms": 3000,
+                              "quote": "合成中文测试字幕"}]
+        self.assertEqual(analysis.validate_candidate(value, self.entry, source, root=self.root)
+                         ["evidence"][0]["sha256"], analysis.sha256(source))
+        analysis.write_json(selection, {"bvid": bvid, "cid": cid + 1, "page": page})
+        with self.assertRaisesRegex(ValueError, "CID 不匹配"):
+            analysis.prepare_text(self.entry, "S23", root=self.root)
 
     def test_weibo_context_includes_local_roster_images_only_in_target_window(self):
         folder = self.root / "data/raw/weibo/2026-10-21_2026-10-29_test"

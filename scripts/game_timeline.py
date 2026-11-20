@@ -543,6 +543,17 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                         while at < len(events) and events[at]['slot'] in {'badge', 'sheriff_result'}:
                             at += 1
                         events.insert(at, death)
+                delayed = next((e for e in events if e['slot'] == 'masked_delayed_death'
+                                and e.get('action') == 'die_after_speech'), None)
+                if delayed is not None:
+                    # A self-destruct can also precede the departure announcement.
+                    anchors = {('exile_vote', 'vote'), ('exile_result', 'exile')}
+                    if '自爆前' in str(delayed.get('result') or ''):
+                        anchors.add(('self_destruct', 'self_destruct'))
+                    anchor = next((e for e in events if (e['slot'], e.get('action')) in anchors), None)
+                    if anchor is not None and events.index(delayed) > events.index(anchor):
+                        events.remove(delayed)
+                        events.insert(events.index(anchor), delayed)
                 # Guile redirection resolves the final exile, including a
                 # prince revote. It cannot precede the reveal and revote.
                 final_exile = next((e for e in reversed(events) if e['slot'] in {'exile_result', 'second_exile_result'}
@@ -594,7 +605,9 @@ def build_game_timeline(game: dict, voting: dict | None = None) -> dict:
                 elif slot == 'sheriff_candidates' and event.get('candidate_stage') == 'initial':
                     title = '首次上警'
                 if slot in {'speech_order', 'hunter_state', 'wolf_king_state', 'puppet_hunter_eligibility',
-                            'treasure_remainder'}:
+                            'treasure_remainder', 'masked_wound'}:
+                    continue
+                if slot == 'masked_delayed_death' and (phase != 'day' or action != 'die_after_speech'):
                     continue
                 if slot == 'mixed_blood_model' and number != 1:
                     continue

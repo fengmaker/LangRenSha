@@ -5,8 +5,9 @@ from __future__ import annotations
 from collections import defaultdict
 from fractions import Fraction
 from typing import Any
-from scripts.role_constraints import puppet_target
+from scripts.role_constraints import family, puppet_target
 from scripts.identity_display import role_label
+from website.api.skill_metrics import mechanical_learning, skill_metrics
 
 
 PHASES = {"all", "regular", "finals_week"}
@@ -17,15 +18,19 @@ MIXED_BLOOD_ROLE = "混血儿"
 SELF_EXPLOSION_ACTIONS = {"self_destruct"}
 PERFORMANCE_RATE_KEYS = frozenset({
     "witch_poison_wolf_rate", "hunter_shot_wolf_rate",
-    "mechanical_poison_wolf_rate", "mechanical_shot_wolf_rate",
+    "mechanical_wolf_rate", "mechanical_learn_rate", "guard_knife_hit_rate",
 })
 PERFORMANCE_RANKING_KEYS = (
     "witch_poison_count", "witch_poison_wolf_rate", "witch_poison_wolf_kills",
     "hunter_shot_count", "hunter_shot_wolf_rate", "hunter_shot_wolf_kills",
-    "mechanical_poison_count", "mechanical_poison_wolf_rate", "mechanical_poison_wolf_kills",
-    "mechanical_shot_count", "mechanical_shot_wolf_rate", "mechanical_shot_wolf_kills",
+    "mechanical_poison_count", "mechanical_shot_count",
+    "mechanical_wolf_count", "mechanical_wolf_rate",
+    "mechanical_learn_rate", "mechanical_poison_god_kills", "mechanical_shot_god_kills",
+    "mechanical_guard_count", "mechanical_reflect_god_kills", "mechanical_check_count",
+    "mechanical_extra_attack_count", "guard_count", "guard_knife_hits", "guard_knife_hit_rate",
     "seer_campaign_count", "seer_badge_count", "seer_first_day_exiled",
     "bluff_badge_count", "bluff_first_day_exiled",
+    "first_night_targeted", "first_night_death", "first_day_exiled",
 )
 PLAYER_RANKING_KEYS = (
     "points", "appearances", "attendance", "total_win_rate", "wins", "losses",
@@ -195,17 +200,19 @@ def _add_excluded(metric: dict[str, Any]) -> None:
     metric["excluded"] += 1
 
 
-def _rank_values(values: dict[str, int | Fraction], *, descending: bool = True) -> dict[str, dict[str, Any]]:
-    """Assign competition ranks, grouping exact values and leaving ties at the same rank."""
-    groups: dict[int | Fraction, list[str]] = defaultdict(list)
+def _rank_values(values: dict[str, int | Fraction], *, descending: bool = True,
+                 effective_games: dict[str, int] | None = None) -> dict[str, dict[str, Any]]:
+    """Assign competition ranks by exact value, then by more effective games."""
+    groups: dict[tuple[int | Fraction, int], list[str]] = defaultdict(list)
     for player_id, value in values.items():
-        groups[value].append(player_id)
+        games = effective_games[player_id] if effective_games is not None else 0
+        groups[(-value if descending else value, -games)].append(player_id)
 
     result: dict[str, dict[str, Any]] = {}
     position = 1
     total = len(values)
-    for value in sorted(groups, reverse=descending):
-        player_ids = groups[value]
+    for group in sorted(groups):
+        player_ids = groups[group]
         ranking = {"rank": position, "total": total, "tied": len(player_ids) > 1}
         for player_id in player_ids:
             result[player_id] = ranking.copy()
@@ -273,11 +280,10 @@ def _player_rank_value(acc: dict[str, Any], key: str) -> tuple[int | Fraction | 
     return Fraction(metric["numerator"], denominator), denominator
 
 
-def _ranked_order(values: dict[str, int | Fraction], players: dict[str, dict[str, Any]],
-                  *, descending: bool = True) -> list[str]:
-    """Order a ranked cohort by value, then stable name and ID tie-breakers."""
-    return sorted(values, key=lambda player_id: (
-        -values[player_id] if descending else values[player_id],
+def _ranked_order(ranks: dict[str, dict[str, Any]], players: dict[str, dict[str, Any]]) -> list[str]:
+    """Order a cohort by rank, then by name and ID within each tie."""
+    return sorted(ranks, key=lambda player_id: (
+        ranks[player_id]["rank"],
         str(players[player_id]["name"]).casefold(), str(players[player_id]["name"]), player_id,
     ))
 
@@ -312,12 +318,20 @@ def _player_rankings(
         "wolf_vote_rate": "wolf_vote",
     }
     for key, cohort in values.items():
-        descending = key != "losses"
-        ranked = _rank_values(cohort, descending=descending)
+        metric_source = vote_metric_sources.get(key)
+        effective_games = None
+        if metric_source is not None:
+            effective_games = {player_id: len(set(players[player_id][metric_source]["game_ids"]))
+                               for player_id in cohort}
+        elif key in PERFORMANCE_RANKING_KEYS:
+            effective_games = {player_id: len(set(players[player_id]["performance"][key]["game_ids"]))
+                               for player_id in cohort}
+        ranked = _rank_values(cohort, descending=(key != "losses"),
+                              effective_games=effective_games if effective_games is not None else samples[key])
         for player_id, ranking in ranked.items():
             rankings[player_id][key] = ranking
         board_rows = []
-        for player_id in _ranked_order(cohort, players, descending=descending):
+        for player_id in _ranked_order(ranked, players):
             row = {
                 "id": player_id, "name": players[player_id]["name"],
                 "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
@@ -325,12 +339,8 @@ def _player_rankings(
                 "sample_count": samples[key][player_id],
                 "appearances": players[player_id]["appearances"],
             }
-            metric_source = vote_metric_sources.get(key)
-            if metric_source is not None:
-                metric = players[player_id][metric_source]
-                row["effective_game_count"] = len(set(metric["game_ids"]))
-            elif key in PERFORMANCE_RANKING_KEYS:
-                row["effective_game_count"] = len(set(players[player_id]["performance"][key]["game_ids"]))
+            if effective_games is not None:
+                row["effective_game_count"] = effective_games[player_id]
             board_rows.append(row)
         boards[key] = board_rows
     return rankings, boards
@@ -353,16 +363,18 @@ def _role_rankings(
     }
     boards: dict[str, list[dict[str, Any]]] = {}
     for role, cohort in role_cohorts.items():
-        ranked = _rank_values(cohort)
+        effective_games = {player_id: players[player_id]["roles"][role]["win_loss_metric"]["denominator"]
+                           for player_id in cohort}
+        ranked = _rank_values(cohort, effective_games=effective_games)
         for player_id, ranking in ranked.items():
             rankings[player_id][role] = ranking
         boards[role] = [{
             "id": player_id, "name": players[player_id]["name"],
             "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
             "value": float(cohort[player_id]),
-            "sample_count": players[player_id]["roles"][role]["win_loss_metric"]["denominator"],
+            "sample_count": effective_games[player_id],
             "appearances": players[player_id]["roles"][role]["appearances"],
-        } for player_id in _ranked_order(cohort, players)]
+        } for player_id in _ranked_order(ranked, players)]
     return rankings, boards
 
 
@@ -398,16 +410,18 @@ def _board_rankings(
     }
     ranking_boards: dict[tuple[str, str], list[dict[str, Any]]] = {}
     for board_key, cohort in board_cohorts.items():
-        ranked = _rank_values(cohort)
+        effective_games = {player_id: players[player_id]["boards"][board_key]["metric"]["denominator"]
+                           for player_id in cohort}
+        ranked = _rank_values(cohort, effective_games=effective_games)
         for player_id, ranking in ranked.items():
             rankings[player_id][board_key] = ranking
         ranking_boards[board_key] = [{
             "id": player_id, "name": players[player_id]["name"],
             "rank": ranked[player_id]["rank"], "tied": ranked[player_id]["tied"],
             "value": float(cohort[player_id]),
-            "sample_count": players[player_id]["boards"][board_key]["metric"]["denominator"],
+            "sample_count": effective_games[player_id],
             "appearances": players[player_id]["boards"][board_key]["appearances"],
-        } for player_id in _ranked_order(cohort, players)]
+        } for player_id in _ranked_order(ranked, players)]
     return rankings, ranking_boards
 
 
@@ -501,6 +515,7 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
         game_players: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
         if include_boards:
             board_key, board_code, board_name = _board_identity(game)
+            mechanical_board = family(board_code) == "mechanical_wolf_seer"
         explosion_actors = _self_explosion_actors(game)
         first = _first_registration(game.get("voting") or {})
 
@@ -534,6 +549,13 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
                     acc["werewolf_appearances"] += 1
                     _add_denominator(acc["werewolf_self_explosion"], game_id,
                                      success=(seat.get("seat") in explosion_actors))
+                    if include_boards and mechanical_board:
+                        for key in ("mechanical_wolf_count", "mechanical_wolf_rate"):
+                            metric = acc["performance"].setdefault(key, _new_metric())
+                            if role_name == "身份未知":
+                                _add_excluded(metric)
+                            else:
+                                _add_denominator(metric, game_id, success=(role_name == "机械狼"))
             else:
                 _add_excluded(acc["werewolf_draw"])
                 _add_excluded(acc["werewolf_self_explosion"])
@@ -581,7 +603,6 @@ def _accumulate(games: list[dict[str, Any]], season: str | list[str], phase: str
 
         if include_boards:
             from website.api.process_metrics import process_observations
-            from website.api.skill_metrics import skill_metrics
 
             observations = process_observations(game)
             skills = skill_metrics(game, lambda seat: effective_faction(game, seat))
@@ -845,6 +866,8 @@ def _serialize_player(acc: dict[str, Any], games: list[dict[str, Any]], phase: s
             "points": ledger_points, "cumulative_points": cumulative_half_points / 2,
             "pending_count": cumulative_pending,
         })
+        if seat.get("role") == "机械狼":
+            ledger[-1]["mechanical_learned_role"] = mechanical_learning(game, seat).form
 
     result = {
         "appearances": appearances,

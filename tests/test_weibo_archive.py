@@ -1,4 +1,5 @@
 import importlib.util
+import io
 import json
 from pathlib import Path
 import sys
@@ -10,6 +11,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import collect_weibo_archive as archive
+import update_incremental as incremental
 from collect_weibo import CollectionError, WeiboCollector, new_manifest, normalize_post, save_json
 from weibo_naming import artifact_paths
 
@@ -52,6 +54,72 @@ class FakeCollector:
 
 
 class WeiboArchiveTests(unittest.TestCase):
+    def test_progress_distinguishes_window_page_dates_and_cumulative_totals(self):
+        pinned = post("12345670", "01-10", text="置顶旧帖")
+        pinned["created_at"] = "2023-01-10T12:00:00+08:00"
+        pinned["isTop"] = 1
+        current = post("12345678", "11-17", long=True)
+        collector = FakeCollector([
+            page([pinned, current], "next"),
+            page([post("12345679", "10-27")], "end", more=False),
+        ])
+        output = io.StringIO()
+        with tempfile.TemporaryDirectory() as folder, mock.patch("sys.stdout", output):
+            archive.collect_archive(collector, Path(folder), "7525583841",
+                                    archive.date(2026, 11, 17), archive.date(2026, 11, 18))
+        lines = output.getvalue().splitlines()
+        self.assertIn("目标窗口：2026-11-17 至 2026-11-18", lines[0])
+        self.assertIn("北京时间", lines[0])
+        self.assertIn("第1页", lines[1])
+        self.assertIn("普通帖日期：2026-11-17 至 2026-11-17", lines[1])
+        self.assertIn("置顶1条", lines[1])
+        self.assertIn("本页命中1条，新增保存1条", lines[1])
+        self.assertIn("累计保存1条、图片0张、长文1/1", lines[1])
+        self.assertIn("本页命中0条，新增保存0条", lines[2])
+        self.assertIn("累计保存1条", lines[2])
+
+    def test_incremental_collection_keeps_all_topics_in_window(self):
+        texts = ["京城大师赛 第23季第十期阵容公布", "京城大师赛超话 京城龙门赛 阵容公布",
+                 "京城大师赛 京师甄选 嘉宾名单 带货安排", "京城大师赛 本周积分公告",
+                 "京城大师赛 请假公告：本周临时换人", "京城大师赛 今日解说及法官调整",
+                 "京城大师赛 本周赛程、版型规则调整"]
+        raws = [post(str(12345678 + i), "11-17", text=text, long=True)
+                for i, text in enumerate(texts)]
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            destination = root / "archive"
+            collector = FakeCollector([page(raws, "end", more=False)])
+            window = {"since": archive.date(2026, 11, 17), "until": archive.date(2026, 11, 18),
+                      "path": destination, "resume": False}
+            with mock.patch.object(incremental, "_new_desktop_weibo_collector", return_value=collector), \
+                    mock.patch.object(incremental, "configure_auth"):
+                self.assertTrue(incremental._collect_weibo_windows(
+                    root, "7525583841", [window], "none", None, {"season": "S23"}))
+            result = json.loads((destination / "manifest.json").read_text(encoding="utf-8"))
+        expected = [str(12345678 + i) for i in range(len(texts))]
+        self.assertEqual(collector.saved, expected)
+        self.assertEqual(collector.long_calls, expected)
+        self.assertCountEqual([item["post_id"] for item in result["posts"]], expected)
+        self.assertEqual(result["pages"][0]["in_date_window"], 7)
+
+    def test_seed_and_resume_preserve_all_topics_in_window(self):
+        raws = [post("12345678", "11-17", text="京城大师赛 阵容公布"),
+                post("12345679", "11-17", text="京城大师赛超话 京城龙门赛 阵容公布")]
+        with tempfile.TemporaryDirectory() as folder:
+            root, seed = Path(folder) / "archive", Path(folder) / "seed"
+            archive.collect_archive(FakeCollector([page(raws, "end", more=False)]), seed,
+                                    "7525583841", archive.date(2026, 11, 17), archive.date(2026, 11, 18))
+            collector = FakeCollector([page([], "end", more=False)])
+            result = archive.collect_archive(
+                collector, root, "7525583841", archive.date(2026, 11, 17), archive.date(2026, 11, 18),
+                seed_path=seed / "manifest.json")
+            self.assertEqual(result["counts"]["seed_posts_reused"], 2)
+            self.assertEqual(collector.saved, [])
+            resumed = archive.collect_archive(
+                FakeCollector([]), root, "7525583841", archive.date(2026, 11, 17),
+                archive.date(2026, 11, 18))
+            self.assertCountEqual([item["post_id"] for item in resumed["posts"]], ["12345678", "12345679"])
+
     def test_date_window_filters_on_beijing_day_including_both_boundaries(self):
         starts_on_window = post("12345678", "05-26")
         starts_on_window["created_at"] = "2026-05-25T16:30:00Z"

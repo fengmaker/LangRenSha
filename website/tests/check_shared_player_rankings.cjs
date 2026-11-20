@@ -2,11 +2,12 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const modules = path.resolve(process.argv[2]);
-const source = path.resolve(process.argv[3]);
+const [modulesArg, sourceArg] = process.argv.slice(2);
+const modules = path.resolve(modulesArg ?? path.join(__dirname, '../web/node_modules'));
+const source = path.resolve(sourceArg ?? path.join(__dirname, '../web/src'));
 const ts = require(path.join(modules, 'typescript'));
 
-function runtime({ readFile = fs.promises.readFile } = {}) {
+function runtime() {
   const cache = new Map();
   function load(relative) {
     const filename = path.join(source, relative);
@@ -22,12 +23,9 @@ function runtime({ readFile = fs.promises.readFile } = {}) {
     const module = { exports: {} };
     cache.set(key, module);
     const resolve = (name) => {
-      if (name === 'server-only') return {};
       if (name === '@/lib/site-mode') return { basePath: '/langrensha-site' };
       if (name === '@/lib/api-error') return load('lib/api-error.ts');
       if (name === '@/lib/player-rankings') return load('lib/player-rankings.ts');
-      if (name === 'node:fs/promises') return { readFile };
-      if (name === 'node:path') return require(name);
       throw new Error(`Unexpected import: ${name}`);
     };
     new Function('require', 'module', 'exports', code)(resolve, module, module.exports);
@@ -187,44 +185,13 @@ async function testClientSchemaOneSkipsSharedFile() {
   assert.equal(requests.some(({ url }) => url.includes('/rankings/')), false);
 }
 
-function serverFixture({ schemaVersion = 2, profiles, shared = sharedRankings() } = {}) {
-  const reads = [];
-  const files = new Map([['manifest.json', manifest(schemaVersion)]]);
-  for (const [id, value] of Object.entries(profiles)) {
-    files.set(`releases/snapshot-1/players/${id}/S22--S23.json`, value);
-  }
-  if (schemaVersion !== 1) files.set('releases/snapshot-1/rankings/S22--S23.json', shared);
-  const snapshotRoot = path.join(process.cwd(), '.static-snapshot', 'data');
-  const readFile = async (filename) => {
-    const relative = path.relative(snapshotRoot, filename).replace(/\\/g, '/');
-    reads.push(relative);
-    if (!files.has(relative)) throw new Error(`Unexpected snapshot read: ${relative}`);
-    return JSON.stringify(files.get(relative));
-  };
-  return { snapshot: runtime({ readFile }).load('lib/snapshot-data.ts'), reads };
-}
-
-async function testServerMergesSharedRankingsAndReadsSchemaOneDirectly() {
-  const { snapshot, reads } = serverFixture({ profiles: { p1: profile('p1') } });
-  const result = await snapshot.getSnapshotPlayer('p1', 'S22', 'S23');
-  assert.deepEqual(result.stats.ranking_boards, sharedRankings().ranking_boards);
-  assert(reads.includes('releases/snapshot-1/rankings/S22--S23.json'));
-
-  const legacy = profile('p1');
-  const legacyFixture = serverFixture({ schemaVersion: 1, profiles: { p1: legacy } });
-  const legacyResult = await legacyFixture.snapshot.getSnapshotPlayer('p1', 'S22', 'S23');
-  assert.deepEqual(legacyResult, legacy);
-  assert.equal(legacyFixture.reads.some((item) => item.includes('/rankings/')), false);
-}
-
 async function main() {
   await testClientMergesSharedRankingsWithoutMutatingProfile();
   await testClientSharesRangeRequestAcrossPlayers();
   await testClientRetriesRejectedSharedRequest();
   await testClientRejectsMixedReleaseOrScope();
   await testClientSchemaOneSkipsSharedFile();
-  await testServerMergesSharedRankingsAndReadsSchemaOneDirectly();
-  console.log('Static shared player ranking client/server paths passed');
+  console.log('Static shared player ranking checks passed');
 }
 
 main().catch((error) => {

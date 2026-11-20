@@ -116,9 +116,10 @@ def validate_subtitles(folder: Path, subtitle_data: object, *, require_chinese: 
     return checked, str(subtitle_data.get("status", "unknown")), chinese_available
 
 
-def validate_media(manifest_path: Path, expected_bvid: str | None = None, expected_page: int | None = None) -> dict:
+def validate_media(manifest_path: Path, expected_bvid: str | None = None, expected_page: int | None = None,
+                   *, expected_owner: str | None = OFFICIAL_BILIBILI_MID, root: Path | None = None) -> dict:
     manifest_path = manifest_path.resolve()
-    if not manifest_path.is_relative_to((ROOT / "data").resolve()):
+    if not manifest_path.is_relative_to(((root or ROOT) / "data").resolve()):
         raise MediaValidationError("采集结果必须位于项目 data 目录")
     manifest = read_json(manifest_path)
     folder = manifest_path.parent
@@ -134,8 +135,10 @@ def validate_media(manifest_path: Path, expected_bvid: str | None = None, expect
         raise MediaValidationError("已有清单不是这次指定的 BV/分 P")
     owner = str((manifest.get("owner") or {}).get("mid", ""))
     raw_owner = str((raw.get("owner") or {}).get("mid", ""))
-    if owner != OFFICIAL_BILIBILI_MID or raw_owner != owner:
-        raise MediaValidationError("清单或原始接口响应的投稿者不是已确认的官方 UID 19106800")
+    if not owner or raw_owner != owner:
+        raise MediaValidationError("清单与原始接口响应的投稿者不一致")
+    if expected_owner is not None and owner != expected_owner:
+        raise MediaValidationError(f"清单或原始接口响应的投稿者不是已确认的 UID {expected_owner}")
     page = next((p for p in raw.get("pages", []) if p.get("page") == manifest.get("page")), None)
     if page is None or page.get("cid") != manifest.get("cid"):
         raise MediaValidationError("清单与原始接口响应的分 P/CID 不一致")
@@ -165,7 +168,7 @@ def validate_media(manifest_path: Path, expected_bvid: str | None = None, expect
     summary = {"status":"raw_media_ready" if audio_available else "raw_subtitles_ready",
                "checked_at_utc":datetime.now(timezone.utc).isoformat(),
                "bvid":bvid,"cid":manifest["cid"],"page":manifest["page"],"owner_mid":owner,
-               "official_owner_matches":True,"audio_available":audio_available,
+               "official_owner_matches":owner == OFFICIAL_BILIBILI_MID,"audio_available":audio_available,
                "audio_bytes":audio["bytes"] if audio_available else None,
                "audio_sha256":audio["sha256"] if audio_available else None,
                "probe":probe,"subtitle_status":subtitle_status,

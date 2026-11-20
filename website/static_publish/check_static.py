@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import hashlib
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import re
@@ -14,7 +14,6 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import unquote, urlsplit
 from urllib.request import urlopen
-
 
 if __package__:
     from .snapshot_files import SNAPSHOT_SCHEMA_VERSION, document_path, object_path
@@ -152,6 +151,9 @@ def check(out: Path | str, base_path: str = "", *, output: Path | str | None = N
     _json(profile)
     _json(release / "stats" / f"{ranges[-1]['start']}--{ranges[-1]['end']}.json")
     _json(release / "leaderboards" / sample_season / "all.json")
+    summary = _json(release / "leaderboards" / sample_season / "all.summary.json")
+    if summary.get("release_id") != manifest.get("release_id"):
+        raise StaticAcceptanceError("Default leaderboard summary differs from the manifest release")
     _json(release / "releases.json")
 
     media_root = root / "media"
@@ -176,6 +178,10 @@ def check(out: Path | str, base_path: str = "", *, output: Path | str | None = N
             body = _read_response(url)
             if b"<!DOCTYPE html>" not in body[:256] and b"<html" not in body[:256]:
                 raise StaticAcceptanceError(f"Static route did not return an HTML document: {url}")
+            if route in ("", "leaderboard"):
+                main = re.search(rb"<main\b[^>]*>(.*?)</main>", body, re.DOTALL)
+                if not main or not re.search(rb"<h1[\s>]", main[1]):
+                    raise StaticAcceptanceError(f"Static route has no prerendered heading: {url}")
             checked.append(route or "/")
         _read_response(origin + "/data/manifest.json")
         if manifest["schema_version"] == SNAPSHOT_SCHEMA_VERSION:

@@ -14,10 +14,12 @@ from urllib.parse import urlsplit
 import uuid
 
 if __package__:
+    from .generated_dirs import rename_generated_directory
     from .photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
     from .player_rankings import split_player_rankings
     from .snapshot_files import SNAPSHOT_SCHEMA_VERSION, object_path
 else:
+    from generated_dirs import rename_generated_directory
     from photo_thumbnails import VERSION as PHOTO_THUMBNAIL_VERSION, create_thumbnails
     from player_rankings import split_player_rankings
     from snapshot_files import SNAPSHOT_SCHEMA_VERSION, object_path
@@ -133,18 +135,36 @@ def _promote_direct_export(stage: Path, data_root: Path, media_root: Path) -> No
             target.parent.mkdir(parents=True, exist_ok=True)
             if target.exists():
                 backup = stage / f"previous-{index}"
-                target.rename(backup)
+                rename_generated_directory(target, backup)
                 backups.append((backup, target))
-            source.rename(target)
+            rename_generated_directory(source, target)
             promoted.append((target, source))
     except BaseException:
         for target, source in reversed(promoted):
             if target.exists():
-                target.rename(source)
+                rename_generated_directory(target, source)
         for backup, target in reversed(backups):
             if backup.exists():
-                backup.rename(target)
+                rename_generated_directory(backup, target)
         raise
+
+
+def _leaderboard_summary(board: dict) -> dict:
+    items = [
+        {
+            key: {field: detail for field, detail in value.items()
+                  if field not in {"game_ids", "samples"}} if isinstance(value, dict) else value
+            for key, value in item.items() if key != "photo"
+        }
+        for item in board["items"]
+    ]
+    latest_date = (max((game["date"] for game in board["sample_games"]), default=None)
+                   if board["phase"] == "all" else None)
+    return {
+        **{key: value for key, value in board.items() if key not in {"items", "sample_games", "notes"}},
+        "items": items,
+        "latest_date": latest_date,
+    }
 
 
 def _player_directory(page: dict, thumbnails: dict[str, str]) -> dict:
@@ -192,6 +212,10 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
         shared_rankings[range_name] = shared
         documents[relative] = compact
     documents.update({f"rankings/{name}": value for name, value in shared_rankings.items()})
+    documents.update({
+        f"{relative.removesuffix('.json')}.summary.json": _leaderboard_summary(board)
+        for relative, board in documents.items() if relative.startswith("leaderboards/")
+    })
 
     data_root.parent.mkdir(parents=True, exist_ok=True)
     # These are public generated assets. Inherit the workspace ACL instead of
@@ -210,16 +234,19 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
         for asset in media_files:
             _, relative, _ = _media_endpoint(asset["url"])
             source = _direct_media_source(root, relative)
-            actual_hash = _sha256(source.read_bytes())
+            body = source.read_bytes()
+            actual_hash = _sha256(body)
             if actual_hash != asset["sha256"]:
                 raise ExportError(f"Allowlisted media hash differs from its public URL: {asset['url']}")
             target = _media_target(staged_media, relative, asset["url"])
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, target)
+            target.write_bytes(body)
             copied_media.append({**asset, "path": relative})
 
         try:
-            photo_thumbnails = create_thumbnails(staged_media, copied_media)
+            photo_thumbnails = create_thumbnails(
+                staged_media, copied_media, cache_root=root / ".cache/static-publish/photo-thumbnails",
+            )
         except (OSError, ValueError) as exc:
             raise ExportError(f"Cannot create player photo thumbnails: {exc}") from exc
 
@@ -255,7 +282,7 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
             "base_path": base_path,
         }))
         snapshot_id = f"snapshot-{fingerprint}"
-        (staged_data / "releases" / "__pending__").rename(staged_data / "releases" / snapshot_id)
+        rename_generated_directory(pending, pending.with_name(snapshot_id))
         generated_at = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
         manifest = {
             "schema_version": SNAPSHOT_SCHEMA_VERSION,
@@ -279,7 +306,9 @@ def export_direct_snapshot(root: Path | str, output: Path | str, *, base_path: s
         shutil.rmtree(stage, ignore_errors=True)
         return manifest
     except BaseException:
-        shutil.rmtree(stage, ignore_errors=True)
+        # A failed rollback can leave the previous snapshot in the stage.
+        if not any(stage.glob("previous-*")):
+            shutil.rmtree(stage, ignore_errors=True)
         raise
 
 

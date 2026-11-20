@@ -1,11 +1,116 @@
+from http.client import IncompleteRead
+from io import BytesIO
 import json
 import os
 from pathlib import Path
+import ssl
 import stat
+from urllib.error import HTTPError, URLError
 
 import pytest
 
 from website.static_publish import sync_pages
+
+
+class OnlineResponse(BytesIO):
+    status = 200
+
+
+def test_deployment_poll_retries_tls_eof(monkeypatch):
+    commit = "abc123"
+    run = {"id": 1, "head_sha": commit, "status": "completed", "conclusion": "success",
+           "html_url": "https://example.test/run/1"}
+    responses = iter([
+        URLError(ssl.SSLEOFError(8, "UNEXPECTED_EOF_WHILE_READING")),
+        OnlineResponse(json.dumps({"workflow_runs": [run]}).encode()),
+    ])
+    requests = []
+    waits = []
+
+    def urlopen(request, *, timeout):
+        requests.append((request.full_url, timeout))
+        response = next(responses)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    monkeypatch.setattr(sync_pages, "urlopen", urlopen)
+    monkeypatch.setattr(sync_pages.time, "sleep", waits.append)
+
+    assert sync_pages.wait_for_deployment(commit, 30) == {
+        "id": 1, "url": "https://example.test/run/1", "conclusion": "success",
+    }
+    assert len(waits) == 1
+    assert len(requests) == 2
+    assert requests[0][0] == requests[1][0]
+    assert all(0 < timeout <= 30 for _, timeout in requests)
+
+
+def test_online_verification_retries_only_the_failed_request(monkeypatch, tmp_path):
+    manifest = {"build_id": "build-1", "snapshot_id": "snapshot-1", "seasons": [{"id": "S23"}]}
+    index = tmp_path / "data/releases/snapshot-1/games/index.json"
+    index.parent.mkdir(parents=True)
+    index.write_text('{"items": [{"id": "game-1", "season": "S23"}]}', encoding="utf-8")
+    manifest_url = sync_pages.WEB_URL + "/data/manifest.json?build_id=build-1"
+    home_url = sync_pages.WEB_URL + "/"
+    game_url = sync_pages.WEB_URL + "/games/game-1/"
+
+    class InterruptedResponse(OnlineResponse):
+        def read(self):
+            raise IncompleteRead(b"<ma", 5)
+
+    responses = iter([
+        OnlineResponse(json.dumps(manifest).encode()),
+        HTTPError(home_url, 503, "Service Unavailable", {}, BytesIO()),
+        OnlineResponse(b"<main>home</main>"),
+        InterruptedResponse(),
+        OnlineResponse(b"<main>game</main>"),
+    ])
+    requests = []
+    waits = []
+
+    def urlopen(request, *, timeout):
+        requests.append(request.full_url)
+        response = next(responses)
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    monkeypatch.setattr(sync_pages, "urlopen", urlopen)
+    monkeypatch.setattr(sync_pages.time, "sleep", waits.append)
+    assert sync_pages.verify_online(tmp_path, manifest) == {
+        "state": "passed", "manifest_matches": True, "routes": ["/", "/games/game-1/"],
+    }
+    assert requests == [manifest_url, home_url, home_url, game_url, game_url]
+    assert waits == [1, 1]
+
+
+@pytest.mark.parametrize("reason, timeout, expected, attempts", [
+    (TimeoutError("no response"), 30, RuntimeError, 4),
+    (TimeoutError("no response"), 1, RuntimeError, 1),
+    (ssl.SSLCertVerificationError(1, "certificate verification failed"), 30, URLError, 1),
+])
+def test_deployment_poll_limits_retries(monkeypatch, reason, timeout, expected, attempts):
+    waits = []
+    requests = []
+    clock = [0]
+
+    def sleep(delay):
+        waits.append(delay)
+        clock[0] += delay
+
+    def urlopen(request, *, timeout):
+        requests.append(timeout)
+        raise URLError(reason)
+
+    monkeypatch.setattr(sync_pages, "urlopen", urlopen)
+    monkeypatch.setattr(sync_pages.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(sync_pages.time, "sleep", sleep)
+    with pytest.raises(expected, match=str(reason)):
+        sync_pages.wait_for_deployment("abc123", timeout)
+    assert len(requests) == attempts
+    assert len(waits) == attempts - 1
+    assert requests == [timeout - sum(waits[:attempt]) for attempt in range(attempts)]
 
 
 def test_pages_deploy_waits_for_upload_and_reuses_its_unique_artifact_name():
@@ -70,7 +175,7 @@ def test_sync_tree_mirrors_only_generated_site_files(tmp_path):
     destination = tmp_path / "publish" / "site"
     (destination / "obsolete").mkdir(parents=True)
     (destination / "obsolete/old.json").write_text("old", encoding="utf-8")
-    (destination / "index.html").write_text("stale", encoding="utf-8")
+    (destination / "index.html").write_text("old!", encoding="utf-8")
 
     first = sync_pages.sync_tree(source, destination)
     assert first == {"written": 2, "unchanged": 0, "removed": 1}
@@ -119,7 +224,8 @@ def test_publication_repository_requires_exact_target_and_no_independent_edits(t
         sync_pages._check_repository(repository)
 
 
-def test_publish_retries_push_even_when_no_new_commit_is_needed(tmp_path, monkeypatch):
+@pytest.mark.parametrize("failed_stage", [None, "deployment", "verify_online"])
+def test_publish_retries_push_even_when_no_new_commit_is_needed(tmp_path, monkeypatch, failed_stage):
     root = tmp_path / "workspace"
     ready = root / "tmp" / "ready"
     (ready / "data").mkdir(parents=True)
@@ -130,10 +236,27 @@ def test_publish_retries_push_even_when_no_new_commit_is_needed(tmp_path, monkey
     repository = tmp_path / "publish"
     site = repository / "site"
     site.mkdir(parents=True)
+    (site / "index.html").write_text("home", encoding="utf-8")
     templates = {}
     monkeypatch.setattr(sync_pages, "ROOT", root)
     monkeypatch.setattr(sync_pages, "_check_repository", lambda path: (site, templates))
     git_calls = []
+    hashed = []
+    file_hash = sync_pages._file_hash
+    target_scans = []
+    rglob = Path.rglob
+
+    def tracked_hash(path):
+        hashed.append(path)
+        return file_hash(path)
+
+    def tracked_rglob(path, pattern):
+        if path == site:
+            target_scans.append(pattern)
+        return rglob(path, pattern)
+
+    monkeypatch.setattr(sync_pages, "_file_hash", tracked_hash)
+    monkeypatch.setattr(Path, "rglob", tracked_rglob)
 
     def fake_git(repo, *args):
         git_calls.append(args)
@@ -144,16 +267,37 @@ def test_publish_retries_push_even_when_no_new_commit_is_needed(tmp_path, monkey
         return ""
 
     monkeypatch.setattr(sync_pages, "git", fake_git)
-    monkeypatch.setattr(sync_pages, "wait_for_deployment", lambda commit, timeout: {"conclusion": "success"})
-    monkeypatch.setattr(sync_pages, "verify_online", lambda ready, manifest: {"state": "passed"})
+    def deployment(commit, timeout):
+        if failed_stage == "deployment":
+            raise RuntimeError("connection lost")
+        return {"conclusion": "success"}
+
+    def verify_online(ready, manifest):
+        if failed_stage == "verify_online":
+            raise RuntimeError("connection lost")
+        return {"state": "passed"}
+
+    monkeypatch.setattr(sync_pages, "wait_for_deployment", deployment)
+    monkeypatch.setattr(sync_pages, "verify_online", verify_online)
+
+    if failed_stage:
+        with pytest.raises(sync_pages.PublicationCheckError, match="已推送 abc123.*connection lost") as error:
+            sync_pages.publish_site(ready, repository)
+        assert error.value.stage == failed_stage
+        assert git_calls.count(("push", "origin", "main")) == 1
+        return
 
     result = sync_pages.publish_site(ready, repository)
-
     assert result["commit_created"] is False
+    assert hashed.count(ready / "index.html") == 1
+    assert hashed.count(site / "index.html") == 2  # Comparison and final readback.
+    assert target_scans == ["*", "*"]  # Inventory and final verification.
     assert ("push", "origin", "main") in git_calls
     assert result["workflow"]["conclusion"] == "success"
     assert set(result["timings_seconds"]) == {
-        "publication_preflight", "sync_files", "commit", "push", "deployment", "verify_online",
+        "publication_preflight", "hash_source", "sync_files", "scan_target",
+        "compare_target", "copy_files", "remove_stale_files", "verify_files",
+        "commit", "push", "deployment", "verify_online",
     }
 
 
@@ -167,8 +311,8 @@ def test_check_only_builds_locally_without_publishing(monkeypatch, tmp_path):
     assert calls == [("/langrensha-site", tmp_path / "preview")]
 
 
-@pytest.mark.parametrize("fails", [False, True])
-def test_sync_records_build_and_publication_timings_on_success_or_failure(monkeypatch, tmp_path, fails):
+@pytest.mark.parametrize("failed_stage", [None, "push", "deployment"])
+def test_sync_records_build_and_publication_timings_on_success_or_failure(monkeypatch, tmp_path, failed_stage):
     monkeypatch.setattr(sync_pages, "ROOT", tmp_path)
     built = {"state": "passed", "build_id": "build-1", "source_hash": "source-1",
              "timings_seconds": {"export_json": 2.5, "build_total": 3.0}}
@@ -176,8 +320,10 @@ def test_sync_records_build_and_publication_timings_on_success_or_failure(monkey
 
     def publish(*args, timings, **kwargs):
         timings["push"] = 0.5
-        if fails:
+        if failed_stage == "push":
             raise RuntimeError("push failed")
+        if failed_stage == "deployment":
+            raise sync_pages.PublicationCheckError("abc123", "deployment", RuntimeError("connection lost"))
         return {"state": "passed", "commit": "abc123"}
 
     monkeypatch.setattr(sync_pages, "publish_site", publish)
@@ -185,10 +331,16 @@ def test_sync_records_build_and_publication_timings_on_success_or_failure(monkey
     monkeypatch.setattr(sync_pages, "cleanup", lambda *args: cleaned.append(args) or {
         "state": "passed", "completed_games": 0, "pending_games": 0,
     })
-    assert sync_pages.main([]) == (1 if fails else 0)
-    assert len(cleaned) == (0 if fails else 1)
+    assert sync_pages.main([]) == (1 if failed_stage else 0)
+    assert len(cleaned) == (0 if failed_stage else 1)
     report = json.loads((tmp_path / "tmp/pages-build/build-1/sync-result.json").read_text(encoding="utf-8"))
-    assert report["state"] == ("failed" if fails else "passed")
+    assert report["state"] == ("failed" if failed_stage else "passed")
+    if failed_stage == "deployment":
+        assert report["commit"] == "abc123"
+        assert report["push_succeeded"] is True
+        assert report["failed_stage"] == "deployment"
+    else:
+        assert "push_succeeded" not in report
     assert report["timings_seconds"]["export_json"] == 2.5
     assert report["timings_seconds"]["push"] == 0.5
     assert report["timings_seconds"]["total"] >= report["timings_seconds"]["publication_total"]

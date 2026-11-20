@@ -1,12 +1,13 @@
 /* 个人页卡片的字号与比例在这里调整；手机端变量覆盖位于文件末尾。 */
 .profile {
-  --profile-card-title-size: 20px;
+  --profile-card-title-size: 18px;
   --profile-card-value-size: 22px;
   --profile-card-rank-size: 17px;
   --profile-card-rank-number-size: 22px;
-  --profile-card-height: 160px;
-  --profile-card-padding: 20px;
-  --profile-card-row-gap: 10px;
+  --profile-card-height: 142px;
+  --profile-card-padding: 16px;
+  --profile-card-row-gap: 8px;
+  --profile-chapter-link-height: 48px;
 }
 
 .profile :global(.player-profile-hero) {
@@ -46,8 +47,6 @@
 .profile :global(.profile-stat-grid) { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
 .profile :global(.profile-stat-section) { padding-top: 28px; }
 .profile :global(.profile-stat-section > .profile-stat-grid) { margin-top: 16px; }
-.profile :global(.profile-two-col) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; padding-top: 36px; align-items: start; }
-.profile :global(.role-bars) { border: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .profile :global(.profile-games) { padding-top: 40px; }
 .profile :global(.ledger-table) { min-width: 680px; table-layout: fixed; text-align: center; font-variant-numeric: tabular-nums; }
 .profile :global(.ledger-game-col) { width: 30%; }
@@ -64,9 +63,6 @@
 .profile :global(.ledger-table td small) { font-size: 15px; line-height: 1.5; }
 .profile :global(.ledger-game-link) { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
 .profile :global(.ledger-game-link small) { margin-top: 0; }
-@media (max-width: 960px) {
-  .profile :global(.profile-two-col) { grid-template-columns: 1fr; }
-}
 @media (max-width: 760px) {
   .profile :global(.player-profile-hero) { grid-template-columns: 140px minmax(0, 1fr); grid-template-areas: "photo title" "controls controls"; grid-template-rows: auto auto; gap: 22px; }
   .profile :global(.profile-hero-copy) { align-self: center; }
@@ -88,7 +84,6 @@
   .profile :global(.profile-filter-form .button) { width: 100%; }
 }
 
-.profile :global(.profile-performance .section-heading) { min-height: 36px; margin-bottom: 20px; }
 .profile :global(.profile-sample-control) { margin-top: 14px; }
 .profile :global(.sample-trigger) { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; }
 .profile :global(.sample-trigger:hover) { border-color: var(--mint); color: var(--mint); }
@@ -121,8 +116,7 @@
   .profile :global(.ranking-table th), .profile :global(.ranking-table td) { padding: 11px 6px; font-size: 12px; }
 }
 
-.profile :global(.profile-stat-card),
-.profile :global(.role-rate-row) {
+.profile :global(.profile-stat-card) {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-rows: repeat(2, minmax(44px, 1fr));
@@ -134,13 +128,9 @@
   min-height: var(--profile-card-height);
   padding: var(--profile-card-padding);
 }
-.profile :global(.role-rate-row) { border: 1px solid var(--line); background: var(--panel); }
 .profile :global(.metric-copy),
-.profile :global(.metric-actions),
-.profile :global(.role-rate-title),
-.profile :global(.role-card-footer) { display: contents; }
-.profile :global(.metric-copy > span),
-.profile :global(.role-rate-title > strong) {
+.profile :global(.metric-actions) { display: contents; }
+.profile :global(.metric-copy > span) {
   grid-area: label;
   align-self: center;
   margin: 0;
@@ -149,8 +139,7 @@
   line-height: 1.35;
   font-weight: 650;
 }
-.profile :global(.metric-copy > strong),
-.profile :global(.role-rate-title > span) {
+.profile :global(.metric-copy > strong) {
   grid-area: value;
   align-self: center;
   justify-self: start;
@@ -158,46 +147,37 @@
   color: var(--mint);
   font: 550 var(--profile-card-value-size)/1.2 var(--mono);
 }
-.profile :global(.profile-metric-ranks),
-.profile :global(.role-card-footer > .ranking-control),
-.profile :global(.role-card-footer > .rank-unavailable) {
+.profile :global(.profile-metric-ranks) {
   grid-area: ranking;
   align-self: center;
   justify-self: end;
   margin: 0;
 }
-.profile :global(.metric-actions > .profile-sample-control),
-.profile :global(.role-card-footer > .profile-sample-control) {
+.profile :global(.metric-actions > .profile-sample-control) {
   grid-area: samples;
   align-self: center;
   justify-self: end;
   margin: 0;
 }
 .profile :global(.metric-copy > small) { grid-column: 1 / -1; grid-row: 3; margin: 0; color: var(--faint); font-size: 13px; line-height: 1.5; }
-@media (max-width: 600px) {
-  .profile :global(.role-bars) { grid-template-columns: 1fr; }
-}
 @media (max-width: 1100px) {
   .profile :global(.profile-stat-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .profile :global(.profile-two-col) { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .profile :global(.profile-stat-grid) { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .profile {
-    --profile-card-title-size: 19px;
+    --profile-card-title-size: 17px;
     --profile-card-value-size: 21px;
     --profile-card-rank-size: 16px;
     --profile-card-rank-number-size: 21px;
-    --profile-card-height: 156px;
-    --profile-card-padding: 18px;
+    --profile-card-height: 136px;
   }
 }
 
 /* 样本按钮与排名入口使用相近的高度，四个区域在各自行内居中。 */
-.profile :global(.metric-actions > .profile-sample-control .sample-trigger),
-.profile :global(.role-card-footer > .profile-sample-control .sample-trigger) { min-height: 36px; font-size: 14px; }
+.profile :global(.metric-actions > .profile-sample-control .sample-trigger) { min-height: 36px; font-size: 14px; }
 
 /* 胜率排行榜：最低有效场次与自定义门槛。 */
 .profile :global(.ranking-filter-status) { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.6; }
@@ -262,12 +242,181 @@
   cursor: pointer;
   white-space: nowrap;
 }
-.performanceTab[aria-pressed="true"] { border-color: #7ce1bf66; color: var(--mint); background: #18342b; }
-.performanceTab:hover { color: var(--text); border-color: var(--mint); }
-.performanceTab:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+.performanceTab[aria-pressed="true"] {
+  color: var(--section-accent, var(--mint));
+  border-color: var(--section-accent, var(--mint));
+  background: var(--section-card, var(--panel));
+}
+.performanceTab:hover { border-color: var(--section-accent, var(--mint)); }
+.performanceTab:focus-visible { outline: 2px solid var(--section-accent, var(--mint)); outline-offset: 2px; }
 .performancePanel { min-width: 0; margin-top: 10px; }
 .performancePanel :global(.profile-stat-grid) { margin-top: 0; }
 .performancePanel :global(.lane-empty) { margin: 0; }
 .performanceSubsection { margin-top: 24px; }
 .performanceSubsection h3 { margin: 0; color: var(--text); font-size: 18px; line-height: 1.4; font-weight: 650; }
 .performanceSubsection :global(.profile-stat-grid) { margin-top: 14px; }
+.learningDistribution { width: 100%; margin-bottom: 20px; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.learningDistribution th, .learningDistribution td { padding: 8px; border-bottom: 1px solid var(--line); text-align: right; }
+.learningDistribution th:first-child { text-align: left; }
+.learningDistribution thead { color: var(--muted); }
+.learningDistribution tbody th { font-weight: 500; }
+
+.profile [data-profile-tone="overview"] {
+  --section-accent: var(--mint);
+  --section-card: #0d1b19;
+  --section-border: #274239;
+}
+.profile [data-profile-tone="good"] {
+  --section-accent: #68ccbf;
+  --section-card: #0b1c1c;
+  --section-border: #23443e;
+}
+.profile [data-profile-tone="divine"] {
+  --section-accent: #a5bdef;
+  --section-card: #111c2c;
+  --section-border: #2c3d5a;
+}
+.profile [data-profile-tone="wolf"] {
+  --section-accent: #e5a0ae;
+  --section-card: #22151d;
+  --section-border: #4a303d;
+}
+.profile [data-profile-tone="lifecycle"] {
+  --section-accent: var(--gold);
+  --section-card: #1b1913;
+  --section-border: #403825;
+}
+.profile section[data-profile-tone] { scroll-margin-top: calc(var(--profile-chapter-link-height) + 1px); }
+.profile section[data-profile-tone] :global(.section-heading h2) { color: var(--section-accent, var(--text)); }
+.profile section[data-profile-tone] :global(.profile-stat-grid) { gap: 12px; border: 0; }
+.profile section[data-profile-tone] :global(.profile-stat-card) {
+  border: 1px solid var(--section-border, var(--line));
+  border-radius: 12px;
+  background: var(--section-card, var(--panel));
+}
+.profile section[data-profile-tone] :global(.metric-copy > strong),
+.profile section[data-profile-tone] :global(.profile-metric-ranks .metric-rank b),
+.profile section[data-profile-tone] :global(.profile-metric-ranks button.metric-rank:hover) {
+  color: var(--section-accent, var(--mint));
+}
+.profile section[data-profile-tone] :global(.metric-actions > .profile-sample-control .sample-trigger) {
+  border-color: var(--section-border, var(--line-strong));
+  border-radius: 4px;
+}
+.profile section[data-profile-tone] :global(.metric-actions > .profile-sample-control .sample-trigger:hover) {
+  color: var(--section-accent, var(--mint));
+  border-color: var(--section-accent, var(--mint));
+}
+
+.chapterNav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: clamp(12px, 2vw, 24px);
+  margin-top: 16px;
+  padding-inline: 4px;
+  overflow-x: auto;
+  background: var(--ink);
+  border-bottom: 1px solid var(--line-strong);
+  scrollbar-width: thin;
+}
+.chapterNav a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--profile-chapter-link-height);
+  padding-inline: 4px;
+  border-block: 2px solid transparent;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.chapterNav a:hover, .chapterNav a[aria-current="location"] { color: var(--section-accent, var(--mint)); }
+.chapterNav a[aria-current="location"] { border-bottom-color: currentColor; }
+.chapterNav a:focus-visible { outline-offset: -2px; }
+
+.identityNameColumn { width: 15%; }
+.identityRankColumn { width: 25%; }
+.identitySampleColumn { width: 25%; }
+.identityName { color: var(--section-accent, var(--text)); }
+.identityRate {
+  display: grid;
+  grid-template-columns: 3.75rem minmax(0, 1fr) 6.25rem;
+  align-items: center;
+  gap: 12px;
+  max-width: 22rem;
+  margin-inline: auto;
+  font-variant-numeric: tabular-nums;
+}
+.identityRate strong { text-align: right; }
+.rateTrack { height: 6px; border-radius: 3px; background: var(--panel-strong); }
+.rateTrack > span { display: block; height: 100%; border-radius: inherit; background: var(--section-accent, var(--muted)); }
+.winLoss { display: inline-grid; gap: 2px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.winLoss small { font-size: 12px; }
+.profile .distribution :global(.profile-sample-control) { margin: 0; }
+.profile .distribution :global(.sample-trigger) { display: inline-flex; min-height: 36px; padding: 4px 0; border: 0; font-size: 14px; }
+.profile .distribution :global(.metric-rank) { min-height: 36px; font-size: 15px; }
+.profile .distribution :global(.metric-rank b) { font-size: 18px; }
+.profile .distribution :global(.rank-total) { font-size: 13px; }
+
+.winTable {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-block: 1px solid var(--line-strong);
+  text-align: center;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.winTable > :is(thead, tbody) > tr > :is(th, td) { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.winTable > thead > tr > th { color: var(--muted); font-size: 15px; font-weight: 550; background: var(--panel); }
+.winTable > tbody > tr:nth-child(even) { background: color-mix(in srgb, var(--ink), var(--panel) 50%); }
+.winTable > tbody > tr > th { font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.boardAppearances { width: 12%; }
+.boardRecord { width: 18%; }
+.boardRate { width: 16%; }
+.boardRank { width: 15%; }
+.boardSamples { width: 13%; }
+.profile .winTable :global(.metric-rank), .profile .winTable :global(.sample-trigger) { justify-content: center; }
+.narrowRecord { display: none; }
+.boardSort {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.boardSort:hover, .boardSort[data-direction] { color: var(--mint); }
+.boardSort span { width: 5px; height: 5px; border: solid currentColor; border-width: 0 1px 1px 0; transform: translateY(-2px) rotate(45deg); }
+.boardSort[data-direction="ascending"] span { transform: translateY(1px) rotate(225deg); }
+
+@media (max-width: 760px) {
+  .chapterNav { position: relative; }
+  .profile section[data-profile-tone] { scroll-margin-top: 16px; }
+  .identityNameColumn { width: 22%; }
+  .identityRankColumn { width: 25%; }
+  .identitySampleColumn { width: 22%; }
+  .identityRate { grid-template-columns: 1fr; justify-items: center; gap: 4px; }
+  .identityRate .rateTrack { width: min(100%, 5.5rem); }
+  .identityRate .winLoss { font-size: 12px; }
+  .winTable > :is(thead, tbody) > tr > :is(th, td) { padding: 9px 3px; font-size: 14px; }
+  .boardSort { gap: 3px; }
+  .winTable .boardRecord { display: none; }
+  .narrowRecord { display: block; }
+  .narrowRecord .winLoss { font-size: 12px; }
+  .boardAppearances { width: 42px; }
+  .boardRate { width: 75px; }
+  .boardRank { width: 65px; }
+  .boardSamples { width: 40px; }
+  .profile .winTable :global(.metric-rank) { font-size: 13px; white-space: normal; }
+  .profile .winTable :global(.metric-rank b) { font-size: 17px; }
+  .profile .winTable :global(.rank-total) { font-size: 12px; }
+  .profile .winTable :global(.rank-arrow) { display: none; }
+}

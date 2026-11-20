@@ -373,7 +373,9 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
         exile_ballots = [b for b in current_ballots if b.get("kind") == "exile"]
         current_exiles = {s for e in day_non_results if e.get("action") == "exile"
                           for s in e.get("targets", [])}
-        current_exiles.update(b.get("winner") for b in exile_ballots if type(b.get("winner")) is int)
+        # The ballot winner may remain alive after an exile redirection.
+        if not current_exiles and exile_ballots and type(exile_ballots[-1].get("winner")) is int:
+            current_exiles.add(exile_ballots[-1]["winner"])
         # Before-vote deaths are distinct from the ensuing exile and shot.
         before_vote.update(s for e in day_non_results if e.get("action") == "die_after_speech"
                            for s in e.get("targets", []))
@@ -547,9 +549,7 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                 if (slot in TRIGGERED and actor is not None and actor not in dead_at_opportunity
                         and phase == "day" and e.get("action") in {None, "unknown"}):
                     # An exile in this day may still trigger a subsequent shot.
-                    exiled = {s for x in day_non_results if x.get("action") == "exile" for s in x.get("targets", [])}
-                    exiled.update(b.get("winner") for b in exile_ballots if b.get("winner"))
-                    if actor not in exiled:
+                    if actor not in current_exiles:
                         status, reason = "unavailable", "death_trigger_absent"
                 if status == "unavailable":
                     replacement = "unavailable"
@@ -614,14 +614,11 @@ def derive_game(dossier, voting=None, *, supplemental=None, endgame=None, termin
                     form = e.get("result") or by_seat.get(actor, {}).get("learned_role")
                     learning[actor] = {"round": n, "target": e["targets"][0], "form": form}
 
-        exiled = {s for e in day_non_results if e.get("action") == "exile" for s in e.get("targets", [])}
-        if exile_ballots and exile_ballots[-1].get("winner"):
-            exiled.add(exile_ballots[-1]["winner"])
-        after = before_vote | inference._actual_deaths(day_non_results) | exiled
-        ended = bool(exile_ballots or exiled or any(e.get("action") == "self_destruct" or
+        after = before_vote | inference._actual_deaths(day_non_results) | current_exiles
+        ended = bool(exile_ballots or current_exiles or any(e.get("action") == "self_destruct" or
                      (e.get("slot") == "exile_result" and e.get("action") == "none") for e in day_non_results))
         unresolved_shot = any(inference._is_empty_unknown(e) and e.get("slot") in TRIGGERED
-                              and _role_owner(e, roles, templates["day"].get(e["slot"], {})) in (night_dead | exiled)
+                              and _role_owner(e, roles, templates["day"].get(e["slot"], {})) in (night_dead | current_exiles)
                               for e in day_non_results)
         exact = vote_exact and ended and not unresolved_shot
         for e in day_non_results:
